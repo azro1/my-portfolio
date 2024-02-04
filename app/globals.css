@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* base styles */
+* {
+  @apply p-0 m-0 box-border;
+}
+
+body {
+  @apply bg-primary;
+}
+
+.logo,
+.title {
+  @apply font-rubik text-4xl;
+}
+
+.subheading {
+  @apply text-1.75xl font-rubik font-b;
+}
+
+a {
+  @apply text-sm font-os no-underline text-secondary;
+}
+
+p {
+  @apply font-os font-r text-sm text-secondary;
+}
+
+.main-container {
+  @apply min-h-screen p-1.625;
+}
+
+main {
+  @apply container mx-auto;
+}
+
+.btn {
+  @apply py-2.5 px-4 text-sm border-2 border-secondary rounded-lg font-rubik font-eb text-secondary;
+}
+
+
+
+
+/* Navbar styles*/
+.links a {
+  @apply relative ml-6.25 pb-2;
+}
+
+.links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 8px;
+  border-bottom: 4px solid transparent;
+}
+
+.links a:hover::after {
+  animation-name: grow;
+  animation-duration: 0.2s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-out;
+  border-color: #9966A2;
+}
+
+@keyframes grow {
+  to {width: 100%;}
+}
+
+.menu-links {
+  @apply bg-shade;
+}
+
+.menu-links a {
+  @apply p-5 mr-auto w-full border-b-2 border-primary;
+}
+
+.menu-links a:nth-child(4) {
+  @apply border-b-0;
+}
+
+nav span {
+  @apply text-secondary;
+}
+
+
+
+
+/* Footer styles */
+footer .newsletter h4 {
+  @apply text-2xl font-rubik text-primary;
+}
+
+footer h4 {
+  @apply font-rubik font-eb text-primary;
+}
+
+footer p {
+  @apply font-os text-primary;
+}
+
+footer span {
+  @apply text-primary;
+}
+
+.pagelinks p {
+  @apply py-1;
+}
+
+.pagelinks h4 {
+  @apply pb-2;
+}

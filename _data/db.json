@@ -1,0 +1,37 @@
+{
+    "projects": [
+        {
+           "title": "Medistore",
+           "url": "https://via.placeholder.com/580x524",
+           "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+           "start": "2024-01-12",
+           "end": "2024-02-02",
+           "contributions": "Sole contributor to all aspects of the project",
+           "techstack": "Node, React, Firebase, Firestore, Git, Github",
+           "projectUrl": "https://azro1.github.io/medi-store/#/login",
+           "id": 1
+        },
+        {
+           "title": "Ping",
+           "url": "https://via.placeholder.com/580x524",
+           "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+           "start": "2024-03-11",
+           "end": "2024-04-14",
+           "contributions": "Sole contributor to all aspects of the project",
+           "techstack": "React, Git, Github",
+           "projectUrl": "https://ping-shmr.onrender.com/",
+           "id": 2
+        },
+        {
+           "title": "Fresh Threads",
+           "url": "https://via.placeholder.com/580x524",
+           "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+           "start": "2024-02-18",
+           "end": "2024-03-09",
+           "contributions": "Sole contributor to all aspects of the project",
+           "techstack": "Node, Express, Passport, Render",
+           "projectUrl": "https://fresh-threads.onrender.com/",
+           "id": 3
+      }
+    ]
+}
