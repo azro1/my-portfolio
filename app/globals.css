@@ -37,7 +37,7 @@ main {
 }
 
 .btn {
-  @apply py-2.5 px-4 text-sm border-2 border-secondary rounded-lg font-rubik font-eb text-secondary;
+  @apply py-2.5 px-4 text-sm rounded-lg font-os font-eb text-secondary;
 }
 
 
@@ -63,28 +63,43 @@ main {
   animation-duration: 0.2s;
   animation-fill-mode: forwards;
   animation-timing-function: ease-out;
-  border-color: #9966A2;
+  border-color: #FFA500;
 }
 
 @keyframes grow {
   to {width: 100%;}
 }
 
-.menu-links {
-  @apply bg-shade;
-}
-
-.menu-links a {
-  @apply p-5 mr-auto w-full border-b-2 border-primary;
-}
-
-.menu-links a:nth-child(4) {
-  @apply border-b-0;
-}
-
 nav span {
   @apply text-secondary;
 }
+
+/* traingle for menu dropdown */
+.menu-links::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 18px solid transparent; /* Adjust the size of the triangle */
+  border-right: 7px solid transparent;
+  border-bottom: 24px solid #1a1f29;
+  top: -16px;
+  right: 14px;
+}
+
+.menu-links::before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 13px solid transparent; /* Adjust the size of the triangle */
+  border-right: 6px solid transparent;
+  border-bottom: 18px solid #F0F0F0;
+  top: -19px;
+  right: 15px;
+}
+
+
 
 
 

@@ -16,8 +16,8 @@ const Hero = () => {
           <p className="text-sm pt-4 px-4 pb-6 max-w-lg mx-auto leading-6">A full stack developer with 6+ years
             specializing in front and back end web 
             technologies and UI design</p>
-          <Link href="#">
-            <button className="btn bg-hint">DOWNLOAD CV</button>
+          <Link className="group" href="#">
+            <button className="btn bg-hint hover:filter hover:brightness-75 duration-300">DOWNLOAD CV</button>
           </Link>
         </div>
       </div>

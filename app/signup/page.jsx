@@ -1,8 +1,11 @@
 "use client"
 import Link from "next/link"
-import Icons from "../components/Icons"
-import { FaGoogle, FaFacebook } from 'react-icons/fa';
 import { useState } from "react"
+
+// components
+import Icons from "../components/Icons"
+import SocialButtons from "../components/SocialButtons";
+
 
 
 const Signup = () => {
@@ -11,10 +14,19 @@ const Signup = () => {
   const [password, setPassword] = useState('')
   const [isChecked, setIsChecked] = useState(false)
 
+  const handleCheckbox = (e) => {
+    setIsChecked(e.target.checked)
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log(firstname, email, password, isChecked)
+  }
+
     return (
       <main className='my-16'>
         <div className='grid gap-y-14 md:gap-x-16 md:grid-cols-2 max-w-screen-lg mx-auto'>
-          <form className=''>
+          <form onSubmit={handleSubmit}>
             <h2 className='pb-2 subheading text-hint'>Sign up</h2>
             <label>
               <span className='max-w-min mt-4 mb-2 text-sm font-os text-secondary block'>
@@ -50,24 +62,16 @@ const Signup = () => {
               />
             </label>
             <div className="mt-6 flex items-center">
-              <input className="self-start mt-0.5 max-w-min" type="checkbox" value={isChecked} onChange={(e) => setIsChecked(e.target.value)}/>
+              <input className="self-start mt-0.5 max-w-min" type="checkbox" value={isChecked} onChange={handleCheckbox}/>
               <p className="ml-2">I accept the{' '}<Link className="text-hint" href='#'>Privacy Policy</Link>{' '}and the{' '}<Link className='text-hint' href='#'>Terms of Service</Link>
               </p>
             </div>
             <button className='btn block mt-6 bg-hint'>Sign up</button>
           </form>
 
-
           <div className='flex flex-col items-center md:md:-mt-48 lg:col-start-1 lg:-mt-24'>
             <p className='mb-8'>or sign up using</p>
-            <button className='btn block mb-3 bg-red-600 w-64 flex items-center justify-center'>
-              <FaGoogle className="mr-2" size={24} />
-              Continue with Google
-            </button>
-            <button className='btn block bg-blue-600 w-64 flex items-center justify-center'>
-              <FaFacebook className="mr-2" size={24} />
-              Continue with Facebook
-            </button>
+            <SocialButtons />
             <p className='mt-8'>
               Have an account?{' '}
               <Link className='text-hint' href='/login'>
@@ -75,7 +79,6 @@ const Signup = () => {
               </Link>
             </p>
           </div>
-
 
           <div className="grid row-start-1 gap-y-6 md:col-start-2 md:w-full md:mt-44">
             <h2 className="text-1.75xl font-rubik font-eb text-secondary">

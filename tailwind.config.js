@@ -13,10 +13,11 @@ module.exports = {
     },
     extend: {
       colors: {
-        hint: '#576366',
+        hint: '#FFA500',
         shade: '#121417',
-        secondary: '#D3D3D3',
+        secondary: '#F0F0F0',
         primary: '#15171A',
+        dropdown: '#1a1f29'
       },
       fontFamily: {
         'rubik': ['Rubik', 'sans-serif'],
@@ -53,7 +54,7 @@ module.exports = {
         '4.75': '4.75rem' // 76px
       },
       boxShadow: {
-        '3xl': '0px 0px 12px 0 #9966A2'
+        '3xl': '0px 0px 12px 0 #2E3C4E'
       }
     },
   },
