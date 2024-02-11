@@ -14,10 +14,12 @@ const Footer = () => {
             <p className="max-w-2xl">Sign up to my newsletter to recieve the latest industry insights, information on upcoming events and updates on new projects</p>
             <form className="block sm:flex ">
               <div className="relative sm:pr-2 mb-3 sm:m-0">
-                <HiMiniEnvelopeOpen className="absolute top-3 left-4" size={28} />
-                 <input className="py-3 w-80 pl-14 pr-5 rounded-lg text-left border-2 border-primary" type="text" placeholder="Enter you email address" />
+                <HiMiniEnvelopeOpen className="absolute top-2 left-4" size={28} />
+                 <input className="p-2 w-80 pl-14 pr-5 rounded-lg text-left border-2 border-primary" type="text" placeholder="Enter you email address" />
               </div>
-               <button className="btn bg-primary">SIGN ME UP</button>
+              <Link className="group" href="#">
+                <button className="p-3 text-sm rounded-lg font-os font-eb text-secondary bg-primary">SIGN ME UP</button>
+              </Link>
             </form>
           </div>
 

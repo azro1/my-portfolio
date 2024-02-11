@@ -33,7 +33,7 @@ const Signup = () => {
                 Username
               </span>
               <input
-                className="w-full p-3"
+                className="w-full p-2.5"
                 type='text'
                 value={firstname}
                 onChange={(e) => setFirstname(e.target.value)}
@@ -44,7 +44,7 @@ const Signup = () => {
                 Email
               </span>
               <input
-                className="w-full p-3"
+                className="w-full p-2.5"
                 type='text'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -55,7 +55,7 @@ const Signup = () => {
                 Password
               </span>
               <input
-                className="w-full p-3"
+                className="w-full p-2.5"
                 type='password'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -69,9 +69,9 @@ const Signup = () => {
             <button className='btn block mt-6 bg-hint'>Sign up</button>
           </form>
 
-          <div className='flex flex-col items-center md:md:-mt-48 lg:col-start-1 lg:-mt-24'>
+          <div className='flex flex-col items-center md:-mt-48 lg:col-start-1 lg:-mt-24'>
             <p className='mb-8'>or sign up using</p>
-            <SocialButtons />
+            <SocialButtons text={"Continue"} />
             <p className='mt-8'>
               Have an account?{' '}
               <Link className='text-hint' href='/login'>
@@ -102,7 +102,6 @@ const Signup = () => {
               and development with CodeDynamics!
             </p>
           </div>
-
           <Icons values={"flex gap-x-5 md:h-4.75 place-content-center md:col-start-2 md:place-content-end md:items-end"} />
         </div>
       </main>
