@@ -3,8 +3,8 @@ import Link from "next/link"
 import { useState } from "react"
 
 // components
-import Icons from "../components/Icons"
-import SocialButtons from "../components/SocialButtons";
+import Icons from "../../components/Icons"
+import SocialButtons from "../../components/SocialButtons";
 
 
 
@@ -24,7 +24,7 @@ const Signup = () => {
   }
 
     return (
-      <main className='my-16'>
+      <main className='my-36'>
         <div className='grid gap-y-14 md:gap-x-16 md:grid-cols-2 max-w-screen-lg mx-auto'>
           <form onSubmit={handleSubmit}>
             <h2 className='pb-2 subheading text-hint'>Sign up</h2>

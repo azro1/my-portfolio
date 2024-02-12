@@ -16,10 +16,6 @@ export async function generateStaticParams () {
 }
 
 async function getProject(id) {
-  await new Promise((resolve) => {
-    setTimeout(resolve, 3000)
-  })
-  
   const res = await fetch(`http://localhost:8080/projects/${id}`, {
     next: {
       revalidate: 86400 // re-validates page after 1 day so Next can use static rendering for this page
@@ -41,7 +37,7 @@ const Project = async ({ params }) => {
       <div className='grid gap-y-6 md:gap-y-6 md:grid-auto-rows md:grid-cols-2'>
         <div className='mt-6'>
           <Card values={'w-full'}>
-            <img className='w-full' src={project.url} alt='a project' />
+            <img className='w-full' src={project.imageUrl} alt='a project' />
           </Card>
         </div>
         <div className='md:row-start-2 md:col-start-1 pb-3 md:col-span-2'>
@@ -67,7 +63,11 @@ const Project = async ({ params }) => {
             <p className='font-rubik font-b text-lg text-hint'>
               Tech Stack:{' '}
               <span className='text-sm text-secondary font-os font-r'>
-                {project.techstack}
+                {project.techstack.map((stack) => (
+                   <span className='techstack' key={stack}>
+                    {stack}
+                   </span>
+                ))}
               </span>
             </p>
             <p className='font-rubik font-b text-lg text-hint'>

@@ -4,8 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 
 // components
-import SocialButtons from "../components/SocialButtons";
-import Icons from "../components/Icons";
+import SocialButtons from "../../components/SocialButtons";
+import Icons from "../../components/Icons";
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -22,7 +22,7 @@ const Login = () => {
   }
 
   return (
-    <main className='my-16'>
+    <main className='my-36'>
       <div className="grid gap-y-14 place-items-center max-w-screen-lg mx-auto">
         <form className="w-full max-w-md" onSubmit={handleSubmit}>
           <h2 className='pb-2 subheading text-hint'>Login</h2>

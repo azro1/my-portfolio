@@ -129,3 +129,13 @@ footer span {
 .pagelinks h4 {
   @apply pb-2;
 }
+
+
+
+
+.techstack::after {
+  content: ', '
+}
+.techstack:last-child::after {
+  content: ''
+}
