@@ -40,8 +40,8 @@ const Navbar = () => {
         <div className='links hidden lg:block'>
           <Link href='/about'>About</Link>
           <Link href='/contact'>Contact</Link>
-          <Link href='/login'>Login</Link>
           <Link href='/signup'>Sign up</Link>
+          <Link href='/login'>Login</Link>
         </div>
 
         {isOpen && (

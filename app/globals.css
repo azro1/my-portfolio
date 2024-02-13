@@ -83,7 +83,7 @@ nav span {
   height: 0;
   border-left: 18px solid transparent; /* Adjust the size of the triangle */
   border-right: 7px solid transparent;
-  border-bottom: 24px solid #1a1f29;
+  border-bottom: 24px solid #15171A;
   top: -16px;
   right: 14px;
 }
@@ -138,4 +138,20 @@ footer span {
 }
 .techstack:last-child::after {
   content: ''
+}
+
+
+
+
+.tooltip {
+  @apply relative;
+}
+
+.tooltiptext {
+  @apply invisible absolute min-w-max text-secondary -top-1.875 -left-2 opacity-0 transition-opacity duration-500 ease-in-out;
+
+}
+
+.tooltip:hover .tooltiptext {
+  @apply visible opacity-100;
 }

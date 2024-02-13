@@ -8,7 +8,7 @@ import {
 
 const Dropdown = ({ handleCloseMenu }) => {
   return (
-    <div className='menu-links lg:hidden flex flex-col absolute w-60 right-0 top-32 p-3 bg-dropdown z-50 border border-secondary'>
+    <div className='menu-links lg:hidden flex flex-col absolute w-60 right-0 top-32 p-3 bg-primary z-50 border border-secondary'>
       <Link href='/about'>
         <div className='flex items-center p-3 group hover:bg-gray-800' onClick={handleCloseMenu}>
           <FaInfoCircle className="group-hover:text-hint transition duration-300" size={17} />

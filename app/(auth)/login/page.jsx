@@ -24,7 +24,7 @@ const Login = () => {
   return (
     <main className='my-36'>
       <div className="grid gap-y-14 place-items-center max-w-screen-lg mx-auto">
-        <form className="w-full max-w-md" onSubmit={handleSubmit}>
+        <form className="w-full max-w-md md:col-span-2" onSubmit={handleSubmit}>
           <h2 className='pb-2 subheading text-hint'>Login</h2>
           <label>
             <span className='max-w-min mt-4 mb-2 text-sm font-os text-secondary block'>
@@ -48,7 +48,6 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </label>
-          
           <div className="flex items-center justify-between mt-5">
             <div className="grid grid-col-2 place-items-center">
               <input className="max-w-min" type="checkbox" value={isChecked} onChange={handleCheckbox} />
@@ -56,14 +55,10 @@ const Login = () => {
             </div>
             <Link className="text-hint" href="#">Forgot Password?</Link>
           </div>
-
-
           <button className='btn block mt-5 bg-hint'>Login</button>
         </form>
   
-
-
-        <div className='flex flex-col text-center'>
+        <div className='flex flex-col text-center md:col-start-1 md:col-span-2'>
           <p className='mb-8'>or login using</p>
           <SocialButtons text={"Login"} />
           <p className='mt-8'>
@@ -73,11 +68,8 @@ const Login = () => {
             </Link>
           </p>
         </div>
-  
 
-
-        <Icons values={"flex gap-x-5"} />
-
+        <Icons values={"flex gap-x-5 md:col-start-2 md:row-start-3 md:place-self-end"} />
 
       </div>
     </main>
