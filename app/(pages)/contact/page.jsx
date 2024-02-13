@@ -1,3 +1,9 @@
+// metadata
+export const metadata = {
+  title: 'My Portfolio | Contact Me',
+  description: 'Get in touch with with me.',
+}
+
 const Contact = () => {
   return (
     <main>

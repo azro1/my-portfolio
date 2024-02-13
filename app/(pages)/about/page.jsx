@@ -1,3 +1,9 @@
+// metadata
+export const metadata = {
+  title: 'My Portfolio | About Me',
+  description: 'Learn more about my work, skills, and interests.',
+}
+
 const About = () => {
   return (
     <main>

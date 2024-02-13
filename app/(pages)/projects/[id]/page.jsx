@@ -5,6 +5,18 @@ export const dynamicParams = true;
 import Icons from '@/app/components/Icons';
 import Card from "@/app/components/Card";
 
+// dynamic metadata
+export async function generateMetadata({ params }) {
+  const id = params.id;
+  const res = await fetch(`http://localhost:8080/projects/${id}`)
+  const project = await res.json()
+
+  return {
+    title: `My Portfolio | ${project.title}`,
+    description: 'A brief summary of the project, outlining its purpose, goals, and key features'
+  }
+}
+
 // provide all of the ids to Next so that it knows how many routes and pages it needs to make so that they can be rendered way in advance at build time into html pages and distributed to a CDN so that they can be served up quickly when requested
 export async function generateStaticParams () {
   const res = await fetch('http://localhost:8080/projects');
