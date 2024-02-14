@@ -7,12 +7,6 @@ import Link from "next/link";
 import SocialButtons from "../../components/SocialButtons";
 import Icons from "../../components/Icons";
 
-// metadata
-export const metadata = {
-  title: 'My Portfolio | Login',
-  description: 'Log in to access exclusive content and manage your portfolio account.'
-}
-
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')

@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { useState } from "react"
-import { FaChevronDown, FaChevronUp, FaSignInAlt, FaUserPlus } from 'react-icons/fa';
+import { FaChevronDown, FaChevronUp, FaSignInAlt, FaUserPlus } from 'react-icons/fa'
 
 export default function AuthLayout ({ children }) {
   const [isOpen, setIsOpen] = useState(false)

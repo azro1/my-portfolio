@@ -6,12 +6,6 @@ import { useState } from "react"
 import Icons from "../../components/Icons"
 import SocialButtons from "../../components/SocialButtons";
 
-// metadata
-export const metadata = {
-  title: 'My Portfolio',
-  description: 'Create an account for personalized features and an enhanced experience.'
-}
-
 const Signup = () => {
   const [firstname, setFirstname] = useState('')
   const [email, setEmail] = useState('')
