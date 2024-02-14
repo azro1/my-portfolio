@@ -1,37 +1,61 @@
 {
-    "projects": [
-        {
-           "title": "Medistore",
-           "imageUrl": "https://via.placeholder.com/580x524",
-           "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-           "start": "2024-01-12",
-           "end": "2024-02-02",
-           "contributions": "Sole contributor to all aspects of the project",
-           "techstack": ["Node", "React"],
-           "projectUrl": "https://azro1.github.io/medi-store/#/login",
-           "id": 1
-        },
-        {
-           "title": "Ping",
-           "imageUrl": "https://via.placeholder.com/580x524",
-           "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-           "start": "2024-03-11",
-           "end": "2024-04-14",
-           "contributions": "Sole contributor to all aspects of the project",
-           "techstack": ["Node", "Express", "Socket.io"],
-           "projectUrl": "https://ping-shmr.onrender.com/",
-           "id": 2
-        },
-        {
-           "title": "Fresh Threads",
-           "imageUrl": "https://via.placeholder.com/580x524",
-           "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-           "start": "2024-02-18",
-           "end": "2024-03-09",
-           "contributions": "Sole contributor to all aspects of the project",
-           "techstack": ["Node", "Express"],
-           "projectUrl": "https://fresh-threads.onrender.com/",
-           "id": 3
-      }
-    ]
+  "projects": [
+    {
+      "title": "Medistore",
+      "imageUrl": "https://via.placeholder.com/580x524",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      "start": "2024-01-12",
+      "end": "2024-02-02",
+      "contributions": "Sole contributor to all aspects of the project",
+      "techstack": [
+        "Node",
+        "React"
+      ],
+      "projectUrl": "https://azro1.github.io/medi-store/#/login",
+      "id": 1
+    },
+    {
+      "title": "Ping",
+      "imageUrl": "https://via.placeholder.com/580x524",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      "start": "2024-03-11",
+      "end": "2024-04-14",
+      "contributions": "Sole contributor to all aspects of the project",
+      "techstack": [
+        "Node",
+        "Express",
+        "Socket.io"
+      ],
+      "projectUrl": "https://ping-shmr.onrender.com/",
+      "id": 2
+    },
+    {
+      "title": "Fresh Threads",
+      "imageUrl": "https://via.placeholder.com/580x524",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      "start": "2024-02-18",
+      "end": "2024-03-09",
+      "contributions": "Sole contributor to all aspects of the project",
+      "techstack": [
+        "Node",
+        "Express"
+      ],
+      "projectUrl": "https://fresh-threads.onrender.com/",
+      "id": 3
+    },
+    {
+      "id": "fa46",
+      "title": "the best future project ever",
+      "imageUrl": "https://via.placeholder.com/580x524",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      "start": "2030-06-21",
+      "end": "2034-10-02",
+      "contributions": "Sole contributor to all aspects of the project",
+      "techstack": [
+        "Python",
+        "Angular"
+      ],
+      "projectUrl": "https://awesome@123.com/"
+    }
+  ]
 }
