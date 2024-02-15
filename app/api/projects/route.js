@@ -3,6 +3,9 @@ import { NextResponse } from "next/server"
 // forces handlers to be dynamic during development and dynamically built at buid time
 export const dynamic = 'force dynamic'
 
+
+
+
 // get
 export async function GET() {
   const res = await fetch('http://localhost:8080/projects')
@@ -12,6 +15,9 @@ export async function GET() {
     status: 200
   })
 }
+
+
+
 
 // post
 export async function POST(request) {
@@ -35,4 +41,6 @@ export async function POST(request) {
       status: 201
     })
   }
+
+
   
