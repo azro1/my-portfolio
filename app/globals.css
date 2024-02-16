@@ -155,3 +155,11 @@ footer span {
 .tooltip:hover .tooltiptext {
   @apply visible opacity-100;
 }
+
+
+
+
+
+.error {
+  @apply pt-4 text-red-700;
+}

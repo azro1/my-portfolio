@@ -1,24 +1,48 @@
 "use client"
+
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+
 import Link from "next/link"
 import { useState } from "react"
+import { useRouter } from "next/navigation";
+
 
 // components
 import Icons from "../../components/Icons"
 import SocialButtons from "../../components/SocialButtons";
 
+
+
 const Signup = () => {
-  const [firstname, setFirstname] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isChecked, setIsChecked] = useState(false)
+  const [error, setError] = useState('')
+  const router = useRouter()
 
   const handleCheckbox = (e) => {
     setIsChecked(e.target.checked)
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log(firstname, email, password, isChecked)
+
+    const supabase = createClientComponentClient()
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: `${location.origin}/api/auth/callback`
+      }
+    })
+
+    if (error) {
+      setError(error.message)
+    }
+
+    if (!error) {
+      router.push('/verify')
+    }
   }
 
     return (
@@ -26,17 +50,6 @@ const Signup = () => {
         <div className='grid gap-y-14 md:gap-x-16 md:grid-cols-2 max-w-screen-lg mx-auto'>
           <form onSubmit={handleSubmit}>
             <h2 className='pb-2 subheading text-hint'>Sign up</h2>
-            <label>
-              <span className='max-w-min mt-4 mb-2 text-sm font-os text-secondary block'>
-                Username
-              </span>
-              <input
-                className="w-full p-2.5"
-                type='text'
-                value={firstname}
-                onChange={(e) => setFirstname(e.target.value)}
-              />
-            </label>
             <label>
               <span className='max-w-min mt-4 mb-2 text-sm font-os text-secondary block'>
                 Email
@@ -59,7 +72,9 @@ const Signup = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </label>
-            <div className="mt-6 flex items-center">
+            {error && <div className="error">{error}</div>}
+
+            <div className="mt-4 flex items-center">
               <input className="self-start mt-0.5 max-w-min" type="checkbox" value={isChecked} onChange={handleCheckbox}/>
               <p className="ml-2">I accept the{' '}<Link className="text-hint" href='#'>Privacy Policy</Link>{' '}and the{' '}<Link className='text-hint' href='#'>Terms of Service</Link>
               </p>
