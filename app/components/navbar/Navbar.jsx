@@ -7,7 +7,7 @@ import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 // components
 import Dropdown from "./Dropdown"
 
-const Navbar = () => {
+const Navbar = ({ user }) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const handleToggleMenu = () => {
@@ -43,11 +43,12 @@ const Navbar = () => {
           <Link href='/signup'>Sign up</Link>
           <Link href='/login'>Login</Link>
         </div>
-
         {isOpen && (
           <Dropdown handleCloseMenu={handleCloseMenu} />
         )}
       </nav>
+      {user && <p className="text-hint text-right">Hello, <span className="text-secondary">{user.email}</span></p>}
+
     </main>
   );
 }
