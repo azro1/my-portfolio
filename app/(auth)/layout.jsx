@@ -2,7 +2,10 @@
 
 import Link from "next/link"
 import { useState } from "react"
-import { FaChevronDown, FaChevronUp, FaSignInAlt, FaUserPlus } from 'react-icons/fa'
+import { FaSignInAlt, FaUserPlus } from 'react-icons/fa'
+
+// components
+import Chevron from "../components/Chevron"
 
 export default function AuthLayout ({ children }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -23,17 +26,9 @@ export default function AuthLayout ({ children }) {
             Port<span>folio</span>
           </h2>
         </Link>
-        <button onClick={handleToggleMenu} className='p-2 text-base font-os font-b text-secondary shadow-3xl rounded-xl bg-shade lg:hidden'>
-          {isOpen ? (
-            <div className="flex items-center">
-              <FaChevronUp size={22} />
-            </div>
-          ) : (
-            <div className="flex items-center">
-              <FaChevronDown size={22} />
-            </div>
-          )}
-        </button>
+
+        <Chevron isOpen={isOpen} handleToggleMenu={handleToggleMenu} />
+
         <div className='hidden lg:flex items-center gap-12'>
           <Link href='/signup'>
             <div className="tooltip group">

@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import {
   FaInfoCircle,
   FaComment,
@@ -12,6 +11,7 @@ import {
 
 // components
 import Dropdown from "./Dropdown"
+import Chevron from "../Chevron";
 
 const Navbar = ({ user }) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -32,18 +32,9 @@ const Navbar = ({ user }) => {
             Port<span>folio</span>
           </h2>
         </Link>
-        <button onClick={handleToggleMenu} className='order-1 p-2 text-base font-os font-b text-secondary shadow-3xl rounded-xl bg-shade lg:hidden'>
-          {isOpen ? (
-            <div className="flex items-center">
-              <FaChevronUp size={22} />
-            </div>
-          ) : (
-            <div className="flex items-center">
-              <FaChevronDown size={22} />
-            </div>
-          )}
-        </button>
-        
+
+        <Chevron isOpen={isOpen} handleToggleMenu={handleToggleMenu} order={'order-1'} />
+
         {user && <p className="text-hint absolute left-0 top-36 md:static">Hello, <span className="text-secondary">{user.email}</span></p>}
 
           <div className='hidden lg:flex lg:items-center gap-12'>
