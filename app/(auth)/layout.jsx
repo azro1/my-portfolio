@@ -34,15 +34,19 @@ export default function AuthLayout ({ children }) {
             </div>
           )}
         </button>
-        <div className='lg:flex items-end gap-12 hidden '>
-          <div className="tooltip group">
-            <Link href='/signup'><FaSignInAlt className="group-hover:text-hint transition duration-300" size={30} /></Link>
-            <span className="tooltiptext -left-1">Sign up</span>
-          </div>
-          <div className="tooltip group">
-            <Link href='/login'><FaUserPlus className="group-hover:text-hint transition duration-300" size={32} /></Link>
-            <span className="tooltiptext -left-1">Login</span>
-          </div>
+        <div className='hidden lg:flex items-center gap-12'>
+          <Link href='/signup'>
+            <div className="tooltip group">
+              <FaSignInAlt className="group-hover:text-hint transition duration-300 cursor-pointer" size={31} />
+              <span className="tooltiptext -left-1">Sign up</span>
+            </div>
+          </Link>
+          <Link href='/login'>
+            <div className="tooltip group">
+              <FaUserPlus className="group-hover:text-hint transition duration-300 cursor-pointer" size={33} />
+              <span className="tooltiptext -left-1">Login</span>
+            </div>
+          </Link>
         </div>
         {isOpen && (
           <div className='menu-links lg:hidden flex flex-col absolute w-60 right-0 top-32 p-3 bg-primary z-50 border border-secondary'>

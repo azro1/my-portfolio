@@ -46,23 +46,22 @@ const Navbar = ({ user }) => {
         
         {user && <p className="text-hint absolute left-0 top-36 md:static">Hello, <span className="text-secondary">{user.email}</span></p>}
 
-        <div className="flex items-center gap-16">
-          <div className='links hidden lg:flex lg:items-center gap-12'>
+          <div className='hidden lg:flex lg:items-center gap-12'>
             <Link href="/about">
               <div className="tooltip group">
-                  <FaInfoCircle className="group-hover:text-hint transition duration-300 text-secondary cursor-pointer" size={28} />
+                  <FaInfoCircle className="group-hover:text-hint transition duration-300 text-secondary cursor-pointer" size={26} />
                 <span className="tooltiptext -left-0.5">About</span>
               </div>
             </Link>
             <Link href="/contact">
               <div className="tooltip group">
-                <FaComment className="group-hover:text-hint transition duration-300 text-secondary cursor-pointer" size={30} />
+                <FaComment className="group-hover:text-hint transition duration-300 text-secondary cursor-pointer" size={28} />
                 <span className="tooltiptext -left-1">Contact</span>
               </div>
             </Link>
             <Link href="/signup">
               <div className="tooltip group">
-                <FaSignInAlt className="group-hover:text-hint transition duration-300 text-secondary cursor-pointer" size={32} />
+                <FaSignInAlt className="group-hover:text-hint transition duration-300 text-secondary cursor-pointer" size={31} />
                 <span className="tooltiptext -left-1">Sign up</span>
               </div>
             </Link>
@@ -73,7 +72,7 @@ const Navbar = ({ user }) => {
               </div>
             </Link>
           </div>
-        </div>
+
         {isOpen && (
           <Dropdown handleCloseMenu={handleCloseMenu} />
         )}
