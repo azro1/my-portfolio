@@ -14,12 +14,18 @@ body {
 
 .logo,
 .title {
-  @apply font-rubik text-4xl;
+  @apply font-rubik text-4xl leading-tight;
+}
+
+h2 {
+  @apply leading-tight;
 }
 
 .subheading {
-  @apply text-1.75xl font-rubik font-b;
+  @apply text-1.75xl font-rubik font-b leading-tight;
 }
+
+
 
 a {
   @apply text-sm font-os no-underline text-secondary;
@@ -94,30 +100,29 @@ nav span {
 
 
 /* Footer styles */
-footer .newsletter h4 {
-  @apply text-2xl font-rubik text-primary;
+footer .newsletter h3 {
+  @apply text-2xl font-eb font-rubik text-hint;
 }
 
 footer h4 {
-  @apply font-rubik font-eb text-primary;
+  @apply font-rubik font-eb text-hint;
 }
 
 footer p {
-  @apply font-os text-primary;
-}
-
-footer span {
-  @apply text-primary;
-}
-
-.pagelinks p {
-  @apply py-1;
+  @apply font-os font-b text-primary leading-6;
 }
 
 .pagelinks h4 {
   @apply pb-2;
 }
 
+.pagelinks p {
+  @apply leading-7;
+}
+
+footer span {
+  @apply text-primary;
+}
 
 
 

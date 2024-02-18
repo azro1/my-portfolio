@@ -7,10 +7,10 @@ import { IoLogoYoutube, IoLogoWhatsapp } from "react-icons/io";
 
 const Footer = () => {
   return (
-    <footer className="bg-secondary border-t-8 border-hint p-3">
-       <main className="my-4.1875">
-          <div className="flex flex-col items-center text-center newsletter gap-y-6 ">
-            <h4>Get News, Insights & Updates</h4>
+    <footer className="bg-secondary border-t-8 border-hint p-1.625">
+       <main className="my-4.1875 max-w-screen-lg mx-auto" >
+          <div className="newsletter flex flex-col items-center text-center gap-y-6">
+            <h3>Get News, Insights & Updates</h3>
             <p className="max-w-2xl">Sign up to my newsletter to recieve the latest industry insights, information on upcoming events and updates on new projects</p>
             <form className="block sm:flex ">
               <div className="relative sm:pr-2 mb-3 sm:m-0">
@@ -18,7 +18,7 @@ const Footer = () => {
                  <input className="p-2 w-80 pl-14 pr-5 rounded-lg text-left border-2 border-primary" type="text" placeholder="Enter you email address" />
               </div>
               <Link className="group" href="#">
-                <button className="p-3 text-sm rounded-lg font-os font-eb text-secondary bg-primary">SIGN ME UP</button>
+                <button className="py-3 px-4 min-w-max text-sm rounded-lg font-os font-eb text-secondary bg-primary ">SIGN ME UP</button>
               </Link>
             </form>
           </div>
@@ -62,25 +62,22 @@ const Footer = () => {
                 </Link>
               </div>
             </div>
-            <div className="">
+            <div className="flex-1">
               <h4>GET IN TOUCH</h4>
               <div className="">
-                <FaPhoneAlt className="inline-block" />
-                <p className="inline-block pl-2">07455132994</p>
+                <p>07455132994</p>
               </div>
               <div>
-                <MdEmail className="inline-block" />
-                <p className="inline-block pl-2">simon.789@hotmail.co.uk</p>
+                <p>simon.789@hotmail.co.uk</p>
               </div>
               <div>
-                <FaLocationDot className="inline-block" />
-                <p className="inline-block pl-2 whitespace-normal">New Southgate, London N11 2RG</p>
+                <p>New Southgate, London N11 2RG</p>
               </div>
             </div>
           </div>
 
           <div className="flex flex-col-reverse items-center text-center gap-y-10 md:h-9.5 md:flex-row md:justify-between md:text-left ">
-            <div className="">
+            <div>
               <Link href="/">
                 <h2 className="logo font-eb text-hint pb-3">Port<span>folio</span></h2>
               </Link>
@@ -88,16 +85,16 @@ const Footer = () => {
             </div>
             <div className="self-center md:self-end flex items-center">
               <Link href="#">
-                <p className="text-xs pt-1 pr-2">Terms of Use</p>
+                <p className="text-xs pt-1 pr-2 min-w-max">Terms of Use</p>
               </Link>
               <span>|</span>
               <Link href="#">
-                <p className="text-xs pt-1 pl-2">Privacy Policy</p>
+                <p className="text-xs pt-1 pl-2 min-w-max">Privacy Policy</p>
               </Link>
             </div>
-            <div className="">
+            <div>
               <div>
-                <h4>FOLLOW ME ON SOCIAL MEDIA</h4>
+                <h4 className="min-w-max">FOLLOW ME ON SOCIAL MEDIA</h4>
               </div>
               <div className="flex gap-x-5 justify-center pt-3">
                 <FaLinkedin size={26} />

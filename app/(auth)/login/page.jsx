@@ -48,7 +48,7 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </label>
-          <div className="flex items-center justify-between mt-5">
+          <div className="flex items-center justify-between mt-4">
             <div className="grid grid-col-2 place-items-center">
               <input className="max-w-min" type="checkbox" value={isChecked} onChange={handleCheckbox} />
               <p className="ml-2 col-start-2">Rememeber me</p>
