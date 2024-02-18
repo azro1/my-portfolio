@@ -1,7 +1,9 @@
 "use client"
 
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 // components
 import SocialButtons from "../../components/SocialButtons";
@@ -11,14 +13,31 @@ const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isChecked, setIsChecked] = useState(false)
+  const [error, setError] = useState('')
+  const router = useRouter()
+
 
   const handleCheckbox = (e) => {
     setIsChecked(e.target.checked)
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log(email, password, isChecked)
+    setError('')
+
+    const supabase = createClientComponentClient()
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    })
+
+    if (error) {
+      setError(error.message)
+    }
+
+    if (!error) {
+      router.push('/')
+    }
   }
 
   return (
@@ -55,6 +74,7 @@ const Login = () => {
             </div>
             <Link className="text-hint" href="#">Forgot Password?</Link>
           </div>
+          {error && <div className="error">{error}</div>}
           <button className='btn block mt-5 bg-hint'>Login</button>
         </form>
   

@@ -140,5 +140,5 @@ footer span {
 
 
 .error {
-  @apply pt-4 text-red-700;
+  @apply pt-4 text-red-600;
 }
