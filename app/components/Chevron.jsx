@@ -5,13 +5,9 @@ const Chevron = ({ isOpen, handleToggleMenu, order }) => {
   return (
     <button onClick={handleToggleMenu} className={`${order} p-2 text-base text-secondary shadow-3xl rounded-xl bg-shade lg:hidden`}>
       {isOpen ? (
-        <div className="flex items-center">
-          <FaChevronUp size={22} />
-        </div>
+        <FaChevronUp size={22} />
       ) : (
-        <div className="flex items-center">
-          <FaChevronDown size={22} />
-        </div>
+        <FaChevronDown size={22} />
       )}
     </button>
   )
