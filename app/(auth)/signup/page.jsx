@@ -47,9 +47,9 @@ const Signup = () => {
 
     return (
       <main className='my-36'>
-        <div className='grid gap-y-14 md:gap-x-16 md:grid-cols-2 max-w-screen-lg mx-auto'>
-          <form onSubmit={handleSubmit}>
-            <h2 className='pb-2 subheading text-hint'>Sign up</h2>
+        <div className='grid gap-y-20 md:gap-x-16 md:grid-cols-2 max-w-screen-lg mx-auto relative'>
+          <form onSubmit={handleSubmit} className="w-full max-w-sm justify-self-center md:justify-self-center">
+            <h2 className='pb-2 text-1.75xl font-rubik font-eb text-hint'>Sign up</h2>
             <label>
               <span className='max-w-min mt-4 mb-2 text-sm font-os text-secondary block'>
                 Email
@@ -72,17 +72,17 @@ const Signup = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </label>
-            {error && <div className="error">{error}</div>}
+            {error && <div className="error">* {error}</div>}
 
-            <div className="mt-4 flex items-center">
-              <input className="self-start mt-0.5 max-w-min" type="checkbox" value={isChecked} onChange={handleCheckbox}/>
+            <div className="mt-3 flex items-center">
+              <input className="self-start mt-0.2 max-w-min" type="checkbox" value={isChecked} onChange={handleCheckbox}/>
               <p className="ml-2">I accept the{' '}<Link className="text-hint" href='#'>Privacy Policy</Link>{' '}and the{' '}<Link className='text-hint' href='#'>Terms of Service</Link>
               </p>
             </div>
-            <button className='btn block mt-6 bg-hint'>Sign up</button>
+            <button className='btn block mt-4 bg-hint'>Sign up</button>
           </form>
 
-          <div className='flex flex-col items-center md:-mt-48 lg:col-start-1 lg:-mt-24'>
+          <div className='flex flex-col items-center md:absolute inset-0 top-96 md:-left-26  lg:-left-32'>
             <p className='mb-8'>or sign up using</p>
             <SocialButtons text={"Continue"} />
             <p className='mt-8'>
@@ -93,8 +93,8 @@ const Signup = () => {
             </p>
           </div>
 
-          <div className="grid row-start-1 gap-y-6 md:col-start-2 md:w-full md:mt-44">
-            <h2 className="text-1.75xl font-rubik font-eb text-secondary">
+          <div className="grid row-start-1 gap-y-6 max-w-sm justify-self-center md:col-start-2 md:w-full md:mt-44">
+            <h2 className="text-1.75xl font-rubik font-eb text-secondary leading-normal">
               Unlock <span className='text-hint'>CodeDynamic's</span> Creative
               Vault!
             </h2>

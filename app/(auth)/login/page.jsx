@@ -43,8 +43,8 @@ const Login = () => {
   return (
     <main className='my-36'>
       <div className="grid gap-y-14 place-items-center max-w-screen-lg mx-auto">
-        <form className="w-full max-w-md md:col-span-2" onSubmit={handleSubmit}>
-          <h2 className='pb-2 subheading text-hint'>Login</h2>
+        <form className="w-full max-w-sm md:col-span-2" onSubmit={handleSubmit}>
+          <h2 className='pb-2 text-1.75xl font-rubik font-eb text-hint'>Login</h2>
           <label>
             <span className='max-w-min mt-4 mb-2 text-sm font-os text-secondary block'>
               Email
@@ -67,15 +67,17 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </label>
-          <div className="flex items-center justify-between mt-4">
+
+          {error && <div className="error">{error}</div>}
+
+          <div className="mt-3 flex items-center justify-between">
             <div className="grid grid-col-2 place-items-center">
               <input className="max-w-min" type="checkbox" value={isChecked} onChange={handleCheckbox} />
               <p className="ml-2 col-start-2">Rememeber me</p>
             </div>
             <Link className="text-hint" href="#">Forgot Password?</Link>
           </div>
-          {error && <div className="error">{error}</div>}
-          <button className='btn block mt-5 bg-hint'>Login</button>
+          <button className='btn block mt-4 bg-hint'>Login</button>
         </form>
   
         <div className='flex flex-col text-center md:col-start-1 md:col-span-2'>

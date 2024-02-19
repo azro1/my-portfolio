@@ -61,12 +61,12 @@ nav span {
 }
 
 .tooltiptext {
-  @apply invisible absolute min-w-max text-secondary -top-1.625 opacity-0 transition-opacity duration-500 ease-in-out;
+  @apply invisible absolute min-w-max text-secondary font-b -top-1.875 opacity-0 transition-opacity duration-500 ease-in-out;
 
 }
 
 .tooltip:hover .tooltiptext {
-  @apply text-xs visible opacity-100;
+  @apply text-base visible opacity-100;
 }
 
 /* traingle for menu dropdown */
@@ -140,5 +140,5 @@ footer span {
 
 
 .error {
-  @apply pt-4 text-red-600;
+  @apply pt-3 text-red-600;
 }
