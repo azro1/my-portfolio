@@ -3,7 +3,7 @@ import { FaChevronDown, FaChevronUp } from 'react-icons/fa'
 const Chevron = ({ isOpen, handleToggleMenu, order }) => {
 
   return (
-    <button onClick={handleToggleMenu} className={`${order} p-2 text-base text-secondary shadow-3xl rounded-xl bg-shade lg:hidden`}>
+    <button onClick={handleToggleMenu} className={`${order} p-2 text-base text-secondary rounded-xl bg-shade border border-secondary lg:hidden`}>
       {isOpen ? (
         <FaChevronUp size={22} />
       ) : (

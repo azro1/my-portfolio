@@ -30,7 +30,7 @@ const Dropdown = ({ user, handleCloseMenu }) => {
   }
 
   return (
-    <div className='menu-links lg:hidden flex flex-col absolute w-60 right-0 top-32 p-3 bg-primary z-50 border border-secondary'>
+    <div className='menu-links lg:hidden flex flex-col absolute w-60 right-0 top-28 mt-4 p-3 bg-primary z-50 border border-secondary'>
 
       {user && (
         <>
