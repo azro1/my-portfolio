@@ -1,11 +1,4 @@
-"use client"
-
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-
-import { useState } from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation";
-
 import {
   FaInfoCircle,
   FaUser,
@@ -15,35 +8,10 @@ import {
 
 
 // components
-import Dropdown from "./Dropdown"
 import Chevron from "../Chevron";
 import LogoutButton from "../LogoutButton";
 
-
 const Navbar = ({ user }) => {
-  const [isOpen, setIsOpen] = useState(false)
-  const router = useRouter()
-
-  const handleToggleMenu = () => {
-    setIsOpen(!isOpen)
-  }
-
-  const handleCloseMenu = () => {
-    setIsOpen(false)
-  }
-
-  const handleLogout = async () => {
-    const supabase = createClientComponentClient()
-    const { error } = await supabase.auth.signOut()
-
-    if (!error) {
-      router.push('/login')
-    }
-
-    if (error) {
-      console.log(error)
-    }
-  }
 
   return (
     <main>
@@ -54,7 +22,7 @@ const Navbar = ({ user }) => {
           </h2>
         </Link>
 
-        <Chevron isOpen={isOpen} handleToggleMenu={handleToggleMenu} order={'order-1'} />
+        <Chevron order={'order-1'} user={user} />
 
           {!user && (
             <div className='hidden lg:flex lg:items-center gap-12'>
@@ -93,16 +61,13 @@ const Navbar = ({ user }) => {
             
             <div className="flex items-center gap-8">
               <p className="font-b text-base text-hint absolute left-0 top-36 md:static">Hello, <span className="text-secondary">{user.email}</span></p>
-              <LogoutButton handleLogout={handleLogout} />
+              <LogoutButton />
             </div>
 
             </>
 
           )}
           
-        {isOpen && (
-          <Dropdown user={user} handleCloseMenu={handleCloseMenu} />
-        )}
       </nav>
     </main>
   );
