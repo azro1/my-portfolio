@@ -8,15 +8,15 @@ import Navbar from "../components/navbar/Navbar"
 export default async function PagesLayout ({ children }) {
   const supabase = createServerComponentClient({ cookies })
   const { data } = await supabase.auth.getSession()
-  // const user = data.session?.user;
+  const user = data.session?.user;
 
-  if (!data.session) {
-    redirect('/login')
-  }
+  // if (!data.session) {
+  //   redirect('/login')
+  // }
   
   return (
     <>
-      <Navbar user={data.session.user} /> 
+      <Navbar user={user} /> 
       {children}
     </>
   )

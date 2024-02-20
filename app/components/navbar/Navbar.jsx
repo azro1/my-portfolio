@@ -26,16 +26,28 @@ const Navbar = ({ user }) => {
 
           {!user && (
             <div className='hidden lg:flex lg:items-center gap-12'>
+              <Link href="/about">
+                <div className="tooltip group">
+                    <FaInfoCircle className="group-hover:text-hint transition duration-300 text-secondary cursor-pointer" size={26} />
+                  <span className="tooltiptext -left-3">About</span>
+                </div>
+              </Link>
+              <Link href="/contact">
+                <div className="tooltip group">
+                  <FaUser className="group-hover:text-hint transition duration-300 text-secondary cursor-pointer" size={26} />
+                  <span className="tooltiptext -left-5">Contact</span>
+                </div>
+              </Link>
               <Link href="/signup">
                 <div className="tooltip group">
                   <FaSignInAlt className="group-hover:text-hint transition duration-300 text-secondary cursor-pointer" size={31} />
-                  <span className="tooltiptext -left-1">Sign up</span>
+                  <span className="tooltiptext -left-2.5">Sign up</span>
                 </div>
               </Link>
               <Link href="/login">
                 <div className="tooltip group">
                   <FaUserPlus className="group-hover:text-hint transition duration-300 text-secondary cursor-pointer" size={33} />
-                  <span className="tooltiptext -left-1">Login</span>
+                  <span className="tooltiptext -left-2.5">Login</span>
                 </div>
               </Link>
             </div>
