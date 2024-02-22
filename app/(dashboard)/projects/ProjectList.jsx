@@ -6,7 +6,11 @@ async function getProjects() {
   await new Promise((resolve) => {
     setTimeout(resolve, 3000)
   })
-  const res = await fetch('http://localhost:8080/projects');
+  const res = await fetch('http://localhost:8080/projects', {
+    next: {
+      revalidate: 0
+    }
+  });
   return res.json();
 }
 

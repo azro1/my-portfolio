@@ -9,10 +9,6 @@ export default async function PagesLayout ({ children }) {
   const supabase = createServerComponentClient({ cookies })
   const { data } = await supabase.auth.getSession()
   const user = data.session?.user;
-
-  // if (!data.session) {
-  //   redirect('/login')
-  // }
   
   return (
     <>

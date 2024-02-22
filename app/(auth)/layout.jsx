@@ -24,8 +24,10 @@ export default async function AuthLayout ({ children }) {
             Port<span>folio</span>
           </h2>
         </Link>
-
-        <Chevron />
+        
+        <div className="lg:hidden">
+          <Chevron />
+        </div>
 
         <div className='hidden lg:flex items-center gap-12'>
           <Link href='/signup'>

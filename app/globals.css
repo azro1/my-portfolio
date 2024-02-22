@@ -47,6 +47,10 @@ main {
   @apply py-2.5 px-4 text-sm rounded-lg font-os font-eb text-secondary;
 }
 
+form input {
+  @apply focus:outline-none;
+}
+
 
 
 
@@ -75,11 +79,11 @@ nav span {
   position: absolute;
   width: 0;
   height: 0;
-  border-left: 18px solid transparent; /* Adjust the size of the triangle */
-  border-right: 7px solid transparent;
-  border-bottom: 24px solid #15171A;
-  top: -16px;
-  right: 14px;
+  border-left: 17px solid transparent; /* Adjust the size of the triangle */
+  border-right: 9px solid transparent;
+  border-bottom: 26px solid #15171A;
+  top: -15px;
+  right: 13.5px;
 }
 
 .menu-links::before {
@@ -88,8 +92,8 @@ nav span {
   width: 0;
   height: 0;
   border-left: 13px solid transparent; /* Adjust the size of the triangle */
-  border-right: 6px solid transparent;
-  border-bottom: 18px solid #F0F0F0;
+  border-right: 7px solid transparent;
+  border-bottom: 19px solid #F0F0F0;
   top: -19px;
   right: 15px;
 }
