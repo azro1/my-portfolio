@@ -17,8 +17,7 @@ const Login = () => {
   const [isChecked, setIsChecked] = useState(false)
   const [error, setError] = useState('')
   const router = useRouter()
-
-
+  
   const handleCheckbox = (e) => {
     setIsChecked(e.target.checked)
   }
@@ -39,6 +38,7 @@ const Login = () => {
 
     if (!error) {
       router.push('/')
+      router.refresh()
     }
   }
 
