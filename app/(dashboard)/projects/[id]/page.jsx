@@ -53,18 +53,18 @@ const Project = async ({ params }) => {
           </Card>
         </div>
         <div className='md:row-start-2 md:col-start-1 pb-3 md:col-span-2'>
-          <h2 className='text-1.75xl font-b text-hint'>Project Description</h2>
-          <p className='pt-3 leading-6'>{project.description}</p>
+          <h2 className='subheading text-hint'>Project Description</h2>
+          <p className='pt-3 leading-6 text-sm'>{project.description}</p>
         </div>
-        <div className='row-start-2 col-start-1 md:col-start-2 md:row-start-1 md:mt-20 md:pl-8'>
+        <div className='row-start-3 col-start-1 md:col-start-2 md:row-start-1 md:mt-20 md:pl-8'>
           <div className='pb-6 md:pb-8'>
-            <p className='font-rubik font-b text-lg text-hint'>
+            <p className='font-os font-b text-base text-hint'>
               Start Date:{' '}
               <span className='text-sm text-secondary font-os font-r'>
                 {project.start}
               </span>
             </p>
-            <p className='font-rubik font-b text-lg text-hint'>
+            <p className='font-os font-b text-base text-hint'>
               End Date:{' '}
               <span className='text-sm text-secondary font-os font-r'>
                 {project.end}
@@ -72,7 +72,7 @@ const Project = async ({ params }) => {
             </p>
           </div>
           <div className='pb-6 md:pb-8'>
-            <p className='font-rubik font-b text-lg text-hint'>
+            <p className='font-os font-b text-base text-hint'>
               Tech Stack:{' '}
               <span className='text-sm text-secondary font-os font-r'>
                 {project.techstack.map((stack) => (
@@ -82,7 +82,7 @@ const Project = async ({ params }) => {
                 ))}
               </span>
             </p>
-            <p className='font-rubik font-b text-lg text-hint'>
+            <p className='font-os font-b text-base text-hint leading-6'>
               Key Contributors:{' '}
               <span className='text-sm text-secondary font-os font-r'>
                 {project.contributions}
@@ -90,7 +90,7 @@ const Project = async ({ params }) => {
             </p>
           </div>
           <div>
-            <p className='font-rubik font-b text-lg text-hint'>
+            <p className='font-rubik font-b text-base text-hint'>
               Project Url:{' '}
               <a href={project.projectUrl} target='_blank'>
                 <span className='text-sm text-secondary font-os font-r'>

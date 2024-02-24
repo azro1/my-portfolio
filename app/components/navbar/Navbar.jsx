@@ -17,7 +17,7 @@ const Navbar = ({ user }) => {
         <Chevron order={'order-1'} user={user} />
           
           {user && (
-            <p className="font-b text-base text-hint absolute left-0 top-36 md:static mr-8">Hello, <span className="text-secondary">{user.email}</span></p>
+            <p className="font-b text-base text-secondary absolute left-0 top-36 md:static mr-8">Hello, <span className="text-hint">{user.email}</span></p>
           )}   
       </nav>
     </main>

@@ -28,7 +28,7 @@ h2 {
 
 
 a {
-  @apply text-sm font-os no-underline text-secondary;
+  @apply text-sm font-r font-os no-underline text-secondary;
 }
 
 p {
