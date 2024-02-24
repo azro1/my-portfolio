@@ -31,7 +31,7 @@ const Dropdown = ({ user, handleCloseMenu }) => {
   }
 
   return (
-    <div className='menu-links flex flex-col absolute w-60 right-0 top-28 mt-4 p-3 bg-primary z-50 border-2 border-secondary'>
+    <div className='menu-links flex flex-col absolute w-60 right-0 top-28 mt-4 p-3 bg-primary z-50 border-2 border-secondary bg-shade'>
 
       {user && (
         <>

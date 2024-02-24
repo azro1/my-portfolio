@@ -14,7 +14,7 @@ const Skills = () => {
           <img src="https://via.placeholder.com/228x194"/>
           <img src="https://via.placeholder.com/228x194"/>
         </div>
-        <div className="pt-5 md:pt-0 md:self-center md:pl-8 md:w-1/2">
+        <div className="pt-6 md:pt-0 md:self-center md:pl-8 md:w-1/2">
           <h2 className="subheading text-hint pb-3">My Skills</h2>
           <p className="leading-6">I possess proficient coding skills in HTML, CSS, JavaScript and Php among other languages and frameworks. With a strong foundation in front-end development and expertise in back-end technologies, I excel in crafting dynamic and responsive web solutions.</p>
         </div>

@@ -8,7 +8,7 @@ import { IoLogoYoutube, IoLogoWhatsapp } from "react-icons/io";
 const Footer = () => {
   return (
     <footer className="bg-secondary border-t-8 border-hint p-1.625">
-       <main className="my-4.1875 max-w-screen-lg mx-auto" >
+       <main className="my-2.375 md:mt-4.1875 max-w-screen-lg mx-auto" >
           <div className="newsletter flex flex-col items-center text-center gap-y-6">
             <h3>Get News, Insights & Updates</h3>
             <p className="max-w-2xl">Sign up to my newsletter to recieve the latest industry insights, information on upcoming events and updates on new projects</p>
@@ -23,7 +23,7 @@ const Footer = () => {
             </form>
           </div>
 
-          <div className="pagelinks flex flex-col text-center place-items-center gap-y-10 md:flex md:flex-row md:place-items-stretch md:text-left  gap-x-6 my-16">
+          <div className="pagelinks flex flex-col text-center place-items-center gap-y-10 gap-x-6 my-12 md:flex md:flex-row md:place-items-stretch md:text-left md:mt-16">
             <div className="flex-1 md:flex-initial md:w-1/6 ">
               <h4>PAGE LINKS</h4>
               <div>
@@ -83,7 +83,7 @@ const Footer = () => {
               </Link>
               <p className="text-xs">&copy; 2024 Simon Sutherland. All rights reserved.</p>
             </div>
-            <div className="self-center md:self-end flex items-center">
+            <div className="flex items-center self-center -order-1 md:order-none md:self-end ">
               <Link href="#">
                 <p className="text-xs pt-1 pr-2 min-w-max">Terms of Use</p>
               </Link>
