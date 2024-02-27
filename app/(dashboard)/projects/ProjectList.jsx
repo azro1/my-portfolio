@@ -24,7 +24,7 @@ const ProjectList = async () => {
              <Link href={`/projects/${project.id}`}>
               <div className="flex flex-col items-center transform transition-transform hover:scale-105">
                  <Card values={"min-w-0 max-w-sm"}>
-                   <img className="w-full" src={project.imageUrl} alt="a project" />
+                   <img className="w-full" src={project.image_url} alt="a project" />
                  </Card>
                 <h4 className="font-rubik text-secondary text-xl mt-4">{project.title}</h4>
               </div>
