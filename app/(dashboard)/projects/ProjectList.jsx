@@ -3,9 +3,6 @@ import Link from "next/link"
 import Card from '../../components/Card'
 
 async function getProjects() {
-  await new Promise((resolve) => {
-    setTimeout(resolve, 3000)
-  })
   const res = await fetch('http://localhost:8080/projects', {
     next: {
       revalidate: 0
