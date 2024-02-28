@@ -13,6 +13,7 @@ import SocialButtons from "../../components/SocialButtons";
 
 
 const Signup = () => {
+  const [displayName, setDisplayName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isChecked, setIsChecked] = useState(false)
@@ -25,12 +26,15 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-
+    
     const supabase = createClientComponentClient()
     const { error } = await supabase.auth.signUp({
       email,
       password,
       options: {
+        data: {
+          first_name: displayName
+        },
         emailRedirectTo: `${location.origin}/api/auth/callback`
       }
     })
@@ -46,15 +50,26 @@ const Signup = () => {
 
     return (
       <main className='my-36'>
-        <div className='grid gap-y-20 md:gap-x-16 md:grid-cols-2 max-w-screen-lg mx-auto relative'>
+        <div className='max-w-screen-lg mx-auto relative grid gap-y-20 md:gap-x-16 md:grid-cols-2'>
           <form onSubmit={handleSubmit} className="w-full max-w-sm justify-self-center md:justify-self-center">
             <h2 className='pb-2 text-1.75xl font-rubik font-eb text-hint'>Sign up</h2>
+            <label>
+              <span className='max-w-min mt-4 mb-2 text-sm font-os text-secondary block'>
+                Name
+              </span>
+              <input
+                className="w-full p-2.5 rounded-md"
+                type='text'
+                value={displayName}
+                onChange={(e) => setDisplayName(e.target.value)}
+              />
+            </label>
             <label>
               <span className='max-w-min mt-4 mb-2 text-sm font-os text-secondary block'>
                 Email
               </span>
               <input
-                className="w-full p-2.5"
+                className="w-full p-2.5 rounded-md"
                 type='text'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -65,7 +80,7 @@ const Signup = () => {
                 Password
               </span>
               <input
-                className="w-full p-2.5"
+                className="w-full p-2.5 rounded-md"
                 type='password'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -81,7 +96,7 @@ const Signup = () => {
             <button className='btn block mt-4 bg-hint'>Sign up</button>
           </form>
 
-          <div className='flex flex-col items-center md:absolute inset-0 top-96 md:-left-26  lg:-left-32'>
+          <div className='flex flex-col items-center md:absolute inset-0 top-96 md:mt-20 md:-left-26 lg:-left-32'>
             <p className='mb-8'>or sign up using</p>
             <SocialButtons text={"Continue"} />
             <p className='mt-8'>

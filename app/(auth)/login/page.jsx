@@ -52,7 +52,7 @@ const Login = () => {
               Email
             </span>
             <input
-              className='w-full p-2.5'
+              className='w-full p-2.5 rounded-md'
               type='text'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -63,7 +63,7 @@ const Login = () => {
               Password
             </span>
             <input
-              className='w-full p-2.5'
+              className='w-full p-2.5 rounded-md'
               type='password'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
