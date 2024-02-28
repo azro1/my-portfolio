@@ -2,7 +2,7 @@
   "projects": [
     {
       "title": "Medistore",
-      "imageUrl": "https://via.placeholder.com/580x524",
+      "image_url": "https://via.placeholder.com/580x524",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
       "start": "2024-01-12",
       "end": "2024-02-02",
@@ -11,12 +11,12 @@
         "Node",
         "React"
       ],
-      "projectUrl": "https://azro1.github.io/medi-store/#/login",
+      "project_url": "https://azro1.github.io/medi-store/#/login",
       "id": "1"
     },
     {
       "title": "Ping",
-      "imageUrl": "https://via.placeholder.com/580x524",
+      "image_url": "https://via.placeholder.com/580x524",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
       "start": "2024-03-11",
       "end": "2024-04-14",
@@ -26,12 +26,12 @@
         "Express",
         "Socket.io"
       ],
-      "projectUrl": "https://ping-shmr.onrender.com/",
+      "project_url": "https://ping-shmr.onrender.com/",
       "id": "2"
     },
     {
       "title": "Fresh Threads",
-      "imageUrl": "https://via.placeholder.com/580x524",
+      "image_url": "https://via.placeholder.com/580x524",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
       "start": "2024-02-18",
       "end": "2024-03-09",
@@ -40,7 +40,7 @@
         "Node",
         "Express"
       ],
-      "projectUrl": "https://fresh-threads.onrender.com/",
+      "project_url": "https://fresh-threads.onrender.com/",
       "id": "3"
     }
   ]

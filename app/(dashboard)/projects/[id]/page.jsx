@@ -18,21 +18,17 @@ export async function generateMetadata({ params }) {
 }
 
 // provide all of the ids to Next so that it knows how many routes and pages it needs to make so that they can be rendered way in advance at build time into html pages and distributed to a CDN so that they can be served up quickly when requested
-export async function generateStaticParams () {
-  const res = await fetch('http://localhost:8080/projects');
-  const projects = await res.json();
+// export async function generateStaticParams () {
+//   const res = await fetch('http://localhost:8080/projects');
+//   const projects = await res.json();
 
-  return projects.map((project) => ({
-    id: project.id
-  }))
-}
+//   return projects.map((project) => ({
+//     id: project.id
+//   }))
+// }
 
 async function getProject(id) {
-  const res = await fetch(`http://localhost:8080/projects/${id}`, {
-    next: {
-      revalidate: 86400 // re-validates page after 1 day so Next can use static rendering for this page
-    }
-  })
+  const res = await fetch(`http://localhost:8080/projects/${id}`)
 
   if (!res.ok) {
     notFound()

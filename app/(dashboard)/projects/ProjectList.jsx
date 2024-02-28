@@ -1,14 +1,19 @@
 import Link from "next/link"
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
+import { cookies } from "next/headers"
 
 import Card from '../../components/Card'
 
 async function getProjects() {
-  const res = await fetch('http://localhost:8080/projects', {
-    next: {
-      revalidate: 0
-    }
-  });
-  return res.json();
+  const supabase = createServerComponentClient({ cookies })
+  const { data, error } = await supabase.from('projects')
+  .select()
+
+  if (error) {
+    console.log(error.message)
+  }
+
+  return data
 }
 
 const ProjectList = async () => {
