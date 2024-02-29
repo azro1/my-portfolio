@@ -1,5 +1,7 @@
 import { notFound } from 'next/navigation'
 export const dynamicParams = true;
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
 
 // components
 import Icons from '@/app/components/Icons';
@@ -7,33 +9,29 @@ import Card from "@/app/components/Card";
 
 // dynamic metadata
 export async function generateMetadata({ params }) {
-  const id = params.id;
-  const res = await fetch(`http://localhost:8080/projects/${id}`)
-  const project = await res.json()
+  const supabase = createServerComponentClient({ cookies })
+  const { data: project } = await supabase.from('projects')
+  .select()
+  .eq('id', params.id)
+  .single()
 
   return {
-    title: `My Portfolio | ${project.title}`,
+    title: `My Portfolio | ${project?.title} || Project Not Found`,
     description: 'A brief summary of the project, outlining its purpose, goals, and key features'
   }
 }
 
-// provide all of the ids to Next so that it knows how many routes and pages it needs to make so that they can be rendered way in advance at build time into html pages and distributed to a CDN so that they can be served up quickly when requested
-// export async function generateStaticParams () {
-//   const res = await fetch('http://localhost:8080/projects');
-//   const projects = await res.json();
-
-//   return projects.map((project) => ({
-//     id: project.id
-//   }))
-// }
-
 async function getProject(id) {
-  const res = await fetch(`http://localhost:8080/projects/${id}`)
+  const supabase = createServerComponentClient({ cookies })
+  const { data } = await supabase.from('projects')
+  .select()
+  .eq('id', id)
+  .single()
 
-  if (!res.ok) {
+  if (!data) {
     notFound()
   }
-  return res.json()
+  return data
 }
 
 const Project = async ({ params }) => {
