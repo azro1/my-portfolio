@@ -144,5 +144,6 @@ footer span {
 
 
 .error {
-  @apply pt-3 text-red-600;
+  color: #9966A2;
+  @apply pt-3 ;
 }

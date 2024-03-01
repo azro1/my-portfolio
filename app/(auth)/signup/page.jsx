@@ -49,12 +49,12 @@ const Signup = () => {
   }
 
     return (
-      <main className='my-36'>
+      <main className='my-4.5'>
         <div className='max-w-screen-lg mx-auto relative grid gap-y-20 md:gap-x-16 md:grid-cols-2'>
           <form onSubmit={handleSubmit} className="w-full max-w-sm justify-self-center md:justify-self-center">
-            <h2 className='pb-2 text-1.75xl font-rubik font-eb text-hint'>Sign up</h2>
+            <h2 className='mb-6 text-1.75xl font-rubik font-eb text-hint'>Sign up</h2>
             <label>
-              <span className='max-w-min mt-4 mb-2 text-sm font-os text-secondary block'>
+              <span className='max-w-min mb-2 text-sm font-os text-secondary block'>
                 Name
               </span>
               <input
