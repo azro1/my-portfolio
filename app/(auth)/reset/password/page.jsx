@@ -8,15 +8,16 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 const UpdatePassword = () => {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [isLoading, setIsLoading] = useState(true)
+  const [loading, setLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
-  const router = useRouter()
   const [user, setUser] = useState(null)
+  const router = useRouter()
 
   useEffect(() => {
+    setError('')
     async function getUser() {
       const supabase = createClientComponentClient()
-      
       try {
         const { data: { user }, error } = await supabase.auth.getUser()
         if (error) {
@@ -25,9 +26,9 @@ const UpdatePassword = () => {
         setUser({...user})
       } catch (err) {
          setError(err.message)
-         setIsLoading(false)
+         setLoading(false)
       } finally {
-        setIsLoading(false)
+        setLoading(false)
       }
     }
     getUser()
@@ -35,7 +36,9 @@ const UpdatePassword = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setIsLoading(false)
+    setLoading(false)
+    setIsLoading(true)
+    setError('')
 
     if (password !== confirmPassword) {
       setError('Passwords do not match')
@@ -47,6 +50,7 @@ const UpdatePassword = () => {
   
       if (error) {
         setError(error.message)
+        setIsLoading(false)
       }
   
       if (!error) {
@@ -55,10 +59,10 @@ const UpdatePassword = () => {
     }
   }
 
-  if (isLoading) {
+  if (loading) {
     return (
       <main className='mt-4.5 text-center'>
-        <h2 className='pb-4 subheading font-b text-hint'>Loading...</h2>
+        <h2 className='pb-4 subheading font-b text-hint'>Please wait...</h2>
       </main>
     )
   }
@@ -74,8 +78,9 @@ const UpdatePassword = () => {
                   Password
                 </span>
                 <input
-                  className='w-full p-2.5 rounded-md'
+                  className='w-full p-2.5 rounded-md font-verdana'
                   type='password'
+                  placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
@@ -85,15 +90,16 @@ const UpdatePassword = () => {
                     Confirm Password
                 </span>
                 <input
-                  className='w-full p-2.5 rounded-md'
+                  className='w-full p-2.5 rounded-md font-verdana'
                   type='password'
+                  placeholder="Confirm Password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
               </label>
-      
               {error && <div className="error">* {error}</div>}
-              <button className='btn block mt-4 bg-hint'>Reset</button>
+              {isLoading && <button className='btn block mt-4 bg-hint'>Processing...</button>}
+              {!isLoading && <button className='btn block mt-4 bg-hint'>Reset</button>}
           </form>
         </main>
       )} 

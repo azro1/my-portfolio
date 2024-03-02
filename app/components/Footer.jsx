@@ -1,8 +1,6 @@
 import Link from "next/link"
 import { HiMiniEnvelopeOpen } from "react-icons/hi2";
-import { FaPhoneAlt, FaLinkedin } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
-import { FaLocationDot } from "react-icons/fa6";
+import { FaLinkedin } from "react-icons/fa";
 import { IoLogoYoutube, IoLogoWhatsapp } from "react-icons/io";
 
 const Footer = () => {
@@ -15,7 +13,12 @@ const Footer = () => {
             <form className="block sm:flex ">
               <div className="relative sm:pr-2 mb-3 sm:m-0">
                 <HiMiniEnvelopeOpen className="absolute top-2 left-4" size={28} />
-                 <input className="p-2 w-80 pl-14 pr-5 rounded-lg text-left border-2 border-primary" type="text" placeholder="Enter you email address" />
+                 <input 
+                   className="p-2 w-80 pl-14 pr-5 rounded-lg text-left border-2 border-primary font-verdana"
+                   type="text"
+                   placeholder="Enter you email address"
+                   spellCheck="false" 
+                 />
               </div>
               <Link className="group" href="#">
                 <button className="py-3 px-4 min-w-max text-sm rounded-lg font-os font-eb text-secondary bg-primary ">SIGN ME UP</button>

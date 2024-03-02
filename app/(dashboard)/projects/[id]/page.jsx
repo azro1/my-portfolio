@@ -38,8 +38,8 @@ const Project = async ({ params }) => {
   const project = await getProject(params.id);
 
   return (
-    <main className='my-24'>
-      <h1 className='title text-hint font-b'>{project.title}</h1>
+    <main className='my-4.5'>
+      <h2 className='subheading text-hint'>{project.title}</h2>
       <div className='grid gap-y-6 md:gap-y-6 md:grid-auto-rows md:grid-cols-2'>
         <div className='mt-6'>
           <Card values={'w-full'}>
@@ -47,54 +47,54 @@ const Project = async ({ params }) => {
           </Card>
         </div>
         <div className='md:row-start-2 md:col-start-1 pb-3 md:col-span-2'>
-          <h2 className='subheading text-hint'>Project Description</h2>
-          <p className='pt-3 leading-6 text-sm'>{project.description}</p>
+          <h3 className='text-1.375 font-b text-hint'>Project Description</h3>
+          <p className='pt-3 leading-6 font-cn text-sm'>{project.description}</p>
         </div>
         <div className='row-start-3 col-start-1 md:col-start-2 md:row-start-1 md:mt-20 md:pl-8'>
           <div className='pb-6 md:pb-8'>
-            <p className='font-os font-b text-base text-hint'>
+            <div className='font-cn font-b text-base text-hint'>
               Start Date:{' '}
-              <span className='text-sm text-secondary font-os font-r'>
+              <span className='text-sm text-secondary font-cn font-r'>
                 {project.start}
               </span>
-            </p>
-            <p className='font-os font-b text-base text-hint'>
+            </div>
+            <div className='font-cn font-b text-base text-hint'>
               End Date:{' '}
-              <span className='text-sm text-secondary font-os font-r'>
+              <span className='text-sm text-secondary font-cn font-r'>
                 {project.end}
               </span>
-            </p>
+            </div>
           </div>
           <div className='pb-6 md:pb-8'>
-            <p className='font-os font-b text-base text-hint'>
+            <div className='font-cn font-b text-base text-hint'>
               Tech Stack:{' '}
-              <span className='text-sm text-secondary font-os font-r'>
+              <span className='text-sm text-secondary font-cn font-r'>
                 {project.techstack.map((stack) => (
                    <span className='techstack' key={stack}>
                     {stack}
                    </span>
                 ))}
               </span>
-            </p>
-            <p className='font-os font-b text-base text-hint leading-6'>
+            </div>
+            <div className='font-cn font-b text-base text-hint'>
               Key Contributors:{' '}
-              <span className='text-sm text-secondary font-os font-r'>
+              <span className='text-sm text-secondary font-cn font-r'>
                 {project.contributions}
               </span>
-            </p>
+            </div>
           </div>
           <div>
-            <p className='font-rubik font-b text-base text-hint'>
+            <div className='font-cn font-b text-base text-hint'>
               Project Url:{' '}
               <a href={project.project_url} target='_blank'>
-                <span className='text-sm text-secondary font-os font-r'>
+                <span className='text-sm text-secondary font-cn font-r'>
                   {project.project_url}
                 </span>
               </a>
-            </p>
+            </div>
           </div>
         </div>
-        <Icons values={"flex gap-x-5 md:h-4.75 md:col-start-2 md:place-content-end md:items-end"} />
+        <Icons values={"flex gap-x-5 h-4.75 items-center md:col-start-2 md:place-content-end md:items-end"} />
       </div>
     </main>
   );

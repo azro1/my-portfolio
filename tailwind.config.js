@@ -13,18 +13,21 @@ module.exports = {
     },
     extend: {
       colors: {
-        hint: '#576366',
+        hint: '#00796B',
         shade: '#191B20',
-        secondary: '#E0E0E0',
+        secondary: '#D3D3D3',
         primary: '#1C1E24',
       },
       fontFamily: {
         'rubik': ['Rubik', 'sans-serif'],
         'barlow': ['Barlow', 'sans-serif'],
-        'os': ['Open Sans', 'sans-serif']
+        'os': ['Open Sans', 'sans-serif'],
+        'cn': ['Courier New', 'monospace'],
+        'verdana': ['Verdana', 'sans-serif']
       },
       fontSize: {
-        '1.75xl': '1.75rem', // 28
+        '1.75xl': '1.75rem', // 28px
+        '1.375': '1.375rem' //22px
       },
       fontWeight: {
         'r': '400',
@@ -32,7 +35,7 @@ module.exports = {
         'eb': '800'
       },
       spacing: {
-        '0.2': '0.2rem', // 4.8px
+        '0.4': '0.4rem', // 6.4px
         '0.5': '0.5rem', // 8px
         '1.375': '1.375rem', // 22px
         '1.625': '1.625rem', // 26px

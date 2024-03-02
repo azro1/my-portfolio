@@ -31,7 +31,7 @@ const ProjectList = async () => {
                  <Card values={"min-w-0 max-w-sm"}>
                    <img className="w-full" src={project.image_url} alt="a project" />
                  </Card>
-                <h4 className="font-rubik text-secondary text-xl mt-4">{project.title}</h4>
+                <h4 className="font-os text-secondary text-lg mt-4">{project.title}</h4>
               </div>
              </Link>
           </div>

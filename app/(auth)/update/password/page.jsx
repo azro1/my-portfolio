@@ -7,11 +7,13 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 const ResetPassword = () => {
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
-
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setIsLoading(true)
+    setError('')
 
     const supabase = createClientComponentClient()
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
@@ -20,6 +22,7 @@ const ResetPassword = () => {
 
     if (error) {
       setError(error.message)
+      setIsLoading(false)
     }
 
     if (!error) {
@@ -36,15 +39,18 @@ const ResetPassword = () => {
                Please enter your email address
             </span>
             <input
-              className='w-full p-2.5 rounded-md mt-3'
+              className='w-full p-2.5 rounded-md mt-3 font-verdana'
+              spellCheck='false'
               type='text'
+              placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </label>
-          {error && <div className="error">{error}</div>}
+          {error && <div className="error">* {error}</div>}
 
-          <button className='btn block mt-4 bg-hint'>Submit</button>
+          {isLoading && <button className='btn block mt-4 bg-hint'>Processing...</button>}
+          {!isLoading && <button className='btn block mt-4 bg-hint'>Submit</button>}
        </form>
     </main>
   )

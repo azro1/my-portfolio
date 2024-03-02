@@ -15,6 +15,7 @@ import SocialButtons from "../../components/SocialButtons";
 const Signup = () => {
   const [displayName, setDisplayName] = useState('')
   const [email, setEmail] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const [password, setPassword] = useState('')
   const [isChecked, setIsChecked] = useState(false)
   const [error, setError] = useState('')
@@ -26,6 +27,8 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setError('')
+    setIsLoading(true)
     
     const supabase = createClientComponentClient()
     const { error } = await supabase.auth.signUp({
@@ -41,6 +44,7 @@ const Signup = () => {
 
     if (error) {
       setError(error.message)
+      setIsLoading(false)
     }
 
     if (!error) {
@@ -58,8 +62,10 @@ const Signup = () => {
                 Name
               </span>
               <input
-                className="w-full p-2.5 rounded-md"
+                className="w-full p-2.5 rounded-md font-verdana"
                 type='text'
+                placeholder="Name"
+                spellCheck='false'
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
               />
@@ -69,8 +75,10 @@ const Signup = () => {
                 Email
               </span>
               <input
-                className="w-full p-2.5 rounded-md"
+                className="w-full p-2.5 rounded-md font-verdana"
                 type='text'
+                placeholder="Email"
+                spellCheck='false'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -80,8 +88,9 @@ const Signup = () => {
                 Password
               </span>
               <input
-                className="w-full p-2.5 rounded-md"
+                className="w-full p-2.5 rounded-md font-verdana"
                 type='password'
+                placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -89,22 +98,23 @@ const Signup = () => {
             {error && <div className="error">* {error}</div>}
 
             <div className="mt-3 flex items-center">
-              <input className="self-start mt-0.2 max-w-min" type="checkbox" value={isChecked} onChange={handleCheckbox}/>
-              <p className="ml-2">I accept the{' '}<Link className="text-hint" href='#'>Privacy Policy</Link>{' '}and the{' '}<Link className='text-hint' href='#'>Terms of Service</Link>
-              </p>
+              <input className="self-start mt-0.4 max-w-min" type="checkbox" value={isChecked} onChange={handleCheckbox}/>
+              <span className="block text-secondary ml-2">I accept the{' '}<Link className="text-hint" href='#'>Privacy Policy</Link>{' '}and the{' '}<Link className='text-hint' href='#'>Terms of Service</Link>
+              </span>
             </div>
-            <button className='btn block mt-4 bg-hint'>Sign up</button>
+            {isLoading && <button className='btn block mt-5 bg-hint'>Processing...</button>}
+            {!isLoading && <button className='btn block mt-5 bg-hint'>Sign up</button>}
           </form>
 
-          <div className='flex flex-col items-center md:absolute inset-0 top-96 md:mt-20 md:-left-26 lg:-left-32'>
-            <p className='mb-8'>or sign up using</p>
+          <div className='flex flex-col items-center md:absolute inset-0 top-96 md:mt-28 md:-left-26 lg:mt-24 lg:-left-32'>
+            <span className='block text-secondary text-base mb-8'>or sign up using</span>
             <SocialButtons text={"Continue"} />
-            <p className='mt-8'>
+            <span className='block text-secondary text-base mt-8'>
               Have an account?{' '}
-              <Link className='text-hint' href='/login'>
+              <Link className='text-base text-hint' href='/login'>
                 Login
               </Link>
-            </p>
+            </span>
           </div>
 
           <div className="grid row-start-1 gap-y-6 max-w-sm justify-self-center md:col-start-2 md:w-full md:mt-44">
@@ -112,22 +122,22 @@ const Signup = () => {
               Unlock <span className='text-hint'>CodeDynamic's</span> Creative
               Vault!
             </h2>
-            <p className="text-justify leading-6">
+            <span className="block text-secondary text-sm font-os text-justify leading-6">
               Uncover the secrets behind my web development and graphic design
               projects by signing up for exclusive content:
-            </p>
-            <p className="text-justify leading-6">
+            </span>
+            <span className="block text-secondary text-sm font-os text-justify leading-6">
               🚀 Creative Process Unveiled: Get an inside look at the making of
               each project, from concept to completion.
-            </p>
-            <p className="text-justify leading-6">
+            </span>
+            <span className="block text-secondary text-sm font-os text-justify leading-6">
               📬 Be the First to Know: Receive notifications on new projects and
               stay in the loop with the latest news and updates.
-            </p>
-            <p className="text-justify leading-6">
+            </span>
+            <span className="block text-secondary text-sm font-os text-justify leading-6">
               Ready to dive in? Join now to elevate your understanding of design
               and development with CodeDynamics!
-            </p>
+            </span>
           </div>
           <Icons values={"flex gap-x-5 md:h-4.75 place-content-center md:col-start-2 md:place-content-end md:items-end"} />
         </div>

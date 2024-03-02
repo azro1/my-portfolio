@@ -14,6 +14,7 @@ import Icons from "../../components/Icons";
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const [isChecked, setIsChecked] = useState(false)
   const [error, setError] = useState('')
   const router = useRouter()
@@ -25,6 +26,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
+    setIsLoading(true)
 
     const supabase = createClientComponentClient()
     const { error } = await supabase.auth.signInWithPassword({
@@ -34,6 +36,7 @@ const Login = () => {
 
     if (error) {
       setError(error.message)
+      setIsLoading(false)
     }
 
     if (!error) {
@@ -52,8 +55,10 @@ const Login = () => {
               Email
             </span>
             <input
-              className='w-full p-2.5 rounded-md'
+              className='w-full p-2.5 rounded-md font-verdana'
               type='text'
+              placeholder="Email"
+              spellCheck='false'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -63,14 +68,15 @@ const Login = () => {
               Password
             </span>
             <input
-              className='w-full p-2.5 rounded-md'
+              className='w-full p-2.5 rounded-md font-verdana'
               type='password'
+              placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </label>
 
-          {error && <div className="error">{error}</div>}
+          {error && <div className="error">* {error}</div>}
 
           <div className="mt-3 flex items-center justify-between">
             <div className="grid grid-col-2 place-items-center">
@@ -79,15 +85,16 @@ const Login = () => {
             </div>
             <Link className="text-hint" href="/update/password">Forgot Password?</Link>
           </div>
-          <button className='btn block mt-4 bg-hint'>Login</button>
+          {isLoading && <button className='btn block mt-5 bg-hint'>Processing...</button>}
+          {!isLoading && <button className='btn block mt-5 bg-hint'>Login</button>}
         </form>
   
-        <div className='flex flex-col text-center md:col-start-1 md:col-span-2'>
-          <p className='mb-8'>or login using</p>
+        <div className='flex flex-col items-center md:col-start-1 md:col-span-2'>
+          <p className='text-sm mb-8'>or login using</p>
           <SocialButtons text={"Login"} />
-          <p className='mt-8'>
+          <p className='text-sm mt-8'>
             Don't have an account?{' '}
-            <Link className='text-hint' href='/signup'>
+            <Link className='text-sm text-hint' href='/signup'>
               Sign Up
             </Link>
           </p>
