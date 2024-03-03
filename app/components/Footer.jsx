@@ -14,7 +14,7 @@ const Footer = () => {
               <div className="relative sm:pr-2 mb-3 sm:m-0">
                 <HiMiniEnvelopeOpen className="absolute top-2 left-4" size={28} />
                  <input 
-                   className="p-2 w-80 pl-14 pr-5 rounded-lg text-left border-2 border-primary font-verdana"
+                   className="p-2 w-80 pl-14 pr-5 rounded-lg text-left border-2 border-primary"
                    type="text"
                    placeholder="Enter you email address"
                    spellCheck="false" 
@@ -84,7 +84,7 @@ const Footer = () => {
               <Link href="/">
                 <h2 className="logo font-eb text-hint pb-3">Port<span>folio</span></h2>
               </Link>
-              <p className="text-xs">&copy; 2024 Simon Sutherland. All rights reserved.</p>
+              <p className="text-sm">&copy; 2024 Simon Sutherland. All rights reserved.</p>
             </div>
             <div className="flex items-center self-center -order-1 md:order-none md:self-end ">
               <Link href="#">

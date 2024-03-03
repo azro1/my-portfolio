@@ -44,7 +44,7 @@ main {
 }
 
 .btn {
-  @apply py-2.5 px-4 text-sm rounded-lg font-os font-eb text-secondary;
+  @apply py-2.5 px-4 text-sm rounded-lg font-os font-eb text-white;
 }
 
 form input {
@@ -113,7 +113,7 @@ footer h4 {
 }
 
 footer p {
-  @apply font-os font-b text-primary leading-6;
+  @apply font-os font-r text-primary leading-6;
 }
 
 .pagelinks h4 {

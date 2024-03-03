@@ -22,8 +22,7 @@ module.exports = {
         'rubik': ['Rubik', 'sans-serif'],
         'barlow': ['Barlow', 'sans-serif'],
         'os': ['Open Sans', 'sans-serif'],
-        'cn': ['Courier New', 'monospace'],
-        'verdana': ['Verdana', 'sans-serif']
+        'cn': ['Courier New', 'monospace']
       },
       fontSize: {
         '1.75xl': '1.75rem', // 28px

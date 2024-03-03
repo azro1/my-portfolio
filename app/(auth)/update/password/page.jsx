@@ -39,7 +39,7 @@ const ResetPassword = () => {
                Please enter your email address
             </span>
             <input
-              className='w-full p-2.5 rounded-md mt-3 font-verdana'
+              className='w-full p-2.5 rounded-md mt-3'
               spellCheck='false'
               type='text'
               placeholder="Email"

@@ -62,7 +62,7 @@ const Signup = () => {
                 Name
               </span>
               <input
-                className="w-full p-2.5 rounded-md font-verdana"
+                className="w-full p-2.5 rounded-md"
                 type='text'
                 placeholder="Name"
                 spellCheck='false'
@@ -75,7 +75,7 @@ const Signup = () => {
                 Email
               </span>
               <input
-                className="w-full p-2.5 rounded-md font-verdana"
+                className="w-full p-2.5 rounded-md"
                 type='text'
                 placeholder="Email"
                 spellCheck='false'
@@ -88,7 +88,7 @@ const Signup = () => {
                 Password
               </span>
               <input
-                className="w-full p-2.5 rounded-md font-verdana"
+                className="w-full p-2.5 rounded-md"
                 type='password'
                 placeholder="Password"
                 value={password}

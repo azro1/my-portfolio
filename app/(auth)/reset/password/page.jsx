@@ -78,7 +78,7 @@ const UpdatePassword = () => {
                   Password
                 </span>
                 <input
-                  className='w-full p-2.5 rounded-md font-verdana'
+                  className='w-full p-2.5 rounded-md'
                   type='password'
                   placeholder="Password"
                   value={password}
@@ -90,7 +90,7 @@ const UpdatePassword = () => {
                     Confirm Password
                 </span>
                 <input
-                  className='w-full p-2.5 rounded-md font-verdana'
+                  className='w-full p-2.5 rounded-md'
                   type='password'
                   placeholder="Confirm Password"
                   value={confirmPassword}
