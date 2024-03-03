@@ -13,7 +13,7 @@ module.exports = {
     },
     extend: {
       colors: {
-        hint: '#00796B',
+        hint: '#FF8C00',
         shade: '#191B20',
         secondary: '#D3D3D3',
         primary: '#1C1E24',
@@ -57,7 +57,7 @@ module.exports = {
         '4.75': '4.75rem' // 76px
       },
       boxShadow: {
-        '3xl': '0px 0px 12px 0 #9966A2'
+        '3xl': '0px 0px 12px 0 #2E3C4E'
       }
     },
   },

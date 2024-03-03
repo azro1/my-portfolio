@@ -36,24 +36,25 @@ const UpdatePassword = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setError('')
     setLoading(false)
     setIsLoading(true)
-    setError('')
 
     if (password !== confirmPassword) {
+      setIsLoading(false)
       setError('Passwords do not match')
     } else {
       const supabase = createClientComponentClient()
-      const { error } = await supabase.auth.updateUser({
+      const { data, error } = await supabase.auth.updateUser({
         password: password
       })
   
       if (error) {
-        setError(error.message)
         setIsLoading(false)
-      }
-  
-      if (!error) {
+        setError(error.message)
+      } 
+      
+      if (data) {
         router.push('/confirmation')
       }
     }

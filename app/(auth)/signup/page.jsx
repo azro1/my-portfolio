@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 
 // components
 import Icons from "../../components/Icons"
-import SocialButtons from "../../components/SocialButtons";
+import SocialButtons from "../SocialButtons";
 
 
 const Signup = () => {

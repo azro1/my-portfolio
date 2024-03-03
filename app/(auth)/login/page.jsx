@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 // components
-import SocialButtons from "../../components/SocialButtons";
+import SocialButtons from "../SocialButtons";
 import Icons from "../../components/Icons";
 
 
