@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Verify = () => {
+const VerifyEmail = () => {
   return (
     <main className='h-screen'>
       <div className="mt-4 5 text-center">
@@ -11,4 +11,4 @@ const Verify = () => {
   )
 }
 
-export default Verify
+export default VerifyEmail

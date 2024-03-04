@@ -29,7 +29,14 @@ const Signup = () => {
     e.preventDefault()
     setError('')
     setIsLoading(true)
-    
+
+    // Check if displayName is provided
+    if (!displayName) {
+      setError('Please provide a Name.');
+      setIsLoading(false);
+      return;
+    }
+
     const supabase = createClientComponentClient()
     const { error } = await supabase.auth.signUp({
       email,
@@ -48,8 +55,9 @@ const Signup = () => {
     }
 
     if (!error) {
-      router.push('/verify/email')
+      router.push('/verify')
     }
+    
   }
 
     return (
