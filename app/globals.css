@@ -28,7 +28,7 @@ h2 {
 
 
 a {
-  @apply text-sm font-r font-os no-underline text-secondary;
+  @apply text-sm font-r no-underline text-secondary;
 }
 
 p {
@@ -144,5 +144,5 @@ footer span {
 
 
 .error {
-  @apply text-red-600 pt-3;
+  @apply text-red-600 font-b pt-3;
 }

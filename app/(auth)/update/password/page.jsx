@@ -31,8 +31,8 @@ const ResetPassword = () => {
   }
 
   return (
-    <main className="mt-4.5">
-      <form className="w-full max-w-sm mx-auto md:col-span-2" onSubmit={handleSubmit}>
+    <main className="h-screen">
+      <form className="mt-4.5 w-full max-w-sm mx-auto md:col-span-2" onSubmit={handleSubmit}>
           <h2 className='mb-5 text-1.75xl font-rubik font-eb text-hint'>Confirm your email</h2>
           <label>
             <span className='text-sm font-os text-secondary'>

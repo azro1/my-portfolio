@@ -48,12 +48,12 @@ const Signup = () => {
     }
 
     if (!error) {
-      router.push('/verify')
+      router.push('/verify/email')
     }
   }
 
     return (
-      <main className='my-4.5'>
+      <main className='mt-4.5 mb-28'>
         <div className='max-w-screen-lg mx-auto relative grid gap-y-20 md:gap-x-16 md:grid-cols-2'>
           <form onSubmit={handleSubmit} className="w-full max-w-sm justify-self-center md:justify-self-center">
             <h2 className='mb-6 text-1.75xl font-rubik font-eb text-hint'>Sign up</h2>
@@ -98,8 +98,8 @@ const Signup = () => {
             {error && <div className="error">* {error}</div>}
 
             <div className="mt-3 flex items-center">
-              <input className="self-start mt-0.4 max-w-min" type="checkbox" value={isChecked} onChange={handleCheckbox}/>
-              <span className="block text-secondary ml-2">I accept the{' '}<Link className="text-hint" href='#'>Privacy Policy</Link>{' '}and the{' '}<Link className='text-hint' href='#'>Terms of Service</Link>
+              <input className="self-start mt-0.21 max-w-min" type="checkbox" value={isChecked} onChange={handleCheckbox}/>
+              <span className="text-sm block text-secondary ml-2">I accept the{' '}<Link className="text-hint" href='#'>Privacy Policy</Link>{' '}and the{' '}<Link className='text-hint' href='#'>Terms of Service</Link>
               </span>
             </div>
             {isLoading && <button className='btn block mt-5 bg-hint'>Processing...</button>}

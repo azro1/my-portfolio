@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link";
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
@@ -53,9 +54,7 @@ const UpdatePassword = () => {
         setIsLoading(false);
         setError(error.message);
         return;
-      }
-
-      if (data) {
+      } else {
         router.push('/confirmation');
       }
     }
@@ -72,8 +71,8 @@ const UpdatePassword = () => {
   return (
     <>
       {user && (
-        <main className="mt-4.5 mb-56">
-          <form className="w-full max-w-sm mx-auto md:col-span-2" onSubmit={handleSubmit}>
+        <main className="h-screen">
+          <form className="mt-4.5 w-full max-w-sm mx-auto md:col-span-2" onSubmit={handleSubmit}>
               <h2 className='pb-2 text-1.75xl font-rubik font-eb text-hint'>Reset Password</h2>
               <label>
                 <span className='mt-4 mb-2 text-sm font-os text-secondary block'>
@@ -110,6 +109,7 @@ const UpdatePassword = () => {
         <main className='mt-4.5 text-center'>
           <h2 className='pb-4 subheading font-b text-hint'>Unauthorised</h2>
           <p className='text-base leading-8'>Please Login before attempting to reset your password.</p>
+          <p className="text-base">Go back to the <Link className="text-base text-hint" href="/login">Login</Link> page</p>
         </main>
       )}
     </>

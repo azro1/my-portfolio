@@ -50,7 +50,7 @@ const Dropdown = ({ user, handleCloseMenu }) => {
           <div onClick={handleLogout}>
             <div className='flex items-center p-3 group hover:bg-white cursor-pointer' onClick={handleCloseMenu}>
               <FaSignOutAlt className="group-hover:text-primary transition duration-300 text-secondary" size={20} />
-              <span className='group-hover:text-primary font-os text-sm font-b ml-3.5'>Logout</span>
+              <span className='group-hover:text-primary text-sm font-b ml-3.5'>Logout</span>
             </div>
           </div>
           <Link href='/help'>
@@ -67,25 +67,25 @@ const Dropdown = ({ user, handleCloseMenu }) => {
           <Link href='/about'>
           <div className='flex items-center p-3 group hover:bg-white' onClick={handleCloseMenu}>
             <FaInfoCircle className="group-hover:text-primary transition duration-300" size={17} />
-            <span className='group-hover:text-primary font-b ml-3.5'>About</span>
+            <span className='group-hover:text-primary text-sm font-b ml-3.5'>About</span>
           </div>
           </Link>
           <Link href='/contact'>
             <div className='flex items-center p-3 group hover:bg-white' onClick={handleCloseMenu}>
               <FaUser className="group-hover:text-primary transition duration-300" size={18} />
-              <span className='group-hover:text-primary font-b ml-3.5'>Contact</span>
+              <span className='group-hover:text-primary text-sm font-b ml-3.5'>Contact</span>
             </div>
           </Link>
           <Link href='/login'>
             <div className='flex items-center p-3 group hover:bg-white' onClick={handleCloseMenu}>
               <FaSignInAlt className="group-hover:text-primary transition duration-300" size={20} />
-              <span className='group-hover:text-primary font-b ml-3.5'>Login</span>
+              <span className='group-hover:text-primary text-sm font-b ml-3.5'>Login</span>
             </div>
           </Link>
           <Link href='/signup'>
             <div className='flex items-center p-3 group hover:bg-white' onClick={handleCloseMenu}>
               <FaUserPlus className="group-hover:text-primary transition duration-300" size={22} />
-              <span className='group-hover:text-primary font-b ml-3.5'>Sign up</span>
+              <span className='group-hover:text-primary text-sm font-b ml-3.5'>Sign up</span>
             </div>
           </Link>
           <Link href='/help'>

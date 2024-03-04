@@ -81,7 +81,7 @@ const Login = () => {
           <div className="mt-3 flex items-center justify-between">
             <div className="grid grid-col-2 place-items-center">
               <input className="max-w-min" type="checkbox" value={isChecked} onChange={handleCheckbox} />
-              <p className="ml-2 col-start-2">Rememeber me</p>
+              <span className="ml-2 text-secondary text-sm col-start-2">Rememeber me</span>
             </div>
             <Link className="text-hint" href="/update/password">Forgot Password?</Link>
           </div>
