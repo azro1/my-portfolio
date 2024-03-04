@@ -15,50 +15,51 @@ const UpdatePassword = () => {
   const router = useRouter()
 
   useEffect(() => {
-    setError('')
+    setError('');
     async function getUser() {
-      const supabase = createClientComponentClient()
+      const supabase = createClientComponentClient();
       try {
-        const { data: { user }, error } = await supabase.auth.getUser()
+        const {data: { user }, error } = await supabase.auth.getUser();
         if (error) {
-          throw error
+          throw error;
         }
-        setUser({...user})
+        setUser({ ...user });
       } catch (err) {
-         setError(err.message)
-         setLoading(false)
+        setError(err.message);
+        setLoading(false);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
     }
-    getUser()
-  }, [])
+    getUser();
+  }, []);
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setError('')
-    setLoading(false)
-    setIsLoading(true)
+    e.preventDefault();
+    setLoading(false);
+    setIsLoading(true);
+    setError('');
 
     if (password !== confirmPassword) {
-      setIsLoading(false)
-      setError('Passwords do not match')
+      setIsLoading(false);
+      setError('Passwords do not match');
     } else {
-      const supabase = createClientComponentClient()
+      const supabase = createClientComponentClient();
       const { data, error } = await supabase.auth.updateUser({
-        password: password
-      })
-  
+        password: password,
+      });
+
       if (error) {
-        setIsLoading(false)
-        setError(error.message)
-      } 
-      
+        setIsLoading(false);
+        setError(error.message);
+        return;
+      }
+
       if (data) {
-        router.push('/confirmation')
+        router.push('/confirmation');
       }
     }
-  }
+  };
 
   if (loading) {
     return (

@@ -17,6 +17,8 @@ module.exports = {
         shade: '#191B20',
         secondary: '#D3D3D3',
         primary: '#1C1E24',
+        discord: '#6A5ACD',
+        github: '#323439'
       },
       fontFamily: {
         'rubik': ['Rubik', 'sans-serif'],
