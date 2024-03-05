@@ -1,7 +1,7 @@
 
 const Skills = () => {
   return (
-    <section className="mt-8.375 lg:mt-12.5">
+    <section>
       <div className="flex flex-col items-center text-center md:flex-row md:items-center md:gap-12">
         <div className="grid grid-cols-3 gap-5 md:gap-7 md:w-1/2">
           <img src="https://via.placeholder.com/228x194"/>

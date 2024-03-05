@@ -8,7 +8,7 @@ const Hero = () => {
     <section>
       <div className="block text-center lg:flex flex-row-reverse gap-16 items-center">
         <Card values={"flex-1 inline-block my-16"}>
-          <img className="w-full" src="https://via.placeholder.com/544x586" alt="placeholder" />
+          <img className="w-full" src="https://via.placeholder.com/544x586" alt="Simon Sutherland, Web Developer and Designer" />
         </Card>
         <div className="flex-1 text-center">
           <h4 className="text-xl text-hint font-barlow">WEB DEVELOPER</h4>

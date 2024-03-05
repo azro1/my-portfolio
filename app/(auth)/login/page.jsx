@@ -78,15 +78,12 @@ const Login = () => {
 
           {error && <div className="error">* {error}</div>}
 
-          <div className="mt-3 flex items-center justify-between">
-            <div className="grid grid-col-2 place-items-center">
-              <input className="max-w-min" type="checkbox" value={isChecked} onChange={handleCheckbox} />
-              <span className="ml-2 text-secondary text-sm col-start-2">Rememeber me</span>
-            </div>
-            <Link className="text-hint" href="/update/password">Forgot Password?</Link>
+          <div className="mt-5 flex items-center justify-between">
+            {isLoading && <button className='btn block bg-hint'>Processing...</button>}
+            {!isLoading && <button className='btn block bg-hint'>Login</button>}
+            <Link className="text-hint self-start -mt-2" href="/update/password">Forgot Password?</Link>
           </div>
-          {isLoading && <button className='btn block mt-5 bg-hint'>Processing...</button>}
-          {!isLoading && <button className='btn block mt-5 bg-hint'>Login</button>}
+
         </form>
   
         <div className='flex flex-col items-center md:col-start-1 md:col-span-2'>

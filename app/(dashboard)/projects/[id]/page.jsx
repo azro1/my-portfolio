@@ -43,7 +43,7 @@ const Project = async ({ params }) => {
       <div className='grid gap-y-6 md:gap-y-6 md:grid-auto-rows md:grid-cols-2'>
         <div className='mt-6'>
           <Card values={'w-full'}>
-            <img className='w-full' src={project.image_url} alt='a project' />
+            <img className='w-full' src={project.image_url} alt={project.alt_desc} />
           </Card>
         </div>
         <div className='md:row-start-2 md:col-start-1 pb-3 md:col-span-2'>

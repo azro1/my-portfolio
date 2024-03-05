@@ -1,6 +1,6 @@
 const Connect = () => {
   return (
-    <section className="mt-8.375 mb-16 md:mb-36 lg:mt-12.5">
+    <section>
       <div className="flex flex-col items-center text-center md:flex md:flex-row md:items-center md:gap-12">
         <div className="grid grid-cols-3 gap-5 md:gap-7 md:w-1/2">
           <img className="row-start-2 col-start-2" src="https://via.placeholder.com/228x194"/>

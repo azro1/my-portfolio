@@ -20,7 +20,7 @@ const ProjectList = async () => {
   const projects = await getProjects();
 
   return (
-    <section className="mt-8.375 lg:mt-12.5">
+    <section>
       <h2 className="subheading text-hint text-center">My Projects</h2>
 
       <div className="md:grid md:grid-cols-2 md:gap-x-12 lg:grid-cols-3 lg:gap-x-14">
@@ -29,7 +29,7 @@ const ProjectList = async () => {
              <Link href={`/projects/${project.id}`}>
               <div className="flex flex-col items-center transform transition-transform hover:scale-105">
                  <Card values={"min-w-0 max-w-sm"}>
-                   <img className="w-full" src={project.image_url} alt="a project" />
+                   <img src={project.image_url} alt={project.alt_desc} />
                  </Card>
                 <h4 className="font-os text-secondary text-lg mt-4">{project.title}</h4>
               </div>
