@@ -21,6 +21,12 @@ const Signup = () => {
   const [error, setError] = useState('')
   const router = useRouter()
 
+  // check if a given string is a valid email address
+  const isValidEmail = (value) => {
+    const emailRegex = new RegExp('^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$', 'u');
+    return emailRegex.test(value);
+  };
+  
   const handleCheckbox = (e) => {
     setIsChecked(e.target.checked)
   }
@@ -30,34 +36,57 @@ const Signup = () => {
     setError('')
     setIsLoading(true)
 
-    // Check if displayName is provided
-    if (!displayName) {
-      setError('Please provide a Name.');
-      setIsLoading(false);
-      return;
-    }
+    const signUserUp = () => {
+      const supabase = createClientComponentClient()
+      const { error } = supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            first_name: displayName
+          },
+          emailRedirectTo: `${location.origin}/api/auth/callback`
+        }
+      })
 
-    const supabase = createClientComponentClient()
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          first_name: displayName
-        },
-        emailRedirectTo: `${location.origin}/api/auth/callback`
+      if (error) {
+        setError(error.message)
+        setIsLoading(false);
       }
-    })
 
-    if (error) {
-      setError(error.message)
-      setIsLoading(false)
+      if (!error) {
+        router.push('/verify')
+      }
     }
 
-    if (!error) {
-      router.push('/verify')
+    // form validation
+    if (!displayName) {
+      setError('Please provide a name.');
+      setIsLoading(false);
+
+    } else if (!email) {
+        setError('To signup, please provide your email.');
+        setIsLoading(false);
+
+    } else if (!isValidEmail(email)) {
+        setError('Unable to validate email address: invalid format.');
+        setIsLoading(false);
+
+    } else if (!password) {
+        setError('Signup requires a valid password.');
+        setIsLoading(false);
+
+    } else if (password.length < 6) {
+        setError('Password should be at least 6 characters.');
+        setIsLoading(false);
+
+    } else if (!isChecked) {
+        setError('Please confirm you have agreed to the Privacy Policy and Terms of Service.');
+        setIsLoading(false);
+        
+    } else {
+        signUserUp()
     }
-    
   }
 
     return (
