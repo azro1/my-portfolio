@@ -1,14 +1,13 @@
 import Link from "next/link"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
-
 import Card from '../../components/Card'
 
 async function getProjects() {
   const supabase = createServerComponentClient({ cookies })
   const { data, error } = await supabase.from('projects')
   .select()
-
+  
   if (error) {
     console.log(error.message)
   }
@@ -20,26 +19,33 @@ const ProjectList = async () => {
   const projects = await getProjects();
 
   return (
-    <section>
-      <h2 className="subheading text-hint text-center">My Projects</h2>
+    <div>
+      <h2 className="subheading text-hint text-center mb-5">My Projects</h2>
+      <section className="mx-auto w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 md:grid-flow-col md:auto-cols-fr">
 
-      <div className="md:grid md:grid-cols-2 md:gap-x-12 lg:grid-cols-3 lg:gap-x-14">
-        {projects.map((project) => (
-          <div className="flex-1 mt-6" key={project.id}>
-             <Link href={`/projects/${project.id}`}>
-              <div className="flex flex-col items-center transform transition-transform hover:scale-105">
-                 <Card values={"min-w-0 max-w-sm"}>
-                   <img src={project.image_url} alt={project.alt_desc} />
-                 </Card>
-                <h4 className="font-os text-secondary text-lg mt-4">{project.title}</h4>
+          {projects && projects.map((project) => (
+            <div className="mt-4 md:mt-0" key={project.id}>
+              <div className="flex flex-col items-center mx-auto max-w-max mb-3 transform transition-transform hover:scale-105">
+                <Link href={`/projects/${project.id}`}>
+                  <Card values={'p-3 rounded-md'}>
+                    <img
+                      className="bg-white p-1 w-full h-40 object-cover object-left-top"
+                      src={project.image_url}
+                      alt={'image'}
+                    />
+                  </Card>
+                </Link>
               </div>
-             </Link>
-          </div>
-        ))}
-      </div>
+                <h4 className="font-os font-r text-secondary text-center text-md">{project.title}</h4>
+            </div>
+          ))}
 
-    </section>
+        </div>
+      </section>
+    </div>
   )
 }
 
 export default ProjectList
+

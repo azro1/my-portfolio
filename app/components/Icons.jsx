@@ -1,14 +1,23 @@
 import { FaLinkedin, FaGithub, FaInstagram, FaWhatsapp } from 'react-icons/fa';
 
-const Icons = ({ values }) => {
+const Icons = ({ values, color}) => {
   return (
     <div className={values}>
-      <FaLinkedin className='text-secondary' size={26} />
-      <FaGithub className='text-secondary' size={26} />
-      <FaInstagram className='text-secondary' size={26} />
-      <FaWhatsapp className='text-secondary' size={26} />
-    </div>
-  )
-}
+      <a href='#'>
+        <FaLinkedin color={color} size={26} />
+      </a>
+      <a href='#'>
+        <FaWhatsapp color={color} size={26} />
+      </a>
+      <a href='#'>
+        <FaGithub color={color} size={26} />
+      </a>
+      <a href='#'>
+        <FaInstagram color={color} size={26} />
+      </a>
 
-export default Icons
+    </div>
+  );
+};
+
+export default Icons;

@@ -15,10 +15,11 @@ module.exports = {
       colors: {
         hint: '#00796B',
         shade: '#191B20',
-        secondary: '#F6F9FF',
+        secondary: '#F0F0F0',
         primary: '#1C1E24',
         discord: '#6A5ACD',
-        github: '#323439'
+        github: '#323439',
+        mauve: '#9966A2'
       },
       fontFamily: {
         'rubik': ['Rubik', 'sans-serif'],
@@ -47,19 +48,25 @@ module.exports = {
         '4.5': '4.5rem', // 72px
         '6.25': '6.25rem', // 100px
         '8.375': '8.375rem', // 134px
-        '12.5': '12.5rem', // 174px
-        '15.75': '15.75rem' // 252px
+        '10.25': '10.25rem', // 164px
+        '12.5': '12.5rem', // 200px
+        '13.5': '13.5rem', // 216px
+        '15.75': '15.75rem', // 252px
+        '32': '32rem' // 512px
+ 
       },
       inset: {
         '26': '26rem',
         '32': '32rem',
       },
       height: {
+        '4.75': '4.75rem', // 76px
         '9.5': '9.5rem', // 152px
-        '4.75': '4.75rem' // 76px
+        '34': '34rem'
       },
       boxShadow: {
-        '3xl': '0px 0px 12px 0 #9966A2'
+        '3xl': '0px 0px 12px 0 #9966A2',
+        inner: 'inset -2px 0px 18px 10px #131519'
       }
     },
   },

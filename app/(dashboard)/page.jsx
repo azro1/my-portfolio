@@ -12,14 +12,14 @@ import Loading from "./loading"
 const Home = ()=> {
   return (
     <main>
-      <Hero />
-      <Services />
-      <div className="flex flex-col mt-6.25 gap-y-6.25 mb-14 sm:mb-6.25 lg:gap-y-40 lg:mt-8.375 lg:mb-36">
-      <Skills />
-      <Suspense fallback={<Loading />}>
-        <ProjectList />
-      </Suspense>
-      <Connect />
+      <div className="flex flex-col gap-y-6.25 mb-14 sm:mb-6.25 md:gap-y-10.25 mb-14 sm:mb-6.25 lg:mb-36">
+        <Hero />
+        <Services />
+        <Skills />
+        <Suspense fallback={<Loading />}>
+          <ProjectList />
+        </Suspense>
+        <Connect />
       </div>
     </main>
   )

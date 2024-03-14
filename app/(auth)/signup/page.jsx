@@ -91,8 +91,8 @@ const Signup = () => {
 
     return (
       <main className='mt-4.5 mb-28'>
-        <div className='max-w-screen-lg mx-auto relative grid gap-y-20 md:gap-x-16 md:grid-cols-2'>
-          <form onSubmit={handleSubmit} className="w-full max-w-sm justify-self-center md:justify-self-center">
+        <div className='max-w-screen-lg mx-auto relative grid gap-y-16 md:gap-x-8 md:grid-cols-2'>
+          <form onSubmit={handleSubmit} className=" justify-self-center place-self-center md:w-full shadow-inner rounded-lg p-10">
             <h2 className='mb-6 text-1.75xl font-rubik font-eb text-hint'>Sign up</h2>
             <label>
               <span className='max-w-min mb-2 text-sm font-os text-secondary block'>
@@ -143,7 +143,7 @@ const Signup = () => {
             {!isLoading && <button className='btn block mt-5 bg-hint'>Sign up</button>}
           </form>
 
-          <div className='flex flex-col items-center md:absolute inset-0 top-96 md:mt-28 md:-left-26 lg:mt-24 lg:-left-32'>
+          <div className='flex flex-col items-center md:grid-col-start-1 md:grid-row-start-2'>
             <span className='block text-secondary text-base mb-8'>or sign up using</span>
             <SocialButtons text={"Continue"} />
             <span className='block text-secondary text-base mt-8'>
@@ -176,7 +176,7 @@ const Signup = () => {
               and development with CodeDynamics!
             </span>
           </div>
-          <Icons values={"flex gap-x-5 md:h-4.75 place-content-center md:col-start-2 md:place-content-end md:items-end"} />
+          <Icons values={"flex gap-x-5 md:h-4.75 place-content-center md:col-start-2 md:place-content-end md:items-end"} color={"#F6F9FF"} />
         </div>
       </main>
     );

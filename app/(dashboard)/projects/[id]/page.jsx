@@ -40,35 +40,37 @@ const Project = async ({ params }) => {
   return (
     <main className='my-4.5'>
       <h2 className='subheading text-hint'>{project.title}</h2>
-      <div className='grid gap-y-6 md:gap-y-6 md:grid-auto-rows md:grid-cols-2'>
-        <div className='mt-6'>
-          <Card values={'w-full'}>
-            <img className='w-full' src={project.image_url} alt={project.alt_desc} />
-          </Card>
-        </div>
+      <div className='grid gap-y-6 md:gap-y-10 md:grid-auto-rows md:grid-cols-2'>
+
+        <Card values={'mt-6 p-3 rounded-md md:col-span-2 md:h-full'} >
+          <div className='bg-secondary p-3 h-full'>
+              <img className='w-full h-96 object-cover object-left-top' src={project.image_url} alt={project.alt_desc} />
+          </div>
+        </Card>
+        
         <div className='md:row-start-2 md:col-start-1 pb-3 md:col-span-2'>
           <h3 className='text-1.375 font-b text-hint'>Project Description</h3>
-          <p className='pt-3 leading-6 font-cn text-sm'>{project.description}</p>
+          <p className='pt-3 leading-6 font-os text-sm'>{project.description}</p>
         </div>
-        <div className='row-start-3 col-start-1 md:col-start-2 md:row-start-1 md:mt-20 md:pl-8'>
+        <div className='row-start-3 col-start-1 md:col-start-1 md:row-start-3'>
           <div className='pb-6 md:pb-8'>
-            <div className='font-cn font-b text-base text-hint'>
+            <div className='font-os text-sm text-secondary'>
               Start Date:{' '}
-              <span className='text-sm text-secondary font-cn font-r'>
+              <span className='text-sm text-secondary font-os font-r'>
                 {project.start}
               </span>
             </div>
-            <div className='font-cn font-b text-base text-hint'>
+            <div className='font-os text-sm text-secondary'>
               End Date:{' '}
-              <span className='text-sm text-secondary font-cn font-r'>
+              <span className='text-sm text-secondary font-os font-r'>
                 {project.end}
               </span>
             </div>
           </div>
           <div className='pb-6 md:pb-8'>
-            <div className='font-cn font-b text-base text-hint'>
+            <div className='font-os text-sm text-secondary'>
               Tech Stack:{' '}
-              <span className='text-sm text-secondary font-cn font-r'>
+              <span className='text-sm text-secondary font-os font-r'>
                 {project.techstack.map((stack) => (
                    <span className='techstack' key={stack}>
                     {stack}
@@ -76,25 +78,25 @@ const Project = async ({ params }) => {
                 ))}
               </span>
             </div>
-            <div className='font-cn font-b text-base text-hint'>
+            <div className='font-os text-sm text-secondary'>
               Key Contributors:{' '}
-              <span className='text-sm text-secondary font-cn font-r'>
+              <span className='text-sm text-secondary font-os font-r'>
                 {project.contributions}
               </span>
             </div>
           </div>
           <div>
-            <div className='font-cn font-b text-base text-hint'>
+            <div className='font-os text-sm text-secondary'>
               Project Url:{' '}
-              <a href={project.project_url} target='_blank'>
-                <span className='text-sm text-secondary font-cn font-r'>
-                  {project.project_url}
+              <a href={project.url} target='_blank'>
+                <span className='text-sm text-blue-500 font-os font-r'>
+                  {project.url}
                 </span>
               </a>
             </div>
           </div>
         </div>
-        <Icons values={"flex gap-x-5 h-4.75 items-center md:col-start-2 md:place-content-end md:items-end"} />
+        <Icons values={"flex gap-x-5 h-4.75 items-center md:col-start-2 md:row-start-3 md:place-content-end md:self-end md:items-end"} color={"#F6F9FF"} />
       </div>
     </main>
   );

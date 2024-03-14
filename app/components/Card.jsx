@@ -1,6 +1,6 @@
 const Card = ({ values, children }) => {
   return (
-    <div className={`${values} relative shadow-3xl p-3 rounded-md`}>
+    <div className={`${values} shadow-3xl`}>
        { children }
     </div> 
   )

@@ -2,16 +2,19 @@ import Link from "next/link"
 
 // components
 import Chevron from "../Chevron";
+import Card from "../Card";
 
 const Navbar = ({ user }) => {
 
   return (
     <main>
       <nav className='flex items-center h-9.5 relative'>
-        <Link href='/' className='shadow-3xl pt-1.5 px-4 pb-0.5 rounded-xl bg-shade mr-auto'>
-          <h2 className='logo font-eb text-hint'>
-            Port<span>folio</span>
-          </h2>
+        <Link className="mr-auto" href='/'>
+          <Card values={'shadow-3xl pt-1.5 px-4 pb-0.5 rounded-xl bg-shade'}>
+            <h2 className='logo font-eb text-hint'>
+              Port<span>folio</span>
+            </h2>
+          </Card>
         </Link>
 
         <Chevron order={'order-1'} user={user} />

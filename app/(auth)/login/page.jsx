@@ -48,7 +48,7 @@ const Login = () => {
   return (
     <main className='my-4.5'>
       <div className="grid gap-y-14 place-items-center max-w-screen-lg mx-auto">
-        <form className="w-full max-w-sm md:col-span-2" onSubmit={handleSubmit}>
+        <form className="w-full max-w-sm md:col-span-2 relative" onSubmit={handleSubmit}>
           <h2 className='mb-6 text-1.75xl font-rubik font-eb text-hint'>Login</h2>
           <label>
             <span className='max-w-min mb-2 text-sm font-os text-secondary block'>
@@ -78,11 +78,11 @@ const Login = () => {
 
           {error && <div className="error">* {error}</div>}
 
-          <div className="mt-5 flex items-center justify-between">
-            {isLoading && <button className='btn block bg-hint'>Processing...</button>}
-            {!isLoading && <button className='btn block bg-hint'>Login</button>}
-            <Link className="text-hint self-start -mt-2" href="/update/password">Forgot Password?</Link>
+          <div className="">
+            {isLoading && <button className='btn mt-5 bg-hint'>Processing...</button>}
+            {!isLoading && <button className='btn mt-5 bg-hint'>Login</button>}
           </div>
+          <Link className="text-hint absolute right-0 top-56 pt-1" href="/update/password">Forgot Password?</Link>
 
         </form>
   
@@ -97,7 +97,7 @@ const Login = () => {
           </p>
         </div>
 
-        <Icons values={"flex gap-x-5 md:col-start-2 md:row-start-3 md:place-self-end"} />
+        <Icons values={"flex gap-x-5 md:col-start-2 md:row-start-3 md:place-self-end"} color={"#F6F9FF"} />
 
       </div>
     </main>
