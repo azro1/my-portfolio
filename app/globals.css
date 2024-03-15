@@ -157,37 +157,214 @@ footer span {
 
 
 
-.progress-bar::after {
+.ts-inner-wrapper div:nth-child(1) .progress-bar > div  {
   content: '';
-  width: 80%;
+  width: 0%;
   height: 10px;
   background: #00796B;
   position: absolute;
   left: 7px;
   bottom: 7px;
+  animation-name: html;
+  animation-duration: 100s;
+  animation-iteration-count: infinite;
+  animation-direction: backwards;
 }
 
+@keyframes html {
+  0% {width: 0%;}
+  2%, 18%, 98%, 100% {width: 64%;} 
+}
+
+.ts-inner-wrapper div:nth-child(2) .progress-bar > div  {
+  content: '';
+  width: 0%;
+  height: 10px;
+  background: #00796B;
+  position: absolute;
+  left: 7px;
+  bottom: 7px;
+  animation-name: css;
+  animation-duration: 100s;
+  animation-iteration-count: infinite;
+  animation-direction: backwards;
+}
+
+@keyframes css {
+  0% {width: 0%;}
+  2%, 18%, 98%, 100% {width: 78%;} 
+}
+
+.ts-inner-wrapper div:nth-child(3) .progress-bar > div  {
+  content: '';
+  width: 0%;
+  height: 10px;
+  background: #00796B;
+  position: absolute;
+  left: 7px;
+  bottom: 7px;
+  animation-name: js;
+  animation-duration: 100s;
+  animation-iteration-count: infinite;
+  animation-direction: backwards;
+}
+
+@keyframes js {
+  0% {width: 0%;}
+  2%, 18%, 98%, 100% {width: 86%;} 
+}
+
+.ts-inner-wrapper div:nth-child(4) .progress-bar > div  {
+  content: '';
+  width: 0%;
+  height: 10px;
+  background: #00796B;
+  position: absolute;
+  left: 7px;
+  bottom: 7px;
+  animation-name: php;
+  animation-duration: 100s;
+  animation-iteration-count: infinite;
+  animation-direction: backwards;  
+}
+
+@keyframes php {
+  0% {width: 0%;}
+  2%, 18%, 98%, 100% {width: 52%;} 
+}
+
+
+
+
+/* professional skills */
 .progress-circle {
   width: 100px;
   height: 100px;
-  border-radius: 50%;
+  /* background: red; */
   position: relative;
-  background: conic-gradient(
-    #00796B 0%,
-    #00796B 25%,
-    #ecf0f1 25%,
-    #ecf0f1 100%
-  );
 }
 
-.fill {
+.progress-circle .outer {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  padding: 15px;
+  @apply shadow-inner;
+  /* box-shadow: 6px 6px 10px -1px rgba(0, 0, 0, 0.15),
+              0px 0px 10px -1px rgba(255, 255, 255, 0.7); */
+}
+
+.progress-circle .inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  @apply shadow-inner;
+  /* box-shadow: inset 4px 4px 6px -1px rgba(0, 0, 0, 0.2),
+              inset 1px 1px 10px -1px rgba(255, 255, 255, 0.7); */
+}
+
+
+/* communication */
+.communication circle {
+  fill: none;
+  stroke: #00796B;
+  stroke-width: 10px;
+  stroke-dasharray: 260;
+  stroke-dashoffset: 260;
+  animation-name: animateCommunicate;
+  animation-duration: 100s;
+  animation-iteration-count: infinite;
+  animation-direction: backwards;
+}
+
+.communication svg {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 50%;
-  height: 100%;
-  background-color: #3498db;
-  border-radius: 50% 0 0 50%;
-  transform-origin: 100% 50%;
-  transform: rotate(45deg);
+  top:-30px;
+  left:-30px;
+}
+
+@keyframes animateCommunicate {
+  0% {width: 0%;}
+  2%, 18%, 98%, 100% {stroke-dashoffset: 65;}
+}
+
+
+
+/* team work */
+.team-work circle {
+  fill: none;
+  stroke: #00796B;
+  stroke-width: 10px;
+  stroke-dasharray: 260;
+  stroke-dashoffset: 260;
+  animation-name: animateTeamWork;
+  animation-duration: 100s;
+  animation-iteration-count: infinite;
+  animation-direction: backwards;
+}
+
+.team-work svg {
+  position: absolute;
+  top:-30px;
+  left:-30px;
+}
+
+@keyframes animateTeamWork {
+  0% {width: 0%;}
+  2%, 18%, 98%, 100% {stroke-dashoffset: 114;}
+}
+
+
+
+/* adaptability */
+.adaptability circle {
+  fill: none;
+  stroke: #00796B;
+  stroke-width: 10px;
+  stroke-dasharray: 260;
+  stroke-dashoffset: 260;
+  animation-name: animateAdaptability;
+  animation-duration: 100s;
+  animation-iteration-count: infinite;
+  animation-direction: backwards;
+}
+
+.adaptability svg {
+  position: absolute;
+  top:-30px;
+  left:-30px;
+}
+
+@keyframes animateAdaptability {
+  0% {width: 0%;}
+  2%, 18%, 98%, 100% {stroke-dashoffset: 143;}
+}
+
+
+
+/* problem solving */
+.problem-solving circle {
+  fill: none;
+  stroke: #00796B;
+  stroke-width: 10px;
+  stroke-dasharray: 260;
+  stroke-dashoffset: 260;
+  animation-name: animateProblemSolving;
+  animation-duration: 100s;
+  animation-iteration-count: infinite;
+  animation-direction: backwards;
+}
+
+.problem-solving svg {
+  position: absolute;
+  top:-30px;
+  left:-30px;
+}
+
+@keyframes animateProblemSolving {
+  0% {width: 0%;}
+  2%, 18%, 98%, 100% {stroke-dashoffset: 104;}
 }

@@ -30,7 +30,7 @@ const ProjectList = async () => {
                 <Link href={`/projects/${project.id}`}>
                   <Card values={'p-3 rounded-md'}>
                     <img
-                      className="bg-white p-1 w-full h-40 object-cover object-left-top"
+                      className="bg-white p-1 w-full h-56 object-cover object-left-top"
                       src={project.image_url}
                       alt={'image'}
                     />

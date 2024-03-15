@@ -23,7 +23,7 @@ const Connect = () => {
         </div>
 
         <div className='md:w-1/2'>
-          <div className='grid grid-flow-col auto-cols-max place-items-center gap-3 '>
+          <div className='grid grid-flow-col auto-cols-max place-items-center justify-end gap-3'>
             <div className='row-start-2 col-start-2'>
               <FaGithub color='#F0F0F0' size={60} />
             </div>
@@ -39,7 +39,7 @@ const Connect = () => {
             <div className='row-start-1 col-start-1'>
               <FaDiscord color='#F0F0F0' size={60} />
             </div>
-            <div className='row-start-3 col-start-3'>
+            <div className='row-start-1 col-start-2'>
               <FaWhatsapp color='#F0F0F0' size={60} />
             </div>
           </div>
