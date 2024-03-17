@@ -25,22 +25,22 @@ const Connect = () => {
         <div className='md:w-1/2'>
           <div className='grid grid-flow-col auto-cols-max place-items-center justify-end gap-3'>
             <div className='row-start-2 col-start-3'>
-              <FaGithub color='#9ACD32' size={60} />
+              <FaGithub color='#9ACD32' size={50} />
             </div>
             <div className='row-start-3'>
-              <FaInstagram color='#9ACD32' size={60} />
+              <FaInstagram color='#9ACD32' size={50} />
             </div>
             <div className='row-start-3 col-start-2 '>
-              <FaLinkedin color='#9ACD32' size={60} />
+              <FaLinkedin color='#9ACD32' size={50} />
             </div>
             <div className='row-start-3 col-start-3'>
-              <FaYoutubeSquare color='#9ACD32' size={60} />
+              <FaYoutubeSquare color='#9ACD32' size={50} />
             </div>
             <div className='row-start-1 col-start-3'>
-              <FaDiscord color='#9ACD32' size={60} />
+              <FaDiscord color='#9ACD32' size={50} />
             </div>
             <div className='row-start-2 col-start-2'>
-              <FaWhatsapp color='#9ACD32' size={60} />
+              <FaWhatsapp color='#9ACD32' size={50} />
             </div>
           </div>
         </div>

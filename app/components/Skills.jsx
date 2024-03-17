@@ -64,7 +64,7 @@ const Skills = () => {
         setPhpPercent(0);
 
         setResetTrigger(false); // Reset the trigger
-      }, 98750); // 100 seconds in milliseconds
+      }, 99000); // 100000ms = 100 seconds(1 min 40s) but deducted 1 second here to compensate for 1 second animation delay
     }
   }, [resetTrigger]);
 

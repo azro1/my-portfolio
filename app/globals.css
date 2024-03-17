@@ -161,7 +161,7 @@ footer span {
   content: '';
   width: 0%;
   height: 10px;
-  background: #576366;
+  background: #fff;
   position: absolute;
   left: 0;
   bottom: 0;
@@ -181,7 +181,7 @@ footer span {
   content: '';
   width: 0%;
   height: 10px;
-  background: #576366;
+  background: #fff;
   position: absolute;
   left: 0;
   bottom: 0;
@@ -201,7 +201,7 @@ footer span {
   content: '';
   width: 0%;
   height: 10px;
-  background: #576366;
+  background: #fff;
   position: absolute;
   left: 0;
   bottom: 0;
@@ -221,7 +221,7 @@ footer span {
   content: '';
   width: 0%;
   height: 10px;
-  background: #576366;
+  background: #fff;
   position: absolute;
   left: 0;
   bottom: 0;
@@ -270,7 +270,7 @@ footer span {
 /* communication */
 .communication circle {
   fill: none;
-  stroke: #576366;
+  stroke: #fff;
   stroke-width: 10px;
   stroke-dasharray: 283;
   stroke-dashoffset: 283;
@@ -297,7 +297,7 @@ footer span {
 /* team work */
 .team-work circle {
   fill: none;
-  stroke: #576366;
+  stroke: #fff;
   stroke-width: 10px;
   stroke-dasharray: 283;
   stroke-dashoffset: 283;
@@ -324,7 +324,7 @@ footer span {
 /* adaptability */
 .adaptability circle {
   fill: none;
-  stroke: #576366;
+  stroke: #fff;
   stroke-width: 10px;
   stroke-dasharray: 283;
   stroke-dashoffset: 283;
@@ -351,7 +351,7 @@ footer span {
 /* problem solving */
 .problem-solving circle {
   fill: none;
-  stroke: #576366;
+  stroke: #fff;
   stroke-width: 10px;
   stroke-dasharray: 283;
   stroke-dashoffset: 283;
