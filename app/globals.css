@@ -161,14 +161,15 @@ footer span {
   content: '';
   width: 0%;
   height: 10px;
-  background: #00796B;
+  background: #576366;
   position: absolute;
-  left: 7px;
-  bottom: 7px;
+  left: 0;
+  bottom: 0;
   animation-name: html;
   animation-duration: 100s;
   animation-iteration-count: infinite;
   animation-direction: backwards;
+  animation-delay: 1s;
 }
 
 @keyframes html {
@@ -180,14 +181,15 @@ footer span {
   content: '';
   width: 0%;
   height: 10px;
-  background: #00796B;
+  background: #576366;
   position: absolute;
-  left: 7px;
-  bottom: 7px;
+  left: 0;
+  bottom: 0;
   animation-name: css;
   animation-duration: 100s;
   animation-iteration-count: infinite;
   animation-direction: backwards;
+  animation-delay: 1s;
 }
 
 @keyframes css {
@@ -199,38 +201,40 @@ footer span {
   content: '';
   width: 0%;
   height: 10px;
-  background: #00796B;
+  background: #576366;
   position: absolute;
-  left: 7px;
-  bottom: 7px;
+  left: 0;
+  bottom: 0;
   animation-name: js;
   animation-duration: 100s;
   animation-iteration-count: infinite;
   animation-direction: backwards;
+  animation-delay: 1s;
 }
 
 @keyframes js {
   0% {width: 0%;}
-  2%, 18%, 98%, 100% {width: 86%;} 
+  2%, 18%, 98%, 100% {width: 50%;} 
 }
 
 .ts-inner-wrapper div:nth-child(4) .progress-bar > div  {
   content: '';
   width: 0%;
   height: 10px;
-  background: #00796B;
+  background: #576366;
   position: absolute;
-  left: 7px;
-  bottom: 7px;
+  left: 0;
+  bottom: 0;
   animation-name: php;
   animation-duration: 100s;
   animation-iteration-count: infinite;
   animation-direction: backwards;  
+  animation-delay: 1s;
 }
 
 @keyframes php {
   0% {width: 0%;}
-  2%, 18%, 98%, 100% {width: 52%;} 
+  2%, 18%, 98%, 100% {width: 35%;} 
 }
 
 
@@ -248,36 +252,33 @@ footer span {
   height: 100px;
   width: 100px;
   border-radius: 50%;
-  padding: 15px;
+  padding: 10px;
   @apply shadow-inner;
-  /* box-shadow: 6px 6px 10px -1px rgba(0, 0, 0, 0.15),
-              0px 0px 10px -1px rgba(255, 255, 255, 0.7); */
 }
 
 .progress-circle .inner {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 70px;
-  width: 70px;
+  height: 80px;
+  width: 80px;
   border-radius: 50%;
   @apply shadow-inner;
-  /* box-shadow: inset 4px 4px 6px -1px rgba(0, 0, 0, 0.2),
-              inset 1px 1px 10px -1px rgba(255, 255, 255, 0.7); */
 }
 
 
 /* communication */
 .communication circle {
   fill: none;
-  stroke: #00796B;
+  stroke: #576366;
   stroke-width: 10px;
-  stroke-dasharray: 260;
-  stroke-dashoffset: 260;
+  stroke-dasharray: 283;
+  stroke-dashoffset: 283;
   animation-name: animateCommunicate;
   animation-duration: 100s;
   animation-iteration-count: infinite;
   animation-direction: backwards;
+  animation-delay: 1s;
 }
 
 .communication svg {
@@ -288,7 +289,7 @@ footer span {
 
 @keyframes animateCommunicate {
   0% {width: 0%;}
-  2%, 18%, 98%, 100% {stroke-dashoffset: 65;}
+  2%, 18%, 98%, 100% {stroke-dashoffset: 70.75;}
 }
 
 
@@ -296,14 +297,15 @@ footer span {
 /* team work */
 .team-work circle {
   fill: none;
-  stroke: #00796B;
+  stroke: #576366;
   stroke-width: 10px;
-  stroke-dasharray: 260;
-  stroke-dashoffset: 260;
+  stroke-dasharray: 283;
+  stroke-dashoffset: 283;
   animation-name: animateTeamWork;
   animation-duration: 100s;
   animation-iteration-count: infinite;
   animation-direction: backwards;
+  animation-delay: 1s;
 }
 
 .team-work svg {
@@ -314,7 +316,7 @@ footer span {
 
 @keyframes animateTeamWork {
   0% {width: 0%;}
-  2%, 18%, 98%, 100% {stroke-dashoffset: 114;}
+  2%, 18%, 98%, 100% {stroke-dashoffset: 124.52;}
 }
 
 
@@ -322,14 +324,15 @@ footer span {
 /* adaptability */
 .adaptability circle {
   fill: none;
-  stroke: #00796B;
+  stroke: #576366;
   stroke-width: 10px;
-  stroke-dasharray: 260;
-  stroke-dashoffset: 260;
+  stroke-dasharray: 283;
+  stroke-dashoffset: 283;
   animation-name: animateAdaptability;
   animation-duration: 100s;
   animation-iteration-count: infinite;
   animation-direction: backwards;
+  animation-delay: 1s;
 }
 
 .adaptability svg {
@@ -340,7 +343,7 @@ footer span {
 
 @keyframes animateAdaptability {
   0% {width: 0%;}
-  2%, 18%, 98%, 100% {stroke-dashoffset: 143;}
+  2%, 18%, 98%, 100% {stroke-dashoffset: 155.65;}
 }
 
 
@@ -348,14 +351,15 @@ footer span {
 /* problem solving */
 .problem-solving circle {
   fill: none;
-  stroke: #00796B;
+  stroke: #576366;
   stroke-width: 10px;
-  stroke-dasharray: 260;
-  stroke-dashoffset: 260;
+  stroke-dasharray: 283;
+  stroke-dashoffset: 283;
   animation-name: animateProblemSolving;
   animation-duration: 100s;
   animation-iteration-count: infinite;
   animation-direction: backwards;
+  animation-delay: 1s;
 }
 
 .problem-solving svg {
@@ -366,5 +370,5 @@ footer span {
 
 @keyframes animateProblemSolving {
   0% {width: 0%;}
-  2%, 18%, 98%, 100% {stroke-dashoffset: 104;}
+  2%, 18%, 98%, 100% {stroke-dashoffset: 113.2;}
 }

@@ -13,7 +13,7 @@ module.exports = {
     },
     extend: {
       colors: {
-        hint: '#00796B',
+        hint: '#9ACD32',
         shade: '#191B20',
         secondary: '#F0F0F0',
         primary: '#1C1E24',
@@ -37,6 +37,7 @@ module.exports = {
         'eb': '800'
       },
       spacing: {
+        '0.312': '0.312rem', // 1.4px
         '0.21': '0.21rem', // 3.36px
         '0.5': '0.5rem', // 8px
         '1.375': '1.375rem', // 22px
@@ -65,7 +66,7 @@ module.exports = {
         '34': '34rem'
       },
       boxShadow: {
-        '3xl': '0px 0px 12px 0 #9966A2',
+        '3xl': '0px 0px 12px 0 #576366',
         inner: 'inset -2px 0px 18px 10px #131519'
       }
     },
