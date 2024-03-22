@@ -222,7 +222,7 @@ const Skills = () => {
     <section>
       <div className='flex flex-col-reverse place-items-center md:flex-row md:items-start md:justify-between gap-y-6.25'>
         <div className='w-full md:w-2/5'>
-          <h2 className='subheading text-hint font-r text-center mb-5'>
+          <h2 className='subheading text-secondary font-r text-center mb-5'>
             Technical Skills
           </h2>
 
@@ -268,7 +268,7 @@ const Skills = () => {
         </div>
 
         <div className='progress-skills md:w-1/2'>
-          <h2 className='subheading text-hint font-r text-center mb-5'>
+          <h2 className='subheading text-secondary font-r text-center mb-5'>
             Professional Skills
           </h2>
 
@@ -288,7 +288,7 @@ const Skills = () => {
                         <stop offset="100%" stopColor="#673ab7" />
                      </linearGradient>
                   </defs>
-                  <circle cx="80" cy="80" r="45" strokeLinecap="round" />
+                  <circle cx="80" cy="80" r="45" strokeLinecap="butt" />
                 </svg>
 
               </div>
@@ -309,7 +309,7 @@ const Skills = () => {
                         <stop offset="100%" stopColor="#673ab7" />
                      </linearGradient>
                   </defs>
-                  <circle cx="80" cy="80" r="45" strokeLinecap="round" />
+                  <circle cx="80" cy="80" r="45" strokeLinecap="butt" />
                 </svg>
 
               </div>
@@ -331,7 +331,7 @@ const Skills = () => {
                         <stop offset="100%" stopColor="#673ab7" />
                      </linearGradient>
                   </defs>
-                  <circle cx="80" cy="80" r="45" strokeLinecap="round" />
+                  <circle cx="80" cy="80" r="45" strokeLinecap="butt" />
                 </svg>
 
               </div>
@@ -353,7 +353,7 @@ const Skills = () => {
                         <stop offset="100%" stopColor="#673ab7" />
                      </linearGradient>
                   </defs>
-                  <circle cx="80" cy="80" r="45" strokeLinecap="round" />
+                  <circle cx="80" cy="80" r="45" strokeLinecap="butt" />
                 </svg>
               </div>
               <div>Problem Solving</div>

@@ -92,7 +92,7 @@ const Signup = () => {
     return (
       <main className='mt-4.5 mb-28'>
         <div className='max-w-screen-lg mx-auto relative grid gap-y-16 md:gap-x-8 md:grid-cols-2'>
-          <form onSubmit={handleSubmit} className=" justify-self-center place-self-center md:w-full shadow-inner rounded-lg p-10">
+          <form onSubmit={handleSubmit} className="justify-self-center place-self-center w-full sm:max-w-sm md:max-w-xs">
             <h2 className='mb-6 text-1.75xl font-rubik font-eb text-hint'>Sign up</h2>
             <label>
               <span className='max-w-min mb-2 text-sm font-os text-secondary block'>
@@ -134,13 +134,13 @@ const Signup = () => {
             </label>
             {error && <div className="error">* {error}</div>}
 
-            <div className="mt-3 flex items-center">
+            <div className="mt-2.5 flex items-center">
               <input className="self-start mt-0.21 max-w-min" type="checkbox" value={isChecked} onChange={handleCheckbox}/>
               <span className="text-sm block text-secondary ml-2">I accept the{' '}<Link className="text-hint" href='#'>Privacy Policy</Link>{' '}and the{' '}<Link className='text-hint' href='#'>Terms of Service</Link>
               </span>
             </div>
-            {isLoading && <button className='btn block mt-5 bg-hint'>Processing...</button>}
-            {!isLoading && <button className='btn block mt-5 bg-hint'>Sign up</button>}
+            {isLoading && <button className='btn block mt-3.5 bg-hint'>Processing...</button>}
+            {!isLoading && <button className='btn block mt-3.5 bg-hint'>Sign up</button>}
           </form>
 
           <div className='flex flex-col items-center md:grid-col-start-1 md:grid-row-start-2'>

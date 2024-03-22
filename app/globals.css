@@ -107,6 +107,7 @@ nav span {
 
 
 
+
 /* Footer styles */
 footer .newsletter h3 {
   @apply text-2xl font-eb font-rubik text-hint;
@@ -155,13 +156,13 @@ footer span {
 
 
 
-
-
+/* technical skills */
+/* language statistic bars */
 .ts-inner-wrapper div:nth-child(1) .progress-bar > div  {
   content: '';
   width: 0%;
   height: 10px;
-  background: #fff;
+  background: #9ACD32;
   position: absolute;
   left: 0;
   bottom: 0;
@@ -181,7 +182,7 @@ footer span {
   content: '';
   width: 0%;
   height: 10px;
-  background: #fff;
+  background: #9ACD32;
   position: absolute;
   left: 0;
   bottom: 0;
@@ -201,7 +202,7 @@ footer span {
   content: '';
   width: 0%;
   height: 10px;
-  background: #fff;
+  background: #9ACD32;
   position: absolute;
   left: 0;
   bottom: 0;
@@ -221,7 +222,7 @@ footer span {
   content: '';
   width: 0%;
   height: 10px;
-  background: #fff;
+  background: #9ACD32;
   position: absolute;
   left: 0;
   bottom: 0;
@@ -241,6 +242,7 @@ footer span {
 
 
 /* professional skills */
+/* circular progress bars */
 .progress-circle {
   width: 100px;
   height: 100px;
@@ -266,11 +268,10 @@ footer span {
   @apply shadow-inner;
 }
 
-
 /* communication */
 .communication circle {
   fill: none;
-  stroke: #fff;
+  stroke: #9ACD32;
   stroke-width: 10px;
   stroke-dasharray: 283;
   stroke-dashoffset: 283;
@@ -292,12 +293,10 @@ footer span {
   2%, 18%, 98%, 100% {stroke-dashoffset: 70.75;}
 }
 
-
-
 /* team work */
 .team-work circle {
   fill: none;
-  stroke: #fff;
+  stroke: #9ACD32;
   stroke-width: 10px;
   stroke-dasharray: 283;
   stroke-dashoffset: 283;
@@ -319,12 +318,10 @@ footer span {
   2%, 18%, 98%, 100% {stroke-dashoffset: 124.52;}
 }
 
-
-
 /* adaptability */
 .adaptability circle {
   fill: none;
-  stroke: #fff;
+  stroke: #9ACD32;
   stroke-width: 10px;
   stroke-dasharray: 283;
   stroke-dashoffset: 283;
@@ -346,12 +343,10 @@ footer span {
   2%, 18%, 98%, 100% {stroke-dashoffset: 155.65;}
 }
 
-
-
 /* problem solving */
 .problem-solving circle {
   fill: none;
-  stroke: #fff;
+  stroke: #9ACD32;
   stroke-width: 10px;
   stroke-dasharray: 283;
   stroke-dashoffset: 283;
