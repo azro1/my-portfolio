@@ -30,7 +30,7 @@ const About = () => {
           <div className="flex flex-col mt-16 md:mt-0 md:justify-center md:text-left md:w-full">
             <h2 className="subheading text-hint pb-3">My History</h2>
             <p className="leading-6 pb-4">I've dedicated years to self-study and hands-on exploration in technology and design. From diving into coding languages to creating engaging digital interfaces, my journey is all about mastering digital innovation through relentless learning.</p> 
-            <p className="leading-6">With a foundation built on diverse tools across different technologies, I create digital solutions that are tailored to users' needs and preferences.</p>
+            <p className="leading-6">With a foundation built on diverse tools across different technologies, I create digital solutions that are tailored to users needs and preferences.</p>
           </div>
           
           <div className="w-full h-64 md:h-74 relative">

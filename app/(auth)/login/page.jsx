@@ -46,7 +46,7 @@ const Login = () => {
   }
 
   return (
-    <main className='my-4.5'>
+    <main className='my-4.5 md:mt-6.25'>
       <div className="grid gap-y-14 place-items-center max-w-screen-lg mx-auto">
         <form className="w-full sm:max-w-xs md:col-span-2 relative" onSubmit={handleSubmit}>
           <h2 className='mb-6 text-1.75xl font-rubik font-eb text-hint'>Login</h2>
@@ -78,7 +78,7 @@ const Login = () => {
 
           {error && <div className="error">* {error}</div>}
 
-          <div className="">
+          <div>
             {isLoading && <button className='btn mt-3.5 bg-hint'>Processing...</button>}
             {!isLoading && <button className='btn mt-3.5 bg-hint'>Login</button>}
           </div>
