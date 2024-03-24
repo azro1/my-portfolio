@@ -12,18 +12,26 @@ export const metadata = {
 };
 
 const Contact = () => {
+  const [error, setError] = useState('')
+  const [user, setUser] = useState(null)
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [subject, setSubject] = useState('');
   const [comment, setComment] = useState('');
+  const [commentError, setCommentError] = useState('')
+  const [isCommentLoading, setIsCommentLoading] = useState(false);
   const [message, setMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [msgError, setMsgError] = useState('')
+  const [isMsgLoading, setIsMsgLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState('');
-  const [user, setUser] = useState(null)
-  const [error, setError] = useState('')
+
 
   const supabase = createClientComponentClient();
 
+
+
+
+  // get currently logged in user
   useEffect(() => {
     setError('');
     async function getUser() {
@@ -44,14 +52,19 @@ const Contact = () => {
   }, []);
   
 
+
+
+
+  // main form (right)
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true)
+    setIsMsgLoading(true)
 
     setName('')
     setEmail('')
     setSubject('')
     setMessage('')
+    setMsgError('')
 
     const {data, error} = await supabase.from('enquiries')
       .insert({
@@ -64,26 +77,56 @@ const Contact = () => {
       .single()
       
       if (error) {
-        setError(error.message)
-        setIsLoading(false)
+        setMsgError(error.message)
+        setIsMsgLoading(false)
       }
 
       if (data) {
         setSuccessMsg('Message Sent!')
-        setIsLoading(false)
+        setIsMsgLoading(false)
 
         function clearSuccessMsg() {
           setSuccessMsg('')
         }
         setTimeout(clearSuccessMsg, 2000)
       }
-
   };
 
   
 
-  const handleComment = (e) => {
+
+
+  //  comment
+  const handleComment = async (e) => {
     e.preventDefault();
+    setIsCommentLoading(true)
+    setCommentError('')
+    setComment('')
+  
+    const res = await fetch(`${location.origin}/api/auth/comments`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        comment
+      })
+    })  
+
+    const json = await res.json()
+
+    if (json.error) {
+      setIsCommentLoading(false)
+      setCommentError(error.message)
+      console.log(error.message)
+    }
+
+    if (json.data) {
+      setIsCommentLoading(false)
+      // console.log(json.data)
+      //  subscribe to realtime data
+    }
+    
   };
 
 
@@ -123,6 +166,9 @@ const Contact = () => {
             {/* google maps */}
           </div>
           
+
+
+          {/* handle comment form */}
           {user && (
             <div className='mt-8'>
             <h3 className='mb-2 text-xl font-eb font-rubik text-hint'>
@@ -138,11 +184,12 @@ const Contact = () => {
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
               ></textarea>
+              {commentError && <p className='error'>{commentError}</p>}
               <div>
-                {isLoading && (
+                {isCommentLoading && (
                   <button className='btn mt-3.5 bg-hint'>Processing...</button>
                 )}
-                {!isLoading && (
+                {!isCommentLoading && (
                   <button className='btn mt-3.5 bg-hint'>Add Comment</button>
                 )}
               </div>
@@ -157,11 +204,16 @@ const Contact = () => {
           )}
         </div>
 
+
+
+
+        {/* main form */}
         <form
           onSubmit={handleSubmit}
           className='w-full row-start-2 sm:max-w-xs md:row-start-2 md:col-start-2 md:place-self-center'
         >
           <label>
+            {error && <p className='error'>{error}</p>}
             <span className="className='max-w-min mb-2 text-sm font-os text-secondary block">
               Name
             </span>
@@ -216,13 +268,13 @@ const Contact = () => {
               rows='4'
             ></textarea>
           </label>
-          {error && <p className='error'>{error}</p>}
+          {msgError && <p className='error'>{msgError}</p>}
           {successMsg && <p className='success'>{successMsg}</p>}
           <div>
-            {isLoading && (
+            {isMsgLoading && (
               <button className='btn mt-3.5 bg-hint'>Processing...</button>
             )}
-            {!isLoading && (
+            {!isMsgLoading && (
               <button className='btn mt-3.5 bg-hint'>Submit</button>
             )}
           </div>
