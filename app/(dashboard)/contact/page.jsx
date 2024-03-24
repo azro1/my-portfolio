@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 import Icons from '@/app/components/Icons';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 // metadata
 export const metadata = {
@@ -17,14 +18,75 @@ const Contact = () => {
   const [comment, setComment] = useState('');
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [successMsg, setSuccessMsg] = useState('');
+  const [user, setUser] = useState(null)
+  const [error, setError] = useState('')
 
-  const handleSubmit = (e) => {
+  const supabase = createClientComponentClient();
+
+  useEffect(() => {
+    setError('');
+    async function getUser() {
+      try {
+        const {data: { session }, error } = await supabase.auth.getSession();
+        if (error) {
+          throw error;
+        }
+        if (session) {
+          const user = session.user;
+          setUser({ ...user });
+        }
+      } catch (err) {
+        setError(err.message);
+      } 
+    }
+    getUser();
+  }, []);
+  
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true)
+
+    setName('')
+    setEmail('')
+    setSubject('')
+    setMessage('')
+
+    const {data, error} = await supabase.from('enquiries')
+      .insert({
+        name,
+        email,
+        subject,
+        message
+      })
+      .select()
+      .single()
+      
+      if (error) {
+        setError(error.message)
+        setIsLoading(false)
+      }
+
+      if (data) {
+        setSuccessMsg('Message Sent!')
+        setIsLoading(false)
+
+        function clearSuccessMsg() {
+          setSuccessMsg('')
+        }
+        setTimeout(clearSuccessMsg, 2000)
+      }
+
   };
+
+  
 
   const handleComment = (e) => {
     e.preventDefault();
   };
+
+
 
   return (
     <main className='my-4.5 md:mt-6.25'>
@@ -60,8 +122,9 @@ const Contact = () => {
           <div className='p-16 bg-white w-full sm:max-w-sm'>
             {/* google maps */}
           </div>
-
-          <div className='mt-8'>
+          
+          {user && (
+            <div className='mt-8'>
             <h3 className='mb-2 text-xl font-eb font-rubik text-hint'>
               Leave a Comment
             </h3>
@@ -85,6 +148,13 @@ const Contact = () => {
               </div>
             </form>
           </div>
+          )}
+
+          {!user && (
+            <div className='mt-8'>
+               <p>Please sign in to leave a comment.</p>
+            </div>
+          )}
         </div>
 
         <form
@@ -146,6 +216,8 @@ const Contact = () => {
               rows='4'
             ></textarea>
           </label>
+          {error && <p className='error'>{error}</p>}
+          {successMsg && <p className='success'>{successMsg}</p>}
           <div>
             {isLoading && (
               <button className='btn mt-3.5 bg-hint'>Processing...</button>

@@ -139,8 +139,8 @@ const Signup = () => {
               <span className="text-sm block text-secondary ml-2">I accept the{' '}<Link className="text-hint" href='#'>Privacy Policy</Link>{' '}and the{' '}<Link className='text-hint' href='#'>Terms of Service</Link>
               </span>
             </div>
-            {isLoading && <button className='btn block mt-3.5 bg-hint'>Processing...</button>}
-            {!isLoading && <button className='btn block mt-3.5 bg-hint'>Sign up</button>}
+            {isLoading && <button className='btn block mt-4 bg-hint'>Processing...</button>}
+            {!isLoading && <button className='btn block mt-4 bg-hint'>Sign up</button>}
           </form>
 
           <div className='flex flex-col items-center md:grid-col-start-1 md:grid-row-start-2'>

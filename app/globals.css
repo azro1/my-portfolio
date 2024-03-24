@@ -149,7 +149,9 @@ footer span {
 .error {
   @apply font-os text-sm text-red-600 font-r pt-2.5;
 }
-
+.success {
+  @apply font-os text-sm text-hint font-r pt-2.5;
+}
 
 
 

@@ -24,7 +24,9 @@ const UpdatePassword = () => {
         if (error) {
           throw error;
         }
-        setUser({ ...user });
+        if(user) {
+          setUser({ ...user });
+        }
       } catch (err) {
         setError(err.message);
         setLoading(false);

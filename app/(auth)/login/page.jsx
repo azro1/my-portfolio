@@ -15,13 +15,9 @@ const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [isChecked, setIsChecked] = useState(false)
   const [error, setError] = useState('')
   const router = useRouter()
   
-  const handleCheckbox = (e) => {
-    setIsChecked(e.target.checked)
-  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -79,8 +75,8 @@ const Login = () => {
           {error && <div className="error">* {error}</div>}
 
           <div>
-            {isLoading && <button className='btn mt-3.5 bg-hint'>Processing...</button>}
-            {!isLoading && <button className='btn mt-3.5 bg-hint'>Login</button>}
+            {isLoading && <button className='btn mt-4 bg-hint'>Processing...</button>}
+            {!isLoading && <button className='btn mt-4 bg-hint'>Login</button>}
           </div>
           <Link className="text-hint absolute right-0 top-56 pt-1" href="/update/password">Forgot Password?</Link>
 
