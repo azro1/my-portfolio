@@ -33,13 +33,13 @@ export default async function AuthLayout ({ children }) {
           <Link href='/signup'>
             <div className="tooltip group">
               <FaSignInAlt className="group-hover:text-hint transition duration-300 cursor-pointer" size={31} />
-              <span className="tooltiptext -left-2.5">Sign up</span>
+              <span className="tooltiptext -left-1.5">Sign up</span>
             </div>
           </Link>
           <Link href='/login'>
             <div className="tooltip group">
               <FaUserPlus className="group-hover:text-hint transition duration-300 cursor-pointer" size={33} />
-              <span className="tooltiptext -left-2.5">Login</span>
+              <span className="tooltiptext -left-1.5">Login</span>
             </div>
           </Link>
         </div>

@@ -45,7 +45,7 @@ const Login = () => {
     <main className='my-4.5 md:mt-6.25'>
       <div className="grid gap-y-14 place-items-center max-w-screen-lg mx-auto">
         <form className="w-full sm:max-w-xs md:col-span-2 relative" onSubmit={handleSubmit}>
-          <h2 className='mb-6 text-1.75xl font-rubik font-eb text-hint'>Login</h2>
+          <h2 className='mb-6 subheading text-hint'>Login</h2>
           <label>
             <span className='max-w-min mb-2 text-sm font-os text-secondary block'>
               Email
@@ -75,8 +75,8 @@ const Login = () => {
           {error && <div className="error">* {error}</div>}
 
           <div>
-            {isLoading && <button className='btn mt-4 bg-hint'>Processing...</button>}
-            {!isLoading && <button className='btn mt-4 bg-hint'>Login</button>}
+            {isLoading && <button className='btn mt-3.5 bg-hint'>Processing...</button>}
+            {!isLoading && <button className='btn mt-3.5 bg-hint'>Login</button>}
           </div>
           <Link className="text-hint absolute right-0 top-56 pt-1" href="/update/password">Forgot Password?</Link>
 

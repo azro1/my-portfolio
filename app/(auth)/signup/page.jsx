@@ -93,7 +93,7 @@ const Signup = () => {
       <main className='mt-6.25 md:mt-4.5'>
         <div className='max-w-screen-lg mx-auto relative -top-14 grid gap-y-16 md:gap-x-8 md:grid-cols-2'>
           <form onSubmit={handleSubmit} className="justify-self-center place-self-center w-full sm:max-w-sm md:max-w-xs">
-            <h2 className='mb-6 text-1.75xl font-rubik font-eb text-hint'>Sign up</h2>
+            <h2 className='mb-6 subheading text-hint'>Sign up</h2>
             <label>
               <span className='max-w-min mb-2 text-sm font-os text-secondary block'>
                 Name

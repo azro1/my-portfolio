@@ -24,18 +24,18 @@ const Contact = () => {
   const [msgError, setMsgError] = useState('')
   const [isMsgLoading, setIsMsgLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState('');
-
-
-  const supabase = createClientComponentClient();
-
+  const [comments, setComments] = useState(null)
 
 
 
-  // get currently logged in user
+  
+
+  // as soon as component loads check if user is logged in to allow comment to be added
   useEffect(() => {
     setError('');
     async function getUser() {
       try {
+        const supabase = createClientComponentClient();
         const {data: { session }, error } = await supabase.auth.getSession();
         if (error) {
           throw error;
@@ -49,13 +49,32 @@ const Contact = () => {
       } 
     }
     getUser();
-  }, []);
-  
+  }, []);  
 
 
 
+  // as soon as component loads fetch all comments to be displayed on page
+  useEffect(() => {
+    async function getComments() {
+      const supabase = createClientComponentClient();
+      const { data, error } = await supabase
+      .from('comments')
+      .select()
 
-  // main form (right)
+      if (error) {
+        setComments(null)
+        console.log(error.message)
+      }
+      
+      if (data) {
+        setComments(data)
+      }
+    }
+    getComments()
+  }, [])
+
+
+  // handlesubmit (main contact form)
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsMsgLoading(true)
@@ -66,6 +85,7 @@ const Contact = () => {
     setMessage('')
     setMsgError('')
 
+    const supabase = createClientComponentClient();
     const {data, error} = await supabase.from('enquiries')
       .insert({
         name,
@@ -96,37 +116,42 @@ const Contact = () => {
 
 
 
-  //  comment
+  // handlecomment (comment form)
   const handleComment = async (e) => {
     e.preventDefault();
     setIsCommentLoading(true)
     setCommentError('')
     setComment('')
   
-    const res = await fetch(`${location.origin}/api/auth/comments`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        comment
-      })
-    })  
+    try {
+      const res = await fetch(`${location.origin}/api/auth/comments`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          comment
+        })
+      })  
+  
+      if (!res.ok) {
+        setIsCommentLoading(false)
+        throw new Error(res.statusText)
+      }
 
-    const json = await res.json()
+      const json = await res.json()
 
-    if (json.error) {
-      setIsCommentLoading(false)
-      setCommentError(error.message)
-      console.log(error.message)
+      if (json.data) {
+        setIsCommentLoading(false)
+      }
+  
+    } catch (error) {
+
+      if (error) {
+        setIsCommentLoading(false)
+        setCommentError(error.message)
+      }
     }
-
-    if (json.data) {
-      setIsCommentLoading(false)
-      // console.log(json.data)
-      //  subscribe to realtime data
-    }
-    
   };
 
 
@@ -135,7 +160,7 @@ const Contact = () => {
     <main className='my-4.5 md:mt-6.25'>
       <div className='grid grid-col-1 gap-y-20 md:grid-col-2 md:gap-x-6'>
         <div className='md:col-span-2'>
-          <h2 className='mb-6 text-1.75xl font-rubik font-eb text-hint'>
+          <h2 className='subheading mb-6 text-hint'>
             Get In Touch
           </h2>
           <p className='leading-6 pb-4'>
@@ -145,6 +170,9 @@ const Contact = () => {
           </p>
           <p>I'm here to help and eager to connect!</p>
         </div>
+
+
+
 
         <div className='row-start-3 md:row-start-2 md:col-start-1'>
           <ul className='mb-2'>
@@ -162,55 +190,88 @@ const Contact = () => {
             </li>
           </ul>
 
-          <div className='p-16 bg-white w-full sm:max-w-sm'>
+          <div className='p-16 bg-secondary w-full sm:max-w-sm'>
             {/* google maps */}
           </div>
           
 
 
-          {/* handle comment form */}
+          {/* comment form */}
           {user && (
             <div className='mt-8'>
-            <h3 className='mb-2 text-xl font-eb font-rubik text-hint'>
-              Leave a Comment
-            </h3>
-            <form onSubmit={handleComment}>
-              <textarea
-                className='p-2'
-                cols='40'
-                rows='4'
-                spellCheck='false'
-                placeholder="Tell us what's on your mind..."
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-              ></textarea>
-              {commentError && <p className='error'>{commentError}</p>}
-              <div>
-                {isCommentLoading && (
-                  <button className='btn mt-3.5 bg-hint'>Processing...</button>
-                )}
-                {!isCommentLoading && (
-                  <button className='btn mt-3.5 bg-hint'>Add Comment</button>
-                )}
-              </div>
-            </form>
-          </div>
+              <h3 className='mb-2 text-xl font-eb font-rubik text-hint'>
+                Leave a Comment
+              </h3>
+              <form onSubmit={handleComment}>
+                <textarea
+                  className='p-2'
+                  cols='40'
+                  rows='4'
+                  spellCheck='false'
+                  placeholder="Tell us what's on your mind..."
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  required
+                ></textarea>
+                {commentError && <p className='error'>{commentError}</p>}
+                <div>
+                  {isCommentLoading && (
+                    <button className='btn mt-3.5 bg-hint'>Processing...</button>
+                  )}
+                  {!isCommentLoading && (
+                    <button className='btn mt-3.5 bg-hint'>Add Comment</button>
+                  )}
+                </div>
+                </form>
+            </div>
           )}
 
           {!user && (
             <div className='mt-8'>
-               <p>Please sign in to leave a comment.</p>
+                <p>Please sign in to leave a comment.</p>
             </div>
           )}
+
+          {comments !== null && comments.length === 0 && (
+            <div className='mt-8'>
+                <p>No comments.</p>
+            </div>
+          )}
+
+  
+          {comments !== null && comments.length > 0 && (
+            <div className='mt-12'>
+              <h3 className='mb-2 text-xl font-b font-rubik text-hint'>
+                Comments
+              </h3>
+              <div className='w-full sm:max-w-xs'>
+                {comments.map(comment => (
+                  <div className='my-4' key={comment.id}>
+                    <div className='bg-secondary mb-2 p-4' >
+                      {comment.comment}
+                    </div>
+                    <p>{comment.user_name}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          
+
         </div>
 
+
+
+
+          
 
 
 
         {/* main form */}
         <form
           onSubmit={handleSubmit}
-          className='w-full row-start-2 sm:max-w-xs md:row-start-2 md:col-start-2 md:place-self-center'
+          className='w-full row-start-2 sm:max-w-xs md:row-start-2 md:col-start-2 md:place-self-start md:mx-auto'
         >
           <label>
             {error && <p className='error'>{error}</p>}
@@ -266,6 +327,7 @@ const Contact = () => {
               onChange={(e) => setMessage(e.target.value)}
               cols='30'
               rows='4'
+              required
             ></textarea>
           </label>
           {msgError && <p className='error'>{msgError}</p>}

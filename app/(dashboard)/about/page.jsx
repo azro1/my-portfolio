@@ -20,7 +20,7 @@ const About = () => {
             />
           </div>
           <div className="flex flex-col text-center mt-16 md:mt-0 md:text-left md:w-full">
-            <h2 className="title font-b text-hint pb-3">About Me</h2>
+            <h2 className="subheading font-b text-hint pb-3">About Me</h2>
             <p className="leading-6 pb-4">Hello there! I'm Simon a passionate Full Stack Developer and UI Designer with over six years of hands-on experience in crafting immersive digital experiences.</p> 
             <p className="leading-6">My journey into the world of code and design was fuelled by a fascination for technology's ability to transform ideas into interactive realities.</p>
           </div>

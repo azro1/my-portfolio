@@ -5,7 +5,6 @@ import { NextResponse } from "next/server"
 
 export async function POST(request) {
   const comment = await request.json()
-  console.log(comment)
   
   // get supabase instance
   const supabase = createRouteHandlerClient({ cookies })
@@ -14,15 +13,16 @@ export async function POST(request) {
   const { data: { user } } = await supabase.auth.getUser()
 
   // insert the data
-  const {data, error} = await supabase.from('comments')
+  const { data, error } = await supabase.from('comments')
    .insert({
      ...comment,
+     user_name: user.user_metadata.first_name,
      user_email: user.email
    })
    .select()
    .single()
 
-//    console.log(data, error)
+  // console.log(data, error)
 
   return NextResponse.json({ data, error })
 }

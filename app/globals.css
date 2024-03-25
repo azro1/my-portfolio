@@ -67,12 +67,12 @@ nav span {
 }
 
 .tooltiptext {
-  @apply invisible absolute min-w-max text-secondary font-b -top-1.875 opacity-0 transition-opacity duration-500 ease-in-out;
+  @apply invisible absolute min-w-max text-secondary font-r -top-1.875 opacity-0 transition-opacity duration-500 ease-in-out;
 
 }
 
 .tooltip:hover .tooltiptext {
-  @apply text-base visible opacity-100;
+  @apply text-sm visible opacity-100;
 }
 
 /* traingle for menu dropdown */
