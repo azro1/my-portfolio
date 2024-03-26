@@ -36,7 +36,38 @@ const Signup = () => {
     setError('')
     setIsLoading(true)
 
-    const signUserUp = async () => {
+    // form validation
+    if (!displayName) {
+      setError('Please provide a name.');
+      setIsLoading(false)
+      return
+
+    } else if (!email) {
+        setError('To signup, please provide your email.');
+        setIsLoading(false)
+        return
+
+    } else if (!isValidEmail(email)) {
+        setError('Unable to validate email address: invalid format.');
+        setIsLoading(false)
+        return
+
+    } else if (!password) {
+        setError('Signup requires a valid password.');
+        setIsLoading(false)
+        return
+
+    } else if (password.length < 6) {
+        setError('Password should be at least 6 characters.');
+        setIsLoading(false)
+        return
+
+    } else if (!isChecked) {
+        setError('Please confirm you have agreed to the Privacy Policy and Terms of Service.');
+        setIsLoading(false)
+        return
+    }
+
       const supabase = createClientComponentClient()
       const { error } = await supabase.auth.signUp({
         email,
@@ -57,36 +88,6 @@ const Signup = () => {
       if (!error) {
         router.push('/verify')
       }
-    }
-
-    // form validation
-    if (!displayName) {
-      setError('Please provide a name.');
-      setIsLoading(false);
-
-    } else if (!email) {
-        setError('To signup, please provide your email.');
-        setIsLoading(false);
-
-    } else if (!isValidEmail(email)) {
-        setError('Unable to validate email address: invalid format.');
-        setIsLoading(false);
-
-    } else if (!password) {
-        setError('Signup requires a valid password.');
-        setIsLoading(false);
-
-    } else if (password.length < 6) {
-        setError('Password should be at least 6 characters.');
-        setIsLoading(false);
-
-    } else if (!isChecked) {
-        setError('Please confirm you have agreed to the Privacy Policy and Terms of Service.');
-        setIsLoading(false);
-        
-    } else {
-        signUserUp()
-    }
   }
 
     return (

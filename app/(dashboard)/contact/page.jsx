@@ -24,10 +24,14 @@ const Contact = () => {
   const [msgError, setMsgError] = useState('')
   const [isMsgLoading, setIsMsgLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState('');
-  const [comments, setComments] = useState(null)
+  const [comments, setComments] = useState([])
 
 
-
+ 
+  // update comments after new comment is added
+  const updateComments = (newComment) => {
+    setComments(prevComments => [...prevComments, newComment]);
+  }
   
 
   // as soon as component loads check if user is logged in to allow comment to be added
@@ -52,7 +56,6 @@ const Contact = () => {
   }, []);  
 
 
-
   // as soon as component loads fetch all comments to be displayed on page
   useEffect(() => {
     async function getComments() {
@@ -62,7 +65,7 @@ const Contact = () => {
       .select()
 
       if (error) {
-        setComments(null)
+        setComments([])
         console.log(error.message)
       }
       
@@ -113,9 +116,6 @@ const Contact = () => {
   };
 
   
-
-
-
   // handlecomment (comment form)
   const handleComment = async (e) => {
     e.preventDefault();
@@ -143,6 +143,7 @@ const Contact = () => {
 
       if (json.data) {
         setIsCommentLoading(false)
+        updateComments(json.data);
       }
   
     } catch (error) {
@@ -241,16 +242,33 @@ const Contact = () => {
   
           {comments !== null && comments.length > 0 && (
             <div className='mt-12'>
-              <h3 className='mb-2 text-xl font-b font-rubik text-hint'>
+              <h3 className='text-xl font-b font-rubik text-hint'>
                 Comments
               </h3>
               <div className='w-full sm:max-w-xs'>
                 {comments.map(comment => (
                   <div className='my-4' key={comment.id}>
-                    <div className='bg-secondary mb-2 p-4' >
-                      {comment.comment}
+                    <div className='' >
+                      {user && user.first_name ? 
+                        <>
+                          <div className='bg-secondary mb-2 p-4'>
+                             <p>{comment.comment}</p> 
+                          </div>
+                            <p>{comment.user_name}</p>
+                        </>
+                      : 
+                        <div className="flex flex-col gap-1 my-8">
+                          <div className='bg-secondary mb-2 p-4'>
+                            <p className='text-black'>{comment.comment}</p> 
+                          </div>
+                          <div className='flex flex items-center'>
+                            <div className="overflow-hidden rounded-full w-12 h-12">
+                                <img className="inline-block w-full h-full object-cover" src={comment.avatar_url} alt="a user avatar" />
+                            </div>
+                            <p className="ml-2">{comment.full_name}</p>
+                          </div>
+                        </div>}
                     </div>
-                    <p>{comment.user_name}</p>
                   </div>
                 ))}
               </div>

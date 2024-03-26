@@ -11,13 +11,15 @@ export async function POST(request) {
 
   // get current user session
   const { data: { user } } = await supabase.auth.getUser()
+  // console.log(user)
 
   // insert the data
   const { data, error } = await supabase.from('comments')
    .insert({
      ...comment,
-     user_name: user.user_metadata.first_name,
-     user_email: user.email
+     first_name: user.user_metadata.first_name,
+     full_name: user.user_metadata.full_name,
+     avatar_url: user.user_metadata.avatar_url,
    })
    .select()
    .single()
