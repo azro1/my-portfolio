@@ -36,9 +36,9 @@ const Signup = () => {
     setError('')
     setIsLoading(true)
 
-    const signUserUp = () => {
+    const signUserUp = async () => {
       const supabase = createClientComponentClient()
-      const { error } = supabase.auth.signUp({
+      const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -52,8 +52,8 @@ const Signup = () => {
       if (error) {
         setError(error.message)
         setIsLoading(false);
-      }
-
+      } 
+      
       if (!error) {
         router.push('/verify')
       }
@@ -90,10 +90,10 @@ const Signup = () => {
   }
 
     return (
-      <main className='mt-6.25 md:mt-4.5'>
-        <div className='max-w-screen-lg mx-auto relative -top-14 grid gap-y-16 md:gap-x-8 md:grid-cols-2'>
-          <form onSubmit={handleSubmit} className="justify-self-center place-self-center w-full sm:max-w-sm md:max-w-xs">
-            <h2 className='mb-6 subheading text-hint'>Sign up</h2>
+      <main className='my-4.5 md:mt-6.25'>
+        <div className='max-w-screen-lg mx-auto grid gap-y-16 md:gap-x-8 md:grid-cols-2'>
+          <form onSubmit={handleSubmit} className="justify-self-center place-self-center w-full sm:max-w-xs">
+            <h2 className='mb-5 subheading text-hint'>Sign up</h2>
             <label>
               <span className='max-w-min mb-2 text-sm font-os text-secondary block'>
                 Name
@@ -154,7 +154,7 @@ const Signup = () => {
             </span>
           </div>
 
-          <div className="grid row-start-1 gap-y-6 max-w-sm justify-self-center md:col-start-2 md:w-full md:mt-44">
+          <div className="grid row-start-1 gap-y-6 max-w-sm justify-self-center md:col-start-2 md:w-full ">
             <h2 className="text-1.75xl font-rubik font-eb text-secondary leading-normal">
               Unlock <span className='text-hint'>CodeDynamic's</span> Creative
               Vault!

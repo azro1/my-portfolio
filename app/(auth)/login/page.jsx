@@ -45,7 +45,7 @@ const Login = () => {
     <main className='my-4.5 md:mt-6.25'>
       <div className="grid gap-y-14 place-items-center max-w-screen-lg mx-auto">
         <form className="w-full sm:max-w-xs md:col-span-2 relative" onSubmit={handleSubmit}>
-          <h2 className='mb-6 subheading text-hint'>Login</h2>
+          <h2 className='mb-5 subheading text-hint'>Login</h2>
           <label>
             <span className='max-w-min mb-2 text-sm font-os text-secondary block'>
               Email

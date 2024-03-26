@@ -57,6 +57,7 @@ module.exports = {
       },
       inset: {
         '26': '26rem',
+        '8.625': '8.625rem', // 136px
       },
       height: {
         '4.75': '4.75rem', // 76px

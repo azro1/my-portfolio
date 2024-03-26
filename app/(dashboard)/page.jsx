@@ -12,7 +12,7 @@ import Loading from "./loading"
 const Home = ()=> {
   return (
     <main>
-      <div className="flex flex-col gap-y-6.25 mb-14 md:gap-y-10.25 sm:mb-6.25 lg:mb-36">
+      <div className="flex flex-col mt-16 gap-y-6.25 mb-14 md:gap-y-10.25 sm:mb-6.25 lg:mb-36">
         <Hero />
         <Services />
         <Skills />

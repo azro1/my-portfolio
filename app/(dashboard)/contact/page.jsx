@@ -160,7 +160,7 @@ const Contact = () => {
     <main className='my-4.5 md:mt-6.25'>
       <div className='grid grid-col-1 gap-y-20 md:grid-col-2 md:gap-x-6'>
         <div className='md:col-span-2'>
-          <h2 className='subheading mb-6 text-hint'>
+          <h2 className='subheading mb-5 text-hint'>
             Get In Touch
           </h2>
           <p className='leading-6 pb-4'>

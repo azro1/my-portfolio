@@ -7,7 +7,7 @@ const Hero = () => {
   return (
     <section>
       <div className="block text-center lg:flex flex-row-reverse gap-16 items-center">
-        <Card values={"mt-16 flex-1 inline-block p-3 rounded-md"}>
+        <Card values={"flex-1 inline-block p-3 rounded-md"}>
           <img className="w-full" src="https://via.placeholder.com/544x586" alt="Simon Sutherland, Web Developer and Designer" />
         </Card>
         <div className="flex-1 text-center mt-16 lg:mt-0">
