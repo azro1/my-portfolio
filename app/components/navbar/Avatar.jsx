@@ -1,5 +1,5 @@
+const Avatar = ({ user }) => {
 
-const Avatar = ( {user} ) => {
   return (
     <div>
       {user && user.user_metadata.first_name ?

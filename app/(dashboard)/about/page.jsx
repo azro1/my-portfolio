@@ -13,7 +13,7 @@ const About = () => {
         <div className="flex flex-col items-center md:flex-row md:justify-between md:items-end md:gap-8">
           <div className="w-full h-80 md:h-96 relative">
             <Image
-              src={'/images/homepage/about/untitled.png'}
+              src={'/images/about/untitled.png'}
               alt={'a picture of me'}
               fill={true}
               objectFit="scale-down"
@@ -35,7 +35,7 @@ const About = () => {
           
           <div className="w-full h-64 md:h-74 relative">
             <Image
-              src={'/images/homepage/about/polygon.svg'}
+              src={'/images/about/triangle.svg'}
               alt={'a triangle shape'}
               fill={true}
               objectFit="scale-down"
@@ -48,7 +48,7 @@ const About = () => {
           <ul className="flex flex-col gap-y-16 items-center md:flex-row md:justify-around">
             <li className="flex flex-col items-center justify-center w-28 text-center gap-3">
               <Image
-                src={'/images/homepage/about/fed.svg'}
+                src={'/images/about/fed.svg'}
                 alt={'an icon for front end development'} 
                 width={30} 
                 height={30} 
@@ -57,7 +57,7 @@ const About = () => {
             </li>
             <li className="flex flex-col items-center justify-center w-28 gap-3">
               <Image
-                src={'/images/homepage/about/gd.svg'}
+                src={'/images/about/gd.svg'}
                 alt={'an icon for graphic design'} 
                 width={30} 
                 height={30} 
@@ -66,7 +66,7 @@ const About = () => {
             </li>
             <li className="flex flex-col items-center justify-center w-28 gap-3">
               <Image
-                src={'/images/homepage/about/rd.svg'}
+                src={'/images/about/rd.svg'}
                 alt={'an icon for responsive design'} 
                 width={30} 
                 height={30} 
@@ -75,7 +75,7 @@ const About = () => {
             </li>
             <li className="flex flex-col items-center justify-center w-28 gap-3">
               <Image
-                src={'/images/homepage/about/uid.svg'}
+                src={'/images/about/uid.svg'}
                 alt={'an icon for responsive design'} 
                 width={30} 
                 height={30} 
@@ -84,7 +84,7 @@ const About = () => {
             </li>
             <li className="flex flex-col items-center justify-center w-28 gap-3">
               <Image
-                src={'/images/homepage/about/bed.svg'}
+                src={'/images/about/bed.svg'}
                 alt={'an icon for responsive design'} 
                 width={30} 
                 height={30} 
@@ -98,7 +98,7 @@ const About = () => {
         <div className="flex flex-col items-center md:flex-row md:justify-between md:items-end md:gap-8">
           <div className="w-full h-80 md:h-96 relative">
             <Image
-              src={'/images/homepage/about/untitled.png'}
+              src={'/images/about/untitled.png'}
               alt={'a picture of me'}
               fill={true}
               objectFit="scale-down"
@@ -119,7 +119,7 @@ const About = () => {
           </div>
           <div className="relative w-full h-64 md:h-74 relative">
             <Image
-              src={'/images/homepage/about/ellipse.svg'}
+              src={'/images/about/ellipse.svg'}
               alt={'a triangle shape'}
               fill={true}
               objectFit="scale-down"
@@ -130,7 +130,7 @@ const About = () => {
         <div className="flex flex-col text-center items-center md:flex-row md:gap-8">
           <div className="w-full h-64 md:h-74 relative">
             <Image
-              src={'/images/homepage/about/polygon.svg'}
+              src={'/images/about/triangle.svg'}
               alt={'a triangle shape'}
               fill={true}
               objectFit="scale-down"

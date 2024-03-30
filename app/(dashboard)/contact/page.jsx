@@ -26,14 +26,6 @@ const Contact = () => {
   const [successMsg, setSuccessMsg] = useState('');
   const [comments, setComments] = useState([])
 
-
- 
-  // update comments after new comment is added
-  const updateComments = (newComment) => {
-    setComments(prevComments => [...prevComments, newComment]);
-  }
-  
-
   // as soon as component loads check if user is logged in to allow comment to be added
   useEffect(() => {
     setError('');
@@ -53,7 +45,14 @@ const Contact = () => {
       } 
     }
     getUser();
-  }, []);  
+  }, []);
+  
+  
+
+  // update comments after new comment is added
+  const updateComments = (newComment) => {
+    setComments(prevComments => [...prevComments, newComment]);
+  }
 
 
   // as soon as component loads fetch all comments to be displayed on page
@@ -75,6 +74,48 @@ const Contact = () => {
     }
     getComments()
   }, [])
+
+
+
+  // handlecomment (comment form)
+  const handleComment = async (e) => {
+    e.preventDefault();
+    setIsCommentLoading(true)
+    setCommentError('')
+    setComment('')
+  
+    try {
+      const res = await fetch(`${location.origin}/api/auth/comments`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          comment
+        })
+      })  
+  
+      if (!res.ok) {
+        setIsCommentLoading(false)
+        throw new Error(res.statusText)
+      }
+
+      // handle response
+      const json = await res.json()
+
+      if (json.data) {
+        setIsCommentLoading(false)
+        updateComments(json.data);
+      }
+  
+    } catch (error) {
+
+      if (error) {
+        setIsCommentLoading(false)
+        setCommentError(error.message)
+      }
+    }
+  };
 
 
   // handlesubmit (main contact form)
@@ -116,52 +157,11 @@ const Contact = () => {
   };
 
   
-  // handlecomment (comment form)
-  const handleComment = async (e) => {
-    e.preventDefault();
-    setIsCommentLoading(true)
-    setCommentError('')
-    setComment('')
-  
-    try {
-      const res = await fetch(`${location.origin}/api/auth/comments`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          comment
-        })
-      })  
-  
-      if (!res.ok) {
-        setIsCommentLoading(false)
-        throw new Error(res.statusText)
-      }
-
-      const json = await res.json()
-
-      if (json.data) {
-        setIsCommentLoading(false)
-        updateComments(json.data);
-      }
-  
-    } catch (error) {
-
-      if (error) {
-        setIsCommentLoading(false)
-        setCommentError(error.message)
-      }
-    }
-  };
-
-
-
   return (
     <main className='my-4.5 md:mt-6.25'>
       <div className='grid grid-col-1 gap-y-20 md:grid-col-2 md:gap-x-6'>
         <div className='md:col-span-2'>
-          <h2 className='subheading mb-5 text-hint'>
+          <h2 className='text-1.75xl font-rubik font-eb mb-5 text-hint'>
             Get In Touch
           </h2>
           <p className='leading-6 pb-4'>
@@ -359,7 +359,7 @@ const Contact = () => {
             )}
           </div>
         </form>
-        <Icons values={"flex gap-x-5 md:col-start-2 md:row-start-3 md:place-self-end"} color={"#F6F9FF"} />
+        <Icons values={"flex gap-x-5 md:col-start-2 md:row-start-3 place-self-center md:place-self-end"} color={"#F6F9FF"} />
       </div>
     </main>
   );

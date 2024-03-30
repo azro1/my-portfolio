@@ -1,6 +1,5 @@
 import { Suspense } from "react"
 
-
 // components
 import Hero from "../components/Hero"
 import Services from "../components/Services"
