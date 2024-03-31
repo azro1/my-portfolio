@@ -4,7 +4,7 @@ import { FaLinkedin, FaInstagramSquare, FaYoutubeSquare, FaGithubSquare } from "
 
 const Footer = () => {
   return (
-    <footer className="bg-secondary border-t-8 border-hint p-1.625">
+    <footer className="bg-white border-t-8 border-hint p-1.625">
        <main className="my-2.375 md:mt-4.1875 max-w-screen-lg mx-auto" >
           <div className="newsletter flex flex-col items-center text-center gap-y-6">
             <h3>Get News, Insights & Updates</h3>
@@ -20,7 +20,7 @@ const Footer = () => {
                  />
               </div>
               <Link className="group" href="#">
-                <button className="py-3 px-4 min-w-max text-sm rounded-lg font-os font-eb text-secondary bg-primary ">SIGN ME UP</button>
+                <button className="py-3 px-4 min-w-max text-sm rounded-lg font-os font-eb text-white bg-primary ">SIGN ME UP</button>
               </Link>
             </form>
           </div>

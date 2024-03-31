@@ -21,7 +21,7 @@ export default async function AuthLayout ({ children }) {
       <nav className='flex items-center h-9.5 relative'>
         <Link href='/' className='mr-auto shadow-3xl pt-1.5 px-4 pb-0.5 rounded-xl bg-shade'>
           <h2 className='logo font-eb text-hint'>
-            Port<span>folio</span>
+            Port<span className="text-secondary">folio</span>
           </h2>
         </Link>
         
@@ -32,13 +32,13 @@ export default async function AuthLayout ({ children }) {
         <div className='hidden lg:flex items-center gap-12'>
           <Link href='/signup'>
             <div className="tooltip group">
-              <FaSignInAlt className="group-hover:text-hint transition duration-300 cursor-pointer" size={31} />
+              <FaSignInAlt className="text-secondary group-hover:text-hint transition duration-300 cursor-pointer" size={31} />
               <span className="tooltiptext -left-1.5">Sign up</span>
             </div>
           </Link>
           <Link href='/login'>
             <div className="tooltip group">
-              <FaUserPlus className="group-hover:text-hint transition duration-300 cursor-pointer" size={33} />
+              <FaUserPlus className="text-secondary group-hover:text-hint transition duration-300 cursor-pointer" size={33} />
               <span className="tooltiptext -left-1.5">Login</span>
             </div>
           </Link>

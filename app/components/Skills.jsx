@@ -222,11 +222,11 @@ const Skills = () => {
     <section>
       <div className='flex flex-col-reverse place-items-center md:flex-row md:items-start md:justify-between gap-y-6.25'>
         <div className='w-full md:w-2/5'>
-          <h2 className='subheading text-secondary font-r text-center mb-5'>
+          <h2 className='subheading text-hint font-r text-center mb-5'>
             Technical Skills
           </h2>
 
-          <div className='ts-inner text-secondary shadow-inner rounded-lg p-10'>
+          <div className='ts-inner shadow-inner rounded-lg p-10'>
 
 
             <div className='ts-inner-wrapper'>
@@ -236,7 +236,7 @@ const Skills = () => {
                 <div className='progress-bar shadow-inner mt-2 p-0.312'>
                   <div></div>
                 </div>
-                <p className='absolute right-0 top-0' ref={htmlPercentId}>{htmlPercent}%</p>
+                <p className='text-secondary absolute right-0 top-0' ref={htmlPercentId}>{htmlPercent}%</p>
               </div>
 
               <div className='relative mb-6'>
@@ -244,7 +244,7 @@ const Skills = () => {
                 <div className='progress-bar shadow-inner mt-2 p-0.312'>
                   <div></div>
                 </div>
-                <p className='absolute right-0 top-0' ref={cssPercentId}>{cssPercent}%</p>
+                <p className='text-secondary absolute right-0 top-0' ref={cssPercentId}>{cssPercent}%</p>
               </div>
 
               <div className='relative mb-6'>
@@ -252,7 +252,7 @@ const Skills = () => {
                 <div className='progress-bar shadow-inner mt-2 p-0.312'>
                   <div></div>
                 </div>
-                <p className='absolute right-0 top-0' ref={jsPercentId}>{jsPercent}%</p>
+                <p className='text-secondary absolute right-0 top-0' ref={jsPercentId}>{jsPercent}%</p>
               </div>
 
               <div className='relative mb-6'>
@@ -260,7 +260,7 @@ const Skills = () => {
                 <div className='progress-bar shadow-inner mt-2 p-0.312'>
                   <div></div>
                 </div>
-                <p className='absolute right-0 top-0' ref={phpPercentId}>{phpPercent}%</p>
+                <p className='text-secondary absolute right-0 top-0' ref={phpPercentId}>{phpPercent}%</p>
               </div>
               
             </div>
@@ -268,7 +268,7 @@ const Skills = () => {
         </div>
 
         <div className='progress-skills md:w-1/2'>
-          <h2 className='subheading text-secondary font-r text-center mb-5'>
+          <h2 className='subheading text-hint font-r text-center mb-5'>
             Professional Skills
           </h2>
 
@@ -277,7 +277,7 @@ const Skills = () => {
               <div className='progress-circle '>
                 <div className="outer">
                   <div className="inner">
-                     <div ref={communicationPercentId}>{communicationPercent}%</div>
+                     <div className="text-secondary" ref={communicationPercentId}>{communicationPercent}%</div>
                   </div>
                 </div>
                 
@@ -298,7 +298,7 @@ const Skills = () => {
               <div className='progress-circle'>
                 <div className="outer">
                   <div className="inner">
-                    <div ref={teamworkPercentId}>{teamworkPercent}%</div>
+                    <div className="text-secondary" ref={teamworkPercentId}>{teamworkPercent}%</div>
                   </div>
                 </div>
 
@@ -319,7 +319,7 @@ const Skills = () => {
               <div className='progress-circle'>
                 <div className="outer">
                   <div className="inner">
-                    <div ref={adaptabilityPercentId}>{adaptabilityPercent}%</div>
+                    <div className="text-secondary" ref={adaptabilityPercentId}>{adaptabilityPercent}%</div>
 
                   </div>
                 </div>
@@ -341,7 +341,7 @@ const Skills = () => {
               <div className='progress-circle'>
                 <div className="outer">
                   <div className="inner">
-                  <div ref={problemSolvingPercentId}>{problemSolvingPercent}%</div>
+                  <div className="text-secondary" ref={problemSolvingPercentId}>{problemSolvingPercent}%</div>
 
                   </div>
                 </div>

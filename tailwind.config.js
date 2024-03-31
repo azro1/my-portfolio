@@ -13,9 +13,9 @@ module.exports = {
     },
     extend: {
       colors: {
-        hint: '#576366',
+        hint: '#FF5722',
         shade: '#191B20',
-        secondary: '#F0F0F0',
+        secondary: '#757575',
         primary: '#1C1E24',
         discord: '#6A5ACD',
         github: '#323439',
@@ -65,7 +65,7 @@ module.exports = {
         '34': '34rem'
       },
       boxShadow: {
-        '3xl': '0px 0px 12px 0 #9966A2',
+        '3xl': '0px 0px 12px 0 #F06292',
         inner: 'inset -2px 0px 18px 10px #131519'
       }
     },

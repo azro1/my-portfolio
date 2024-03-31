@@ -196,7 +196,7 @@ const Contact = () => {
             </li>
           </ul>
 
-          <div className='p-16 bg-secondary w-full sm:max-w-sm'>
+          <div className='p-16 bg-white w-full sm:max-w-sm'>
             {/* google maps */}
           </div>
 
@@ -268,7 +268,7 @@ const Contact = () => {
                   <div className='mb-4' key={comment.id}>
                     
                      <div className="flex flex-col gap-1 mb-8">
-                       <div className='bg-secondary mb-2 p-4'>
+                       <div className='bg-white mb-2 p-4'>
                          <p className='text-black'>{comment.comment}</p> 
                        </div>
                        <div className='flex flex items-start'>
@@ -361,7 +361,7 @@ const Contact = () => {
             )}
           </div>
         </form>
-        <Icons values={"flex gap-x-5 md:col-start-2 md:row-start-3 place-self-center md:place-self-end"} color={"#F6F9FF"} />
+        <Icons values={"flex gap-x-5 md:col-start-2 md:row-start-3 place-self-center md:place-self-end"} color={"#757575"} />
       </div>
     </main>
   );

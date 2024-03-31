@@ -13,7 +13,7 @@ const Navbar = ({ user }) => {
         <Link className="mr-auto" href='/'>
           <Card values={'shadow-3xl pt-1.5 px-4 pb-0.5 rounded-xl bg-shade'}>
             <h2 className='logo font-eb text-hint'>
-              Port<span>folio</span>
+              Port<span className="text-secondary">folio</span>
             </h2>
           </Card>
         </Link>
