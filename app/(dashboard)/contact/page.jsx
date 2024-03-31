@@ -118,7 +118,7 @@ const Contact = () => {
   };
 
 
-  // handlesubmit (main contact form)
+  // handlesubmit (enquiries contact form)
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsMsgLoading(true)
@@ -155,7 +155,6 @@ const Contact = () => {
         setTimeout(clearSuccessMsg, 2000)
       }
   };
-
   
   return (
     <main className='my-4.5 md:mt-6.25'>
@@ -172,10 +171,7 @@ const Contact = () => {
           <p>I'm here to help and eager to connect!</p>
         </div>
 
-
-
-
-        <div className='row-start-3 md:row-start-2 md:col-start-1'>
+        <div className='row-start-3 md:row-start-2 md:row-start-2 md:col-start-1'>
           <ul className='mb-2'>
             <li className='flex gap-3 pb-3'>
               <FaPhone size={20} className='text-hint' />
@@ -194,12 +190,32 @@ const Contact = () => {
           <div className='p-16 bg-secondary w-full sm:max-w-sm'>
             {/* google maps */}
           </div>
-          
 
+          {!user && (
+            <div className='mt-4'>
+                <p>Please sign in to leave a comment.</p>
+            </div>
+          )}
+        </div>
+
+        {!user && 
+          <div className='md:row-start-2 col-start-1 md:place-self-end md:justify-self-start'>
+            <h3 className='text-xl font-eb font-rubik text-hint mb-5'>
+              When You Can Reach Me
+            </h3>
+            <div className='flex flex-col gap-3 max-w-xs'>
+              <p>I'm available:</p>
+              <ul className='text-secondary'>
+                <li>Monday to Friday:</li>
+                <li>9:00 AM - 5:00 PM (local time)</li>
+              </ul>
+              <p className="text-secondary leading-6">Feel free to drop me a line, and I'll get back to you as soon as possible!</p>
+            </div>
+          </div>}
 
           {/* comment form */}
           {user && (
-            <div className='mt-8'>
+            <div className='md:row-start-2 col-start-1 md:place-self-end md:justify-self-start'>
               <h3 className='mb-2 text-xl font-eb font-rubik text-hint'>
                 Leave a Comment
               </h3>
@@ -227,70 +243,47 @@ const Contact = () => {
             </div>
           )}
 
-          {!user && (
-            <div className='mt-8'>
-                <p>Please sign in to leave a comment.</p>
-            </div>
-          )}
-
-          {comments !== null && comments.length === 0 && (
-            <div className='mt-8'>
+          {user && comments !== null && comments.length === 0 && (
+            <div className='md:row-start-3 col-start-1'>
                 <p>No comments.</p>
             </div>
           )}
 
-  
           {comments !== null && comments.length > 0 && (
-            <div className='mt-12'>
-              <h3 className='text-xl font-b font-rubik text-hint'>
+            <div>
+              <h3 className='text-xl font-eb font-rubik text-hint mb-5'>
                 Comments
               </h3>
               <div className='w-full sm:max-w-xs'>
                 {comments.map(comment => (
-                  <div className='my-4' key={comment.id}>
-                    <div className='' >
-                      {user && user.first_name ? 
-                        <>
-                          <div className='bg-secondary mb-2 p-4'>
-                             <p>{comment.comment}</p> 
-                          </div>
-                            <p>{comment.user_name}</p>
-                        </>
-                      : 
-                        <div className="flex flex-col gap-1 my-8">
-                          <div className='bg-secondary mb-2 p-4'>
-                            <p className='text-black'>{comment.comment}</p> 
-                          </div>
-                          <div className='flex flex items-center'>
-                            <div className="overflow-hidden rounded-full w-12 h-12">
-                                <img className="inline-block w-full h-full object-cover" src={comment.avatar_url} alt="a user avatar" />
-                            </div>
-                            <p className="ml-2">{comment.full_name}</p>
-                          </div>
-                        </div>}
-                    </div>
+                  <div className='mb-4' key={comment.id}>
+                    
+                     <div className="flex flex-col gap-1 mb-8">
+                       <div className='bg-secondary mb-2 p-4'>
+                         <p className='text-black'>{comment.comment}</p> 
+                       </div>
+                       <div className='flex flex items-start'>
+                         <div className="overflow-hidden rounded-full w-12 h-12">
+                             <img className="inline-block w-full h-full object-cover" src={comment.avatar_url} alt="a user avatar" />
+                         </div>
+                         <p className="ml-2">{comment.full_name}</p>
+                       </div>
+                     </div>
+                    
                   </div>
                 ))}
               </div>
             </div>
           )}
 
-          
-
-        </div>
-
-
-
-
-          
-
-
-
-        {/* main form */}
+        {/* enquiries form */}
         <form
           onSubmit={handleSubmit}
           className='w-full row-start-2 sm:max-w-xs md:row-start-2 md:col-start-2 md:place-self-start md:mx-auto'
         >
+          <h3 className='mb-5 text-2xl font-eb font-rubik text-hint'>
+            Enquiries
+          </h3>
           <label>
             {error && <p className='error'>{error}</p>}
             <span className="className='max-w-min mb-2 text-sm font-os text-secondary block">
