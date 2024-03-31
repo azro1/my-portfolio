@@ -56,12 +56,15 @@ const Contact = () => {
 
 
   // as soon as component loads fetch all comments to be displayed on page
-  useEffect(() => {
-    async function getComments() {
+  const fetchComments = async () => {
+    try {
       const supabase = createClientComponentClient();
       const { data, error } = await supabase
       .from('comments')
       .select()
+      .order('created_at', {
+        ascending: false
+      })
 
       if (error) {
         setComments([])
@@ -71,10 +74,15 @@ const Contact = () => {
       if (data) {
         setComments(data)
       }
+    } catch (error) {
+        setError(error.message);
     }
-    getComments()
-  }, [])
+  }
 
+
+  useEffect(() => {
+    fetchComments();
+  }, []);
 
 
   // handlecomment (comment form)
@@ -106,6 +114,7 @@ const Contact = () => {
       if (json.data) {
         setIsCommentLoading(false)
         updateComments(json.data);
+        fetchComments();
       }
   
     } catch (error) {
