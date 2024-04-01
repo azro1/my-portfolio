@@ -158,7 +158,7 @@ footer span {
   content: '';
   width: 0%;
   height: 10px;
-  background: #757575;
+  background: #FFFFFF;
   position: absolute;
   left: 0;
   bottom: 0;
@@ -178,7 +178,7 @@ footer span {
   content: '';
   width: 0%;
   height: 10px;
-  background: #757575;
+  background: #FFFFFF;
   position: absolute;
   left: 0;
   bottom: 0;
@@ -198,7 +198,7 @@ footer span {
   content: '';
   width: 0%;
   height: 10px;
-  background: #757575;
+  background: #FFFFFF;
   position: absolute;
   left: 0;
   bottom: 0;
@@ -218,7 +218,7 @@ footer span {
   content: '';
   width: 0%;
   height: 10px;
-  background: #757575;
+  background: #FFFFFF;
   position: absolute;
   left: 0;
   bottom: 0;
@@ -264,52 +264,52 @@ footer span {
   @apply shadow-inner;
 }
 
-/* communication */
-.communication circle {
+/* organisation */
+.organisation circle {
   fill: none;
-  stroke: #757575;
+  stroke: #FFFFFF;
   stroke-width: 10px;
   stroke-dasharray: 283;
   stroke-dashoffset: 283;
-  animation-name: animateCommunicate;
+  animation-name: animateOrganisation;
   animation-duration: 100s;
   animation-iteration-count: infinite;
   animation-direction: backwards;
   animation-delay: 1s;
 }
 
-.communication svg {
+.organisation svg {
   position: absolute;
   top:-30px;
   left:-30px;
 }
 
-@keyframes animateCommunicate {
+@keyframes animateOrganisation {
   0% {width: 0%;}
   2%, 18%, 98%, 100% {stroke-dashoffset: 70.75;}
 }
 
-/* team work */
-.team-work circle {
+/* teamwork */
+.teamwork circle {
   fill: none;
-  stroke: #757575;
+  stroke: #FFFFFF;
   stroke-width: 10px;
   stroke-dasharray: 283;
   stroke-dashoffset: 283;
-  animation-name: animateTeamWork;
+  animation-name: animateTeamwork;
   animation-duration: 100s;
   animation-iteration-count: infinite;
   animation-direction: backwards;
   animation-delay: 1s;
 }
 
-.team-work svg {
+.teamwork svg {
   position: absolute;
   top:-30px;
   left:-30px;
 }
 
-@keyframes animateTeamWork {
+@keyframes animateTeamwork {
   0% {width: 0%;}
   2%, 18%, 98%, 100% {stroke-dashoffset: 124.52;}
 }
@@ -317,7 +317,7 @@ footer span {
 /* adaptability */
 .adaptability circle {
   fill: none;
-  stroke: #757575;
+  stroke: #FFFFFF;
   stroke-width: 10px;
   stroke-dasharray: 283;
   stroke-dashoffset: 283;
@@ -339,27 +339,27 @@ footer span {
   2%, 18%, 98%, 100% {stroke-dashoffset: 155.65;}
 }
 
-/* problem solving */
-.problem-solving circle {
+/* research-skills */
+.research-skills circle {
   fill: none;
-  stroke: #757575;
+  stroke: #FFFFFF;
   stroke-width: 10px;
   stroke-dasharray: 283;
   stroke-dashoffset: 283;
-  animation-name: animateProblemSolving;
+  animation-name: animateResearchSkills;
   animation-duration: 100s;
   animation-iteration-count: infinite;
   animation-direction: backwards;
   animation-delay: 1s;
 }
 
-.problem-solving svg {
+.research-skills svg {
   position: absolute;
   top:-30px;
   left:-30px;
 }
 
-@keyframes animateProblemSolving {
+@keyframes animateResearchSkills {
   0% {width: 0%;}
   2%, 18%, 98%, 100% {stroke-dashoffset: 113.2;}
 }

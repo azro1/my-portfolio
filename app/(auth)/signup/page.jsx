@@ -13,7 +13,7 @@ const Signup = () => {
 
 
           <div className='flex flex-col md:place-self-center items-center row-start-2 md:col-start-1 md:row-start-1'>
-            <h2 className='mb-7 text-1.75xl font-rubik font-b text-secondary'>Sign up</h2>
+            <h2 className='mb-7 text-1.75xl font-rubik font-eb text-secondary'>Sign up</h2>
             <SocialButtons text={"Continue"} />
             <span className='block text-secondary text-base mt-8'>
               Have an account?{' '}

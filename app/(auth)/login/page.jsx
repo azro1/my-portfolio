@@ -10,7 +10,7 @@ const Login = () => {
       <div className="flex flex-col items-center mx-auto gap-12">
 
         <div className='flex flex-col items-center'>
-          <h2 className='mb-7 text-1.75xl font-rubik font-b text-secondary'>Login</h2>
+          <h2 className='mb-7 text-1.75xl font-rubik font-eb text-secondary'>Login</h2>
           <SocialButtons text={"Login"} />
           <p className='text-sm mt-8'>
             Don't have an account?{' '}

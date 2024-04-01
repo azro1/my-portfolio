@@ -212,68 +212,56 @@ const Skills = () => {
     return () => clearInterval(phpPercentId.current)
   }, [isPhpPaused])
 
-
-
-
-  
-
-
   return (
     <section>
-      <div className='flex flex-col-reverse place-items-center md:flex-row md:items-start md:justify-between gap-y-6.25'>
-        <div className='w-full md:w-2/5'>
-          <h2 className='subheading text-hint font-r text-center mb-5'>
+      <div className='flex flex-col place-items-center gap-y-6.25 md:flex-row md:items-start md:items-stretch'>
+
+        <div className='w-full flex-1'>
+          <h2 className='subheading text-hint font-r text-center pb-4'>
             Technical Skills
           </h2>
 
-          <div className='ts-inner shadow-inner rounded-lg p-10'>
+            <div className='ts-inner-wrapper text-secondary w-4/5 sm:w-3/5 md:w-3/4 lg:w-3/5 mx-auto flex flex-col gap-5'>
 
-
-            <div className='ts-inner-wrapper'>
-
-              <div className='relative mb-6'>
+              <div className='relative'>
                 <p>Hmtl</p>
                 <div className='progress-bar shadow-inner mt-2 p-0.312'>
                   <div></div>
                 </div>
-                <p className='text-secondary absolute right-0 top-0' ref={htmlPercentId}>{htmlPercent}%</p>
+                <p className='absolute right-0 top-0 text-secondary' ref={htmlPercentId}>{htmlPercent}%</p>
               </div>
-
-              <div className='relative mb-6'>
+              <div className='relative'>
                 <p>Css</p>
                 <div className='progress-bar shadow-inner mt-2 p-0.312'>
                   <div></div>
                 </div>
-                <p className='text-secondary absolute right-0 top-0' ref={cssPercentId}>{cssPercent}%</p>
+                <p className='absolute right-0 top-0 text-secondary' ref={cssPercentId}>{cssPercent}%</p>
               </div>
-
-              <div className='relative mb-6'>
+              <div className='relative'>
                 <p>JavaScript</p>
                 <div className='progress-bar shadow-inner mt-2 p-0.312'>
                   <div></div>
                 </div>
-                <p className='text-secondary absolute right-0 top-0' ref={jsPercentId}>{jsPercent}%</p>
+                <p className='absolute right-0 top-0 text-secondary' ref={jsPercentId}>{jsPercent}%</p>
               </div>
-
-              <div className='relative mb-6'>
+              <div className='relative'>
                 <p>Php</p>
                 <div className='progress-bar shadow-inner mt-2 p-0.312'>
                   <div></div>
                 </div>
-                <p className='text-secondary absolute right-0 top-0' ref={phpPercentId}>{phpPercent}%</p>
+                <p className='absolute right-0 top-0 text-secondary' ref={phpPercentId}>{phpPercent}%</p>
               </div>
               
-            </div>
           </div>
         </div>
 
-        <div className='progress-skills md:w-1/2'>
-          <h2 className='subheading text-hint font-r text-center mb-5'>
+        <div className='flex-1 flex flex-col justify-end'>
+          <h2 className='subheading text-hint font-r text-center pb-4'>
             Professional Skills
           </h2>
 
-          <ul className='text-secondary text-center grid grid-col-1 gap-y-10 md:grid-cols-2 place-items-center shadow-inner rounded-lg p-10'>
-            <li className='communication flex flex-col items-center gap-2'>
+          <ul className='text-secondary text-center flex flex-wrap w-3/5 mx-auto gap-y-2.5'>
+            <li className='organisation flex flex-col items-center justify-center gap-1 px-2 flex-1'>
               <div className='progress-circle '>
                 <div className="outer">
                   <div className="inner">
@@ -292,9 +280,9 @@ const Skills = () => {
                 </svg>
 
               </div>
-              <div>Communication</div>
+              <div>Organisation</div>
             </li>
-            <li className='team-work flex flex-col items-center gap-2'>
+            <li className='teamwork flex flex-col items-center justify-center gap-1  px-2 flex-1'>
               <div className='progress-circle'>
                 <div className="outer">
                   <div className="inner">
@@ -313,9 +301,9 @@ const Skills = () => {
                 </svg>
 
               </div>
-              <div>Team Work</div>
+              <div>Teamwork</div>
             </li>
-            <li className='adaptability flex flex-col items-center gap-2'>
+            <li className='adaptability flex flex-col items-center justify-center gap-1 px-2 flex-1'>
               <div className='progress-circle'>
                 <div className="outer">
                   <div className="inner">
@@ -337,7 +325,7 @@ const Skills = () => {
               </div>
               <div>Adaptability</div>
             </li>
-            <li className='problem-solving flex flex-col items-center gap-2'>
+            <li className='research-skills flex flex-col items-center justify-center gap-1 px-2 flex-1'>
               <div className='progress-circle'>
                 <div className="outer">
                   <div className="inner">
@@ -356,7 +344,7 @@ const Skills = () => {
                   <circle cx="80" cy="80" r="45" strokeLinecap="butt" />
                 </svg>
               </div>
-              <div>Problem Solving</div>
+              <div className="whitespace-nowrap">Research-skills</div>
             </li>
           </ul>
           

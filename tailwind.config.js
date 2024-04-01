@@ -65,7 +65,7 @@ module.exports = {
         '34': '34rem'
       },
       boxShadow: {
-        '3xl': '0px 0px 12px 0 #F06292',
+        '3xl': '0px 0px 12px 0 #FFFFFF',
         inner: 'inset -2px 0px 18px 10px #131519'
       }
     },
