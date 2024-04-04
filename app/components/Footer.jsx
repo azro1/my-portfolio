@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { HiMiniEnvelopeOpen } from "react-icons/hi2";
-import { FaLinkedin, FaInstagramSquare, FaYoutubeSquare, FaGithubSquare } from "react-icons/fa";
+import { FaLinkedin, FaGithub, FaInstagramSquare, FaYoutube } from 'react-icons/fa';
 
 const Footer = () => {
   return (
@@ -99,24 +99,24 @@ const Footer = () => {
                 <h4 className="min-w-max">FOLLOW ME ON SOCIAL MEDIA</h4>
               </div>
               <div className="flex gap-x-5 justify-center pt-3">
-                <a href="#">
+              <a href="#">
                   <span>
-                    <FaYoutubeSquare size={26} />
+                    <FaLinkedin size={28} />
                   </span>
                 </a>
                 <a href="#">
                   <span>
-                    <FaLinkedin size={26} />
+                    <FaYoutube size={28} />
                   </span>
                 </a>
                 <a href="#">
                   <span>
-                    <FaGithubSquare size={26} />
+                    <FaGithub size={28} />
                   </span>
                 </a>
                 <a href="#">
                   <span>
-                    <FaInstagramSquare size={26} />
+                    <FaInstagramSquare size={28} />
                   </span>
                 </a>
               </div>

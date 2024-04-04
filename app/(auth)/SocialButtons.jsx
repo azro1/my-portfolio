@@ -68,11 +68,11 @@ const SocialButtons = ({ text }) => {
         {text} with Google
       </button>
       <button className='py-2.5 px-4 text-sm rounded-lg font-rubik text-white font-b block mb-3 bg-github w-64 flex items-center justify-center hover:filter hover:brightness-75 duration-300' onClick={handleGithubClick}>
-        <FaGithub className="mr-2" size={24} />
+        <FaGithub className="mr-2" size={26} />
         {text} with GitHub
       </button>
       <button className='py-2.5 px-4 text-sm rounded-lg font-rubik text-white font-b block bg-discord w-64 flex items-center justify-center hover:filter hover:brightness-75 duration-500' onClick={handleDiscordClick}>
-        <FaDiscord className="mr-2" size={24} />
+        <FaDiscord className="mr-2" size={26} />
         {text} with Discord
       </button>
     </>

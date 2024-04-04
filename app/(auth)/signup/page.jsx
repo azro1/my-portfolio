@@ -1,7 +1,6 @@
 import Link from "next/link"
 
 // components
-import Icons from "../../components/Icons"
 import SocialButtons from "../SocialButtons";
 
 
@@ -10,7 +9,6 @@ const Signup = () => {
     return (
       <main className='mb-14 mt-12 md:mb-4.5'>
         <div className='max-w-screen-lg mx-auto grid gap-12 md:gap-y-20 md:grid-cols-2'>
-
 
           <div className='flex flex-col md:place-self-center items-center row-start-2 md:col-start-1 md:row-start-1'>
             <h2 className='mb-7 text-1.75xl font-rubik font-eb text-secondary'>Sign up</h2>
@@ -45,7 +43,6 @@ const Signup = () => {
               and development with CodeDynamics!
             </span>
           </div>
-          <Icons values={"flex gap-x-5 place-content-center md:col-start-2 md:place-content-end md:items-end"} color={"#757575"} />
         </div>
       </main>
     );

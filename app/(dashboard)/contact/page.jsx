@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
-import Icons from '@/app/components/Icons';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 // metadata
@@ -362,7 +361,6 @@ const Contact = () => {
             )}
           </div>
         </form>
-        <Icons values={"flex gap-x-5 md:col-start-2 md:row-start-3 place-self-center md:place-self-end"} color={"#757575"} />
       </div>
     </main>
   );
