@@ -13,7 +13,7 @@ module.exports = {
     },
     extend: {
       colors: {
-        hint: '#FF5722',
+        hint: '#00796B',
         shade: '#191B20',
         secondary: '#757575',
         primary: '#1C1E24',
@@ -37,7 +37,7 @@ module.exports = {
         'eb': '800'
       },
       spacing: {
-        '0.312': '0.312rem', // 1.4px
+        '0.312': '0.312rem', // 4.992px
         '0.21': '0.21rem', // 3.36px
         '0.5': '0.5rem', // 8px
         '1.375': '1.375rem', // 22px

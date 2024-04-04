@@ -51,6 +51,8 @@ const Contact = () => {
   // update comments after new comment is added
   const updateComments = (newComment) => {
     setComments(prevComments => [...prevComments, newComment]);
+    console.log(user)
+
   }
 
 
@@ -266,19 +268,27 @@ const Contact = () => {
               <div className='w-full sm:max-w-xs'>
                 {comments.map(comment => (
                   <div className='mb-4' key={comment.id}>
-                    
-                     <div className="flex flex-col gap-1 mb-8">
-                       <div className='bg-white mb-2 p-4'>
-                         <p className='text-black'>{comment.comment}</p> 
-                       </div>
-                       <div className='flex flex items-start'>
-                         <div className="overflow-hidden rounded-full w-12 h-12">
-                             <img className="inline-block w-full h-full object-cover" src={comment.avatar_url} alt="a user avatar" />
-                         </div>
-                         <p className="ml-2">{comment.full_name}</p>
-                       </div>
+                    <div className='' >
+                      {user && comment.first_name ? 
+                        <>
+                          <div className='bg-white mb-2 p-4'>
+                             <p className='text-black'>{comment.comment}</p> 
+                          </div>
+                            <p>{comment.first_name}</p>
+                        </>
+                      : 
+                        <div className="flex flex-col gap-1 my-8">
+                          <div className='bg-white mb-2 p-4'>
+                            <p className='text-black'>{comment.comment}</p> 
+                          </div>
+                          <div className='flex flex items-center'>
+                            <div className="overflow-hidden rounded-full w-12 h-12">
+                                <img className="inline-block w-full h-full object-cover" src={comment.avatar_url} alt="a user avatar" />
+                            </div>
+                            <p className="ml-2">{comment.full_name}</p>
+                          </div>
+                        </div>}
                      </div>
-                    
                   </div>
                 ))}
               </div>
