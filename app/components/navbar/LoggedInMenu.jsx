@@ -3,6 +3,7 @@ import Link from "next/link"
 import {
   FaHome,
   FaInfoCircle,
+  FaEnvelope,
   FaUser,
   FaSignOutAlt,
   FaQuestionCircle
@@ -25,22 +26,28 @@ const LoggedInMenu = ({handleLogout, handleCloseMenu }) => {
       </Link>
       <Link href='/contact'>
       <div className='flex items-center p-3 group hover:bg-white' onClick={handleCloseMenu}>
-        <FaUser className="text-hint group-hover:text-primary transition duration-300" size={18} />
+        <FaEnvelope className="text-hint group-hover:text-primary transition duration-300" size={18} />
         <span className='text-secondary group-hover:text-primary text-sm font-b ml-3.5'>Contact</span>
       </div>
       </Link>
-      <div onClick={handleLogout}>
-      <div className='flex items-center p-3 group hover:bg-white cursor-pointer' onClick={handleCloseMenu}>
-        <FaSignOutAlt className="text-hint group-hover:text-primary transition duration-300" size={20} />
-        <span className='text-secondary group-hover:text-primary text-sm font-b ml-3.5'>Logout</span>
-      </div>
-      </div>
-      <Link href='/help'>
+      <Link href='/profile'>
       <div className='flex items-center p-3 group hover:bg-white' onClick={handleCloseMenu}>
-        <FaQuestionCircle className="text-hint group-hover:text-primary transition duration-300" size={18} />
-        <span className='text-secondary group-hover:text-primary text-sm font-b ml-3.5'>Help</span>
+        <FaUser className="text-hint group-hover:text-primary transition duration-300" size={18} />
+        <span className='text-secondary group-hover:text-primary text-sm font-b ml-3.5'>Profile</span>
       </div>
       </Link>
+      <Link href='/help'>
+        <div className='flex items-center p-3 group hover:bg-white' onClick={handleCloseMenu}>
+          <FaQuestionCircle className="text-hint group-hover:text-primary transition duration-300" size={18} />
+          <span className='text-secondary group-hover:text-primary text-sm font-b ml-3.5'>Help</span>
+        </div>
+      </Link>
+      <div onClick={handleLogout}>
+        <div className='flex items-center p-3 group hover:bg-white cursor-pointer' onClick={handleCloseMenu}>
+          <FaSignOutAlt className="text-hint group-hover:text-primary transition duration-300" size={20} />
+          <span className='text-secondary group-hover:text-primary text-sm font-b ml-3.5'>Logout</span>
+        </div>
+      </div>
     </>
   )
 }

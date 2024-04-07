@@ -3,7 +3,7 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation";
 
 
@@ -20,15 +20,20 @@ const Signup = () => {
   const [error, setError] = useState('')
   const router = useRouter()
 
+
   // check if a given string is a valid email address
   const isValidEmail = (value) => {
     const emailRegex = new RegExp('^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$', 'u');
     return emailRegex.test(value);
   };
 
+  
+
   const handleCheckbox = (e) => {
     setIsChecked(e.target.checked)
   }
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -68,7 +73,7 @@ const Signup = () => {
     }
 
       const supabase = createClientComponentClient()
-      const { error } = await supabase.auth.signUp({
+      const { data: { user }, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -133,9 +138,10 @@ const Signup = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </label>
-            {error && <div className="error">* {error}</div>}
 
-            <div className="mt-2.5 flex items-center">
+            {error && <div className="error mt-2">* {error}</div>}
+
+            <div className="mt-4 flex items-center">
               <input className="self-start mt-0.21 max-w-min" type="checkbox" value={isChecked} onChange={handleCheckbox}/>
               <span className="text-sm block text-secondary ml-2">I accept the{' '}<Link className="text-hint" href='#'>Privacy Policy</Link>{' '}and the{' '}<Link className='text-hint' href='#'>Terms of Service</Link>
               </span>

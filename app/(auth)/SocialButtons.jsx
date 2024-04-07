@@ -63,11 +63,11 @@ const SocialButtons = ({ text }) => {
 
   return (
     <>
-      <button className='py-2.5 px-4 text-sm rounded-lg font-rubik text-white font-b block mb-3 bg-red-600 w-64 flex items-center justify-center hover:filter hover:brightness-75 duration-300' onClick={handleGoogleClick}>
+      <button className='py-2.5 px-4 text-sm rounded-lg font-rubik text-white font-b block mb-2 bg-red-600 w-64 flex items-center justify-center hover:filter hover:brightness-75 duration-300' onClick={handleGoogleClick}>
         <FaGoogle className="mr-2" size={24} />
         {text} with Google
       </button>
-      <button className='py-2.5 px-4 text-sm rounded-lg font-rubik text-white font-b block mb-3 bg-github w-64 flex items-center justify-center hover:filter hover:brightness-75 duration-300' onClick={handleGithubClick}>
+      <button className='py-2.5 px-4 text-sm rounded-lg font-rubik text-white font-b block mb-2 bg-github w-64 flex items-center justify-center hover:filter hover:brightness-75 duration-300' onClick={handleGithubClick}>
         <FaGithub className="mr-2" size={26} />
         {text} with GitHub
       </button>
