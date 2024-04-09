@@ -30,7 +30,7 @@ const ProjectList = async () => {
                     <img
                       className="bg-white p-1 w-full h-48 object-cover object-left-top"
                       src={project.image_url}
-                      alt={'image'}
+                      alt={project.list_alt_desc}
                     />
                 </Link>
               </div>

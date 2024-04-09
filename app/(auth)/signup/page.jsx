@@ -99,7 +99,7 @@ const Signup = () => {
         <div className='max-w-screen-lg mx-auto grid gap-y-16 md:gap-x-8 md:grid-cols-2'>
 
           <form onSubmit={handleSubmit} className="justify-self-center place-self-center w-full sm:max-w-xs">
-            <h2 className='mb-5 subheading text-hint'>Sign up</h2>
+            <h2 className='mb-5 text-1.75xl font-rubik font-eb text-hint'>Sign up</h2>
             <label>
               <span className='max-w-min mb-2 text-sm font-os text-secondary block'>
                 Name

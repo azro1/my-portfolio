@@ -3,6 +3,9 @@ const nextConfig = {}
 
 module.exports = {
   ...nextConfig, 
+  images: {
+    domains: ['sjvdjiblyhtpmryrmrlr.supabase.co'],
+  },
     webpack: ( config, { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack } ) => {
       if (isServer) { 
         config.externals.push({ 

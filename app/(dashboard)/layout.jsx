@@ -9,6 +9,7 @@ export default async function DashboardLayout ({ children }) {
   const { data } = await supabase.auth.getSession()
   const user = data.session?.user;
   
+
   return (
     <>
       <Navbar user={user} /> 

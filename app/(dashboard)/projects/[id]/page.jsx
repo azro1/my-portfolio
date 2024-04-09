@@ -4,7 +4,7 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 
 // components
-import Icons from '@/app/components/Icons';
+// import Icons from '@/app/components/Icons';
 import Card from "@/app/components/Card";
 
 // dynamic metadata
@@ -46,7 +46,7 @@ const Project = async ({ params }) => {
       <div className='grid gap-y-6 md:gap-y-10 md:grid-auto-rows md:grid-cols-2'>
 
         <Card values={'mt-6 p-3 rounded-md md:col-span-2 md:h-full'} >
-          <div className='bg-secondary p-3 h-full'>
+          <div className='bg-white p-3 h-full'>
               <img className='w-full h-96 object-cover object-left-top' src={project.image_url} alt={project.alt_desc} />
           </div>
         </Card>
@@ -99,7 +99,7 @@ const Project = async ({ params }) => {
             </div>
           </div>
         </div>
-        <Icons values={"flex gap-x-5 h-4.75 items-center md:col-start-2 md:row-start-3 md:place-content-end md:self-end md:items-end"} color={"#F6F9FF"} />
+        {/* <Icons values={"flex gap-x-5 h-4.75 items-center md:col-start-2 md:row-start-3 md:place-content-end md:self-end md:items-end"} color={"#F6F9FF"} /> */}
       </div>
     </main>
   );

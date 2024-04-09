@@ -11,7 +11,6 @@ export async function POST(request) {
 
   // get current user session
   const { data: { user } } = await supabase.auth.getUser()
-  // console.log(user)
 
   // insert the data
   const { data, error } = await supabase.from('comments')
