@@ -12,6 +12,28 @@ const Avatar = ({ user }) => {
     const supabase = createClientComponentClient();
 
     useEffect(() => {
+        const channel = supabase.channel('realtime profile').on('postgres_changes', {
+          event: '*',
+          schema: 'public',
+          table: 'profiles'
+        }, (payload) => {
+  
+             if (payload) {
+                setFirstName((prevFirstName) => {
+                    return prevFirstName ? payload.new.first_name : prevFirstName
+                })
+
+                setAvatarUrl((prevAvatar) => {
+                    return prevAvatar ? payload.new.avatar_url : prevAvatar
+                })
+             }
+        }).subscribe()
+  
+        return () => supabase.removeChannel(channel)
+      }, [avatar_url])
+
+
+    useEffect(() => {
         const getProfile = async () => {
             try {
                 const { data, error } = await supabase.from('profiles')
@@ -43,7 +65,6 @@ const Avatar = ({ user }) => {
                     <p className="font-b text-base text-hint">Hello, <span className="text-secondary">{user.user_metadata.full_name}</span></p>
                 </div>
                 )
-
             :
                (
                 <div className="flex flex-col items-center gap-1 absolute left-0 top-8.625 md:static mr-8">
@@ -56,7 +77,7 @@ const Avatar = ({ user }) => {
                         }}
                     />
                   </div>
-                    <p className="font-b text-base text-hint">Hello, <span className="text-secondary">{first_name}</span></p>
+                    <p className="font-b text-base text-secondary">Hello, <span className="text-hint">{first_name}</span></p>
                 </div>
             )}
 

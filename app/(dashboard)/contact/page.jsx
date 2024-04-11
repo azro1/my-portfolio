@@ -167,10 +167,10 @@ const Contact = () => {
   };
   
   return (
-    <main className='my-4.5 md:mt-6.25'>
+    <main className='mt-4.5 lg:mb-28'>
       <div className='grid grid-col-1 gap-y-20 md:grid-col-2 md:gap-x-6'>
         <div className='md:col-span-2'>
-          <h2 className='text-1.75xl font-rubik font-eb mb-5 text-hint'>
+          <h2 className='text-1.75xl font-rubik font-b mb-5 text-hint'>
             Get In Touch
           </h2>
           <p className='leading-6 pb-4'>
@@ -211,7 +211,7 @@ const Contact = () => {
 
         {!user && 
           <div className='md:row-start-2 col-start-1 md:place-self-end md:justify-self-start'>
-            <h3 className='text-xl font-eb font-rubik text-hint mb-5'>
+            <h3 className='text-xl font-b font-rubik text-hint mb-5'>
               When You Can Reach Me
             </h3>
             <div className='flex flex-col gap-3 max-w-xs'>
@@ -227,7 +227,7 @@ const Contact = () => {
           {/* comment form */}
           {user && (
             <div className='md:row-start-2 col-start-1 md:place-self-end md:justify-self-start'>
-              <h3 className='mb-2 text-xl font-eb font-rubik text-hint'>
+              <h3 className='mb-2 text-xl font-b font-rubik text-hint'>
                 Leave a Comment
               </h3>
               <form onSubmit={handleComment}>
@@ -244,10 +244,10 @@ const Contact = () => {
                 {commentError && <p className='error'>{commentError}</p>}
                 <div>
                   {isCommentLoading && (
-                    <button className='btn mt-3.5 bg-hint'>Processing...</button>
+                    <button className='btn mt-2 bg-hint'>Processing...</button>
                   )}
                   {!isCommentLoading && (
-                    <button className='btn mt-3.5 bg-hint'>Add Comment</button>
+                    <button className='btn mt-2 bg-hint'>Add Comment</button>
                   )}
                 </div>
                 </form>
@@ -262,7 +262,7 @@ const Contact = () => {
 
           {comments !== null && comments.length > 0 && (
             <div>
-              <h3 className='text-xl font-eb font-rubik text-hint mb-5'>
+              <h3 className='text-xl font-b font-rubik text-hint mb-5'>
                 Comments
               </h3>
               <div className='w-full sm:max-w-xs'>
@@ -300,7 +300,7 @@ const Contact = () => {
           onSubmit={handleSubmit}
           className='w-full row-start-2 sm:max-w-xs md:row-start-2 md:col-start-2 md:place-self-start md:mx-auto'
         >
-          <h3 className='mb-5 text-2xl font-eb font-rubik text-hint'>
+          <h3 className='mb-5 text-2xl font-b font-rubik text-hint'>
             Enquiries
           </h3>
           <label>
@@ -364,10 +364,10 @@ const Contact = () => {
           {successMsg && <p className='success'>{successMsg}</p>}
           <div>
             {isMsgLoading && (
-              <button className='btn mt-3.5 bg-hint'>Processing...</button>
+              <button className='btn mt-2 bg-hint'>Processing...</button>
             )}
             {!isMsgLoading && (
-              <button className='btn mt-3.5 bg-hint'>Submit</button>
+              <button className='btn mt-2 bg-hint'>Submit</button>
             )}
           </div>
         </form>

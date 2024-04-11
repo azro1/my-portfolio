@@ -21,9 +21,8 @@ const ProfileAvatar = ({ url, size }) => {
                 if (error) {
                     setError(error.message);
                 }
-    
-                if (data && data.length > 0) {
-                    console.log("Signed URL:", data[0]);
+                if (data && data.length > 0) {  
+                    // console.log("Signed URL:", data[0]);
                     setSignedUrl(data[0].signedUrl);
                 } else {
                     setError('Image not found or access denied');
@@ -53,11 +52,12 @@ const ProfileAvatar = ({ url, size }) => {
                         fill={true}
                         quality={100}
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-
                     />
                 </div>
             ) : (
-                <div className="avatar no-image bg-shade" style={{ height: size, width: size }} />
+                <div className='h-14 w-14 bg-shade'>
+
+                </div>
             )}
         </div>
     );
