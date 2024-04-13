@@ -3,7 +3,7 @@
 // Avatar.jsx
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useState, useEffect } from "react";
-import ProfileAvatar from "@/app/(dashboard)/profile/ProfileAvatar";
+import ProfileAvatar from "@/app/(profile)/profile/ProfileAvatar";
 
 const Avatar = ({ user }) => {
     const [first_name, setFirstName] = useState('');
@@ -62,7 +62,7 @@ const Avatar = ({ user }) => {
                     <div className="overflow-hidden rounded-full w-12 h-12">
                         <img className="inline-block w-full h-full object-cover" src={user.user_metadata.avatar_url} alt="a user avatar" />
                     </div>
-                    <p className="font-b text-base text-hint">Hello, <span className="text-secondary">{user.user_metadata.full_name}</span></p>
+                    <p className="font-b text-base text-hint">{user.user_metadata.full_name}</p>
                 </div>
                 )
             :
@@ -77,7 +77,7 @@ const Avatar = ({ user }) => {
                         }}
                     />
                   </div>
-                    <p className="font-b text-base text-secondary">Hello, <span className="text-hint">{first_name}</span></p>
+                    <p className="font-b text-base text-hint">{first_name}</p>
                 </div>
             )}
 
