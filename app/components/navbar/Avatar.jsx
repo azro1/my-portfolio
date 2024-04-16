@@ -67,9 +67,9 @@ const Avatar = ({ user }) => {
                 )
             :
                (
-                <div className="flex flex-col items-center gap-1 absolute left-0 top-8.625 md:static mr-8">
+                <div className="flex flex-col items-center justify-center gap-1 absolute left-0 top-8.625 md:static mr-8">
                    <div className="overflow-hidden rounded-full w-14 h-14">
-                    <ProfileAvatar
+                     <ProfileAvatar
                         url={avatar_url}
                         size={150}
                         onUpload={(url) => {

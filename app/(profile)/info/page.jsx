@@ -250,7 +250,9 @@ const PersonalInfo = () => {
         <div className='w-full max-w-xs flex-1'>
           <div>
             <div className='mb-4'>
-              <ProfileAvatar url={avatar_url} size={150} />
+              <div className='h-14 w-14 relative'>
+                <ProfileAvatar url={avatar_url} size={150} />
+              </div>
             </div>
             <input
               className='text-secondary'

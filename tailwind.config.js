@@ -18,8 +18,7 @@ module.exports = {
         secondary: '#757575',
         primary: '#1C1E24',
         discord: '#6A5ACD',
-        github: '#323439',
-        mauve: '#9966A2'
+        github: '#323439'
       },
       fontFamily: {
         'rubik': ['Rubik', 'sans-serif'],
