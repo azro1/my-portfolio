@@ -3,9 +3,7 @@
 import { useState } from 'react'
 import {
   FaChevronDown,
-  FaChevronUp,
-  FaSignInAlt,
-  FaUserPlus,
+  FaChevronUp
 } from 'react-icons/fa';
 
 // components

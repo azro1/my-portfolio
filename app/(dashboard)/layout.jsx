@@ -6,10 +6,8 @@ import Navbar from "../components/navbar/Navbar"
 
 export default async function DashboardLayout ({ children }) {
   const supabase = createServerComponentClient({ cookies })
-  const { data } = await supabase.auth.getSession()
-  const user = data.session?.user;
+  const { data: { user } } = await supabase.auth.getUser()
   
-
   return (
     <>
       <Navbar user={user} /> 

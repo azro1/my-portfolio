@@ -10,12 +10,12 @@ const ProfileAvatar = ({ url, size }) => {
     const [signedUrl, setSignedUrl] = useState(null);
     const [error, setError] = useState(null);
     const supabase = createClientComponentClient();
-    const [isLoading, setIsLoading] = useState(true);
-
+    const [isLoading, setIsLoading] = useState(false);
 
     // the temporary URL is used to create a signed URL using Supabase's createSignedUrls function. This signedURL is then used to display the image in the ProfileAvatar component which we pass through as a prop.
     useEffect(() => {
         const fetchSignedUrl = async () => {
+            setIsLoading(true)
             try {
                 const { data, error } = await supabase
                     .storage
@@ -25,17 +25,13 @@ const ProfileAvatar = ({ url, size }) => {
                 if (error) {
                     setError(error.message);
                     setIsLoading(false)
-                }
-                if (data && data.length > 0) {  
-                    // console.log("Signed URL:", data[0]);
-                    setIsLoading(false)
-                    setSignedUrl(data[0].signedUrl);
                 } else {
-                    setError('Image not found or access denied');
+                    setSignedUrl(data && data.length > 0 ? data[0].signedUrl : null);
                 }
             } catch (error) {
-                console.error('Error generating signed URL:', error.message);
+                console.error(error.message);
                 setError('Error generating signed URL');
+            } finally {
                 setIsLoading(false)
             }
         };
@@ -52,13 +48,13 @@ const ProfileAvatar = ({ url, size }) => {
     return (
         <div>
             {isLoading ? (
-                <img src="images/navbar/avatar/loader.gif" alt="" />
+                <img src="images/navbar/avatar/loader.gif" alt="Loading..." /> // Show loader GIF when loading
             ) : (
                 <>
                     {signedUrl ? (
                         <div className='h-14 w-14 relative'>
                             <Image
-                                src={signedUrl} // Use the signed URL here
+                                src={signedUrl}
                                 alt="Avatar"
                                 fill={true}
                                 quality={100}
@@ -66,9 +62,9 @@ const ProfileAvatar = ({ url, size }) => {
                             />
                         </div>
                     ) : (
-                       <FaUserCircle size={56} color="gray"  />
+                        <FaUserCircle size={56} color="gray" />
                     )}
-                </>  
+                </>
             )}
         </div>
     );

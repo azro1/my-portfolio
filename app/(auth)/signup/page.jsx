@@ -27,13 +27,9 @@ const Signup = () => {
     return emailRegex.test(value);
   };
 
-  
-
   const handleCheckbox = (e) => {
     setIsChecked(e.target.checked)
   }
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -73,7 +69,7 @@ const Signup = () => {
     }
 
       const supabase = createClientComponentClient()
-      const { data: { user }, error } = await supabase.auth.signUp({
+      const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {

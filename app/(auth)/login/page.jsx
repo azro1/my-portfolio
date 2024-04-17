@@ -8,15 +8,12 @@ import { useRouter } from "next/navigation";
 // components
 import SocialButtons from "../SocialButtons";
 
-
-
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const router = useRouter()
-
 
   const handleSubmit = async (e) => {
     e.preventDefault()

@@ -9,9 +9,9 @@ import Chevron from "../components/Chevron"
 
 export default async function AuthLayout ({ children }) {
   const supabase = createServerComponentClient({ cookies })
-  const { data } = await supabase.auth.getSession()
+  const { data: { user } } = await supabase.auth.getUser()
   
-  if (data.session) {
+  if (user) {
     redirect('/')
   }
 

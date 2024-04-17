@@ -31,13 +31,13 @@ const Contact = () => {
     async function getUser() {
       try {
         const supabase = createClientComponentClient();
-        const {data: { session }, error } = await supabase.auth.getSession();
+        const {data: { user }, error } = await supabase.auth.getUser();
         if (error) {
           throw error;
         }
-        if (session) {
-          const user = session.user;
-          setUser({ ...user });
+        if (user) {
+          const authUser = user;
+          setUser({ ...authUser });
         }
       } catch (err) {
         setError(err.message);
@@ -51,8 +51,6 @@ const Contact = () => {
   // update comments after new comment is added
   const updateComments = (newComment) => {
     setComments(prevComments => [...prevComments, newComment]);
-    console.log(user)
-
   }
 
 

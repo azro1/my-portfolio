@@ -4,14 +4,16 @@ import { useState, useEffect } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 // components
-import ProfileAvatar from '../profile/ProfileAvatar';
 import ProfileHeader from '../profile/ProfileHeader';
+import { FaUserCircle } from "react-icons/fa";
+import Image from 'next/image';
+
+
 
 const PersonalInfo = () => {
-  const [user, setUser] = useState('');
+  const [authUser, setAuthUser] = useState('');
   const [first_name, setFirstName] = useState(null);
   const [full_name, setFullName] = useState(null);
-  const [avatar_url, setAvatarUrl] = useState(null);
   const [email, setEmail] = useState(null);
   const [uploadSuccess, setUploadSuccess] = useState(null);
   const [updateSuccess, setUpdateSuccess] = useState(null);
@@ -20,8 +22,40 @@ const PersonalInfo = () => {
   const [fileInputError, setFileInputError] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [imgSrc, setImgSrc] = useState('');
 
   const supabase = createClientComponentClient();
+
+  // get user session object as soon as component loads, set user state then call getProfile
+  useEffect(() => {
+    async function getUser() {
+      setUpdateError('');
+      try {
+        const {
+          data: { user },
+          error,
+        } = await supabase.auth.getUser();
+        if (error) {
+          throw new Error(error);
+        }
+        if (user) {
+          setAuthUser(user);
+        }
+      } catch (error) {
+        setUpdateError(error.message);
+        console.log(error.message);
+      }
+    }
+    getUser();
+  }, []);
+
+
+  // make sure we have a user and a user id before calling getProfile
+  useEffect(() => {
+    if (authUser && authUser.id) {
+      getProfile();
+    }
+  }, [authUser && authUser.id]);
 
   // when a user selects a file this function is invoked and the file is stored in state, the URL.createObjectURL function takes a File object as an input and creates a temporary URL that represents the file's content. It creates a URL that can be used to reference the file directly in the browser without uploading it to a server. This is stored as the value to avatar_url which is then passed as a prop to the ProfileAvatar component
   const handleFileInputChange = async (event) => {
@@ -30,54 +64,17 @@ const PersonalInfo = () => {
     const file = event.target.files[0];
     setSelectedFile(file);
 
-    try {
-      const { data, error } = await supabase.storage
-        .from('avatars')
-        .createSignedUrls([file.name], 60, { download: true }); // Expires in 60 seconds
-
-      if (error) {
-        throw new Error(error.message);
+    // display image users selects
+    if (file) {
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        setImgSrc(e.target.result)
       }
-      if (data && data.length > 0) {
-        setAvatarUrl(data[0].signedUrl);
-      } else {
-        throw new Error('Image not found or access denied');
-      }
-    } catch (error) {
-      setFileInputError(error.message);
-      console.error('Error generating signed URL:', error.message);
+      reader.readAsDataURL(file);
+    } else {
+        setFileInputError('Could not select file. Please try again.');
     }
   };
-
-  // get user session object as soon as component loads, set user state then call getProfile
-  useEffect(() => {
-    async function getSession() {
-      setUpdateError('');
-
-      try {
-        const {
-          data: { session },
-          error,
-        } = await supabase.auth.getSession();
-        if (error) {
-          throw new Error(error.message);
-        }
-        if (session) {
-          setUser(session.user);
-        }
-      } catch (error) {
-        setUpdateError(error.massage);
-        console.log(error.massage);
-      }
-    }
-    getSession();
-  }, []);
-
-  useEffect(() => {
-    if (user && user.id) {
-      getProfile();
-    }
-  }, [user && user.id]);
 
   // gets a users profile row with the id that is equal to the users id who is signed in and store properties in state whose values are being pre-poulated in the input fields as we have 2 way binding unsing controlled inputs
   const getProfile = async () => {
@@ -87,7 +84,7 @@ const PersonalInfo = () => {
       const { data, error } = await supabase
         .from('profiles')
         .select()
-        .eq('id', user.id)
+        .eq('id', authUser.id)
         .limit(1);
       if (error) {
         throw new Error(error.message);
@@ -96,7 +93,6 @@ const PersonalInfo = () => {
         const profileData = data[0];
         setFirstName(profileData.first_name);
         setFullName(profileData.full_name);
-        setAvatarUrl(profileData.avatar_url);
         setEmail(profileData.email);
       } else {
         throw new Error('You currently have no profile saved.');
@@ -120,7 +116,7 @@ const PersonalInfo = () => {
 
     try {
       const updatedProfile = {
-        id: user.id,
+        id: authUser.id,
         first_name,
         full_name,
         avatar_url,
@@ -132,8 +128,6 @@ const PersonalInfo = () => {
 
       if (error) {
         throw new Error(error.message);
-      } else {
-        location.reload();
       }
 
       if (first_name || full_name || email) {
@@ -165,23 +159,22 @@ const PersonalInfo = () => {
         throw new Error('You must select an image to upload.');
       }
       const fileExt = selectedFile.name.split('.').pop();
-      const filePath = `${user.id}-${Math.random()}.${fileExt}`;
+      const filePath = `${authUser.id}-${Math.random()}.${fileExt}`;
       const { error } = await supabase.storage
         .from('avatars')
         .upload(filePath, selectedFile, { upsert: true });
       if (error) {
         throw error;
-      } else {
-        location.reload();
       }
+      
       await updateProfile({ avatar_url: filePath }); // Wait for profile update
     } catch (error) {
-      setUploadError(error.message);
-
-      function clearErrorMsg() {
-        setUploadError('');
-      }
-      setTimeout(clearErrorMsg, 1500);
+        setUploadError(error.message);
+  
+        function clearErrorMsg() {
+          setUploadError('');
+        }
+        setTimeout(clearErrorMsg, 1500);
     } finally {
       setUploading(false);
     }
@@ -251,7 +244,17 @@ const PersonalInfo = () => {
           <div>
             <div className='mb-4'>
               <div className='h-14 w-14 relative'>
-                <ProfileAvatar url={avatar_url} size={150} />
+                {imgSrc ? (
+                  <Image
+                    src={imgSrc}
+                    alt="A user's selected image"
+                    fill={true}
+                    quality={100}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                ) : (
+                  <FaUserCircle size={56} color="gray" />
+                )}
               </div>
             </div>
             <input
@@ -260,7 +263,7 @@ const PersonalInfo = () => {
               id='single'
               accept='image/*'
               onChange={handleFileInputChange}
-              disabled={uploading || (user && user.user_metadata.full_name)}
+              disabled={uploading || (authUser && authUser.user_metadata.full_name)}
             />
             {fileInputError && <div className='error'>* {fileInputError}</div>}
             {uploadError && <div className='error'>* {uploadError}</div>}
@@ -270,7 +273,7 @@ const PersonalInfo = () => {
                 uploadError || uploadSuccess ? 'mt-2' : 'mt-3'
               }`}
               onClick={uploadAvatar}
-              disabled={uploading || (user && user.user_metadata.full_name)}
+              disabled={uploading || (authUser && authUser.user_metadata.full_name)}
             >
               {uploading ? 'Uploading ...' : 'Upload'}
             </button>
