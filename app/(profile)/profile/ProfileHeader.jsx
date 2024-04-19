@@ -3,7 +3,7 @@ const ProfileHeader = ({ heading, text }) => {
      <div className="">
         <div className="text-center">
             <h2 className="subheading text-hint">{heading}</h2>
-            <p className="text-base p-5">{text}</p>
+            <p className="text-base text-secondary p-5">{text}</p>
         </div>
      </div>
   )

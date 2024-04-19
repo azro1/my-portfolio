@@ -4,10 +4,14 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useState, useEffect } from "react";
 import ProfileAvatar from "@/app/(profile)/profile/ProfileAvatar";
+import { FaUserCircle } from "react-icons/fa";
+
 
 const Avatar = ({ user }) => {
     const [first_name, setFirstName] = useState('');
     const [avatar_url, setAvatarUrl] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+
 
     const supabase = createClientComponentClient();
 
@@ -30,11 +34,12 @@ const Avatar = ({ user }) => {
         }).subscribe()
   
         return () => supabase.removeChannel(channel)
-      }, [avatar_url])
+      }, [])
 
 
     useEffect(() => {
         const getProfile = async () => {
+            setIsLoading(true)
             try {
                 const { data, error } = await supabase.from('profiles')
                     .select()
@@ -47,37 +52,58 @@ const Avatar = ({ user }) => {
                     const profileData = data[0];
                     setFirstName(profileData.first_name);
                     setAvatarUrl(profileData.avatar_url);
+                    setIsLoading(false)
                 }
             } catch (error) {
+                setIsLoading(false)
                 console.log(error.message);
+            } finally {
+                setIsLoading(false)
             }
         };
-        getProfile();
-    }, [avatar_url, first_name]);
+        if (user && user.id) {
+            getProfile();
+        }
+    }, [avatar_url, first_name, user && user.id]);
  
     return (
         <div>
-            {user && user.user_metadata.full_name ? (
+            {user && user.app_metadata.provider !== "email" ? (
                 <div className="flex flex-col items-center gap-1 absolute left-0 top-8.625 md:static mr-8">
-                    <div className="overflow-hidden rounded-full w-12 h-12">
-                        <img className="inline-block w-full h-full object-cover" src={user.user_metadata.avatar_url} alt="a user avatar" />
-                    </div>
-                    <p className="font-b text-base text-hint">{user.user_metadata.full_name}</p>
+
+                    {isLoading ? (
+                        <div className='overflow-hidden w-12 h-12'>
+                            <img src="images/navbar/avatar/loader.gif" alt="a loading gif" />
+                        </div>
+                    ) : (
+                        <>
+                            {avatar_url ? (
+                                <div className="overflow-hidden rounded-full w-12 h-12">
+                                    <img className="inline-block w-full h-full object-cover" src={avatar_url} alt="a user avatar" />
+                                </div>
+                            ) : (
+                                <div className="overflow-hidden rounded-full min-w-max h-auto">
+                                    <FaUserCircle size={48} color="gray" />
+                                </div>
+                            )}
+                        </>
+                    )}
+
+                    <h6 className="font-os text-sm font-b text-hint">{user.user_metadata.full_name}</h6>
                 </div>
                 )
             :
                (
                 <div className="flex flex-col items-center justify-center gap-1 absolute left-0 top-8.625 md:static mr-8">
-                   <div className="overflow-hidden rounded-full w-14 h-14">
                      <ProfileAvatar
                         url={avatar_url}
-                        size={150}
                         onUpload={(url) => {
                             setAvatarUrl(url);
                         }}
+                        size={'h-12 w-12'}
+                        phSize={50}
                     />
-                  </div>
-                    <p className="font-b text-base text-hint">{first_name}</p>
+                    <h6 className="font-os text-sm font-b text-hint">{first_name}</h6>
                 </div>
             )}
 

@@ -3,6 +3,9 @@
 import { useState, useEffect } from 'react';
 import { FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import ProfileAvatar from '@/app/(profile)/profile/ProfileAvatar';
+import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
+import Image from 'next/image';
 
 // metadata
 export const metadata = {
@@ -24,6 +27,8 @@ const Contact = () => {
   const [isMsgLoading, setIsMsgLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState('');
   const [comments, setComments] = useState([])
+  const [profile, setProfile] = useState(null);
+  const [source, setSource] = useState('')
 
   // as soon as component loads check if user is logged in to allow comment to be added
   useEffect(() => {
@@ -39,6 +44,7 @@ const Contact = () => {
           const authUser = user;
           setUser({ ...authUser });
         }
+
       } catch (err) {
         setError(err.message);
       } 
@@ -46,15 +52,12 @@ const Contact = () => {
     getUser();
   }, []);
   
-  
-
   // update comments after new comment is added
   const updateComments = (newComment) => {
     setComments(prevComments => [...prevComments, newComment]);
   }
 
-
-  // as soon as component loads fetch all comments to be displayed on page
+  // as soon as component mounts fetch all comments to be displayed on page
   const fetchComments = async () => {
     try {
       const supabase = createClientComponentClient();
@@ -78,11 +81,36 @@ const Contact = () => {
     }
   }
 
-
   useEffect(() => {
     fetchComments();
   }, []);
 
+  // fetch profiles
+  useEffect(() => {
+    const fetchProfiles = async () => {
+      try {
+        const supabase = createClientComponentClient();
+        const { data, error } = await supabase
+        .from('profiles')
+        .select()
+        .eq("id", user.id)
+        .single()
+         
+        if (error) {
+          throw new Error(error.message)
+        }
+        
+        if (data) {
+          setProfile(data)
+        }
+      } catch (error) {
+          console.log(error.message);
+      }
+    }
+    if (user && user.id) {
+      fetchProfiles()
+    }
+  }, [user && user.id])
 
   // handlecomment (comment form)
   const handleComment = async (e) => {
@@ -98,7 +126,9 @@ const Contact = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          comment
+          profile,
+          comment,
+          source
         })
       })  
   
@@ -110,7 +140,12 @@ const Contact = () => {
       // handle response
       const json = await res.json()
 
+      if (json.error) {
+        console.log(error.message)
+      }
+
       if (json.data) {
+        // console.log(json.data)
         setIsCommentLoading(false)
         updateComments(json.data);
         fetchComments();
@@ -124,7 +159,6 @@ const Contact = () => {
       }
     }
   };
-
 
   // handlesubmit (enquiries contact form)
   const handleSubmit = async (e) => {
@@ -168,7 +202,7 @@ const Contact = () => {
     <main className='mt-4.5 lg:mb-28'>
       <div className='grid grid-col-1 gap-y-20 md:grid-col-2 md:gap-x-6'>
         <div className='md:col-span-2'>
-          <h2 className='text-1.75xl font-rubik font-b mb-5 text-hint'>
+          <h2 className='text-1.75xl font-rubik font-b mb-4 text-hint'>
             Get In Touch
           </h2>
           <p className='leading-6 pb-4'>
@@ -230,7 +264,7 @@ const Contact = () => {
               </h3>
               <form onSubmit={handleComment}>
                 <textarea
-                  className='p-2'
+                  className='p-2 outline-none'
                   cols='40'
                   rows='4'
                   spellCheck='false'
@@ -260,33 +294,39 @@ const Contact = () => {
 
           {comments !== null && comments.length > 0 && (
             <div>
-              <h3 className='text-xl font-b font-rubik text-hint mb-5'>
+              <h3 className='text-xl font-b font-rubik text-hint mb-8'>
                 Comments
               </h3>
-              <div className='w-full sm:max-w-xs'>
+              <div className='w-full sm:max-w-lg'>
                 {comments.map(comment => (
-                  <div className='mb-4' key={comment.id}>
-                    <div className='' >
-                      {user && comment.first_name ? 
-                        <>
-                          <div className='bg-white mb-2 p-4'>
-                             <p className='text-black'>{comment.comment}</p> 
-                          </div>
-                            <p>{comment.first_name}</p>
-                        </>
-                      : 
-                        <div className="flex flex-col gap-1 my-8">
-                          <div className='bg-white mb-2 p-4'>
-                            <p className='text-black'>{comment.comment}</p> 
-                          </div>
-                          <div className='flex flex items-center'>
-                            <div className="overflow-hidden rounded-full w-12 h-12">
-                                <img className="inline-block w-full h-full object-cover" src={comment.avatar_url} alt="a user avatar" />
+                  <div className='mb-8' key={comment.id}>
+                    {user &&  
+                      <>
+                        <div className="flex items-start gap-3">
+                          {user && comment.avatar_url?.includes('https') ? ( 
+                              <div className="overflow-hidden rounded-full min-w-max h-12">
+                                  <img className="inline-block w-full h-full object-cover" src={comment.avatar_url} alt="a user avatar" />
+                              </div>
+                          ) : (
+                              <ProfileAvatar
+                                url={comment.avatar_url}
+                                onUpload={(url) => {
+                                    setAvatarUrl(url);
+                                }}
+                                size={'h-12 w-12'}
+                                phSize={50}
+                              />
+                          )} 
+                          <div>
+                            <div className='flex gap-2 items-center font-os mb-2'>
+                              <h6 className='text-sm text-hint font-b'>{comment.first_name ? comment.first_name : comment.full_name}</h6>
+                              <span className='text-xs text-secondary'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
                             </div>
-                            <p className="ml-2">{comment.full_name}</p>
+                            <p>{comment.comment}</p> 
                           </div>
-                        </div>}
-                     </div>
+                        </div>
+                      </>
+                    }
                   </div>
                 ))}
               </div>
@@ -298,7 +338,7 @@ const Contact = () => {
           onSubmit={handleSubmit}
           className='w-full row-start-2 sm:max-w-xs md:row-start-2 md:col-start-2 md:place-self-start md:mx-auto'
         >
-          <h3 className='mb-5 text-2xl font-b font-rubik text-hint'>
+          <h3 className='mb-4 text-2xl font-b font-rubik text-hint'>
             Enquiries
           </h3>
           <label>
@@ -349,7 +389,7 @@ const Contact = () => {
               Your Message
             </span>
             <textarea
-              className='p-2'
+              className='p-2 outline-none'
               placeholder='Enter you message here...'
               value={message}
               onChange={(e) => setMessage(e.target.value)}

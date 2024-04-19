@@ -14,13 +14,13 @@ export default async function ProfileLayout({ children }) {
   return (
     <>
       <Navbar user={user && user} />
-      <main className='my-4.5 lg:mb-28'>
+      <main className='my-4.5 lg:mb-28 h-screen'>
         <div className='flex flex-col md:flex-row '>
           <div className='sidebar bg-shade mb-12 md:mb-0 md:h-auto md:p-1 md:w-60'>
             <div className='flex flex-col'>
               <Link href={'/profile'}>
                 <div className='flex items-center p-3.5 mb-1 bg-primary group hover:bg-white'>
-                  <FaUserCircle size={18} color="#6B8E23" />
+                  <FaUserCircle className='text-hint group-hover:text-primary transition duration-300' size={18} />
                   <span className='text-secondary group-hover:text-primary text-sm ml-3.5'>
                     Dashboard
                   </span>
@@ -28,7 +28,7 @@ export default async function ProfileLayout({ children }) {
               </Link>
               <Link href={'/info'}>
                 <div className='flex items-center p-3.5 mb-1 bg-primary group hover:bg-white'>
-                  <HiMiniIdentification size={20} color="#6B8E23" />
+                  <HiMiniIdentification className='text-hint group-hover:text-primary transition duration-300' size={20} />
                   <span className='text-secondary group-hover:text-primary text-sm ml-3.5'>
                     Personal Info
                   </span>

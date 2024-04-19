@@ -4,26 +4,29 @@ import { NextResponse } from "next/server"
 
 
 export async function POST(request) {
-  const comment = await request.json()
+  const { profile, comment } = await request.json()
   
-  // get supabase instance
-  const supabase = createRouteHandlerClient({ cookies })
+    // get supabase instance
+    const supabase = createRouteHandlerClient({ cookies })
 
-  // get current user session
-  const { data: { user } } = await supabase.auth.getUser()
+    // insert comment
+    const { data, error } = await supabase.from('comments')
+      .insert({
+        comment: comment,
+        avatar_url: profile.avatar_url,
+        email: profile.email,
+        first_name: profile.first_name,
+        full_name: profile.full_name,
+      })
+      .select()
+      .single()
 
-  // insert the data
-  const { data, error } = await supabase.from('comments')
-   .insert({
-     ...comment,
-     first_name: user.user_metadata.first_name,
-     full_name: user.user_metadata.full_name,
-     avatar_url: user.user_metadata.avatar_url,
-   })
-   .select()
-   .single()
+      if (error) {
+          console.log(error)
+      } 
 
-  // console.log(data, error)
+      if (data) {
+          return NextResponse.json({ data, error })
+      }
 
-  return NextResponse.json({ data, error })
 }

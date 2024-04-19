@@ -250,7 +250,7 @@ const PersonalInfo = () => {
                     alt="A user's selected image"
                     fill={true}
                     quality={100}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    sizes="100%"
                   />
                 ) : (
                   <FaUserCircle size={56} color="gray" />
@@ -258,7 +258,7 @@ const PersonalInfo = () => {
               </div>
             </div>
             <input
-              className='text-secondary'
+              className='text-secondary file:cursor-pointer'
               type='file'
               id='single'
               accept='image/*'
