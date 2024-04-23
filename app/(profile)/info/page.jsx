@@ -9,7 +9,6 @@ import { FaUserCircle } from "react-icons/fa";
 import Image from 'next/image';
 
 
-
 const PersonalInfo = () => {
   const [authUser, setAuthUser] = useState('');
   const [first_name, setFirstName] = useState(null);
@@ -103,6 +102,42 @@ const PersonalInfo = () => {
     }
   };
 
+
+
+
+
+
+
+  // update comment avatar after user uploads avatar
+  const fetchComments = async (path, name) => {
+    try {
+      // const { data: comments, error } = await supabase
+      // .from('profiles')
+      // .select('*, comments(*)')
+
+          const { data, error } = await supabase
+            .from('comments')
+            .update({ 
+              avatar_url: path,
+              first_name: name
+            })
+            .eq('comment_id', authUser.id)
+            .select()
+
+          if (error) {
+            throw error;
+          } else {
+            console.log(data)
+          }
+
+    } catch (error) {
+        console.log(error.message)
+    }
+  }
+
+
+
+
   // users can edit the state values in the form input fields and then when the form is submitted we call this function to update the profiles table in supabase
   const updateProfile = async ({
     first_name,
@@ -132,6 +167,8 @@ const PersonalInfo = () => {
 
       if (first_name || full_name || email) {
         setUpdateSuccess('Profile updated!');
+        await fetchComments(undefined, first_name)  // pass first_name to fetchComments
+
       } else {
         setUploadSuccess('Avatar uploaded successfully.');
       }
@@ -147,6 +184,10 @@ const PersonalInfo = () => {
     }
   };
 
+
+
+
+    
   // we use the file that a user selects to construct a file path which we use to uload the file to the avatars bucket, once the operation is complete we upadte the users profile again this time setting the value of the avatar_url property to the filePath which was just uploaded to the bucket and use await to wait until the operation is complete
   const uploadAvatar = async () => {
     setUpdateSuccess('');
@@ -166,8 +207,9 @@ const PersonalInfo = () => {
       if (error) {
         throw error;
       }
-      
-      await updateProfile({ avatar_url: filePath }); // Wait for profile update
+      await updateProfile({ avatar_url: filePath });
+      await fetchComments(filePath, undefined)  // pass filePath to fetchComments
+
     } catch (error) {
         setUploadError(error.message);
   

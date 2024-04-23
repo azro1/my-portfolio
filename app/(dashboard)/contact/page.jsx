@@ -5,7 +5,6 @@ import { FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import ProfileAvatar from '@/app/(profile)/profile/ProfileAvatar';
 import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
-import Image from 'next/image';
 
 // metadata
 export const metadata = {
@@ -28,7 +27,6 @@ const Contact = () => {
   const [successMsg, setSuccessMsg] = useState('');
   const [comments, setComments] = useState([])
   const [profile, setProfile] = useState(null);
-  const [source, setSource] = useState('')
 
   // as soon as component loads check if user is logged in to allow comment to be added
   useEffect(() => {
@@ -36,15 +34,14 @@ const Contact = () => {
     async function getUser() {
       try {
         const supabase = createClientComponentClient();
-        const {data: { user }, error } = await supabase.auth.getUser();
+        const {data: { session }, error } = await supabase.auth.getSession();
         if (error) {
           throw error;
         }
-        if (user) {
-          const authUser = user;
-          setUser({ ...authUser });
+        if (session) {
+          const user = session.user;
+          setUser({ ...user });
         }
-
       } catch (err) {
         setError(err.message);
       } 
@@ -52,6 +49,15 @@ const Contact = () => {
     getUser();
   }, []);
   
+
+  
+
+
+
+
+
+
+
   // update comments after new comment is added
   const updateComments = (newComment) => {
     setComments(prevComments => [...prevComments, newComment]);
@@ -85,6 +91,12 @@ const Contact = () => {
     fetchComments();
   }, []);
 
+
+
+
+
+
+
   // fetch profiles
   useEffect(() => {
     const fetchProfiles = async () => {
@@ -112,13 +124,20 @@ const Contact = () => {
     }
   }, [user && user.id])
 
+
+
+
+
+
+
+
   // handlecomment (comment form)
   const handleComment = async (e) => {
     e.preventDefault();
     setIsCommentLoading(true)
     setCommentError('')
     setComment('')
-  
+      
     try {
       const res = await fetch(`${location.origin}/api/auth/comments`, {
         method: 'POST',
@@ -127,8 +146,7 @@ const Contact = () => {
         },
         body: JSON.stringify({
           profile,
-          comment,
-          source
+          comment
         })
       })  
   
@@ -159,6 +177,12 @@ const Contact = () => {
       }
     }
   };
+
+
+
+
+
+
 
   // handlesubmit (enquiries contact form)
   const handleSubmit = async (e) => {
@@ -197,6 +221,12 @@ const Contact = () => {
         setTimeout(clearSuccessMsg, 2000)
       }
   };
+
+
+
+
+
+
   
   return (
     <main className='mt-4.5 lg:mb-28'>
@@ -234,14 +264,15 @@ const Contact = () => {
             <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d2477.512962604341!2d-0.13284128788590113!3d51.61381197172027!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNTHCsDM2JzQ5LjciTiAwwrAwNyc0OC45Ilc!5e0!3m2!1sen!2suk!4v1712056886513!5m2!1sen!2suk" style={{ width: "100%", height: "100%", border: "0" }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
           </div>
 
-          {!user && (
+          {!comments && (
             <div className='mt-4 md:mb-64'>
                 <p>Please sign in to leave a comment.</p>
             </div>
           )}
-        </div>
+          </div>
 
-        {!user && 
+        
+        {!comments && (
           <div className='md:row-start-2 col-start-1 md:place-self-end md:justify-self-start'>
             <h3 className='text-xl font-b font-rubik text-hint mb-5'>
               When You Can Reach Me
@@ -254,10 +285,11 @@ const Contact = () => {
               </ul>
               <p className="text-secondary leading-6">Feel free to drop me a line, and I'll get back to you as soon as possible!</p>
             </div>
-          </div>}
+          </div>
+         )}
 
           {/* comment form */}
-          {user && (
+          {comments && (
             <div className='md:row-start-2 col-start-1 md:place-self-end md:justify-self-start'>
               <h3 className='mb-2 text-xl font-b font-rubik text-hint'>
                 Leave a Comment
@@ -286,7 +318,7 @@ const Contact = () => {
             </div>
           )}
 
-          {user && comments !== null && comments.length === 0 && (
+          {comments !== null && comments.length === 0 && (
             <div className='md:row-start-3 col-start-1'>
                 <p>No comments.</p>
             </div>
@@ -300,10 +332,10 @@ const Contact = () => {
               <div className='w-full sm:max-w-lg'>
                 {comments.map(comment => (
                   <div className='mb-8' key={comment.id}>
-                    {user &&  
+                    
                       <>
                         <div className="flex items-start gap-3">
-                          {user && comment.avatar_url?.includes('https') ? ( 
+                          {comment.avatar_url?.includes('https') ? ( 
                               <div className="overflow-hidden rounded-full min-w-max h-12">
                                   <img className="inline-block w-full h-full object-cover" src={comment.avatar_url} alt="a user avatar" />
                               </div>
@@ -326,7 +358,7 @@ const Contact = () => {
                           </div>
                         </div>
                       </>
-                    }
+                    
                   </div>
                 ))}
               </div>
