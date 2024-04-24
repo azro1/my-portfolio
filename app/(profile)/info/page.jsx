@@ -126,8 +126,6 @@ const PersonalInfo = () => {
 
           if (error) {
             throw error;
-          } else {
-            console.log(data)
           }
 
     } catch (error) {
@@ -180,7 +178,8 @@ const PersonalInfo = () => {
       }
       setTimeout(clearSuccessMsg, 1500);
     } catch (error) {
-      setUpdateError(error.message);
+        setUpdateError('Please enter your profile info. First names must be at least 3 characters long.');
+        console.log(error.message)
     }
   };
 
@@ -269,8 +268,8 @@ const PersonalInfo = () => {
               />
             </label>
 
-            {updateError && <div className='error'>* {updateError}</div>}
-            {updateSuccess && <div className='success'>* {updateSuccess}</div>}
+            {updateError && <div className='error mt-2'>* {updateError}</div>}
+            {updateSuccess && <div className='success mt-2'>* {updateSuccess}</div>}
           </form>
           <button
             className={`btn block bg-hint ${
@@ -307,9 +306,9 @@ const PersonalInfo = () => {
               onChange={handleFileInputChange}
               disabled={uploading || (authUser && authUser.user_metadata.full_name)}
             />
-            {fileInputError && <div className='error'>* {fileInputError}</div>}
-            {uploadError && <div className='error'>* {uploadError}</div>}
-            {uploadSuccess && <div className='success'>* {uploadSuccess}</div>}
+            {fileInputError && <div className='error mt-2'>* {fileInputError}</div>}
+            {uploadError && <div className='error mt-2'>* {uploadError}</div>}
+            {uploadSuccess && <div className='success mt-2'>* {uploadSuccess}</div>}
             <button
               className={`btn bg-hint max-w-max primary block ${
                 uploadError || uploadSuccess ? 'mt-2' : 'mt-3'

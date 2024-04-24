@@ -1,11 +1,19 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {}
+/** 
+ * @type {import('next').NextConfig} 
+ */
+
+const nextConfig = {
+  reactStrictMode: true, 
+  swcMinify: true, 
+  images: {  
+    domains: [
+      'sjvdjiblyhtpmryrmrlr.supabase.co',  
+    ],     
+  },
+}
 
 module.exports = {
   ...nextConfig, 
-  images: {
-    domains: ['sjvdjiblyhtpmryrmrlr.supabase.co'],
-  },
     webpack: ( config, { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack } ) => {
       if (isServer) { 
         config.externals.push({ 

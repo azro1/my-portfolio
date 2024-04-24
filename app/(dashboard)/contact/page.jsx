@@ -149,17 +149,12 @@ const Contact = () => {
           comment
         })
       })  
-  
-      if (!res.ok) {
-        setIsCommentLoading(false)
-        throw new Error(res.statusText)
-      }
 
       // handle response
       const json = await res.json()
 
       if (json.error) {
-        console.log(error.message)
+        throw new Error(json.error);
       }
 
       if (json.data) {
@@ -170,11 +165,8 @@ const Contact = () => {
       }
   
     } catch (error) {
-
-      if (error) {
         setIsCommentLoading(false)
-        setCommentError(error.message)
-      }
+        console.log(error.message)
     }
   };
 
@@ -229,9 +221,11 @@ const Contact = () => {
 
   
   return (
-    <main className='mt-4.5 lg:mb-28'>
-      <div className='grid grid-col-1 gap-y-20 md:grid-col-2 md:gap-x-6'>
-        <div className='md:col-span-2'>
+    <main className='my-4.5 lg:mb-28'>
+      <div className='grid grid-flow-col auto-cols-fr gap-y-20 md:grid-col-2 md:gap-x-6'>
+
+
+        <div className='row-start-1 col-start-1 col-span-2'>
           <h2 className='text-1.75xl font-rubik font-b mb-4 text-hint'>
             Get In Touch
           </h2>
@@ -243,7 +237,10 @@ const Contact = () => {
           <p>I'm here to help and eager to connect!</p>
         </div>
 
-        <div className='row-start-3 md:row-start-2 md:row-start-2 md:col-start-1'>
+
+
+        <div className='row-start-3 col-start-1 col-span-2 md:row-start-2 md:col-start-1 md:col-span-1 flex flex-col gap-6'>
+          <div>
           <ul className='mb-2'>
             <li className='flex gap-3 pb-3'>
               <FaPhone size={20} className='text-hint' />
@@ -260,37 +257,20 @@ const Contact = () => {
           </ul>
           
           {/* Google maps */}
-          <div className='relative h-44 w-full sm:w-4/5 md:w-full lg:w-4/5'>
+          <div className='relative h-44 w-full sm:w-4/5 md:w-full'>
             <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d2477.512962604341!2d-0.13284128788590113!3d51.61381197172027!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNTHCsDM2JzQ5LjciTiAwwrAwNyc0OC45Ilc!5e0!3m2!1sen!2suk!4v1712056886513!5m2!1sen!2suk" style={{ width: "100%", height: "100%", border: "0" }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
           </div>
 
-          {!comments && (
+          {!user && (
             <div className='mt-4 md:mb-64'>
                 <p>Please sign in to leave a comment.</p>
             </div>
           )}
           </div>
 
-        
-        {!comments && (
-          <div className='md:row-start-2 col-start-1 md:place-self-end md:justify-self-start'>
-            <h3 className='text-xl font-b font-rubik text-hint mb-5'>
-              When You Can Reach Me
-            </h3>
-            <div className='flex flex-col gap-3 max-w-xs'>
-              <p>I'm available:</p>
-              <ul className='text-secondary'>
-                <li>Monday to Friday:</li>
-                <li>9:00 AM - 5:00 PM (local time)</li>
-              </ul>
-              <p className="text-secondary leading-6">Feel free to drop me a line, and I'll get back to you as soon as possible!</p>
-            </div>
-          </div>
-         )}
-
           {/* comment form */}
-          {comments && (
-            <div className='md:row-start-2 col-start-1 md:place-self-end md:justify-self-start'>
+          {user && (
+            <div>
               <h3 className='mb-2 text-xl font-b font-rubik text-hint'>
                 Leave a Comment
               </h3>
@@ -305,7 +285,7 @@ const Contact = () => {
                   onChange={(e) => setComment(e.target.value)}
                   required
                 ></textarea>
-                {commentError && <p className='error'>{commentError}</p>}
+                {commentError && <div className='error'>{commentError}</div>}
                 <div>
                   {isCommentLoading && (
                     <button className='btn mt-2 bg-hint'>Processing...</button>
@@ -318,18 +298,45 @@ const Contact = () => {
             </div>
           )}
 
-          {comments !== null && comments.length === 0 && (
+          {user !== null && comments.length === 0 && (
             <div className='md:row-start-3 col-start-1'>
                 <p>No comments.</p>
             </div>
           )}
+        </div>
+
+
+
+        
+        {!user && (
+          <div className='row-start-4 col-start-1 col-span-2 md:row-start-2 md:col-start-1 md:col-span-1 md:place-self-end md:justify-self-start'>
+            <h3 className='text-xl font-b font-rubik text-hint mb-5'>
+              When You Can Reach Me
+            </h3>
+            <div className='flex flex-col gap-3 max-w-xs'>
+              <p>I'm available:</p>
+              <ul className='font-os text-sm text-secondary leading-6'>
+                <li>Monday to Friday:</li>
+                <li>9:00 AM - 5:00 PM (local time)</li>
+              </ul>
+              <p className="text-secondary leading-6">Feel free to drop me a line, and I'll get back to you as soon as possible!</p>
+            </div>
+          </div>
+         )}
+
+
+
+
+
+
+
+
 
           {comments !== null && comments.length > 0 && (
-            <div>
+            <div className='w-full sm:max-w-xl row-start-4 col-start-1 col-span-2 md:row-start-3'>
               <h3 className='text-xl font-b font-rubik text-hint mb-8'>
                 Comments
               </h3>
-              <div className='w-full sm:max-w-lg'>
                 {comments.map(comment => (
                   <div className='mb-8' key={comment.id}>
                     
@@ -361,14 +368,17 @@ const Contact = () => {
                     
                   </div>
                 ))}
-              </div>
             </div>
           )}
+
+
+
+
 
         {/* enquiries form */}
         <form
           onSubmit={handleSubmit}
-          className='w-full row-start-2 sm:max-w-xs md:row-start-2 md:col-start-2 md:place-self-start md:mx-auto'
+          className='w-full row-start-2 col-start-1 col-span-2 sm:max-w-xs  md:col-span-1 md:col-start-2 md:justify-self-end' 
         >
           <h3 className='mb-4 text-2xl font-b font-rubik text-hint'>
             Enquiries

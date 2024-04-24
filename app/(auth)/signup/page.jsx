@@ -137,7 +137,7 @@ const Signup = () => {
 
             {error && <div className="error mt-2">* {error}</div>}
 
-            <div className="mt-4 flex items-center">
+            <div className="mt-2.5 flex items-center">
               <input className="self-start mt-0.21 max-w-min" type="checkbox" value={isChecked} onChange={handleCheckbox}/>
               <span className="text-sm block text-secondary ml-2">I accept the{' '}<Link className="text-hint" href='#'>Privacy Policy</Link>{' '}and the{' '}<Link className='text-hint' href='#'>Terms of Service</Link>
               </span>

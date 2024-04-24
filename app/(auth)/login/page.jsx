@@ -67,7 +67,7 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </label>
-          {error && <div className="error">* {error}</div>}
+          {error && <div className="error mt-2">* {error}</div>}
           <div>
             {isLoading && <button className='btn mt-3.5 bg-hint'>Processing...</button>}
             {!isLoading && <button className='btn mt-3.5 bg-hint'>Login</button>}
