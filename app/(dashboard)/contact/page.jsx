@@ -5,6 +5,7 @@ import { FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import ProfileAvatar from '@/app/(profile)/profile/ProfileAvatar';
 import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
+import { v4 as uuidv4 } from "uuid"
 
 // metadata
 export const metadata = {
@@ -40,7 +41,7 @@ const Contact = () => {
         }
         if (session) {
           const user = session.user;
-          setUser({ ...user });
+          setUser(user);
         }
       } catch (err) {
         setError(err.message);
@@ -49,15 +50,6 @@ const Contact = () => {
     getUser();
   }, []);
   
-
-  
-
-
-
-
-
-
-
   // update comments after new comment is added
   const updateComments = (newComment) => {
     setComments(prevComments => [...prevComments, newComment]);
@@ -92,44 +84,32 @@ const Contact = () => {
   }, []);
 
 
-
-
-
-
-
   // fetch profiles
   useEffect(() => {
     const fetchProfiles = async () => {
       try {
         const supabase = createClientComponentClient();
         const { data, error } = await supabase
-        .from('profiles')
-        .select()
-        .eq("id", user.id)
-        .single()
-         
+          .from('profiles')
+          .select()
+          .eq('id', user.id)
+          .single();
+
         if (error) {
-          throw new Error(error.message)
+          throw new Error(error.message);
         }
-        
+
         if (data) {
-          setProfile(data)
+          setProfile(data);
         }
       } catch (error) {
-          console.log(error.message);
+        console.log(error.message);
       }
-    }
+    };
     if (user && user.id) {
-      fetchProfiles()
+      fetchProfiles();
     }
-  }, [user && user.id])
-
-
-
-
-
-
-
+  }, [user && user.id]);
 
   // handlecomment (comment form)
   const handleComment = async (e) => {
@@ -170,10 +150,19 @@ const Contact = () => {
     }
   };
 
+  // clear messages
+  const clearMessage = () => {
+    setTimeout(() => {
+      setMsgError('');
+      setSuccessMsg('')
+    }, 2000)
+  }
 
-
-
-
+  // check if a given string is a valid email address
+  const isValidEmail = (value) => {
+    const emailRegex = new RegExp('^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$', 'u');
+    return emailRegex.test(value);
+  };
 
 
   // handlesubmit (enquiries contact form)
@@ -181,49 +170,96 @@ const Contact = () => {
     e.preventDefault();
     setIsMsgLoading(true)
 
-    setName('')
-    setEmail('')
-    setSubject('')
-    setMessage('')
-    setMsgError('')
+    if (profile) {
 
-    const supabase = createClientComponentClient();
-    const {data, error} = await supabase.from('enquiries')
-      .insert({
-        name,
-        email,
-        subject,
-        message
-      })
-      .select()
-      .single()
-      
-      if (error) {
-        setMsgError(error.message)
+      if (!name) {
+        setMsgError('Please provide a name.');
         setIsMsgLoading(false)
+        clearMessage()
+        return
+
+      } else if (!email) {
+        setMsgError('Please provide your email.');
+        setIsMsgLoading(false)
+        clearMessage()
+        return
+  
+      } else if (!isValidEmail(email)) {
+          setMsgError('Unable to validate email address: invalid format.');
+          setIsMsgLoading(false)
+          clearMessage()
+          return
+  
+      } else if (!subject) {
+         setMsgError('Please provide a subject.');
+         setIsMsgLoading(false)
+         clearMessage()
+         return
+  
+      } else if (!message) {
+         setMsgError('Please enter your message.');
+         setIsMsgLoading(false)
+         clearMessage()
+         return
       }
 
-      if (data) {
-        setSuccessMsg('Message Sent!')
-        setIsMsgLoading(false)
+      const supabase = createClientComponentClient();
 
-        function clearSuccessMsg() {
-          setSuccessMsg('')
+      const { data: enquiries, error: enquiriesError } = await supabase
+      .from('profiles')
+      .select('*, enquiries(*)')
+      .eq('id', user.id)
+  
+      if (enquiriesError) {
+        console.log('enquiriesError:', enquiriesError)
+      } else {
+        const userEnquiries = enquiries[0].enquiries;
+  
+        if (userEnquiries.length >= 2) {
+          setIsMsgLoading(false)
+          setMsgError('You have reached the maximum number of enquiries.');
+          return;
         }
-        setTimeout(clearSuccessMsg, 2000)
+
+        const {data, error} = await supabase.from('enquiries')
+        .insert({
+          id: uuidv4(), 
+          created_at: new Date().toISOString(),
+          name,
+          email,
+          subject,
+          message,
+          enquiry_id: profile.id
+        })
+        .select()
+        .single()
+
+        if (error) {
+          setIsMsgLoading(false)
+        }
+
+        if (data) {
+          setSuccessMsg('Message Sent!')
+          setIsMsgLoading(false);
+          clearMessage()
+
+          setName('')
+          setEmail('')
+          setSubject('')
+          setMessage('')
+        }
       }
+
+    } else {
+        setIsMsgLoading(false)
+        setMsgError('Please sign up to make an enquiry.')
+        clearMessage()
+    }
   };
 
-
-
-
-
-
-  
   return (
     <main className='my-4.5 lg:mb-28'>
       <div className='grid grid-flow-col auto-cols-fr gap-y-20 md:grid-col-2 md:gap-x-6'>
-
 
         <div className='row-start-1 col-start-1 col-span-2'>
           <h2 className='text-1.75xl font-rubik font-b mb-4 text-hint'>
@@ -236,8 +272,6 @@ const Contact = () => {
           </p>
           <p>I'm here to help and eager to connect!</p>
         </div>
-
-
 
         <div className='row-start-3 col-start-1 col-span-2 md:row-start-2 md:col-start-1 md:col-span-1 flex flex-col gap-6'>
           <div>
@@ -305,9 +339,6 @@ const Contact = () => {
           )}
         </div>
 
-
-
-        
         {!user && (
           <div className='row-start-4 col-start-1 col-span-2 md:row-start-2 md:col-start-1 md:col-span-1 md:place-self-end md:justify-self-start'>
             <h3 className='text-xl font-b font-rubik text-hint mb-5'>
@@ -324,56 +355,44 @@ const Contact = () => {
           </div>
          )}
 
-
-
-
-
-
-
-
-
-          {comments !== null && comments.length > 0 && (
-            <div className='w-full sm:max-w-xl row-start-4 col-start-1 col-span-2 md:row-start-3'>
-              <h3 className='text-xl font-b font-rubik text-hint mb-8'>
-                Comments
-              </h3>
-                {comments.map(comment => (
-                  <div className='mb-8' key={comment.id}>
-                    
-                      <>
-                        <div className="flex items-start gap-3">
-                          {comment.avatar_url?.includes('https') ? ( 
-                              <div className="overflow-hidden rounded-full min-w-max h-12">
-                                  <img className="inline-block w-full h-full object-cover" src={comment.avatar_url} alt="a user avatar" />
-                              </div>
-                          ) : (
-                              <ProfileAvatar
-                                url={comment.avatar_url}
-                                onUpload={(url) => {
-                                    setAvatarUrl(url);
-                                }}
-                                size={'h-12 w-12'}
-                                phSize={50}
-                              />
-                          )} 
-                          <div>
-                            <div className='flex gap-2 items-center font-os mb-2'>
-                              <h6 className='text-sm text-hint font-b'>{comment.first_name ? comment.first_name : comment.full_name}</h6>
-                              <span className='text-xs text-secondary'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
+        {comments !== null && comments.length > 0 && (
+          <div className='w-full sm:max-w-xl row-start-4 col-start-1 col-span-2 md:row-start-3'>
+            <h3 className='text-xl font-b font-rubik text-hint mb-8'>
+              Comments
+            </h3>
+              {comments.map(comment => (
+                <div className='mb-8' key={comment.id}>
+                  
+                    <>
+                      <div className="flex items-start gap-3">
+                        {comment.avatar_url?.includes('https') ? ( 
+                            <div className="overflow-hidden rounded-full min-w-max h-12">
+                                <img className="inline-block w-full h-full object-cover" src={comment.avatar_url} alt="a user avatar" />
                             </div>
-                            <p>{comment.comment}</p> 
+                        ) : (
+                            <ProfileAvatar
+                              url={comment.avatar_url}
+                              onUpload={(url) => {
+                                  setAvatarUrl(url);
+                              }}
+                              size={'h-12 w-12'}
+                              phSize={50}
+                            />
+                        )} 
+                        <div>
+                          <div className='flex gap-2 items-center font-os mb-2'>
+                            <h6 className='text-sm text-hint font-b'>{comment.first_name ? comment.first_name : comment.full_name}</h6>
+                            <span className='text-xs text-secondary'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
                           </div>
+                          <p>{comment.comment}</p> 
                         </div>
-                      </>
-                    
-                  </div>
-                ))}
-            </div>
-          )}
-
-
-
-
+                      </div>
+                    </>
+                  
+                </div>
+              ))}
+          </div>
+        )}
 
         {/* enquiries form */}
         <form
@@ -395,7 +414,6 @@ const Contact = () => {
               placeholder='Name'
               value={name}
               onChange={(e) => setName(e.target.value)}
-              required
             />
           </label>
           <label>
@@ -409,7 +427,6 @@ const Contact = () => {
               placeholder='Email'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
             />
           </label>
           <label>
@@ -423,7 +440,6 @@ const Contact = () => {
               placeholder='Subject'
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
-              required
             />
           </label>
           <label>
@@ -437,7 +453,6 @@ const Contact = () => {
               onChange={(e) => setMessage(e.target.value)}
               cols='30'
               rows='4'
-              required
             ></textarea>
           </label>
           {msgError && <p className='error'>{msgError}</p>}
