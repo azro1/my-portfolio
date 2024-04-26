@@ -16,7 +16,6 @@ const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);
 
 
-
   const supabase = createClientComponentClient();
 
   useEffect(() => {
@@ -42,38 +41,73 @@ const Profile = () => {
   }, []);
 
 
+
+
+
+  // get user profile, activity and comments
   useEffect(() => {
-      const getProfile = async () => {
+      async function getProfile() {
           setIsLoading(true)
+
           try {
-              const { data, error } = await supabase.from('profiles')
-                  .select()
-                  .eq("id", user.id)
-                  .limit(1);
-              if (error) {
-                  throw new Error(error.message);
+              const { data: profile, error: profilesError } = await supabase.from('profiles')
+               .select('*, comments(*), activity(*)')
+               .eq('id', user.id) 
+              
+              if (profilesError) {
+                throw new Error(profilesError.message);
               }
-              if (data && data.length > 0) {
-                  setIsLoading(false)
-                  const profileData = data[0];
-                  setFirstName(profileData.first_name);
-                  setAvatarUrl(profileData.avatar_url);
+              
+              if (profile && profile.length > 0) {
+                setIsLoading(false)
+                const profileData = profile[0];
+
+                setFirstName(profileData.first_name);
+                setAvatarUrl(profileData.avatar_url);
+
+                // map through the array of projects a user has viewed which is currently an array of strings and parse them into numbers which can then be used to reference/fetch the projects matching those ids (which are stored in supabase column of type int8) which will be returned to be displayed in the template 
+                const projectIds = profileData.activity.map(activity => activity.project_id)
+                const projectIdsInt = projectIds.map(id => parseInt(id));
+
+
+
+                // get project views
+                const { data, error } = await supabase.from('projects')
+                .select()
+                .in('id', projectIdsInt)
+                
+                if (error) {
+                    console.log(error)
+                } else {
+                    console.log(data)
+                }
+
+
+
               }
+
+
+
+              
           } catch (error) {
               setIsLoading(false)
               console.log(error.message);
           } finally {
-            setIsLoading(false)
+              setIsLoading(false)
           }
-      };
-      if (user && user.id) {
-          getProfile();
+
       }
-  }, [avatar_url, first_name, user && user.id]);
+      if (user && user.id) {
+        getProfile();
+    }
+  }, [avatar_url, first_name, user && user.id])
+
+
+
 
 
   return (
-      <>
+      <div className='bg-gray-800'>
           {user && user.app_metadata.provider !== "email" ? ( 
             <div className='flex-1 flex flex-col items-center gap-3'>
 
@@ -113,7 +147,14 @@ const Profile = () => {
              <ProfileHeader heading={`Hi, ${first_name}`} text={"Welcome to your Profile dashboard. Get started by personalizing your account settings and exploring our features."} />
           </div>
          )}
-     </>
+         
+         <div className='grid grid-cols-2 text-center mt-16 bg-red-900'>
+            <h3 className='mb-4 text-2xl font-b font-rubik text-hint'>
+               Project views
+            </h3>
+            <div className='p-20 bg-green-800'></div>
+         </div>
+     </div>
   );
 };
 

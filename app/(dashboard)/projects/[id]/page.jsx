@@ -2,6 +2,8 @@ import { notFound } from 'next/navigation'
 export const dynamicParams = true;
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
+import { v4 as uuidv4 } from "uuid"
+
 
 // components
 // import Icons from '@/app/components/Icons';
@@ -22,9 +24,6 @@ export async function generateMetadata({ params }) {
 }
 
 async function getProject(id) {
-  await new Promise((resolve) => {
-    setTimeout(resolve, 3000)
-  })
   const supabase = createServerComponentClient({ cookies })
   const { data } = await supabase.from('projects')
   .select()
@@ -39,6 +38,50 @@ async function getProject(id) {
 
 const Project = async ({ params }) => {
   const project = await getProject(params.id);
+
+  const supabase = createServerComponentClient({ cookies })
+  const { data: { user }, error } = await supabase.auth.getUser()
+
+  if (error) {
+    console.log(error)
+  }
+
+  if (user) {
+    const { data: profiles, error: profilesError } = await supabase.from('profiles')
+    .select('*, comments(*)')
+    .eq('id', user.id)
+    
+    if (error) {
+      console.log(profilesError)
+    } else {
+        const history = profiles.map((profile) => {
+           return {
+              id: uuidv4(),
+              created_at: profile.updated_at,
+              project_id: params.id,
+              activity_id: user.id
+           }
+        })
+
+        const { data, error } = await supabase.from('activity')
+        .insert(history)
+        .select()
+        .single()
+
+        if (error) {
+          console.log(error)
+        } else {
+          console.log(data)
+        }
+    }
+  }
+  
+
+  
+  
+
+
+
 
   return (
     <main className='my-4.5'>
