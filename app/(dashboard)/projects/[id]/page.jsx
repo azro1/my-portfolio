@@ -40,49 +40,35 @@ const Project = async ({ params }) => {
   const project = await getProject(params.id);
 
   const supabase = createServerComponentClient({ cookies })
-  const { data: { user }, error } = await supabase.auth.getUser()
+  const { data: { session }, error} = await supabase.auth.getSession()
 
   if (error) {
     console.log(error)
   }
 
-  if (user) {
-    const { data: profiles, error: profilesError } = await supabase.from('profiles')
-    .select('*, comments(*)')
-    .eq('id', user.id)
-    
+  if (session) {
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
+
+    if (authError) {
+      console.log(authError)
+    }
+
+    const { error } = await supabase.from('activity')
+    .upsert({
+        id: uuidv4(),
+        updated_at: new Date().toISOString(),
+        project_id: params.id,
+        activity_id: user.id
+      }, { onConflict: 'activity_id' } )
+    .select()
+    .single()
+
     if (error) {
-      console.log(profilesError)
-    } else {
-        const history = profiles.map((profile) => {
-           return {
-              id: uuidv4(),
-              created_at: profile.updated_at,
-              project_id: params.id,
-              activity_id: user.id
-           }
-        })
-
-        const { data, error } = await supabase.from('activity')
-        .insert(history)
-        .select()
-        .single()
-
-        if (error) {
-          console.log(error)
-        } else {
-          console.log(data)
-        }
+      console.log(error)
     }
   }
   
-
   
-  
-
-
-
-
   return (
     <main className='my-4.5'>
       <h2 className='subheading text-hint'>{project.title}</h2>

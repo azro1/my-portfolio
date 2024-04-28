@@ -40,7 +40,7 @@ const Contact = () => {
           throw error;
         }
         if (session) {
-          const user = session.user;
+          const { data: { user }, error } = await supabase.auth.getUser()
           setUser(user);
         }
       } catch (err) {
@@ -310,7 +310,7 @@ const Contact = () => {
               </h3>
               <form onSubmit={handleComment}>
                 <textarea
-                  className='p-2 outline-none'
+                  className='p-2 outline-none text-sm'
                   cols='40'
                   rows='4'
                   spellCheck='false'
@@ -408,7 +408,7 @@ const Contact = () => {
               Name
             </span>
             <input
-              className='w-full p-2.5 rounded-md'
+              className='w-full p-2.5 rounded-md text-sm'
               type='text'
               spellCheck='false'
               placeholder='Name'
@@ -421,7 +421,7 @@ const Contact = () => {
               Email
             </span>
             <input
-              className='w-full p-2.5 rounded-md'
+              className='w-full p-2.5 rounded-md text-sm'
               type='text'
               spellCheck='false'
               placeholder='Email'
@@ -434,7 +434,7 @@ const Contact = () => {
               Subject
             </span>
             <input
-              className='w-full p-2.5 rounded-md'
+              className='w-full p-2.5 rounded-md text-sm'
               type='text'
               spellCheck='false'
               placeholder='Subject'
@@ -447,7 +447,7 @@ const Contact = () => {
               Your Message
             </span>
             <textarea
-              className='p-2 outline-none'
+              className='p-2 outline-none text-sm'
               placeholder='Enter you message here...'
               value={message}
               onChange={(e) => setMessage(e.target.value)}
