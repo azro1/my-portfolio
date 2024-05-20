@@ -384,7 +384,7 @@ const Contact = () => {
                             <h6 className='text-sm text-hint font-b'>{comment.first_name ? comment.first_name : comment.full_name}</h6>
                             <span className='text-xs text-secondary'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
                           </div>
-                          <p>{comment.comment}</p> 
+                          <p>{comment.text}</p> 
                         </div>
                       </div>
                     </>

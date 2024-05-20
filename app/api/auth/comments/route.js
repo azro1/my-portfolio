@@ -14,7 +14,7 @@ export async function POST(request) {
     const { data, error } = await supabase.from('comments')
       .insert({
         id: uuidv4(),
-        comment: comment,
+        text: comment,
         first_name: profile.first_name,
         full_name: profile.full_name,
         avatar_url: profile.avatar_url,

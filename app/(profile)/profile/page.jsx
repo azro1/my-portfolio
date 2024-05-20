@@ -17,6 +17,7 @@ const Profile = () => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [projectsViewed, setProjectsViewed] = useState('')
+  const [comments, setComments] = useState(null)
 
   const supabase = createClientComponentClient();
 
@@ -51,22 +52,27 @@ const Profile = () => {
       async function getProfile() {
 
           try {
-              const { data: profile, error: profilesError } = await supabase.from('profiles')
-               .select()
+              const { data, error } = await supabase
+               .from('profiles')
+               .select('*, comments(*)')
                .eq('id', user.id)
-               .limit(1)
               
-              if (profilesError) {
-                throw new Error(profilesError.message);
+              if (error) {
+                throw new Error(error.message);
               }
+
               
-              if (profile && profile.length > 0) {
+              if (data && data.length > 0) {
                 setIsLoading(false)
-                const profileData = profile[0];
+                const profileData = data[0];
                 setFirstName(profileData.first_name);
                 setAvatarUrl(profileData.avatar_url);
+
+
+                if (data[0].comments && data[0].comments.length > 0) {
+                   setComments(data[0].comments)
+                }
               }
-              
           } catch (error) {
               setIsLoading(false)
               console.log(error.message);
@@ -175,16 +181,16 @@ const Profile = () => {
          )}
 
          <div className='mt-16'>
-             <h2 className='text-center text-2xl font-b font-rubik text-secondary'>History</h2>
+             <h2 className='text-center text-2xl font-b font-rubik text-secondary'>Activity Feed</h2>
          </div>
          
-         <div className='text-center mt-10 flex'>
+         <div className='text-center mt-10 gap-3 lg:flex'>
      
-             <div className='grid grid-cols-2 w-1/2'>
+             <div className='grid grid-cols-2 flex-1 place-self-start'>
                  <h3 className='row-start-1 col-span-2 mb-3 text-xl font-b font-rubik text-hint'>Project Views</h3>
                  {projectsViewed ? (projectsViewed.map((project) => (
                     <div className='flex flex-col p-3' key={project.id}>
-                      <div className='w-full h-full bg-white p-1' >
+                      <div className='max-w-full max-h-full bg-white p-1' >
                           <Link href={`/projects/${project.id}`}>
                               <img className='w-full h-28 object-cover object-left-top' 
                                 src={project.image_url} 
@@ -198,15 +204,24 @@ const Profile = () => {
                  ))) : 
                     <p className='col-span-2'>No project views yet.</p>
                  }
-                 
              </div>
 
-             <div className='w-1/2'>
-               <h3 className='row-start-1 col-span-2 mb-3 text-xl font-b font-rubik text-hint'>Activity Feed</h3>
-               <div className=''>
-                  {/* feed loop */}
-               </div>
+             <div className='flex-1'>
+               <h3 className='row-start-1 col-span-2 mb-3 text-xl font-b font-rubik text-hint'>Comments</h3>
+               <div className='flex flex-col gap-5 text-left'>
+                  {comments ? (comments.map((comment) => (
+                    <div className='flex items-start justify-between gap-3 pt-2' key={comment.id}>
+                      <div>
+                          <p>{comment.text}</p>
+                          <span className='text-xs text-hint'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
+                      </div>
+                        <button className='btn bg-hint'>Delete</button>
 
+                    </div>
+                  ))) :
+                    <p className='text-center'>No comments yet.</p>
+                  }
+               </div>
              </div>
          </div>
 

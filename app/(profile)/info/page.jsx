@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
+
 
 // components
 import ProfileHeader from '../profile/ProfileHeader';
@@ -111,25 +113,20 @@ const PersonalInfo = () => {
   // update comment avatar after user uploads avatar
   const fetchComments = async (path, name) => {
     try {
-      // const { data: comments, error } = await supabase
-      // .from('profiles')
-      // .select('*, comments(*)')
+      const { error } = await supabase
+        .from('comments')
+        .update({
+          avatar_url: path,
+          first_name: name
+        })
+        .eq('comment_id', authUser.id)
+        .select()
 
-          const { data, error } = await supabase
-            .from('comments')
-            .update({ 
-              avatar_url: path,
-              first_name: name
-            })
-            .eq('comment_id', authUser.id)
-            .select()
-
-          if (error) {
-            throw error;
-          }
-
+      if (error) {
+        throw error;
+      }
     } catch (error) {
-        console.log(error.message)
+      console.log(error.message)
     }
   }
 
