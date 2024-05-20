@@ -59,7 +59,7 @@ const Project = async ({ params }) => {
         updated_at: new Date().toISOString(),
         project_id: params.id,
         activity_id: user.id
-      }, { onConflict: 'activity_id' } )
+      })
     .select()
     .single()
 

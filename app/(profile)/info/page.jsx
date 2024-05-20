@@ -206,6 +206,7 @@ const PersonalInfo = () => {
       if (error) {
         throw error;
       }
+      console.log(filePath)
       await updateProfile({ avatar_url: filePath });
       await fetchComments(filePath, undefined)  // pass filePath to fetchComments
 

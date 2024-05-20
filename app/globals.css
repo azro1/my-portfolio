@@ -36,7 +36,7 @@ p {
 }
 
 .main-container {
-  @apply min-h-screen p-1.625;
+  @apply p-1.625;
 }
 
 main {

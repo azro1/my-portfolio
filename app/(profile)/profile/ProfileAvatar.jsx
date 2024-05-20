@@ -58,9 +58,9 @@ const ProfileAvatar = ({ url, size, phSize }) => {
                             <Image
                                 src={signedUrl}
                                 alt="Avatar"
-                                fill={true}
+                                width={80}
+                                height={70}
                                 quality={100}
-                                sizes="100%"
                             />
                         </div>
                     ) : (

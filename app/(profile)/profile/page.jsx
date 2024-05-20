@@ -5,12 +5,11 @@ import { useState, useEffect } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
 
-
-
 // components
 import ProfileHeader from "./ProfileHeader";
 import ProfileAvatar from './ProfileAvatar';
 import Link from 'next/link';
+
 
 const Profile = () => {
   const [first_name, setFirstName] = useState('');
@@ -18,7 +17,6 @@ const Profile = () => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [projectsViewed, setProjectsViewed] = useState('')
-
 
   const supabase = createClientComponentClient();
 
@@ -120,11 +118,11 @@ const Profile = () => {
             const activity = activities.find(activity => activity.project_id === project.id);
             return {
               ...project,
-              timestamp: activity ? activity.updated_at : null
-            };
+              activity
+            }
           });
           setProjectsViewed(projectsViewed)
-
+          // console.log(projectsViewed)
         }
       }
     }
@@ -196,7 +194,6 @@ const Profile = () => {
                       </div>
 
                       <h4 className="font-os font-r text-secondary text-center text-sm mt-2">{project.title}</h4>
-                      {project.timestamp && <p className="text-xs text-hint mt-2">{formatDistanceToNow(new Date(project.timestamp), { addSuffix: true })}</p>}
                     </div>
                  ))) : 
                     <p className='col-span-2'>No project views yet.</p>
