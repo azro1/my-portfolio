@@ -184,7 +184,7 @@ const PersonalInfo = () => {
 
 
     
-  // we use the file that a user selects to construct a file path which we use to uload the file to the avatars bucket, once the operation is complete we upadte the users profile again this time setting the value of the avatar_url property to the filePath which was just uploaded to the bucket and use await to wait until the operation is complete
+  // we use the file that a user selects to construct a file path which we use to upload the file to the avatars bucket, once the operation is complete we upadte the users profile again this time setting the value of the avatar_url property to the filePath which was just uploaded to the bucket and use await to wait until the operation is complete
   const uploadAvatar = async () => {
     setUpdateSuccess('');
     setUploadSuccess('');
