@@ -8,7 +8,7 @@ import { FaUserCircle } from "react-icons/fa";
 
 
 const Avatar = ({ user }) => {
-    const [first_name, setFirstName] = useState('');
+    const [first_name, setFirstName] = useState(user ? user.user_metadata.full_name : '');
     const [avatar_url, setAvatarUrl] = useState('');
     const [isProfileLoading, setIsProfileLoading] = useState(true);
 
@@ -49,7 +49,7 @@ const Avatar = ({ user }) => {
                 }
                 if (data && data.length > 0) {
                     const profileData = data[0];
-                    setFirstName(profileData.first_name);
+                    setFirstName(profileData.first_name || user.user_metadata.full_name );
                     setAvatarUrl(profileData.avatar_url);
                 } else {
                     setFirstName(user.user_metadata.full_name);
@@ -90,7 +90,13 @@ const Avatar = ({ user }) => {
                             </>
                         )}
 
-                        <h6 className="font-os text-sm font-b text-hint">{first_name}</h6>
+                        {isProfileLoading ? (
+                          <div></div>
+                        ) : (
+
+                          <h6 className="font-os text-sm font-b text-hint">{first_name}</h6>
+
+                        )}
                     </div>
                 )
             :
@@ -98,9 +104,6 @@ const Avatar = ({ user }) => {
                     <div className="flex flex-col items-center justify-center gap-1 absolute left-0 top-8.625 md:static mr-8">
                         <ProfileAvatar
                             url={avatar_url}
-                            onUpload={(url) => {
-                                setAvatarUrl(url);
-                            }}
                             size={'h-12 w-12'}
                             phSize={50}
                         />

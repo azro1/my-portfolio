@@ -2,18 +2,16 @@
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useState, useEffect } from "react";
-import { FaUserCircle } from "react-icons/fa";
 import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
 
 // components
 import ProfileHeader from "./ProfileHeader";
-import ProfileAvatar from './ProfileAvatar';
 import Link from 'next/link';
 
 
 const Profile = () => {
   const [user, setUser] = useState(null);
-  const [first_name, setFirstName] = useState('');
+  const [first_name, setFirstName] = useState(user ? user.user_metadata.full_name : '');
   const [avatar_url, setAvatarUrl] = useState('');
   const [projectsViewed, setProjectsViewed] = useState('');
   const [comments, setComments] = useState(null);
@@ -68,7 +66,7 @@ const Profile = () => {
               
               if (data && data.length > 0) {
                 const profileData = data[0];
-                setFirstName(profileData.first_name);
+                setFirstName(profileData.first_name || user.user_metadata.full_name);
                 setAvatarUrl(profileData.avatar_url);
 
                 if (data[0].comments && data[0].comments.length > 0) {
@@ -82,7 +80,6 @@ const Profile = () => {
           } finally {
               setIsProfileLoading(false)
           }
-
       }
       if (user && user.id) {
         getProfile();
@@ -143,93 +140,62 @@ const Profile = () => {
   const isLoading = isUserLoading || isProfileLoading;
 
 
+
   return (
-      <>
-        <div className=''>
-            {user && user.app_metadata.provider !== "email" ? ( 
-                <div className='flex-1 flex flex-col items-center gap-3'>
-                    {isLoading ? (
-                        <div className='overflow-hidden w-20 h-20'>
-                            <img src="images/navbar/avatar/loader.gif" alt="a loading gif" />
-                        </div>
-                    ) : (
-                        <>
-                            {avatar_url ? (
-                                <div className="overflow-hidden rounded-full w-20 h-20">
-                                    <img className="inline-block w-full h-full object-cover" src={avatar_url} alt="a user avatar" />
-                                </div>
-                            ) : (
-                                <div className="overflow-hidden rounded-full min-w-max h-auto">
-                                    <FaUserCircle size={80} color="gray" />
-                                </div>
-                            )}
-                        </>
-                    )}
-                    
-                    <ProfileHeader heading={`Hi, ${first_name}`} text={"Welcome to your Profile dashboard. Get started by personalizing your account settings and exploring our features."} />
-                </div>
-          )
-        :
-          (
-            <div className='flex-1 flex flex-col items-center gap-3'>
-                <ProfileAvatar
-                      url={avatar_url}
-                      onUpload={(url) => {
-                          setAvatarUrl(url);
-                      }}
-                      size={'h-20 w-20'}
-                      phSize={80}
-                />
-                <ProfileHeader heading={`Hi, ${first_name}`} text={"Welcome to your Profile dashboard. Get started by personalizing your account settings and exploring our features."} />
-            </div>
-          )}
+      <div>
+        <ProfileHeader
+          user={user}
+          isLoading={isLoading} 
+          avatar_url={avatar_url} 
+          first_name={first_name}
+        />
 
-          <div className='mt-16'>
-              <h2 className='text-center text-2xl font-b font-rubik text-secondary'>Activity Feed</h2>
-          </div>
-          
-          <div className='text-center mt-10 gap-3 lg:flex'>
-      
-              <div className='grid grid-cols-2 flex-1 place-self-start'>
-                  <h3 className='row-start-1 col-span-2 mb-3 text-xl font-b font-rubik text-hint'>Project Views</h3>
-                  {projectsViewed ? (projectsViewed.map((project) => (
-                      <div className='flex flex-col p-3' key={project.id}>
-                        <div className='max-w-full max-h-full bg-white p-1' >
-                            <Link href={`/projects/${project.id}`}>
-                                <img className='w-full h-28 object-cover object-left-top' 
-                                  src={project.image_url} 
-                                  alt={project.list_alt_desc}
-                                />
-                            </Link>
-                        </div>
-
-                        <h4 className="font-os font-r text-secondary text-center text-sm mt-2">{project.title}</h4>
+        <div className='mt-16'>
+            <h2 className='text-center text-2xl font-b font-rubik text-secondary'>Activity Feed</h2>
+        </div>
+        
+        <div className='text-center mt-10 gap-3 lg:flex'>
+    
+            <div className='grid grid-cols-2 flex-1 place-self-start'>
+                <h3 className='row-start-1 col-span-2 mb-3 text-xl font-b font-rubik text-hint'>Project Views</h3>
+                {projectsViewed ? (projectsViewed.map((project) => (
+                    <div className='flex flex-col p-3' key={project.id}>
+                      <div className='max-w-full max-h-full bg-white p-1' >
+                          <Link href={`/projects/${project.id}`}>
+                              <img className='w-full h-28 object-cover object-left-top' 
+                                src={project.image_url} 
+                                alt={project.list_alt_desc}
+                              />
+                          </Link>
                       </div>
-                  ))) : 
-                      <p className='col-span-2'>No project views yet.</p>
+
+                      <h4 className="font-os font-r text-secondary text-center text-sm mt-2">{project.title}</h4>
+                    </div>
+                ))) : 
+                    <p className='col-span-2'>No project views yet.</p>
+                }
+            </div>
+
+            <div className='flex-1'>
+              <h3 className='row-start-1 col-span-2 mb-3 text-xl font-b font-rubik text-hint'>Comments</h3>
+              <div className='flex flex-col gap-5 text-left'>
+                  {comments ? (comments.map((comment) => (
+                    <div className='flex items-start justify-between gap-3 pt-2' key={comment.id}>
+                      <div>
+                          <p>{comment.text}</p>
+                          <span className='text-xs text-hint'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
+                      </div>
+                        <button className='btn bg-hint'>Delete</button>
+
+                    </div>
+                  ))) :
+                    <p className='text-center'>No comments yet.</p>
                   }
               </div>
+            </div>
 
-              <div className='flex-1'>
-                <h3 className='row-start-1 col-span-2 mb-3 text-xl font-b font-rubik text-hint'>Comments</h3>
-                <div className='flex flex-col gap-5 text-left'>
-                    {comments ? (comments.map((comment) => (
-                      <div className='flex items-start justify-between gap-3 pt-2' key={comment.id}>
-                        <div>
-                            <p>{comment.text}</p>
-                            <span className='text-xs text-hint'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
-                        </div>
-                          <button className='btn bg-hint'>Delete</button>
-
-                      </div>
-                    ))) :
-                      <p className='text-center'>No comments yet.</p>
-                    }
-                </div>
-              </div>
-          </div>
-      </div>
-     </>
+        </div>
+    </div>
   );
 };
 

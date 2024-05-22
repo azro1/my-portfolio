@@ -221,11 +221,15 @@ const PersonalInfo = () => {
 
   return (
     <div className='sm:flex-1'>
-      <ProfileHeader heading={"Personal Information"} text={"Welcome to your personal information section! Here, you can easily edit and update your profile details for the site."} />
+
+      <div className='text-center px-4'>
+        <h2 className='subheading text-hint mb-3'>Personal Information</h2>
+        <p className='text-base'>Welcome to your personal information section! Here, you can easily edit and update your profile details for the site.</p>
+      </div>
 
       <div className='mt-8 flex flex-col-reverse items-center gap-5 lg:flex-row lg:justify-end'>
         <div className='w-full max-w-xs flex-1'>
-          <form>
+          <form> 
             <label>
               <span className='mt-4 mb-2 text-sm font-os text-secondary block'>
                 Full Name

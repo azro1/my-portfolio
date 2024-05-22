@@ -372,9 +372,6 @@ const Contact = () => {
                         ) : (
                             <ProfileAvatar
                               url={comment.avatar_url}
-                              onUpload={(url) => {
-                                  setAvatarUrl(url);
-                              }}
                               size={'h-12 w-12'}
                               phSize={50}
                             />
