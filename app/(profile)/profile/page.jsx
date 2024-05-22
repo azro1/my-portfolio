@@ -2,24 +2,21 @@
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useState, useEffect } from "react";
-import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
 
 // components
 import ProfileHeader from "./ProfileHeader";
 import ProjectsViewedList from './ProjectsViewedList';
+import CommentList from './CommentList';
 
 
 const Profile = () => {
   const [user, setUser] = useState(null);
   const [first_name, setFirstName] = useState(user ? user.user_metadata.full_name : '');
   const [avatar_url, setAvatarUrl] = useState('');
-  const [comments, setComments] = useState(null);
-
   const [isUserLoading, setIsUserLoading] = useState(true);
   const [isProfileLoading, setIsProfileLoading] = useState(true);
 
   const supabase = createClientComponentClient();
-
 
   useEffect(() => {
     async function getUser() {
@@ -51,8 +48,9 @@ const Profile = () => {
 
               const { data, error } = await supabase
                .from('profiles')
-               .select('*, comments(*)')
+               .select()
                .eq('id', user.id)
+               .limit(1)
               
               if (error) {
                 throw new Error(error.message);
@@ -62,10 +60,6 @@ const Profile = () => {
                 const profileData = data[0];
                 setFirstName(profileData.first_name || user.user_metadata.full_name);
                 setAvatarUrl(profileData.avatar_url);
-
-                if (data[0].comments && data[0].comments.length > 0) {
-                   setComments(data[0].comments)
-                }
               } else {
                 setFirstName(user.user_metadata.full_name);
             }
@@ -78,11 +72,10 @@ const Profile = () => {
       if (user && user.id) {
         getProfile();
     }
-  }, [avatar_url, first_name, user && user.id])
+  }, [user && user.id])
 
   const isLoading = isUserLoading || isProfileLoading;
 
-  
   return (
       <div>
         <ProfileHeader
@@ -96,28 +89,9 @@ const Profile = () => {
             <h2 className='text-center text-2xl font-b font-rubik text-secondary'>Activity Feed</h2>
         </div>
         
-        <div className='text-center mt-10 gap-3 lg:flex'>
-    
+        <div className='flex flex-col gap-8 text-center mt-10  lg:flex-row lg:gap-3'>
             <ProjectsViewedList user={user} />
-
-            <div className='flex-1'>
-              <h3 className='row-start-1 col-span-2 mb-3 text-xl font-b font-rubik text-hint'>Comments</h3>
-              <div className='flex flex-col gap-5 text-left'>
-                  {comments ? (comments.map((comment) => (
-                    <div className='flex items-start justify-between gap-3 pt-2' key={comment.id}>
-                      <div>
-                          <p>{comment.text}</p>
-                          <span className='text-xs text-hint'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
-                      </div>
-                        <button className='btn bg-hint'>Delete</button>
-
-                    </div>
-                  ))) :
-                    <p className='text-center'>No comments yet.</p>
-                  }
-              </div>
-            </div>
-
+            <CommentList user={user} />
         </div>
     </div>
   );
