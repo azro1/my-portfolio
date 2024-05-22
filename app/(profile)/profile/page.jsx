@@ -6,23 +6,20 @@ import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
 
 // components
 import ProfileHeader from "./ProfileHeader";
-import Link from 'next/link';
+import ProjectsViewedList from './ProjectsViewedList';
 
 
 const Profile = () => {
   const [user, setUser] = useState(null);
   const [first_name, setFirstName] = useState(user ? user.user_metadata.full_name : '');
   const [avatar_url, setAvatarUrl] = useState('');
-  const [projectsViewed, setProjectsViewed] = useState('');
   const [comments, setComments] = useState(null);
 
   const [isUserLoading, setIsUserLoading] = useState(true);
   const [isProfileLoading, setIsProfileLoading] = useState(true);
 
-
-
-
   const supabase = createClientComponentClient();
+
 
   useEffect(() => {
     async function getUser() {
@@ -43,9 +40,6 @@ const Profile = () => {
     }
     getUser();
   }, []);
-
-
-
 
 
   // get user profile
@@ -86,61 +80,9 @@ const Profile = () => {
     }
   }, [avatar_url, first_name, user && user.id])
 
-
-
-
-
-
-  // get projects viewed
-  useEffect(() => {
-    async function getProjectsViewed() {
-      
-      // get activity table entries
-      const { data: activities, error: activitiesError } = await supabase.from('activity')
-      .select()
-      .eq('activity_id', user.id)
-      
-      if (activitiesError) {
-          console.log(activitiesError.message)
-      }
-      
-      if (activities && activities.length > 0) {
-        // convert array of string ids into an array of numbers
-        const projectIds = activities.map(project => project.project_id)
-        const projectIdsInt = projectIds.map(id => parseInt(id));
-        
-
-        // get projects using ids
-        const { data: projects, error: projectsError } = await supabase.from('projects')
-        .select()
-        .in('id', projectIdsInt)
-
-        if (projectsError) {
-          console.log(projectsError.message)
-        } else {
-        
-           // Associate projects with their corresponding activities
-          const projectsViewed = projects.map(project => {
-            const activity = activities.find(activity => activity.project_id === project.id);
-            return {
-              ...project,
-              activity
-            }
-          });
-          setProjectsViewed(projectsViewed)
-        }
-      }
-    }
-    if (user && user.id) {
-      getProjectsViewed()
-    }
-  }, [user && user.id])
-
-
   const isLoading = isUserLoading || isProfileLoading;
 
-
-
+  
   return (
       <div>
         <ProfileHeader
@@ -156,25 +98,7 @@ const Profile = () => {
         
         <div className='text-center mt-10 gap-3 lg:flex'>
     
-            <div className='grid grid-cols-2 flex-1 place-self-start'>
-                <h3 className='row-start-1 col-span-2 mb-3 text-xl font-b font-rubik text-hint'>Project Views</h3>
-                {projectsViewed ? (projectsViewed.map((project) => (
-                    <div className='flex flex-col p-3' key={project.id}>
-                      <div className='max-w-full max-h-full bg-white p-1' >
-                          <Link href={`/projects/${project.id}`}>
-                              <img className='w-full h-28 object-cover object-left-top' 
-                                src={project.image_url} 
-                                alt={project.list_alt_desc}
-                              />
-                          </Link>
-                      </div>
-
-                      <h4 className="font-os font-r text-secondary text-center text-sm mt-2">{project.title}</h4>
-                    </div>
-                ))) : 
-                    <p className='col-span-2'>No project views yet.</p>
-                }
-            </div>
+            <ProjectsViewedList user={user} />
 
             <div className='flex-1'>
               <h3 className='row-start-1 col-span-2 mb-3 text-xl font-b font-rubik text-hint'>Comments</h3>
