@@ -3,10 +3,12 @@
 import { useState, useEffect } from "react";
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
-
+import { FaTrashAlt } from "react-icons/fa";
 
 const CommentList = ({ user }) => {
-    const [comments, setComments] = useState(null);
+    const [comments, setComments] = useState(null)
+    const [deleteMsg, setDeleteMsg] = useState(null)
+    const [errorMsg, setErrorMsg] = useState(null)
 
     const supabase = createClientComponentClient();
 
@@ -17,6 +19,9 @@ const CommentList = ({ user }) => {
                 const { data, error } = await supabase
                 .from('comments')
                 .select()
+                .order('created_at', {
+                  ascending: false
+                })
                 .eq('comment_id', user.id)
                 
                 if (error) {
@@ -35,21 +40,67 @@ const CommentList = ({ user }) => {
         }
     }, [user && user.id])
 
+
+
+
+    // Subscription to realtime changes on comments table
+    useEffect(() => {
+        const channel = supabase.channel('realtime comments').on('postgres_changes', {
+          event: 'DELETE',
+          schema: 'public',
+          table: 'comments'
+        }, (payload) => {
+             if (payload) {
+               setComments(prevComments => prevComments.filter(comment => comment.id !== payload.old.id));
+               setDeleteMsg('Comment deleted!')
+               setTimeout(() => setDeleteMsg(''), 1500);
+             }
+        }).subscribe()
+  
+        return () => supabase.removeChannel(channel)
+      }, [user, supabase])
+
+
+
+    
+
+    const handleDelete = async (id) => {
+      const { data } = await supabase
+      .from('comments')
+      .delete()
+      .eq('id', id)
+      .select()
+       
+      if (!data) {
+        setErrorMsg('Could not delete comment.')
+      }
+    }
+
   return (
     <div className='flex-1'>
         <h3 className='mb-5 text-xl font-b font-rubik text-hint'>Comments</h3>
-            <div className='flex flex-col gap-5 text-left md:p-3 lg:p-0'>
-                {comments ? (comments.map((comment) => (
-                    <div className='flex items-start justify-between gap-3 pt-2' key={comment.id}>
+            <div className='flex flex-col gap-4 text-left md:p-3 lg:p-0' >
+                {comments && comments.length > 0 ? (
+                    comments.map(comment => (
+                    <div className='flex items-start justify-between gap-3 p-2' key={comment.id}>
                         <div>
                             <p>{comment.text}</p>
                             <span className='text-xs text-hint'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
                         </div>
-                        <button className='btn bg-hint'>Delete</button>
+
+                        <FaTrashAlt className="min-w-max cursor-pointer" color="#B22222" size={20} onClick={() => handleDelete(comment.id)}/>
                     </div>
-                    ))) :
-                    <p className='text-center'>No comments yet.</p>
-                }
+                    ))
+                ) : (
+                    <>
+                        {!deleteMsg && (
+                            <p className='text-center'>No comments yet.</p>
+                        )}
+                    </>
+
+                )}
+                {deleteMsg && <p className="place-self-center">{deleteMsg}</p>}
+                {errorMsg && <p className="error place-self-center">{errorMsg}</p>}
             </div>
     </div>
 
