@@ -1,12 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
 
 
 // components
-import ProfileHeader from '../profile/ProfileHeader';
 import { FaUserCircle } from "react-icons/fa";
 import Image from 'next/image';
 
@@ -24,6 +22,7 @@ const PersonalInfo = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [imgSrc, setImgSrc] = useState('');
+  const formRef = useRef(null)
 
   const supabase = createClientComponentClient();
 
@@ -59,7 +58,7 @@ const PersonalInfo = () => {
   }, [authUser && authUser.id]);
 
   // when a user selects a file this function is invoked and the file is stored in state, the URL.createObjectURL function takes a File object as an input and creates a temporary URL that represents the file's content. It creates a URL that can be used to reference the file directly in the browser without uploading it to a server. This is stored as the value to avatar_url which is then passed as a prop to the ProfileAvatar component
-  const handleFileInputChange = async (event) => {
+  const handleFileInputChange = (event) => {
     setFileInputError('');
 
     const file = event.target.files[0];
@@ -76,6 +75,7 @@ const PersonalInfo = () => {
         setFileInputError('Could not select file. Please try again.');
     }
   };
+  
 
   // gets a users profile row with the id that is equal to the users id who is signed in and store properties in state whose values are being pre-poulated in the input fields as we have 2 way binding unsing controlled inputs
   const getProfile = async () => {
@@ -192,6 +192,7 @@ const PersonalInfo = () => {
 
     try {
       setUploading(true);
+
       if (!selectedFile) {
         throw new Error('You must select an image to upload.');
       }
@@ -206,6 +207,11 @@ const PersonalInfo = () => {
       console.log(filePath)
       await updateProfile({ avatar_url: filePath });
       await fetchComments(filePath, undefined)  // pass filePath to fetchComments
+
+      if (formRef.current) {
+        setImgSrc('');
+        formRef.current.reset();
+      }
 
     } catch (error) {
         setUploadError(error.message);
@@ -300,14 +306,16 @@ const PersonalInfo = () => {
                 )}
               </div>
             </div>
-            <input
-              className='text-secondary file:cursor-pointer'
-              type='file'
-              id='single'
-              accept='image/*'
-              onChange={handleFileInputChange}
-              disabled={uploading || (authUser && authUser.user_metadata.full_name)}
-            />
+            <form ref={formRef}>
+              <input
+                className='text-secondary file:cursor-pointer file:mr-3'
+                type='file'
+                id='single'
+                accept='image/*'
+                onChange={handleFileInputChange}
+                disabled={uploading || (authUser && authUser.user_metadata.full_name)}
+              />
+            </form>
             {fileInputError && <div className='error mt-2'>* {fileInputError}</div>}
             {uploadError && <div className='error mt-2'>* {uploadError}</div>}
             {uploadSuccess && <div className='success mt-2'>* {uploadSuccess}</div>}
