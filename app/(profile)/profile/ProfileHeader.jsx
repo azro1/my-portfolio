@@ -1,7 +1,82 @@
+"use client"
+
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+
 import ProfileAvatar from "./ProfileAvatar";
 import { FaUserCircle } from "react-icons/fa";
+import { useState, useEffect } from "react";
 
-const ProfileHeader = ({ user, isLoading, avatar_url, first_name }) => {
+
+const ProfileHeader = () => {
+   const [user, setUser] = useState(null);
+   const [first_name, setFirstName] = useState(user ? user.user_metadata.full_name : '');
+   const [avatar_url, setAvatarUrl] = useState('');
+   const [isUserLoading, setIsUserLoading] = useState(true);
+   const [isProfileLoading, setIsProfileLoading] = useState(true);
+
+   
+   const supabase = createClientComponentClient();
+
+   useEffect(() => {
+      async function getUser() {
+        setIsUserLoading(true)
+        try {
+          const {data: { user }, error} = await supabase.auth.getUser();
+          if (error) {
+            throw new Error(error.message);
+          }
+          if (user) {
+            setUser(user);
+          }
+        } catch (error) {
+            console.log(error.massage);
+        } finally {
+            setIsUserLoading(false)
+        }
+      }
+      getUser();
+   }, []);
+
+
+   // get user profile
+   useEffect(() => {
+      async function getProfile() {
+
+         try {
+            setIsProfileLoading(true)
+
+            const { data, error } = await supabase
+               .from('profiles')
+               .select()
+               .eq('id', user.id)
+               .limit(1)
+            
+            if (error) {
+               throw new Error(error.message);
+            }
+            
+            if (data && data.length > 0) {
+               const profileData = data[0];
+               setFirstName(profileData.first_name || user.user_metadata.full_name);
+               setAvatarUrl(profileData.avatar_url);
+            } else {
+               setFirstName(user.user_metadata.full_name);
+            }
+         } catch (error) {
+            console.log(error.message);
+         } finally {
+            setIsProfileLoading(false)
+         }
+      }
+      if (user && user.id) {
+      getProfile();
+   }
+   }, [user && user.id])
+
+   const isLoading = isUserLoading || isProfileLoading;
+
+
+
   return (
       <>
          {user && user.app_metadata.provider !== "email" ? ( 

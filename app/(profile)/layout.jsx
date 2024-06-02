@@ -26,7 +26,7 @@ export default async function ProfileLayout({ children }) {
                   </span>
                 </div>
               </Link>
-              <Link href={'/personal-info'}>
+              <Link href={'/profile/personal-info'}>
                 <div className='flex items-center p-3.5 mb-1 bg-primary group hover:bg-white'>
                   <HiMiniIdentification className='text-hint group-hover:text-primary transition duration-300' size={20} />
                   <span className='text-secondary group-hover:text-primary text-sm ml-3.5'>

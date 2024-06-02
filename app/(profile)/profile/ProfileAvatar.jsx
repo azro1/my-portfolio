@@ -49,7 +49,7 @@ const ProfileAvatar = ({ url, size, phSize }) => {
         <div>
             {isLoading ? (
                 <div className='overflow-hidden w-12 h-12'>
-                    <img src="images/navbar/avatar/loader.gif" alt="a loading gif" />
+                    <img src="../images/navbar/avatar/loader.gif" alt="a loading gif" />
                 </div>
             ) : (
                 <>

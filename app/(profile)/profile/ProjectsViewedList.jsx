@@ -4,11 +4,32 @@ import Link from 'next/link';
 import { useState, useEffect } from "react";
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
-const ProjectsViewedList = ({ user }) => {
+const ProjectsViewedList = () => {
+    const [user, setUser] = useState(null);
     const [projectsViewed, setProjectsViewed] = useState('')
 
     const supabase = createClientComponentClient()
 
+
+    useEffect(() => {
+      async function getUser() {
+        try {
+          const {data: { user }, error} = await supabase.auth.getUser();
+          if (error) {
+            throw new Error(error.message);
+          }
+          if (user) {
+            setUser(user);
+          }
+        } catch (error) {
+            console.log(error.massage);
+        }
+      }
+      getUser();
+   }, []);
+
+
+   
   // get projects viewed
   useEffect(() => {
     async function getProjectsViewed() {
@@ -55,11 +76,10 @@ const ProjectsViewedList = ({ user }) => {
   }, [user && user.id])
 
 
-
   return (
     <div className='grid grid-cols-2 flex-1 place-self-start '>
         <h3 className='row-start-1 col-span-2 mb-5 text-xl font-b font-rubik text-hint'>Project Views</h3>
-        {projectsViewed ? (projectsViewed.map((project) => (
+        {projectsViewed && projectsViewed.map((project) => (
             <div className='flex flex-col p-3' key={project.id}>
             <div className='max-w-full max-h-full bg-white p-1' >
                 <Link href={`/projects/${project.id}`}>
@@ -72,8 +92,7 @@ const ProjectsViewedList = ({ user }) => {
 
             <h4 className="font-os font-r text-secondary text-center text-sm mt-2">{project.title}</h4>
             </div>
-            ))) : 
-                <p className='col-span-2'>No project views yet.</p>
+            ))
         }
     </div>
   )

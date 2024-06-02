@@ -5,12 +5,33 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
 import { FaTrashAlt } from "react-icons/fa";
 
-const CommentList = ({ user }) => {
+const CommentList = () => {
+    const [user, setUser] = useState(null);
     const [comments, setComments] = useState(null)
     const [deleteMsg, setDeleteMsg] = useState(null)
     const [errorMsg, setErrorMsg] = useState(null)
 
     const supabase = createClientComponentClient();
+
+
+    useEffect(() => {
+      async function getUser() {
+        try {
+          const {data: { user }, error} = await supabase.auth.getUser();
+          if (error) {
+            throw new Error(error.message);
+          }
+          if (user) {
+            setUser(user);
+          }
+        } catch (error) {
+            console.log(error.massage);
+        }
+      }
+      getUser();
+   }, []);
+
+   
 
     // get user comments
     useEffect(() => {
