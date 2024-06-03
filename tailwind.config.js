@@ -18,7 +18,7 @@ module.exports = {
         secondary: '#757575',
         primary: '#1C1E24',
         discord: '#6A5ACD',
-        github: '#323439'
+        github: '#323439',
       },
       fontFamily: {
         'rubik': ['Rubik', 'sans-serif'],
@@ -66,7 +66,12 @@ module.exports = {
       boxShadow: {
         '3xl': '0px 0px 12px 0 #757575',
         inner: 'inset -2px 0px 18px 10px #131519'
-      }
+      },
+      minHeight: {
+        'custom-sm': '25vh',
+        'custom-md': '50vh'
+        
+      },
     },
   },
   plugins: [],

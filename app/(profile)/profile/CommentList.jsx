@@ -115,7 +115,7 @@ const CommentList = () => {
                 ) : (
                     <>
                         {!deleteMsg && (
-                            <p className='text-center'>No comments yet.</p>
+                            <p className='text-center'>No comments.</p>
                         )}
                     </>
 

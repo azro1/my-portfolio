@@ -38,8 +38,8 @@ const Login = () => {
   }
 
   return (
-    <main className='my-4.5 md:my-6.25'>
-      <div className="grid gap-y-12 max-w-screen-lg mx-auto">
+    <main className='mt-4.5 md:mt-0 mb-4.5'>
+      <div className="flex flex-col items-center justify-center min-h-custom-md gap-12 max-w-screen-lg mx-auto md:flex-row">
         <form className="w-full relative justify-self-center sm:max-w-xs md:justify-self-end" onSubmit={handleSubmit}>
           <h2 className='mb-5 text-1.75xl font-rubik font-eb text-hint'>Login</h2>
           <label>

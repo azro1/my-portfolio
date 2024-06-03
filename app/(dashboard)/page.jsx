@@ -6,7 +6,7 @@ import Services from "../components/Services"
 import Skills from "../components/Skills"
 import ProjectList from "./projects/ProjectList"
 import Connect from "../components/Connect"
-import Loading from "./loading"
+import Loading from "../components/Loading"
 
 const Home = ()=> {
   return (

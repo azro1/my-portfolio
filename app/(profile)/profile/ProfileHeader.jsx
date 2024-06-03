@@ -99,9 +99,10 @@ const ProfileHeader = () => {
                      </>
                )}
                
-                <div>
-                  <h2 className='subheading text-hint mb-3'>{`Hi, ${first_name}`}</h2>
-                  <p className='text-base'>Welcome to your Profile dashboard. Get started by personalizing your account settings and exploring our features.</p>  
+                <div className='px-3'>
+                  <h2 className='subheading text-hint mb-5'>{`Hi, ${first_name}`}</h2>
+                  <p className='mb-3 text-base'>Welcome to your profile dashboard!</p>
+                  <p className='text-base'>In the Profile section you can view and edit your recent activity, update your personal information, view your data and personalize your account settings.</p>  
                 </div>
             </div>
          )
@@ -113,9 +114,10 @@ const ProfileHeader = () => {
                   size={'h-20 w-20'}
                   phSize={80}
                />
-                <div>
-                  <h2 className='subheading text-hint mb-3'>{`Hi, ${first_name}`}</h2>
-                  <p className='text-base'>Welcome to your Profile dashboard. Get started by personalizing your account settings and exploring our features.</p>  
+                <div className='px-3'>
+                  <h2 className='subheading text-hint mb-5'>{`Hi, ${first_name}`}</h2>
+                  <p className='mb-3 text-base'>Welcome to your profile dashboard!</p>
+                  <p className='text-base'>In the Profile section you can view and edit your recent activity, update your personal information, view your data and personalize your account settings.</p>  
                 </div>            
             </div>
          )}

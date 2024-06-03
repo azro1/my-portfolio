@@ -9,7 +9,7 @@ const Profile = () => {
         <ProfileHeader />
 
         <div className='mt-16'>
-            <h2 className='text-center text-2xl font-b font-rubik text-secondary'>Activity Feed</h2>
+            <h2 className='text-center text-2xl font-b font-rubik text-hint'>Activity Feed</h2>
         </div>
         
         <div className='flex flex-col gap-8 text-center mt-10  lg:flex-row lg:gap-3'>

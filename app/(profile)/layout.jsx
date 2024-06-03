@@ -34,14 +34,14 @@ export default async function ProfileLayout({ children }) {
                   </span>
                 </div>
               </Link>
-              <Link href={'/privacy'}>
+              <Link href={'/profile/data-privacy'}>
                 <div className='flex items-center p-3.5 mb-1 bg-primary group hover:bg-white'>
                   <span className='text-secondary group-hover:text-primary text-sm ml-3.5'>
                     Data & Privacy
                   </span>
                 </div>
               </Link>
-              <Link href={'/security'}>
+              <Link href={'/profile/security'}>
                 <div className='flex items-center p-3.5 bg-primary group hover:bg-white'>
                   <span className='text-secondary group-hover:text-primary text-sm ml-3.5'>
                     Security

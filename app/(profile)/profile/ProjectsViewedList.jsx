@@ -79,7 +79,7 @@ const ProjectsViewedList = () => {
   return (
     <div className='grid grid-cols-2 flex-1 place-self-start '>
         <h3 className='row-start-1 col-span-2 mb-5 text-xl font-b font-rubik text-hint'>Project Views</h3>
-        {projectsViewed && projectsViewed.map((project) => (
+        {projectsViewed ? (projectsViewed.map((project) => (
             <div className='flex flex-col p-3' key={project.id}>
             <div className='max-w-full max-h-full bg-white p-1' >
                 <Link href={`/projects/${project.id}`}>
@@ -93,6 +93,9 @@ const ProjectsViewedList = () => {
             <h4 className="font-os font-r text-secondary text-center text-sm mt-2">{project.title}</h4>
             </div>
             ))
+          ) : (
+              <p className='col-span-2'>No project views.</p>
+          )
         }
     </div>
   )
