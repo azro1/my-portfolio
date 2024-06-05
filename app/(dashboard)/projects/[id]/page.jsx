@@ -4,10 +4,9 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { v4 as uuidv4 } from "uuid"
 
-
 // components
-// import Icons from '@/app/components/Icons';
 import Card from "@/app/components/Card";
+import ProjectFavouriteButton from '../ProjectFavouriteButton';
 
 // dynamic metadata
 export async function generateMetadata({ params }) {
@@ -73,6 +72,7 @@ const Project = async ({ params }) => {
   return (
     <main className='my-4.5'>
       <h2 className='subheading text-hint'>{project.title}</h2>
+
       <div className='grid gap-y-6 md:gap-y-10 md:grid-auto-rows md:grid-cols-2'>
 
         <Card values={'mt-6 p-3 rounded-md md:col-span-2 md:h-full'} >
@@ -80,11 +80,13 @@ const Project = async ({ params }) => {
               <img className='w-full h-96 object-cover object-left-top' src={project.image_url} alt={project.alt_desc} />
           </div>
         </Card>
-        
-        <div className='md:row-start-2 md:col-start-1 pb-3 md:col-span-2'>
+
+        <div className='md:row-start-2 md:col-start-1 pb-3 md:col-span-2 relative'>
+          <ProjectFavouriteButton className={'absolute right-0 top-1'} id={project.id} />
           <h3 className='text-1.375 font-b text-hint'>Project Description</h3>
           <p className='pt-3 leading-6 font-os text-sm'>{project.description}</p>
         </div>
+
         <div className='row-start-3 col-start-1 md:col-start-1 md:row-start-3'>
           <div className='pb-6 md:pb-8'>
             <div className='font-os text-sm text-secondary'>
@@ -129,8 +131,8 @@ const Project = async ({ params }) => {
             </div>
           </div>
         </div>
-        {/* <Icons values={"flex gap-x-5 h-4.75 items-center md:col-start-2 md:row-start-3 md:place-content-end md:self-end md:items-end"} color={"#F6F9FF"} /> */}
       </div>
+
     </main>
   );
 }
