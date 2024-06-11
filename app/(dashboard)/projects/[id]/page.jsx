@@ -45,12 +45,18 @@ const Project = async ({ params }) => {
   if (error) {
     console.log(error)
   }
+  
+  let userId = null;
 
   if (session) {
     const { data: { user }, error: authError } = await supabase.auth.getUser()
 
     if (authError) {
       console.log(authError)
+    }
+
+    if (user) {
+      userId = user.id
     }
 
     const { error } = await supabase.from('activity')
@@ -82,7 +88,7 @@ const Project = async ({ params }) => {
         </Card>
 
         <div className='md:row-start-2 md:col-start-1 pb-3 md:col-span-2 relative'>
-          <ProjectFavouriteButton className={'absolute right-0 top-1'} id={project.id} />
+          <ProjectFavouriteButton className={'absolute right-0 top-1'} projectId={project.id} userId={userId} />
           <h3 className='text-1.375 font-b text-hint'>Project Description</h3>
           <p className='pt-3 leading-6 font-os text-sm'>{project.description}</p>
         </div>

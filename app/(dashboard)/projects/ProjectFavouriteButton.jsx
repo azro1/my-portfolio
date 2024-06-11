@@ -1,47 +1,128 @@
 "use client"
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { v4 as uuidv4 } from 'uuid';
 
-const ProjectFavouriteButton = ({ className, id }) => {
+
+const ProjectFavouriteButton = ({ className, projectId, userId }) => {
   const [isClicked, setIsClicked] = useState(false)
   const [isFavourite, setIsFavourite] = useState(false);
-  const [isNotFavourite, setIsNotFavourite] = useState(false);
+  const [favouriteProjects, setFavouriteProjects] = useState([])
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const supabase = createClientComponentClient()
 
 
-  const handleClick = () => {
-    setIsClicked(!isClicked)
 
-    if (!isClicked) {
-        setIsFavourite(true)
-        setIsNotFavourite(false)
 
-        const tooltipTimeout = setTimeout(() => {
+    // get favourites
+    useEffect(() => {
+        async function getFavourites() {
+            const { data, error } = await supabase
+            .from('favourites')
+            .select()
+            .eq('user_id', userId)
+
+            if (error) {
+                console.log(error)
+            }
+
+            if (data) {
+                setFavouriteProjects(data);
+                const isFav = data.some(fav => fav.project_id === projectId)
+                setIsFavourite(isFav)
+            }
+            setIsLoading(false)
+        }
+        if (userId) {
+            getFavourites()
+        }
+    }, [userId, projectId, supabase])
+
+
+
+
+
+
+
+    // add favourites    
+    const addFavourite = async () => {
+        const { error } = await supabase
+        .from('favourites')
+        .upsert({
+            id: uuidv4(),
+            created_at: new Date().toISOString(),
+            project_id: projectId,
+            user_id: userId
+        })
+        .single()
+
+        if (error) {
+            console.log(error)
             setIsFavourite(false)
-            return clearTimeout(tooltipTimeout)
-        }, 2000)
-
-    } else {
-        setIsFavourite(false)
-        setIsNotFavourite(true)
-
-        const tooltipTimeout = setTimeout(() => {
-            setIsNotFavourite(false)
-            return clearTimeout(tooltipTimeout)
-        }, 2000)
+        } else {
+            setIsFavourite(true)
+            setMessage('Added to Favourites')
+            setTimeout(() => setMessage(''), 2000)
+        } 
     }
-    console.log(id)
-  }
+
+
+
+
+
+    // delete favourites
+    const deleteFavourite = async () => {
+        const { error } = await supabase
+        .from('favourites')
+        .delete()
+        .eq('project_id', projectId)
+        .eq('user_id', userId);
+
+        if (error) {
+            console.log(error)
+        } else {
+            setIsFavourite(false)
+            setMessage('Removed from Favourites')
+            setTimeout(() => setMessage(''), 2000)
+        }
+    }
+
+
+
+
+
+
+    const handleClick = async () => {
+        setIsClicked(!isClicked)
+        setIsFavourite(prevFavourite => !prevFavourite)
+    
+        if (isFavourite) {
+            await deleteFavourite()
+        } else {
+            await addFavourite()
+        }
+      }
+
+
+
 
   
   return (
     <>
-        <button className={className} onClick={handleClick}>  
-            {isClicked ? <FaHeart className="cursor-pointer" size={24} color="red"/> : <FaRegHeart className="cursor-pointer" size={24} color="red"/>}
+        <button className={className} onClick={handleClick}> 
+        {isLoading ? null : (isFavourite ? 
+          <FaHeart className="cursor-pointer" size={24} color="red"/> : 
+          <FaRegHeart className="cursor-pointer" size={24} color="red"/>
+        )}
         </button>
+
         <div className='absolute right-16 -top-20'>
-            {isFavourite && <span className='bg-primary text-secondary p-2 rounded-md'>Added to favorites</span> }
-            {isNotFavourite && <span className='bg-primary text-secondary p-2 rounded-md'>Removed from favorites</span>}
+            {message && <span className='bg-primary text-secondary p-2 rounded-md'>{message}</span>}         
         </div>
     </>
 
@@ -50,3 +131,35 @@ const ProjectFavouriteButton = ({ className, id }) => {
 }
 
 export default ProjectFavouriteButton
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
