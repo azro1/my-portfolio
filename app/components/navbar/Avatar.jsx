@@ -102,11 +102,20 @@ const Avatar = ({ user }) => {
             :
                 (
                     <div className="flex flex-col items-center justify-center gap-1 absolute left-0 top-8.625 md:static mr-8">
-                        <ProfileAvatar
-                            url={avatar_url}
-                            size={'h-12 w-12'}
-                            phSize={50}
-                        />
+                        {isProfileLoading ? (
+                            <div className='overflow-hidden w-12 h-12'>
+                                <img src="images/navbar/avatar/loader.gif" alt="a loading gif" />
+                            </div>
+                        ) : (
+                            <>
+                                <ProfileAvatar
+                                    url={avatar_url}
+                                    size={'w-12 h-12'}
+                                    lgSize={'w-12 h-12'}
+                                    phSize={50}
+                                />
+                            </>
+                        )}
                         <h6 className="font-os text-sm font-b text-hint">{first_name}</h6>
                     </div>
                 )}

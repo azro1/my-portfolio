@@ -15,8 +15,8 @@ export default async function ProfileLayout({ children }) {
     <>
       <Navbar user={user && user} />
       <main className='my-4.5 lg:mb-28'>
-        <div className='flex flex-col md:flex-row '>
-          <div className='sidebar bg-shade mb-12 md:mb-0 md:h-auto md:p-1 md:min-w-60'>
+        <div className='flex flex-col md:flex-row'>
+          <div className='sidebar bg-secondary mb-12 md:mb-0 md:h-fit md:p-1 md:min-w-60'>
             <div className='flex flex-col'>
               <Link href={'/profile'}>
                 <div className='flex items-center p-3.5 mb-1 bg-primary group hover:bg-white'>

@@ -79,7 +79,7 @@ img {
   height: 0;
   border-left: 12px solid transparent; /* Adjust the size of the triangle */
   border-right: 7.5px solid transparent;
-  border-bottom: 19px solid #191B20;
+  border-bottom: 19px solid '#757575';
   top: -15px;
   right: 14.3px;
 }
@@ -91,7 +91,7 @@ img {
   height: 0;
   border-left: 13px solid transparent; /* Adjust the size of the triangle */
   border-right: 7px solid transparent;
-  border-bottom: 18.5px solid #F0F0F0;
+  border-bottom: 20.5px solid #757575;
   top: -19px;
   right: 14px;
 }

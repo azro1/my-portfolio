@@ -8,13 +8,15 @@ const Profile = () => {
       <div>
         <ProfileHeader />
 
-        <div className='mt-16'>
-            <h2 className='text-center text-2xl font-b font-rubik text-hint'>Activity Feed</h2>
-        </div>
-        
-        <div className='flex flex-col gap-8 text-center mt-10  lg:flex-row lg:gap-3'>
-            <ProjectsViewedList  />
-            <CommentList />
+        <div className='mt-12'>
+          <div>
+            <h2 className='text-center text-2xl font-rubik text-hint my-6'>Activity Feed</h2>
+            <div className='flex flex-col text-center lg:flex-row'>
+                <ProjectsViewedList  />
+                <CommentList />
+            </div>
+          </div>
+
         </div>
     </div>
   );

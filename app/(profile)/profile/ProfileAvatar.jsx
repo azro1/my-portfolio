@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { FaUserCircle } from "react-icons/fa";
 
 
-const ProfileAvatar = ({ url, size, phSize }) => {
+const ProfileAvatar = ({ url, size, lgSize, phSize }) => {
     const [signedUrl, setSignedUrl] = useState(null);
     const [error, setError] = useState(null);
     const supabase = createClientComponentClient();
@@ -48,9 +48,7 @@ const ProfileAvatar = ({ url, size, phSize }) => {
     return (
         <div>
             {isLoading ? (
-                <div className='overflow-hidden w-12 h-12'>
-                    <img src="../images/navbar/avatar/loader.gif" alt="a loading gif" />
-                </div>
+                <div className={`overflow-hidden ${lgSize} bg-primary rounded-full`}></div>
             ) : (
                 <>
                     {signedUrl ? (
@@ -64,7 +62,6 @@ const ProfileAvatar = ({ url, size, phSize }) => {
                             />
                         </div>
                     ) : (
-
                         <FaUserCircle size={phSize} color="gray" />
                     )}
                 </>

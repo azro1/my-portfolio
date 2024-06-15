@@ -99,23 +99,23 @@ const CommentList = () => {
 
   return (
     <div className='flex-1'>
-        <h3 className='mb-5 text-xl font-b font-rubik text-hint'>Comments</h3>
-            <div className='flex flex-col gap-4 text-left md:p-3 lg:p-0' >
+        <h3 className='mb-4 text-lg font-rubik text-secondary'>Comments</h3>
+            <div className={`flex flex-col gap-3 text-left md:px-3 ${comments && comments.length > 0 ? 'lg:pt-3' : 'lg:pt-0' } lg:px-0`} >
                 {comments && comments.length > 0 ? (
                     comments.map(comment => (
-                    <div className='flex items-start justify-between gap-3 p-2' key={comment.id}>
-                        <div>
-                            <p>{comment.text}</p>
-                            <span className='text-xs text-hint'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
-                        </div>
+                        <div className='flex items-start justify-between gap-2 p-4 border-2 border-secondary' key={comment.id}>
+                            <div>
+                                <p>{comment.text}</p>
+                                <span className='text-xs text-hint'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
+                            </div>
 
-                        <FaTrashAlt className="min-w-max cursor-pointer" color="#B22222" size={20} onClick={() => handleDelete(comment.id)}/>
-                    </div>
+                            <FaTrashAlt className="min-w-max cursor-pointer text-hint" size={20} onClick={() => handleDelete(comment.id)}/>
+                        </div>
                     ))
                 ) : (
                     <>
                         {!deleteMsg && (
-                            <p className='text-center'>No comments.</p>
+                            <p className='text-center pt-0'>No comments.</p>
                         )}
                     </>
 
