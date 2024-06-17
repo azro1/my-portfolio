@@ -1,11 +1,15 @@
 "use client"
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { v4 as uuidv4 } from "uuid"
 
 
-const EnquiriesForm = ({ profile, user, error }) => {
+// hooks
+import { useFetchProfile } from '@/app/hooks/useFetchProfile';
+
+
+const EnquiriesForm = ({ user }) => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [subject, setSubject] = useState('')
@@ -13,6 +17,18 @@ const EnquiriesForm = ({ profile, user, error }) => {
     const [formError, setFormError] = useState('')
     const [successMsg, setSuccessMsg] = useState('')
     const [isLoading, setIsLoading] = useState(false)
+
+
+    // custom hook
+    const { error, profile, fetchProfile } = useFetchProfile()
+  
+  
+     // watch user prop value to get users profile
+    useEffect(() => {
+      if (user) {
+        fetchProfile(user)
+      }
+    }, [user])
 
 
     // clear messages

@@ -1,7 +1,6 @@
-'use client';
-
-import { useState, useEffect } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
+import { cookies } from "next/headers"
+import { Suspense } from "react";
 
 // metadata
 export const metadata = {
@@ -16,58 +15,10 @@ import Comments from './Comments';
 import EnquiriesForm from './EnquiriesForm';
 import AvailabilityInfo from './AvailabilityInfo';
 
-const Contact = () => {
-  const [error, setError] = useState('')
-  const [user, setUser] = useState(null)
-  const [profile, setProfile] = useState(null);
 
-  // as soon as component loads check if user is logged in to allow comment to be added
-  useEffect(() => {
-    setError('');
-    async function getUser() {
-      try {
-        const supabase = createClientComponentClient();
-        const {data: { session }, error } = await supabase.auth.getSession();
-        if (error) {
-          throw error;
-        }
-        if (session) {
-          const { data: { user }, error } = await supabase.auth.getUser()
-          setUser(user);
-        }
-      } catch (err) {
-        setError(err.message);
-      } 
-    }
-    getUser();
-  }, []);
-
-  // fetch profiles
-  useEffect(() => {
-    const fetchProfiles = async () => {
-      try {
-        const supabase = createClientComponentClient();
-        const { data, error } = await supabase
-          .from('profiles')
-          .select()
-          .eq('id', user.id)
-          .single();
-
-        if (error) {
-          throw new Error(error.message);
-        }
-
-        if (data) {
-          setProfile(data);
-        }
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
-    if (user && user.id) {
-      fetchProfiles();
-    }
-  }, [user && user.id]);
+const Contact = async () => {
+  const supabase = createServerComponentClient({ cookies })
+  const { data: { user } } = await supabase.auth.getUser()
 
   return (
     <main className='my-4.5 lg:mb-28'>
@@ -82,12 +33,12 @@ const Contact = () => {
               <p>Please sign in to leave a comment.</p>
             </div>
           )}
-          <Comments profile={profile} user={user} />
+          <Comments user={user} />
         </div>
         {!user && (
-           <AvailabilityInfo />
-         )}
-        <EnquiriesForm profile={profile} user={user} error={error} />
+          <AvailabilityInfo />
+        )}
+        <EnquiriesForm user={user} />
       </div>
     </main>
   );

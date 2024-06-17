@@ -4,16 +4,30 @@ import { useState, useEffect } from 'react';
 import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
+// hooks
+import { useFetchProfile } from '@/app/hooks/useFetchProfile';
+
 // components
 import ProfileAvatar from '@/app/(profile)/profile/ProfileAvatar';
 
 
-const Comments = ({ profile, user }) => {
+const Comments = ({ user }) => {
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([])
     const [commentError, setCommentError] = useState('')
     const [isCommentLoading, setIsCommentLoading] = useState(false);
 
+
+    // custom hooks
+    const { profile, fetchProfile } = useFetchProfile() 
+  
+
+    // watch user value to get users profile
+    useEffect(() => {
+      if (user) {
+        fetchProfile(user)
+      }
+    }, [user])
 
 
 
@@ -131,7 +145,7 @@ const Comments = ({ profile, user }) => {
             )}
 
             {user !== null && comments.length === 0 && (
-                <div className='md:row-start-3 col-start-1'>
+                <div className='md:row-start-3 col-start-1 mt-4'>
                     <p>No comments.</p>
                 </div>
             )}
