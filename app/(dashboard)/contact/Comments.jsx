@@ -15,7 +15,8 @@ const Comments = ({ user }) => {
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([])
     const [commentError, setCommentError] = useState('')
-    const [isCommentLoading, setIsCommentLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isCommentsLoading, setIsCommentsLoading] = useState(true);
 
 
     // custom hooks
@@ -42,24 +43,26 @@ const Comments = ({ user }) => {
     // as soon as component mounts fetch all comments to be displayed on page
     const fetchComments = async () => {
         try {
-        const supabase = createClientComponentClient();
-        const { data, error } = await supabase
-        .from('comments')
-        .select()
-        .order('created_at', {
-            ascending: false
-        })
+            const supabase = createClientComponentClient();
+            const { data, error } = await supabase
+                .from('comments')
+                .select()
+                .order('created_at', {
+                    ascending: false
+                })
 
-        if (error) {
-            setComments([])
-            console.log(error.message)
-        }
-        
-        if (data) {
-            setComments(data)
-        }
+            if (error) {
+                setComments([])
+                console.log(error.message)
+            }
+
+            if (data) {
+                setComments(data)
+            }
         } catch (error) {
             setError(error.message);
+        } finally {
+            setIsCommentsLoading(false)
         }
     }
 
@@ -73,7 +76,7 @@ const Comments = ({ user }) => {
 
     const handleComment = async (e) => {
         e.preventDefault();
-        setIsCommentLoading(true)
+        setIsLoading(true)
         setCommentError('')
         setComment('')
           
@@ -98,7 +101,7 @@ const Comments = ({ user }) => {
     
           if (json.data) {
             // console.log(json.data)
-            setIsCommentLoading(false)
+            setIsLoading(false)
             updateComments(json.data);
             fetchComments();
           }
@@ -133,10 +136,10 @@ const Comments = ({ user }) => {
                         ></textarea>
                         {commentError && <div className='error'>{commentError}</div>}
                         <div>
-                            {isCommentLoading && (
+                            {isLoading && (
                                 <button className='btn mt-2 bg-hint'>Processing...</button>
                             )}
-                            {!isCommentLoading && (
+                            {!isLoading && (
                                 <button className='btn mt-2 bg-hint'>Add Comment</button>
                             )}
                         </div>
@@ -144,11 +147,20 @@ const Comments = ({ user }) => {
                 </div>
             )}
 
-            {user !== null && comments.length === 0 && (
-                <div className='md:row-start-3 col-start-1 mt-4'>
-                    <p>No comments.</p>
+            {isCommentsLoading ? (
+                <div className='mt-20'>
+                   <img className="w-20" src="/images/loading/loading.gif" alt="a loading gif" />
                 </div>
+            ) : (
+                <>
+                    {user !== null && comments.length === 0 && (
+                        <div className='md:row-start-3 col-start-1 mt-4'>
+                            <p>No comments.</p>
+                        </div>
+                    )}
+                </>
             )}
+
 
 
             {comments !== null && comments.length > 0 && (

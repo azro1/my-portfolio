@@ -14,7 +14,7 @@ module.exports = {
     extend: {
       colors: {
         hint: '#6B8E23',
-        shade: '#191919',
+        shade: '#131519',
         secondary: '#757575',
         primary: '#1C1E24',
         discord: '#6A5ACD',
@@ -66,7 +66,7 @@ module.exports = {
       boxShadow: {
         '3xl': '0px 0px 12px 0 #757575',
         inner: 'inset -2px 0px 18px 10px #131519',
-        outer: '2px 2px 2px 2px #131519'
+        outer: '0px 0px 16px 4px #131519'
       },
       minHeight: {
         'custom-sm': '25vh',

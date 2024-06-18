@@ -20,7 +20,6 @@ const ProfileHeader = () => {
 
    useEffect(() => {
       async function getUser() {
-         setIsUserLoading(true)
          try {
             const { data: { user }, error } = await supabase.auth.getUser();
             if (error) {
@@ -44,8 +43,6 @@ const ProfileHeader = () => {
       async function getProfile() {
 
          try {
-            setIsProfileLoading(true)
-
             const { data, error } = await supabase
                .from('profiles')
                .select()
@@ -106,51 +103,70 @@ const ProfileHeader = () => {
                      )}
 
                      <h2 className='subheading text-hint'>{`Hi, ${first_name}`}</h2>
-                     <p className='text-secondary text-base'>{`"${bio ? bio : 'Add a short Bio.'}"`}</p>
+                     {isProfileLoading ? (
+                           <></>
+                        ) : (
+                           <>
+                               {!isProfileLoading && bio ? (
+                                 <p className='text-base text-secondary'>{`"${bio}"`}</p>
+                              ) : (
+                                 <p className='text-base text-secondary'>"Add a Bio"</p>
+                              )}
+                           </>
+                        )}
                   </div>
 
                   <div>
-                     <p className='text-xl'>This is your Profile section. Here you can view and edit your recent activity, update your personal information, view your data and personalize your account settings.</p>
+                     <p className='text-lg'>This is your Profile section. Here you can view and edit your recent activity, update your personal information, view your data and personalize your account settings.</p>
                   </div>
                </div>
 
             </div>
-
          )
             :
-            (
-               <div className='flex-1 text-center'>
+         (
+            <div className='flex-1 text-center'>
 
-                  <div className='flex flex-col items-center gap-6 p-8'>
-                     <div className='flex flex-col items-center gap-3'>
+               <div className='flex flex-col items-center gap-6 p-8'>
+                  <div className='flex flex-col items-center gap-3'>
 
-                     {isLoading ? (
-                        <div className='overflow-hidden w-20 h-20'>
-                           <img src="images/navbar/avatar/loader.gif" alt="a loading gif" />
-                        </div>
+                  {isLoading ? (
+                     <div className='overflow-hidden w-20 h-20'>
+                        <img src="images/navbar/avatar/loader.gif" alt="a loading gif" />
+                     </div>
+                  ) : (
+                     <>
+                     <ProfileAvatar
+                        url={avatar_url}
+                        size={'w-20 h-20'}
+                        lgSize={'w-20 h-20'}
+                        phSize={80}
+                     />
+                     </>
+                  )}
+
+
+                     <h2 className='subheading text-hint'>{`Hi, ${first_name}`}</h2>
+                     {isProfileLoading ? (
+                        <></>
                      ) : (
                         <>
-                        <ProfileAvatar
-                           url={avatar_url}
-                           size={'w-20 h-20'}
-                           lgSize={'w-20 h-20'}
-                           phSize={80}
-                        />
+                              {!isProfileLoading && bio ? (
+                              <p className='text-base text-secondary'>{`"${bio}"`}</p>
+                           ) : (
+                              <p className='text-base text-secondary'>"Add a Bio"</p>
+                           )}
                         </>
                      )}
-
-
-                        <h2 className='subheading text-hint'>{`Hi, ${first_name}`}</h2>
-                        <p className='text-secondary text-base'>{`"${bio ? bio : 'Add a Bio.'}"`}</p>
-                     </div>
-
-                     <div>
-                        <p className='text-xl'>This is your Profile section. Here you can view and edit your recent activity, update your personal information, view your data and personalize your account settings.</p>
-                     </div>
                   </div>
 
+                  <div>
+                     <p className='text-lg'>This is your Profile section. Here you can view and edit your recent activity, update your personal information, view your data and personalize your account settings.</p>
+                  </div>
                </div>
-            )}
+
+            </div>
+         )}
       </>
    )
 }

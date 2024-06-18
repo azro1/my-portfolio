@@ -3,13 +3,14 @@
 import { useState, useEffect } from "react";
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
-import { FaTrashAlt } from "react-icons/fa";
+import { MdDeleteForever } from "react-icons/md";
 
 const CommentList = () => {
     const [user, setUser] = useState(null);
     const [comments, setComments] = useState(null)
     const [deleteMsg, setDeleteMsg] = useState(null)
     const [errorMsg, setErrorMsg] = useState(null)
+    const [isCommentsLoading, setIsCommentsLoading] = useState(true)
 
     const supabase = createClientComponentClient();
 
@@ -54,6 +55,8 @@ const CommentList = () => {
                 }
             } catch (error) {
                 console.log(error.message);
+            } finally {
+                setIsCommentsLoading(false)
             }
         }
         if (user && user.id) {
@@ -98,30 +101,33 @@ const CommentList = () => {
     }
 
   return (
-    <div className='flex-1'>
-        <h3 className='mb-4 text-lg font-rubik text-secondary'>Comments</h3>
-            <div className={`flex flex-col gap-3 text-left md:px-3 ${comments && comments.length > 0 ? 'lg:pt-3' : 'lg:pt-0' } lg:px-0`} >
+    <div className='text-center flex-1'>
+        <h3 className='mb-4 text-lg font-rubik text-hint'>Comments</h3>
+            <div className='flex flex-col gap-2 text-left max-w-sm mx-auto lg:max-w-none overflow-auto h-96'>
                 {comments && comments.length > 0 ? (
                     comments.map(comment => (
-                        <div className='flex items-start justify-between gap-2 p-4 border-2 border-secondary' key={comment.id}>
+                        <div className='flex items-start justify-between gap-2 p-3 shadow-outer' key={comment.id}>
                             <div>
                                 <p>{comment.text}</p>
                                 <span className='text-xs text-hint'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
                             </div>
-
-                            <FaTrashAlt className="min-w-max cursor-pointer text-hint" size={20} onClick={() => handleDelete(comment.id)}/>
+                                <MdDeleteForever className="min-w-max cursor-pointer text-hint" size={24} onClick={() => handleDelete(comment.id)}/>
                         </div>
                     ))
                 ) : (
                     <>
-                        {!deleteMsg && (
-                            <p className='text-center pt-0'>No comments.</p>
+                        {isCommentsLoading ? (
+                           <img className="w-20 mx-auto" src="/images/loading/loading.gif" alt="a loading gif" />
+                        ) : (
+                          <>
+                             {!isCommentsLoading && !deleteMsg && (<p className='text-center pt-0'>No Comments.</p>)}
+                          </>
                         )}
                     </>
 
                 )}
-                {deleteMsg && <p className="place-self-center">{deleteMsg}</p>}
-                {errorMsg && <p className="error place-self-center">{errorMsg}</p>}
+                {deleteMsg && <p className="mt-4  place-self-center">{deleteMsg}</p>}
+                {errorMsg && <p className="mt-4 error place-self-center">{errorMsg}</p>}
             </div>
     </div>
 
