@@ -6,7 +6,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { v4 as uuidv4 } from 'uuid';
 
 
-const ProjectFavouriteButton = ({ className, projectId, userId }) => {
+const ProjectFavouriteButton = ({ className, projectId, user }) => {
   const [isClicked, setIsClicked] = useState(false)
   const [isFavourite, setIsFavourite] = useState(false);
   const [favouriteProjects, setFavouriteProjects] = useState([])
@@ -25,7 +25,7 @@ const ProjectFavouriteButton = ({ className, projectId, userId }) => {
             const { data, error } = await supabase
             .from('favourites')
             .select()
-            .eq('user_id', userId)
+            .eq('user_id', user.id)
 
             if (error) {
                 console.log(error)
@@ -38,10 +38,10 @@ const ProjectFavouriteButton = ({ className, projectId, userId }) => {
             }
             setIsLoading(false)
         }
-        if (userId) {
+        if (user) {
             getFavourites()
         }
-    }, [userId, projectId, supabase])
+    }, [user, projectId, supabase])
 
 
 
@@ -57,7 +57,7 @@ const ProjectFavouriteButton = ({ className, projectId, userId }) => {
             id: uuidv4(),
             created_at: new Date().toISOString(),
             project_id: projectId,
-            user_id: userId
+            user_id: user.id
         })
         .single()
 
@@ -81,7 +81,7 @@ const ProjectFavouriteButton = ({ className, projectId, userId }) => {
         .from('favourites')
         .delete()
         .eq('project_id', projectId)
-        .eq('user_id', userId);
+        .eq('user_id', user.id);
 
         if (error) {
             console.log(error)

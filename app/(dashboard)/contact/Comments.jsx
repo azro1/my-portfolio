@@ -81,7 +81,7 @@ const Comments = ({ user }) => {
         setComment('')
           
         try {
-          const res = await fetch(`${location.origin}/api/auth/comments`, {
+          const res = await fetch(`${location.origin}/api/comments`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'

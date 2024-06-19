@@ -1,11 +1,11 @@
 import { Suspense } from "react"
 
 // components
-import Hero from "../components/Hero"
-import Services from "../components/Services"
-import Skills from "../components/Skills"
+import Hero from "./Hero"
+import Services from "./Services"
+import Skills from "./Skills"
 import ProjectList from "./projects/ProjectList"
-import Connect from "../components/Connect"
+import Connect from "./Connect"
 import Loading from "../components/Loading"
 
 const Home = ()=> {

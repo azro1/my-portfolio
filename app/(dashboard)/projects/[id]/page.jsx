@@ -40,31 +40,14 @@ const Project = async ({ params }) => {
   const project = await getProject(params.id);
 
   const supabase = createServerComponentClient({ cookies })
-  const { data: { session }, error} = await supabase.auth.getSession()
-
-  if (error) {
-    console.log(error)
-  }
+  const { data: { user } } = await supabase.auth.getUser()
   
-  let userId = null;
-
-  if (session) {
-    const { data: { user }, error: authError } = await supabase.auth.getUser()
-
-    if (authError) {
-      console.log(authError)
-    }
-
-    if (user) {
-      userId = user.id
-    }
-
     const { error } = await supabase.from('activity')
     .upsert({
         id: uuidv4(),
         updated_at: new Date().toISOString(),
         project_id: params.id,
-        activity_id: user.id
+        activity_id: user ? user.id : null
       })
     .select()
     .single()
@@ -72,7 +55,7 @@ const Project = async ({ params }) => {
     if (error) {
       console.log(error)
     }
-  }
+  
   
   
   return (
@@ -88,7 +71,7 @@ const Project = async ({ params }) => {
         </Card>
 
         <div className='md:row-start-2 md:col-start-1 pb-3 md:col-span-2 relative'>
-          <ProjectFavouriteButton className={'absolute right-0 top-1'} projectId={project.id} userId={userId} />
+          <ProjectFavouriteButton className={'absolute right-0 top-1'} projectId={project.id} user={user} />
           <h3 className='text-1.375 font-b text-hint'>Project Description</h3>
           <p className='pt-3 leading-6 font-os text-sm'>{project.description}</p>
         </div>
