@@ -74,7 +74,7 @@ const Avatar = ({ user }) => {
 
                         {isProfileLoading ? (
                             <div className='overflow-hidden w-12 h-12'>
-                                <img src="images/navbar/avatar/loader.gif" alt="a loading gif" />
+                                <img src="../../images/loading/loader.gif" alt="a loading gif" />
                             </div>
                         ) : (
                             <>
@@ -104,7 +104,7 @@ const Avatar = ({ user }) => {
                     <div className="flex flex-col items-center justify-center gap-1 absolute left-0 top-8.625 md:static mr-8">
                         {isProfileLoading ? (
                             <div className='overflow-hidden w-12 h-12'>
-                                <img src="images/navbar/avatar/loader.gif" alt="a loading gif" />
+                                <img src="../../images/loading/loader.gif" alt="a loading gif" />
                             </div>
                         ) : (
                             <>

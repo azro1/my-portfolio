@@ -4,33 +4,18 @@ import Link from 'next/link';
 import { useState, useEffect } from "react";
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
+// custom hooks
+import { useFetchUser } from '@/app/hooks/useFetchUser';
+
 const ProjectsViewedList = () => {
-    const [user, setUser] = useState(null);
+  // custom hook to fetch user
+    const { user } = useFetchUser()
+
     const [projectsViewed, setProjectsViewed] = useState('')
     const [isProjectsLoading, setIsProjectsloading] = useState(true)
 
     const supabase = createClientComponentClient()
 
-
-    useEffect(() => {
-      async function getUser() {
-        try {
-          const {data: { user }, error} = await supabase.auth.getUser();
-          if (error) {
-            throw new Error(error.message);
-          }
-          if (user) {
-            setUser(user);
-          }
-        } catch (error) {
-            console.log(error.massage);
-        }
-      }
-      getUser();
-   }, []);
-
-
-   
   // get projects viewed
   useEffect(() => {
     async function getProjectsViewed() {
@@ -77,20 +62,19 @@ const ProjectsViewedList = () => {
       }
     }
 
-    if (user && user.id) {
+    if (user) {
       getProjectsViewed()
     }
-  }, [user && user.id])
+  }, [user])
 
 
   return (
-    <div className='h-fit text-center flex-1'>
+    <div className='text-center flex-1'>
         <h3 className='mb-4 text-lg font-rubik text-hint'>Project Views</h3>
 
-
-        <div className='flex flex-wrap gap-3 justify-center lg:justify-start'>
+        <div className='flex flex-wrap gap-3 max-w-sm mx-auto min-h-96 justify-center lg:justify-start'>
           {projectsViewed ? (projectsViewed.map((project) => (
-              <div className='p-3 shadow-outer max-w-40 min-w-40' key={project.id}>
+              <div className='p-3 shadow-outer max-w-40 min-w-40 h-fit' key={project.id}>
                   <div className='max-w-full max-h-full bg-white p-1' >
                       <Link href={`/projects/${project.id}`}>
                           <img className='w-full h-28 object-cover object-left-top' 
@@ -104,15 +88,15 @@ const ProjectsViewedList = () => {
               </div>
               ))
             ) : (
-              <>
+              <div className='w-full relative'>
                 {isProjectsLoading ? (
-                  <img className="w-20 mx-auto" src="/images/loading/loading.gif" alt="a loading gif" />
+                  <img className="w-16 absolute top-16 left-1/2 transform -translate-x-1/2" src="../images/loading/loader.gif" alt="a loading gif" />
                 ) : (
                   <>
                     {!isProjectsLoading && (<p className='text-center w-full pt-0'>No Projects Views.</p>)}
                   </>
                 )}
-              </>
+              </div>
             )
           }
 

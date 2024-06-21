@@ -8,21 +8,26 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { FaUserCircle } from "react-icons/fa";
 import Image from 'next/image';
 
+// custom hooks
+import { useFetchUser } from '@/app/hooks/useFetchUser';
+
 
 const PersonalInfo = () => {
-  const [authUser, setAuthUser] = useState(null);
-  const [first_name, setFirstName] = useState(null);
-  const [full_name, setFullName] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [updateError, setUpdateError] = useState(null);
-  const [updateSuccess, setUpdateSuccess] = useState(null);
-  const [updating, setUpdating] = useState(false);
-  const [uploadError, setUploadError] = useState(null);
-  const [uploadSuccess, setUploadSuccess] = useState(null);
-  const [uploading, setUploading] = useState(false);
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [fileInputError, setFileInputError] = useState(null);
-  const [imgSrc, setImgSrc] = useState('');
+  // custom hook to fetch user
+  const { user } = useFetchUser()
+
+  const [first_name, setFirstName] = useState(null)
+  const [full_name, setFullName] = useState(null)
+  const [email, setEmail] = useState(null)
+  const [updateError, setUpdateError] = useState(null)
+  const [updateSuccess, setUpdateSuccess] = useState(null)
+  const [updating, setUpdating] = useState(false)
+  const [uploadError, setUploadError] = useState(null)
+  const [uploadSuccess, setUploadSuccess] = useState(null)
+  const [uploading, setUploading] = useState(false)
+  const [selectedFile, setSelectedFile] = useState(null)
+  const [fileInputError, setFileInputError] = useState(null)
+  const [imgSrc, setImgSrc] = useState('')
   const formRef = useRef(null)
 
   const [bio, setBio] = useState(null)
@@ -30,47 +35,17 @@ const PersonalInfo = () => {
   const [bioError, setBioError] = useState(null)
   const [bioSuccess, setBioSuccess] = useState(null)
 
-  const supabase = createClientComponentClient();
+  const supabase = createClientComponentClient()
 
 
 
 
-
-  // get user session object as soon as component loads, set user state then call getProfile
+  // make sure we have a user and a user before calling getProfile
   useEffect(() => {
-    async function getUser() {
-      setUpdateError('');
-      try {
-        const {
-          data: { user },
-          error,
-        } = await supabase.auth.getUser();
-        if (error) {
-          throw new Error(error);
-        }
-        if (user) {
-          setAuthUser(user);
-        }
-      } catch (error) {
-        setUpdateError(error.message);
-        console.log(error.message);
-      }
+    if (user) {
+      getProfile()
     }
-    getUser();
-  }, []);
-
-
-
-
-
-
-
-  // make sure we have a user and a user id before calling getProfile
-  useEffect(() => {
-    if (authUser && authUser.id) {
-      getProfile();
-    }
-  }, [authUser && authUser.id]);
+  }, [user])
 
 
 
@@ -80,10 +55,10 @@ const PersonalInfo = () => {
 
     /* This function is triggered when a user selects a file. If a file is selected, the FileReader object reads the file as a data URL. The FileReader API is used to asynchronously read the contents of files stored on the user's computer. The readAsDataURL method of FileReader reads the content of the file and converts it into a base64-encoded string, called a data URL. A data URL is a string that represents the file's data and includes a media type prefix. The FileReader's onload event is triggered once the file is read, and the result (data URL) is stored in imgSrc. This data URL can be used to display the image directly in the browser */
   const handleFileInputChange = (event) => {
-    setFileInputError('');
+    setFileInputError('')
 
     const file = event.target.files[0];
-    setSelectedFile(file);
+    setSelectedFile(file)
 
     // display image users selects
     if (file) {
@@ -91,11 +66,11 @@ const PersonalInfo = () => {
       reader.onload = (e) => {
         setImgSrc(e.target.result)
       }
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file)
     } else {
-        setFileInputError('Could not select file. Please try again.');
+        setFileInputError('Could not select file. Please try again.')
     }
-  };
+  }
 
 
 
@@ -104,30 +79,30 @@ const PersonalInfo = () => {
 
   // gets a users profile row with the id that is equal to the users id who is signed in and store properties in state whose values are being pre-poulated in the input fields as we have 2 way binding unsing controlled inputs
   const getProfile = async () => {
-    setUpdateError('');
+    setUpdateError('')
 
     try {
       const { data, error } = await supabase
         .from('profiles')
         .select()
-        .eq('id', authUser.id)
-        .limit(1);
+        .eq('id', user.id)
+        .limit(1)
       if (error) {
         throw new Error(error.message);
       }
       if (data && data.length > 0) {
         const profileData = data[0];
-        setFirstName(profileData.first_name);
-        setFullName(profileData.full_name);
-        setEmail(profileData.email);
+        setFirstName(profileData.first_name)
+        setFullName(profileData.full_name)
+        setEmail(profileData.email)
       } else {
-        throw new Error('You currently have no profile saved.');
+        throw new Error('You currently have no profile saved.')
       }
     } catch (error) {
-      setUpdateError(error.message);
-      console.log(error.message);
+      setUpdateError(error.message)
+      console.log(error.message)
     }
-  };
+  }
 
 
 
@@ -144,11 +119,11 @@ const PersonalInfo = () => {
           avatar_url: path,
           first_name: name
         })
-        .eq('comment_id', authUser.id)
+        .eq('comment_id', user.id)
         .select()
 
       if (error) {
-        throw error;
+        throw error
       }
     } catch (error) {
       console.log(error.message)
@@ -172,41 +147,41 @@ const PersonalInfo = () => {
       setUpdating(true)
 
       const updatedProfile = {
-        id: authUser.id,
+        id: user.id,
         first_name,
         full_name,
         avatar_url,
         email,
         updated_at: new Date().toISOString(),
-      };
+      }
 
-      const { error } = await supabase.from('profiles').upsert(updatedProfile);
+      const { error } = await supabase.from('profiles').upsert(updatedProfile)
 
       if (error) {
-        throw new Error(error.message);
+        throw new Error(error.message)
       }
 
       if (first_name || full_name || email) {
-        setUpdateSuccess('Profile updated!');
+        setUpdateSuccess('Profile updated!')
         await fetchComments(undefined, first_name)  // pass first_name to fetchComments
 
       } else {
-        setUploadSuccess('Avatar uploaded successfully.');
+        setUploadSuccess('Avatar uploaded successfully.')
       }
 
     } catch (error) {
-        setUpdateError('Please enter your profile info. First names must be at least 3 characters long.');
+        setUpdateError('Please enter your profile info. First names must be at least 3 characters long.')
     } finally {
         setUpdating(false)
     }
 
     function clearUpdateMsgs() {
-      setUpdateSuccess('');
-      setUploadSuccess('');
-      setUpdateError('');
+      setUpdateSuccess('')
+      setUploadSuccess('')
+      setUpdateError('')
     }
-    setTimeout(clearUpdateMsgs, 2000);
-  };
+    setTimeout(clearUpdateMsgs, 2000)
+  }
 
 
 
@@ -218,35 +193,35 @@ const PersonalInfo = () => {
   const uploadAvatar = async () => {
     
     try {
-      setUploading(true);
+      setUploading(true)
 
       if (!selectedFile) {
-        throw new Error('You must select an image to upload.');
+        throw new Error('You must select an image to upload.')
       }
-      const fileExt = selectedFile.name.split('.').pop();
-      const filePath = `${authUser.id}-${Math.random()}.${fileExt}`;
+      const fileExt = selectedFile.name.split('.').pop()
+      const filePath = `${user.id}-${Math.random()}.${fileExt}`;
       const { error } = await supabase.storage
         .from('avatars')
-        .upload(filePath, selectedFile, { upsert: true });
+        .upload(filePath, selectedFile, { upsert: true })
       if (error) {
-        throw error;
+        throw error
       }
-      await updateProfile({ avatar_url: filePath });
+      await updateProfile({ avatar_url: filePath })
       await fetchComments(filePath, undefined)  // pass filePath to fetchComments
 
       if (formRef.current) {
-        setImgSrc('');
+        setImgSrc('')
         setSelectedFile('')
-        formRef.current.reset();
+        formRef.current.reset()
       }
 
     } catch (error) {
-        setUploadError(error.message);
-        setTimeout(() => setUploadError(''), 2000);
+        setUploadError(error.message)
+        setTimeout(() => setUploadError(''), 2000)
     } finally {
-      setUploading(false);
+      setUploading(false)
     }
-  };
+  }
 
 
 
@@ -279,13 +254,13 @@ const PersonalInfo = () => {
         .update({
           bio,
         })
-        .eq('id', authUser.id)
+        .eq('id', user.id)
         .select()
   
       if (error) {
         throw error
       } else {
-        setBioSuccess('Bio added successfully.')
+        setBioSuccess('Bio added!')
         setBio('')
       }
     } catch (error) {
@@ -433,7 +408,7 @@ const PersonalInfo = () => {
                 id='single'
                 accept='image/*'
                 onChange={handleFileInputChange}
-                disabled={uploading || (authUser && authUser.user_metadata.full_name)}
+                disabled={uploading || (user && user.user_metadata.full_name)}
               />
             </form>
             {fileInputError && <div className='error mt-2'>* {fileInputError}</div>}
@@ -444,7 +419,7 @@ const PersonalInfo = () => {
                 uploadError || uploadSuccess ? 'mt-2' : 'mt-3'
               }`}
               onClick={uploadAvatar}
-              disabled={uploading || (authUser && authUser.user_metadata.full_name)}
+              disabled={uploading || (user && user.user_metadata.full_name)}
             >
               {uploading ? 'Uploading...' : 'Upload'}
             </button>
@@ -452,7 +427,7 @@ const PersonalInfo = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default PersonalInfo;

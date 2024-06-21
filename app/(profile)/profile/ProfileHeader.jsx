@@ -6,36 +6,20 @@ import ProfileAvatar from "./ProfileAvatar";
 import { FaUserCircle } from "react-icons/fa";
 import { useState, useEffect } from "react";
 
+// custom hooks
+import { useFetchUser } from '@/app/hooks/useFetchUser';
+
 
 const ProfileHeader = () => {
-   const [user, setUser] = useState(null);
+   // custom hook to fetch user
+   const { user, isLoading } = useFetchUser(true)
+
    const [first_name, setFirstName] = useState(user ? user.user_metadata.full_name : '');
    const [bio, setBio] = useState('');
    const [avatar_url, setAvatarUrl] = useState('');
-   const [isUserLoading, setIsUserLoading] = useState(true);
    const [isProfileLoading, setIsProfileLoading] = useState(true);
 
-
    const supabase = createClientComponentClient();
-
-   useEffect(() => {
-      async function getUser() {
-         try {
-            const { data: { user }, error } = await supabase.auth.getUser();
-            if (error) {
-               throw new Error(error.message);
-            }
-            if (user) {
-               setUser(user);
-            }
-         } catch (error) {
-            console.log(error.massage);
-         } finally {
-            setIsUserLoading(false)
-         }
-      }
-      getUser();
-   }, []);
 
 
    // get user profile
@@ -72,7 +56,7 @@ const ProfileHeader = () => {
       }
    }, [user && user.id])
 
-   const isLoading = isUserLoading || isProfileLoading;
+   const loading = isLoading || isProfileLoading;
 
 
 
@@ -84,16 +68,19 @@ const ProfileHeader = () => {
                <div className='flex flex-col items-center gap-6 p-8'>
                   <div className='flex flex-col items-center gap-3'>
 
-                     {isLoading ? (
+                     {loading ? (
                         <div className='overflow-hidden w-20 h-20'>
-                           <img src="images/navbar/avatar/loader.gif" alt="a loading gif" />
+                           <img src="../images/loading/loader.gif" alt="a loading gif" />
                         </div>
                      ) : (
                         <>
                            {avatar_url ? (
-                              <div className="overflow-hidden rounded-full w-20 h-20">
-                                 <img className="inline-block w-full h-full object-cover" src={avatar_url} alt="a user avatar" />
+                              <div className='border-2 border-hint shadow-outer rounded-full p-2'>
+                                 <div className="overflow-hidden rounded-full w-20 h-20">
+                                    <img className="inline-block w-full h-full object-cover" src={avatar_url} alt="a user avatar" />
+                                 </div>
                               </div>
+
                            ) : (
                               <div className="overflow-hidden rounded-full min-w-max h-auto">
                                  <FaUserCircle size={80} color="gray" />
@@ -130,19 +117,19 @@ const ProfileHeader = () => {
                <div className='flex flex-col items-center gap-6 p-8'>
                   <div className='flex flex-col items-center gap-3'>
 
-                  {isLoading ? (
+                  {loading ? (
                      <div className='overflow-hidden w-20 h-20'>
-                        <img src="images/navbar/avatar/loader.gif" alt="a loading gif" />
+                        <img src="../images/loading/loader.gif" alt="a loading gif" />
                      </div>
                   ) : (
-                     <>
-                     <ProfileAvatar
-                        url={avatar_url}
-                        size={'w-20 h-20'}
-                        lgSize={'w-20 h-20'}
-                        phSize={80}
-                     />
-                     </>
+                     <div className='border-2 border-hint shadow-outer rounded-full p-2'>
+                        <ProfileAvatar
+                           url={avatar_url}
+                           size={'w-20 h-20'}
+                           lgSize={'w-20 h-20'}
+                           phSize={80}
+                        />
+                     </div>
                   )}
 
 

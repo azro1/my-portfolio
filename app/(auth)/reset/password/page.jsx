@@ -5,64 +5,46 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
+// custom hooks
+import { useFetchUser } from "@/app/hooks/useFetchUser";
+
 
 const UpdatePassword = () => {
+  // custom hook to fetch user
+  const { user, error, isLoading } = useFetchUser()
+  
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [loading, setLoading] = useState(true)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState('')
-  const [user, setUser] = useState(null)
+  const [isFormLoading, setIsFormLoading] = useState(false)
+  const [formError, setFormError] = useState('')
   const router = useRouter()
-
-  useEffect(() => {
-    setError('');
-    async function getUser() {
-      const supabase = createClientComponentClient();
-      try {
-        const {data: { user }, error } = await supabase.auth.getUser();
-        if (error) {
-          throw error;
-        }
-        if(user) {
-          setUser({ ...user });
-        }
-      } catch (err) {
-        setError(err.message);
-        setLoading(false);
-      } finally {
-        setLoading(false);
-      }
-    }
-    getUser();
-  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(false);
-    setIsLoading(true);
-    setError('');
+    setIsFormLoading(true);
+    setFormError('');
 
     if (password !== confirmPassword) {
-      setIsLoading(false);
-      setError('Passwords do not match');
+      setIsFormLoading(false);
+      setFormError('Passwords do not match');
     } else {
       const supabase = createClientComponentClient();
-      const { data, error } = await supabase.auth.updateUser({
+      const { error } = await supabase.auth.updateUser({
         password: password,
       });
 
       if (error) {
-        setIsLoading(false);
-        setError(error.message);
+        setIsFormLoading(false);
+        setFormError(error.message);
+        console.log(error.message);
         return;
       } else {
         router.push('/confirmation');
       }
     }
-  };
+  }
 
-  if (loading) {
+  if (isLoading) {
     return (
       <main className='mb-4.5'>
         <div className="flex items-center justify-center text-center min-h-custom-md"> 
@@ -104,8 +86,9 @@ const UpdatePassword = () => {
                   />
                 </label>
                 {error && <div className="error mt-2">* {error}</div>}
-                {isLoading && <button className='btn block mt-3.5 bg-hint'>Processing...</button>}
-                {!isLoading && <button className='btn block mt-3.5 bg-hint'>Reset</button>}
+                {formError && <div className="error mt-2">* {formError}</div>}
+                {isFormLoading && <button className='btn block mt-3.5 bg-hint'>Processing...</button>}
+                {!isFormLoading && <button className='btn block mt-3.5 bg-hint'>Reset</button>}
             </form>
           </div>
         </main>
