@@ -22,6 +22,7 @@ const ResetPassword = () => {
 
     if (error) {
       setError(error.message)
+      setTimeout(() => setError(''), 2000)
       setIsLoading(false)
     }
 

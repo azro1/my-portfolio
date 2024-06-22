@@ -17,8 +17,9 @@ module.exports = {
         shade: '#131519',
         secondary: '#757575',
         primary: '#1C1E24',
+        tertiary: '',
         discord: '#6A5ACD',
-        github: '#323439',
+        github: '#323439'
       },
       fontFamily: {
         'rubik': ['Rubik', 'sans-serif'],
@@ -61,7 +62,8 @@ module.exports = {
       height: {
         '4.75': '4.75rem', // 76px
         '9.5': '9.5rem', // 152px
-        '34': '34rem'
+        '30': '7.5rem', // 120px
+        '34': '34rem' // 544px
       },
       boxShadow: {
         '3xl': '0px 0px 12px 0 #757575',

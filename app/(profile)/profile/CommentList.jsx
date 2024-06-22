@@ -13,8 +13,8 @@ const CommentList = () => {
   const { user } = useFetchUser()
 
   const [comments, setComments] = useState(null)
-  const [deleteMsg, setDeleteMsg] = useState(null)
-  const [errorMsg, setErrorMsg] = useState(null)
+  const [successMsg, setSuccessMsg] = useState('')
+  const [errorMsg, setErrorMsg] = useState('')
   const [isCommentsLoading, setIsCommentsLoading] = useState(true)
 
   const supabase = createClientComponentClient();
@@ -26,6 +26,7 @@ const CommentList = () => {
   useEffect(() => {
     async function getComments() {
       try {
+        setErrorMsg('')
         const { data, error } = await supabase
           .from('comments')
           .select()
@@ -42,15 +43,16 @@ const CommentList = () => {
           setComments(data)
         }
       } catch (error) {
+        setErrorMsg('Could not fetch comments. Please try again later.')
         console.log(error.message);
       } finally {
         setIsCommentsLoading(false)
       }
     }
-    if (user && user.id) {
+    if (user) {
       getComments();
     }
-  }, [user && user.id])
+  }, [user])
 
 
 
@@ -64,8 +66,8 @@ const CommentList = () => {
     }, (payload) => {
       if (payload) {
         setComments(prevComments => prevComments.filter(comment => comment.id !== payload.old.id));
-        setDeleteMsg('Comment deleted!')
-        setTimeout(() => setDeleteMsg(''), 1500);
+        setSuccessMsg('Comment deleted!')
+        setTimeout(() => setSuccessMsg(''), 1500);
       }
     }).subscribe()
 
@@ -91,10 +93,10 @@ const CommentList = () => {
   return (
     <div className='text-center flex-1'>
         <h3 className='mb-4 text-lg font-rubik text-hint'>Comments</h3>
-            <div className='flex flex-col gap-2 text-left max-w-sm mx-auto lg:max-w-none overflow-auto h-96'>
+            <div className='flex flex-col gap-2 text-left max-w-sm mx-auto lg:max-w-none overflow-auto max-h-96 min-h-96 '>
                 {comments && comments.length > 0 ? (
                     comments.map(comment => (
-                        <div className='flex items-start justify-between gap-2 p-3 shadow-outer' key={comment.id}>
+                        <div className='flex items-start justify-between gap-2 p-3 shadow-outer border-shade border-4' key={comment.id}>
                             <div>
                                 <p>{comment.text}</p>
                                 <span className='text-xs text-hint'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
@@ -108,14 +110,14 @@ const CommentList = () => {
                            <img className="w-16 absolute top-16 left-1/2 transform -translate-x-1/2" src="../images/loading/loader.gif" alt="a loading gif" />
                         ) : (
                           <>
-                             {!isCommentsLoading && !deleteMsg && (<p className='text-center pt-0'>No Comments.</p>)}
+                             {!isCommentsLoading && !successMsg && (<p className='text-center'>No Comments.</p>)}
                           </>
                         )}
                     </div>
 
                 )}
-                {deleteMsg && <p className="mt-4  place-self-center">{deleteMsg}</p>}
-                {errorMsg && <p className="mt-4 error place-self-center">{errorMsg}</p>}
+                {successMsg && <p className="success place-self-center">{successMsg}</p>}
+                {errorMsg && <p className="error place-self-center">{errorMsg}</p>}
             </div>
     </div>
 

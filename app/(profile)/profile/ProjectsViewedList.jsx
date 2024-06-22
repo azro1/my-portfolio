@@ -72,12 +72,12 @@ const ProjectsViewedList = () => {
     <div className='text-center flex-1'>
         <h3 className='mb-4 text-lg font-rubik text-hint'>Project Views</h3>
 
-        <div className='flex flex-wrap gap-3 max-w-sm mx-auto min-h-96 justify-center lg:justify-start'>
+        <div className='flex flex-wrap gap-2 max-w-sm mx-auto min-h-96 justify-center lg:justify-start'>
           {projectsViewed ? (projectsViewed.map((project) => (
-              <div className='p-3 shadow-outer max-w-40 min-w-40 h-fit' key={project.id}>
+              <div className='p-3 shadow-outer max-w-40 min-w-40 h-fit border-shade border-4' key={project.id}>
                   <div className='max-w-full max-h-full bg-white p-1' >
                       <Link href={`/projects/${project.id}`}>
-                          <img className='w-full h-28 object-cover object-left-top' 
+                          <img className='w-full h-30 object-cover object-left-top' 
                               src={project.image_url} 
                               alt={project.list_alt_desc}
                           />
