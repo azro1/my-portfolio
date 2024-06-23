@@ -5,13 +5,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
 import { MdDeleteForever } from "react-icons/md";
 
-// custom hooks
-import { useFetchUser } from "@/app/hooks/useFetchUser";
-
-const CommentList = () => {
-  // custom hook to fetch user
-  const { user } = useFetchUser()
-
+const CommentList = ({ user }) => {
   const [comments, setComments] = useState(null)
   const [successMsg, setSuccessMsg] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
@@ -19,8 +13,7 @@ const CommentList = () => {
 
   const supabase = createClientComponentClient();
 
-
-
+  
 
   // get user comments
   useEffect(() => {
@@ -91,9 +84,9 @@ const CommentList = () => {
   }
 
   return (
-    <div className='text-center flex-1'>
-        <h3 className='mb-4 text-lg font-rubik text-hint'>Comments</h3>
-            <div className='flex flex-col gap-2 text-left max-w-sm mx-auto lg:max-w-none overflow-auto max-h-96 min-h-96 '>
+    <div className='text-center lg:w-1/2'>
+        <h3 className='mb-4 text-lg text-hint'>Comments</h3>
+            <div className='flex flex-col gap-2 text-left max-w-sm mx-auto lg:max-w-none overflow-auto max-h-96 min-h-96'>
                 {comments && comments.length > 0 ? (
                     comments.map(comment => (
                         <div className='flex items-start justify-between gap-2 p-3 shadow-outer border-shade border-4' key={comment.id}>

@@ -89,7 +89,7 @@ const ProfileHeader = () => {
                         </>
                      )}
 
-                     <h2 className='subheading text-hint'>{`Hi, ${first_name}`}</h2>
+                     <h2 className='text-custom-2xl font-b text-hint'>{`Hi, ${first_name}`}</h2>
                      {isProfileLoading ? (
                            <></>
                         ) : (
@@ -133,7 +133,7 @@ const ProfileHeader = () => {
                   )}
 
 
-                     <h2 className='subheading text-hint'>{`Hi, ${first_name}`}</h2>
+                     <h2 className='text-custom-2xl font-b text-hint'>{`Hi, ${first_name}`}</h2>
                      {isProfileLoading ? (
                         <></>
                      ) : (
