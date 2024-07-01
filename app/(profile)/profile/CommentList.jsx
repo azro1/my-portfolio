@@ -85,7 +85,7 @@ const CommentList = ({ user }) => {
 
   return (
     <div className='text-center lg:w-1/2'>
-        <h3 className='mb-4 text-lg text-hint'>Comments</h3>
+        <h3 className='profile-sub-subheading'>Comments</h3>
             <div className='flex flex-col gap-2 text-left max-w-sm mx-auto lg:max-w-none overflow-auto max-h-96 min-h-96'>
                 {comments && comments.length > 0 ? (
                     comments.map(comment => (

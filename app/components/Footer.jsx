@@ -81,7 +81,7 @@ const Footer = () => {
           <div className="flex flex-col-reverse items-center text-center gap-y-10 md:h-9.5 md:flex-row md:justify-between md:text-left ">
             <div>
               <Link href="/">
-                <h2 className="logo font-eb text-hint pb-3">Port<span>folio</span></h2>
+                <h2 className="mainheading font-eb text-hint pb-3">Port<span>folio</span></h2>
               </Link>
               <p className="text-sm">&copy; 2024 Simon Sutherland. All rights reserved.</p>
             </div>

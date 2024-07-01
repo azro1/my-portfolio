@@ -20,7 +20,7 @@ export default async function AuthLayout ({ children }) {
 
       <nav className='flex items-center h-9.5 relative'>
         <Link href='/' className='mr-auto shadow-3xl pt-1.5 px-4 pb-0.5 rounded-xl bg-shade'>
-          <h2 className='logo font-eb text-hint'>
+          <h2 className='mainheading font-eb text-hint'>
             Port<span className="text-secondary">folio</span>
           </h2>
         </Link>

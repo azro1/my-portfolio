@@ -61,7 +61,7 @@ const UpdatePassword = () => {
         <main className="mb-4.5">
           <div className="flex items-center justify-center min-h-custom-md">
             <form className="w-full max-w-sm mx-auto md:col-span-2" onSubmit={handleSubmit}>
-              <h2 className='pb-2 text-1.75xl font-rubik font-eb text-hint'>Reset Password</h2>
+              <h2 className='pb-2 subheading font-eb text-hint'>Reset Password</h2>
               <label>
                 <span className='mt-4 mb-2 text-sm font-os text-secondary block'>
                   Password

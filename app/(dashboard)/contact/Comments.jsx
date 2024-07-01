@@ -107,7 +107,7 @@ const Comments = ({ user }) => {
           }
       
         } catch (error) {
-            setIsCommentLoading(false)
+            setIsCommentsLoading(false)
             console.log(error.message)
         }
       };
@@ -120,7 +120,7 @@ const Comments = ({ user }) => {
         <div className='place-self-start'>
             {user && (
                 <div>
-                    <h3 className='mb-2 text-xl font-b font-rubik text-hint'>
+                    <h3 className='mb-2 text-xl font-b text-hint'>
                         Leave a Comment
                     </h3>
                     <form onSubmit={handleComment}>
@@ -165,7 +165,7 @@ const Comments = ({ user }) => {
 
             {comments !== null && comments.length > 0 && (
                 <div className='w-full sm:max-w-xl mt-20'>
-                    <h3 className='text-xl font-b font-rubik text-hint mb-8'>
+                    <h3 className='text-xl font-b text-hint mb-8'>
                         Comments
                     </h3>
                     {comments.map(comment => (

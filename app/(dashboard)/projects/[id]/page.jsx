@@ -60,7 +60,7 @@ const Project = async ({ params }) => {
   
   return (
     <main className='my-4.5'>
-      <h2 className='subheading text-hint'>{project.title}</h2>
+      <h2 className='subheading font-b text-hint'>{project.title}</h2>
 
       <div className='grid gap-y-6 md:gap-y-10 md:grid-auto-rows md:grid-cols-2'>
 
@@ -113,7 +113,7 @@ const Project = async ({ params }) => {
             <div className='font-os text-sm text-secondary'>
               Project Url:{' '}
               <a href={project.url} target='_blank'>
-                <span className='text-sm text-blue-500 font-os font-r'>
+                <span className='text-sm text-hint font-os font-r'>
                   {project.url}
                 </span>
               </a>

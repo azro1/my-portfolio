@@ -35,7 +35,7 @@ const ResetPassword = () => {
     <main className="mb-4.5">
       <div className="flex items-center justify-center min-h-custom-md">
           <form className="w-full max-w-sm mx-auto md:col-span-2" onSubmit={handleSubmit}>
-              <h2 className='mb-5 text-1.75xl font-rubik font-eb text-hint'>Confirm your email</h2>
+              <h2 className='mb-5 subheading font-eb text-hint'>Confirm your email</h2>
               <label>
                 <span className='text-sm font-os text-secondary'>
                   Please enter your email address

@@ -214,10 +214,10 @@ const Skills = () => {
 
   return (
     <section>
-      <div className='flex flex-col place-items-center gap-y-6.25 md:flex-row md:items-start md:items-stretch'>
+      <div className='flex flex-col place-items-center gap-y-6.25 md:flex-row md:items-stretch'>
 
         <div className='w-full flex-1'>
-          <h2 className='subheading text-hint font-r text-center pb-4'>
+          <h2 className='subheading font-b text-hint text-center pb-4'>
             Technical Skills
           </h2>
 
@@ -256,7 +256,7 @@ const Skills = () => {
         </div>
 
         <div className='flex-1 flex flex-col justify-end'>
-          <h2 className='subheading text-hint font-r text-center pb-4'>
+          <h2 className='subheading font-b text-hint text-center pb-4'>
             Professional Skills
           </h2>
 

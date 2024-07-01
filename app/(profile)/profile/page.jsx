@@ -17,8 +17,8 @@ const Profile = async () => {
 
         <div className='mt-12'>
           <div>
-            <h2 className='text-center text-2xl text-hint my-16'>Activity Feed</h2>
-            <div className='flex flex-col gap-20 lg:gap-x-0 lg:gap-y-20 lg:flex-row lg:flex-wrap'>
+            <h2 className='profile-subheading text-center my-16'>Activity Feed</h2>
+            <div className='flex flex-col gap-20 lg:gap-x-0 lg:flex-row lg:flex-wrap bg-blue-900'>
                 <ProjectsViewedList user={user}  />
                 <CommentList user={user} />
                 <FavouriteProjectList user={user} />

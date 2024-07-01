@@ -12,7 +12,7 @@ const Connect = () => {
     <section>
       <div className='flex flex-col-reverse items-center text-center md:flex-row md:gap-10 md:items-end'>
         <div className='mt-6 md:mt-0 md:text-left'>
-          <h2 className='subheading text-hint pb-3'>Connect With Me</h2>
+          <h2 className='subheading font-b text-hint pb-3'>Connect With Me</h2>
           <p className='mb-3'>Let's connect!</p>
           <p className='leading-6'>
             Follow me on <a href="" target="_blank" className="text-hint">LinkedIn</a> for professional insights, <a href="https://github.com/azro1" target="_blank" className="text-hint">GitHub</a> for code

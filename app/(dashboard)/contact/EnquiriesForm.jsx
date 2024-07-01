@@ -144,7 +144,7 @@ const EnquiriesForm = ({ user }) => {
         <form onSubmit={handleSubmit}
             className='w-full row-start-2 col-start-1 col-span-2 sm:max-w-xs  md:col-span-1 md:row-start-2 md:col-start-2 md:justify-self-end'
         >
-            <h3 className='mb-4 text-2xl font-b font-rubik text-hint'>
+            <h3 className='mb-4 text-2xl font-b text-hint'>
                 Enquiries
             </h3>
             <label>

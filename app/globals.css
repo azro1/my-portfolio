@@ -12,20 +12,37 @@ body {
   @apply bg-primary;
 }
 
-.logo,
-.title {
-  @apply font-rubik text-4xl leading-tight;
+
+/* base headings */
+.mainheading {
+  @apply  text-4xl leading-tight;
 }
+
+.subheading {
+  @apply text-1.75 leading-tight;
+}
+
+
+/* profile section headings */
+.profile-mainheading {
+  @apply text-2 font-b text-hint;
+}
+
+.profile-subheading {
+  @apply text-2xl text-hint;
+}
+
+.profile-sub-subheading {
+  @apply mb-4 text-lg text-hint;
+}
+
+
+
+
 
 h2 {
   @apply leading-tight;
 }
-
-.subheading {
-  @apply text-1.75xl font-rubik font-b leading-tight;
-}
-
-
 
 a {
   @apply text-sm font-r no-underline;
@@ -104,11 +121,11 @@ img {
 
 /* Footer styles */
 footer .newsletter h3 {
-  @apply text-2xl font-eb font-rubik text-hint;
+  @apply text-2xl font-eb text-hint;
 }
 
 footer h4 {
-  @apply font-rubik font-eb text-hint;
+  @apply font-eb text-hint;
 }
 
 footer p {
