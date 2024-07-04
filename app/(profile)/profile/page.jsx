@@ -12,20 +12,17 @@ const Profile = async () => {
   const { data: { user } } = await supabase.auth.getUser()
 
   return (
-      <div>
+      <div className='overflow-y-scroll hide-scrollbar max-h-custom-lg'>
         <ProfileHeader />
-
         <div className='mt-12'>
-          <div>
             <h2 className='profile-subheading text-center my-16'>Activity Feed</h2>
-            <div className='flex flex-col gap-20 lg:gap-x-0 lg:flex-row lg:flex-wrap bg-blue-900'>
+            <div className='grid grid-cols-1 gap-20 lg:grid-cols-2 lg:gap-x-0 grid-flow-row auto-rows-max'>
                 <ProjectsViewedList user={user}  />
                 <CommentList user={user} />
                 <FavouriteProjectList user={user} />
             </div>
-          </div>
-
         </div>
+
     </div>
   );
 };

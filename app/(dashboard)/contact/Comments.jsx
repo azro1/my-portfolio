@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
@@ -14,10 +14,11 @@ import ProfileAvatar from '@/app/(profile)/profile/ProfileAvatar';
 const Comments = ({ user }) => {
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([])
+    const [hasMore, setHasMore] = useState(true);
     const [commentError, setCommentError] = useState('')
     const [isLoading, setIsLoading] = useState(false);
     const [isCommentsLoading, setIsCommentsLoading] = useState(true);
-
+    const commentsContainerRef = useRef(null);
 
     // custom hooks
     const { profile, fetchProfile } = useFetchProfile() 
@@ -34,22 +35,19 @@ const Comments = ({ user }) => {
 
     // update comments after new comment is added
     const updateComments = (newComment) => {
-        setComments(prevComments => [...prevComments, newComment]);
+        setComments(prevComments => [newComment, ...prevComments]);
     }
 
 
-
-
-    // as soon as component mounts fetch all comments to be displayed on page
+    // as soon as component mounts fetch 5 comments to be displayed on page
     const fetchComments = async () => {
         try {
             const supabase = createClientComponentClient();
             const { data, error } = await supabase
                 .from('comments')
                 .select()
-                .order('created_at', {
-                    ascending: false
-                })
+                .order('created_at', { ascending: false })
+                .range(comments.length, comments.length + 5 - 1)
 
             if (error) {
                 setComments([])
@@ -68,12 +66,62 @@ const Comments = ({ user }) => {
 
     useEffect(() => {
         fetchComments();
-    }, []);
+    }, [])
 
 
 
+    // lazy loading function
+    useEffect(() => {
+        // everytime a user scrolls to the bottom of the comments div fetch an additional 5 comments and updates comments state
+        const loadMoreComments = async () => {
+            if (!hasMore) return;
+
+            try {
+                const supabase = createClientComponentClient();
+                const { data, error } = await supabase
+                    .from('comments')
+                    .select()
+                    .order('created_at', { ascending: false })
+                    .range(comments.length, comments.length + 5 - 1)
+
+                if (error) {
+                    setComments([])
+                    throw new Error(error.message)
+                }
+
+                if (data) {
+                    setComments(prevComments => [...prevComments, ...data])
+                    setHasMore(data.length > 0);
+                }
+            } catch (error) {
+                console.log(error.message)
+                setError('Unable to load more comments.');
+            } finally {
+                setIsCommentsLoading(false)
+            }
+        }
+
+        const commentsContainer = commentsContainerRef.current;
+        if (!commentsContainer) return;
+        
+        // function that checks if user has scrolled to bottom of comments div
+        const handleScroll = () => {
+            if (
+                commentsContainer.scrollTop + commentsContainer.clientHeight >=
+                commentsContainer.scrollHeight
+            ) {
+                loadMoreComments();
+            }
+        };
+
+        commentsContainer.addEventListener('scroll', handleScroll);
+        return () => commentsContainer.removeEventListener('scroll', handleScroll);
+
+    }, [comments, hasMore])
 
 
+
+    // send comment to sever api endpoint
     const handleComment = async (e) => {
         e.preventDefault();
         setIsLoading(true)
@@ -103,17 +151,13 @@ const Comments = ({ user }) => {
             // console.log(json.data)
             setIsLoading(false)
             updateComments(json.data);
-            fetchComments();
           }
       
         } catch (error) {
             setIsCommentsLoading(false)
             console.log(error.message)
         }
-      };
-
-
-
+    };
 
 
     return (
@@ -168,6 +212,7 @@ const Comments = ({ user }) => {
                     <h3 className='text-xl font-b text-hint mb-8'>
                         Comments
                     </h3>
+                    <div className='overflow-y-scroll hide-scrollbar max-h-custom-md' ref={commentsContainerRef}>
                     {comments.map(comment => (
                         <div className='mb-8' key={comment.id}>
 
@@ -196,6 +241,9 @@ const Comments = ({ user }) => {
 
                         </div>
                     ))}
+
+                    </div>
+
                 </div>
             )}
         </div>

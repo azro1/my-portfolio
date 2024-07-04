@@ -63,20 +63,40 @@ export default {
         '4.75': '4.75rem', // 76px
         '9.5': '9.5rem', // 152px
         '30': '7.5rem', // 120px
-        '34': '34rem' // 544px
+        '34': '34rem', // 544px
       },
       boxShadow: {
         '3xl': '0px 0px 12px 0 #757575',
         inner: 'inset -2px 0px 18px 10px #131519',
         outer: '0px 0px 16px 4px #131519'
       },
+      maxHeight: {
+        'custom-sm': '25vh',
+        'custom-md': '50vh',
+        'custom-lg': '75vh',
+        'custom-fixed': '890px'
+      },
       minHeight: {
         'custom-sm': '25vh',
-        'custom-md': '50vh'
+        'custom-md': '50vh',
+        'custom-lg': '75vh'
       },
     },
   },
-  plugins: []
+  plugins: [
+    function({ addUtilities }) {
+      addUtilities({
+        '.hide-scrollbar': {
+          /* For modern browsers */
+          '-ms-overflow-style': 'none', /* IE and Edge */
+          'scrollbar-width': 'none', /* Firefox */
+        },
+        '.hide-scrollbar::-webkit-scrollbar': {
+          'display': 'none', /* Chrome, Safari, and Opera */
+        },
+      }, ['responsive', 'hover']);
+    },
+  ]
 }
 
 

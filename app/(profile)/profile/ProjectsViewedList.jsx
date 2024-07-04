@@ -12,7 +12,7 @@ const ProjectsViewedList = ({ user }) => {
 
 
   return (
-    <div className='text-center lg:w-1/2'>
+    <div className='text-center lg:ml-2.5'>
         <h3 className='profile-sub-subheading'>Project Views</h3>
 
         <div className='flex flex-wrap gap-2 max-w-sm mx-auto min-h-96 justify-center lg:justify-start'>
