@@ -3,7 +3,7 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 import Link from "next/link"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useRouter } from "next/navigation";
 
 
@@ -97,8 +97,8 @@ const Signup = () => {
           <form onSubmit={handleSubmit} className="justify-self-center place-self-center w-full sm:max-w-xs">
             <h2 className='subheading mb-5 font-eb text-hint'>Sign up</h2>
             <label>
-              <span className='max-w-min mb-2 text-sm font-os text-secondary block'>
-                Name
+              <span className='max-w-max mb-2 text-sm font-os text-secondary block'>
+                First Name
               </span>
               <input
                 className="w-full p-2.5 rounded-md"
