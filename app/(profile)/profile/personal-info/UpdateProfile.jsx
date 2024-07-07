@@ -11,6 +11,8 @@ import { useUpdateComments } from '@/app/hooks/useUpdateComments';
 // components
 import AvatarUploader from './AvatarUploader';
 import BioForm from './BioForm';
+import NameForm from './NameForm';
+import EmailForm from './EmailForm';
 
 
 
@@ -18,6 +20,11 @@ import BioForm from './BioForm';
 
 
 const UpdateProfile = () => {
+    // const [phone, setPhone] = useState(null)
+    const [updating, setUpdating] = useState(false)
+    const [updateError, setUpdateError] = useState(null)
+    const [updateSuccess, setUpdateSuccess] = useState(null)
+
     // custom hook to fetch user
     const { user } = useFetchUser()
     
@@ -26,21 +33,7 @@ const UpdateProfile = () => {
 
     // custom hook to update comments after user updates personal info
     const { updateComments } = useUpdateComments()
-
-
-    const [first_name, setFirstName] = useState(null)
-    const [last_name, setLastName] = useState(null)
-    const [email, setEmail] = useState(null)
-    const [phone, setPhone] = useState(null)
-    const [updating, setUpdating] = useState(false)
-    const [updateError, setUpdateError] = useState(null)
-    const [updateSuccess, setUpdateSuccess] = useState(null)
-
-
     const supabase = createClientComponentClient()
-
-
-
 
 
 
@@ -54,23 +47,6 @@ const UpdateProfile = () => {
         }
     }, [user])
 
-
-
-
-
-
-    // populate form fields with profiles info from supabase
-    useEffect(() => {
-        if (user && profile) {
-            setFirstName(profile.first_name || user.user_metadata.full_name)
-            setEmail(profile.email)
-        }
-    }, [user, profile])
-
-
-
-
-    
 
 
 
@@ -101,14 +77,14 @@ const UpdateProfile = () => {
                 throw new Error(error.message)
             }
 
-            if (first_name || last_name || email) {
+            if (first_name || last_name) {
                 setUpdateSuccess('Profile updated!')
                 await updateComments(user, undefined, first_name)  // pass first_name to updateComments
                 // await updateUserData(first_name)
             }
 
         } catch (error) {
-            setUpdateError('Please enter your profile info. First names must be at least 3 characters long.')
+            setUpdateError('First names must be at least 3 characters long.')
             console.log(error.message)
         } finally {
             setUpdating(false)
@@ -138,57 +114,24 @@ const UpdateProfile = () => {
                 user={user}
             />
 
-            <form >
-                <label>
-                    <span className='mt-4 mb-2 text-sm font-os text-secondary block'>
-                        First Name
-                    </span>
-                    <input
-                        className='w-full p-2.5 rounded-md'
-                        type='text'
-                        value={first_name || ''}
-                        placeholder='First Name'
-                        spellCheck='false'
-                        onChange={(e) => setFirstName(e.target.value)}
-                    />
-                </label>
-                <label>
-                    <span className='mt-4 mb-2 text-sm font-os text-secondary block'>
-                        Last Name
-                    </span>
-                    <input
-                        className='w-full p-2.5 rounded-md'
-                        type='text'
-                        value={last_name || ''}
-                        placeholder='Last Name'
-                        spellCheck='false'
-                        onChange={(e) => setLastName(e.target.value)}
-                    />
-                </label>
-                <label>
-                    <span className='max-w-min mt-4 mb-2 text-sm font-os text-secondary block'>
-                        Email
-                    </span>
-                    <input
-                        className='w-full p-2.5 rounded-md'
-                        type='url'
-                        value={email || ''}
-                        placeholder='Email'
-                        spellCheck='false'
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </label>
-                {profileError && <div className='error mt-2'>* {profileError}</div>}
-                {updateError && <div className='error mt-2'>* {updateError}</div>}
-                {updateSuccess && <div className='success mt-2'>* {updateSuccess}</div>}
-            </form>
-            <button
-                className={`btn block bg-hint ${updateError || updateSuccess ? 'mt-2' : 'mt-3'
-                    }`}
-                onClick={() => updateProfile({ first_name, last_name, email })}
-            >
-                {updating ? 'Updating...' : 'Update'}
-            </button>
+            <NameForm
+                user={user}
+                profile={profile}
+                profileError={profileError}
+                updateProfile={updateProfile}
+                updateError={updateError}
+                updateSuccess={updateSuccess}
+                updating={updating}
+            />
+
+            <EmailForm 
+                user={user}
+                profile={profile}
+                profileError={profileError}
+
+            />
+
+
         </div>
     )
 }
