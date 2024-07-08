@@ -7,6 +7,7 @@ import { useSearchParams } from 'next/navigation'
 
 // custom hooks
 import { useFetchUser } from '@/app/hooks/useFetchUser';
+import { useUpdate } from '@/app/hooks/useUpdate';
 
 const Confirm = () => {
   const [password, setPassword] = useState('')
@@ -16,8 +17,10 @@ const Confirm = () => {
   const [confirmationUrl, setConfirmationUrl] = useState('')
   const searchParams = useSearchParams()
 
-  // custom hook
+  // custom hooks
   const { user } = useFetchUser()
+  const { error: tableError, updateTable } = useUpdate()
+
   const supabase = createClientComponentClient()
 
 
@@ -51,19 +54,13 @@ const Confirm = () => {
 
 
       const newEmail = localStorage.getItem('newEmail')
+
+      let tableData = {
+        email: newEmail
+      }
+
+      updateTable(user, 'profiles', tableData, 'id') // pass in params to updateTable function from generic custom hook useUpdate to update profiles table
     
-      const { error } = await supabase
-        .from('profiles')
-        .update({ 
-          email: newEmail 
-        })
-        .eq('id', user.id)
-  
-        if (error) {
-          throw Error('failed to update profile.')
-        }
-
-
     } catch (error) {
       setError(error.message)
       setIsLoading(false)
@@ -90,6 +87,7 @@ const Confirm = () => {
           />
         </label>
         {successMsg && <div className='success mt-2'>* {successMsg}</div>}
+        {tableError && <div className='error mt-2'>* {tableError}</div>}
         {error && <div className='error mt-2'>* {error}</div>}
         <button className='btn block mt-3.5 bg-hint'>
           {isLoading ? 'Processing...' : 'Submit'}

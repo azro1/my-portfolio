@@ -6,15 +6,14 @@ import { useState, useRef } from 'react';
 import { FaUserCircle } from "react-icons/fa";
 
 // custom hooks
-import { useUpdateComments } from '@/app/hooks/useUpdateComments';
-
+import { useUpdate } from '@/app/hooks/useUpdate';
 
 
 
 const AvatarUploader = ({ user, updateProfile }) => {
 
     // custom hook to update comments after user updates personal info
-    const { updateComments } = useUpdateComments()
+    const { updateTable } = useUpdate()
 
     const [fileInputError, setFileInputError] = useState(null)
     const [selectedFile, setSelectedFile] = useState(null)
@@ -67,9 +66,13 @@ const AvatarUploader = ({ user, updateProfile }) => {
                 throw new Error(error.message)
             }
             setUploadSuccess('Avatar uploaded successfully.')
-
             await updateProfile({ avatar_url: filePath })
-            await updateComments(user, filePath, undefined)  // pass filePath to updateComments
+
+            let tableData = {
+                first_name: undefined,
+                avatar_url: filePath
+            }
+            await updateTable(user, 'comments', tableData, 'comment_id') // pass in params to updateTable function from generic custom hook useUpdate to update comments table
 
             if (formRef.current) {
                 setImgSrc('')

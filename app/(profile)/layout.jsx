@@ -1,6 +1,9 @@
 import Link from 'next/link';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+
+// icons
 import { FaUserCircle } from "react-icons/fa";
 import { HiMiniIdentification } from "react-icons/hi2";
 
@@ -10,6 +13,10 @@ import Navbar from '../components/navbar/Navbar';
 export default async function ProfileLayout({ children }) {
   const supabase = createServerComponentClient({ cookies });
   const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect('/login')
+  }
 
   return (
     <>
