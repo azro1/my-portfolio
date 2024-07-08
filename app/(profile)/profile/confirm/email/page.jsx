@@ -43,12 +43,27 @@ const Confirm = () => {
       if (signInError) {
         throw Error('Incorrect password. Please try again.')
       } else {
-        setSuccessMsg('Password verified. Completing email change...')
+        setSuccessMsg('Password verified. Finalizing email update...')
         setTimeout(() => {
           window.location.href = confirmationUrl;
         }, 3000)
-
       }
+
+
+      const newEmail = localStorage.getItem('newEmail')
+    
+      const { error } = await supabase
+        .from('profiles')
+        .update({ 
+          email: newEmail 
+        })
+        .eq('id', user.id)
+  
+        if (error) {
+          throw Error('failed to update profile.')
+        }
+
+
     } catch (error) {
       setError(error.message)
       setIsLoading(false)
@@ -58,7 +73,7 @@ const Confirm = () => {
 
   return (
     <div className="flex flex-col items-center justify-start gap-8 min-h-custom-md max-w-lg mx-auto">
-      <p className='text-base leading-8'>Thanks for comfirming. You're email has been updated. Please enter your password to confirm the change.</p>
+      <p className='text-base leading-8'>Thanks for your comfirmation. You're email has been updated. Please enter your password to confirm the change.</p>
 
       <form className="w-full max-w-sm mr-auto md:col-span-2" onSubmit={handleSubmit}>
         <h2 className='pb-2 subheading font-eb text-hint'>Enter Your Password</h2>

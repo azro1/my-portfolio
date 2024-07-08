@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 const EmailForm = ({ user, profile, profileError }) => {
     const [email, setEmail] = useState('')
     const [error, setError] = useState(null)
-    const [updating, setUpdating] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
     const router = useRouter()
 
     const supabase = createClientComponentClient()
@@ -29,14 +29,17 @@ const EmailForm = ({ user, profile, profileError }) => {
     const handleEmailUpdate = async (e) => {
         e.preventDefault()
 
-        if (profile.email === email) {
+        if (profile.email !== email) {
+          localStorage.setItem('newEmail', email)
+          
+        } else {
             setError('Please change your email address.')
             setTimeout(() => setError(''), 2000)
             return;
         }
 
         try {
-            setUpdating(true)
+            setIsLoading(true)
             const { data, error } = await supabase.auth.updateUser({
                 email,
                 options: {
@@ -54,7 +57,7 @@ const EmailForm = ({ user, profile, profileError }) => {
         } catch (error) {
             console.log(error.message)
         } finally {
-            setUpdating(false)
+            setIsLoading(false)
         }
 
     }
@@ -81,7 +84,7 @@ const EmailForm = ({ user, profile, profileError }) => {
             {error && <div className='error mt-2'>* {error}</div>}
 
             <button className={`btn block bg-hint mt-3`} onClick={handleEmailUpdate}>
-                {updating ? 'Loading...' : 'Update Email'}
+                {isLoading ? 'Loading...' : 'Update Email'}
             </button>
 
             {/* {updateError && <div className='error mt-2'>* {updateError}</div>}
