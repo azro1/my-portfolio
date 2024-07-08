@@ -7,12 +7,11 @@ const nextConfig = {
   swcMinify: true, 
   images: {
     formats: ['image/avif', 'image/webp'],
-    domains: ['sjvdjiblyhtpmryrmrlr.supabase.co'],
     remotePatterns: [{
       protocol: 'https',
       hostname: 'sjvdjiblyhtpmryrmrlr.supabase.co',
       port: '',
-      pathname: '/avatars/**'
+      pathname: '/storage/v1/object/sign/avatars/**'
     }]     
   },
 }
