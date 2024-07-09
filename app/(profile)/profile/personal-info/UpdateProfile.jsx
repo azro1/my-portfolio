@@ -108,7 +108,7 @@ const UpdateProfile = () => {
 
 
     return (
-        <div className=''>
+        <div className='bg-green-900'>
 
             <AvatarUploader
                 user={user}

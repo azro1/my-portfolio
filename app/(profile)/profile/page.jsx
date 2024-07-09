@@ -12,7 +12,7 @@ const Profile = async () => {
   const { data: { user } } = await supabase.auth.getUser()
 
   return (
-      <div className='overflow-y-scroll hide-scrollbar max-h-custom-lg'>
+      <div className='flex-1 overflow-y-scroll hide-scrollbar max-h-custom-lg'>
         <ProfileHeader />
         <div className='mt-12'>
             <h2 className='profile-subheading text-center my-16'>Activity Feed</h2>

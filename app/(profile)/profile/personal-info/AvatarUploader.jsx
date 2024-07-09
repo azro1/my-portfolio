@@ -96,7 +96,7 @@ const AvatarUploader = ({ user, updateProfile }) => {
 
 
     return (
-        <div className='w-full max-w-xs flex-1 order-1 px-3 pb-5'>
+        <div className='w-full max-w-xs flex-1'>
             <div>
                 <div className='mb-4'>
                     <div className='h-14 w-14 relative'>

@@ -65,7 +65,7 @@ const ProfileHeader = () => {
          {user && user.app_metadata.provider !== "email" ? (
             <div className='flex-1 text-center'>
 
-               <div className='flex flex-col items-center gap-6 p-8'>
+               <div className='flex flex-col items-center gap-6'>
                   <div className='flex flex-col items-center gap-3'>
 
                      {loading ? (
@@ -114,7 +114,7 @@ const ProfileHeader = () => {
          (
             <div className='flex-1 text-center'>
 
-               <div className='flex flex-col items-center gap-6 p-8'>
+               <div className='flex flex-col items-center gap-6'>
                   <div className='flex flex-col items-center gap-3'>
 
                   {loading ? (

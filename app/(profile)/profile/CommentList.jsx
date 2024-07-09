@@ -86,7 +86,7 @@ const CommentList = ({ user }) => {
   return (
     <div className='lg:row-span-2 '>
         <h3 className='text-center profile-sub-subheading'>Comments</h3>
-            <div className='flex flex-col gap-2 text-left max-w-xs mx-auto min-h-96 max-h-96 lg:max-h-custom-fixed overflow-y-scroll hide-scrollbar'>
+            <div className='flex flex-col gap-2 text-left min-h-96 max-h-96 lg:max-h-custom-fixed overflow-y-scroll hide-scrollbar md:max-w-xs md:mx-auto'>
                 {comments && comments.length > 0 ? (
                     comments.map(comment => (
                         <div className='flex items-start justify-between p-3 border-shade border-4' key={comment.id}>

@@ -90,7 +90,7 @@ const BioForm = ({ user, profile }) => {
 
 
     return (
-        <div className="p-3 relative h-64">
+        <div className="relative h-40 bg-red-900">
 
             {isLoading ? (
                 <>
@@ -112,7 +112,7 @@ const BioForm = ({ user, profile }) => {
 
             {showForm && (
                 <Modal >
-                    <form>
+                    <form >
                         <input
                             className='w-full p-2.5'
                             type='text'
