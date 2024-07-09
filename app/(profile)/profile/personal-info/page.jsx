@@ -20,7 +20,7 @@ const PersonalInfo = () => {
         <p className='text-base'>This is your personal information section. Here, you can easily edit and update your profile information.</p>
       </div>
 
-      <div className='mt-8 bg-blue-900'>
+      <div className='mt-20 px-3'>
 
 
           <UpdateProfile />

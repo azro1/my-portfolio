@@ -1,33 +1,43 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
+// components
+import Modal from "./Modal";
 
-const BioForm = ({ user }) => {
-    const [bio, setBio] = useState(null)
-    const [adding, setAdding] = useState(null)
+const BioForm = ({ user, profile }) => {
+    const [bio, setBio] = useState('')
+    const [draftBio, setDraftBio] = useState('');
+    const [saving, setSaving] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
     const [bioError, setBioError] = useState(null)
     const [bioSuccess, setBioSuccess] = useState(null)
+    const [showForm, setShowForm] = useState(false)
 
 
     const supabase = createClientComponentClient()
-
     
-    // update bio
-    const handleKeyDown = (event) => {
-        if (event.key === 'Enter') {
-            event.preventDefault()
+
+    // populate form fields from profiles table
+    useEffect(() => {
+        if (user && profile) {
+            setIsLoading(true)
+            setBio(profile.bio)
+            setDraftBio(profile.bio)
         }
-    }
+    }, [user, profile])
+    
 
-    const updateBio = async (event) => {
-        event.preventDefault()
 
+    // update bio function
+    const updateBio = async () => {
+          
         try {
-            setAdding(true)
+            setSaving(true)
 
-            if (!bio) {
+            if (!draftBio) {
+                setSaving(null)
                 setBioError('Please add a bio.')
                 setTimeout(() => setBioError(''), 2000)
                 return
@@ -36,7 +46,7 @@ const BioForm = ({ user }) => {
             const { error } = await supabase
                 .from('profiles')
                 .update({
-                    bio,
+                    bio: draftBio
                 })
                 .eq('id', user.id)
                 .select()
@@ -44,49 +54,89 @@ const BioForm = ({ user }) => {
             if (error) {
                 throw new Error(error.message)
             } else {
+                setBio(draftBio)
                 setBioSuccess('Bio added!')
-                setBio('')
+                setTimeout(() => setShowForm(false), 2000) 
             }
+
         } catch (error) {
             console.log(error.message)
             setBioError('Something went wrong. Please try again later.')
+
         } finally {
-            setAdding(false)
+            function clearBioMsgs() {
+                setBioSuccess('')
+                setBioError('')
+            }
+            setTimeout(clearBioMsgs, 2000)    
         }
 
-        function clearBioMsgs() {
-            setBioSuccess('')
-            setBioError('')
-        }
-        setTimeout(clearBioMsgs, 2000)
+
+    }
+    
+
+    // handleOpenForm function
+    const handleOpenForm = () => {
+        setShowForm(true)
+        setSaving(null)
     }
 
 
+    // handleCloseForm function
+    const handleCloseForm = () => {
+        setShowForm(false)
+        setDraftBio(bio)
+    }
+
 
     return (
-        <form className="bg-pink-900" onSubmit={updateBio}>
-            <label>
-                <span className='mt-4 mb-2 text-sm font-os text-secondary block'>
-                    Bio
-                </span>
-                <input
-                    className='w-full p-2.5 rounded-md'
-                    type='text'
-                    value={bio || ''}
-                    maxLength={'80'}
-                    placeholder='Bio'
-                    spellCheck='false'
-                    onChange={(e) => setBio(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                />
-            </label>
+        <div className="p-3 relative h-64">
 
-            {bioError && <div className='error mt-2'>* {bioError}</div>}
-            {bioSuccess && <div className='success mt-2'>* {bioSuccess}</div>}
-            <button className={`btn block bg-hint ${bioError || bioSuccess ? 'mt-2' : 'mt-3'}`}>
-                {adding ? 'Adding...' : 'Add'}
-            </button>
-        </form>
+            {isLoading ? (
+                <>
+                    <div className="max-w-xs">
+                        <div className="flex justify-between">
+                            <span className="inline-block pb-1 text-hint">Bio</span>
+                            <span className="text-hint cursor-pointer" onClick={handleOpenForm}>Edit</span> 
+                        </div>
+
+
+                        <p className="whitespace-normal break-words">{showForm ? '' : `${bio}`}</p>
+                    </div>
+                </>
+            ) : (
+                <div className="pt-2">
+                    <p className="text-base">Loading...</p>
+                </div>
+            )}
+
+            {showForm && (
+                <Modal >
+                    <form>
+                        <input
+                            className='w-full p-2.5'
+                            type='text'
+                            value={draftBio || ''}
+                            placeholder='Edit Bio'
+                            autoFocus='true'
+                            spellCheck='false'
+                            maxLength={'80'}
+                            onChange={(e) => setDraftBio(e.target.value)}
+                        />
+                    </form>
+                    <button className='btn bg-hint mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
+                    <button className='btn bg-hint mt-3' onClick={updateBio}>
+                        {saving ? 'Saving...' : 'Save'}
+                    </button>
+                </Modal>
+            )}
+
+            <div className="absolute top-40"> 
+                {bioError && <p className='error mt-2'>* {bioError}</p>}
+                {bioSuccess && <div className='success mt-2'>* {bioSuccess}</div>}
+            </div>
+
+        </div>
     )
 }
 

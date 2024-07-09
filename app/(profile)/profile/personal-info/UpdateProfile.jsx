@@ -108,7 +108,7 @@ const UpdateProfile = () => {
 
 
     return (
-        <div className='w-1/2 bg-yellow-800'>
+        <div className=''>
 
             <AvatarUploader
                 user={user}
@@ -117,6 +117,8 @@ const UpdateProfile = () => {
 
             <BioForm
                 user={user}
+                profile={profile}
+
             />
 
             <NameForm
