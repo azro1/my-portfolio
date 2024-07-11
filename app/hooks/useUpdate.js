@@ -19,7 +19,7 @@ const useUpdate = () => {
                 throw new Error(error.message)
             }
         } catch (error) {
-            console.log(error.message)
+            // console.log(error.message)
             setError(`failed to update ${table}.`)
             setTimeout(() => setError(null), 2000)
         }

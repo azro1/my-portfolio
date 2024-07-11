@@ -8,6 +8,9 @@ import { FaUserCircle } from "react-icons/fa";
 // custom hooks
 import { useUpdate } from '@/app/hooks/useUpdate';
 
+// components
+import Modal from './Modal';
+
 
 
 const AvatarUploader = ({ user, updateProfile }) => {
@@ -20,7 +23,6 @@ const AvatarUploader = ({ user, updateProfile }) => {
     const [imgSrc, setImgSrc] = useState('')
     const [uploading, setUploading] = useState(false)
     const [uploadError, setUploadError] = useState(null)
-    const [uploadSuccess, setUploadSuccess] = useState(null)
     const formRef = useRef(null)
 
     const supabase = createClientComponentClient()
@@ -43,6 +45,7 @@ const AvatarUploader = ({ user, updateProfile }) => {
             reader.readAsDataURL(file)
         } else {
             setFileInputError('Could not select file. Please try again.')
+            setTimeout(() => setFileInputError(null), 2000)
         }
     }
 
@@ -65,7 +68,6 @@ const AvatarUploader = ({ user, updateProfile }) => {
             if (error) {
                 throw new Error(error.message)
             }
-            setUploadSuccess('Avatar uploaded successfully.')
             await updateProfile({ avatar_url: filePath })
 
             let tableData = {
@@ -79,62 +81,55 @@ const AvatarUploader = ({ user, updateProfile }) => {
                 setSelectedFile('')
                 formRef.current.reset()
             }
-
         } catch (error) {
             setUploadError(error.message)
         } finally {
             setUploading(false)
-
-            function clearUploadMsgs() {
-                setUploadError('')
-                setUploadSuccess('')
-              }
-              setTimeout(clearUploadMsgs, 2000)
+            setTimeout(() => setUploadError(null), 2000)
         }
     }
 
 
 
     return (
-        <div className='w-full max-w-xs flex-1'>
-            <div>
-                <div className='mb-4'>
-                    <div className='h-14 w-14 relative'>
-                        {imgSrc ? (
-                            <Image
-                                src={imgSrc}
-                                alt="A user's selected image"
-                                fill={true}
-                                quality={100}
-                                sizes="100%"
-                            />
-                        ) : (
-                            <FaUserCircle size={56} color="gray" />
-                        )}
-                    </div>
-                </div>
-                <form ref={formRef}>
-                    <input
-                        className='text-secondary file:cursor-pointer file:mr-3'
-                        type='file'
-                        id='single'
-                        accept='image/*'
-                        onChange={handleFileInputChange}
-                        disabled={uploading || (user && user.user_metadata.full_name)}
+        <div className='w-56'>
+            <div className='mb-4 h-14 w-14 relative'>
+                {imgSrc ? (
+                    <Image
+                        src={imgSrc}
+                        alt="A user's selected image"
+                        fill={true}
+                        quality={100}
+                        sizes="100%"
                     />
-                </form>
-                {fileInputError && <div className='error mt-2'>* {fileInputError}</div>}
-                {uploadError && <div className='error mt-2'>* {uploadError}</div>}
-                {uploadSuccess && <div className='success mt-2'>* {uploadSuccess}</div>}
-                <button
-                    className={`btn bg-hint max-w-max primary block ${uploadError || uploadSuccess ? 'mt-2' : 'mt-3'
-                        }`}
-                    onClick={uploadAvatar}
-                    disabled={uploading || (user && user.user_metadata.full_name)}
-                >
-                    {uploading ? 'Uploading...' : 'Upload'}
-                </button>
+                ) : (
+                    <FaUserCircle size={56} color="gray" />
+                )}
             </div>
+            <form ref={formRef}>
+                <input
+                    className='text-secondary file:cursor-pointer file:mr-3'
+                    type='file'
+                    id='single'
+                    accept='image/*'
+                    onChange={handleFileInputChange}
+                    disabled={uploading || (user && user.user_metadata.full_name)}
+                />
+            </form>
+            <button className={`btn bg-hint block ${uploadError ? 'mt-2' : 'mt-3'}`}
+                onClick={uploadAvatar}
+                disabled={uploading || (user && user.user_metadata.full_name)}
+            >
+                {uploading ? 'Uploading...' : 'Upload'}
+            </button>
+
+            {(uploadError || fileInputError) && (
+                <Modal>
+                    <div className="text-center">
+                        <p className='error'>* {uploadError || fileInputError}</p>
+                    </div>
+                </Modal>
+            )}
         </div>
     )
 }

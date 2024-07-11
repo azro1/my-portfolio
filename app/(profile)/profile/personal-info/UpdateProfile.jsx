@@ -11,7 +11,7 @@ import { useUpdate } from '@/app/hooks/useUpdate';
 // components
 import AvatarUploader from './AvatarUploader';
 import BioForm from './BioForm';
-import NameForm from './NameForm';
+import FirstNameForm from './FirstNameForm';
 import EmailForm from './EmailForm';
 
 
@@ -23,7 +23,6 @@ const UpdateProfile = () => {
     // const [phone, setPhone] = useState(null)
     const [updating, setUpdating] = useState(false)
     const [updateError, setUpdateError] = useState(null)
-    const [updateSuccess, setUpdateSuccess] = useState(null)
 
     // custom hook to fetch user
     const { user } = useFetchUser()
@@ -60,7 +59,6 @@ const UpdateProfile = () => {
     }) => {
 
         try {
-            setUpdateError(null)
             setUpdating(true)
 
             const updatedProfile = {
@@ -78,27 +76,18 @@ const UpdateProfile = () => {
                 throw new Error(error.message)
             }
 
-            if (first_name || last_name) {
-                setUpdateSuccess('Profile updated!')
-                
-                let tableData = {
-                    first_name,
-                    avatar_url: undefined
-                }
-                await updateTable(user, 'comments', tableData, 'comment_id') // pass in params to updateTable function from generic custom hook useUpdate to update comments table
+            let tableData = {
+                first_name,
+                avatar_url: undefined
             }
+            await updateTable(user, 'comments', tableData, 'comment_id') // pass in params to updateTable function from generic custom hook useUpdate to update comments table
+            
 
         } catch (error) {
             setUpdateError('First names must be at least 3 characters long.')
             console.log(error.message)
         } finally {
-            setUpdating(false)
-
-            function clearUpdateMsgs() {
-                setUpdateSuccess('')
-                setUpdateError('')
-            }
-            setTimeout(clearUpdateMsgs, 2000)
+            setTimeout(() => setUpdateError(null), 2000)    
         }
     }
 
@@ -108,8 +97,9 @@ const UpdateProfile = () => {
 
 
     return (
-        <div className='bg-green-900'>
-
+        <div className='flex flex-col gap-12 relative'>
+          
+          
             <AvatarUploader
                 user={user}
                 updateProfile={updateProfile}
@@ -121,14 +111,9 @@ const UpdateProfile = () => {
 
             />
 
-            <NameForm
+            <FirstNameForm
                 user={user}
                 profile={profile}
-                profileError={profileError}
-                updateProfile={updateProfile}
-                updateError={updateError}
-                updateSuccess={updateSuccess}
-                updating={updating}
             />
 
             <EmailForm 

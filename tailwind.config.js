@@ -19,7 +19,8 @@ export default {
         primary: '#1C1E24',
         tertiary: '',
         discord: '#6A5ACD',
-        github: '#323439'
+        github: '#323439',
+        'modal-translucent': 'rgb(28, 30, 36, 0.97)'
       },
       fontFamily: {
         'rubik': ['Rubik', 'sans-serif'],

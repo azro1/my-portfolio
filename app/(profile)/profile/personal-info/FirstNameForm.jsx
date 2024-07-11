@@ -1,22 +1,17 @@
-"use client"
-
-import { useState, useEffect } from "react"
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { useState, useEffect } from 'react'
+import Modal from './Modal'
 
 // custom hooks
 import { useUpdate } from '@/app/hooks/useUpdate'
 
-// components
-import Modal from "./Modal";
-
-const BioForm = ({ user, profile }) => {
-    const [bio, setBio] = useState('')
-    const [draftBio, setDraftBio] = useState('');
-    const [saving, setSaving] = useState(false)
+const FirstNameForm = ({ user, profile }) => {
+    const [first_name, setFirstName] = useState('')
+    const [draftFirstName, setDraftFirstName] = useState('');
     const [isLoading, setIsLoading] = useState(false)
-    const [formError, setFormError] = useState(null)
     const [showForm, setShowForm] = useState(false)
-  
+    const [formError, setFormError] = useState(null)
+    const [saving, setSaving] = useState(false)
+
 
     // custom hook to update profiles table
     const { error: profileError, updateTable } = useUpdate()
@@ -26,33 +21,32 @@ const BioForm = ({ user, profile }) => {
     useEffect(() => {
         if (user && profile) {
             setIsLoading(true)
-            setBio(profile.bio)
-            setDraftBio(profile.bio)
+            setDraftFirstName(profile.first_name || user.user_metadata.full_name)
+            setFirstName(profile.first_name || user.user_metadata.full_name)
         }
 
         if (profileError) {
-            return;
-         }
-    }, [user, profile])
-    
+           return;
+        }
+    }, [user, profile, profileError])
 
 
-    // update bio
-    const handleUpdateBio = async () => {     
+    // update first name
+    const handleNameUpdate = async () => {
         setSaving(true)
 
-        if (!draftBio) {
+        if (!draftFirstName) {
             setSaving(false)
-            setFormError('Please add a Bio.')
+            setFormError('Please add a First Name.')
             setTimeout(() => setFormError(null), 2000)
             return
         }
 
-        await updateTable(user, 'profiles', { bio: draftBio }, 'id')
-        setBio(draftBio)
-        setTimeout(() => setShowForm(false), 1000) 
+        await updateTable(user, 'profiles', { first_name: draftFirstName }, 'id')
+        setFirstName(draftFirstName)
+        setTimeout(() => setShowForm(false), 1000)
     }
-    
+
 
     // handleOpenForm function
     const handleOpenForm = () => {
@@ -64,7 +58,7 @@ const BioForm = ({ user, profile }) => {
     // handleCloseForm function
     const handleCloseForm = () => {
         setShowForm(false)
-        setDraftBio(bio)
+        setDraftFirstName(first_name)
     }
 
 
@@ -74,10 +68,10 @@ const BioForm = ({ user, profile }) => {
                 <>
                     <div className="max-w-xs">
                         <div className="flex items-center justify-between pb-1">
-                            <span className="inline-block text-hint">Bio</span>
-                            <span className="text-hint cursor-pointer" onClick={handleOpenForm}>Edit</span> 
+                            <span className="inline-block text-hint">First Name</span>
+                            <span className="text-hint cursor-pointer" onClick={handleOpenForm}>Edit</span>
                         </div>
-                        <p className="whitespace-normal break-words">{bio}</p>
+                        <p className="whitespace-normal break-words">{first_name}</p>
                     </div>
                 </>
             ) : (
@@ -87,24 +81,24 @@ const BioForm = ({ user, profile }) => {
             )}
 
             {showForm && (
-                <Modal >
-                    <form >
+                <Modal>
+                    <form>
                         <label>
-                            <span className="block mb-2 text-xl">Edit Bio</span>
+                            <span className='block mb-2 text-xl'>
+                                Edit First Name
+                            </span>
                             <input
-                                className='w-full p-1.5 rounded-md border-2'
+                                className='w-full p-2.5 rounded-md border-2'
                                 type='text'
-                                value={draftBio || ''}
-                                placeholder='Bio'
-                                autoFocus='true'
+                                value={draftFirstName || ''}
+                                placeholder='First Name'
                                 spellCheck='false'
-                                maxLength={'80'}
-                                onChange={(e) => setDraftBio(e.target.value)}
+                                onChange={(e) => setDraftFirstName(e.target.value)}
                             />
                         </label>
                     </form>
                     <button className='btn bg-hint mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                    <button className='btn bg-hint mt-3' onClick={handleUpdateBio}>
+                    <button className='btn bg-hint mt-3' onClick={handleNameUpdate}>
                         {saving ? 'Saving...' : 'Save'}
                     </button>
                     {(profileError || formError) && (
@@ -118,4 +112,4 @@ const BioForm = ({ user, profile }) => {
     )
 }
 
-export default BioForm
+export default FirstNameForm
