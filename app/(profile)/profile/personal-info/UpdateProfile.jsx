@@ -13,6 +13,7 @@ import AvatarUploader from './AvatarUploader';
 import BioForm from './BioForm';
 import FirstNameForm from './FirstNameForm';
 import EmailForm from './EmailForm';
+import LastNameForm from './LastNameForm';
 
 
 
@@ -108,10 +109,14 @@ const UpdateProfile = () => {
             <BioForm
                 user={user}
                 profile={profile}
-
             />
 
             <FirstNameForm
+                user={user}
+                profile={profile}
+            />
+
+            <LastNameForm
                 user={user}
                 profile={profile}
             />

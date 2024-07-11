@@ -41,7 +41,7 @@ const BioForm = ({ user, profile }) => {
     const handleUpdateBio = async () => {     
         setSaving(true)
 
-        if (!draftBio) {
+        if (!draftBio.trim()) {
             setSaving(false)
             setFormError('Please add a Bio.')
             setTimeout(() => setFormError(null), 2000)

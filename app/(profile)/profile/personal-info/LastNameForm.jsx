@@ -6,9 +6,9 @@ import Modal from './Modal'
 // custom hooks
 import { useUpdate } from '@/app/hooks/useUpdate'
 
-const FirstNameForm = ({ user, profile }) => {
-    const [first_name, setFirstName] = useState('')
-    const [draftFirstName, setDraftFirstName] = useState('');
+const LastNameForm = ({ user, profile }) => {
+    const [last_name, setLastName] = useState('')
+    const [draftLastName, setDraftLastName] = useState('');
     const [isLoading, setIsLoading] = useState(false)
     const [showForm, setShowForm] = useState(false)
     const [formError, setFormError] = useState(null)
@@ -23,8 +23,8 @@ const FirstNameForm = ({ user, profile }) => {
     useEffect(() => {
         if (user && profile) {
             setIsLoading(true)
-            setDraftFirstName(profile.first_name || user.user_metadata.full_name)
-            setFirstName(profile.first_name || user.user_metadata.full_name)
+            setDraftLastName(profile.last_name || '')
+            setLastName(profile.last_name || '')
         }
 
         if (profileError) {
@@ -33,20 +33,22 @@ const FirstNameForm = ({ user, profile }) => {
     }, [user, profile, profileError])
 
 
-    // update first name
+    // update last name
     const handleNameUpdate = async () => {
         setSaving(true)
 
-        if (!draftFirstName.trim()) {
+        if (!draftLastName.trim()) {
             setSaving(false)
-            setFormError('Please add a First Name.')
+            setFormError('Please add a Last Name.')
             setTimeout(() => setFormError(null), 2000)
             return
         }
 
-        await updateTable(user, 'profiles', { first_name: draftFirstName }, 'id')
-        setFirstName(draftFirstName)
-        setTimeout(() => setShowForm(false), 1000)
+        await updateTable(user, 'profiles', { last_name: draftLastName }, 'id')
+        setTimeout(() => {
+            setShowForm(false)
+            setLastName(draftLastName)
+        }, 1000)
     }
 
 
@@ -60,7 +62,7 @@ const FirstNameForm = ({ user, profile }) => {
     // handleCloseForm function
     const handleCloseForm = () => {
         setShowForm(false)
-        setDraftFirstName(first_name)
+        setDraftLastName(last_name)
     }
 
 
@@ -70,10 +72,12 @@ const FirstNameForm = ({ user, profile }) => {
                 <>
                     <div className="max-w-xs">
                         <div className="flex items-center justify-between pb-1">
-                            <span className="inline-block text-hint">First Name</span>
-                            <span className="text-hint cursor-pointer" onClick={handleOpenForm}>Edit</span>
+                            <span className="inline-block text-hint">Last Name</span>
+                            <span className="text-hint cursor-pointer" onClick={handleOpenForm}>
+                                {last_name ? 'Edit' : 'Add'}
+                            </span>
                         </div>
-                        <p className="whitespace-normal break-words">{first_name}</p>
+                        <p className="whitespace-normal break-words">{last_name}</p>
                     </div>
                 </>
             ) : (
@@ -87,16 +91,16 @@ const FirstNameForm = ({ user, profile }) => {
                     <form>
                         <label>
                             <span className='block mb-2 text-xl'>
-                                Edit First Name
+                                {last_name ? 'Edit Last Name' : 'Add Last Name'}
                             </span>
                             <input
                                 className='w-full p-2.5 rounded-md border-2'
                                 type='text'
-                                value={draftFirstName || ''}
-                                placeholder='First Name'
+                                value={draftLastName || ''}
+                                placeholder='Last Name'
                                 spellCheck='false'
                                 autoFocus='true'
-                                onChange={(e) => setDraftFirstName(e.target.value)}
+                                onChange={(e) => setDraftLastName(e.target.value)}
                             />
                         </label>
                     </form>
@@ -115,4 +119,4 @@ const FirstNameForm = ({ user, profile }) => {
     )
 }
 
-export default FirstNameForm
+export default LastNameForm
