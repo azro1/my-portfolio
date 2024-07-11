@@ -1,15 +1,16 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import Modal from './Modal'
 
 // custom hooks
 import { useUpdate } from '@/app/hooks/useUpdate'
 
+// components
+import Modal from './Modal'
+
 const FirstNameForm = ({ user, profile }) => {
     const [first_name, setFirstName] = useState('')
     const [draftFirstName, setDraftFirstName] = useState('');
-    const [isLoading, setIsLoading] = useState(false)
     const [showForm, setShowForm] = useState(false)
     const [formError, setFormError] = useState(null)
     const [saving, setSaving] = useState(false)
@@ -22,9 +23,8 @@ const FirstNameForm = ({ user, profile }) => {
     // populate form fields from profiles table
     useEffect(() => {
         if (user && profile) {
-            setIsLoading(true)
-            setDraftFirstName(profile.first_name || user.user_metadata.full_name)
-            setFirstName(profile.first_name || user.user_metadata.full_name)
+            setDraftFirstName(profile.first_name || user.user_metadata.full_name || '')
+            setFirstName(profile.first_name || user.user_metadata.full_name || '')
         }
 
         if (profileError) {
@@ -66,21 +66,14 @@ const FirstNameForm = ({ user, profile }) => {
 
     return (
         <div>
-            {isLoading ? (
-                <>
-                    <div className="max-w-xs">
-                        <div className="flex items-center justify-between pb-1">
-                            <span className="inline-block text-hint">First Name</span>
-                            <span className="text-hint cursor-pointer" onClick={handleOpenForm}>Edit</span>
-                        </div>
-                        <p className="whitespace-normal break-words">{first_name}</p>
-                    </div>
-                </>
-            ) : (
-                <div className="pt-2">
-                    <p className="text-base">Loading...</p>
+
+            <div className="max-w-xs">
+                <div className="flex items-center justify-between pb-1">
+                    <span className="inline-block text-hint">First Name</span>
+                    <span className="text-hint cursor-pointer" onClick={handleOpenForm}>Edit</span>
                 </div>
-            )}
+                <p className="whitespace-normal break-words">{first_name}</p>
+            </div>
 
             {showForm && (
                 <Modal>

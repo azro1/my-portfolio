@@ -20,7 +20,7 @@ export default {
         tertiary: '',
         discord: '#6A5ACD',
         github: '#323439',
-        'modal-translucent': 'rgb(28, 30, 36, 0.97)'
+        'modal-translucent': 'rgb(28, 30, 36, 0.70)'
       },
       fontFamily: {
         'rubik': ['Rubik', 'sans-serif'],

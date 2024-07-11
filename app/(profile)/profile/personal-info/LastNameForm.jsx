@@ -1,15 +1,17 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import Modal from './Modal'
 
 // custom hooks
 import { useUpdate } from '@/app/hooks/useUpdate'
 
+// components
+import Modal from './Modal'
+
+
 const LastNameForm = ({ user, profile }) => {
     const [last_name, setLastName] = useState('')
     const [draftLastName, setDraftLastName] = useState('');
-    const [isLoading, setIsLoading] = useState(false)
     const [showForm, setShowForm] = useState(false)
     const [formError, setFormError] = useState(null)
     const [saving, setSaving] = useState(false)
@@ -22,7 +24,6 @@ const LastNameForm = ({ user, profile }) => {
     // populate form fields from profiles table
     useEffect(() => {
         if (user && profile) {
-            setIsLoading(true)
             setDraftLastName(profile.last_name || '')
             setLastName(profile.last_name || '')
         }
@@ -68,24 +69,17 @@ const LastNameForm = ({ user, profile }) => {
 
     return (
         <div>
-            {isLoading ? (
-                <>
-                    <div className="max-w-xs">
-                        <div className="flex items-center justify-between pb-1">
-                            <span className="inline-block text-hint">Last Name</span>
-                            <span className="text-hint cursor-pointer" onClick={handleOpenForm}>
-                                {last_name ? 'Edit' : 'Add'}
-                            </span>
-                        </div>
-                        <p className="whitespace-normal break-words">{last_name}</p>
-                    </div>
-                </>
-            ) : (
-                <div className="pt-2">
-                    <p className="text-base">Loading...</p>
-                </div>
-            )}
 
+            <div className="max-w-xs">
+                <div className="flex items-center justify-between pb-1">
+                    <span className="inline-block text-hint">Last Name</span>
+                    <span className="text-hint cursor-pointer" onClick={handleOpenForm}>
+                        {last_name ? 'Edit' : 'Add'}
+                    </span>
+                </div>
+                <p className="whitespace-normal break-words">{last_name}</p>
+            </div>
+  
             {showForm && (
                 <Modal>
                     <form>
