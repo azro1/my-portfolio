@@ -14,6 +14,7 @@ import BioForm from './BioForm';
 import FirstNameForm from './FirstNameForm';
 import EmailForm from './EmailForm';
 import LastNameForm from './LastNameForm';
+import PhoneForm from './PhoneForm';
 
 
 
@@ -125,7 +126,11 @@ const UpdateProfile = () => {
                 user={user}
                 profile={profile}
                 profileError={profileError}
+            />
 
+            <PhoneForm
+                user={user}
+                profile={profile}
             />
 
 

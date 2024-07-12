@@ -11,9 +11,9 @@ import { useUpdateMetadata } from '@/app/hooks/useUpdateMetadata';
 import Modal from './Modal'
 
 
-const LastNameForm = ({ user, profile }) => {
-    const [last_name, setLastName] = useState('')
-    const [draftLastName, setDraftLastName] = useState('');
+const PhoneForm = ({ user, profile }) => {
+    const [phone, setPhone] = useState('')
+    const [draftPhone, setDraftPhone] = useState('');
     const [showForm, setShowForm] = useState(false)
     const [formError, setFormError] = useState(null)
     const [saving, setSaving] = useState(false)
@@ -29,8 +29,9 @@ const LastNameForm = ({ user, profile }) => {
     // populate form fields from profiles table
     useEffect(() => {
         if (user && profile) {
-            setDraftLastName(profile.last_name || '')
-            setLastName(profile.last_name || '')
+            setDraftPhone(profile.phone || '')
+            setPhone(profile.phone || '')
+            console.log(user)
         }
 
         if (profileError) {
@@ -40,25 +41,25 @@ const LastNameForm = ({ user, profile }) => {
 
 
     // update last name
-    const handleNameUpdate = async () => {
+    const handlePhoneUpdate = async () => {
         setSaving(true)
 
-        if (!draftLastName.trim()) {
+        if (!draftPhone) {
             setSaving(false)
-            setFormError('Please add a Last Name.')
+            setFormError('Please add a Phone Number.')
             setTimeout(() => setFormError(null), 2000)
             return
         }
 
         // update user metadata
-        updateMetadata({ lastname: draftLastName })
+        updateMetadata({ phone: draftPhone })
 
         // update profiles
-        await updateTable(user, 'profiles', { last_name: draftLastName }, 'id')
+        await updateTable(user, 'profiles', { phone: draftPhone }, 'id')
 
         setTimeout(() => {
             setShowForm(false)
-            setLastName(draftLastName)
+            setPhone(draftPhone)
         }, 1000)
     }
 
@@ -73,7 +74,7 @@ const LastNameForm = ({ user, profile }) => {
     // handleCloseForm function
     const handleCloseForm = () => {
         setShowForm(false)
-        setDraftLastName(last_name)
+        setDraftPhone(phone)
     }
 
 
@@ -82,12 +83,12 @@ const LastNameForm = ({ user, profile }) => {
 
             <div className="max-w-xs">
                 <div className="flex items-center justify-between pb-1">
-                    <span className="inline-block text-hint">Last Name</span>
+                    <span className="inline-block text-hint">Phone Number</span>
                     <span className="text-hint cursor-pointer" onClick={handleOpenForm}>
-                        {last_name ? 'Edit' : 'Add'}
+                        {phone ? 'Edit' : 'Add'}
                     </span>
                 </div>
-                <p className="whitespace-normal break-words">{last_name}</p>
+                <p className="whitespace-normal break-words">{phone}</p>
             </div>
   
             {showForm && (
@@ -95,21 +96,23 @@ const LastNameForm = ({ user, profile }) => {
                     <form>
                         <label>
                             <span className='block mb-2 text-xl'>
-                                {last_name ? 'Edit Last Name' : 'Add Last Name'}
+                                {phone ? 'Edit Phone Number' : 'Add Phone Number'}
                             </span>
                             <input
                                 className='w-full p-2.5 rounded-md border-2'
-                                type='text'
-                                value={draftLastName || ''}
-                                placeholder='Last Name'
+                                type='tel'
+                                value={draftPhone || ''}
+                                placeholder='Phone'
                                 spellCheck='false'
                                 autoFocus='true'
-                                onChange={(e) => setDraftLastName(e.target.value)}
+                                pattern='[0-9]{7,15}'
+                                maxLength="15"
+                                onChange={(e) => setDraftPhone(e.target.value)}
                             />
                         </label>
                     </form>
                     <button className='btn bg-hint mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                    <button className='btn bg-hint mt-3' onClick={handleNameUpdate}>
+                    <button className='btn bg-hint mt-3' onClick={handlePhoneUpdate}>
                         {saving ? 'Saving...' : 'Save'}
                     </button>
                     {(profileError || formError) && (
@@ -123,4 +126,4 @@ const LastNameForm = ({ user, profile }) => {
     )
 }
 
-export default LastNameForm
+export default PhoneForm

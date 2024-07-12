@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 
 // custom hooks
 import { useUpdate } from '@/app/hooks/useUpdate'
+import { useUpdateMetadata } from '@/app/hooks/useUpdateMetadata'
 
 // components
 import Modal from './Modal'
@@ -15,9 +16,11 @@ const FirstNameForm = ({ user, profile }) => {
     const [formError, setFormError] = useState(null)
     const [saving, setSaving] = useState(false)
 
-
     // custom hook to update profiles table
     const { error: profileError, updateTable } = useUpdate()
+
+    // custom hook to update user metadata
+    const { updateMetadata } = useUpdateMetadata()
 
 
     // populate form fields from profiles table
@@ -44,7 +47,12 @@ const FirstNameForm = ({ user, profile }) => {
             return
         }
 
+        // update user metadata
+        updateMetadata({ first_name: draftFirstName })
+        
+        // update profiles
         await updateTable(user, 'profiles', { first_name: draftFirstName }, 'id')
+
         setFirstName(draftFirstName)
         setTimeout(() => setShowForm(false), 1000)
     }
