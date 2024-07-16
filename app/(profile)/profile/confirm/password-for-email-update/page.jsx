@@ -9,7 +9,7 @@ import { useSearchParams } from 'next/navigation'
 import { useFetchUser } from '@/app/hooks/useFetchUser';
 import { useUpdate } from '@/app/hooks/useUpdate';
 
-const Confirm = () => {
+const ConfirmPasswordForEmailUpdate = () => {
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -97,4 +97,4 @@ const Confirm = () => {
   )
 }
 
-export default Confirm
+export default ConfirmPasswordForEmailUpdate

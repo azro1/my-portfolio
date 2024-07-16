@@ -139,7 +139,7 @@ const Signup = () => {
 
             <div className="mt-2.5 flex items-center">
               <input className="self-start mt-0.21 max-w-min" type="checkbox" value={isChecked} onChange={handleCheckbox}/>
-              <span className="text-sm block text-secondary ml-2">I accept the{' '}<Link className="text-hint" href='#'>Privacy Policy</Link>{' '}and the{' '}<Link className='text-hint' href='#'>Terms of Service</Link>
+              <span className="text-sm block text-secondary ml-2">By signing up I accept the{' '}<Link className="text-hint" href='#'>Privacy Policy</Link>{' '}and the{' '}<Link className='text-hint' href='#'>Terms of Service</Link>
               </span>
             </div>
             {isLoading && <button className='btn block mt-4 bg-hint'>Processing...</button>}

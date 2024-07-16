@@ -72,6 +72,14 @@ const FirstNameForm = ({ user, profile }) => {
     }
 
 
+    // prevent enter submission
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault()
+        }
+    }
+
+
     return (
         <div>
 
@@ -98,6 +106,7 @@ const FirstNameForm = ({ user, profile }) => {
                                 spellCheck='false'
                                 autoFocus='true'
                                 onChange={(e) => setDraftFirstName(e.target.value)}
+                                onKeyDown={handleKeyDown}
                             />
                         </label>
                     </form>

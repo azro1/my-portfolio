@@ -72,7 +72,7 @@ const Login = () => {
             {isLoading && <button className='btn mt-3.5 bg-hint'>Processing...</button>}
             {!isLoading && <button className='btn mt-3.5 bg-hint'>Login</button>}
           </div>
-          <Link className="text-hint absolute right-0 top-56" href="/update/password">Forgot Password?</Link>
+          <Link className="text-hint absolute right-0 top-56" href="/confirm/email-for-forgot-password">Forgot Password?</Link>
         </form>
 
         <div className='flex flex-col items-center md:col-start-2'>

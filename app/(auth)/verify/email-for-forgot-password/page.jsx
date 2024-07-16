@@ -1,4 +1,4 @@
-const VerifyPassword = () => {
+const VerifyEmailForForgotPassword = () => {
   return (
     <main className='mb-4.5'>
       <div className="flex flex-col items-center justify-center text-center min-h-custom-md">
@@ -9,4 +9,4 @@ const VerifyPassword = () => {
   )
 }
 
-export default VerifyPassword
+export default VerifyEmailForForgotPassword

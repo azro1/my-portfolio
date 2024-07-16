@@ -15,6 +15,9 @@ import FirstNameForm from './FirstNameForm';
 import EmailForm from './EmailForm';
 import LastNameForm from './LastNameForm';
 import PhoneForm from './PhoneForm';
+import DobForm from './DobForm';
+import AgeForm from './AgeForm';
+import PasswordForm from './PasswordForm';
 
 
 
@@ -122,6 +125,16 @@ const UpdateProfile = () => {
                 profile={profile}
             />
 
+            <AgeForm
+                user={user}
+                profile={profile}
+            />
+
+            <DobForm
+                user={user}
+                profile={profile}
+            />
+
             <EmailForm 
                 user={user}
                 profile={profile}
@@ -132,6 +145,8 @@ const UpdateProfile = () => {
                 user={user}
                 profile={profile}
             />
+
+            <PasswordForm />
 
 
         </div>

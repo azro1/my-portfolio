@@ -13,11 +13,10 @@ const ResetPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsLoading(true)
-    setError('')
 
     const supabase = createClientComponentClient()
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${location.origin}/reset/password`
+      redirectTo: `${location.origin}/reset/forgot-password`
     })
 
     if (error) {
@@ -27,7 +26,7 @@ const ResetPassword = () => {
     }
 
     if (!error) {
-      router.push('/verify/password')
+      router.push('/verify/email-for-forgot-password')
     }
   }
 

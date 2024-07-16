@@ -67,6 +67,14 @@ const BioForm = ({ user, profile }) => {
     }
 
 
+    // prevent enter submission
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault()
+        }
+    }
+
+
     return (
         <div>
 
@@ -96,6 +104,7 @@ const BioForm = ({ user, profile }) => {
                                 spellCheck='false'
                                 maxLength={'80'}
                                 onChange={(e) => setDraftBio(e.target.value)}
+                                onKeyDown={handleKeyDown}
                             />
                         </label>
                     </form>

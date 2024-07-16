@@ -54,7 +54,7 @@ const EmailForm = ({ user, profile, profileError }) => {
             const { data, error } = await supabase.auth.updateUser({
                 email: draftEmail,
                 options: {
-                    emailRedirectTo: `${location.origin}/profile/confirm/email`
+                    emailRedirectTo: `${location.origin}/profile/confirm/password-for-email-update`
                 }
             })
 
@@ -64,7 +64,7 @@ const EmailForm = ({ user, profile, profileError }) => {
 
             if (data) {
                 setEmail(draftEmail)
-                router.push('/verify/email')
+                router.push('/verify/email-for-update-email')
             }
         } catch (error) {
             setIsSending(false)
@@ -88,6 +88,12 @@ const EmailForm = ({ user, profile, profileError }) => {
         setDraftEmail(email)
     }
 
+    // prevent enter submission
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault()
+        }
+    }
 
 
     return (
@@ -113,9 +119,11 @@ const EmailForm = ({ user, profile, profileError }) => {
                                 type='email'
                                 value={draftEmail || ''}
                                 placeholder='Email'
+                                maxLength={40}
                                 spellCheck='false'
                                 autoFocus='true'
                                 onChange={(e) => setDraftEmail(e.target.value)}
+                                onKeyDown={handleKeyDown}
                             />
                         </label>
                     </form>

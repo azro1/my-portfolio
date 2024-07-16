@@ -1,6 +1,6 @@
 import React from 'react'
 
-const VerifyEmail = () => {
+const VerifyEmailForSignUp = () => {
   return (
     <main className='mb-4.5'>
       <div className="flex flex-col items-center justify-center text-center min-h-custom-md">
@@ -11,4 +11,4 @@ const VerifyEmail = () => {
   )
 }
 
-export default VerifyEmail
+export default VerifyEmailForSignUp

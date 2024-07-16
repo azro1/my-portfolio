@@ -1,67 +1,61 @@
 "use client"
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from "react"
+import { format, parseISO } from "date-fns";
 
 // custom hooks
 import { useUpdate } from '@/app/hooks/useUpdate'
-import { useUpdateMetadata } from '@/app/hooks/useUpdateMetadata';
-
 
 // components
-import Modal from './Modal'
+import Modal from "./Modal";
 
-
-const PhoneForm = ({ user, profile }) => {
-    const [phone, setPhone] = useState('')
-    const [draftPhone, setDraftPhone] = useState('');
-    const [showForm, setShowForm] = useState(false)
-    const [formError, setFormError] = useState(null)
+const DobForm = ({ user, profile }) => {
+    const [dob, setDob] = useState('')
+    const [draftDob, setDraftDob] = useState('');
     const [saving, setSaving] = useState(false)
-
+    const [formError, setFormError] = useState(null)
+    const [showForm, setShowForm] = useState(false)
+  
 
     // custom hook to update profiles table
     const { error: profileError, updateTable } = useUpdate()
-
-    // custom hook to update user metadata
-    const { updateMetadata } = useUpdateMetadata()
 
 
     // populate form fields from profiles table
     useEffect(() => {
         if (user && profile) {
-            setDraftPhone(profile.phone || '')
-            setPhone(profile.phone || '')
+            setDob(profile.dob || '')
+            setDraftDob(profile.dob || '')
         }
 
         if (profileError) {
-           return;
-        }
-    }, [user, profile, profileError])
+            return;
+         }
+    }, [user, profile])
+    
 
 
-    // update last name
-    const handlePhoneUpdate = async () => {
+    // update bio
+    const handleUpdateDob = async () => {     
         setSaving(true)
 
-        if (!draftPhone) {
+        if (!draftDob.trim()) {
             setSaving(false)
-            setFormError('Please add a Phone Number.')
+            setFormError('Please add your Date of birth.')
             setTimeout(() => setFormError(null), 2000)
             return
         }
 
-        // update user metadata
-        await updateMetadata({ phone: draftPhone })
+        const formattedDate = format(parseISO(draftDob.trim()), 'dd/MM/yyyy');
+        console.log(formattedDate)
 
-        // update profiles
-        await updateTable(user, 'profiles', { phone: draftPhone }, 'id')
-
+        await updateTable(user, 'profiles', { dob: formattedDate }, 'id')
         setTimeout(() => {
             setShowForm(false)
-            setPhone(draftPhone)
-        }, 1000)
+            setDob(formattedDate)
+        }, 1000) 
     }
-
+    
 
     // handleOpenForm function
     const handleOpenForm = () => {
@@ -73,8 +67,9 @@ const PhoneForm = ({ user, profile }) => {
     // handleCloseForm function
     const handleCloseForm = () => {
         setShowForm(false)
-        setDraftPhone(phone)
+        setDraftDob(dob)
     }
+
 
     // prevent enter submission
     const handleKeyDown = (e) => {
@@ -89,37 +84,36 @@ const PhoneForm = ({ user, profile }) => {
 
             <div className="max-w-xs">
                 <div className="flex items-center justify-between pb-1">
-                    <span className="inline-block text-hint">Phone Number</span>
+                    <span className="inline-block text-hint">Dob</span>
                     <span className="text-hint cursor-pointer" onClick={handleOpenForm}>
-                        {phone ? 'Edit' : 'Add'}
-                    </span>
+                        {dob ? 'Edit' : 'Add'}
+                    </span> 
                 </div>
-                <p className="whitespace-normal break-words">{phone}</p>
+                <p className="whitespace-normal break-words">{dob}</p>
             </div>
-  
+
             {showForm && (
-                <Modal>
-                    <form>
+                <Modal >
+                    <form >
                         <label>
-                            <span className='block mb-2 text-xl'>
-                                {phone ? 'Edit Phone Number' : 'Add Phone Number'}
+                            <span className="block mb-2 text-xl">
+                                {dob ? 'Edit Dob' : 'Add Dob'}
                             </span>
                             <input
-                                className='w-full p-2.5 rounded-md border-2'
-                                type='tel'
-                                value={draftPhone || ''}
-                                placeholder='Phone'
-                                spellCheck='false'
+                                className='w-full p-1.5 rounded-md border-2'
+                                type='date'
+                                value={draftDob || ''}
+                                placeholder='Dob'
                                 autoFocus='true'
-                                pattern='[0-9]{7,15}'
-                                maxLength="15"
-                                onChange={(e) => setDraftPhone(e.target.value)}
+                                spellCheck='false'
+                                maxLength={'10'}
+                                onChange={(e) => setDraftDob(e.target.value)}
                                 onKeyDown={handleKeyDown}
                             />
                         </label>
                     </form>
                     <button className='btn bg-hint mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                    <button className='btn bg-hint mt-3' onClick={handlePhoneUpdate}>
+                    <button className='btn bg-hint mt-3' onClick={handleUpdateDob}>
                         {saving ? 'Saving...' : 'Save'}
                     </button>
                     {(profileError || formError) && (
@@ -133,4 +127,4 @@ const PhoneForm = ({ user, profile }) => {
     )
 }
 
-export default PhoneForm
+export default DobForm
