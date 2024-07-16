@@ -40,7 +40,7 @@ const UpdatePassword = () => {
         console.log(error.message)
         return
       } else {
-        router.push('/confirmation')
+        router.push('/password-update-success-confirmation')
       }
     }
   }

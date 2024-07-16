@@ -86,7 +86,7 @@ const Signup = () => {
       } 
 
       if (!error) {
-        router.push('/verify')
+        router.push('/verify/email-for-signup-instructions')
       }
   }
 

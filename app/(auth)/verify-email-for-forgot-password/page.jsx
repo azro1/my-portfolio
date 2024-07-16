@@ -26,7 +26,7 @@ const ResetPassword = () => {
     }
 
     if (!error) {
-      router.push('/verify/email-for-forgot-password')
+      router.push('/verify/email-for-forgot-password-instructions')
     }
   }
 
@@ -34,7 +34,8 @@ const ResetPassword = () => {
     <main className="mb-4.5">
       <div className="flex items-center justify-center min-h-custom-md">
           <form className="w-full max-w-sm mx-auto md:col-span-2" onSubmit={handleSubmit}>
-              <h2 className='mb-5 subheading font-eb text-hint'>Confirm your email</h2>
+              <h2 className='mb-5 subheading font-eb text-hint'>Forgot your Password? No worries.</h2>
+              <p className='mb-5 leading-6' >Please enter your email address below, and we'll send you a link to reset your password. If you don't receive the email within a few minutes, check your spam folder or request a new one.</p>
               <label>
                 <span className='text-sm font-os text-secondary'>
                   Please enter your email address
