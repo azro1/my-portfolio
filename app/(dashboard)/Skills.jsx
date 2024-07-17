@@ -262,7 +262,7 @@ const Skills = () => {
 
           <ul className='text-secondary text-center flex flex-wrap w-3/5 mx-auto gap-y-2.5'>
             <li className='organisation flex flex-col items-center justify-center gap-1 px-2 flex-1'>
-              <div className='progress-circle '>
+              <div className='progress-circle mb-1'>
                 <div className="outer">
                   <div className="inner">
                      <div className="text-secondary" ref={communicationPercentId}>{communicationPercent}%</div>
@@ -280,10 +280,10 @@ const Skills = () => {
                 </svg>
 
               </div>
-              <div>Organisation</div>
+              <p>Organisation</p>
             </li>
             <li className='teamwork flex flex-col items-center justify-center gap-1  px-2 flex-1'>
-              <div className='progress-circle'>
+              <div className='progress-circle mb-1'>
                 <div className="outer">
                   <div className="inner">
                     <div className="text-secondary" ref={teamworkPercentId}>{teamworkPercent}%</div>
@@ -301,10 +301,10 @@ const Skills = () => {
                 </svg>
 
               </div>
-              <div>Teamwork</div>
+              <p>Teamwork</p>
             </li>
             <li className='adaptability flex flex-col items-center justify-center gap-1 px-2 flex-1'>
-              <div className='progress-circle'>
+              <div className='progress-circle mb-1'>
                 <div className="outer">
                   <div className="inner">
                     <div className="text-secondary" ref={adaptabilityPercentId}>{adaptabilityPercent}%</div>
@@ -323,10 +323,10 @@ const Skills = () => {
                 </svg>
 
               </div>
-              <div>Adaptability</div>
+              <p>Adaptability</p>
             </li>
             <li className='research-skills flex flex-col items-center justify-center gap-1 px-2 flex-1'>
-              <div className='progress-circle'>
+              <div className='progress-circle mb-1'>
                 <div className="outer">
                   <div className="inner">
                   <div className="text-secondary" ref={problemSolvingPercentId}>{problemSolvingPercent}%</div>
@@ -344,7 +344,7 @@ const Skills = () => {
                   <circle cx="80" cy="80" r="45" strokeLinecap="butt" />
                 </svg>
               </div>
-              <div className="whitespace-nowrap">Research-skills</div>
+              <p className="whitespace-nowrap">Research-skills</p>
             </li>
           </ul>
           

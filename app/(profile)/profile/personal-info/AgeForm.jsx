@@ -96,7 +96,7 @@ const AgeForm = ({ user, profile }) => {
                                 {age ? 'Edit Age' : 'Add Age'}
                             </span>
                             <input
-                                className='w-full p-1.5 rounded-md border-2'
+                                className='w-full p-2.5 rounded-md border-2'
                                 type='text'
                                 value={draftAge || ''}
                                 placeholder='Age'
@@ -114,7 +114,7 @@ const AgeForm = ({ user, profile }) => {
                     </button>
                     {(profileError || formError) && (
                         <div className="absolute">
-                            <p className='error'>* {profileError || formError}</p>
+                            <p className='modal-form-error'>* {profileError || formError}</p>
                         </div>
                     )}
                 </Modal>

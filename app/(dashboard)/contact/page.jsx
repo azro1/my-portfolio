@@ -26,12 +26,7 @@ const Contact = async () => {
           <ContactHeader />
         </div>
         <div className='row-start-3 col-start-1 col-span-2 md:row-start-2 md:col-start-1 md:col-span-1 flex flex-col gap-6'>
-          <ContactInfo />
-          {!user && (
-            <div className='md:mb-56'>
-              <p>Please sign in to leave a comment.</p>
-            </div>
-          )}
+          <ContactInfo user={user}/>
           <Comments user={user} />
         </div>
         {!user && (

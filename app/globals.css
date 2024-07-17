@@ -33,7 +33,7 @@ body {
 }
 
 .profile-sub-subheading {
-  @apply mb-4 text-lg text-hint;
+  @apply text-lg text-hint;
 }
 
 
@@ -41,7 +41,7 @@ body {
 
 
 h2 {
-  @apply leading-tight;
+  @apply leading-normal;
 }
 
 a {
@@ -49,7 +49,7 @@ a {
 }
 
 p {
-  @apply font-os font-r text-sm text-secondary;
+  @apply font-r text-base text-secondary;
 }
 
 .main-container {
@@ -61,7 +61,11 @@ main {
 }
 
 .btn {
-  @apply py-2.5 px-4 text-sm rounded-lg font-os font-eb text-white;
+  @apply py-2.5 px-4 rounded-lg font-b text-white;
+}
+
+.small-btn {
+  @apply py-2 px-4 rounded-lg font-b text-white;
 }
 
 form input {
@@ -160,10 +164,15 @@ footer span {
 
 
 .error {
-  @apply font-os text-sm text-red-600 font-r leading-6;
+  @apply text-red-900 font-b leading-6 bg-red-200 border-red-900 border-2 p-2;
 }
+
+.modal-form-error {
+  @apply text-red-600 leading-6;
+}
+
 .success {
-  @apply font-os text-sm text-hint font-r leading-6;
+  @apply text-green-900 font-b leading-6 bg-green-200 border-green-900 border-2 p-2;
 }
 
 

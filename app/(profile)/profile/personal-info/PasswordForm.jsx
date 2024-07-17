@@ -24,7 +24,7 @@ const PasswordForm = () => {
     const handleSendEmail = async () => {     
         if (!email.trim()) {
             setIsSending(false)
-            setFormError('Please add your email address.')
+            setFormError('Please enter your email address.')
             setTimeout(() => setFormError(null), 2000)
             return
         }
@@ -43,10 +43,8 @@ const PasswordForm = () => {
           }
       
           if (!error) {
-            router.push('/verify/email-for-update-password')
+            router.push('/verify/email-for-update-password-instructions')
           }
-
- 
     }
     
 
@@ -87,11 +85,14 @@ const PasswordForm = () => {
                 <Modal >
                     <form >
                         <label>
+                        <p className="mb-2 text-secondary">
+                            To update your password, please enter your email for verification.
+                        </p>
                             <span className="block mb-2 text-xl">
-                                Confirm Email
+                                Email
                             </span>
                             <input
-                                className='w-full p-1.5 rounded-md border-2'
+                                className='w-full p-2.5 rounded-md border-2'
                                 type='text'
                                 value={email || ''}
                                 placeholder='Email'
@@ -109,7 +110,7 @@ const PasswordForm = () => {
                     </button>
                     {( formError) && (
                         <div className="absolute">
-                            <p className='error'>* {formError}</p>
+                            <p className='modal-form-error'>* {formError}</p>
                         </div>
                     )}
                 </Modal>

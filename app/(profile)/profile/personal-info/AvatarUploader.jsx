@@ -116,7 +116,7 @@ const AvatarUploader = ({ user, updateProfile }) => {
                     disabled={uploading || (user && user.user_metadata.full_name)}
                 />
             </form>
-            <button className={`btn bg-hint block ${uploadError ? 'mt-2' : 'mt-3'}`}
+            <button className={`small-btn bg-hint block ${uploadError ? 'mt-2' : 'mt-3'}`}
                 onClick={uploadAvatar}
                 disabled={uploading || (user && user.user_metadata.full_name)}
             >
@@ -126,7 +126,7 @@ const AvatarUploader = ({ user, updateProfile }) => {
             {(uploadError || fileInputError) && (
                 <Modal>
                     <div className="text-center">
-                        <p className='error'>* {uploadError || fileInputError}</p>
+                        <p className='modal-form-error'>* {uploadError || fileInputError}</p>
                     </div>
                 </Modal>
             )}

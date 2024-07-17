@@ -14,7 +14,7 @@ const FavouriteProjectList = ({ user }) => {
 
     return (
         <div className='text-center lg:ml-2.5'>
-            <h3 className='mb-4 text-lg text-hint'>Favourite Projects</h3>
+            <h3 className='profile-sub-subheading text-lg text-hint'>Favourite Projects</h3>
 
             <div className='flex flex-wrap gap-2 max-w-sm mx-auto min-h-96 justify-center lg:justify-start'>
                 {retrievedProjects ? (retrievedProjects.map((project) => (

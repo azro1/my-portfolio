@@ -5,7 +5,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { v4 as uuidv4 } from "uuid"
 
 
-// hooks
+// custom hooks
 import { useFetchProfile } from '@/app/hooks/useFetchProfile';
 
 
@@ -14,13 +14,15 @@ const EnquiriesForm = ({ user }) => {
     const [email, setEmail] = useState('')
     const [subject, setSubject] = useState('')
     const [message, setMessage] = useState('')
-    const [formError, setFormError] = useState('')
-    const [successMsg, setSuccessMsg] = useState('')
+    const [formError, setFormError] = useState(null)
+    const [successMsg, setSuccessMsg] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
 
-
-    // custom hook
+    // custom hook to fetch a users profile
     const { error, profile, fetchProfile } = useFetchProfile()
+
+    const supabase = createClientComponentClient()
+
   
   
      // watch user prop value to get users profile
@@ -31,14 +33,6 @@ const EnquiriesForm = ({ user }) => {
     }, [user])
 
 
-    // clear messages
-    const clearFormMessages = () => {
-        setTimeout(() => {
-            setFormError('')
-            setSuccessMsg('')
-        }, 2000)
-    }
-
     // check if a given string is a valid email address
     const isValidEmail = (value) => {
         const emailRegex = new RegExp('^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$', 'u')
@@ -48,42 +42,36 @@ const EnquiriesForm = ({ user }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        setIsLoading(true)
 
         if (profile) {
 
             if (!name) {
                 setFormError('Please provide a name.')
-                setIsLoading(false)
-                clearFormMessages()
+                setTimeout(() => setFormError(null), 2000)
                 return
 
             } else if (!email) {
                 setFormError('Please provide your email.')
-                setIsLoading(false)
-                clearFormMessages()
+                setTimeout(() => setFormError(null), 2000)
                 return
 
             } else if (!isValidEmail(email)) {
                 setFormError('Unable to validate email address: invalid format.')
-                setIsLoading(false)
-                clearFormMessages()
+                setTimeout(() => setFormError(null), 2000)
                 return
 
             } else if (!subject) {
                 setFormError('Please provide a subject.')
-                setIsLoading(false)
-                clearFormMessages()
+                setTimeout(() => setFormError(null), 2000)
                 return
 
             } else if (!message) {
                 setFormError('Please enter your message.')
-                setIsLoading(false)
-                clearFormMessages()
+                setTimeout(() => setFormError(null), 2000)
                 return
             }
-
-            const supabase = createClientComponentClient()
+            
+            setIsLoading(true)
 
             const { data: enquiries, error: enquiriesError } = await supabase
                 .from('profiles')
@@ -91,15 +79,19 @@ const EnquiriesForm = ({ user }) => {
                 .eq('id', user.id)
 
             if (enquiriesError) {
+                setIsLoading(false)
                 console.log('enquiriesError:', enquiriesError)
                 setFormError('Something went wrong. Please try again later.')
+                setTimeout(() => setFormError(null), 2000)
+                return;
             } else {
                 const userEnquiries = enquiries[0].enquiries;
 
                 if (userEnquiries.length >= 2) {
                     setIsLoading(false)
                     setFormError('You have reached the maximum number of enquiries.')
-                    return
+                    setTimeout(() => setFormError(null), 2000)
+                    return;
                 }
 
                 const { data, error } = await supabase.from('enquiries')
@@ -118,12 +110,13 @@ const EnquiriesForm = ({ user }) => {
                 if (error) {
                     setIsLoading(false)
                     setFormError('Something went wrong. Please try again later.');
+                    setTimeout(() => setFormError(null), 2000)
                 }
 
                 if (data) {
-                    setSuccessMsg('Message Sent!')
                     setIsLoading(false);
-                    clearFormMessages()
+                    setSuccessMsg('Message Sent!')
+                    setTimeout(() => setSuccessMsg(null), 2000)
 
                     setName('')
                     setEmail('')
@@ -135,7 +128,7 @@ const EnquiriesForm = ({ user }) => {
         } else {
             setIsLoading(false)
             setFormError('Please sign up to make an enquiry.')
-            clearFormMessages()
+            setTimeout(() => setFormError(null), 2000)
         }
     };
 
@@ -149,11 +142,11 @@ const EnquiriesForm = ({ user }) => {
             </h3>
             <label>
                 {error && <p className='error'>{error}</p>}
-                <span className="className='max-w-min mb-2 text-sm font-os text-secondary block">
+                <span className="className='max-w-min mb-2 text-base text-secondary block">
                     Name
                 </span>
                 <input
-                    className='w-full p-2.5 rounded-md text-sm'
+                    className='w-full p-2.5 rounded-md'
                     type='text'
                     spellCheck='false'
                     placeholder='Name'
@@ -162,11 +155,11 @@ const EnquiriesForm = ({ user }) => {
                 />
             </label>
             <label>
-                <span className="className='max-w-min mt-4 mb-2 text-sm font-os text-secondary block">
+                <span className="className='max-w-min mt-4 mb-2 text-base text-secondary block">
                     Email
                 </span>
                 <input
-                    className='w-full p-2.5 rounded-md text-sm'
+                    className='w-full p-2.5 rounded-md'
                     type='text'
                     spellCheck='false'
                     placeholder='Email'
@@ -175,11 +168,11 @@ const EnquiriesForm = ({ user }) => {
                 />
             </label>
             <label>
-                <span className="className='max-w-min mt-4 mb-2 text-sm font-os text-secondary block">
+                <span className="className='max-w-min mt-4 mb-2 text-base text-secondary block">
                     Subject
                 </span>
                 <input
-                    className='w-full p-2.5 rounded-md text-sm'
+                    className='w-full p-2.5 rounded-md'
                     type='text'
                     spellCheck='false'
                     placeholder='Subject'
@@ -188,11 +181,11 @@ const EnquiriesForm = ({ user }) => {
                 />
             </label>
             <label>
-                <span className="className='max-w-min mt-4 mb-2 text-sm font-os text-secondary block">
+                <span className="className='max-w-min mt-4 mb-2 text-base text-secondary block">
                     Your Message
                 </span>
                 <textarea
-                    className='p-2 outline-none text-sm'
+                    className='p-2 outline-none text-base w-4/5'
                     placeholder='Enter you message here...'
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
@@ -200,15 +193,13 @@ const EnquiriesForm = ({ user }) => {
                     rows='4'
                 ></textarea>
             </label>
-            {formError && <p className='error'>{formError}</p>}
-            {successMsg && <p className='success'>{successMsg}</p>}
-            <div>
-                {isLoading && (
-                    <button className='btn mt-2 bg-hint'>Processing...</button>
-                )}
-                {!isLoading && (
-                    <button className='btn mt-2 bg-hint'>Submit</button>
-                )}
+
+        
+    
+            <button className='btn block mt-2 bg-hint'>{isLoading ? 'Sending...' : 'Send'}</button>
+            <div className="mt-5 h-5 text-center">
+                {formError && <p className='error'>{formError}</p>}
+                {successMsg && <p className='success'>{successMsg}</p>}
             </div>
         </form>
     )

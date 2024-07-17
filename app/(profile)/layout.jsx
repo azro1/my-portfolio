@@ -28,7 +28,7 @@ export default async function ProfileLayout({ children }) {
               <Link href={'/profile'}>
                 <div className='flex items-center p-3.5 mb-1 bg-primary group hover:bg-white'>
                   <FaUserCircle className='text-hint group-hover:text-primary transition duration-300' size={18} />
-                  <span className='text-secondary group-hover:text-primary text-sm ml-3.5'>
+                  <span className='text-secondary group-hover:text-primary text-base ml-3.5'>
                     Dashboard
                   </span>
                 </div>
@@ -36,21 +36,21 @@ export default async function ProfileLayout({ children }) {
               <Link href={'/profile/personal-info'}>
                 <div className='flex items-center p-3.5 mb-1 bg-primary group hover:bg-white'>
                   <HiMiniIdentification className='text-hint group-hover:text-primary transition duration-300' size={20} />
-                  <span className='text-secondary group-hover:text-primary text-sm ml-3.5'>
+                  <span className='text-secondary group-hover:text-primary text-base ml-3.5'>
                     Personal Info
                   </span>
                 </div>
               </Link>
               <Link href={'/profile/data-privacy'}>
                 <div className='flex items-center p-3.5 mb-1 bg-primary group hover:bg-white'>
-                  <span className='text-secondary group-hover:text-primary text-sm ml-3.5'>
+                  <span className='text-secondary group-hover:text-primary text-base ml-3.5'>
                     Data & Privacy
                   </span>
                 </div>
               </Link>
               <Link href={'/profile/security'}>
                 <div className='flex items-center p-3.5 bg-primary group hover:bg-white'>
-                  <span className='text-secondary group-hover:text-primary text-sm ml-3.5'>
+                  <span className='text-secondary group-hover:text-primary text-base ml-3.5'>
                     Security
                   </span>
                 </div>

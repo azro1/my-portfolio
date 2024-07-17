@@ -16,8 +16,8 @@ const PersonalInfo = () => {
     <div className='flex-1 overflow-y-scroll hide-scrollbar max-h-custom-lg'>
 
       <div className='text-center'>
-        <h2 className='text-center profile-subheading text-hint mb-5'>Personal Information</h2>
-        <p className='text-base'>This is your personal information section. Here, you can easily edit and update your profile information.</p>
+        <h2 className='text-center subheading font-b text-hint mb-5'>Personal Information</h2>
+        <p className='text-lg'>This is your personal information section. Here, you can easily edit and update your profile information.</p>
       </div>
 
       <div className='mt-20'>

@@ -6,7 +6,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 
 const ResetPassword = () => {
   const [email, setEmail] = useState('')
-  const [error, setError] = useState('')
+  const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
@@ -21,7 +21,7 @@ const ResetPassword = () => {
 
     if (error) {
       setError(error.message)
-      setTimeout(() => setError(''), 2000)
+      setTimeout(() => setError(null), 2000)
       setIsLoading(false)
     }
 
@@ -34,14 +34,14 @@ const ResetPassword = () => {
     <main className="mb-4.5">
       <div className="flex items-center justify-center min-h-custom-md">
           <form className="w-full max-w-sm mx-auto md:col-span-2" onSubmit={handleSubmit}>
-              <h2 className='mb-5 subheading font-eb text-hint'>Forgot your Password? No worries.</h2>
-              <p className='mb-5 leading-6' >Please enter your email address below, and we'll send you a link to reset your password. If you don't receive the email within a few minutes, check your spam folder or request a new one.</p>
+              <h2 className='mb-5 text-3xl font-eb text-hint leading-normal'>Forgot Your Password?</h2>
+              <p className='mb-6 leading-7' >Please enter your email address below, and we'll send you a link to reset your password. If you don't receive the email within a few minutes, check your spam folder or request a new one.</p>
               <label>
-                <span className='text-sm font-os text-secondary'>
-                  Please enter your email address
+                <span className='text-base text-secondary mt-4 mb-2 block'>
+                  Enter your email address
                 </span>
                 <input
-                  className='w-full p-2.5 rounded-md mt-3'
+                  className='w-full p-2.5 rounded-md'
                   spellCheck='false'
                   type='text'
                   placeholder="Email"
@@ -49,10 +49,10 @@ const ResetPassword = () => {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </label>
-              {error && <div className="error mt-2">* {error}</div>}
-
-              {isLoading && <button className='btn block mt-3.5 bg-hint'>Processing...</button>}
-              {!isLoading && <button className='btn block mt-3.5 bg-hint'>Submit</button>}
+              <button className='btn block mt-4 bg-hint'>{isLoading ? 'Processing...' : 'Submit'}</button>
+              <div className="mt-5 h-5 text-center">
+                {error && <div className="error">{error}</div>}
+              </div>         
           </form>
        </div>
     </main>

@@ -14,7 +14,7 @@ const Connect = () => {
         <div className='mt-6 md:mt-0 md:text-left'>
           <h2 className='subheading font-b text-hint pb-3'>Connect With Me</h2>
           <p className='mb-3'>Let's connect!</p>
-          <p className='leading-6'>
+          <p className='leading-7'>
             Follow me on <a href="" target="_blank" className="text-hint">LinkedIn</a> for professional insights, <a href="https://github.com/azro1" target="_blank" className="text-hint">GitHub</a> for code
             repositories and projects, and subscribe to my YouTube channel <a href="https://www.youtube.com/channel/UCSK7zfwlgMq3r88lkchHsSw"  target="_blank" className="text-hint">CodeDynamics </a>
             where I share insights and tutorials on Full Stack

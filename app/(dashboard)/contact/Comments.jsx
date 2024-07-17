@@ -169,7 +169,7 @@ const Comments = ({ user }) => {
                     </h3>
                     <form onSubmit={handleComment}>
                         <textarea
-                            className='p-2 outline-none text-sm'
+                            className='p-2 outline-none text-base'
                             cols='40'
                             rows='4'
                             spellCheck='false'
@@ -179,17 +179,11 @@ const Comments = ({ user }) => {
                             required
                         ></textarea>
                         {commentError && <div className='error'>{commentError}</div>}
-                        <div>
-                            {isLoading && (
-                                <button className='btn mt-2 bg-hint'>Processing...</button>
-                            )}
-                            {!isLoading && (
-                                <button className='btn mt-2 bg-hint'>Add Comment</button>
-                            )}
-                        </div>
+                            <button className='btn block mt-2 bg-hint'>{isLoading ? 'Adding...' : 'Add Comment'}</button>
                     </form>
                 </div>
             )}
+            
 
             {isCommentsLoading ? (
                 <div className='mt-20'>
@@ -230,9 +224,9 @@ const Comments = ({ user }) => {
                                         />
                                     )}
                                     <div>
-                                        <div className='flex gap-2 items-center font-os mb-2'>
-                                            <h6 className='text-sm text-hint font-b'>{comment.first_name ? comment.first_name : comment.full_name}</h6>
-                                            <span className='text-xs text-secondary'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
+                                        <div className='flex gap-2 items-center mb-2'>
+                                            <h6 className='text-base text-hint font-b'>{comment.first_name ? comment.first_name : comment.full_name}</h6>
+                                            <span className='text-sm text-secondary'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
                                         </div>
                                         <p>{comment.text}</p>
                                     </div>

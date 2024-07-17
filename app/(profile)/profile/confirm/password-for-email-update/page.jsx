@@ -35,6 +35,16 @@ const ConfirmPasswordForEmailUpdate = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
+    if (!password) {
+      setError('Please enter your password.');
+      setTimeout(() => setError(null), 2000)
+      return;
+    } else if (password.length < 6) {
+      setError('Password should be at least 6 characters.');
+      setTimeout(() => setError(null), 2000)
+      return;
+    } 
+
     try {
       setIsLoading(true)
 
@@ -69,29 +79,31 @@ const ConfirmPasswordForEmailUpdate = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-start gap-8 min-h-custom-md max-w-lg mx-auto">
-      <p className='text-base leading-8'>Thanks for your comfirmation. You're email has been updated. Please enter your password to confirm the change.</p>
+    <div className="flex flex-col items-center justify-center gap-8 min-h-custom-md max-w-lg mx-auto">
+      <p className='leading-7'>Your email update is almost complete. Please enter your password to confirm the change.</p>
 
       <form className="w-full max-w-sm mr-auto md:col-span-2" onSubmit={handleSubmit}>
-        <h2 className='pb-2 subheading font-eb text-hint'>Enter Your Password</h2>
+        <h2 className='pb-2 text-3xl font-eb text-hint'>Enter Your Password</h2>
         <label>
-          <span className='mt-4 mb-2 text-sm font-os text-secondary block'>
+          <span className='mt-4 mb-2 text-base text-secondary block'>
             Password
           </span>
           <input
             className='w-full p-2.5 rounded-md'
             type='password'
-            placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
-        {successMsg && <div className='success mt-2'>* {successMsg}</div>}
-        {tableError && <div className='error mt-2'>* {tableError}</div>}
-        {error && <div className='error mt-2'>* {error}</div>}
-        <button className='btn block mt-3.5 bg-hint'>
+
+        <button className='btn block mt-4 bg-hint'>
           {isLoading ? 'Processing...' : 'Submit'}
         </button>
+        <div className="mt-5 h-5 text-center">
+            {successMsg && <div className='success mt-2'>{successMsg}</div>}
+            {tableError && <div className='error mt-2'>{tableError}</div>}
+            {error && <div className='error mt-2'>{error}</div>}
+        </div>
       </form>
     </div>
   )

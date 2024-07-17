@@ -64,7 +64,7 @@ const EmailForm = ({ user, profile, profileError }) => {
 
             if (data) {
                 setEmail(draftEmail)
-                router.push('/verify/email-for-update-email')
+                router.push('/verify/email-for-update-email-instructions')
             }
         } catch (error) {
             setIsSending(false)
@@ -129,11 +129,11 @@ const EmailForm = ({ user, profile, profileError }) => {
                     </form>
                     <button className='btn bg-hint mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
                     <button className={`btn bg-hint mt-3`} onClick={handleEmailUpdate}>
-                        {isSending ? 'Sending...' : 'Update'}
+                        {isSending ? 'Sending...' : 'Submit'}
                     </button>
                     {(profileError || formError) && (
                         <div className="absolute">
-                            <p className='error'>* {profileError || formError}</p>
+                            <p className='modal-form-error'>* {profileError || formError}</p>
                         </div>
                     )}
                 </Modal>

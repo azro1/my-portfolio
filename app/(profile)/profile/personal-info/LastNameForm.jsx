@@ -123,7 +123,7 @@ const LastNameForm = ({ user, profile }) => {
                     </button>
                     {(profileError || formError) && (
                         <div className="absolute">
-                            <p className='error'>* {profileError || formError}</p>
+                            <p className='modal-form-error'>* {profileError || formError}</p>
                         </div>
                     )}
                 </Modal>
