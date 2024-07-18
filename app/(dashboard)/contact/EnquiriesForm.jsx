@@ -46,27 +46,27 @@ const EnquiriesForm = ({ user }) => {
         if (profile) {
 
             if (!name) {
-                setFormError('Please provide a name.')
+                setFormError('Please provide a name')
                 setTimeout(() => setFormError(null), 2000)
                 return
 
             } else if (!email) {
-                setFormError('Please provide your email.')
+                setFormError('Please provide your email')
                 setTimeout(() => setFormError(null), 2000)
                 return
 
             } else if (!isValidEmail(email)) {
-                setFormError('Unable to validate email address: invalid format.')
+                setFormError('Unable to validate email address: invalid format')
                 setTimeout(() => setFormError(null), 2000)
                 return
 
             } else if (!subject) {
-                setFormError('Please provide a subject.')
+                setFormError('Please provide a subject')
                 setTimeout(() => setFormError(null), 2000)
                 return
 
             } else if (!message) {
-                setFormError('Please enter your message.')
+                setFormError('Please enter your message')
                 setTimeout(() => setFormError(null), 2000)
                 return
             }
@@ -81,7 +81,7 @@ const EnquiriesForm = ({ user }) => {
             if (enquiriesError) {
                 setIsLoading(false)
                 console.log('enquiriesError:', enquiriesError)
-                setFormError('Something went wrong. Please try again later.')
+                setFormError('Something went wrong. Please try again later')
                 setTimeout(() => setFormError(null), 2000)
                 return;
             } else {
@@ -89,7 +89,7 @@ const EnquiriesForm = ({ user }) => {
 
                 if (userEnquiries.length >= 2) {
                     setIsLoading(false)
-                    setFormError('You have reached the maximum number of enquiries.')
+                    setFormError('You have reached the maximum number of enquiries')
                     setTimeout(() => setFormError(null), 2000)
                     return;
                 }
@@ -109,7 +109,7 @@ const EnquiriesForm = ({ user }) => {
 
                 if (error) {
                     setIsLoading(false)
-                    setFormError('Something went wrong. Please try again later.');
+                    setFormError('Something went wrong. Please try again later');
                     setTimeout(() => setFormError(null), 2000)
                 }
 
@@ -127,7 +127,7 @@ const EnquiriesForm = ({ user }) => {
 
         } else {
             setIsLoading(false)
-            setFormError('Please sign up to make an enquiry.')
+            setFormError('Please sign up to make an enquiry')
             setTimeout(() => setFormError(null), 2000)
         }
     };

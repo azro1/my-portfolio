@@ -20,7 +20,7 @@ const Footer = () => {
                  />
               </div>
               <Link className="group" href="#">
-                <button className="py-3 px-4 min-w-max text-sm rounded-lg font-os font-eb text-white bg-primary ">SIGN ME UP</button>
+                <button className="py-3 px-4 min-w-max text-sm rounded-lg font-b text-white bg-primary ">SIGN ME UP</button>
               </Link>
             </form>
           </div>
@@ -78,23 +78,26 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="flex flex-col-reverse items-center text-center gap-y-10 md:h-9.5 md:flex-row md:justify-between md:text-left ">
-            <div>
+          <div className="flex flex-col-reverse items-center text-center gap-y-10 md:h-9.5 md:flex-row md:justify-between">
+            
+            <div className="md:text-left flex-1">
               <Link href="/">
                 <h2 className="mainheading font-eb text-hint pb-3">Port<span>folio</span></h2>
               </Link>
-              <p className="text-sm">&copy; 2024 Simon Sutherland. All rights reserved.</p>
+              <p className="">&copy; 2024 Simon Sutherland. All rights reserved.</p>
             </div>
-            <div className="flex items-center self-center -order-1 md:order-none md:self-end ">
+
+            <div className="flex items-center justify-center -order-1 md:order-none md:self-end flex-1">
               <Link href="#">
-                <p className="text-xs pt-1 pr-2 min-w-max">Terms of Use</p>
+                <p className="text-sm pt-1 pr-2 min-w-max">Terms of Use</p>
               </Link>
               <span>|</span>
               <Link href="#">
-                <p className="text-xs pt-1 pl-2 min-w-max">Privacy Policy</p>
+                <p className="text-sm pt-1 pl-2 min-w-max">Privacy Policy</p>
               </Link>
             </div>
-            <div>
+
+            <div className="flex-1">
               <div>
                 <h4 className="min-w-max">FOLLOW ME ON SOCIAL MEDIA</h4>
               </div>
@@ -121,6 +124,7 @@ const Footer = () => {
                 </a>
               </div>
             </div>
+
           </div>
         </main>
     </footer>

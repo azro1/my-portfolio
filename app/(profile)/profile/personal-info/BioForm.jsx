@@ -40,7 +40,7 @@ const BioForm = ({ user, profile }) => {
 
         if (!draftBio.trim()) {
             setSaving(false)
-            setFormError('Please add a Bio.')
+            setFormError('Please add a Bio')
             setTimeout(() => setFormError(null), 2000)
             return
         }

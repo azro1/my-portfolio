@@ -45,7 +45,7 @@ const LastNameForm = ({ user, profile }) => {
 
         if (!draftLastName.trim()) {
             setSaving(false)
-            setFormError('Please add a Last Name.')
+            setFormError('Please add a Last Name')
             setTimeout(() => setFormError(null), 2000)
             return
         }

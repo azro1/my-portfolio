@@ -84,14 +84,14 @@ const CommentList = ({ user }) => {
   }
 
   return (
-    <div className='lg:row-span-2 '>
-        <h3 className='text-center profile-sub-subheading'>Comments</h3>
+    <div className='lg:row-span-2'>
+        <h3 className='text-center profile-sub-subheading mb-4'>Comments</h3>
             <div className='flex flex-col gap-2 text-left min-h-96 max-h-96 lg:max-h-custom-fixed overflow-y-scroll hide-scrollbar md:max-w-xs md:mx-auto'>
                 {comments && comments.length > 0 ? (
                     comments.map(comment => (
-                        <div className='flex items-start justify-between p-3 border-shade border-4' key={comment.id}>
+                        <div className='flex items-start gap-1 justify-between p-3 border-shade border-4' key={comment.id}>
                             <div>
-                                <p className="pb-1">{comment.text}</p>
+                                <span className="text-secondary text-sm pb-1 block">{comment.text}</span>
                                 <span className='text-xs text-hint'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
                             </div>
                                 <MdDeleteForever className="min-w-max cursor-pointer text-hint" size={24} onClick={() => handleDelete(comment.id)}/>

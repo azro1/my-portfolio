@@ -37,37 +37,37 @@ const Signup = () => {
 
     // form validation
     if (!displayName) {
-      setError('Please provide a name.');
+      setError('Please provide a name');
       setTimeout(() => setError(null), 2000)
       setIsLoading(false)
       return
 
     } else if (!email) {
-        setError('To signup, please provide your email.');
+        setError('To signup, please provide your email');
         setTimeout(() => setError(null), 2000)
         setIsLoading(false)
         return
 
     } else if (!isValidEmail(email)) {
-        setError('Unable to validate email address: invalid format.');
+        setError('Unable to validate email address: invalid format');
         setTimeout(() => setError(null), 2000)
         setIsLoading(false)
         return
 
     } else if (!password) {
-        setError('Signup requires a valid password.');
+        setError('Signup requires a valid password');
         setTimeout(() => setError(null), 2000)
         setIsLoading(false)
         return
 
     } else if (password.length < 6) {
-        setError('Password should be at least 6 characters.');
+        setError('Password should be at least 6 characters');
         setTimeout(() => setError(null), 2000)
         setIsLoading(false)
         return
 
     } else if (!isChecked) {
-        setError('Please confirm you have agreed to the Privacy Policy and Terms of Service.');
+        setError('Please confirm you have agreed to the Privacy Policy and Terms of Service');
         setTimeout(() => setError(null), 2000)
         setIsLoading(false)
         return

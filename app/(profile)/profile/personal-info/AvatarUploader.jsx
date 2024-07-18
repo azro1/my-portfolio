@@ -44,7 +44,7 @@ const AvatarUploader = ({ user, updateProfile }) => {
             }
             reader.readAsDataURL(file)
         } else {
-            setFileInputError('Could not select file. Please try again.')
+            setFileInputError('Could not select file. Please try again')
             setTimeout(() => setFileInputError(null), 2000)
         }
     }
@@ -58,7 +58,7 @@ const AvatarUploader = ({ user, updateProfile }) => {
             setUploading(true)
 
             if (!selectedFile) {
-                throw new Error('You must select an image to upload.')
+                throw new Error('You must select an image to upload')
             }
             const fileExt = selectedFile.name.split('.').pop()
             const filePath = `${user.id}-${Math.random()}.${fileExt}`;

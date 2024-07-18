@@ -13,8 +13,8 @@ const FavouriteProjectList = ({ user }) => {
   const { retrievedProjects, isProjectsLoading } = useFetchProjectsById(user, 'favourites', 'user_id')
 
     return (
-        <div className='text-center lg:ml-2.5'>
-            <h3 className='profile-sub-subheading text-lg text-hint'>Favourite Projects</h3>
+        <div className='text-center'>
+            <h3 className='profile-sub-subheading text-lg text-hint mb-4'>Favourite Projects</h3>
 
             <div className='flex flex-wrap gap-2 max-w-sm mx-auto min-h-96 justify-center lg:justify-start'>
                 {retrievedProjects ? (retrievedProjects.map((project) => (

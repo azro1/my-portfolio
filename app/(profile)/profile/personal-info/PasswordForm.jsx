@@ -24,7 +24,7 @@ const PasswordForm = () => {
     const handleSendEmail = async () => {     
         if (!email.trim()) {
             setIsSending(false)
-            setFormError('Please enter your email address.')
+            setFormError('Please enter your email address')
             setTimeout(() => setFormError(null), 2000)
             return
         }

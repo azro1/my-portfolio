@@ -15,8 +15,30 @@ const Login = () => {
   const [error, setError] = useState('')
   const router = useRouter()
 
+  // check if a given string is a valid email address
+  const isValidEmail = (value) => {
+    const emailRegex = new RegExp('^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$', 'u');
+    return emailRegex.test(value);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault()
+    
+    if (!email) {
+      setError('Please provide your email');
+      setTimeout(() => setError(null), 2000)
+      return;
+    } else if (!isValidEmail(email)) {
+      setError('Unable to validate email address: invalid format');
+      setTimeout(() => setError(null), 2000)
+      setIsLoading(false)
+      return;
+    } else if (!password) {
+      setError('Login requires a valid password');
+      setTimeout(() => setError(null), 2000)
+      return;
+    }
+
     setIsLoading(true)
 
     const supabase = createClientComponentClient()

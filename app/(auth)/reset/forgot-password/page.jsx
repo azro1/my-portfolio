@@ -24,11 +24,11 @@ const UpdatePassword = () => {
     e.preventDefault();
 
     if (!password) {
-      setFormError('Please enter your new password.');
+      setFormError('Please enter your new password');
       setTimeout(() => setFormError(null), 2000)
       return;
     } else if (password !== confirmPassword) {
-      setFormError('Passwords do not match.')
+      setFormError('Passwords do not match')
       setTimeout(() => setFormError(null), 2000)
       return;
     } else {

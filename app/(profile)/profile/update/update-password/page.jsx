@@ -37,22 +37,22 @@ const UpdatePassword = () => {
     
 
     if (!oldPassword) {
-        setFormError('Please enter your old password.')
+        setFormError('Please enter your old password')
         setTimeout(() => setFormError(null), 2000)
         return;
 
     } else if (!newPassword) {
-        setFormError('Please enter a new password.')
+        setFormError('Please enter a new password')
         setTimeout(() => setFormError(null), 2000)
         return;
 
     } else if (newPassword.length < 6) {
-        setFormError('Password should be at least 6 characters.');
+        setFormError('Password should be at least 6 characters');
         setTimeout(() => setFormError(null), 2000)
         return;
 
     } else if (newPassword === oldPassword) {
-        setFormError('New password must be different from the old password.');
+        setFormError('New password must be different from the old password');
         setTimeout(() => setFormError(null), 2000);
         return;
     }
@@ -69,7 +69,7 @@ const UpdatePassword = () => {
       })
 
       if (signInWithOldPasswordError) {
-        throw new Error('Please double-check your old password and try again.')
+        throw new Error('Please double-check your old password and try again')
       } 
 
       // if checks pass then proceed to use custom hook function to update password
@@ -79,7 +79,7 @@ const UpdatePassword = () => {
       });
 
       if (updatePasswordError) {
-        throw new Error('Failed to update password. Please try again.');
+        throw new Error('Failed to update password. Please try again');
       } else {
         setSuccessMsg('Checking passwords...')
         setTimeout(() => {

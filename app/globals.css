@@ -15,7 +15,7 @@ body {
 
 /* base headings */
 .mainheading {
-  @apply  text-4xl leading-tight;
+  @apply text-4xl leading-tight;
 }
 
 .subheading {
@@ -125,15 +125,15 @@ img {
 
 /* Footer styles */
 footer .newsletter h3 {
-  @apply text-2xl font-eb text-hint;
+  @apply subheading font-b text-hint;
 }
 
 footer h4 {
-  @apply font-eb text-hint;
+  @apply font-b text-hint;
 }
 
 footer p {
-  @apply font-os font-r text-primary leading-6;
+  @apply text-primary leading-7;
 }
 
 .pagelinks h4 {

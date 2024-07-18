@@ -41,7 +41,7 @@ const DobForm = ({ user, profile }) => {
 
         if (!draftDob.trim()) {
             setSaving(false)
-            setFormError('Please add your Date of birth.')
+            setFormError('Please add your Date of birth')
             setTimeout(() => setFormError(null), 2000)
             return
         }

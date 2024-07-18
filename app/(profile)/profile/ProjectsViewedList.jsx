@@ -12,8 +12,8 @@ const ProjectsViewedList = ({ user }) => {
 
 
   return (
-    <div className='text-center lg:ml-2.5'>
-        <h3 className='profile-sub-subheading'>Project Views</h3>
+    <div className='text-center'>
+        <h3 className='profile-sub-subheading mb-4'>Project Views</h3>
 
         <div className='flex flex-wrap gap-2 max-w-sm mx-auto min-h-96 justify-center lg:justify-start'>
           {retrievedProjects ? (retrievedProjects.map((project) => (
@@ -28,7 +28,7 @@ const ProjectsViewedList = ({ user }) => {
                       </Link>
                   </div>
               </div>
-              <h4 className="font-os font-r text-secondary text-center text-sm mt-2">{project.title}</h4>
+              <h4 className="font-r text-secondary text-center text-sm mt-2">{project.title}</h4>
             </div>
 
               ))

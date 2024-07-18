@@ -38,11 +38,11 @@ const EmailForm = ({ user, profile, profileError }) => {
         }
 
         if (!isValidEmail(draftEmail)) {
-            setFormError('Please enter a valid email address.')
+            setFormError('Please enter a valid email address')
             setTimeout(() => setFormError(''), 2000)
             return;
         } else if (profile.email === draftEmail.trim()) {
-            setFormError('Please change your email address.')
+            setFormError('Please change your email address')
             setTimeout(() => setFormError(''), 2000)
             return;
         } else {

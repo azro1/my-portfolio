@@ -42,7 +42,7 @@ const FirstNameForm = ({ user, profile }) => {
 
         if (!draftFirstName.trim()) {
             setSaving(false)
-            setFormError('Please add a First Name.')
+            setFormError('Please add a First Name')
             setTimeout(() => setFormError(null), 2000)
             return
         }

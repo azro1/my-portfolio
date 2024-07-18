@@ -4,12 +4,11 @@ const ContactHeader = () => {
             <h2 className='subheading font-b mb-4 text-hint'>
                 Get In Touch
             </h2>
-            <p className='leading-7 pb-4'>
+            <p className='leading-7'>
                 Have a question, project inquiry, or just want to say hello? I'd
                 love to hear from you! Use the form below or connect through any of
-                the provided contact methods.
+                the provided contact methods
             </p>
-            <p>I'm here to help and eager to connect!</p>
         </>
     )
 }

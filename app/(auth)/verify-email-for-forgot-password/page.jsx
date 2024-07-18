@@ -12,6 +12,13 @@ const ResetPassword = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
+    if (!email) {
+      setError('Please provide your email');
+      setTimeout(() => setError(null), 2000)
+      return;
+    }
+    
     setIsLoading(true)
 
     const supabase = createClientComponentClient()

@@ -45,7 +45,7 @@ const PhoneForm = ({ user, profile }) => {
 
         if (!draftPhone) {
             setSaving(false)
-            setFormError('Please add a Phone Number.')
+            setFormError('Please add a Phone Number')
             setTimeout(() => setFormError(null), 2000)
             return
         }

@@ -40,7 +40,7 @@ const AgeForm = ({ user, profile }) => {
 
         if (!draftAge.trim()) {
             setSaving(false)
-            setFormError('Please add your Age.')
+            setFormError('Please add your Age')
             setTimeout(() => setFormError(null), 2000)
             return
         }
