@@ -54,9 +54,9 @@ const UpdatePassword = () => {
 
   if (isLoading) {
     return (
-      <main className='mb-4.5'>
-        <div className="flex items-center justify-center min-h-custom-md"> 
-          <img className="w-20" src="../../images/loading/loading.gif" alt="a loading gif" />
+      <main>
+        <div className="flex items-center justify-center h-auth-page-height"> 
+          <img className="w-32" src="../../images/loading/loading.gif" alt="a loading gif" />
         </div>
       </main>
     )
@@ -65,8 +65,8 @@ const UpdatePassword = () => {
   return (
     <>
       {user && (
-        <main className="mb-4.5">
-          <div className="flex items-center justify-center min-h-custom-md">
+        <main>
+          <div className="flex items-center justify-center h-auth-page-height">
             <form className="w-full max-w-sm mx-auto md:col-span-2" onSubmit={handleSubmit}>
               <h2 className='pb-2 text-3xl font-eb text-hint'>Reset Password</h2>
               <label>
@@ -103,8 +103,8 @@ const UpdatePassword = () => {
       )}
 
       {!user && (
-        <main className='mb-4.5'>
-          <div className="flex flex-col items-center justify-center text-center min-h-custom-md">
+        <main>
+          <div className="flex flex-col items-center justify-center text-center h-auth-page-height">
             <h2 className='pb-4 text-3xl font-b text-hint'>Unauthorised</h2>
             <p className='text-base leading-7'>Please <Link className="text-base text-hint" href="/login">Login</Link> before attempting to reset your password.</p>
           </div>

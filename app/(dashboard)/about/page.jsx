@@ -9,7 +9,7 @@ export const metadata = {
 const About = () => {
   return (
     <main>
-      <div className="grid grid-cols-1 mt-16 gap-y-6.25 md:gap-y-10.25 mb-14 sm:mb-6.25 lg:mb-36">
+      <div className="grid grid-cols-1 gap-y-6.25 md:gap-y-10.25">
         <div className="flex flex-col items-center md:flex-row md:justify-between md:items-end md:gap-8">
           <div className="w-full h-80 md:h-96 relative">
             <Image

@@ -1,8 +1,8 @@
 const Loading = () => {
     return (
-      <main className="mb-4.5">
-        <div className="flex items-center justify-center min-h-custom-md">
-          <img className="w-20" src="/images/loading/loading.gif" alt="a loading gif" />
+      <main>
+        <div className="flex items-center justify-center h-projects-page-height">
+          <img className="w-32 -mt-80" src="/images/loading/loading.gif" alt="a loading gif" />
         </div>
       </main>
     )

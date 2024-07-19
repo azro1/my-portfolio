@@ -59,7 +59,7 @@ const Project = async ({ params }) => {
   
   
   return (
-    <main className='my-4.5'>
+    <main>
       <h2 className='subheading font-b text-hint'>{project.title}</h2>
 
       <div className='grid gap-y-6 md:gap-y-10 md:grid-auto-rows md:grid-cols-2'>

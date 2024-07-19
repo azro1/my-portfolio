@@ -10,8 +10,10 @@ export default async function DashboardLayout ({ children }) {
   
   return (
     <>
-      <Navbar user={user} /> 
-      {children}
+      <Navbar user={user} />
+      <div className="mt-20 mb-4.5 md:mb-10.25 ">
+        {children}
+      </div> 
     </>
   )
 }

@@ -97,8 +97,8 @@ const Signup = () => {
   }
 
     return (
-      <main className='my-4.5 md:mt-6.25'>
-        <div className='max-w-screen-lg mx-auto grid gap-y-16 md:gap-x-8 md:grid-cols-2'>
+      <main>
+        <div className='max-w-screen-lg mx-auto grid gap-y-16 md:gap-x-8 md:grid-cols-2 mb-4.5'>
 
           <form onSubmit={handleSubmit} className="justify-self-center place-self-center w-full sm:max-w-xs">
             <h2 className='text-3xl mb-6 font-eb text-hint'>Sign up</h2>

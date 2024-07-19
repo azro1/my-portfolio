@@ -17,35 +17,36 @@ export default async function AuthLayout ({ children }) {
 
   return (
     <main>
-
-      <nav className='flex items-center h-9.5 relative'>
-        <Link href='/' className='mr-auto shadow-3xl pt-1.5 px-4 pb-0.5 rounded-xl bg-shade'>
-          <h2 className='mainheading font-eb text-hint'>
-            Port<span className="text-secondary">folio</span>
-          </h2>
-        </Link>
-        
-        <div className="lg:hidden">
-          <Chevron />
-        </div>
-
-        <div className='hidden lg:flex items-center gap-12'>
-          <Link href='/signup'>
-            <div className="tooltip group">
-              <FaSignInAlt className="text-secondary group-hover:text-hint transition duration-300 cursor-pointer" size={31} />
-              <span className="tooltiptext -left-1.5">Sign up</span>
-            </div>
+      <div className="min-h-custom-lg flex flex-col gap-20">
+        <nav className='flex items-center h-9.5 relative'>
+          <Link href='/' className='mr-auto shadow-3xl pt-1.5 px-4 pb-0.5 rounded-xl bg-shade'>
+            <h2 className='mainheading font-eb text-hint'>
+              Port<span className="text-secondary">folio</span>
+            </h2>
           </Link>
-          <Link href='/login'>
-            <div className="tooltip group">
-              <FaUserPlus className="text-secondary group-hover:text-hint transition duration-300 cursor-pointer" size={33} />
-              <span className="tooltiptext -left-1.5">Login</span>
-            </div>
-          </Link>
-        </div>
-  
-      </nav>
-      {children}
+
+          <div className="lg:hidden">
+            <Chevron />
+          </div>
+
+          <div className='hidden lg:flex items-center gap-12'>
+            <Link href='/signup'>
+              <div className="tooltip group">
+                <FaSignInAlt className="text-secondary group-hover:text-hint transition duration-300 cursor-pointer" size={31} />
+                <span className="tooltiptext -left-2.5">Sign up</span>
+              </div>
+            </Link>
+            <Link href='/login'>
+              <div className="tooltip group">
+                <FaUserPlus className="text-secondary group-hover:text-hint transition duration-300 cursor-pointer" size={33} />
+                <span className="tooltiptext -left-2.5">Login</span>
+              </div>
+            </Link>
+          </div>
+
+        </nav>
+        {children}
+      </div>
     </main>
   )
 }

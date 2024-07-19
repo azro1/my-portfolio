@@ -20,7 +20,7 @@ const Contact = async () => {
   const { data: { user } } = await supabase.auth.getUser()
 
   return (
-    <main className='my-4.5 lg:mb-28'>
+    <main>
       <div className='grid grid-flow-col auto-cols-fr gap-y-20 md:grid-col-2 md:gap-x-6'>
         <div className='row-start-1 col-start-1 col-span-2'>
           <ContactHeader />

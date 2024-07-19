@@ -60,8 +60,8 @@ const Login = () => {
   }
 
   return (
-    <main className='mt-4.5 md:mt-0 mb-4.5'>
-      <div className="flex flex-col items-center justify-center gap-12 max-w-screen-lg mx-auto md:flex-row min-h-custom-md">
+    <main>
+      <div className="flex flex-col items-center justify-center gap-12 max-w-screen-lg mx-auto md:flex-row h-auth-page-height">
         <form className="w-full justify-self-center sm:max-w-xs md:justify-self-end" onSubmit={handleSubmit}>
           <h2 className='text-3xl mb-6 font-eb text-hint'>Login</h2>
           <label>

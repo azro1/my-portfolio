@@ -89,7 +89,7 @@ img {
 }
 
 .tooltip:hover .tooltiptext {
-  @apply text-sm visible opacity-100;
+  @apply text-base visible opacity-100;
 }
 
 /* traingle for menu dropdown */

@@ -38,8 +38,8 @@ const ResetPassword = () => {
   }
 
   return (
-    <main className="mb-4.5">
-      <div className="flex items-center justify-center min-h-custom-md">
+    <main>
+      <div className="flex items-center justify-center h-auth-page-height">
           <form className="w-full max-w-sm mx-auto md:col-span-2" onSubmit={handleSubmit}>
               <h2 className='mb-5 text-3xl font-eb text-hint leading-normal'>Forgot Your Password?</h2>
               <p className='mb-6 leading-7' >Please enter your email address below, and we'll send you a link to reset your password. If you don't receive the email within a few minutes, check your spam folder or request a new one.</p>

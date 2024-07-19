@@ -60,9 +60,20 @@ export default {
         '8.625': '8.625rem', // 136px
       },
       height: {
+        // Small heights
         '4.75': '4.75rem', // 76px
         '9.5': '9.5rem', // 152px
         '30': '7.5rem', // 120px
+
+        // Page heights
+        'page-height': '34.8rem', // 556.8px
+        'auth-page-height': '28rem', // 384px
+        'projects-page-height': '57.2rem', // 915.2px
+
+        // Specific component heights
+        'projectsList-height': '17.4rem', // 278.4px
+
+        // Large heights
         '34': '34rem', // 544px
       },
       boxShadow: {
