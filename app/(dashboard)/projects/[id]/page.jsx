@@ -59,9 +59,8 @@ const Project = async ({ params }) => {
   
   
   return (
-    <main>
+    <>
       <h2 className='subheading font-b text-hint'>{project.title}</h2>
-
       <div className='grid gap-y-6 md:gap-y-10 md:grid-auto-rows md:grid-cols-2'>
 
         <Card values={'mt-6 p-3 rounded-md md:col-span-2 md:h-full'} >
@@ -121,8 +120,7 @@ const Project = async ({ params }) => {
           </div>
         </div>
       </div>
-
-    </main>
+    </>
   );
 }
 

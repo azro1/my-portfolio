@@ -105,63 +105,57 @@ const UpdatePassword = () => {
 
   if (isLoading) {
     return (
-      <main className='mb-4.5'>
-        <div className="flex items-center justify-center min-h-custom-md"> 
-          <img className="w-20" src="../../images/loading/loading.gif" alt="a loading gif" />
-        </div>
-      </main>
+      <div className="flex items-center justify-center h-profile-page-height flex-1">
+        <img className="w-32" src="../../images/loading/loading.gif" alt="a loading gif" />
+      </div>
     )
   }
 
   return (
     <>
       {!user && (
-        <main className='mb-4.5'>
-          <div className="flex flex-col items-center justify-center text-center min-h-custom-md">
-            <h2 className='pb-4 text-3xl font-b text-hint'>Unauthorised</h2>
-            <p className='text-base leading-8'>Please <Link className="text-base text-hint" href="/login">Login</Link> before attempting to reset your password.</p>
-          </div>
-        </main>
+        <div className="flex flex-col items-center justify-center text-center h-profile-page-height flex-1">
+          <h2 className='pb-4 text-3xl font-b text-hint'>Unauthorised</h2>
+          <p className='text-base leading-7'>Please <Link className="text-base text-hint" href="/login">Login</Link> before attempting to reset your password.</p>
+        </div>
       )}
 
-      {user && (
-        <main className="mb-4.5">
-          <div className="flex items-center justify-center min-h-custom-md">
-            <form className="w-full max-w-sm mx-auto md:col-span-2" onSubmit={handleSubmit}>
-              <h2 className='mb-5 text-3xl font-eb text-hint'>Update Password</h2>
-              <p className='mb-6 leading-7'>To update your password, please provide your current password for verification and enter a new password.</p>
-              <label>
-                <span className='mt-4 mb-2 text-base text-secondary block'>
-                  Old Password
-                </span>
-                <input
-                  className='w-full p-2.5 rounded-md'
-                  type='password'
-                  value={oldPassword}
-                  onChange={(e) => setOldPassword(e.target.value)}
-                />
-              </label>
-              <label>
-                <span className='mt-4 mb-2 text-base text-secondary block'>
-                  New Password
-                </span>
-                <input
-                  className='w-full p-2.5 rounded-md'
-                  type='password'
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                />
-              </label>
+      {user && (  
+        <div className="flex items-center justify-center h-profile-page-height flex-1">
+          <form className="w-full max-w-sm mx-auto" onSubmit={handleSubmit}>
+            <h2 className='mb-5 text-3xl font-eb text-hint'>Update Password</h2>
+            <p className='mb-6 leading-7'>To update your password, please provide your current password for verification and enter a new password.</p>
+            <label>
+              <span className='mt-4 mb-2 text-base text-secondary block'>
+                Old Password
+              </span>
+              <input
+                className='w-full p-2.5 rounded-md'
+                type='password'
+                value={oldPassword}
+                onChange={(e) => setOldPassword(e.target.value)}
+              />
+            </label>
+            <label>
+              <span className='mt-4 mb-2 text-base text-secondary block'>
+                New Password
+              </span>
+              <input
+                className='w-full p-2.5 rounded-md'
+                type='password'
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+              />
+            </label>
 
-              <button className='btn block mt-4 bg-hint'>{isFormLoading ? 'Finalizing...' : 'Update'}</button>
-              <div className="mt-5 h-5 text-center">
-                {successMsg && <div className="success">{successMsg}</div>}
-                {updateError && <div className="error mt-2">{updateError}</div>}
-                {formError && <div className="error mt-2">{formError}</div>}
-              </div>
-            </form>
-          </div>
-        </main>
+            <button className='btn block mt-4 bg-hint'>{isFormLoading ? 'Finalizing...' : 'Update'}</button>
+            <div className="mt-5 h-5 text-center">
+              {successMsg && <div className="success">{successMsg}</div>}
+              {updateError && <div className="error mt-2">{updateError}</div>}
+              {formError && <div className="error mt-2">{formError}</div>}
+            </div>
+          </form>
+        </div>
       )}
     </>
   )

@@ -21,7 +21,7 @@ export default async function ProfileLayout({ children }) {
   return (
     <>
       <Navbar user={user && user} />
-      <main className='my-4.5 lg:mb-28'>
+      <main className='mt-20 mb-4.5 md:mb-28'>
         <div className='flex flex-col gap-20 md:gap-x-6 md:flex-row'>
           <div className='sidebar bg-shade shadow-outer mb-12 md:mb-0 md:h-fit md:p-1 max-w-60 md:min-w-60'>
             <div className='flex flex-col'>

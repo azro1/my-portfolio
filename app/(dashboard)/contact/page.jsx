@@ -20,21 +20,19 @@ const Contact = async () => {
   const { data: { user } } = await supabase.auth.getUser()
 
   return (
-    <main>
-      <div className='grid grid-flow-col auto-cols-fr gap-y-20 md:grid-col-2 md:gap-x-6'>
-        <div className='row-start-1 col-start-1 col-span-2'>
-          <ContactHeader />
-        </div>
-        <div className='row-start-3 col-start-1 col-span-2 md:row-start-2 md:col-start-1 md:col-span-1 flex flex-col gap-6'>
-          <ContactInfo user={user}/>
-          <Comments user={user} />
-        </div>
-        {!user && (
-          <AvailabilityInfo />
-        )}
-        <EnquiriesForm user={user} />
+    <div className='grid grid-flow-col auto-cols-fr gap-y-20 md:grid-col-2 md:gap-x-6'>
+      <div className='row-start-1 col-start-1 col-span-2'>
+        <ContactHeader />
       </div>
-    </main>
+      <div className='row-start-3 col-start-1 col-span-2 md:row-start-2 md:col-start-1 md:col-span-1 flex flex-col gap-6'>
+        <ContactInfo user={user}/>
+        <Comments user={user} />
+      </div>
+      {!user && (
+        <AvailabilityInfo />
+      )}
+      <EnquiriesForm user={user} />
+    </div>
   );
 };
 

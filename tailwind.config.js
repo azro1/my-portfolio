@@ -69,6 +69,7 @@ export default {
         'page-height': '34.8rem', // 556.8px
         'auth-page-height': '28rem', // 384px
         'projects-page-height': '57.2rem', // 915.2px
+        'profile-page-height': '54.5rem',
 
         // Specific component heights
         'projectsList-height': '17.4rem', // 278.4px

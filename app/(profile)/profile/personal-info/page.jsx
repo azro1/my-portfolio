@@ -13,7 +13,7 @@ const PersonalInfo = () => {
 
 
   return (
-    <div className='flex-1 overflow-y-scroll hide-scrollbar max-h-custom-lg'>
+    <div className='flex-1 overflow-y-scroll hide-scrollbar h-profile-page-height'>
 
       <div className='text-center'>
         <h2 className='text-center subheading font-b text-hint mb-5'>Personal Information</h2>

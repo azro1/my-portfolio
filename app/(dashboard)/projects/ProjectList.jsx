@@ -19,7 +19,7 @@ const ProjectList = async () => {
   const projects = await getProjects();
 
   return (
-    <div>
+    <main>
       <h2 className="subheading font-b text-hint text-center pb-4">My Projects</h2>
       <section className="mx-auto w-full">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 md:grid-flow-col md:auto-cols-fr">
@@ -41,7 +41,7 @@ const ProjectList = async () => {
 
         </div>
       </section>
-    </div>
+    </main>
   )
 }
 
