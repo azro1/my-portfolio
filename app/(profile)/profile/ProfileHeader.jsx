@@ -8,150 +8,139 @@ import { useState, useEffect } from "react";
 
 // custom hooks
 import { useFetchUser } from '@/app/hooks/useFetchUser';
+import { useFetchProfile } from '@/app/hooks/useFetchProfile';
 
 
-const ProfileHeader = () => {
-   // custom hook to fetch user
-   const { user, isLoading } = useFetchUser(true)
-
-   const [first_name, setFirstName] = useState(user ? user.user_metadata.full_name : '');
+const ProfileHeader = ({ title, subheading, showAvatar }) => {
+   const [first_name, setFirstName] = useState('');
    const [bio, setBio] = useState('');
    const [avatar_url, setAvatarUrl] = useState('');
    const [isProfileLoading, setIsProfileLoading] = useState(true);
 
-   const supabase = createClientComponentClient();
+   // custom hooks
+   const { user, isLoading } = useFetchUser(true)
+   const { profile, fetchProfile } = useFetchProfile()
+
+   const supabase = createClientComponentClient()
 
 
-   // get user profile
+
+
+
    useEffect(() => {
-      async function getProfile() {
+     if (user) {
+       fetchProfile(user)
+     }
+   }, [user])
 
-         try {
-            const { data, error } = await supabase
-               .from('profiles')
-               .select()
-               .eq('id', user.id)
-               .limit(1)
+   
 
-            if (error) {
-               throw new Error(error.message);
-            }
 
-            if (data && data.length > 0) {
-               const profileData = data[0];
-               setFirstName(profileData.first_name || user.user_metadata.full_name);
-               setBio(profileData.bio);
-               setAvatarUrl(profileData.avatar_url);
-            } else {
-               setFirstName(user.user_metadata.full_name);
-            }
-         } catch (error) {
-            console.log(error.message);
-         } finally {
-            setIsProfileLoading(false)
-         }
+
+
+   useEffect(() => {
+      if (profile) {
+         setIsProfileLoading(false)
+         setFirstName(profile.first_name || user.user_metadata.full_name || '')
+         setAvatarUrl(profile.avatar_url)
+         setBio(profile.bio)
       }
-      if (user && user.id) {
-         getProfile();
-      }
-   }, [user && user.id])
+   }, [profile])
+
+
+
+
+
+
+   // realtime subscription for profiles
+   useEffect(() => {
+      const channel = supabase.channel('realtime profiles').on('postgres_changes', {
+        event: '*',
+        schema: 'public',
+        table: 'profiles'
+      }, (payload) => {
+        if (payload) {
+          setFirstName(prevFirstName => payload.new.first_name);
+          setAvatarUrl(prevAvatar_url => payload.new.avatar_url);
+          setBio(prevBio => payload.new.bio)
+        }
+      }).subscribe()
+  
+      return () => supabase.removeChannel(channel)
+    }, [supabase])
+
+
+
+
+
+
 
    const loading = isLoading || isProfileLoading;
-
-
-
+   
    return (
       <>
          {user && user.app_metadata.provider !== "email" ? (
-            <div className='flex-1 text-center'>
 
-               <div className='flex flex-col items-center gap-6'>
-                  <div className='flex flex-col items-center gap-3'>
+            <div className='flex-1 p-4 bg-gray-800'>
+               <h2 className='subheading font-b text-hint'>{title}</h2>
+               <p className='mt-2 text-base leading-7'>{subheading}</p>
 
+               {showAvatar && (
+                  <div className='mt-12 bg-red-900'>
                      {loading ? (
                         <div className='overflow-hidden w-20 h-20'>
                            <img src="../images/loading/loader.gif" alt="a loading gif" />
                         </div>
                      ) : (
-                        <>
+                        <div>
                            {avatar_url ? (
-                              <div className='border-2 border-hint shadow-outer rounded-full p-2'>
-                                 <div className="overflow-hidden rounded-full w-20 h-20">
-                                    <img className="inline-block w-full h-full object-cover" src={avatar_url} alt="a user avatar" />
-                                 </div>
+                              <div className="overflow-hidden rounded-full w-20 h-20">
+                                 <img className="inline-block w-full h-full object-cover" src={avatar_url} alt="a user avatar" />
                               </div>
-
                            ) : (
                               <div className="overflow-hidden rounded-full min-w-max h-auto">
                                  <FaUserCircle size={80} color="gray" />
                               </div>
                            )}
-                        </>
+                           <p className='font-b text-hint pl-5 mt-1'>{first_name}</p>
+                           <p className='text-base text-secondary break-words pt-1'>{bio ? `"${bio}"` : `"Add your Bio"`}</p>
+                        </div>
                      )}
-
-                     <h2 className='profile-mainheading font-b text-hint'>{`Hi, ${first_name}`}</h2>
-                     {isProfileLoading ? (
-                           <></>
-                        ) : (
-                           <>
-                               {!isProfileLoading && bio ? (
-                                 <p className='text-base text-secondary'>{`"${bio}"`}</p>
-                              ) : (
-                                 <p className='text-base text-secondary'>"Add a Bio"</p>
-                              )}
-                           </>
-                        )}
                   </div>
-
-                  <div>
-                     <p className='text-lg'>This is your Profile section. Here you can view and edit your recent activity, update your personal information, view your data and personalize your account settings.</p>
-                  </div>
-               </div>
-
+               )}
             </div>
          )
             :
          (
-            <div className='flex-1 text-center'>
+            <div className='flex-1 p-4 pt-6 bg-secondary'>
+               <h2 className='subheading text-shade font-b'>{title}</h2>
+               <p className='mt-4 text-base text-primary font-b leading-normal'>{subheading}</p>
 
-               <div className='flex flex-col items-center gap-6'>
-                  <div className='flex flex-col items-center gap-3'>
-
-                  {loading ? (
-                     <div className='overflow-hidden w-20 h-20'>
-                        <img src="../images/loading/loader.gif" alt="a loading gif" />
-                     </div>
-                  ) : (
-                     <div className='border-2 border-hint shadow-outer rounded-full p-2'>
-                        <ProfileAvatar
-                           url={avatar_url}
-                           size={'w-20 h-20'}
-                           lgSize={'w-20 h-20'}
-                           phSize={80}
-                        />
-                     </div>
-                  )}
-
-
-                     <h2 className='profile-mainheading'>{`Hi, ${first_name}`}</h2>
-                     {isProfileLoading ? (
-                        <></>
+               {showAvatar && (
+                  <div className='mt-6'>
+                     
+                     {loading ? (
+                        <div className='overflow-hidden w-20 h-20'>
+                           <img src="../images/loading/loader.gif" alt="a loading gif" />
+                        </div>
                      ) : (
-                        <>
-                              {!isProfileLoading && bio ? (
-                              <p className='text-base text-secondary'>{`"${bio}"`}</p>
-                           ) : (
-                              <p className='text-base text-secondary'>"Add a Bio"</p>
-                           )}
-                        </>
+                           <div className='flex items-center gap-1 bg-primary p-4'>
+                              <div className='border-2 border-secondary rounded-full p-1 w-fit'>
+                                 <ProfileAvatar
+                                    url={avatar_url}
+                                    size={'w-20 h-20'}
+                                    lgSize={'w-20 h-20'}
+                                    phSize={80}
+                                 />
+                              </div>
+                              <div className='pl-2'>
+                                 <p className='font-b text-hint'>{first_name}</p>
+                                 <p className='text-base text-secondary break-words pt-1'>{bio ? `${bio}` : `"Add your Bio"`}</p>
+                              </div>
+                           </div>
                      )}
                   </div>
-
-                  <div>
-                     <p className='text-lg'>This is your Profile section. Here you can view and edit your recent activity, update your personal information, view your data and personalize your account settings.</p>
-                  </div>
-               </div>
-
+               )}
             </div>
          )}
       </>

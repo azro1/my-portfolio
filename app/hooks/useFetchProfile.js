@@ -27,7 +27,7 @@ const useFetchProfile = () => {
 
         } catch (error) {
             console.log(error.message)
-            setError('Something went wrong. Try again later.')
+            setError('Failed to fetch profile. Try again later.')
         }
 
     }

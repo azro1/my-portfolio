@@ -106,7 +106,7 @@ const Signup = () => {
               First Name
             </span>
             <input
-              className="w-full p-2.5 rounded-md"
+              className="w-full p-2.5 rounded-md text-secondary shadow-inner bg-shade border-2 border-secondary"
               type='text'
               spellCheck='false'
               value={displayName}
@@ -118,7 +118,7 @@ const Signup = () => {
               Email
             </span>
             <input
-              className="w-full p-2.5 rounded-md"
+              className="w-full p-2.5 rounded-md text-secondary shadow-inner bg-shade border-2 border-secondary"
               type='text'
               spellCheck='false'
               value={email}
@@ -130,7 +130,7 @@ const Signup = () => {
               Password
             </span>
             <input
-              className="w-full p-2.5 rounded-md"
+              className="w-full p-2.5 rounded-md text-secondary shadow-inner bg-shade border-2 border-secondary"
               type='password'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -139,11 +139,11 @@ const Signup = () => {
 
 
           <div className="mt-5 flex items-center">
-            <input className="self-start mt-0.21 max-w-min" type="checkbox" value={isChecked} onChange={handleCheckbox}/>
-            <span className="text-base block text-secondary ml-2 leading-7 -mt-1">By signing up I agree to the{' '}<Link className="text-hint text-base" href='#'>Privacy Policy</Link>{' '}and{' '}<Link className='text-hint text-base' href='#'>Terms of Service</Link>
+            <input className="self-start mt-0.21 max-w-min transform scale-125" type="checkbox" value={isChecked} onChange={handleCheckbox}/>
+            <span className="text-base block text-secondary ml-2.5 leading-7 -mt-1">By signing up I agree to the{' '}<Link className="text-hint text-base" href='#'>Privacy Policy</Link>{' '}and{' '}<Link className='text-hint text-base' href='#'>Terms of Service</Link>
             .</span>
           </div>
-          <button className='btn block mt-5 bg-hint'>{isLoading ? 'Processing...' : 'Signup'}</button>
+          <button className='btn block mt-4 bg-hint'>{isLoading ? 'Processing...' : 'Signup'}</button>
           <div className="mt-5 h-5 text-center">
               {error && <div className="error">{error}</div>}
           </div>

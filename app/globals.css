@@ -23,19 +23,6 @@ body {
 }
 
 
-/* profile section headings */
-.profile-mainheading {
-  @apply text-2 font-b text-hint;
-}
-
-.profile-subheading {
-  @apply text-2xl text-hint;
-}
-
-.profile-sub-subheading {
-  @apply text-lg text-hint;
-}
-
 
 
 
@@ -75,6 +62,19 @@ form input {
 img {
   @apply text-gray-600;
 }
+
+
+
+
+
+
+/* profile layout nav */
+.layout-nav a.active {
+  @apply shadow-outer rounded-lg text-mywhite;
+}
+
+
+
 
 
 

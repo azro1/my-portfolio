@@ -68,7 +68,7 @@ const Login = () => {
             Email
           </span>
           <input
-            className='w-full p-2.5 rounded-md'
+            className='w-full p-2.5 rounded-md bg-primary text-secondary shadow-inner border-2 border-secondary'
             type='text'
             spellCheck='false'
             value={email}
@@ -80,7 +80,7 @@ const Login = () => {
             Password
           </span>
           <input
-            className='w-full p-2.5 rounded-md'
+            className='w-full p-2.5 rounded-md bg-primary text-secondary shadow-inner border-2 border-secondary'
             type='password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}

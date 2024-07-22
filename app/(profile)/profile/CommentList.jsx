@@ -84,15 +84,15 @@ const CommentList = ({ user }) => {
   }
 
   return (
-    <div className='lg:row-span-2'>
-        <h3 className='text-center profile-sub-subheading mb-4'>Comments</h3>
-            <div className='flex flex-col gap-2 text-left min-h-96 max-h-96 lg:max-h-custom-fixed overflow-y-scroll hide-scrollbar md:max-w-xs md:mx-auto'>
+    <div className=''>
+        <h3 className='text-lg font-b text-shade mb-3'>Comments</h3>
+            <div className='flex flex-col gap-2 text-left min-h-96 max-h-96 overflow-y-scroll hide-scrollbar md:max-w-xs'>
                 {comments && comments.length > 0 ? (
                     comments.map(comment => (
-                        <div className='flex items-start gap-1 justify-between p-3 border-shade border-4' key={comment.id}>
+                        <div className='flex items-start gap-1 justify-between p-3 border-shade border-4 bg-primary' key={comment.id}>
                             <div>
-                                <span className="text-secondary text-sm pb-1 block">{comment.text}</span>
-                                <span className='text-xs text-hint'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
+                                <span className="text-secondary text-sm pb-1 leading-normal block">{comment.text}</span>
+                                <span className='text-sm text-hint'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
                             </div>
                                 <MdDeleteForever className="min-w-max cursor-pointer text-hint" size={24} onClick={() => handleDelete(comment.id)}/>
                         </div>
@@ -103,7 +103,7 @@ const CommentList = ({ user }) => {
                            <img className="w-16 absolute top-16 left-1/2 transform -translate-x-1/2" src="../images/loading/loader.gif" alt="a loading gif" />
                         ) : (
                           <>
-                             {!isCommentsLoading && !successMsg && (<p className='text-center'>No Comments.</p>)}
+                             {!isCommentsLoading && !successMsg && (<p className='text-primary'>No Comments.</p>)}
                           </>
                         )}
                     </div>

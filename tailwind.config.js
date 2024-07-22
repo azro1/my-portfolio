@@ -13,11 +13,13 @@ export default {
     },
     extend: {
       colors: {
-        hint: '#6B8E23',
+        hint: '#A52A2A',
         shade: '#131519',
+        lightshade: '#191b20',
+        darkshade: '#16181c',
         secondary: '#757575',
         primary: '#1C1E24',
-        tertiary: '',
+        mywhite: '#b0b0b0',
         discord: '#6A5ACD',
         github: '#323439',
         'modal-translucent': 'rgb(28, 30, 36, 0.70)'
@@ -31,7 +33,6 @@ export default {
       fontSize: {
         '1.375': '1.375rem', //22px
         '1.75': '1.75rem', // 28px
-        '2': '2rem' // 32px
       },
       fontWeight: {
         'r': '400',
@@ -69,7 +70,7 @@ export default {
         'page-height': '34.8rem', // 556.8px
         'auth-page-height': '28rem', // 384px
         'projects-page-height': '57.2rem', // 915.2px
-        'profile-page-height': '54.5rem',
+        'profile-page-height': '47rem',
 
         // Specific component heights
         'projectsList-height': '17.4rem', // 278.4px
