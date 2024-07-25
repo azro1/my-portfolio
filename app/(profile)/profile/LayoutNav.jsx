@@ -16,13 +16,13 @@ const LayoutNav = () => {
 
     return (
         <>
-            <div className='min-h-52 md:min-h-0 md:hidden shadow-outer bg-deepCharcoal layout-nav sm'>
+            <div className='min-h-52 md:min-h-0 md:hidden shadow-outer bg-deepCharcoal layout-nav sm max-w-xs'>
                 <Link className={`${activeLink === '/profile' ? 'active' : ''} flex items-center gap-3 p-3.5 mb-1 bg-nightSky text-stoneGray text-base`} href={'/profile'} onClick={() => handleActiveLink('/profile')}>
-                        <FaUserCircle className='icon' size={20} />
+                        <FaUserCircle className='text-accentRed' size={20} />
                         <span>Dashboard</span>
                 </Link>
                 <Link className={`${activeLink === '/profile/edit-profile' ? 'active' : ''} flex items-center gap-3 p-3.5 mb-1 bg-nightSky text-stoneGray text-base`} href={'/profile/edit-profile'} onClick={() => handleActiveLink('/profile/edit-profile')}>
-                        <HiMiniIdentification size={20} />
+                        <HiMiniIdentification className='text-accentRed' size={20} />
                         <span>Edit Profile</span>
                 </Link>
                 <Link className={`${activeLink === '/profile/data-privacy' ? 'active' : ''} flex items-center p-3.5 mb-1 bg-nightSky text-stoneGray text-base`} href={'/profile/data-privacy'} onClick={() => handleActiveLink('/profile/data-privacy')}>

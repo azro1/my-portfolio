@@ -1,6 +1,9 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 
+// tell next to render dynamic and not static pages at build time
+export const dynamic = 'force-dynamic'
+
 const inter = Inter({ subsets: ['latin'] })
 
 // components
