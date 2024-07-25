@@ -13,13 +13,14 @@ export default {
     },
     extend: {
       colors: {
-        hint: '#A52A2A',
+        accentRed: '#A52A2A',
         shade: '#131519',
         lightshade: '#191b20',
         darkshade: '#16181c',
         secondary: '#757575',
         primary: '#1C1E24',
-        mywhite: '#b0b0b0',
+        mywhite: '#f2f2f2',
+        mygray: '#e0e0e3',
         discord: '#6A5ACD',
         github: '#323439',
         'modal-translucent': 'rgb(28, 30, 36, 0.70)'
@@ -64,6 +65,7 @@ export default {
         // Small heights
         '4.75': '4.75rem', // 76px
         '9.5': '9.5rem', // 152px
+        '9.8': '9.8rem', // 156.8px
         '30': '7.5rem', // 120px
 
         // Page heights

@@ -82,7 +82,7 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
          {user && user.app_metadata.provider !== "email" ? (
 
             <div className='flex-1 p-4 bg-gray-800'>
-               <h2 className='subheading font-b text-hint'>{title}</h2>
+               <h2 className='subheading font-b text-accentRed'>{title}</h2>
                <p className='mt-2 text-base leading-7'>{subheading}</p>
 
                {showAvatar && (
@@ -102,8 +102,8 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
                                  <FaUserCircle size={80} color="gray" />
                               </div>
                            )}
-                           <p className='font-b text-hint pl-5 mt-1'>{first_name}</p>
-                           <p className='text-base text-secondary break-words pt-1'>{bio ? `"${bio}"` : `"Add your Bio"`}</p>
+                           <p className='font-b text-accentRed pl-5 mt-1'>{first_name}</p>
+                           <p className='text-base text-secondary break-words'>{bio ? `"${bio}"` : `"Add your Bio"`}</p>
                         </div>
                      )}
                   </div>
@@ -112,20 +112,16 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
          )
             :
          (
-            <div className='flex-1 p-4 pt-6 bg-secondary'>
-               <h2 className='subheading text-shade font-b'>{title}</h2>
-               <p className='mt-4 text-base text-primary font-b leading-normal'>{subheading}</p>
+            <div className='flex-1 p-4 pt-6 bg-mygray'>
+               <h2 className='subheading font-b'>{title}</h2>
+               <p className='mt-4 leading-normal'>{subheading}</p>
 
                {showAvatar && (
                   <div className='mt-6'>
                      
-                     {loading ? (
-                        <div className='overflow-hidden w-20 h-20'>
-                           <img src="../images/loading/loader.gif" alt="a loading gif" />
-                        </div>
-                     ) : (
-                           <div className='flex items-center gap-1 bg-primary p-4'>
-                              <div className='border-2 border-secondary rounded-full p-1 w-fit'>
+
+                           <div className='flex items-center gap-1 bg-mywhite p-4'>
+                              <div className='border-2 border-mygray rounded-full p-1 w-fit'>
                                  <ProfileAvatar
                                     url={avatar_url}
                                     size={'w-20 h-20'}
@@ -133,12 +129,12 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
                                     phSize={80}
                                  />
                               </div>
-                              <div className='pl-2'>
-                                 <p className='font-b text-hint'>{first_name}</p>
-                                 <p className='text-base text-secondary break-words pt-1'>{bio ? `${bio}` : `"Add your Bio"`}</p>
-                              </div>
+                              {!loading && <div className='pl-2'>
+                                 <p className='text-primary font-b'>{first_name}</p>
+                                 <p className='break-words'>{bio ? `${bio}` : `"Add your Bio"`}</p>
+                              </div>}
                            </div>
-                     )}
+                  
                   </div>
                )}
             </div>

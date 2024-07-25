@@ -1,42 +1,55 @@
-"use client"
+"use client";
 
 import Link from 'next/link';
 import { useState } from 'react';
 
-const Nav = () => {
-    const [activeLink, setActiveLink] = useState('/profile')
+// icons
+import { FaUserCircle } from "react-icons/fa";
+import { HiMiniIdentification } from "react-icons/hi2";
 
-    const handleActiveLink = (herf) => {
-        setActiveLink(herf)
-    }
+const LayoutNav = () => {
+    const [activeLink, setActiveLink] = useState('/profile');
+
+    const handleActiveLink = (href) => {
+        setActiveLink(href);
+    };
 
     return (
-        <div className='flex items-center gap-2 mb-20 layout-nav'>
-            <Link className={`${activeLink === '/profile' ? 'active' : ''} ${activeLink !== '/profile' ? 'hover:bg-lightshade hover:rounded-lg' : ''} text-secondary text-base py-2.5 px-4`} href={'/profile'}
-                onClick={() => handleActiveLink('/profile')}>
-                <span >
-                    Dashboard
-                </span>
-            </Link>
-            <Link className={`${activeLink === '/profile/edit-profile' ? 'active' : ''}  ${activeLink !== '/profile/edit-profile' ? 'hover:bg-lightshade hover:rounded-lg' : ''} text-secondary text-base py-2.5 px-4`} href={'/profile/edit-profile'} onClick={() => handleActiveLink('/profile/edit-profile')}>
-                <span >
-                    Edit Profile
-                </span>
-            </Link>
-            <Link className={`${activeLink === '/profile/data-privacy' ? 'active' : ''}  ${activeLink !== '/profile/data-privacy' ? 'hover:bg-lightshade hover:rounded-lg' : ''}  text-secondary text-base py-2.5 px-4`} href={'/profile/data-privacy'} onClick={() => handleActiveLink('/profile/data-privacy')}>
-                <span >
-                    Data & Privacy
-                </span>
-            </Link >
-            <Link
-                className={`${activeLink === '/profile/security' ? 'active' : ''}  ${activeLink !== '/profile/security' ? 'hover:bg-lightshade hover:rounded-lg' : ''}  text-secondary text-base py-2.5 px-4`} href={'/profile/security'}
-                onClick={() => handleActiveLink('/profile/security')}>
-                <span >
-                    Security
-                </span>
-            </Link >
-        </div >
-    )
-}
+        <>
+            <div className='min-h-52 md:min-h-0 md:hidden shadow-outer bg-shade layout-nav sm'>
+                <Link className={`${activeLink === '/profile' ? 'active' : ''} flex items-center gap-3 p-3.5 mb-1 bg-primary text-secondary text-base`} href={'/profile'} onClick={() => handleActiveLink('/profile')}>
+                        <FaUserCircle size={20} />
+                        <span>Dashboard</span>
+                </Link>
+                <Link className={`${activeLink === '/profile/edit-profile' ? 'active' : ''} flex items-center gap-3 p-3.5 mb-1 bg-primary text-secondary text-base`} href={'/profile/edit-profile'} onClick={() => handleActiveLink('/profile/edit-profile')}>
+                        <HiMiniIdentification size={20} />
+                        <span>Edit Profile</span>
+                </Link>
+                <Link className={`${activeLink === '/profile/data-privacy' ? 'active' : ''} flex items-center p-3.5 mb-1 bg-primary text-secondary text-base`} href={'/profile/data-privacy'} onClick={() => handleActiveLink('/profile/data-privacy')}>
+                        <span>Data & Privacy</span>
+                </Link>
+                <Link className={`${activeLink === '/profile/security' ? 'active' : ''} flex items-center p-3.5 bg-primary text-secondary text-base`} href={'/profile/security'} onClick={() => handleActiveLink('/profile/security')}>
+                        <span>Security</span>
+                </Link>
+            </div>
 
-export default Nav
+       
+            <div className='min-h-0 md:min-h-12 hidden md:flex md:flex-row md:items-center md:gap-2 layout-nav md'>
+                <Link className={`${activeLink === '/profile' ? 'active' : ''} ${activeLink !== '/profile' ? 'hover:bg-lightshade hover:rounded-lg' : ''} text-secondary text-base py-2.5 px-4`} href={'/profile'} onClick={() => handleActiveLink('/profile')}>
+                        <span>Dashboard</span>
+                </Link>
+                <Link className={`${activeLink === '/profile/edit-profile' ? 'active' : ''}  ${activeLink !== '/profile/edit-profile' ? 'hover:bg-lightshade hover:rounded-lg' : ''} text-secondary text-base py-2.5 px-4`} href={'/profile/edit-profile'} onClick={() => handleActiveLink('/profile/edit-profile')}>
+                        <span>Edit Profile</span>
+                </Link>
+                <Link className={`${activeLink === '/profile/data-privacy' ? 'active' : ''}  ${activeLink !== '/profile/data-privacy' ? 'hover:bg-lightshade hover:rounded-lg' : ''}  text-secondary text-base py-2.5 px-4`} href={'/profile/data-privacy'} onClick={() => handleActiveLink('/profile/data-privacy')}>
+                        <span>Data & Privacy</span>
+                </Link>
+                <Link className={`${activeLink === '/profile/security' ? 'active' : ''}  ${activeLink !== '/profile/security' ? 'hover:bg-lightshade hover:rounded-lg' : ''}  text-secondary text-base py-2.5 px-4`} href={'/profile/security'} onClick={() => handleActiveLink('/profile/security')}>
+                        <span>Security</span>
+                </Link>
+            </div>
+        </>
+    );
+};
+
+export default LayoutNav;

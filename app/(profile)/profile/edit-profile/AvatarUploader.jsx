@@ -116,7 +116,7 @@ const AvatarUploader = ({ user, updateProfile }) => {
                     disabled={uploading || (user && user.user_metadata.full_name)}
                 />
             </form>
-            <button className={`small-btn bg-hint block ${uploadError ? 'mt-2' : 'mt-3'}`}
+            <button className={`small-btn bg-accentRed block ${uploadError ? 'mt-2' : 'mt-3'}`}
                 onClick={uploadAvatar}
                 disabled={uploading || (user && user.user_metadata.full_name)}
             >

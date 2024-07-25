@@ -68,9 +68,13 @@ img {
 
 
 
-/* profile layout nav */
-.layout-nav a.active {
+/* profile layout navs */
+.layout-nav.md a.active {
   @apply shadow-outer rounded-lg text-mywhite;
+}
+
+.layout-nav.sm a.active {
+  @apply text-primary bg-mywhite;
 }
 
 
@@ -125,11 +129,11 @@ img {
 
 /* Footer styles */
 footer .newsletter h3 {
-  @apply subheading font-b text-hint;
+  @apply subheading font-b text-accentRed;
 }
 
 footer h4 {
-  @apply font-b text-hint;
+  @apply font-b text-accentRed;
 }
 
 footer p {

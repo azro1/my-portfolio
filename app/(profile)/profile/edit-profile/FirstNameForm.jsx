@@ -85,8 +85,8 @@ const FirstNameForm = ({ user, profile }) => {
 
             <div className="max-w-xs">
                 <div className="flex items-center justify-between pb-1">
-                    <span className="inline-block text-hint">First Name</span>
-                    <span className="text-hint cursor-pointer" onClick={handleOpenForm}>Edit</span>
+                    <span className="inline-block text-accentRed">First Name</span>
+                    <span className="text-accentRed cursor-pointer" onClick={handleOpenForm}>Edit</span>
                 </div>
                 <p className="whitespace-normal break-words">{first_name}</p>
             </div>
@@ -110,8 +110,8 @@ const FirstNameForm = ({ user, profile }) => {
                             />
                         </label>
                     </form>
-                    <button className='btn bg-hint mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                    <button className='btn bg-hint mt-3' onClick={handleNameUpdate}>
+                    <button className='btn bg-accentRed mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
+                    <button className='btn bg-accentRed mt-3' onClick={handleNameUpdate}>
                         {saving ? 'Saving...' : 'Save'}
                     </button>
                     {(profileError || formError) && (

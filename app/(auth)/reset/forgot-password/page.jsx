@@ -65,7 +65,7 @@ const UpdatePassword = () => {
       {user && (
         <div className="flex items-center justify-center h-auth-page-height">
           <form className="w-full max-w-sm mx-auto md:col-span-2" onSubmit={handleSubmit}>
-            <h2 className='pb-2 text-3xl font-eb text-hint'>Reset Password</h2>
+            <h2 className='pb-2 text-3xl font-eb text-accentRed'>Reset Password</h2>
             <label>
               <span className='mt-4 mb-2 text-base text-secondary block'>
                 Password
@@ -88,7 +88,7 @@ const UpdatePassword = () => {
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </label>
-            <button className='btn block mt-4 bg-hint'>{isFormLoading ? 'Processing...' : 'Reset'}</button>
+            <button className='btn block mt-4 bg-accentRed'>{isFormLoading ? 'Processing...' : 'Reset'}</button>
             <div className="mt-5 h-5 text-center">
               {error && <div className="error">{error}</div>}
               {successMsg && <div className="success">{successMsg}</div>}
@@ -100,8 +100,8 @@ const UpdatePassword = () => {
 
       {!user && (
         <div className="flex flex-col items-center justify-center text-center h-auth-page-height">
-          <h2 className='pb-4 text-3xl font-b text-hint'>Unauthorised</h2>
-          <p className='text-base leading-7'>Please <Link className="text-base text-hint" href="/login">Login</Link> before attempting to reset your password.</p>
+          <h2 className='pb-4 text-3xl font-b text-accentRed'>Unauthorised</h2>
+          <p className='text-base leading-7'>Please <Link className="text-base text-accentRed" href="/login">Login</Link> before attempting to reset your password.</p>
         </div>
       )}
     </>

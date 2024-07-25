@@ -84,32 +84,25 @@ const CommentList = ({ user }) => {
   }
 
   return (
-    <div className=''>
-        <h3 className='text-lg font-b text-shade mb-3'>Comments</h3>
-            <div className='flex flex-col gap-2 text-left min-h-96 max-h-96 overflow-y-scroll hide-scrollbar md:max-w-xs'>
+    <div>
+        <h3 className='text-lg font-b text-primary mb-3'>Comments</h3>
+            <div className='flex flex-col gap-2 text-left min-h-96 max-h-96 overflow-y-scroll hide-scrollbar md:max-w-xs relative'>
                 {comments && comments.length > 0 ? (
                     comments.map(comment => (
-                        <div className='flex items-start gap-1 justify-between p-3 border-shade border-4 bg-primary' key={comment.id}>
+                        <div className='flex items-start gap-1 justify-between p-3 bg-mywhite' key={comment.id}>
                             <div>
                                 <span className="text-secondary text-sm pb-1 leading-normal block">{comment.text}</span>
-                                <span className='text-sm text-hint'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
+                                <span className='text-sm text-accentRed'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
                             </div>
-                                <MdDeleteForever className="min-w-max cursor-pointer text-hint" size={24} onClick={() => handleDelete(comment.id)}/>
+                                <MdDeleteForever className="min-w-max cursor-pointer text-accentRed" size={25} onClick={() => handleDelete(comment.id)}/>
                         </div>
                     ))
                 ) : (
-                    <div className="relative h-full">
-                        {isCommentsLoading ? (
-                           <img className="w-16 absolute top-16 left-1/2 transform -translate-x-1/2" src="../images/loading/loader.gif" alt="a loading gif" />
-                        ) : (
-                          <>
-                             {!isCommentsLoading && !successMsg && (<p className='text-primary'>No Comments.</p>)}
-                          </>
-                        )}
-                    </div>
-
+                        <div className="min-h-96 bg-mywhite">
+                            {!isCommentsLoading && !successMsg && <p className='p-4'>No Comments.</p>}
+                        </div>
                 )}
-                {successMsg && <p className="success place-self-center">{successMsg}</p>}
+                {successMsg && <p className="success place-self-center absolute bottom-2">{successMsg}</p>}
                 {errorMsg && <p className="error place-self-center">{errorMsg}</p>}
             </div>
     </div>

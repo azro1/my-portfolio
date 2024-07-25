@@ -6,6 +6,7 @@ import { redirect } from 'next/navigation';
 import Navbar from '../components/navbar/Navbar';
 import LayoutNav from './profile/LayoutNav';
 
+
 export default async function ProfileLayout({ children }) {
   const supabase = createServerComponentClient({ cookies });
   const { data: { user } } = await supabase.auth.getUser();
@@ -18,9 +19,10 @@ export default async function ProfileLayout({ children }) {
     <>
       <Navbar user={user && user} />
       <main className='mt-20 mb-4.5 md:mb-28'>
+        
          <LayoutNav />
 
-        <div className='bg-mywhite p-3'>
+        <div className='mt-20 bg-mywhite p-3'>
           {children}
         </div>
         
