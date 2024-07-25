@@ -142,7 +142,7 @@ const EnquiriesForm = ({ user }) => {
             </h3>
             <label>
                 {error && <p className='error'>{error}</p>}
-                <span className="className='max-w-min mb-2 text-base text-secondary block">
+                <span className="className='max-w-min mb-2 text-base text-stoneGray block">
                     Name
                 </span>
                 <input
@@ -155,7 +155,7 @@ const EnquiriesForm = ({ user }) => {
                 />
             </label>
             <label>
-                <span className="className='max-w-min mt-4 mb-2 text-base text-secondary block">
+                <span className="className='max-w-min mt-4 mb-2 text-base text-stoneGray block">
                     Email
                 </span>
                 <input
@@ -168,7 +168,7 @@ const EnquiriesForm = ({ user }) => {
                 />
             </label>
             <label>
-                <span className="className='max-w-min mt-4 mb-2 text-base text-secondary block">
+                <span className="className='max-w-min mt-4 mb-2 text-base text-stoneGray block">
                     Subject
                 </span>
                 <input
@@ -181,7 +181,7 @@ const EnquiriesForm = ({ user }) => {
                 />
             </label>
             <label>
-                <span className="className='max-w-min mt-4 mb-2 text-base text-secondary block">
+                <span className="className='max-w-min mt-4 mb-2 text-base text-stoneGray block">
                     Your Message
                 </span>
                 <textarea

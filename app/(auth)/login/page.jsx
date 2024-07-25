@@ -64,11 +64,11 @@ const Login = () => {
       <form className="w-full justify-self-center sm:max-w-xs md:justify-self-end" onSubmit={handleSubmit}>
         <h2 className='text-3xl mb-6 font-eb text-accentRed'>Login</h2>
         <label>
-          <span className='max-w-min mb-2 text-base text-secondary block'>
+          <span className='max-w-min mb-2 text-base text-stoneGray block'>
             Email
           </span>
           <input
-            className='w-full p-2.5 rounded-md bg-primary text-secondary shadow-inner border-2 border-secondary'
+            className='w-full p-2.5 rounded-md bg-nightSky text-stoneGray shadow-inner border-2 border-stoneGray'
             type='text'
             spellCheck='false'
             value={email}
@@ -76,11 +76,11 @@ const Login = () => {
           />
         </label>
         <label>
-          <span className='max-w-min mt-4 mb-2 text-base text-secondary block'>
+          <span className='max-w-min mt-4 mb-2 text-base text-stoneGray block'>
             Password
           </span>
           <input
-            className='w-full p-2.5 rounded-md bg-primary text-secondary shadow-inner border-2 border-secondary'
+            className='w-full p-2.5 rounded-md bg-nightSky text-stoneGray shadow-inner border-2 border-stoneGray'
             type='password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}

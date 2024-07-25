@@ -102,11 +102,11 @@ const Signup = () => {
         <form onSubmit={handleSubmit} className="justify-self-center place-self-center w-full sm:max-w-sm md:max-w-xs">
           <h2 className='text-3xl mb-6 font-eb text-accentRed'>Sign up</h2>
           <label>
-            <span className='max-w-max mb-2 text-base text-secondary block'>
+            <span className='max-w-max mb-2 text-base text-stoneGray block'>
               First Name
             </span>
             <input
-              className="w-full p-2.5 rounded-md text-secondary shadow-inner bg-shade border-2 border-secondary"
+              className="w-full p-2.5 rounded-md text-stoneGray shadow-inner bg-deepCharcoal border-2 border-stoneGray"
               type='text'
               spellCheck='false'
               value={displayName}
@@ -114,11 +114,11 @@ const Signup = () => {
             />
           </label>
           <label>
-            <span className='max-w-min mt-4 mb-2 text-base text-secondary block'>
+            <span className='max-w-min mt-4 mb-2 text-base text-stoneGray block'>
               Email
             </span>
             <input
-              className="w-full p-2.5 rounded-md text-secondary shadow-inner bg-shade border-2 border-secondary"
+              className="w-full p-2.5 rounded-md text-stoneGray shadow-inner bg-deepCharcoal border-2 border-stoneGray"
               type='text'
               spellCheck='false'
               value={email}
@@ -126,11 +126,11 @@ const Signup = () => {
             />
           </label>
           <label>
-            <span className='max-w-min mt-4 mb-2 text-base text-secondary block'>
+            <span className='max-w-min mt-4 mb-2 text-base text-stoneGray block'>
               Password
             </span>
             <input
-              className="w-full p-2.5 rounded-md text-secondary shadow-inner bg-shade border-2 border-secondary"
+              className="w-full p-2.5 rounded-md text-stoneGray shadow-inner bg-deepCharcoal border-2 border-stoneGray"
               type='password'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -140,7 +140,7 @@ const Signup = () => {
 
           <div className="mt-5 flex items-center">
             <input className="self-start mt-0.21 max-w-min transform scale-125" type="checkbox" value={isChecked} onChange={handleCheckbox}/>
-            <span className="text-base block text-secondary ml-2.5 leading-7 -mt-1">By signing up I agree to the{' '}<Link className="text-accentRed text-base" href='#'>Privacy Policy</Link>{' '}and{' '}<Link className='text-accentRed text-base' href='#'>Terms of Service</Link>
+            <span className="text-base block text-stoneGray ml-2.5 leading-7 -mt-1">By signing up I agree to the{' '}<Link className="text-accentRed text-base" href='#'>Privacy Policy</Link>{' '}and{' '}<Link className='text-accentRed text-base' href='#'>Terms of Service</Link>
             .</span>
           </div>
           <button className='btn block mt-4 bg-accentRed'>{isLoading ? 'Processing...' : 'Signup'}</button>
@@ -160,23 +160,23 @@ const Signup = () => {
         </div>
 
         <div className="grid row-start-1 max-w-sm gap-4  justify-self-center md:col-start-2 md:row-start-1 md:w-full md:h-64 ">
-          <h2 className="subheading font-rubik font-eb text-secondary leading-normal mb-1 md:mb-0">
+          <h2 className="subheading font-rubik font-eb text-stoneGray leading-normal mb-1 md:mb-0">
             Unlock <span className='text-accentRed'>CodeDynamic's</span> Creative
             Vault!
           </h2>
-          <span className="block text-secondary text-sm font-os text-justify leading-6">
+          <span className="block text-stoneGray text-sm font-os text-justify leading-6">
             Uncover the secrets behind my web development and graphic design
             projects by signing up for exclusive content:
           </span>
-          <span className="block text-secondary text-sm font-os text-justify leading-6">
+          <span className="block text-stoneGray text-sm font-os text-justify leading-6">
             🚀 Creative Process Unveiled: Get an inside look at the making of
             each project, from concept to completion.
           </span>
-          <span className="block text-secondary text-sm font-os text-justify leading-6">
+          <span className="block text-stoneGray text-sm font-os text-justify leading-6">
             📬 Be the First to Know: Receive notifications on new projects and
             stay in the loop with the latest news and updates.
           </span>
-          <span className="block text-secondary text-sm font-os text-justify leading-6">
+          <span className="block text-stoneGray text-sm font-os text-justify leading-6">
             Ready to dive in? Join now to elevate your understanding of design
             and development with CodeDynamics!
           </span>

@@ -43,7 +43,7 @@ const ResetPassword = () => {
             <h2 className='mb-5 text-3xl font-eb text-accentRed leading-normal'>Forgot Your Password?</h2>
             <p className='mb-6 leading-7' >Please enter your email address below, and we'll send you a link to reset your password. If you don't receive the email within a few minutes, check your spam folder or request a new one.</p>
             <label>
-              <span className='text-base text-secondary mt-4 mb-2 block'>
+              <span className='text-base text-stoneGray mt-4 mb-2 block'>
                 Enter your email address
               </span>
               <input

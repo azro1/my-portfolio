@@ -29,13 +29,13 @@ const ProjectList = async () => {
               <div className="flex flex-col items-center mx-auto max-w-max mb-3 transform transition-transform hover:scale-105">
                 <Link href={`/projects/${project.id}`}>
                     <img
-                      className="bg-white p-1 w-full h-48 object-cover object-left-top"
+                      className="bg-frostWhite p-1 w-full h-48 object-cover object-left-top"
                       src={project.image_url}
                       alt={project.list_alt_desc}
                     />
                 </Link>
               </div>
-                  <h4 className="font-os font-r text-secondary text-center text-md flex-1">{project.title}</h4>  
+                  <h4 className="font-os font-r text-stoneGray text-center text-md flex-1">{project.title}</h4>  
             </div>
           ))}
 

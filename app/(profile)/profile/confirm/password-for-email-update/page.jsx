@@ -84,7 +84,7 @@ const ConfirmPasswordForEmailUpdate = () => {
       <form className="w-full max-w-sm mr-auto md:col-span-2" onSubmit={handleSubmit}>
         <h2 className='pb-2 text-3xl font-eb text-accentRed'>Enter Your Password</h2>
         <label>
-          <span className='mt-4 mb-2 text-base text-secondary block'>
+          <span className='mt-4 mb-2 text-base text-stoneGray block'>
             Password
           </span>
           <input

@@ -22,7 +22,7 @@ export default async function ProfileLayout({ children }) {
         
          <LayoutNav />
 
-        <div className='mt-20 bg-mywhite p-3'>
+        <div className='mt-20 bg-frostWhite p-3'>
           {children}
         </div>
         

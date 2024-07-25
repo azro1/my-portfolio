@@ -9,7 +9,7 @@
 }
 
 body {
-  @apply bg-primary;
+  @apply bg-nightSky;
 }
 
 
@@ -36,7 +36,7 @@ a {
 }
 
 p {
-  @apply font-r text-base text-secondary;
+  @apply font-r text-base text-stoneGray;
 }
 
 .main-container {
@@ -48,11 +48,11 @@ main {
 }
 
 .btn {
-  @apply py-2.5 px-4 rounded-lg font-b text-white;
+  @apply py-2.5 px-4 rounded-lg font-b text-frostWhite;
 }
 
 .small-btn {
-  @apply py-2 px-4 rounded-lg font-b text-white;
+  @apply py-2 px-4 rounded-lg font-b text-frostWhite;
 }
 
 form input {
@@ -70,11 +70,11 @@ img {
 
 /* profile layout navs */
 .layout-nav.md a.active {
-  @apply shadow-outer rounded-lg text-mywhite;
+  @apply shadow-outer rounded-lg text-frostWhite;
 }
 
 .layout-nav.sm a.active {
-  @apply text-primary bg-mywhite;
+  @apply text-nightSky bg-frostWhite;
 }
 
 
@@ -88,7 +88,7 @@ img {
 }
 
 .tooltiptext {
-  @apply invisible absolute min-w-max text-secondary font-r -top-1.875 opacity-0 transition-opacity duration-500 ease-in-out;
+  @apply invisible absolute min-w-max text-stoneGray font-r -top-1.875 opacity-0 transition-opacity duration-500 ease-in-out;
 
 }
 
@@ -137,7 +137,7 @@ footer h4 {
 }
 
 footer p {
-  @apply text-primary leading-7;
+  @apply text-nightSky leading-7;
 }
 
 .pagelinks h4 {
@@ -149,7 +149,7 @@ footer p {
 }
 
 footer span {
-  @apply text-primary;
+  @apply text-nightSky;
 }
 
 

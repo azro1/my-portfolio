@@ -88,7 +88,7 @@ const FirstNameForm = ({ user, profile }) => {
                     <span className="inline-block text-accentRed">First Name</span>
                     <span className="text-accentRed cursor-pointer" onClick={handleOpenForm}>Edit</span>
                 </div>
-                <p className="whitespace-normal break-words">{first_name}</p>
+                <p className="frostWhitespace-normal break-words">{first_name}</p>
             </div>
 
             {showForm && (

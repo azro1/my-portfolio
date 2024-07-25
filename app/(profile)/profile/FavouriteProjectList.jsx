@@ -14,14 +14,14 @@ const FavouriteProjectList = ({ user }) => {
 
     return (
         <div>
-            <h3 className='text-primary text-lg font-b mb-4'>Favourite Projects</h3>
-            <div className='flex items-center min-h-52 bg-mywhite p-4'>
+            <h3 className='text-nightSky text-lg font-b mb-4'>Favourite Projects</h3>
+            <div className='flex items-center min-h-52 bg-frostWhite p-4'>
                 {!isProjectsLoading && (
                     <div className='flex flex-wrap gap-3'>
                         {retrievedProjects && (retrievedProjects.map((project) => (
                             <div key={project.id}>
                                 <div className='max-w-36 relative'>
-                                    <div className='bg-white p-1 shadow-outer' >
+                                    <div className='bg-frostWhite p-1 shadow-outer' >
                                         <Link href={`/projects/${project.id}`}>
                                             <img className='w-full h-30 object-cover object-left-top'
                                                 src={project.image_url}
@@ -31,7 +31,7 @@ const FavouriteProjectList = ({ user }) => {
                                     </div>
                                     <FaHeart className='absolute bottom-1 left-1' size='18' color='red' />
                                 </div>
-                                <h4 className="font-os font-r text-secondary text-center text-sm mt-2">{project.title}</h4>
+                                <h4 className="font-os font-r text-stoneGray text-center text-sm mt-2">{project.title}</h4>
                             </div>))
                         )}
                     </div>

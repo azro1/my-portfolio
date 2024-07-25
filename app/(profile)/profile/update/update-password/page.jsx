@@ -126,7 +126,7 @@ const UpdatePassword = () => {
             <h2 className='mb-5 text-3xl font-eb text-accentRed'>Update Password</h2>
             <p className='mb-6 leading-7'>To update your password, please provide your current password for verification and enter a new password.</p>
             <label>
-              <span className='mt-4 mb-2 text-base text-secondary block'>
+              <span className='mt-4 mb-2 text-base text-stoneGray block'>
                 Old Password
               </span>
               <input
@@ -137,7 +137,7 @@ const UpdatePassword = () => {
               />
             </label>
             <label>
-              <span className='mt-4 mb-2 text-base text-secondary block'>
+              <span className='mt-4 mb-2 text-base text-stoneGray block'>
                 New Password
               </span>
               <input

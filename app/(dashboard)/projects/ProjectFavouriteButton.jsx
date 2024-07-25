@@ -122,7 +122,7 @@ const ProjectFavouriteButton = ({ className, projectId, user }) => {
         </button>
 
         <div className='absolute right-16 -top-20'>
-            {message && <span className='bg-primary text-secondary p-2 rounded-md'>{message}</span>}         
+            {message && <span className='bg-nightSky text-stoneGray p-2 rounded-md'>{message}</span>}         
         </div>
     </>
 

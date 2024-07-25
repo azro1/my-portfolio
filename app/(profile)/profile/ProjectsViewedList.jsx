@@ -12,13 +12,13 @@ const ProjectsViewedList = ({ user }) => {
 
   return (
       <div>
-          <h3 className='text-lg text-shade font-b mb-4'>Project Views</h3>
-              <div className='min-h-52 flex items-center bg-mywhite p-4'>
+          <h3 className='text-lg text-deepCharcoal font-b mb-4'>Project Views</h3>
+              <div className='min-h-52 flex items-center bg-frostWhite p-4'>
                 {!isProjectsLoading && (
                     <div className='flex flex-wrap gap-3'>
                         {retrievedProjects && (retrievedProjects.map((project) => (
                             <div key={project.id}>
-                                <div className='max-w-36 bg-white p-1 shadow-outer'>
+                                <div className='max-w-36 bg-frostWhite p-1 shadow-outer'>
                                     <Link href={`/projects/${project.id}`}>
                                       <img className='w-full h-30 object-cover object-left-top'
                                         src={project.image_url}
@@ -26,7 +26,7 @@ const ProjectsViewedList = ({ user }) => {
                                       />
                                     </Link>
                                 </div>
-                                <h4 className="font-r text-secondary text-center text-sm mt-2">{project.title}</h4>
+                                <h4 className="font-r text-stoneGray text-center text-sm mt-2">{project.title}</h4>
                             </div>))
                         )}
                     </div>

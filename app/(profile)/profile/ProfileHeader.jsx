@@ -103,7 +103,7 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
                               </div>
                            )}
                            <p className='font-b text-accentRed pl-5 mt-1'>{first_name}</p>
-                           <p className='text-base text-secondary break-words'>{bio ? `"${bio}"` : `"Add your Bio"`}</p>
+                           <p className='text-base text-stoneGray break-words'>{bio ? `"${bio}"` : `"Add your Bio"`}</p>
                         </div>
                      )}
                   </div>
@@ -112,7 +112,7 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
          )
             :
          (
-            <div className='flex-1 p-4 pt-6 bg-mygray'>
+            <div className='flex-1 p-4 pt-6 bg-cloudGray'>
                <h2 className='subheading font-b'>{title}</h2>
                <p className='mt-4 leading-normal'>{subheading}</p>
 
@@ -120,8 +120,8 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
                   <div className='mt-6'>
                      
 
-                           <div className='flex items-center gap-1 bg-mywhite p-4'>
-                              <div className='border-2 border-mygray rounded-full p-1 w-fit'>
+                           <div className='flex items-center gap-1 bg-frostWhite p-4'>
+                              <div className='border-2 border-cloudGray rounded-full p-1 w-fit'>
                                  <ProfileAvatar
                                     url={avatar_url}
                                     size={'w-20 h-20'}
@@ -130,7 +130,7 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
                                  />
                               </div>
                               {!loading && <div className='pl-2'>
-                                 <p className='text-primary font-b'>{first_name}</p>
+                                 <p className='text-nightSky font-b'>{first_name}</p>
                                  <p className='break-words'>{bio ? `${bio}` : `"Add your Bio"`}</p>
                               </div>}
                            </div>

@@ -4,7 +4,7 @@ import { FaLinkedin, FaGithub, FaInstagramSquare, FaYoutube } from 'react-icons/
 
 const Footer = () => {
   return (
-    <footer className="bg-white border-t-8 border-accentRed p-1.625">
+    <footer className="bg-frostWhite border-t-8 border-accentRed p-1.625">
        <main className="my-2.375 md:mt-4.1875 max-w-screen-lg mx-auto" >
           <div className="newsletter flex flex-col items-center text-center gap-y-6">
             <h3>Get News, Insights & Updates</h3>
@@ -13,14 +13,14 @@ const Footer = () => {
               <div className="relative sm:pr-2 mb-3 sm:m-0">
                 <HiMiniEnvelopeOpen className="absolute top-2 left-4" size={28} />
                  <input 
-                   className="p-2 w-80 pl-14 pr-5 rounded-lg text-left border-2 border-primary"
+                   className="p-2 w-80 pl-14 pr-5 rounded-lg text-left border-2 border-nightSky"
                    type="text"
                    placeholder="Enter you email address"
                    spellCheck="false" 
                  />
               </div>
               <Link className="group" href="#">
-                <button className="py-3 px-4 min-w-max text-sm rounded-lg font-b text-white bg-primary ">SIGN ME UP</button>
+                <button className="py-3 px-4 min-w-max text-sm rounded-lg font-b text-frostWhite bg-nightSky ">SIGN ME UP</button>
               </Link>
             </form>
           </div>

@@ -78,14 +78,14 @@ const PasswordForm = () => {
                         Edit
                     </span> 
                 </div>
-                <p className="text-secondary">*********</p>
+                <p className="text-stoneGray">*********</p>
             </div>
 
             {showForm && (
                 <Modal >
                     <form >
                         <label>
-                        <p className="mb-2 text-secondary">
+                        <p className="mb-2 text-stoneGray">
                             To update your password, please enter your email for verification.
                         </p>
                             <span className="block mb-2 text-xl">

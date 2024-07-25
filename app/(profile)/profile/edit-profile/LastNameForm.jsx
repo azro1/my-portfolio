@@ -95,7 +95,7 @@ const LastNameForm = ({ user, profile }) => {
                         {last_name ? 'Edit' : 'Add'}
                     </span>
                 </div>
-                <p className="whitespace-normal break-words">{last_name}</p>
+                <p className="frostWhitespace-normal break-words">{last_name}</p>
             </div>
   
             {showForm && (

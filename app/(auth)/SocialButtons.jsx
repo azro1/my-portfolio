@@ -63,15 +63,15 @@ const SocialButtons = ({ text }) => {
 
   return (
     <>
-      <button className='btn mb-2 bg-red-600 w-64 flex items-center justify-center hover:filter hover:brightness-75 duration-300' onClick={handleGoogleClick}>
+      <button className='btn mb-2 bg-googleRed w-64 flex items-center justify-center hover:filter hover:brightness-75 duration-300' onClick={handleGoogleClick}>
         <FaGoogle className="mr-2" size={24} />
         {text} with Google
       </button>
-      <button className='btn mb-2 bg-github w-64 flex items-center justify-center hover:filter hover:brightness-75 duration-300' onClick={handleGithubClick}>
+      <button className='btn mb-2 bg-githubDark w-64 flex items-center justify-center hover:filter hover:brightness-75 duration-300' onClick={handleGithubClick}>
         <FaGithub className="mr-2" size={26} />
         {text} with GitHub
       </button>
-      <button className='btn bg-discord w-64 flex items-center justify-center hover:filter hover:brightness-75 duration-500' onClick={handleDiscordClick}>
+      <button className='btn bg-discordPurple w-64 flex items-center justify-center hover:filter hover:brightness-75 duration-500' onClick={handleDiscordClick}>
         <FaDiscord className="mr-2" size={26} />
         {text} with Discord
       </button>

@@ -48,7 +48,7 @@ const ProfileAvatar = ({ url, size, lgSize, phSize }) => {
     return (
         <div>
             {isLoading ? (
-                <div className={`overflow-hidden ${lgSize} bg-primary rounded-full`}></div>
+                <div className={`overflow-hidden ${lgSize} bg-nightSky rounded-full`}></div>
             ) : (
                 <>
                     {signedUrl ? (

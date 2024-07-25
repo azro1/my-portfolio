@@ -108,7 +108,7 @@ const AvatarUploader = ({ user, updateProfile }) => {
             </div>
             <form ref={formRef}>
                 <input
-                    className='text-secondary file:cursor-pointer file:mr-3'
+                    className='text-stoneGray file:cursor-pointer file:mr-3'
                     type='file'
                     id='single'
                     accept='image/*'

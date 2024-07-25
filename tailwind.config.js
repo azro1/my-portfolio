@@ -14,15 +14,16 @@ export default {
     extend: {
       colors: {
         accentRed: '#A52A2A',
-        shade: '#131519',
-        lightshade: '#191b20',
-        darkshade: '#16181c',
-        secondary: '#757575',
-        primary: '#1C1E24',
-        mywhite: '#f2f2f2',
-        mygray: '#e0e0e3',
-        discord: '#6A5ACD',
-        github: '#323439',
+        deepCharcoal: '#131519',
+        softCharcoal: '#191b20',
+        onyx: '#16181C',
+        stoneGray: '#757575',
+        nightSky: '#1C1E24',
+        frostWhite: '#f2f2f2',
+        cloudGray: '#E0E0E3',
+        discordPurple: '#6A5ACD',
+        githubDark: '#323439',
+        googleRed: '#DC2626',
         'modal-translucent': 'rgb(28, 30, 36, 0.70)'
       },
       fontFamily: {

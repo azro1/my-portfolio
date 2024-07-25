@@ -104,7 +104,7 @@ const EmailForm = ({ user, profile, profileError }) => {
                     <span className="inline-block text-accentRed">Email</span>
                     <span className="text-accentRed cursor-pointer" onClick={handleOpenForm}>Edit</span>
                 </div>
-                <p className="whitespace-normal break-words">{email}</p>
+                <p className="frostWhitespace-normal break-words">{email}</p>
             </div>
 
             {showForm && (

@@ -89,7 +89,7 @@ const DobForm = ({ user, profile }) => {
                         {dob ? 'Edit' : 'Add'}
                     </span> 
                 </div>
-                <p className="whitespace-normal break-words">{dob}</p>
+                <p className="frostWhitespace-normal break-words">{dob}</p>
             </div>
 
             {showForm && (

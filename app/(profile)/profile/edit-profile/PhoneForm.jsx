@@ -94,7 +94,7 @@ const PhoneForm = ({ user, profile }) => {
                         {phone ? 'Edit' : 'Add'}
                     </span>
                 </div>
-                <p className="whitespace-normal break-words">{phone}</p>
+                <p className="frostWhitespace-normal break-words">{phone}</p>
             </div>
   
             {showForm && (

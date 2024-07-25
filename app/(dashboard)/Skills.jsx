@@ -221,35 +221,35 @@ const Skills = () => {
             Technical Skills
           </h2>
 
-            <div className='ts-inner-wrapper text-secondary w-4/5 sm:w-3/5 md:w-3/4 lg:w-3/5 mx-auto flex flex-col gap-5'>
+            <div className='ts-inner-wrapper text-stoneGray w-4/5 sm:w-3/5 md:w-3/4 lg:w-3/5 mx-auto flex flex-col gap-5'>
 
               <div className='relative'>
                 <p>Hmtl</p>
                 <div className='progress-bar shadow-inner mt-2 p-0.312'>
                   <div></div>
                 </div>
-                <p className='absolute right-0 top-0 text-secondary' ref={htmlPercentId}>{htmlPercent}%</p>
+                <p className='absolute right-0 top-0 text-stoneGray' ref={htmlPercentId}>{htmlPercent}%</p>
               </div>
               <div className='relative'>
                 <p>Css</p>
                 <div className='progress-bar shadow-inner mt-2 p-0.312'>
                   <div></div>
                 </div>
-                <p className='absolute right-0 top-0 text-secondary' ref={cssPercentId}>{cssPercent}%</p>
+                <p className='absolute right-0 top-0 text-stoneGray' ref={cssPercentId}>{cssPercent}%</p>
               </div>
               <div className='relative'>
                 <p>JavaScript</p>
                 <div className='progress-bar shadow-inner mt-2 p-0.312'>
                   <div></div>
                 </div>
-                <p className='absolute right-0 top-0 text-secondary' ref={jsPercentId}>{jsPercent}%</p>
+                <p className='absolute right-0 top-0 text-stoneGray' ref={jsPercentId}>{jsPercent}%</p>
               </div>
               <div className='relative'>
                 <p>Php</p>
                 <div className='progress-bar shadow-inner mt-2 p-0.312'>
                   <div></div>
                 </div>
-                <p className='absolute right-0 top-0 text-secondary' ref={phpPercentId}>{phpPercent}%</p>
+                <p className='absolute right-0 top-0 text-stoneGray' ref={phpPercentId}>{phpPercent}%</p>
               </div>
               
           </div>
@@ -260,12 +260,12 @@ const Skills = () => {
             Professional Skills
           </h2>
 
-          <ul className='text-secondary text-center flex flex-wrap w-3/5 mx-auto gap-y-2.5'>
+          <ul className='text-stoneGray text-center flex flex-wrap w-3/5 mx-auto gap-y-2.5'>
             <li className='organisation flex flex-col items-center justify-center gap-1 px-2 flex-1'>
               <div className='progress-circle mb-1'>
                 <div className="outer">
                   <div className="inner">
-                     <div className="text-secondary" ref={communicationPercentId}>{communicationPercent}%</div>
+                     <div className="text-stoneGray" ref={communicationPercentId}>{communicationPercent}%</div>
                   </div>
                 </div>
                 
@@ -286,7 +286,7 @@ const Skills = () => {
               <div className='progress-circle mb-1'>
                 <div className="outer">
                   <div className="inner">
-                    <div className="text-secondary" ref={teamworkPercentId}>{teamworkPercent}%</div>
+                    <div className="text-stoneGray" ref={teamworkPercentId}>{teamworkPercent}%</div>
                   </div>
                 </div>
 
@@ -307,7 +307,7 @@ const Skills = () => {
               <div className='progress-circle mb-1'>
                 <div className="outer">
                   <div className="inner">
-                    <div className="text-secondary" ref={adaptabilityPercentId}>{adaptabilityPercent}%</div>
+                    <div className="text-stoneGray" ref={adaptabilityPercentId}>{adaptabilityPercent}%</div>
 
                   </div>
                 </div>
@@ -329,7 +329,7 @@ const Skills = () => {
               <div className='progress-circle mb-1'>
                 <div className="outer">
                   <div className="inner">
-                  <div className="text-secondary" ref={problemSolvingPercentId}>{problemSolvingPercent}%</div>
+                  <div className="text-stoneGray" ref={problemSolvingPercentId}>{problemSolvingPercent}%</div>
 
                   </div>
                 </div>
@@ -344,7 +344,7 @@ const Skills = () => {
                   <circle cx="80" cy="80" r="45" strokeLinecap="butt" />
                 </svg>
               </div>
-              <p className="whitespace-nowrap">Research-skills</p>
+              <p className="frostWhitespace-nowrap">Research-skills</p>
             </li>
           </ul>
           

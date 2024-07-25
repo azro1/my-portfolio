@@ -85,7 +85,7 @@ const AgeForm = ({ user, profile }) => {
                         {age ? 'Edit' : 'Add'}
                     </span> 
                 </div>
-                <p className="whitespace-normal break-words">{age}</p>
+                <p className="frostWhitespace-normal break-words">{age}</p>
             </div>
 
             {showForm && (

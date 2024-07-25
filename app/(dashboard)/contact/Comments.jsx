@@ -226,7 +226,7 @@ const Comments = ({ user }) => {
                                     <div>
                                         <div className='flex gap-2 items-center mb-2'>
                                             <h6 className='text-base text-accentRed font-b'>{comment.first_name ? comment.first_name : comment.full_name}</h6>
-                                            <span className='text-sm text-secondary'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
+                                            <span className='text-sm text-stoneGray'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
                                         </div>
                                         <p>{comment.text}</p>
                                     </div>

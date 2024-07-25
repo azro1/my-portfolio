@@ -11,9 +11,9 @@ const Navbar = ({ user }) => {
     <main>
       <nav className={`flex items-center h-9.5 relative ${user && user.user_metadata.avatar_url || user && user.user_metadata.first_name  ? 'mb-36 md:mb-0' : 'mb-0'}`}>
         <Link className="mr-auto" href='/'>
-          <Card values={'shadow-3xl pt-1.5 px-4 pb-0.5 rounded-xl bg-shade'}>
+          <Card values={'shadow-3xl pt-1.5 px-4 pb-0.5 rounded-xl bg-deepCharcoal'}>
             <h2 className='mainheading font-eb text-accentRed'>
-              Port<span className="text-secondary">folio</span>
+              Port<span className="text-stoneGray">folio</span>
             </h2>
           </Card>
         </Link>

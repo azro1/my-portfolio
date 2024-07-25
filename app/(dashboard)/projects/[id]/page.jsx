@@ -64,7 +64,7 @@ const Project = async ({ params }) => {
       <div className='grid gap-y-6 md:gap-y-10 md:grid-auto-rows md:grid-cols-2'>
 
         <Card values={'mt-6 p-3 rounded-md md:col-span-2 md:h-full'} >
-          <div className='bg-white p-3 h-full'>
+          <div className='bg-frostWhite p-3 h-full'>
               <img className='w-full h-96 object-cover object-left-top' src={project.image_url} alt={project.alt_desc} />
           </div>
         </Card>
@@ -77,23 +77,23 @@ const Project = async ({ params }) => {
 
         <div className='row-start-3 col-start-1 md:col-start-1 md:row-start-3'>
           <div className='pb-6 md:pb-8'>
-            <div className='text-secondary text-base leading-7'>
+            <div className='text-stoneGray text-base leading-7'>
               Start Date:{' '}
-              <span className='text-secondary text-base'>
+              <span className='text-stoneGray text-base'>
                 {project.start}
               </span>
             </div>
-            <div className='text-secondary text-base leading-7'>
+            <div className='text-stoneGray text-base leading-7'>
               End Date:{' '}
-              <span className='text-secondary text-base'>
+              <span className='text-stoneGray text-base'>
                 {project.end}
               </span>
             </div>
           </div>
           <div className='pb-6 md:pb-8'>
-            <div className='text-secondary text-base leading-7'>
+            <div className='text-stoneGray text-base leading-7'>
               Tech Stack:{' '}
-              <span className='text-secondary text-base'>
+              <span className='text-stoneGray text-base'>
                 {project.techstack.map((stack) => (
                    <span className='techstack ' key={stack}>
                     {stack}
@@ -101,15 +101,15 @@ const Project = async ({ params }) => {
                 ))}
               </span>
             </div>
-            <div className='text-secondary text-base leading-7'>
+            <div className='text-stoneGray text-base leading-7'>
               Key Contributors:{' '}
-              <span className='text-secondary text-base'>
+              <span className='text-stoneGray text-base'>
                 {project.contributions}
               </span>
             </div>
           </div>
           <div>
-            <div className='text-secondary text-base leading-7'>
+            <div className='text-stoneGray text-base leading-7'>
               Project Url:{' '}
               <a href={project.url} target='_blank'>
                 <span className='text-accentRed text-base'>

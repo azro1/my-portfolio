@@ -24,22 +24,22 @@ const Connect = () => {
         <div className='md:w-1/2'>
           <div className='grid grid-flow-col auto-cols-max place-items-center justify-end gap-3'>
             <div className='row-start-1 col-start-3'>
-              <FaGithub className="text-white" size={50} />
+              <FaGithub className="text-frostWhite" size={50} />
             </div>
             <div className='row-start-3'>
-              <FaInstagram className="text-white" size={50} />
+              <FaInstagram className="text-frostWhite" size={50} />
             </div>
             <div className='row-start-3 col-start-2 '>
-              <FaLinkedin className="text-white" size={50} />
+              <FaLinkedin className="text-frostWhite" size={50} />
             </div>
             <div className='row-start-3 col-start-3'>
-              <FaYoutubeSquare className="text-white" size={50} />
+              <FaYoutubeSquare className="text-frostWhite" size={50} />
             </div>
             <div className='row-start-2 col-start-38'>
-              <FaDiscord className="text-white" size={50} />
+              <FaDiscord className="text-frostWhite" size={50} />
             </div>
             <div className='row-start-2 col-start-2'>
-              <FaWhatsapp className="text-white" size={50} />
+              <FaWhatsapp className="text-frostWhite" size={50} />
             </div>
           </div>
         </div>

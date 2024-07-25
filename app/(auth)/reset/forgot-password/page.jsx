@@ -67,7 +67,7 @@ const UpdatePassword = () => {
           <form className="w-full max-w-sm mx-auto md:col-span-2" onSubmit={handleSubmit}>
             <h2 className='pb-2 text-3xl font-eb text-accentRed'>Reset Password</h2>
             <label>
-              <span className='mt-4 mb-2 text-base text-secondary block'>
+              <span className='mt-4 mb-2 text-base text-stoneGray block'>
                 Password
               </span>
               <input
@@ -78,7 +78,7 @@ const UpdatePassword = () => {
               />
             </label>
             <label>
-              <span className='mt-4 mb-2 text-base text-secondary block'>
+              <span className='mt-4 mb-2 text-base text-stoneGray block'>
                 Confirm Password
               </span>
               <input
