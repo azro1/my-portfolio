@@ -77,15 +77,14 @@ const BioForm = ({ user, profile }) => {
 
     return (
         <div>
-
-            <div className="max-w-xs">
+            <div>
                 <div className="flex items-center justify-between pb-1">
-                    <span className="inline-block text-accentRed">Bio</span>
-                    <span className="text-accentRed cursor-pointer" onClick={handleOpenForm}>
+                    <span className="inline-block text-base text-stoneGray">Bio</span>
+                    <span className={`${bio ? 'text-red-600' : 'text-stoneGray'} text-base cursor-pointer`} onClick={handleOpenForm}>
                         {bio ? 'Edit' : 'Add'}
                     </span> 
                 </div>
-                <p className="frostWhitespace-normal break-words">{bio}</p>
+                <p className="text-nightSky frostWhitespace-normal break-words">{bio}</p>
             </div>
 
             {showForm && (

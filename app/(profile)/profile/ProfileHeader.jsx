@@ -81,31 +81,29 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
       <>
          {user && user.app_metadata.provider !== "email" ? (
 
-            <div className='flex-1 p-4 bg-gray-800'>
-               <h2 className='subheading font-b text-accentRed'>{title}</h2>
-               <p className='mt-2 text-base leading-7'>{subheading}</p>
+            <div className='flex-1 p-4 pt-6 bg-cloudGray'>
+               <h2 className='subheading font-b'>{title}</h2>
+               <p className='mt-4 leading-normal'>{subheading}</p>
 
                {showAvatar && (
-                  <div className='mt-12 bg-red-900'>
-                     {loading ? (
-                        <div className='overflow-hidden w-20 h-20'>
-                           <img src="../images/loading/loader.gif" alt="a loading gif" />
-                        </div>
-                     ) : (
-                        <div>
-                           {avatar_url ? (
-                              <div className="overflow-hidden rounded-full w-20 h-20">
-                                 <img className="inline-block w-full h-full object-cover" src={avatar_url} alt="a user avatar" />
-                              </div>
-                           ) : (
-                              <div className="overflow-hidden rounded-full min-w-max h-auto">
-                                 <FaUserCircle size={80} color="gray" />
-                              </div>
-                           )}
-                           <p className='font-b text-accentRed pl-5 mt-1'>{first_name}</p>
-                           <p className='text-base text-stoneGray break-words'>{bio ? `"${bio}"` : `"Add your Bio"`}</p>
-                        </div>
-                     )}
+                  <div className='mt-6'>
+                     <div className='flex items-center gap-1 bg-frostWhite p-4'>
+                        {avatar_url ? (
+                           <div className="border-2 border-cloudGray rounded-full overflow-hidden p-1 w-fit">
+                              <img className="inline-block w-20 h-20 object-cover" src={avatar_url} alt="a user avatar" />
+                           </div>
+                        )  : (
+                           <div className="rounded-full border-2 border-cloudGray overflow-hidden p-1 w-fit ">
+                              <FaUserCircle size={80} color="gray" />
+                           </div>
+                        )} 
+                        {!loading && (
+                           <div className='pl-2'>
+                              <p className='text-nightSky font-b'>{first_name}</p>
+                              <p className='break-words'>{bio ? `${bio}` : `"Add your Bio"`}</p>
+                           </div>
+                        )}
+                     </div>
                   </div>
                )}
             </div>
@@ -118,23 +116,22 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
 
                {showAvatar && (
                   <div className='mt-6'>
-                     
-
-                           <div className='flex items-center gap-1 bg-frostWhite p-4'>
-                              <div className='border-2 border-cloudGray rounded-full p-1 w-fit'>
-                                 <ProfileAvatar
-                                    url={avatar_url}
-                                    size={'w-20 h-20'}
-                                    lgSize={'w-20 h-20'}
-                                    phSize={80}
-                                 />
-                              </div>
-                              {!loading && <div className='pl-2'>
-                                 <p className='text-nightSky font-b'>{first_name}</p>
-                                 <p className='break-words'>{bio ? `${bio}` : `"Add your Bio"`}</p>
-                              </div>}
+                     <div className='flex items-center gap-1 bg-frostWhite p-4'>
+                        <div className='border-2 border-cloudGray rounded-full p-1 w-fit'>
+                           <ProfileAvatar
+                              url={avatar_url}
+                              size={'w-20 h-20'}
+                              lgSize={'w-20 h-20'}
+                              phSize={80}
+                           />
+                        </div>
+                        {!loading && (
+                           <div className='pl-2'>
+                              <p className='text-nightSky font-b'>{first_name}</p>
+                              <p className='break-words'>{bio ? `${bio}` : `"Add your Bio"`}</p>
                            </div>
-                  
+                        )}
+                     </div>
                   </div>
                )}
             </div>

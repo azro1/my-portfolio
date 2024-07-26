@@ -1,14 +1,20 @@
 "use client";
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 // icons
 import { FaUserCircle } from "react-icons/fa";
 import { HiMiniIdentification } from "react-icons/hi2";
 
 const LayoutNav = () => {
-    const [activeLink, setActiveLink] = useState('/profile');
+    const [activeLink, setActiveLink] = useState('');
+    const pathName = usePathname()
+
+    useEffect(() => {
+        setActiveLink(pathName)
+    }, [pathName])
 
     const handleActiveLink = (href) => {
         setActiveLink(href);

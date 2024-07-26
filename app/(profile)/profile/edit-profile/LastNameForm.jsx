@@ -87,17 +87,18 @@ const LastNameForm = ({ user, profile }) => {
 
     return (
         <div>
-
-            <div className="max-w-xs">
+            <div className='my-4'>
                 <div className="flex items-center justify-between pb-1">
-                    <span className="inline-block text-accentRed">Last Name</span>
-                    <span className="text-accentRed cursor-pointer" onClick={handleOpenForm}>
+                    <span className="inline-block text-stoneGray">Last Name</span>
+                    <span className={`${last_name ? 'text-red-600' : 'text-stoneGray'} cursor-pointer`} onClick={handleOpenForm}>
                         {last_name ? 'Edit' : 'Add'}
                     </span>
                 </div>
-                <p className="frostWhitespace-normal break-words">{last_name}</p>
+                <p className="text-nightSky frostWhitespace-normal break-words">{last_name}</p>
             </div>
-  
+
+            <div className='bg-cloudGray h-px'></div>
+
             {showForm && (
                 <Modal>
                     <form>

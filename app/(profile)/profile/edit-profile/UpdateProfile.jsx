@@ -102,51 +102,56 @@ const UpdateProfile = () => {
 
 
     return (
-        <div className='flex flex-col gap-12 relative'>
+        <div className='flex flex-col gap-4'>
           
-          
-            <AvatarUploader
-                user={user}
-                updateProfile={updateProfile}
-            />
+            <div className='mt-6 bg-frostWhite p-4'>
+                <AvatarUploader
+                    user={user}
+                    updateProfile={updateProfile}
+                />
+            </div>
+ 
+            <div className='bg-frostWhite p-4'>
+                <BioForm
+                    user={user}
+                    profile={profile}
+                />
+            </div>
 
-            <BioForm
-                user={user}
-                profile={profile}
-            />
+            <div className='flex flex-col bg-frostWhite p-4'>
+                <FirstNameForm
+                    user={user}
+                    profile={profile}
+                />
 
-            <FirstNameForm
-                user={user}
-                profile={profile}
-            />
+                <LastNameForm
+                    user={user}
+                    profile={profile}
+                />
 
-            <LastNameForm
-                user={user}
-                profile={profile}
-            />
+                <AgeForm
+                    user={user}
+                    profile={profile}
+                />
 
-            <AgeForm
-                user={user}
-                profile={profile}
-            />
+                <DobForm
+                    user={user}
+                    profile={profile}
+                />
 
-            <DobForm
-                user={user}
-                profile={profile}
-            />
+                <EmailForm 
+                    user={user}
+                    profile={profile}
+                    profileError={profileError}
+                />
 
-            <EmailForm 
-                user={user}
-                profile={profile}
-                profileError={profileError}
-            />
+                <PhoneForm
+                    user={user}
+                    profile={profile}
+                />
+            </div>
 
-            <PhoneForm
-                user={user}
-                profile={profile}
-            />
-
-            <PasswordForm />
+            {/* <PasswordForm /> */}
 
 
         </div>

@@ -168,16 +168,17 @@ footer span {
 
 
 .error {
-  @apply text-red-900 font-b leading-6 bg-red-200 border-red-900 border-2 p-2;
+  @apply text-red-900 font-b leading-7 bg-red-200 border-red-900 border-2 p-2;
 }
 
 .modal-form-error {
-  @apply text-red-600 leading-6;
+  @apply text-red-600 leading-7;
 }
 
 .success {
-  @apply text-green-900 font-b leading-6 bg-green-200 border-green-900 border-2 p-2;
+  @apply text-green-900 font-b leading-7 bg-green-200 border-green-900 border-2 p-2;
 }
+
 
 
 
