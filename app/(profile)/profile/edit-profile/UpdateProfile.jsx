@@ -17,7 +17,6 @@ import LastNameForm from './LastNameForm';
 import PhoneForm from './PhoneForm';
 import DobForm from './DobForm';
 import AgeForm from './AgeForm';
-import PasswordForm from './PasswordForm';
 
 
 
@@ -102,7 +101,7 @@ const UpdateProfile = () => {
 
 
     return (
-        <div className='flex flex-col gap-4'>
+        <div className='flex flex-col gap-6'>
           
             <div className='mt-6 bg-frostWhite p-4'>
                 <AvatarUploader
@@ -150,9 +149,6 @@ const UpdateProfile = () => {
                     profile={profile}
                 />
             </div>
-
-            {/* <PasswordForm /> */}
-
 
         </div>
     )

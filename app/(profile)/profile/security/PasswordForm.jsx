@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"
 
 
 // components
-import Modal from "./Modal";
+import Modal from "../edit-profile/Modal";
 
 const PasswordForm = () => {
     const [email, setEmail] = useState('')
@@ -71,14 +71,14 @@ const PasswordForm = () => {
     return (
         <div>
 
-            <div className="max-w-xs">
+            <div>
                 <div className="flex items-center justify-between pb-1">
                     <span className="inline-block text-accentRed">Password</span>
                     <span className="text-accentRed cursor-pointer" onClick={handleOpenForm}>
                         Edit
                     </span> 
                 </div>
-                <p className="text-stoneGray">*********</p>
+                <p className="text-stoneGray">**********************</p>
             </div>
 
             {showForm && (

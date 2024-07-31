@@ -84,7 +84,7 @@ const BioForm = ({ user, profile }) => {
                         {bio ? 'Edit' : 'Add'}
                     </span> 
                 </div>
-                <p className="text-nightSky frostWhitespace-normal break-words">{bio}</p>
+                <p className="text-nightSky frost whitespace-normal break-words">{bio}</p>
             </div>
 
             {showForm && (

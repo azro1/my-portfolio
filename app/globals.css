@@ -69,13 +69,13 @@ img {
 
 
 /* profile layout navs */
-.layout-nav.md a.active {
+.layout-nav a.active {
   @apply shadow-outer rounded-lg text-frostWhite;
 }
 
-.layout-nav.sm a.active {
+/* .layout-nav.sm a.active {
   @apply text-frostWhite bg-softCharcoal;
-}
+} */
 
 
 
@@ -168,15 +168,15 @@ footer span {
 
 
 .error {
-  @apply text-red-900 font-b leading-7 bg-red-200 border-red-900 border-2 p-2;
+  @apply text-red-900 font-b bg-red-200 border-red-900 border-2 p-2;
 }
 
 .modal-form-error {
-  @apply text-red-600 leading-7;
+  @apply text-red-600;
 }
 
 .success {
-  @apply text-green-900 font-b leading-7 bg-green-200 border-green-900 border-2 p-2;
+  @apply text-green-900 font-b bg-green-200 border-green-900 border-2 p-2;
 }
 
 
