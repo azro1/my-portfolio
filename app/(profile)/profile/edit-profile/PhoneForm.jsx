@@ -39,6 +39,15 @@ const PhoneForm = ({ user, profile }) => {
     }, [user, profile, profileError])
 
 
+    // Phone number validation function
+    const isValidPhoneNumber = (phoneNumber) => {
+        // Check that the phone number contains only valid characters and at least one digit
+        const phoneRegex = /^\+?[0-9\(\)\-\s]{7,15}$/;
+        const hasDigit = /[0-9]/.test(phoneNumber);
+        return phoneRegex.test(phoneNumber) && hasDigit;
+    }
+
+
     // update last name
     const handlePhoneUpdate = async () => {
         setSaving(true)
@@ -49,6 +58,13 @@ const PhoneForm = ({ user, profile }) => {
             setTimeout(() => setFormError(null), 2000)
             return
         }
+
+        if (!isValidPhoneNumber(draftPhone)) {
+            setSaving(false)
+            setFormError('Invalid phone number. Please enter a number between 7 and 15 digits.')
+            setTimeout(() => setFormError(null), 2000)
+            return
+          }
 
         // update user metadata
         await updateMetadata({ phone: draftPhone })
@@ -80,21 +96,24 @@ const PhoneForm = ({ user, profile }) => {
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
             e.preventDefault()
+
+        // Allow only numeric keys, backspace, and arrow keys
+        } else if (!/[0-9+\(\)\-\s]/.test(e.key) && !['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete'].includes(e.key)) {
+          e.preventDefault();
         }
     }
 
 
     return (
         <div>
-
-            <div className="max-w-xs">
+            <div className='my-4'>
                 <div className="flex items-center justify-between pb-1">
-                    <span className="inline-block text-accentRed">Phone Number</span>
-                    <span className="text-accentRed cursor-pointer" onClick={handleOpenForm}>
+                    <span className="inline-block text-stoneGray">Phone Number</span>
+                    <span className={`${phone ? 'text-red-600' : 'text-stoneGray'} cursor-pointer`} onClick={handleOpenForm}>
                         {phone ? 'Edit' : 'Add'}
                     </span>
                 </div>
-                <p className="frostWhitespace-normal break-words">{phone}</p>
+                <p className="text-nightSky frostWhitespace-normal break-words">{phone}</p>
             </div>
   
             {showForm && (
@@ -111,7 +130,7 @@ const PhoneForm = ({ user, profile }) => {
                                 placeholder='Phone'
                                 spellCheck='false'
                                 autoFocus='true'
-                                pattern='[0-9]{7,15}'
+                                pattern='\+?[0-9\(\)\-\s]{7,15}'
                                 maxLength="15"
                                 onChange={(e) => setDraftPhone(e.target.value)}
                                 onKeyDown={handleKeyDown}

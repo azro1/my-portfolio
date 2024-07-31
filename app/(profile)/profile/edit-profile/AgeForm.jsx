@@ -77,16 +77,17 @@ const AgeForm = ({ user, profile }) => {
 
     return (
         <div>
-
-            <div className="max-w-xs">
+            <div className='my-4'>
                 <div className="flex items-center justify-between pb-1">
-                    <span className="inline-block text-accentRed">Age</span>
-                    <span className="text-accentRed cursor-pointer" onClick={handleOpenForm}>
+                    <span className="inline-block text-stoneGray">Age</span>
+                    <span className={`${age ? 'text-red-600' : 'text-stoneGray'} cursor-pointer`} onClick={handleOpenForm}>
                         {age ? 'Edit' : 'Add'}
                     </span> 
                 </div>
-                <p className="frostWhitespace-normal break-words">{age}</p>
+                <p className="text-nightSky frostWhitespace-normal break-words">{age}</p>
             </div>
+
+            <div className='bg-cloudGray h-px'></div>
 
             {showForm && (
                 <Modal >

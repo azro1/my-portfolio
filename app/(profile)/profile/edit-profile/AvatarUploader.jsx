@@ -92,36 +92,39 @@ const AvatarUploader = ({ user, updateProfile }) => {
 
 
     return (
-        <div className='w-56'>
-            <div className='mb-4 h-14 w-14 relative'>
-                {imgSrc ? (
-                    <Image
-                        src={imgSrc}
-                        alt="A user's selected image"
-                        fill={true}
-                        quality={100}
-                        sizes="100%"
+        <div>
+            <div>
+                <p className='leading-normal'>Personalize your account by uploading your own avatar.</p>
+                <div className='mb-2 mt-4 h-14 w-14 relative '>
+                    {imgSrc ? (
+                        <Image
+                            src={imgSrc}
+                            alt="A user's selected image"
+                            fill={true}
+                            quality={100}
+                            sizes="100%"
+                        />
+                    ) : (
+                        <FaUserCircle size={56} color="gray" />
+                    )}
+                </div>
+                <form ref={formRef}>
+                    <input
+                        className='text-stoneGray file:cursor-pointer file:mr-3'
+                        type='file'
+                        id='single'
+                        accept='image/*'
+                        onChange={handleFileInputChange}
+                        disabled={uploading || (user && user.user_metadata.full_name)}
                     />
-                ) : (
-                    <FaUserCircle size={56} color="gray" />
-                )}
-            </div>
-            <form ref={formRef}>
-                <input
-                    className='text-stoneGray file:cursor-pointer file:mr-3'
-                    type='file'
-                    id='single'
-                    accept='image/*'
-                    onChange={handleFileInputChange}
+                </form>
+                <button className={`small-btn bg-nightSky block ${uploadError ? 'mt-2' : 'mt-3'}`}
+                    onClick={uploadAvatar}
                     disabled={uploading || (user && user.user_metadata.full_name)}
-                />
-            </form>
-            <button className={`small-btn bg-accentRed block ${uploadError ? 'mt-2' : 'mt-3'}`}
-                onClick={uploadAvatar}
-                disabled={uploading || (user && user.user_metadata.full_name)}
-            >
-                {uploading ? 'Uploading...' : 'Upload'}
-            </button>
+                >
+                    {uploading ? 'Uploading...' : 'Upload'}
+                </button>
+            </div>
 
             {(uploadError || fileInputError) && (
                 <Modal>
