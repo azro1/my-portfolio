@@ -27,6 +27,10 @@ const Signup = () => {
     return emailRegex.test(value);
   };
 
+  // regex for password validation
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/;
+
+
   const handleCheckbox = (e) => {
     setIsChecked(e.target.checked)
   }
@@ -60,11 +64,17 @@ const Signup = () => {
         setIsLoading(false)
         return
 
-    } else if (password.length < 6) {
-        setError('Password should be at least 6 characters');
+    } else if (password.length < 8) {
+        setError('Password should be at least 8 characters');
         setTimeout(() => setError(null), 2000)
         setIsLoading(false)
-        return
+        return 
+
+    } else if (!regex.test(password)) {
+        setError('Password is invalid. Please check requirements')
+        setTimeout(() => setError(null), 2000)
+        setIsLoading(false)
+        return 
 
     } else if (!isChecked) {
         setError('Please confirm you have agreed to the Privacy Policy and Terms of Service');
@@ -159,28 +169,20 @@ const Signup = () => {
           </div>
         </div>
 
-        <div className="grid row-start-1 max-w-sm gap-4  justify-self-center md:col-start-2 md:row-start-1 md:w-full md:h-64 ">
-          <h2 className="subheading font-rubik font-eb text-stoneGray leading-normal mb-1 md:mb-0">
-            Unlock <span className='text-accentRed'>CodeDynamic's</span> Creative
-            Vault!
-          </h2>
-          <span className="block text-stoneGray text-sm font-os text-justify leading-6">
-            Uncover the secrets behind my web development and graphic design
-            projects by signing up for exclusive content:
-          </span>
-          <span className="block text-stoneGray text-sm font-os text-justify leading-6">
-            🚀 Creative Process Unveiled: Get an inside look at the making of
-            each project, from concept to completion.
-          </span>
-          <span className="block text-stoneGray text-sm font-os text-justify leading-6">
-            📬 Be the First to Know: Receive notifications on new projects and
-            stay in the loop with the latest news and updates.
-          </span>
-          <span className="block text-stoneGray text-sm font-os text-justify leading-6">
-            Ready to dive in? Join now to elevate your understanding of design
-            and development with CodeDynamics!
-          </span>
-        </div>
+        
+        <div className="row-start-1 max-w-sm md:col-start-2 md:row-start-1 md:w-full text-stoneGray">
+            <div className="md:mt-32">
+              <p className="text-accentRed">Your password must:</p>
+              <ul className="list-disc pl-5 mt-2">
+                <li>Be at least 8 characters long</li>
+                <li>Use at least one uppercase and one lowercase letter (a-z and A-Z)</li>
+                <li>Use at least one number (0-9)</li>
+                <li>Use at least one special character (! £ $ % & * @)</li>
+                <li>Not be a commonly used password</li>
+              </ul>
+            </div>
+
+          </div>
       </div>
     );
   }

@@ -62,8 +62,9 @@ const ConfirmPasswordForEmailUpdate = () => {
         }, 3000)
       }
 
-
+      // retrieve and remove email from localStorage
       const newEmail = localStorage.getItem('newEmail')
+      localStorage.removeItem('newEmail')
 
       let tableData = {
         email: newEmail
@@ -99,9 +100,9 @@ const ConfirmPasswordForEmailUpdate = () => {
           {isLoading ? 'Processing...' : 'Submit'}
         </button>
         <div className="mt-5 h-5 text-center">
-            {successMsg && <div className='success mt-2'>{successMsg}</div>}
-            {tableError && <div className='error mt-2'>{tableError}</div>}
-            {error && <div className='error mt-2'>{error}</div>}
+          {successMsg && <div className='success mt-2'>{successMsg}</div>}
+          {tableError && <div className='error mt-2'>{tableError}</div>}
+          {error && <div className='error mt-2'>{error}</div>}
         </div>
       </form>
     </div>

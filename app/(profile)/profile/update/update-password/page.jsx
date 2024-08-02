@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link";
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
@@ -16,6 +16,8 @@ const UpdatePassword = () => {
   const [isFormLoading, setIsFormLoading] = useState(false)
   const [formError, setFormError] = useState(null)
   const [successMsg, setSuccessMsg] = useState(null)
+  const [redirect, setRedirect] = useState(false);
+
 
 
   // custom hook to fetch user
@@ -82,9 +84,7 @@ const UpdatePassword = () => {
         throw new Error('Failed to update password. Please try again');
       } else {
         setSuccessMsg('Checking passwords...')
-        setTimeout(() => {
-          router.push('/profile/confirmation')
-        }, 2000)
+        setRedirect(true)
       }
 
 
@@ -99,7 +99,15 @@ const UpdatePassword = () => {
     }
 
     
-  
+
+
+    useEffect(() => {
+      if (redirect) {
+        router.push('/profile/confirmation')
+      }
+    }, [redirect, router])
+
+
 
 
 
