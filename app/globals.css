@@ -168,7 +168,7 @@ footer span {
 
 
 .error {
-  @apply text-red-900 font-b bg-red-200 border-red-900 border-2 p-2;
+  @apply text-red-900 font-b bg-red-200  p-2;
 }
 
 .modal-form-error {
@@ -176,7 +176,7 @@ footer span {
 }
 
 .success {
-  @apply text-green-900 font-b bg-green-200 border-green-900 border-2 p-2;
+  @apply text-green-900 font-b bg-green-200 p-2;
 }
 
 

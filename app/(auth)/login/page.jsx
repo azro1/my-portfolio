@@ -27,42 +27,46 @@ const Login = () => {
     if (!email) {
       setError('Please provide your email');
       setTimeout(() => setError(null), 2000)
-      return;
+      return
+
     } else if (!isValidEmail(email)) {
       setError('Unable to validate email address: invalid format');
       setTimeout(() => setError(null), 2000)
       setIsLoading(false)
-      return;
-    } else if (!password) {
-      setError('Login requires a valid password');
-      setTimeout(() => setError(null), 2000)
-      return;
+      return
     }
 
     setIsLoading(true)
 
+
+    // store email temporarily in local storage
+    localStorage.setItem('email', email)
+
+
     const supabase = createClientComponentClient()
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password
+    const { data, error } = await supabase.auth.signInWithOtp({
+      email
     })
+    
 
     if (error) {
       setError(error.message)
       setTimeout(() => setError(null), 2000)
-      setIsLoading(false)
-    }
+      setIsLoading(false);
+    } 
 
     if (!error) {
-      router.push('/')
-      router.refresh()
+      router.push('/verify-login-otp')
     }
   }
 
   return (
-    <div className="flex flex-col items-center justify-center gap-12 mb-4.5 md:flex-row md:h-auth-page-height md:mb-0">
-      <form className="w-full justify-self-center sm:max-w-xs md:justify-self-end" onSubmit={handleSubmit}>
+    <div className='flex flex-col items-center gap-12 md:flex-row md:justify-evenly md:gap-0 mb-4.5 md:flex-row md:h-auth-page-height'>
+
+      <form className="w-full max-w-xs" onSubmit={handleSubmit}>
         <h2 className='text-3xl mb-6 font-eb text-accentRed'>Login</h2>
+        <p className='mb-3'>Enter your email to recieve a OTP (One-Time Passcode) for Login.</p>
+
         <label>
           <span className='max-w-min mb-2 text-base text-stoneGray block'>
             Email
@@ -75,24 +79,9 @@ const Login = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
         </label>
-        <label>
-          <span className='max-w-min mt-4 mb-2 text-base text-stoneGray block'>
-            Password
-          </span>
-          <input
-            className='w-full p-2.5 rounded-md bg-nightSky text-stoneGray shadow-inner border-2 border-stoneGray'
-            type='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
-        <div className="mt-4 flex justify-between items-start">
-          <button className='btn bg-accentRed'>{isLoading ? 'Logging in...' : 'Login'}</button>
-          <Link className="text-accentRed text-base -mt-1.5" href="/verify-email-for-forgot-password">Forgot Password?</Link>
-        </div>
-        <div className="mt-5 h-5 text-center">
-            {error && <div className="error">{error}</div>}
-        </div>
+
+        <button className='mt-4 btn bg-accentRed'>{isLoading ? 'Logging in...' : 'Login'}</button>
+        {error && <div className="mt-4 text-center error">{error}</div>}
       </form>
 
       <div className='flex flex-col items-center md:col-start-2'>
