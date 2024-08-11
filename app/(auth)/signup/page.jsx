@@ -100,9 +100,9 @@ const Signup = () => {
             
 
             if (error) {
+              setIsLoading(false);
               setError(error.message)
               setTimeout(() => setError(null), 2000)
-              setIsLoading(false);
             } 
 
             if (!error) {

@@ -16,12 +16,12 @@ export async function POST(request) {
     .eq('email', email)
     
 
-   if (error) {
-     console.log('sb server error:', error)
-     return NextResponse.json({ exists: false }, {
-        status: 500
-     })
-   }
+  if (error) {
+    console.log('sb server error:', error)
+    return NextResponse.json({ exists: false }, {
+      status: 500
+    })
+  }
 
 
   // Check if data array has any rows

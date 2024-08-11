@@ -10,7 +10,6 @@ import SocialButtons from "../SocialButtons";
 
 const Login = () => {
   const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const router = useRouter()
@@ -39,25 +38,59 @@ const Login = () => {
     setIsLoading(true)
 
 
-    // store email temporarily in local storage
-    localStorage.setItem('email', email)
 
 
-    const supabase = createClientComponentClient()
-    const { data, error } = await supabase.auth.signInWithOtp({
-      email
-    })
-    
+    // send email to server endpoint to check if email already exists within profiles table
+    try {
+      const res = await fetch(`${location.origin}/api/auth/email-exists`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email
+        })
+      })
 
-    if (error) {
-      setError(error.message)
-      setTimeout(() => setError(null), 2000)
-      setIsLoading(false);
-    } 
+      const userEmail = await res.json()
+      console.log('Server response:', userEmail);
 
-    if (!error) {
-      router.push('/verify-login-otp')
+
+      if (!userEmail.exists) {
+        setIsLoading(false)
+        setError('There is no account associated with that email. Please signup.')
+        return
+      } else {
+          console.log('the email exists!')
+  
+          // store email temporarily in local storage
+          localStorage.setItem('email', email)
+
+          
+          const supabase = createClientComponentClient()
+          const { data, error } = await supabase.auth.signInWithOtp({
+            email
+          })
+          
+
+          if (error) {
+            setIsLoading(false);
+            setError(error.message)
+            setTimeout(() => setError(null), 2000)
+          } 
+
+          if (!error) {
+            router.push('/verify-login-otp')
+          }
+
+      }
+
+    } catch (error) {
+        console.log(error)
     }
+
+
+
   }
 
   return (
