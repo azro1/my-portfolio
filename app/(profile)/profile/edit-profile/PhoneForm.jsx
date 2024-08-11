@@ -137,8 +137,8 @@ const PhoneForm = ({ user, profile }) => {
                             />
                         </label>
                     </form>
-                    <button className='btn bg-accentRed mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                    <button className='btn bg-accentRed mt-3' onClick={handlePhoneUpdate}>
+                    <button className='btn bg-deepOlive mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
+                    <button className='btn bg-deepOlive mt-3' onClick={handlePhoneUpdate}>
                         {saving ? 'Saving...' : 'Save'}
                     </button>
                     {(profileError || formError) && (

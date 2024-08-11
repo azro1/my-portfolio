@@ -83,7 +83,7 @@ const ConfirmPasswordForEmailUpdate = () => {
     <div className="flex flex-col items-center justify-center gap-8 min-h-custom-md max-w-lg mx-auto">
       <p className='leading-7'>Your email update is almost complete. Please enter your password to confirm the change.</p>
       <form className="w-full max-w-sm mr-auto md:col-span-2" onSubmit={handleSubmit}>
-        <h2 className='pb-2 text-3xl font-eb text-accentRed'>Enter Your Password</h2>
+        <h2 className='pb-2 text-3xl font-eb text-deepOlive'>Enter Your Password</h2>
         <label>
           <span className='mt-4 mb-2 text-base text-stoneGray block'>
             Password
@@ -96,7 +96,7 @@ const ConfirmPasswordForEmailUpdate = () => {
           />
         </label>
 
-        <button className='btn block mt-4 bg-accentRed'>
+        <button className='btn block mt-4 bg-deepOlive'>
           {isLoading ? 'Processing...' : 'Submit'}
         </button>
         <div className="mt-5 h-5 text-center">

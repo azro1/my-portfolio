@@ -137,7 +137,7 @@ const EnquiriesForm = ({ user }) => {
         <form onSubmit={handleSubmit}
             className='w-full row-start-2 col-start-1 col-span-2 sm:max-w-xs  md:col-span-1 md:row-start-2 md:col-start-2 md:justify-self-end'
         >
-            <h3 className='mb-4 text-2xl font-b text-accentRed'>
+            <h3 className='mb-4 text-2xl font-b text-deepOlive'>
                 Enquiries
             </h3>
             <label>
@@ -196,7 +196,7 @@ const EnquiriesForm = ({ user }) => {
 
         
     
-            <button className='btn block mt-2 bg-accentRed'>{isLoading ? 'Sending...' : 'Send'}</button>
+            <button className='btn block mt-2 bg-deepOlive'>{isLoading ? 'Sending...' : 'Send'}</button>
             <div className="mt-5 h-5 text-center">
                 {formError && <p className='error'>{formError}</p>}
                 {successMsg && <p className='success'>{successMsg}</p>}

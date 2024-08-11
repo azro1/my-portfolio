@@ -61,10 +61,10 @@ const Login = () => {
   }
 
   return (
-    <div className='flex flex-col items-center gap-12 md:flex-row md:justify-evenly md:gap-0 mb-4.5 md:flex-row md:h-auth-page-height'>
+    <div className='flex flex-col items-center gap-12 mb-4.5 md:justify-evenly md:gap-0 md:flex-row md:h-auth-page-height'>
 
       <form className="w-full max-w-xs" onSubmit={handleSubmit}>
-        <h2 className='text-3xl mb-6 font-eb text-accentRed'>Login</h2>
+        <h2 className='text-3xl mb-6 font-eb text-deepOlive'>Login</h2>
         <p className='mb-3'>Enter your email to recieve a OTP (One-Time Passcode) for Login.</p>
 
         <label>
@@ -72,7 +72,7 @@ const Login = () => {
             Email
           </span>
           <input
-            className='w-full p-2.5 rounded-md bg-nightSky text-stoneGray shadow-inner border-2 border-stoneGray'
+            className={`w-full p-2.5 rounded-md bg-nightSky text-stoneGray shadow-inner border-2 ${error ? 'border-red-900' : 'border-stoneGray'} `}
             type='text'
             spellCheck='false'
             value={email}
@@ -80,8 +80,10 @@ const Login = () => {
           />
         </label>
 
-        <button className='mt-4 btn bg-accentRed'>{isLoading ? 'Logging in...' : 'Login'}</button>
-        {error && <div className="mt-4 text-center error">{error}</div>}
+        <button className='mt-4 btn bg-deepOlive'>{isLoading ? 'Logging in...' : 'Login'}</button>
+        <div className="mt-4 h-5 text-center">
+          {error && <div className="error">{error}</div>}
+        </div>
       </form>
 
       <div className='flex flex-col items-center md:col-start-2'>
@@ -89,7 +91,7 @@ const Login = () => {
         <SocialButtons text={"Login"} />
         <div className="mt-7">
           <p className='mt-8 inline pr-2'>Don't have an account?</p>
-          <Link className='text-accentRed text-base' href='/signup'>Sign up</Link>
+          <Link className='text-deepOlive text-base' href='/signup'>Sign up</Link>
         </div>
       </div>
     </div>

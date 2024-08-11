@@ -69,14 +69,13 @@ img {
 
 
 /* profile layout navs */
-.layout-nav a.active {
-  @apply shadow-outer rounded-lg text-frostWhite;
+.layout-nav.md a.active {
+  @apply font-b text-nightSky;
 }
 
-/* .layout-nav.sm a.active {
-  @apply text-frostWhite bg-softCharcoal;
-} */
-
+.layout-nav.sm a.active {
+  @apply text-frostWhite;
+}
 
 
 
@@ -129,11 +128,11 @@ img {
 
 /* Footer styles */
 footer .newsletter h3 {
-  @apply subheading font-b text-accentRed;
+  @apply subheading font-b text-deepOlive;
 }
 
 footer h4 {
-  @apply font-b text-accentRed;
+  @apply font-b text-deepOlive;
 }
 
 footer p {
@@ -168,7 +167,7 @@ footer span {
 
 
 .error {
-  @apply text-red-900 font-b bg-red-200  p-2;
+  @apply text-red-900 bg-red-200  p-2;
 }
 
 .modal-form-error {
@@ -176,7 +175,7 @@ footer span {
 }
 
 .success {
-  @apply text-green-900 font-b bg-green-200 p-2;
+  @apply text-green-900 bg-green-200 p-2;
 }
 
 

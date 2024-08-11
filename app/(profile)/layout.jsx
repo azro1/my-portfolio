@@ -20,7 +20,7 @@ export default async function ProfileLayout({ children }) {
       <main className='mt-20 mb-4.5 md:mb-28'>
          <LayoutNav />
 
-        <div className='mt-20 bg-frostWhite sm:p-3'>
+        <div className='mt-4 bg-frostWhite sm:p-3'>
           {children}
         </div>
         

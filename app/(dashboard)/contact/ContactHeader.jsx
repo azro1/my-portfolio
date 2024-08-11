@@ -1,7 +1,7 @@
 const ContactHeader = () => {
     return (
         <>
-            <h2 className='subheading font-b mb-4 text-accentRed'>
+            <h2 className='subheading font-b mb-4 text-deepOlive'>
                 Get In Touch
             </h2>
             <p className='leading-7'>

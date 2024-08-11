@@ -217,7 +217,7 @@ const Skills = () => {
       <div className='flex flex-col place-items-center gap-y-6.25 md:flex-row md:items-stretch'>
 
         <div className='w-full flex-1'>
-          <h2 className='subheading font-b text-accentRed text-center pb-4'>
+          <h2 className='subheading font-b text-deepOlive text-center pb-4'>
             Technical Skills
           </h2>
 
@@ -256,7 +256,7 @@ const Skills = () => {
         </div>
 
         <div className='flex-1 flex flex-col justify-end'>
-          <h2 className='subheading font-b text-accentRed text-center pb-4'>
+          <h2 className='subheading font-b text-deepOlive text-center pb-4'>
             Professional Skills
           </h2>
 
