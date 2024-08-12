@@ -6,7 +6,6 @@ import { useUpdateMetadata } from "@/app/hooks/useUpdateMetadata";
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation";
-import Navbar from "../components/navbar/Navbar";
 
 
 
@@ -43,19 +42,27 @@ const CompleteRegistration = () => {
 
 
 
+
     // Phone number validation function
     const isValidPhoneNumber = (phoneNumber) => {
-        // Check that the phone number contains only valid characters and at least one digit
-        const phoneRegex = /^\+?[0-9\(\)\-\s]{7,15}$/;
-        const hasDigit = /[0-9]/.test(phoneNumber);
-        return phoneRegex.test(phoneNumber) && hasDigit;
+        // Check that the phone number follows E.164 format
+        const phoneRegex = /^\+\d{1,15}$/;
+        return phoneRegex.test(phoneNumber);
+
     }
 
 
+    const isValidDob = (dateOfBirth) => {
+        // Check that the dob follows correct format
+        const dobRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+        return dobRegex.test(dateOfBirth);
+    }
+
+    
 
 
-    const handleUpdateProfile = async (e) => {
-        e.preventDefault()
+
+    const handleUpdateProfile = async () => {
         setIsLoading(true)
 
         // form validation
@@ -71,22 +78,28 @@ const CompleteRegistration = () => {
             setTimeout(() => setLastNameError(null), 2000)
             return
 
+        }  else if (!dob) {
+            setIsLoading(false)
+            setDobError('Please provide your Date of birth');
+            setTimeout(() => setDobError(null), 2000)
+            return
+
+        } else if (!isValidDob(dob)) {
+            setIsLoading(false)
+            setDobError('Invalid format. Please try again.');
+            setTimeout(() => setDobError(null), 2000)
+            return
+
         } else if (!phone) {
             setIsLoading(false)
             setPhoneError('Please provide a phone number');
             setTimeout(() => setPhoneError(null), 2000)
             return
-
+            
         } else if (!isValidPhoneNumber(phone)) {
-            setSaving(false)
-            setPhoneError('Invalid phone number. Please enter a number between 7 and 15 digits')
-            setTimeout(() => setPhoneError(null), 2000)
-            return
-
-        } else if (!dob) {
             setIsLoading(false)
-            setDobError('Please provide your Date of birth');
-            setTimeout(() => setDobError(null), 2000)
+            setPhoneError('Please enter a valid phone number (e.g., +123456789).')
+            setTimeout(() => setPhoneError(null), 2000)
             return
         }
 
@@ -116,11 +129,15 @@ const CompleteRegistration = () => {
     }
 
 
+
+
     useEffect(() => {
         if (redirect) {
             router.push('/');
         }
     }, [redirect, router]);
+
+
 
 
     // prevent enter submission
@@ -129,6 +146,8 @@ const CompleteRegistration = () => {
             e.preventDefault()
         }
     }
+
+
 
     const handlePhoneKeyDown = (e) => {
         if (e.key === 'Enter') {
@@ -141,16 +160,28 @@ const CompleteRegistration = () => {
         }
     }
 
+
+
+    const handleDobChange = (e) => {
+        const value = e.target.value;
+        // Replace anything that is not a digit or slash with an empty string
+        const sanitizedValue = value.replace(/[^0-9/]/g, '');
+        setDob(sanitizedValue);
+    };
+    
+
+
     let error = firstNameError || lastNameError || phoneError || dobError;
 
+
+
     return (
-        <>
-            <Navbar />
-            <div className='flex flex-col justify-center items-center my-4.5'>
+        <div className='flex flex-col justify-center items-center my-4.5 w-8/12 mx-auto '>
+            <h2 className='text-3xl leading-normal mb-8 font-eb text-deepOlive'>Set Up Your Account</h2>
 
-                <form onSubmit={handleUpdateProfile} className='w-full max-w-xs'>
-                <h2 className='text-3xl leading-normal mb-8 font-eb text-deepOlive'>Set Up Your Account</h2>
+            <form className='flex gap-8 w-full'>
 
+                <div className='flex-1'>
                     <label>
                         <span className='max-w-max mb-2 text-base text-stoneGray block'>
                             First Name
@@ -160,6 +191,8 @@ const CompleteRegistration = () => {
                             type='text'
                             spellCheck='false'
                             value={firstName}
+                            placeholder='John'
+                            autoFocus='true'
                             onChange={(e) => setFirstName(e.target.value)}
                             onKeyDown={handleKeyDown}
                         />
@@ -172,7 +205,28 @@ const CompleteRegistration = () => {
                             className={`w-full p-2.5 rounded-md text-stoneGray shadow-inner bg-nightSky border-2 ${lastNameError ? 'border-red-900' : 'border-stoneGray'}`}
                             type='text'
                             value={lastName}
+                            placeholder='Smith'
+                            autoFocus='true'
                             onChange={(e) => setLastName(e.target.value)}
+                            onKeyDown={handleKeyDown}
+                        />
+                    </label>
+                </div>
+
+                <div className='flex-1'>
+                    <label>
+                        <span className='mb-2 text-base text-stoneGray block'>
+                            Date of Birth
+                        </span>
+                        <input
+                            className={`w-full p-2.5 rounded-md text-stoneGray shadow-inner bg-nightSky border-2 ${dobError ? 'border-red-900' : 'border-stoneGray'}`}
+                            type='text'
+                            value={dob}
+                            spellCheck='false'
+                            placeholder='DD/MM/YYYY'
+                            pattern='\d{2}/\d{2}/\d{4}'
+                            maxLength={10}
+                            onChange={handleDobChange}
                             onKeyDown={handleKeyDown}
                         />
                     </label>
@@ -186,37 +240,24 @@ const CompleteRegistration = () => {
                             value={phone}
                             spellCheck='false'
                             autoFocus='true'
-                            pattern='\+?[0-9\(\)\-\s]{7,15}'
+                            pattern='^\+\d{1,15}$' 
                             maxLength="15"
+                            placeholder="e.g., +14155552671"
                             onChange={(e) => setPhone(e.target.value)}
                             onKeyDown={handlePhoneKeyDown}
                         />
                     </label>
-                    <label>
-                        <span className='mt-4 mb-2 text-base text-stoneGray block'>
-                            Date of Birth
-                        </span>
-                        <input
-                            className={`w-full p-2.5 rounded-md text-stoneGray shadow-inner bg-nightSky border-2 ${dobError ? 'border-red-900' : 'border-stoneGray'}`}
-                            type='text'
-                            value={dob}
-                            autoFocus='true'
-                            spellCheck='false'
-                            maxLength={'10'}
-                            onChange={(e) => setDob(e.target.value)}
-                            onKeyDown={handleKeyDown}
-                        />
-                    </label>
+                </div>
 
-
-                    <button className='btn block mt-5 bg-deepOlive'>{isLoading ? 'Registering...' : 'Register'}</button>
-                    <div className="mt-5 h-5 text-center">
-                        {successMsg && <div className='success text-center'>{successMsg}</div>}
-                        {error && <div className="error text-center">{error}</div>}
-                    </div>
-                </form>
-            </div>     
-        </>
+            </form>
+            
+            <button className='btn block w-full mt-5 bg-deepOlive' onClick={handleUpdateProfile}>{isLoading ? 'Registering...' : 'Register'}</button>
+            <div className="mt-5 h-5 w-full text-center">
+                {successMsg && <div className='success text-center'>{successMsg}</div>}
+                {error && <div className="error text-center">{error}</div>}
+            </div>
+            
+        </div>     
     );
 }
 

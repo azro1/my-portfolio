@@ -41,10 +41,9 @@ const PhoneForm = ({ user, profile }) => {
 
     // Phone number validation function
     const isValidPhoneNumber = (phoneNumber) => {
-        // Check that the phone number contains only valid characters and at least one digit
-        const phoneRegex = /^\+?[0-9\(\)\-\s]{7,15}$/;
-        const hasDigit = /[0-9]/.test(phoneNumber);
-        return phoneRegex.test(phoneNumber) && hasDigit;
+        // Check that the phone number follows E.164 format
+        const phoneRegex = /^\+\d{1,15}$/;
+        return phoneRegex.test(phoneNumber);
     }
 
 
@@ -61,7 +60,7 @@ const PhoneForm = ({ user, profile }) => {
 
         if (!isValidPhoneNumber(draftPhone)) {
             setSaving(false)
-            setFormError('Invalid phone number. Please enter a number between 7 and 15 digits.')
+            setFormError('Please enter a valid phone number (e.g., +123456789).')
             setTimeout(() => setFormError(null), 2000)
             return
           }
@@ -130,7 +129,7 @@ const PhoneForm = ({ user, profile }) => {
                                 placeholder='Phone'
                                 spellCheck='false'
                                 autoFocus='true'
-                                pattern='\+?[0-9\(\)\-\s]{7,15}'
+                                pattern='^\+\d{1,15}$' 
                                 maxLength="15"
                                 onChange={(e) => setDraftPhone(e.target.value)}
                                 onKeyDown={handleKeyDown}

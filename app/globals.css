@@ -63,7 +63,9 @@ img {
   @apply text-gray-600;
 }
 
-
+input::placeholder {
+  opacity: 0.5
+}
 
 
 
