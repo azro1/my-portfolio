@@ -100,12 +100,10 @@ const VerifyLoginOtp = () => {
 
 
     return (
-        <div className="flex items-center justify-center h-auth-page-height mb-4.5">
-            <form className="w-full max-w-xs" onSubmit={handleVerifyOtp}>
+        <div className="flex items-center justify-center h-auth-page-height">
+            <form className="w-full max-w-xs relative" onSubmit={handleVerifyOtp}>
                 <h2 className='text-3xl leading-normal mb-4 font-eb text-deepOlive'>Verify Your Email</h2>
-                <p className='mb-3'>Enter the OTP (One-Time-Password) that was sent to your inbox.
-                </p>
-
+                <p className='mb-3'>Enter the OTP (One-Time-Password) that was sent to your inbox.</p>
 
                 <label>
                     <span className='max-w-min mb-2 text-base text-stoneGray block'>
@@ -137,10 +135,11 @@ const VerifyLoginOtp = () => {
                         )}
                     </div>
                 </label>
+                
                 <button className='btn block mt-3.5 bg-deepOlive'>{isLoading ? 'Verifying...' : 'Submit'}</button>
-                <div className="mt-3.5 h-5">
-                    {successMsg && <div className='success text-center'>{successMsg}</div>}
-                    {error && <div className="error text-center">{error}</div>}
+                <div className="mt-3.5 h-5 absolute text-center w-full">
+                    {successMsg && <div className='success'>{successMsg}</div>}
+                    {error && <div className="error">{error}</div>}
                 </div>
             </form>
         </div>

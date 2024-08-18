@@ -30,7 +30,7 @@ export default {
         'rubik': ['Rubik', 'sans-serif'],
         'barlow': ['Barlow', 'sans-serif'],
         'os': ['Open Sans', 'sans-serif'],
-        'cn': ['Courier New', 'monospace']
+        'cn': ['Courier New', 'monospace'],
       },
       fontSize: {
         '1.375': '1.375rem', //22px

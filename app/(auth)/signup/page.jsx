@@ -124,7 +124,7 @@ const Signup = () => {
     return (
       <div className='flex flex-col items-center gap-12 mb-4.5 md:justify-evenly md:gap-0 md:flex-row md:h-auth-page-height'>
 
-        <form onSubmit={handleSubmit} className="w-full max-w-xs">
+        <form onSubmit={handleSubmit} className="w-full max-w-xs relative">
           <h2 className='text-3xl mb-6 font-eb text-deepOlive'>Sign up</h2>
           <p className='mb-3'>Enter your email to recieve a OTP (One-Time Passcode) to create your account.</p>
           
@@ -133,9 +133,10 @@ const Signup = () => {
               Email
             </span>
             <input
-              className={`w-full p-2.5 rounded-md text-stoneGray shadow-inner bg-nightSky border-2 ${error ? 'border-red-900' : 'border-stoneGray'}`}
+              className={`w-full p-2.5 rounded-md text-stoneGray shadow-inner bg-nightSky border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-deepOlive focus:ring-1 focus:ring-deepOlive`}
               type='text'
               spellCheck='false'
+              autoFocus='true'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -148,9 +149,9 @@ const Signup = () => {
           </div>
 
           <button className='btn block mt-4 bg-deepOlive'>{isLoading ? 'Processing...' : 'Signup'}</button>
-          <div className="mt-5 h-5 text-center">
+          <div className="mt-4 text-center h-2 md:h-0 md:absolute w-full">
             {error && <div className="error">{error}</div>}
-            {checkBoxError && <div className="error">{checkBoxError}</div>}
+            {checkBoxError && <p className="error leading-tight">{checkBoxError}</p>}
           </div>
 
         </form>

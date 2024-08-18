@@ -48,11 +48,11 @@ main {
 }
 
 .btn {
-  @apply py-2.5 px-4 rounded-lg font-b text-frostWhite;
+  @apply py-2.5 px-4 rounded-lg font-medium text-frostWhite;
 }
 
 .small-btn {
-  @apply py-2 px-4 rounded-lg font-b text-frostWhite;
+  @apply py-2 px-4 rounded-lg font-medium text-frostWhite;
 }
 
 form input {
@@ -64,7 +64,7 @@ img {
 }
 
 input::placeholder {
-  opacity: 0.5
+  filter: brightness(42%)
 }
 
 
@@ -168,17 +168,21 @@ footer span {
 
 
 
+/* Error messages with a strong emphasis */
 .error {
-  @apply text-red-900 bg-red-200  p-2;
+  @apply text-red-900 bg-red-200 p-2.5 font-os font-b text-sm rounded-md leading-tight;
 }
 
+/* Modal form error messages */
 .modal-form-error {
-  @apply text-red-600;
+  @apply text-red-600 font-os text-sm;
 }
 
+/* Success messages with a distinct style */
 .success {
-  @apply text-green-900 bg-green-200 p-2;
+  @apply text-green-900 bg-green-200 p-2.5 font-os font-b text-sm rounded-md leading-tight;
 }
+
 
 
 
