@@ -148,7 +148,7 @@ const Signup = () => {
             .</span>
           </div>
 
-          <button className='btn block mt-4 bg-deepOlive'>{isLoading ? 'Processing...' : 'Signup'}</button>
+          <button className='btn block mt-4 bg-deepOlive' disabled={isLoading}>{isLoading ? 'Processing...' : 'Signup'}</button>
           <div className="mt-4 text-center h-2 md:h-0 md:absolute w-full">
             {error && <div className="error">{error}</div>}
             {checkBoxError && <p className="error leading-tight">{checkBoxError}</p>}

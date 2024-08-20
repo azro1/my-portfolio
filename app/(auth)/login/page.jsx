@@ -114,7 +114,7 @@ const Login = () => {
           />
         </label>
 
-        <button className='mt-4 btn bg-deepOlive'>{isLoading ? 'Logging in...' : 'Login'}</button>
+        <button className='mt-4 btn bg-deepOlive' disabled={isLoading}>{isLoading ? 'Logging in...' : 'Login'}</button>
         <div className="mt-4 text-center h-2 md:h-0 md:absolute w-full">
           {error && <div className="error">{error}</div>}
         </div>
