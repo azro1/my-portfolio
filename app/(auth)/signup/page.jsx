@@ -122,9 +122,9 @@ const Signup = () => {
 
 
     return (
-      <div className='flex flex-col items-center gap-12 mb-4.5 md:justify-evenly md:gap-0 md:flex-row md:h-auth-page-height'>
+      <div className='flex flex-col items-center gap-6 mb-4.5 md:justify-evenly md:gap-0 md:flex-row md:h-auth-page-height relative'>
 
-        <form onSubmit={handleSubmit} className="w-full max-w-xs relative">
+        <form onSubmit={handleSubmit} className="w-full max-w-xs">
           <h2 className='text-3xl mb-6 font-eb text-deepOlive'>Sign up</h2>
           <p className='mb-3'>Enter your email to recieve a OTP (One-Time Passcode) to create your account.</p>
           
@@ -149,13 +149,12 @@ const Signup = () => {
           </div>
 
           <button className='btn block mt-4 bg-deepOlive' disabled={isLoading}>{isLoading ? 'Processing...' : 'Signup'}</button>
-          <div className="mt-4 text-center h-2 md:h-0 md:absolute w-full">
-            {error && <div className="error">{error}</div>}
-            {checkBoxError && <p className="error leading-tight">{checkBoxError}</p>}
-          </div>
-
         </form>
-        
+  
+        <div className="mt-4 text-center h-2 md:h-0 absolute -top-24 md:-top-16 justify-self-center w-80">
+          {error && <div className="error">{error}</div>}
+          {checkBoxError && <p className="error leading-tight">{checkBoxError}</p>}
+        </div>
 
         <div className='flex flex-col items-center md:grid-col-start-1 md:grid-row-start-2 md:col-span-2'>
           <p className='mb-8'>or Sign up using</p>

@@ -18,7 +18,7 @@ export async function POST(request) {
 
   if (error) {
     console.log('sb server error:', error)
-    return NextResponse.json({ exists: false }, {
+    return NextResponse.json({
       status: 500
     })
   }
@@ -26,10 +26,9 @@ export async function POST(request) {
 
   // Check if data array has any rows
   const exists = emailArr.length > 0;
-  console.log('server:', exists)
 
 
-  return NextResponse.json({ exists }, {
+  return NextResponse.json({
     status: exists ? 409 : 201
   });
   

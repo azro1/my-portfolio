@@ -9,9 +9,9 @@ export default async function RegisterLayout ({ children }) {
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
 
-  // if (!user) {
-  //   redirect('/login')
-  // }
+  if (!user) {
+    redirect('/login')
+  }
   
   return (
     <main>
