@@ -12,12 +12,12 @@ import SocialButtons from "../SocialButtons";
 
 
 const Signup = () => {
-  const [displayName, setDisplayName] = useState('')
+
   const [email, setEmail] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [password, setPassword] = useState('')
   const [isChecked, setIsChecked] = useState(false)
   const [error, setError] = useState(null)
+  const [checkBoxError, setCheckBoxError] = useState(null)
   const router = useRouter()
 
 
@@ -31,156 +31,146 @@ const Signup = () => {
     setIsChecked(e.target.checked)
   }
 
+
+
+
+
+
+
+
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setIsLoading(true)
 
     // form validation
-    if (!displayName) {
-      setError('Please provide a name');
-      setTimeout(() => setError(null), 2000)
-      setIsLoading(false)
-      return
-
-    } else if (!email) {
-        setError('To signup, please provide your email');
-        setTimeout(() => setError(null), 2000)
-        setIsLoading(false)
-        return
-
+    if (!email) {
+      setError('Please provide your email');
+      setTimeout(() => setError(null), 2000);
+      setIsLoading(false);
+      return;
     } else if (!isValidEmail(email)) {
-        setError('Unable to validate email address: invalid format');
-        setTimeout(() => setError(null), 2000)
-        setIsLoading(false)
-        return
-
-    } else if (!password) {
-        setError('Signup requires a valid password');
-        setTimeout(() => setError(null), 2000)
-        setIsLoading(false)
-        return
-
-    } else if (password.length < 6) {
-        setError('Password should be at least 6 characters');
-        setTimeout(() => setError(null), 2000)
-        setIsLoading(false)
-        return
-
+      setError('Unable to validate email address: invalid format');
+      setTimeout(() => setError(null), 2000);
+      setIsLoading(false);
+      return;
     } else if (!isChecked) {
-        setError('Please confirm you have agreed to the Privacy Policy and Terms of Service');
-        setTimeout(() => setError(null), 2000)
-        setIsLoading(false)
-        return
+      setCheckBoxError(
+        'Please confirm you have agreed to the privacy policy and terms of service.'
+      );
+      setTimeout(() => setCheckBoxError(null), 2000);
+      setIsLoading(false);
+      return;
     }
 
-      const supabase = createClientComponentClient()
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            first_name: displayName
-          },
-          emailRedirectTo: `${location.origin}/api/auth/callback`
-        }
+    setIsLoading(true)
+
+
+
+
+    // sent email to server endpoint to check if email already exists within profiles table
+    try {
+      const res = await fetch(`${location.origin}/api/auth/email-exists`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email
+        })
       })
 
-      if (error) {
-        setError(error.message)
-        setTimeout(() => setError(null), 2000)
-        setIsLoading(false);
-      } 
+      const userEmail = await res.json()
+      console.log('Server response:', userEmail);
 
-      if (!error) {
-        router.push('/verify/email-for-signup-instructions')
+
+      if (res.status === 409) {
+        setIsLoading(false)
+        setError('This email is already associated with an account. Please login.')
+        return
+
+      } else if (userEmail.error) {
+        setIsLoading(false)
+        setError(userEmail.error)
+        return
+
+      } else if (!userEmail.exists && res.status === 404) {
+        // store email temporarily in local storage
+        localStorage.setItem('email', email)
+
+
+        const supabase = createClientComponentClient()
+        const { error } = await supabase.auth.signInWithOtp({
+          email
+        })
+
+
+        if (error) {
+          setIsLoading(false);
+          setError(error.message)
+          setTimeout(() => setError(null), 2000)
+        }
+
+        if (!error) {
+          router.push('/verify-signup-otp')
+        }
+
       }
+
+    } catch (error) {
+      setIsLoading(false)
+      console.log(error.message)
+      setError('An unexpected error occurred. Please try again.');
+    }
+
   }
 
-    return (
-      <div className='max-w-screen-lg mx-auto grid gap-y-16 md:gap-x-8 md:grid-cols-2 mb-4.5'>
 
-        <form onSubmit={handleSubmit} className="justify-self-center place-self-center w-full sm:max-w-sm md:max-w-xs">
-          <h2 className='text-3xl mb-6 font-eb text-accentRed'>Sign up</h2>
-          <label>
-            <span className='max-w-max mb-2 text-base text-stoneGray block'>
-              First Name
-            </span>
-            <input
-              className="w-full p-2.5 rounded-md text-stoneGray shadow-inner bg-deepCharcoal border-2 border-stoneGray"
-              type='text'
-              spellCheck='false'
-              value={displayName}
-              onChange={(e) => setDisplayName(e.target.value)}
-            />
-          </label>
+
+
+
+    return (
+      <div className='flex flex-col items-center gap-6 mb-4.5 md:justify-evenly md:gap-0 md:flex-row md:h-auth-page-height relative'>
+
+        <form onSubmit={handleSubmit} className="w-full max-w-xs">
+          <h2 className='text-3xl mb-6 font-eb text-deepOlive'>Sign up</h2>
+          <p className='mb-3'>Enter your email to recieve a OTP (One-Time Passcode) to create your account.</p>
+          
           <label>
             <span className='max-w-min mt-4 mb-2 text-base text-stoneGray block'>
               Email
             </span>
             <input
-              className="w-full p-2.5 rounded-md text-stoneGray shadow-inner bg-deepCharcoal border-2 border-stoneGray"
+              className={`w-full p-2.5 rounded-md text-stoneGray shadow-inner bg-nightSky border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-deepOlive focus:ring-1 focus:ring-deepOlive`}
               type='text'
               spellCheck='false'
+              autoFocus='true'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </label>
-          <label>
-            <span className='max-w-min mt-4 mb-2 text-base text-stoneGray block'>
-              Password
-            </span>
-            <input
-              className="w-full p-2.5 rounded-md text-stoneGray shadow-inner bg-deepCharcoal border-2 border-stoneGray"
-              type='password'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </label>
-
 
           <div className="mt-5 flex items-center">
             <input className="self-start mt-0.21 max-w-min transform scale-125" type="checkbox" value={isChecked} onChange={handleCheckbox}/>
-            <span className="text-base block text-stoneGray ml-2.5 leading-7 -mt-1">By signing up I agree to the{' '}<Link className="text-accentRed text-base" href='#'>Privacy Policy</Link>{' '}and{' '}<Link className='text-accentRed text-base' href='#'>Terms of Service</Link>
+            <span className="text-base block text-stoneGray ml-2.5 -mt-1">By signing up I agree to the{' '}<Link className="text-deepOlive text-base" href='#'>Privacy Policy</Link>{' '}and{' '}<Link className='text-deepOlive text-base' href='#'>Terms of Service</Link>
             .</span>
           </div>
-          <button className='btn block mt-4 bg-accentRed'>{isLoading ? 'Processing...' : 'Signup'}</button>
-          <div className="mt-5 h-5 text-center">
-              {error && <div className="error">{error}</div>}
-          </div>
+
+          <button className='btn block mt-4 bg-deepOlive' disabled={isLoading}>{isLoading ? 'Processing...' : 'Signup'}</button>
         </form>
-        
+  
+        <div className="mt-4 text-center h-2 md:h-0 absolute -top-28 md:-top-16 w-80">
+          {error && <div className="error"> {error}</div>}
+          {checkBoxError && <p className="error leading-tight">{checkBoxError}</p>}
+        </div>
 
         <div className='flex flex-col items-center md:grid-col-start-1 md:grid-row-start-2 md:col-span-2'>
           <p className='mb-8'>or Sign up using</p>
           <SocialButtons text={"Continue"} />
           <div className="mt-7">
             <p className='inline mt-8 pr-2'>Have an account?</p>
-            <Link className='text-base text-accentRed' href='/login'>Login</Link>
+            <Link className='text-base text-deepOlive' href='/login'>Login</Link>
           </div>
         </div>
 
-        <div className="grid row-start-1 max-w-sm gap-4  justify-self-center md:col-start-2 md:row-start-1 md:w-full md:h-64 ">
-          <h2 className="subheading font-rubik font-eb text-stoneGray leading-normal mb-1 md:mb-0">
-            Unlock <span className='text-accentRed'>CodeDynamic's</span> Creative
-            Vault!
-          </h2>
-          <span className="block text-stoneGray text-sm font-os text-justify leading-6">
-            Uncover the secrets behind my web development and graphic design
-            projects by signing up for exclusive content:
-          </span>
-          <span className="block text-stoneGray text-sm font-os text-justify leading-6">
-            🚀 Creative Process Unveiled: Get an inside look at the making of
-            each project, from concept to completion.
-          </span>
-          <span className="block text-stoneGray text-sm font-os text-justify leading-6">
-            📬 Be the First to Know: Receive notifications on new projects and
-            stay in the loop with the latest news and updates.
-          </span>
-          <span className="block text-stoneGray text-sm font-os text-justify leading-6">
-            Ready to dive in? Join now to elevate your understanding of design
-            and development with CodeDynamics!
-          </span>
-        </div>
       </div>
     );
   }

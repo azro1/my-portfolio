@@ -92,9 +92,9 @@ const CommentList = ({ user }) => {
                         <div className='flex items-start gap-1 justify-between p-3 bg-frostWhite' key={comment.id}>
                             <div>
                                 <span className="text-stoneGray text-sm pb-1 leading-normal block">{comment.text}</span>
-                                <span className='text-sm text-accentRed'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
+                                <span className='text-sm text-deepOlive'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
                             </div>
-                                <MdDeleteForever className="min-w-max cursor-pointer text-accentRed" size={25} onClick={() => handleDelete(comment.id)}/>
+                                <MdDeleteForever className="min-w-max cursor-pointer text-deepOlive" size={25} onClick={() => handleDelete(comment.id)}/>
                         </div>
                     ))
                 ) : (

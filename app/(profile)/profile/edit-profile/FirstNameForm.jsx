@@ -111,8 +111,8 @@ const FirstNameForm = ({ user, profile }) => {
                             />
                         </label>
                     </form>
-                    <button className='btn bg-accentRed mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                    <button className='btn bg-accentRed mt-3' onClick={handleNameUpdate}>
+                    <button className='btn bg-deepOlive mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
+                    <button className='btn bg-deepOlive mt-3' onClick={handleNameUpdate}>
                         {saving ? 'Saving...' : 'Save'}
                     </button>
                     {(profileError || formError) && (

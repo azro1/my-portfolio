@@ -48,11 +48,11 @@ main {
 }
 
 .btn {
-  @apply py-2.5 px-4 rounded-lg font-b text-frostWhite;
+  @apply py-2.5 px-4 rounded-lg font-medium text-frostWhite;
 }
 
 .small-btn {
-  @apply py-2 px-4 rounded-lg font-b text-frostWhite;
+  @apply py-2 px-4 rounded-lg font-medium text-frostWhite;
 }
 
 form input {
@@ -63,20 +63,21 @@ img {
   @apply text-gray-600;
 }
 
-
+input::placeholder, .fieye, .fieye-off {
+  filter: brightness(42%)
+}
 
 
 
 
 /* profile layout navs */
 .layout-nav.md a.active {
-  @apply shadow-outer rounded-lg text-frostWhite;
+  @apply font-b text-nightSky;
 }
 
 .layout-nav.sm a.active {
-  @apply text-frostWhite bg-softCharcoal;
+  @apply text-frostWhite;
 }
-
 
 
 
@@ -129,11 +130,11 @@ img {
 
 /* Footer styles */
 footer .newsletter h3 {
-  @apply subheading font-b text-accentRed;
+  @apply subheading font-b text-deepOlive;
 }
 
 footer h4 {
-  @apply font-b text-accentRed;
+  @apply font-b text-deepOlive;
 }
 
 footer p {
@@ -167,17 +168,21 @@ footer span {
 
 
 
+/* Error messages with a strong emphasis */
 .error {
-  @apply text-red-900 font-b leading-7 bg-red-200 border-red-900 border-2 p-2;
+  @apply text-nightSky font-b shadow-outer bg-red-200 p-3 font-os text-base rounded-md leading-tight;
 }
 
+/* Modal form error messages */
 .modal-form-error {
-  @apply text-red-600 leading-7;
+  @apply text-red-600 font-os text-sm;
 }
 
+/* Success messages with a distinct style */
 .success {
-  @apply text-green-900 font-b leading-7 bg-green-200 border-green-900 border-2 p-2;
+  @apply text-green-900 bg-green-200 p-3 font-os font-b text-base rounded-md leading-tight;
 }
+
 
 
 

@@ -98,9 +98,9 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
                            </div>
                         )} 
                         {!loading && (
-                           <div className='pl-2'>
+                           <div className='pl-2 flex-1 min-w-0'>
                               <p className='text-nightSky font-b'>{first_name}</p>
-                              <p className='break-words'>{bio ? `${bio}` : `"Add your Bio"`}</p>
+                              <p className='whitespace-normal break-words'>{bio ? `${bio}` : `"Add your Bio"`}</p>
                            </div>
                         )}
                      </div>
@@ -126,9 +126,9 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
                            />
                         </div>
                         {!loading && (
-                           <div className='pl-2'>
-                              <p className='text-nightSky font-b'>{first_name}</p>
-                              <p className='break-words'>{bio ? `${bio}` : `"Add your Bio"`}</p>
+                           <div className='pl-2 flex-1 min-w-0'>
+                              <p className='text-nightSky text-xl font-b'>Welcome, {first_name}</p>
+                              <p className='whitespace-normal break-words pt-1'>{bio ? `${bio}` : `"Add your Bio"`}</p>
                            </div>
                         )}
                      </div>

@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link";
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
@@ -16,6 +16,8 @@ const UpdatePassword = () => {
   const [isFormLoading, setIsFormLoading] = useState(false)
   const [formError, setFormError] = useState(null)
   const [successMsg, setSuccessMsg] = useState(null)
+  const [redirect, setRedirect] = useState(false);
+
 
 
   // custom hook to fetch user
@@ -82,9 +84,7 @@ const UpdatePassword = () => {
         throw new Error('Failed to update password. Please try again');
       } else {
         setSuccessMsg('Checking passwords...')
-        setTimeout(() => {
-          router.push('/profile/confirmation')
-        }, 2000)
+        setRedirect(true)
       }
 
 
@@ -99,7 +99,15 @@ const UpdatePassword = () => {
     }
 
     
-  
+
+
+    useEffect(() => {
+      if (redirect) {
+        router.push('/profile/confirmation')
+      }
+    }, [redirect, router])
+
+
 
 
 
@@ -115,15 +123,15 @@ const UpdatePassword = () => {
     <>
       {!user && (
         <div className="flex flex-col items-center justify-center text-center h-profile-page-height flex-1">
-          <h2 className='pb-4 text-3xl font-b text-accentRed'>Unauthorised</h2>
-          <p className='text-base leading-7'>Please <Link className="text-base text-accentRed" href="/login">Login</Link> before attempting to reset your password.</p>
+          <h2 className='pb-4 text-3xl font-b text-deepOlive'>Unauthorised</h2>
+          <p className='text-base leading-7'>Please <Link className="text-base text-deepOlive" href="/login">Login</Link> before attempting to reset your password.</p>
         </div>
       )}
 
       {user && (  
         <div className="flex items-center justify-center h-profile-page-height flex-1">
           <form className="w-full max-w-sm mx-auto" onSubmit={handleSubmit}>
-            <h2 className='mb-5 text-3xl font-eb text-accentRed'>Update Password</h2>
+            <h2 className='mb-5 text-3xl font-eb text-deepOlive'>Update Password</h2>
             <p className='mb-6 leading-7'>To update your password, please provide your current password for verification and enter a new password.</p>
             <label>
               <span className='mt-4 mb-2 text-base text-stoneGray block'>
@@ -148,7 +156,7 @@ const UpdatePassword = () => {
               />
             </label>
 
-            <button className='btn block mt-4 bg-accentRed'>{isFormLoading ? 'Finalizing...' : 'Update'}</button>
+            <button className='btn block mt-4 bg-deepOlive'>{isFormLoading ? 'Finalizing...' : 'Update'}</button>
             <div className="mt-5 h-5 text-center">
               {successMsg && <div className="success">{successMsg}</div>}
               {updateError && <div className="error mt-2">{updateError}</div>}

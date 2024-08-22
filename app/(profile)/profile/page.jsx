@@ -13,7 +13,7 @@ const Profile = async () => {
 
   return (
       <div className='flex-1 flex flex-col gap-6 overflow-y-scroll hide-scrollbar h-profile-page-height'>
-        <ProfileHeader title={'My Profile'} subheading={'Here you can view and edit your recent activity, update your personal information, view your data and personalize your account settings.'} showAvatar={true} />
+        <ProfileHeader title={'My Profile'} subheading={'Here you can view and edit your recent activity, update your personal information and security preferences, view your data and personalize your privacy settings.'} showAvatar={true} />
         
         {user && (
           <div className="bg-cloudGray p-4 pt-10">

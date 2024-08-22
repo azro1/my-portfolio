@@ -94,7 +94,7 @@ const Avatar = ({ user }) => {
                           <div></div>
                         ) : (
 
-                          <h6 className="font-os text-sm font-b text-accentRed">{first_name}</h6>
+                          <h6 className="font-os text-sm font-b text-deepOlive">{first_name}</h6>
 
                         )}
                     </div>
@@ -116,7 +116,7 @@ const Avatar = ({ user }) => {
                                 />
                             </>
                         )}
-                        <h6 className="font-os text-sm font-b text-accentRed">{first_name}</h6>
+                        <h6 className="font-os text-sm font-b text-deepOlive">{first_name}</h6>
                     </div>
                 )}
             </div>

@@ -84,7 +84,7 @@ const BioForm = ({ user, profile }) => {
                         {bio ? 'Edit' : 'Add'}
                     </span> 
                 </div>
-                <p className="text-nightSky frostWhitespace-normal break-words">{bio}</p>
+                <p className="text-nightSky frost whitespace-normal break-words">{bio}</p>
             </div>
 
             {showForm && (
@@ -107,8 +107,8 @@ const BioForm = ({ user, profile }) => {
                             />
                         </label>
                     </form>
-                    <button className='btn bg-accentRed mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                    <button className='btn bg-accentRed mt-3' onClick={handleUpdateBio}>
+                    <button className='btn bg-deepOlive mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
+                    <button className='btn bg-deepOlive mt-3' onClick={handleUpdateBio}>
                         {saving ? 'Saving...' : 'Save'}
                     </button>
                     {(profileError || formError) && (

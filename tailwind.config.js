@@ -13,7 +13,7 @@ export default {
     },
     extend: {
       colors: {
-        accentRed: '#A52A2A',
+        deepOlive: '#556B2F',
         deepCharcoal: '#131519',
         softCharcoal: '#191b20',
         onyx: '#16181C',
@@ -30,7 +30,7 @@ export default {
         'rubik': ['Rubik', 'sans-serif'],
         'barlow': ['Barlow', 'sans-serif'],
         'os': ['Open Sans', 'sans-serif'],
-        'cn': ['Courier New', 'monospace']
+        'cn': ['Courier New', 'monospace'],
       },
       fontSize: {
         '1.375': '1.375rem', //22px
