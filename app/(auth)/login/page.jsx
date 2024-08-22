@@ -22,7 +22,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    
+
     if (!email) {
       setError('Please provide your email');
       setTimeout(() => setError(null), 2000)
@@ -56,40 +56,43 @@ const Login = () => {
       console.log('Server response:', userEmail);
 
 
-      if (!userEmail.exists) {
+      if (res.status === 404) {
         setIsLoading(false)
         setError('There is no account associated with that email. Please signup.')
         return
-      } else {
-          console.log('the email exists!')
-  
-          // store email temporarily in local storage
-          localStorage.setItem('email', email)
 
-          
-          const supabase = createClientComponentClient()
-          const { data, error } = await supabase.auth.signInWithOtp({
-            email
-          })
-          
+      } else if (userEmail.error) {
+        setIsLoading(false)
+        setError(userEmail.error)
+        return
 
-          if (error) {
-            setIsLoading(false);
-            setError(error.message)
-            setTimeout(() => setError(null), 2000)
-          } 
+      } else if (userEmail.exists && res.status === 409) {
+        // store email temporarily in local storage
+        localStorage.setItem('email', email)
 
-          if (!error) {
-            router.push('/verify-login-otp')
-          }
+        const supabase = createClientComponentClient()
+        const { error } = await supabase.auth.signInWithOtp({
+          email
+        })
+
+
+        if (error) {
+          setIsLoading(false);
+          setError(error.message)
+          setTimeout(() => setError(null), 2000)
+        }
+
+        if (!error) {
+          router.push('/verify-login-otp')
+        }
 
       }
 
     } catch (error) {
-        console.log(error)
+      setIsLoading(false)
+      console.log(error)
+      setError('An unexpected error occurred. Please try again.');
     }
-
-
 
   }
 

@@ -63,7 +63,7 @@ img {
   @apply text-gray-600;
 }
 
-input::placeholder {
+input::placeholder, .fieye, .fieye-off {
   filter: brightness(42%)
 }
 
@@ -170,7 +170,7 @@ footer span {
 
 /* Error messages with a strong emphasis */
 .error {
-  @apply text-red-900 bg-red-200 p-3 font-os font-b text-sm rounded-md leading-tight;
+  @apply text-nightSky font-b shadow-outer bg-red-200 p-3 font-os text-base rounded-md leading-tight;
 }
 
 /* Modal form error messages */
@@ -180,7 +180,7 @@ footer span {
 
 /* Success messages with a distinct style */
 .success {
-  @apply text-green-900 bg-green-200 p-3 font-os font-b text-sm rounded-md leading-tight;
+  @apply text-green-900 bg-green-200 p-3 font-os font-b text-base rounded-md leading-tight;
 }
 
 

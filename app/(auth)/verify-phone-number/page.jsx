@@ -57,20 +57,28 @@ const VerifyPhoneNumber = () => {
             const email = await res.json()
             console.log('client:', email)
 
-            if (!email.exists) {
+            if (res.status === 404) {
                 setIsLoading(false)
                 setError('There is no account associated with that phone number.')
-            } else {
+                return
+
+            } else if (email.error) {
+                setIsLoading(false)
+                setError(email.error)
+                return
+
+            } else if (email.exists && res.status === 200) {
                 setSuccessMsg("We've located your account. A verification code has been sent to your email.")
 
                 // store email temporarily in local storage
                 localStorage.setItem('email', email.email)
-                setTimeout(() => setRedirect(true), 2000)
+                setTimeout(() => setRedirect(true), 3000)
             }
 
         } catch (error) {
             setIsLoading(false)
             console.log(error.message)
+            setError('An unexpected error occurred. Please try again.');
         }
 
       }
@@ -107,7 +115,7 @@ const VerifyPhoneNumber = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 grid-flow-row auto-rows-fr justify-center md:h-auth-page-height relative ">
             
             <div className='max-w-xs self-center justify-self-center shadow-outer p-6 rounded-md h-fit md:self-end'>
-                <p className=''>Enter the phone number you provided during your account setup to help us recover your email address.</p>
+                <p>Enter the phone number you provided during your account setup to help us recover your email address.</p>
             </div>
 
 

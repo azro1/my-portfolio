@@ -65,54 +65,60 @@ const Signup = () => {
 
 
 
-    
+
     // sent email to server endpoint to check if email already exists within profiles table
     try {
-        const res = await fetch(`${location.origin}/api/auth/email-exists`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            email
-          })
+      const res = await fetch(`${location.origin}/api/auth/email-exists`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email
+        })
+      })
+
+      const userEmail = await res.json()
+      console.log('Server response:', userEmail);
+
+
+      if (res.status === 409) {
+        setIsLoading(false)
+        setError('This email is already associated with an account. Please login.')
+        return
+
+      } else if (userEmail.error) {
+        setIsLoading(false)
+        setError(userEmail.error)
+        return
+
+      } else if (!userEmail.exists && res.status === 404) {
+        // store email temporarily in local storage
+        localStorage.setItem('email', email)
+
+
+        const supabase = createClientComponentClient()
+        const { error } = await supabase.auth.signInWithOtp({
+          email
         })
 
-        const userEmail = await res.json()
-        console.log('Server response:', userEmail);
 
-
-        if (userEmail.exists) {
-          setIsLoading(false)
-          setError('This email is already associated with an account. Please login.')
-          return
-        } else {
-            console.log('the email does not exist!')
-    
-            // store email temporarily in local storage
-            localStorage.setItem('email', email)
-
-            
-            const supabase = createClientComponentClient()
-            const { data, error } = await supabase.auth.signInWithOtp({
-              email
-            })
-            
-
-            if (error) {
-              setIsLoading(false);
-              setError(error.message)
-              setTimeout(() => setError(null), 2000)
-            } 
-
-            if (!error) {
-              router.push('/verify-signup-otp')
-            }
-
+        if (error) {
+          setIsLoading(false);
+          setError(error.message)
+          setTimeout(() => setError(null), 2000)
         }
 
+        if (!error) {
+          router.push('/verify-signup-otp')
+        }
+
+      }
+
     } catch (error) {
-        console.log(error)
+      setIsLoading(false)
+      console.log(error.message)
+      setError('An unexpected error occurred. Please try again.');
     }
 
   }
@@ -151,8 +157,8 @@ const Signup = () => {
           <button className='btn block mt-4 bg-deepOlive' disabled={isLoading}>{isLoading ? 'Processing...' : 'Signup'}</button>
         </form>
   
-        <div className="mt-4 text-center h-2 md:h-0 absolute -top-24 md:-top-16 justify-self-center w-80">
-          {error && <div className="error">{error}</div>}
+        <div className="mt-4 text-center h-2 md:h-0 absolute -top-28 md:-top-16 w-80">
+          {error && <div className="error"> {error}</div>}
           {checkBoxError && <p className="error leading-tight">{checkBoxError}</p>}
         </div>
 

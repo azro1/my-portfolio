@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { FiEye, FiEyeOff } from 'react-icons/fi'
 
 
-const VerifyOtpForm = ({ redirectUrl }) => {
+const VerifyOtpForm = ({ redirectUrl, successMessage }) => {
     const [otp, setOtp] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
@@ -56,7 +56,7 @@ const VerifyOtpForm = ({ redirectUrl }) => {
             return
 
         } else if (session) {
-            setSuccessMsg('OTP verification passed. Creating your account...')
+            setSuccessMsg(successMessage)
             setRedirect(true)
         }
     }
@@ -106,7 +106,7 @@ const VerifyOtpForm = ({ redirectUrl }) => {
                     </span>
                     <div className='relative'>
                         <input
-                            className={`w-full p-2.5 rounded-md text-stoneGray shadow-inner bg-nightSky border-2 ${error ? 'border-red-900' : 'border-stoneGray'}`}
+                            className={`w-full p-2.5 rounded-md text-stoneGray shadow-inner bg-nightSky border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-deepOlive focus:ring-1 focus:ring-deepOlive`}
                             type={`${isEyeOpen ? 'text' : 'password'}`}
                             spellCheck='false'
                             autoComplete="off"
@@ -117,13 +117,13 @@ const VerifyOtpForm = ({ redirectUrl }) => {
                         />
                         {!isEyeOpen ? (
                             <FiEye
-                                className='text-stoneGray absolute right-3 top-1/3 cursor-pointer'
+                                className='text-stoneGray absolute right-3 top-1/3 cursor-pointer fieye'
                                 size={17}
                                 onClick={handleShowCode}
                             />
                         ) : (
                             <FiEyeOff
-                                className='text-stoneGray absolute right-3 top-1/3 cursor-pointer'
+                                className='text-stoneGray absolute right-3 top-1/3 cursor-pointer fieye-off'
                                 size={17}
                                 onClick={handleShowCode}
                             />

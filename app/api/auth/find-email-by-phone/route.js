@@ -15,7 +15,7 @@ export async function POST(request) {
 
     if (error) {
         console.log('sb server error:', error)
-        return NextResponse.json({ exists: false }, {
+        return NextResponse.json({ error: 'Unable to process request.' }, {
             status: 500
         })
     }

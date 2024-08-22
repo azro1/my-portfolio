@@ -18,7 +18,7 @@ export async function POST(request) {
 
   if (error) {
     console.log('sb server error:', error)
-    return NextResponse.json({
+    return NextResponse.json({ error: 'Unable to process request.' }, {
       status: 500
     })
   }
@@ -27,9 +27,13 @@ export async function POST(request) {
   // Check if data array has any rows
   const exists = emailArr.length > 0;
 
-
-  return NextResponse.json({
-    status: exists ? 409 : 201
-  });
-  
+  if (exists) {
+    return NextResponse.json({ exists }, {
+      status: 409
+    })
+  } else {
+    return NextResponse.json({ exists }, {
+      status: 404
+    })
+  }
 }
