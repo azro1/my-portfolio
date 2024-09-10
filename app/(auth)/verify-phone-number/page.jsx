@@ -54,8 +54,8 @@ const VerifyPhoneNumber = () => {
                 })
             })
 
+            // await json response from server and store in const email
             const email = await res.json()
-            console.log('client:', email)
 
             if (res.status === 404) {
                 setIsLoading(false)
@@ -124,7 +124,7 @@ const VerifyPhoneNumber = () => {
                 <label>
                     <span className='max-w-min mt-4 mb-2 text-base text-stoneGray block'>Phone</span>
                     <input
-                        className={`w-full p-2.5 rounded-md text-stoneGray shadow-inner bg-nightSky border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-deepOlive focus:ring-1 focus:ring-deepOlive`}
+                        className={`w-full p-2.5 rounded-md text-stoneGray bg-deepCharcoal border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-deepOlive focus:ring-1 focus:ring-deepOlive`}
                         type='tel'
                         value={phone}
                         spellCheck='false'

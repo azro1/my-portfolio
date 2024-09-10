@@ -4,16 +4,30 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation";
 
+// icons
 import { FiEye, FiEyeOff } from 'react-icons/fi'
 
+// hooks
+import { useUpdate } from "@/app/hooks/useUpdate";
+import { useUpdateMetadata } from "@/app/hooks/useUpdateMetadata";
 
-const OtpForm = ({ redirectUrl, successMessage }) => {
+
+const EmailUpdateOtp = () => {
     const [otp, setOtp] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
     const [successMsg, setSuccessMsg] = useState(null)
     const [isEyeOpen, setIsEyeOpen] = useState(false)
     const [redirect, setRedirect] = useState(false)
+
+    
+
+    // custom hook to update profiles table
+    const { error: updateTableError, updateTable } = useUpdate()
+    // custom hook to update metadata
+    const { error: updateMetadataError, updateMetadata } = useUpdateMetadata()
+
+
 
     const router = useRouter()
 
@@ -41,12 +55,13 @@ const OtpForm = ({ redirectUrl, successMessage }) => {
         const email = localStorage.getItem('email')
         localStorage.removeItem('email')
 
+        
 
         const supabase = createClientComponentClient()
         const { data: { session }, error } = await supabase.auth.verifyOtp({
             email,
             token: otp,
-            type: 'email'
+            type: 'email_change'
         })
 
         if (error) {
@@ -56,8 +71,24 @@ const OtpForm = ({ redirectUrl, successMessage }) => {
             return
 
         } else if (session) {
-            setSuccessMsg(successMessage)
-            setTimeout(() => setRedirect(true), 3000)
+            setSuccessMsg('OTP verification passed. Email updated!')
+
+            // update metadata
+            await updateMetadata({ email: email })
+            // update profiles table with new email
+            await updateTable(session.user, 'profiles', {email: email}, 'id')
+            
+            if (updateMetadataError) {
+               setIsLoading(false)
+               setError(updateMetadataError)
+               return
+            } else if (updateTableError) {
+               setIsLoading(false)
+               setError(updateTableError)
+               return
+            } else {
+               setTimeout(() => setRedirect(true), 3000)
+            }
         }
     }
 
@@ -66,9 +97,9 @@ const OtpForm = ({ redirectUrl, successMessage }) => {
 
     useEffect(() => {
         if (redirect) {
-            router.push(redirectUrl)
+            router.push('/profile/edit-profile')
         }
-    }, [redirect, redirectUrl, router]);
+    }, [redirect, router]);
 
 
 
@@ -95,7 +126,7 @@ const OtpForm = ({ redirectUrl, successMessage }) => {
 
 
     return (
-        <div className="flex items-center justify-center h-auth-page-height">
+        <div className="flex items-center justify-center h-profile-page-height relative">
             <form className="w-full max-w-xs relative" onSubmit={handleVerifyOtp}>
                 <h2 className='text-3xl leading-normal mb-6 font-eb text-deepOlive'>Verify Your Email</h2>
                 <p className='mb-3'>Enter the OTP (One-Time-Passcode) that was sent to your inbox.</p>
@@ -138,7 +169,7 @@ const OtpForm = ({ redirectUrl, successMessage }) => {
                 </label>
 
                 <button className='btn block mt-3.5 bg-deepOlive' disabled={isLoading}>{isLoading ? 'Verifying...' : 'Submit'}</button>
-                <div className="mt-3.5 absolute text-center w-full">
+                <div className="text-center h-2 md:h-0 absolute -top-24 justify-self-center w-full">
                     {successMsg && <div className='success'>{successMsg}</div>}
                     {error && <div className="error">{error}</div>}
                 </div>
@@ -147,4 +178,5 @@ const OtpForm = ({ redirectUrl, successMessage }) => {
     )
 }
 
-export default OtpForm
+export default EmailUpdateOtp
+

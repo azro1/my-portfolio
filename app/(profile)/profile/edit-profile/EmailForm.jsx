@@ -2,7 +2,8 @@
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation"
+
 
 // components
 import Modal from './Modal'
@@ -14,6 +15,7 @@ const EmailForm = ({ user, profile, profileError }) => {
     const [formError, setFormError] = useState(null)
     const [isSending, setIsSending] = useState(false)
     const [showForm, setShowForm] = useState(false)
+
 
     const router = useRouter()
     const supabase = createClientComponentClient()
@@ -31,6 +33,8 @@ const EmailForm = ({ user, profile, profileError }) => {
 
 
     const handleEmailUpdate = async () => {
+        setFormError(null)
+
         // check if a given string is a valid email address
         const isValidEmail = (value) => {
             const emailRegex = new RegExp('^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$', 'u');
@@ -46,33 +50,69 @@ const EmailForm = ({ user, profile, profileError }) => {
             setTimeout(() => setFormError(''), 2000)
             return;
         } else {
-            localStorage.setItem('newEmail', draftEmail)
-        }
 
+
+
+
+        // sent email to server endpoint to check if email already exists within profiles table
         try {
             setIsSending(true)
-            const { data, error } = await supabase.auth.updateUser({
-                email: draftEmail,
-                options: {
-                    emailRedirectTo: `${location.origin}/profile/confirm/password-for-email-update`
-                }
+            const res = await fetch(`${location.origin}/api/auth/email-exists`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: draftEmail
+                })
             })
+    
+            const userEmail = await res.json()
+            console.log('Server response:', userEmail);
+    
+    
+            if (res.status === 409) {
+                setIsSending(false)
+                setFormError('This email is already associated with an account.')
+                return
+    
+            } else if (userEmail.error) {
+                setIsSending(false)
+                setFormError(userEmail.error)
+                return
 
-            if (error) {
-                throw new Error(error.message)
+    
+            } else if (!userEmail.exists && res.status === 404) {
+                
+                // store email temporarily in local storage
+                localStorage.setItem('email', draftEmail)
+
+                const { data, error } = await supabase.auth.updateUser({
+                    email: draftEmail,
+                })
+                
+                if (error) {
+                    throw new Error(error.message)
+                }
+
+                if (data) {
+                    router.push('/profile/verify-email-update-otp')
+                }
             }
 
-            if (data) {
-                setEmail(draftEmail)
-                router.push('/verify/email-for-update-email-instructions')
-            }
-        } catch (error) {
-            setIsSending(false)
-            setFormError(error.message)
+        } catch(error) {
             console.log(error.message)
         }
 
+        }
     }
+
+
+
+
+
+
+
 
 
 
