@@ -78,9 +78,8 @@ const Signup = () => {
         })
       })
 
+      // await json response from server and store in const userEmail
       const userEmail = await res.json()
-      console.log('Server response:', userEmail);
-
 
       if (res.status === 409) {
         setIsLoading(false)
@@ -96,12 +95,10 @@ const Signup = () => {
         // store email temporarily in local storage
         localStorage.setItem('email', email)
 
-
         const supabase = createClientComponentClient()
         const { error } = await supabase.auth.signInWithOtp({
           email
         })
-
 
         if (error) {
           setIsLoading(false);
@@ -139,7 +136,7 @@ const Signup = () => {
               Email
             </span>
             <input
-              className={`w-full p-2.5 rounded-md text-stoneGray shadow-inner bg-nightSky border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-deepOlive focus:ring-1 focus:ring-deepOlive`}
+              className={`w-full p-2.5 rounded-md text-stoneGray bg-deepCharcoal border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-deepOlive focus:ring-1 focus:ring-deepOlive`}
               type='text'
               spellCheck='false'
               autoFocus='true'

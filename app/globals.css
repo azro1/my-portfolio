@@ -63,9 +63,26 @@ img {
   @apply text-gray-600;
 }
 
-input::placeholder, .fieye, .fieye-off {
+
+
+
+
+
+/* input placeholders */
+input::placeholder {
   filter: brightness(42%)
 }
+
+.fieye, .fieye-off {
+  filter: brightness(52%)
+}
+
+.fieye-container:hover .fieye, .fieye-container:hover .fieye-off {
+  filter: brightness(100%)
+}
+
+
+
 
 
 
@@ -138,7 +155,7 @@ footer h4 {
 }
 
 footer p {
-  @apply text-nightSky leading-7;
+  @apply text-nightSky leading-normal;
 }
 
 .pagelinks h4 {
@@ -170,17 +187,17 @@ footer span {
 
 /* Error messages with a strong emphasis */
 .error {
-  @apply text-nightSky font-b shadow-outer bg-red-200 p-3 font-os text-base rounded-md leading-tight;
+  @apply text-nightSky font-b shadow-outer bg-red-200 p-3 text-base rounded-md leading-tight;
 }
 
 /* Modal form error messages */
 .modal-form-error {
-  @apply text-red-600 font-os text-sm;
+  @apply text-red-600 text-sm;
 }
 
 /* Success messages with a distinct style */
 .success {
-  @apply text-green-900 bg-green-200 p-3 font-os font-b text-base rounded-md leading-tight;
+  @apply text-green-900 bg-green-200 p-3 font-b text-base rounded-md leading-tight;
 }
 
 
