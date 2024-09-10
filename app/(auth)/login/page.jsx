@@ -51,10 +51,9 @@ const Login = () => {
           email
         })
       })
-
+     
+      // await json response from server and store in const userEmail
       const userEmail = await res.json()
-      console.log('Server response:', userEmail);
-
 
       if (res.status === 404) {
         setIsLoading(false)
@@ -75,7 +74,6 @@ const Login = () => {
           email
         })
 
-
         if (error) {
           setIsLoading(false);
           setError(error.message)
@@ -85,7 +83,6 @@ const Login = () => {
         if (!error) {
           router.push('/verify-login-otp')
         }
-
       }
 
     } catch (error) {
@@ -108,7 +105,7 @@ const Login = () => {
             Email
           </span>
           <input
-            className={`w-full p-2.5 rounded-md bg-nightSky text-stoneGray shadow-inner border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-deepOlive focus:ring-1 focus:ring-deepOlive`}
+            className={`w-full p-2.5 rounded-md bg-deepCharcoal text-stoneGray border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-deepOlive focus:ring-1 focus:ring-deepOlive`}
             type='text'
             spellCheck='false'
             autoFocus='true'
