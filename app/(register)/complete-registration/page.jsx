@@ -95,7 +95,7 @@ const CompleteRegistration = () => {
 
                 await updateTable(user, 'profiles', profile, 'id');
                 setSuccessMsg('Finalizing account setup...');
-                setRedirect(true);
+                setTimeout(() => setRedirect(true), 3000);
             } catch (err) {
                 setError('An error occurred. Please try again.');
             } finally {
@@ -151,20 +151,7 @@ const CompleteRegistration = () => {
                             />
                         </label>
                         <label>
-                            <span className='mt-4 mb-2 text-base text-stoneGray block'>Last Name</span>
-                            <input
-                                className={`w-full p-2.5 rounded-md text-stoneGray shadow-inner bg-nightSky border-2 ${lastNameError ? 'border-red-900' : 'border-stoneGray'} focus:border-deepOlive focus:ring-1 focus:ring-deepOlive`}
-                                type='text'
-                                value={lastName}
-                                placeholder='Smith'
-                                onChange={(e) => setLastName(e.target.value)}
-                                onKeyDown={handleKeyDown}
-                            />
-                        </label>
-                    </div>
-                    <div className='flex-1'>
-                        <label>
-                            <span className='mb-2 text-base text-stoneGray block'>Date of Birth</span>
+                            <span className='mt-4 mb-2 text-base text-stoneGray block'>Date of Birth</span>
                             <input
                                 className={`w-full p-2.5 rounded-md text-stoneGray shadow-inner bg-nightSky border-2 ${dobError ? 'border-red-900' : 'border-stoneGray'} focus:border-deepOlive focus:ring-1 focus:ring-deepOlive`}
                                 type='text'
@@ -173,6 +160,19 @@ const CompleteRegistration = () => {
                                 placeholder='e.g., DD/MM/YYYY'
                                 maxLength={10}
                                 onChange={handleDobChange}
+                                onKeyDown={handleKeyDown}
+                            />
+                        </label>
+                    </div>
+                    <div className='flex-1'>
+                    <label>
+                            <span className='mb-2 text-base text-stoneGray block'>Last Name</span>
+                            <input
+                                className={`w-full p-2.5 rounded-md text-stoneGray shadow-inner bg-nightSky border-2 ${lastNameError ? 'border-red-900' : 'border-stoneGray'} focus:border-deepOlive focus:ring-1 focus:ring-deepOlive`}
+                                type='text'
+                                value={lastName}
+                                placeholder='Smith'
+                                onChange={(e) => setLastName(e.target.value)}
                                 onKeyDown={handleKeyDown}
                             />
                         </label>

@@ -155,7 +155,7 @@ footer h4 {
 }
 
 footer p {
-  @apply text-nightSky leading-7;
+  @apply text-nightSky leading-normal;
 }
 
 .pagelinks h4 {

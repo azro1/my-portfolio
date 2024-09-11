@@ -67,20 +67,18 @@ const EmailForm = ({ user, profile, profileError }) => {
                 })
             })
     
-            const userEmail = await res.json()
-            console.log('Server response:', userEmail);
-    
+            // await json response from server and store in const userEmail
+            const userEmail = await res.json()    
     
             if (res.status === 409) {
                 setIsSending(false)
-                setFormError('This email is already associated with an account.')
+                setFormError('This email is already associated with an account')
                 return
     
             } else if (userEmail.error) {
                 setIsSending(false)
                 setFormError(userEmail.error)
                 return
-
     
             } else if (!userEmail.exists && res.status === 404) {
                 
@@ -171,7 +169,7 @@ const EmailForm = ({ user, profile, profileError }) => {
                     </form>
                     <button className='btn bg-deepOlive mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
                     <button className={`btn bg-deepOlive mt-3`} onClick={handleEmailUpdate}>
-                        {isSending ? 'Sending...' : 'Submit'}
+                        {isSending ? 'Updating...' : 'Submit'}
                     </button>
                     {(profileError || formError) && (
                         <div className="absolute">
