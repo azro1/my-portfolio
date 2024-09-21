@@ -1,7 +1,7 @@
 "use client";
 
 import { useFetchUser } from "@/app/hooks/useFetchUser";
-import { useUpdate } from "@/app/hooks/useUpdate";
+import { useUpdateTable } from "@/app/hooks/useUpdateTable";
 import { useUpdateMetadata } from "@/app/hooks/useUpdateMetadata";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -24,7 +24,7 @@ const CompleteRegistration = () => {
 
     const router = useRouter();
     const { user } = useFetchUser();
-    const { updateTable } = useUpdate();
+    const { updateTable } = useUpdateTable();
     const { updateMetadata } = useUpdateMetadata();
 
     const isValidPhoneNumber = (phoneNumber) => /^\+\d{1,15}$/.test(phoneNumber);
@@ -82,10 +82,10 @@ const CompleteRegistration = () => {
 
         if (user) {
             try {
-                const metadata = { firstname: firstName, lastname: lastName, phone };
+                const metadata = { first_name: firstName, last_name: lastName, phone };
                 await updateMetadata(metadata);
 
-                const profile = {
+                const profileData = {
                     first_name: firstName,
                     last_name: lastName,
                     phone,
@@ -93,7 +93,7 @@ const CompleteRegistration = () => {
                     updated_at: new Date().toISOString()
                 };
 
-                await updateTable(user, 'profiles', profile, 'id');
+                await updateTable(user, 'profiles', profileData, 'id');
                 setSuccessMsg('Finalizing account setup...');
                 setTimeout(() => setRedirect(true), 3000);
             } catch (err) {

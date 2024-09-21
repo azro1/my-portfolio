@@ -3,7 +3,7 @@
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useState } from 'react';
 
-const useUpdate = () => {
+const useUpdateTable = () => {
     const [error, setError] = useState(null)
     const supabase = createClientComponentClient()
 
@@ -28,4 +28,4 @@ const useUpdate = () => {
     return { error, updateTable }
 }
 
-export { useUpdate }
+export { useUpdateTable }

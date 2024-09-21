@@ -1,9 +1,12 @@
 "use client"
 
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useState, useEffect } from 'react'
+import { useRouter } from "next/navigation";
+
 
 // custom hooks
-import { useUpdate } from '@/app/hooks/useUpdate'
+import { useUpdateTable } from '@/app/hooks/useUpdateTable'
 import { useUpdateMetadata } from '@/app/hooks/useUpdateMetadata';
 
 
@@ -17,10 +20,11 @@ const PhoneForm = ({ user, profile }) => {
     const [showForm, setShowForm] = useState(false)
     const [formError, setFormError] = useState(null)
     const [saving, setSaving] = useState(false)
-
-
+    
+    const router = useRouter()
+  
     // custom hook to update profiles table
-    const { error: profileError, updateTable } = useUpdate()
+    const { error: profileError, updateTable } = useUpdateTable()
 
     // custom hook to update user metadata
     const { updateMetadata } = useUpdateMetadata()
@@ -63,13 +67,27 @@ const PhoneForm = ({ user, profile }) => {
             setFormError('Please enter a valid phone number (e.g., +123456789).')
             setTimeout(() => setFormError(null), 2000)
             return
-          }
+        }
 
-        // update user metadata
-        await updateMetadata({ phone: draftPhone })
+        // store phone temporarily in local storage
+        localStorage.setItem('phone', draftPhone)
 
-        // update profiles
-        await updateTable(user, 'profiles', { phone: draftPhone }, 'id')
+        try {
+            const supabase = createClientComponentClient()
+            const { data, error } = await supabase.auth.updateUser({
+                phone: draftPhone
+            })
+    
+            if (error) {
+                throw new Error(error.message)
+            }
+    
+            if (data) {
+                router.push('/profile/verify-phone-otp')
+            }  
+        } catch (error) {
+            console.log(error.message)
+        }
 
         setTimeout(() => {
             setShowForm(false)

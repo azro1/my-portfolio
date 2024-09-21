@@ -29,7 +29,7 @@ const Login = () => {
       return
 
     } else if (!isValidEmail(email)) {
-      setError('Unable to validate email address: invalid format');
+      setError('Invalid format. Please try again.');
       setTimeout(() => setError(null), 2000)
       setIsLoading(false)
       return
@@ -94,37 +94,42 @@ const Login = () => {
   }
 
   return (
-    <div className='flex flex-col items-center gap-6 md:justify-evenly md:gap-0 md:flex-row md:h-auth-page-height relative'>
+    <div className='flex flex-col items-center md:justify-evenly md:flex-row md:h-auth-page-height'>
 
-      <form className="w-full max-w-xs" onSubmit={handleSubmit}>
-        <h2 className='text-3xl mb-6 font-eb text-deepOlive'>Login</h2>
-        <p className='mb-3'>Enter your email to recieve a OTP (One-Time Passcode) for Login.</p>
 
-        <label>
-          <span className='max-w-min mb-2 text-base text-stoneGray block'>
-            Email
-          </span>
-          <input
-            className={`w-full p-2.5 rounded-md bg-deepCharcoal text-stoneGray border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-deepOlive focus:ring-1 focus:ring-deepOlive`}
-            type='text'
-            spellCheck='false'
-            autoFocus='true'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </label>
-        
-        <div className="flex">
-          <button className='mt-4 btn bg-deepOlive' disabled={isLoading}>{isLoading ? 'Logging in...' : 'Login'}</button>
-          <Link className='ml-auto mt-2' href={'/verify-phone-number'}>
-             <span className='text-deepOlive text-base'>Forgot email?</span>
-          </Link>
+      <div className="flex w-full max-w-xs relative h-72 md:h-80">
+        <div className="absolute -top-16 md:-top-10 w-full text-center">
+          {error && <div className="error">{error}</div>}
         </div>
-      </form>
 
-      <div className="mt-4 text-center h-2 md:h-0 absolute -top-24 md:-top-16 justify-self-center w-80">
-        {error && <div className="error">{error}</div>}
+        <form className="h-fit self-end" onSubmit={handleSubmit}>
+          <h2 className='text-3xl mb-6 font-eb text-deepOlive'>Login</h2>
+          <p className='mb-4'>Enter your email address to recieve a security code for quick and secure login</p>
+
+          <label>
+            <span className='max-w-min mb-2 text-base text-stoneGray block'>
+              Email
+            </span>
+            <input
+              className={`w-full p-2.5 rounded-md bg-deepCharcoal text-stoneGray border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-deepOlive focus:ring-1 focus:ring-deepOlive`}
+              type='text'
+              placeholder='name@domain.com'
+              spellCheck='false'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </label>
+
+          <div className="flex">
+            <button className='mt-4 btn bg-deepOlive' disabled={isLoading}>{isLoading ? 'Logging in...' : 'Login'}</button>
+            <Link className='ml-auto mt-2' href={'/forgot-email'}>
+              <span className='text-deepOlive text-base'>Forgot email?</span>
+            </Link>
+          </div>
+        </form>
       </div>
+
+
 
       <div className='flex flex-col items-center mb-4.5 md:col-start-2 md:mb-0'>
         <p className='mb-8'>or Login using</p>

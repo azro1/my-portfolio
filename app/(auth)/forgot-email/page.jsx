@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation";
 
 
-const VerifyPhoneNumber = () => {
+const ForgotEmail = () => {
     const [phone, setPhone] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
@@ -91,7 +91,7 @@ const VerifyPhoneNumber = () => {
       // once email associated with phone number is found send otp from server to recovered email and redirect them to verify-login-otp page
       useEffect(() => {
          if (redirect) {
-            router.push('/verify-login-otp')
+            router.push('/verify-email-otp')
          }
       }, [router, redirect])
 
@@ -112,39 +112,38 @@ const VerifyPhoneNumber = () => {
 
     
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 grid-flow-row auto-rows-fr justify-center md:h-auth-page-height relative ">
-            
-            <div className='max-w-xs self-center justify-self-center shadow-outer p-6 rounded-md h-fit md:self-end'>
-                <p>Enter the phone number you provided during your account setup to help us recover your email address.</p>
-            </div>
+        <div className='flex items-center justify-center h-auth-page-height'>
 
+            <div className='flex h-80 relative'>
+                <div className="absolute -top-10 sm:-top-8 w-full text-center">
+                    {error && <div className="error">{error}</div>}
+                    {successMsg && <div className='success mt-2'>{successMsg}</div>}
+                </div>
 
-            <form className="max-w-xs md:row-start-2 md:col-start-2 justify-self-center md:justify-self-start md:place-self-end" onSubmit={handleSubmit}>
-                <h2 className='text-3xl mb-6 font-eb text-deepOlive'>Recover Your email</h2>
-                <label>
-                    <span className='max-w-min mt-4 mb-2 text-base text-stoneGray block'>Phone</span>
-                    <input
-                        className={`w-full p-2.5 rounded-md text-stoneGray bg-deepCharcoal border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-deepOlive focus:ring-1 focus:ring-deepOlive`}
-                        type='tel'
-                        value={phone}
-                        spellCheck='false'
-                        autoFocus='true'
-                        maxLength="15"
-                        placeholder="e.g., +14155552671"
-                        onChange={(e) => setPhone(e.target.value)}
-                        onKeyDown={handleKeyDown}
-                    />
-                </label>
-                <button className='btn block mt-4 bg-deepOlive' disabled={isLoading}>{isLoading ? 'Processing...' : 'Submit'}</button>
+                <form className='max-w-max h-fit place-self-end' onSubmit={handleSubmit}>
+                    <h2 className='text-3xl mb-4 font-eb text-deepOlive'>Recover Your email</h2>
+                    <p className='mb-4 max-w-lg'>Enter the phone number you provided during your account setup to help us recover your email address.</p>
 
-            </form>
-            <div className="mt-4  text-center h-2 md:h-0 absolute -top-16 justify-self-center w-80">
-                {error && <div className="error">{error}</div>}
-                {successMsg && <div className='success mt-2'>{successMsg}</div>}
+                    <label>
+                        <span className='max-w-min mb-2 text-base text-stoneGray block'>Phone</span>
+                        <input
+                            className={`w-full max-w-xs p-2.5 rounded-md text-stoneGray bg-deepCharcoal border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-deepOlive focus:ring-1 focus:ring-deepOlive`}
+                            type='tel'
+                            value={phone}
+                            spellCheck='false'
+                            maxLength="15"
+                            placeholder="e.g., +14155552671"
+                            onChange={(e) => setPhone(e.target.value)}
+                            onKeyDown={handleKeyDown}
+                        />
+                    </label>
+                    <button className='btn block mt-4 bg-deepOlive' disabled={isLoading}>{isLoading ? 'Processing...' : 'Submit'}</button>
+
+                </form>
             </div>
 
         </div>
     )
 }
 
-export default VerifyPhoneNumber
+export default ForgotEmail

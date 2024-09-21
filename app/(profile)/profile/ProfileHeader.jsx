@@ -41,7 +41,7 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
    useEffect(() => {
       if (profile) {
          setIsProfileLoading(false)
-         setFirstName(profile.first_name || user.user_metadata.full_name || '')
+         setFirstName(profile.first_name || user.user_metadata.name || '')
          setAvatarUrl(profile.avatar_url)
          setBio(profile.bio)
       }

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 
 // custom hooks
-import { useUpdate } from '@/app/hooks/useUpdate'
+import { useUpdateTable } from '@/app/hooks/useUpdateTable'
 import { useUpdateMetadata } from '@/app/hooks/useUpdateMetadata';
 
 
@@ -20,7 +20,7 @@ const LastNameForm = ({ user, profile }) => {
 
 
     // custom hook to update profiles table
-    const { error: profileError, updateTable } = useUpdate()
+    const { error: profileError, updateTable } = useUpdateTable()
 
     // custom hook to update user metadata
     const { updateMetadata } = useUpdateMetadata()
@@ -51,7 +51,7 @@ const LastNameForm = ({ user, profile }) => {
         }
 
         // update user metadata
-        updateMetadata({ lastname: draftLastName })
+        updateMetadata({ last_name: draftLastName })
 
         // update profiles
         await updateTable(user, 'profiles', { last_name: draftLastName }, 'id')

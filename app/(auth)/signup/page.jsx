@@ -40,7 +40,8 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-
+    setError(null)
+    
     // form validation
     if (!email) {
       setError('Please provide your email');
@@ -48,7 +49,7 @@ const Signup = () => {
       setIsLoading(false);
       return;
     } else if (!isValidEmail(email)) {
-      setError('Unable to validate email address: invalid format');
+      setError('Invalid format. Please try again.');
       setTimeout(() => setError(null), 2000);
       setIsLoading(false);
       return;
@@ -125,39 +126,45 @@ const Signup = () => {
 
 
     return (
-      <div className='flex flex-col items-center gap-6 mb-4.5 md:justify-evenly md:gap-0 md:flex-row md:h-auth-page-height relative'>
+      <div className='flex flex-col items-center gap-6 mb-4.5 md:justify-evenly md:gap-0 md:flex-row md:h-auth-page-height'>
 
-        <form onSubmit={handleSubmit} className="w-full max-w-xs">
-          <h2 className='text-3xl mb-6 font-eb text-deepOlive'>Sign up</h2>
-          <p className='mb-3'>Enter your email to recieve a OTP (One-Time Passcode) to create your account.</p>
+        <div className="flex w-full max-w-xs h-72 md:h-96 relative">
           
-          <label>
-            <span className='max-w-min mt-4 mb-2 text-base text-stoneGray block'>
-              Email
-            </span>
-            <input
-              className={`w-full p-2.5 rounded-md text-stoneGray bg-deepCharcoal border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-deepOlive focus:ring-1 focus:ring-deepOlive`}
-              type='text'
-              spellCheck='false'
-              autoFocus='true'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </label>
-
-          <div className="mt-5 flex items-center">
-            <input className="self-start mt-0.21 max-w-min transform scale-125" type="checkbox" value={isChecked} onChange={handleCheckbox}/>
-            <span className="text-base block text-stoneGray ml-2.5 -mt-1">By signing up I agree to the{' '}<Link className="text-deepOlive text-base" href='#'>Privacy Policy</Link>{' '}and{' '}<Link className='text-deepOlive text-base' href='#'>Terms of Service</Link>
-            .</span>
+          <div className="absolute -top-16 md:-top-10 w-full text-center">
+            {error && <div className="error"> {error}</div>}
+            {checkBoxError && <p className="error leading-tight">{checkBoxError}</p>}
           </div>
 
-          <button className='btn block mt-4 bg-deepOlive' disabled={isLoading}>{isLoading ? 'Processing...' : 'Signup'}</button>
-        </form>
-  
-        <div className="mt-4 text-center h-2 md:h-0 absolute -top-28 md:-top-16 w-80">
-          {error && <div className="error"> {error}</div>}
-          {checkBoxError && <p className="error leading-tight">{checkBoxError}</p>}
+          <form onSubmit={handleSubmit} className="h-fit self-end">
+            <h2 className='text-3xl mb-6 font-eb text-deepOlive'>Sign up</h2>
+            <p className='mb-4'>Enter your email address to recieve a security code to create your account</p>
+            
+            <label>
+              <span className='max-w-min mt-4 mb-2 text-base text-stoneGray block'>
+                Email
+              </span>
+              <input
+                className={`w-full p-2.5 rounded-md text-stoneGray bg-deepCharcoal border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-deepOlive focus:ring-1 focus:ring-deepOlive`}
+                type='text'
+                spellCheck='false'
+                placeholder='name@domain.com'
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </label>
+
+            <div className="mt-5 flex items-center">
+              <input className="self-start mt-0.21 max-w-min transform scale-125" type="checkbox" value={isChecked} onChange={handleCheckbox}/>
+              <span className="text-base block text-stoneGray ml-2.5 -mt-1">By signing up I agree to the{' '}<Link className="text-deepOlive text-base" href='#'>Privacy Policy</Link>{' '}and{' '}<Link className='text-deepOlive text-base' href='#'>Terms of Service</Link>
+              .</span>
+            </div>
+
+            <button className='btn block mt-4 bg-deepOlive' disabled={isLoading}>{isLoading ? 'Processing...' : 'Signup'}</button>
+          </form>
         </div>
+
+  
+
 
         <div className='flex flex-col items-center md:grid-col-start-1 md:grid-row-start-2 md:col-span-2'>
           <p className='mb-8'>or Sign up using</p>

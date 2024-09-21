@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 
 // custom hooks
-import { useUpdate } from '@/app/hooks/useUpdate'
+import { useUpdateTable } from '@/app/hooks/useUpdateTable'
 import { useUpdateMetadata } from '@/app/hooks/useUpdateMetadata'
 
 // components
@@ -17,7 +17,7 @@ const FirstNameForm = ({ user, profile }) => {
     const [saving, setSaving] = useState(false)
 
     // custom hook to update profiles table
-    const { error: profileError, updateTable } = useUpdate()
+    const { error: profileError, updateTable } = useUpdateTable()
 
     // custom hook to update user metadata
     const { updateMetadata } = useUpdateMetadata()
@@ -26,8 +26,8 @@ const FirstNameForm = ({ user, profile }) => {
     // populate form fields from profiles table
     useEffect(() => {
         if (user && profile) {
-            setDraftFirstName(profile.first_name || user.user_metadata.full_name || '')
-            setFirstName(profile.first_name || user.user_metadata.full_name || '')
+            setDraftFirstName(profile.first_name || user.user_metadata.name || '')
+            setFirstName(profile.first_name || user.user_metadata.name || '')
         }
 
         if (profileError) {

@@ -6,7 +6,7 @@ import { useState, useEffect } from "react"
 // custom hooks
 import { useFetchUser } from '@/app/hooks/useFetchUser';
 import { useFetchProfile } from '@/app/hooks/useFetchProfile';
-import { useUpdate } from '@/app/hooks/useUpdate';
+import { useUpdateTable } from '@/app/hooks/useUpdateTable';
 
 // components
 import AvatarUploader from './AvatarUploader';
@@ -35,7 +35,7 @@ const UpdateProfile = () => {
     const { error: profileError, profile, fetchProfile } = useFetchProfile()
 
     // custom hook to update comments after user updates personal info
-    const { updateTable } = useUpdate()
+    const { updateTable } = useUpdateTable()
 
     const supabase = createClientComponentClient()
 
@@ -84,7 +84,7 @@ const UpdateProfile = () => {
                 first_name,
                 avatar_url: undefined
             }
-            await updateTable(user, 'comments', tableData, 'comment_id') // pass in params to updateTable function from generic custom hook useUpdate to update comments table
+            await updateTable(user, 'comments', tableData, 'comment_id') // pass in params to updateTable function from generic custom hook useUpdateTable to update comments table
             
 
         } catch (error) {
