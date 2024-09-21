@@ -1,14 +1,15 @@
 // components
 import OtpForm from "../OtpForm";
 
-const LoginOtp = () => {
+const VerifyLoginOtp = () => {
 
     return (
         <OtpForm
+            subHeading='To complete the login process, enter the verification code we sent to your email address.'
             successMessage='OTP verification passed. Loggin in...'
             redirectUrl='/'
         />
     )
 }
 
-export default LoginOtp
+export default VerifyLoginOtp

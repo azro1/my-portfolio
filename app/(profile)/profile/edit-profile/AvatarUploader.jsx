@@ -6,7 +6,7 @@ import { useState, useRef } from 'react';
 import { FaUserCircle } from "react-icons/fa";
 
 // custom hooks
-import { useUpdate } from '@/app/hooks/useUpdate';
+import { useUpdateTable } from '@/app/hooks/useUpdateTable';
 
 // components
 import Modal from './Modal';
@@ -16,7 +16,7 @@ import Modal from './Modal';
 const AvatarUploader = ({ user, updateProfile }) => {
 
     // custom hook to update comments after user updates personal info
-    const { updateTable } = useUpdate()
+    const { updateTable } = useUpdateTable()
 
     const [fileInputError, setFileInputError] = useState(null)
     const [selectedFile, setSelectedFile] = useState(null)
@@ -74,7 +74,7 @@ const AvatarUploader = ({ user, updateProfile }) => {
                 first_name: undefined,
                 avatar_url: filePath
             }
-            await updateTable(user, 'comments', tableData, 'comment_id') // pass in params to updateTable function from generic custom hook useUpdate to update comments table
+            await updateTable(user, 'comments', tableData, 'comment_id') // pass in params to updateTable function from generic custom hook useUpdateTable to update comments table
 
             if (formRef.current) {
                 setImgSrc('')
@@ -115,12 +115,12 @@ const AvatarUploader = ({ user, updateProfile }) => {
                         id='single'
                         accept='image/*'
                         onChange={handleFileInputChange}
-                        disabled={uploading || (user && user.user_metadata.full_name)}
+                        disabled={uploading || (user && user.user_metadata.name)}
                     />
                 </form>
                 <button className={`small-btn bg-nightSky block ${uploadError ? 'mt-2' : 'mt-3'}`}
                     onClick={uploadAvatar}
-                    disabled={uploading || (user && user.user_metadata.full_name)}
+                    disabled={uploading || (user && user.user_metadata.name)}
                 >
                     {uploading ? 'Uploading...' : 'Upload'}
                 </button>

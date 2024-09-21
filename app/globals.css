@@ -70,11 +70,7 @@ img {
 
 /* input placeholders */
 input::placeholder {
-  filter: brightness(42%)
-}
-
-.fieye, .fieye-off {
-  filter: brightness(52%)
+  filter: brightness(30%)
 }
 
 .fieye-container:hover .fieye, .fieye-container:hover .fieye-off {
@@ -187,7 +183,7 @@ footer span {
 
 /* Error messages with a strong emphasis */
 .error {
-  @apply text-nightSky font-b shadow-outer bg-red-200 p-3 text-base rounded-md leading-tight;
+  @apply text-stoneGray font-medium shadow-outer p-3 text-base rounded-md leading-normal;
 }
 
 /* Modal form error messages */
@@ -197,7 +193,7 @@ footer span {
 
 /* Success messages with a distinct style */
 .success {
-  @apply text-green-900 bg-green-200 p-3 font-b text-base rounded-md leading-tight;
+  @apply text-nightSky bg-green-200 p-3 font-medium text-base rounded-md leading-normal;
 }
 
 

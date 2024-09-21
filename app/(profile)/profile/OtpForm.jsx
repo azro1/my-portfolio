@@ -4,16 +4,30 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation";
 
+// icons
 import { FiEye, FiEyeOff } from 'react-icons/fi'
 
+// hooks
+import { useUpdateTable } from "@/app/hooks/useUpdateTable";
+import { useUpdateMetadata } from "@/app/hooks/useUpdateMetadata";
 
-const OtpForm = ({ redirectUrl, subHeading, successMessage }) => {
+
+const OtpForm = ({ storageStr, verificationType, redirectUrl, subHeading, successMessage }) => {
     const [otp, setOtp] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
     const [successMsg, setSuccessMsg] = useState(null)
     const [isEyeOpen, setIsEyeOpen] = useState(false)
     const [redirect, setRedirect] = useState(false)
+
+    
+
+    // custom hook to update profiles table
+    const { error: updateTableError, updateTable } = useUpdateTable()
+    // custom hook to update metadata
+    const { error: updateMetadataError, updateMetadata } = useUpdateMetadata()
+
+
 
     const router = useRouter()
 
@@ -38,16 +52,22 @@ const OtpForm = ({ redirectUrl, subHeading, successMessage }) => {
 
 
         // get and remove email from local storage
-        const email = localStorage.getItem('email')
-        localStorage.removeItem('email')
+        const contactMethod = localStorage.getItem(storageStr)
+        localStorage.removeItem(storageStr)
 
+        let email, phone;
+
+        if (contactMethod.includes('@')) {
+            email = contactMethod
+        } else {
+            phone = contactMethod
+        }
+
+        const otpVerificationData = email ? { email, token: otp, type: verificationType } : { phone, token: otp, type: verificationType }
+        const appData = email ? { email: email } : { phone: phone }
 
         const supabase = createClientComponentClient()
-        const { data: { session }, error } = await supabase.auth.verifyOtp({
-            email,
-            token: otp,
-            type: 'email'
-        })
+        const { data: { session }, error } = await supabase.auth.verifyOtp(otpVerificationData)
 
         if (error) {
             setIsLoading(false)
@@ -57,7 +77,23 @@ const OtpForm = ({ redirectUrl, subHeading, successMessage }) => {
 
         } else if (session) {
             setSuccessMsg(successMessage)
-            setTimeout(() => setRedirect(true), 3000)
+
+            // update raw_user_meta_data
+            await updateMetadata(appData)
+            // update profiles table with new email
+            await updateTable(session.user, 'profiles', appData, 'id')
+            
+            if (updateMetadataError) {
+               setIsLoading(false)
+               setError(updateMetadataError)
+               return
+            } else if (updateTableError) {
+               setIsLoading(false)
+               setError(updateTableError)
+               return
+            } else {
+               setTimeout(() => setRedirect(true), 3000)
+            }
         }
     }
 
@@ -68,7 +104,7 @@ const OtpForm = ({ redirectUrl, subHeading, successMessage }) => {
         if (redirect) {
             router.push(redirectUrl)
         }
-    }, [redirect, redirectUrl, router]);
+    }, [redirect, router, redirectUrl]);
 
 
 
@@ -95,18 +131,18 @@ const OtpForm = ({ redirectUrl, subHeading, successMessage }) => {
 
 
     return (
-        <div className="flex items-center justify-center h-auth-page-height">
+        <div className="flex items-center justify-center h-profile-page-height">
 
-            <div className="flex relative h-80">
+            <div className="flex relative max-w-sm">
 
-                <div className="absolute -top-24 sm:-top-8 w-full text-center">
+                <div className="absolute -top-20 w-full text-center">
                     {successMsg && <div className='success'>{successMsg}</div>}
                     {error && <div className="error">{error}</div>}
                 </div>
 
-                <form className="max-w-max h-fit place-self-end" onSubmit={handleVerifyOtp}>
-                    <h2 className='text-3xl leading-normal mb-4 font-eb text-deepOlive'>Email Verification Required</h2>
-                    <p className='mb-4 max-w-lg'>{subHeading}</p>
+                <form className="max-w-max" onSubmit={handleVerifyOtp}>
+                    <h2 className='text-3xl leading-normal mb-6 font-eb text-deepOlive'>Verify Your Email</h2>
+                    <p className='mb-4'>{subHeading}</p>
 
                     <label>
                         <span className='max-w-min mb-2 text-base text-stoneGray block'>
@@ -118,7 +154,6 @@ const OtpForm = ({ redirectUrl, subHeading, successMessage }) => {
                                 type={`${isEyeOpen ? 'text' : 'password'}`}
                                 spellCheck='false'
                                 autoComplete="off"
-                                placeholder="123456"
                                 value={otp}
                                 maxLength='6'
                                 onChange={handleOtpChange}
@@ -144,16 +179,14 @@ const OtpForm = ({ redirectUrl, subHeading, successMessage }) => {
                             </div>
                         </div>
                     </label>
-
                     <button className='btn block mt-3.5 bg-deepOlive' disabled={isLoading}>{isLoading ? 'Verifying...' : 'Submit'}</button>
-
                 </form>
 
             </div>
-
 
         </div>
     )
 }
 
 export default OtpForm
+

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 
 // custom hooks
-import { useUpdate } from '@/app/hooks/useUpdate'
+import { useUpdateTable } from '@/app/hooks/useUpdateTable'
 
 // components
 import Modal from "./Modal";
@@ -17,7 +17,7 @@ const AgeForm = ({ user, profile }) => {
   
 
     // custom hook to update profiles table
-    const { error: profileError, updateTable } = useUpdate()
+    const { error: profileError, updateTable } = useUpdateTable()
 
 
     // populate form fields from profiles table

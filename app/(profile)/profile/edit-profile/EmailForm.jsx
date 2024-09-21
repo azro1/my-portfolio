@@ -94,7 +94,7 @@ const EmailForm = ({ user, profile, profileError }) => {
                 }
 
                 if (data) {
-                    router.push('/profile/verify-email-update-otp')
+                    router.push('/profile/verify-email-otp')
                 }
             }
 
@@ -104,14 +104,6 @@ const EmailForm = ({ user, profile, profileError }) => {
 
         }
     }
-
-
-
-
-
-
-
-
 
 
     // handleOpenForm function
