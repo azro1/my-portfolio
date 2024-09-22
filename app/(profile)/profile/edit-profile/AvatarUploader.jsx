@@ -2,7 +2,7 @@
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import Image from 'next/image';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { FaUserCircle } from "react-icons/fa";
 
 // custom hooks
@@ -13,7 +13,7 @@ import Modal from './Modal';
 
 
 
-const AvatarUploader = ({ user, updateProfile }) => {
+const AvatarUploader = ({ user, updateProfile, updateError, title, displayTitle, btnColor, btnText }) => {
 
     // custom hook to update comments after user updates personal info
     const { updateTable } = useUpdateTable()
@@ -68,14 +68,12 @@ const AvatarUploader = ({ user, updateProfile }) => {
             if (error) {
                 throw new Error(error.message)
             }
+            // update profiles avatar
             await updateProfile({ avatar_url: filePath })
 
-            let tableData = {
-                first_name: undefined,
-                avatar_url: filePath
-            }
-            await updateTable(user, 'comments', tableData, 'comment_id') // pass in params to updateTable function from generic custom hook useUpdateTable to update comments table
-
+            // update comments avatar
+            await updateTable(user, 'comments', { avatar_url: filePath }, 'comment_id') 
+            
             if (formRef.current) {
                 setImgSrc('')
                 setSelectedFile('')
@@ -94,7 +92,10 @@ const AvatarUploader = ({ user, updateProfile }) => {
     return (
         <div>
             <div>
-                <p className='leading-normal'>Personalize your account by uploading your own avatar.</p>
+                {displayTitle &&  (
+                    <h2 className='text-2xl text-stoneGray mb-3'>{title}</h2>
+                )}
+                <p className='leading-normal'>Personalize your account by uploading your own avatar</p>
                 <div className='mb-2 mt-4 h-14 w-14 relative '>
                     {imgSrc ? (
                         <Image
@@ -118,18 +119,18 @@ const AvatarUploader = ({ user, updateProfile }) => {
                         disabled={uploading || (user && user.user_metadata.name)}
                     />
                 </form>
-                <button className={`small-btn bg-nightSky block ${uploadError ? 'mt-2' : 'mt-3'}`}
+                <button className={`small-btn ${btnColor} block ${uploadError ? 'mt-2' : 'mt-3'}`}
                     onClick={uploadAvatar}
                     disabled={uploading || (user && user.user_metadata.name)}
                 >
-                    {uploading ? 'Uploading...' : 'Upload'}
+                    {uploading ? 'Uploading...' : `${btnText}`}
                 </button>
             </div>
 
-            {(uploadError || fileInputError) && (
+            {(uploadError || fileInputError || updateError) && (
                 <Modal>
                     <div className="text-center">
-                        <p className='modal-form-error'>* {uploadError || fileInputError}</p>
+                        <p className='modal-form-error'>* {uploadError || fileInputError || updateError}</p>
                     </div>
                 </Modal>
             )}

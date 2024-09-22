@@ -86,10 +86,11 @@ const CommentList = ({ user }) => {
   return (
     <div>
         <h3 className='text-lg font-b text-nightSky mb-3'>Comments</h3>
-            <div className='flex flex-col gap-2 text-left min-h-96 max-h-96 overflow-y-scroll hide-scrollbar md:max-w-xs relative'>
+
+            <div className='flex flex-col gap-2 text-left min-h-96 max-h-96 overflow-y-scroll hide-scrollbar md:max-w-xs relative bg-frostWhite'>
                 {comments && comments.length > 0 ? (
                     comments.map(comment => (
-                        <div className='flex items-start gap-1 justify-between p-3 bg-frostWhite' key={comment.id}>
+                        <div className='flex items-start gap-1 justify-between p-3 bg-nightSky' key={comment.id}>
                             <div>
                                 <span className="text-stoneGray text-sm pb-1 leading-normal block">{comment.text}</span>
                                 <span className='text-sm text-deepOlive'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>

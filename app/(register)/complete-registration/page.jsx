@@ -1,16 +1,23 @@
 "use client";
 
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+
+// components
+import AvatarUploader from "@/app/(profile)/profile/edit-profile/AvatarUploader";
+
 import { useFetchUser } from "@/app/hooks/useFetchUser";
 import { useUpdateTable } from "@/app/hooks/useUpdateTable";
 import { useUpdateMetadata } from "@/app/hooks/useUpdateMetadata";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
+
 const CompleteRegistration = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [phone, setPhone] = useState('');
     const [dob, setDob] = useState('');
+    const [imageUrl, setImageUrl] = useState(null);
 
     const [firstNameError, setFirstNameError] = useState(false);
     const [lastNameError, setLastNameError] = useState(false);
@@ -39,49 +46,50 @@ const CompleteRegistration = () => {
         setDobError(false);
 
         if (!firstName) {
+            setIsLoading(false);
             setFirstNameError(true);
             setError('Please provide your Firstname');
-            setIsLoading(false);
             return;
         }
 
         if (!lastName) {
+            setIsLoading(false);
             setLastNameError(true);
             setError('Please provide your Lastname');
-            setIsLoading(false);
             return;
         }
 
         if (!dob) {
+            setIsLoading(false);
             setDobError(true);
             setError('Please provide your Date of Birth');
-            setIsLoading(false);
             return;
         }
 
         if (!isValidDob(dob)) {
+            setIsLoading(false);
             setDobError(true);
             setError('Invalid Date of Birth format. Use DD/MM/YYYY.');
-            setIsLoading(false);
             return;
         }
 
         if (!phone) {
+            setIsLoading(false);
             setPhoneError(true);
             setError('Please provide a phone number');
-            setIsLoading(false);
             return;
         }
 
         if (!isValidPhoneNumber(phone)) {
+            setIsLoading(false);
             setPhoneError(true);
             setError('Invalid phone number format. Use: +14155552671.');
-            setIsLoading(false);
             return;
         }
 
         if (user) {
             try {
+                // update raw_user_metadata object
                 const metadata = { first_name: firstName, last_name: lastName, phone };
                 await updateMetadata(metadata);
 
@@ -92,17 +100,56 @@ const CompleteRegistration = () => {
                     dob,
                     updated_at: new Date().toISOString()
                 };
-
+                
+                // update profiles table
                 await updateTable(user, 'profiles', profileData, 'id');
+
                 setSuccessMsg('Finalizing account setup...');
                 setTimeout(() => setRedirect(true), 3000);
             } catch (err) {
-                setError('An error occurred. Please try again.');
+                setError('An error occurred. Please try again later.');
             } finally {
                 setIsLoading(false);
             }
         }
     };
+
+
+
+
+
+    const updateProfile = async ({ avatar_url }) => {
+        setError(null)
+        setImageUrl(avatar_url)
+
+        try {
+            const updatedProfile = {
+                id: user.id,
+                avatar_url,
+                updated_at: new Date().toISOString(),
+            }
+
+            const supabase = createClientComponentClient()
+            const { error } = await supabase.from('profiles').upsert(updatedProfile)
+
+            if (error) {
+                throw new Error(error.message)
+            } else {
+                setSuccessMsg('Avatar added!');
+                setTimeout(() => setSuccessMsg(null), 2000)    
+            }
+
+        } catch (error) {
+            setError('Failed to upload avatar.')
+            console.log(error.message)
+        } finally {
+            setTimeout(() => setError(null), 2000)    
+        }
+    }
+
+
+
+
 
     useEffect(() => {
         if (redirect) {
@@ -127,20 +174,34 @@ const CompleteRegistration = () => {
         setDob(sanitizedValue);
     };
 
-    return (
-        <div className='flex flex-col justify-center items-center md:h-auth-page-height w-full'>
-            
-            
-            
-            <div className='w-full sm:w-9/12 relative'>
-                <h2 className='text-3xl md:text-center leading-normal mb-6 font-eb text-deepOlive'>Set Up Your Account</h2>
 
-                <form className='flex flex-col md:flex-row gap-4'>
-                    <div className='flex-1'>
+
+
+
+    
+    return (
+        <div className='flex flex-col  w-full'>
+            
+            
+            
+            <div className='flex flex-col relative w-full '>
+              
+                <h2 className='text-3xl md:text-center leading-normal font-eb text-deepOlive'>Set Up Your Account</h2>
+
+
+                <div className="absolute -top-20 text-center w-full place-self-center">
+                    {successMsg && <div className='success text-center'>{successMsg}</div>}
+                    {error && <div className="error text-center">{error}</div>}
+                </div>  
+
+             
+               <div className='mt-8 flex flex-col  gap-6 md:flex-row md:justify-evenly h-fit w-full'>
+
+                    <form className='flex-1 order-2 md:order-1'>
                         <label>
-                            <span className='max-w-max mb-2 text-base text-stoneGray block'>First Name</span>
+                            <span className='mb-2 text-base text-stoneGray block'>First Name</span>
                             <input
-                                className={`w-full p-2.5 rounded-md text-stoneGray shadow-inner bg-nightSky border-2 ${firstNameError ? 'border-red-900' : 'border-stoneGray'} focus:border-deepOlive focus:ring-1 focus:ring-deepOlive`}
+                                className={`w-full max-w-sm p-2.5 rounded-md text-stoneGray shadow-inner bg-nightSky border-2 ${firstNameError ? 'border-red-900' : 'border-stoneGray'} focus:border-deepOlive focus:ring-1 focus:ring-deepOlive`}
                                 type='text'
                                 spellCheck='false'
                                 value={firstName}
@@ -151,9 +212,20 @@ const CompleteRegistration = () => {
                             />
                         </label>
                         <label>
+                            <span className='mt-4 mb-2 text-base text-stoneGray block'>Last Name</span>
+                            <input
+                                className={`w-full max-w-sm p-2.5 rounded-md text-stoneGray shadow-inner bg-nightSky border-2 ${lastNameError ? 'border-red-900' : 'border-stoneGray'} focus:border-deepOlive focus:ring-1 focus:ring-deepOlive`}
+                                type='text'
+                                value={lastName}
+                                placeholder='Smith'
+                                onChange={(e) => setLastName(e.target.value)}
+                                onKeyDown={handleKeyDown}
+                            />
+                        </label>
+                        <label>
                             <span className='mt-4 mb-2 text-base text-stoneGray block'>Date of Birth</span>
                             <input
-                                className={`w-full p-2.5 rounded-md text-stoneGray shadow-inner bg-nightSky border-2 ${dobError ? 'border-red-900' : 'border-stoneGray'} focus:border-deepOlive focus:ring-1 focus:ring-deepOlive`}
+                                className={`w-full max-w-sm p-2.5 rounded-md text-stoneGray shadow-inner bg-nightSky border-2 ${dobError ? 'border-red-900' : 'border-stoneGray'} focus:border-deepOlive focus:ring-1 focus:ring-deepOlive`}
                                 type='text'
                                 value={dob}
                                 spellCheck='false'
@@ -163,23 +235,10 @@ const CompleteRegistration = () => {
                                 onKeyDown={handleKeyDown}
                             />
                         </label>
-                    </div>
-                    <div className='flex-1'>
-                    <label>
-                            <span className='mb-2 text-base text-stoneGray block'>Last Name</span>
-                            <input
-                                className={`w-full p-2.5 rounded-md text-stoneGray shadow-inner bg-nightSky border-2 ${lastNameError ? 'border-red-900' : 'border-stoneGray'} focus:border-deepOlive focus:ring-1 focus:ring-deepOlive`}
-                                type='text'
-                                value={lastName}
-                                placeholder='Smith'
-                                onChange={(e) => setLastName(e.target.value)}
-                                onKeyDown={handleKeyDown}
-                            />
-                        </label>
                         <label>
                             <span className='max-w-min mt-4 mb-2 text-base text-stoneGray block'>Phone</span>
                             <input
-                                className={`w-full p-2.5 rounded-md text-stoneGray shadow-inner bg-nightSky border-2 ${phoneError ? 'border-red-900' : 'border-stoneGray'} focus:border-deepOlive focus:ring-1 focus:ring-deepOlive`}
+                                className={`w-full max-w-sm p-2.5 rounded-md text-stoneGray shadow-inner bg-nightSky border-2 ${phoneError ? 'border-red-900' : 'border-stoneGray'} focus:border-deepOlive focus:ring-1 focus:ring-deepOlive`}
                                 type='tel'
                                 value={phone}
                                 spellCheck='false'
@@ -190,24 +249,49 @@ const CompleteRegistration = () => {
                                 onKeyDown={handlePhoneKeyDown}
                             />
                         </label>
+                    </form>  
+
+                    <div className='flex-1 order-1 w-fit h-fit md:mt-4 md:order-2 md:shadow-outer md:p-5 '>
+                        <div className='p-5 bg-deepCharcoal border-2 border-stoneGray'>
+                            <AvatarUploader 
+                                user={user}
+                                updateProfile={updateProfile}
+                                title='Add a profile avatar'
+                                displayTitle={true}
+                                btnColor='bg-deepOlive'
+                                btnText='Add'
+                            />
+                        </div>
+
                     </div>
-                </form>
+               </div>
+  
 
 
 
-                <button className='btn block w-full mt-5 bg-deepOlive' onClick={handleUpdateProfile}>
-                    {isLoading ? 'Registering...' : 'Register'}
-                </button>
-                <div className="mt-4 w-full text-center absolute">
-                    {successMsg && <div className='success text-center'>{successMsg}</div>}
-                    {error && <div className="error text-center">{error}</div>}
+
+
+
+
+
+
+
+
+                        <button className='btn block  w-fit   mt-4 bg-deepOlive' onClick={handleUpdateProfile}>
+                            {isLoading ? 'Registering...' : 'Register'}
+                        </button>
                 </div>
+
+
+
+
+
+
 
 
             </div>
 
 
-        </div>
     );
 };
 

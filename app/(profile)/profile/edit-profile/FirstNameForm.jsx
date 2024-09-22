@@ -49,9 +49,12 @@ const FirstNameForm = ({ user, profile }) => {
 
         // update user metadata
         updateMetadata({ first_name: draftFirstName })
-        
+
         // update profiles
         await updateTable(user, 'profiles', { first_name: draftFirstName }, 'id')
+        
+        // update comments
+        await updateTable(user, 'comments', { first_name: draftFirstName }, 'comment_id')
 
         setFirstName(draftFirstName)
         setTimeout(() => setShowForm(false), 1000)

@@ -130,7 +130,7 @@ const Signup = () => {
 
         <div className="flex w-full max-w-xs h-72 md:h-96 relative">
           
-          <div className="absolute -top-16 md:-top-10 w-full text-center">
+          <div className="absolute -top-16 md:-top-12 w-full text-center">
             {error && <div className="error"> {error}</div>}
             {checkBoxError && <p className="error leading-tight">{checkBoxError}</p>}
           </div>

@@ -16,16 +16,14 @@ import EmailForm from './EmailForm';
 import LastNameForm from './LastNameForm';
 import PhoneForm from './PhoneForm';
 import DobForm from './DobForm';
-import AgeForm from './AgeForm';
 
 
 
 
 
 
-const UpdateProfile = () => {
+const EditProfilePage = () => {
     // const [phone, setPhone] = useState(null)
-    const [updating, setUpdating] = useState(false)
     const [updateError, setUpdateError] = useState(null)
 
     // custom hook to fetch user
@@ -53,42 +51,25 @@ const UpdateProfile = () => {
 
 
 
-
-  // users can edit the state values in the form input fields and then when the form is submitted we call this function to update the profiles table in supabase
-    const updateProfile = async ({
-        first_name,
-        last_name,
-        avatar_url,
-        email,
-    }) => {
-
+    // update users avatar in profiles table
+    const updateProfile = async ({ avatar_url }) => {
         try {
             setUpdating(true)
 
-            const updatedProfile = {
+            const profileData = {
                 id: user.id,
-                first_name,
-                last_name,
                 avatar_url,
-                email,
                 updated_at: new Date().toISOString(),
             }
 
-            const { error } = await supabase.from('profiles').upsert(updatedProfile)
+            const { error } = await supabase.from('profiles').upsert(profileData)
 
             if (error) {
                 throw new Error(error.message)
             }
-
-            let tableData = {
-                first_name,
-                avatar_url: undefined
-            }
-            await updateTable(user, 'comments', tableData, 'comment_id') // pass in params to updateTable function from generic custom hook useUpdateTable to update comments table
             
-
         } catch (error) {
-            setUpdateError('First names must be at least 3 characters long.')
+            setUpdateError('Failed to upload avatar.')
             console.log(error.message)
         } finally {
             setTimeout(() => setUpdateError(null), 2000)    
@@ -107,6 +88,9 @@ const UpdateProfile = () => {
                 <AvatarUploader
                     user={user}
                     updateProfile={updateProfile}
+                    updateError={updateError}
+                    btnColor='bg-nightSky'
+                    btnText='Upload'
                 />
             </div>
  
@@ -124,11 +108,6 @@ const UpdateProfile = () => {
                 />
 
                 <LastNameForm
-                    user={user}
-                    profile={profile}
-                />
-
-                <AgeForm
                     user={user}
                     profile={profile}
                 />
@@ -154,4 +133,4 @@ const UpdateProfile = () => {
     )
 }
 
-export default UpdateProfile
+export default EditProfilePage
