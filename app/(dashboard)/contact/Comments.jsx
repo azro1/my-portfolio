@@ -164,7 +164,7 @@ const Comments = ({ user }) => {
         <div className='place-self-start'>
             {user && (
                 <div>
-                    <h3 className='mb-2 text-xl font-b text-deepOlive'>
+                    <h3 className='mb-2 text-xl font-b text-saddleBrown'>
                         Leave a Comment
                     </h3>
                     <form onSubmit={handleComment}>
@@ -179,7 +179,7 @@ const Comments = ({ user }) => {
                             required
                         ></textarea>
                         {commentError && <div className='error'>{commentError}</div>}
-                            <button className='btn block mt-2 bg-deepOlive'>{isLoading ? 'Adding...' : 'Add Comment'}</button>
+                            <button className='btn block mt-2 bg-saddleBrown'>{isLoading ? 'Adding...' : 'Add Comment'}</button>
                     </form>
                 </div>
             )}
@@ -203,7 +203,7 @@ const Comments = ({ user }) => {
 
             {comments !== null && comments.length > 0 && (
                 <div className='w-full sm:max-w-xl mt-20'>
-                    <h3 className='text-xl font-b text-deepOlive mb-8'>
+                    <h3 className='text-xl font-b text-saddleBrown mb-8'>
                         Comments
                     </h3>
                     <div className='overflow-y-scroll hide-scrollbar max-h-custom-md' ref={commentsContainerRef}>
@@ -225,7 +225,7 @@ const Comments = ({ user }) => {
                                     )}
                                     <div>
                                         <div className='flex gap-2 items-center mb-2'>
-                                            <h6 className='text-base text-deepOlive font-b'>{comment.first_name ? comment.first_name : comment.full_name}</h6>
+                                            <h6 className='text-base text-saddleBrown font-b'>{comment.first_name ? comment.first_name : comment.full_name}</h6>
                                             <span className='text-sm text-stoneGray'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
                                         </div>
                                         <p>{comment.text}</p>

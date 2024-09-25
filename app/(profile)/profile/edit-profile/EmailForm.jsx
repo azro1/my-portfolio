@@ -159,8 +159,8 @@ const EmailForm = ({ user, profile, profileError }) => {
                             />
                         </label>
                     </form>
-                    <button className='btn bg-deepOlive mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                    <button className={`btn bg-deepOlive mt-3`} onClick={handleEmailUpdate}>
+                    <button className='btn bg-saddleBrown mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
+                    <button className={`btn bg-saddleBrown mt-3`} onClick={handleEmailUpdate}>
                         {isSending ? 'Updating...' : 'Submit'}
                     </button>
                     {(profileError || formError) && (

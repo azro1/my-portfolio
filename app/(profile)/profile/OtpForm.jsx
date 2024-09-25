@@ -146,7 +146,7 @@ const OtpForm = ({ storageStr, verificationType, redirectUrl, subHeading, succes
                 </div>
 
                 <form className="max-w-max" onSubmit={handleVerifyOtp}>
-                    <h2 className='text-3xl leading-normal mb-4 font-eb text-deepOlive'>Verify Your Email</h2>
+                    <h2 className='text-3xl leading-normal mb-4 font-eb text-saddleBrown'>Verify Your Email</h2>
                     <p className='mb-4'>{subHeading}</p>
 
                     <label>
@@ -155,7 +155,7 @@ const OtpForm = ({ storageStr, verificationType, redirectUrl, subHeading, succes
                         </span>
                         <div className='relative max-w-xs'>
                             <input
-                                className={`w-full max-w-xs p-2.5 rounded-md text-stoneGray bg-deepCharcoal border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-deepOlive focus:ring-1 focus:ring-deepOlive`}
+                                className={`w-full max-w-xs p-2.5 rounded-md text-stoneGray bg-deepCharcoal border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-saddleBrown focus:ring-1 focus:ring-saddleBrown`}
                                 type={`${isEyeOpen ? 'text' : 'password'}`}
                                 spellCheck='false'
                                 autoComplete="off"
@@ -184,7 +184,7 @@ const OtpForm = ({ storageStr, verificationType, redirectUrl, subHeading, succes
                             </div>
                         </div>
                     </label>
-                    <button className='btn block mt-3.5 bg-deepOlive' disabled={isLoading}>{isLoading ? 'Verifying...' : 'Submit'}</button>
+                    <button className='btn block mt-3.5 bg-saddleBrown' disabled={isLoading}>{isLoading ? 'Verifying...' : 'Submit'}</button>
                 </form>
 
             </div>

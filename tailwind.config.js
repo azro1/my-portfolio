@@ -13,7 +13,7 @@ export default {
     },
     extend: {
       colors: {
-        deepOlive: '#556B2F',
+        saddleBrown: '#A52A2A',
         deepCharcoal: '#131519',
         softCharcoal: '#191b20',
         onyx: '#16181C',

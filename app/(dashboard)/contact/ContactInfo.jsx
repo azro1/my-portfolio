@@ -5,15 +5,15 @@ const ContactInfo = ({ user }) => {
         <div>
             <ul>
                 <li className='flex gap-3 pb-3'>
-                    <FaPhone size={20} className='text-deepOlive' aria-label='Phone' />
+                    <FaPhone size={20} className='text-saddleBrown' aria-label='Phone' />
                     <p>+447455 132 994</p>
                 </li>
                 <li className='flex gap-3 pb-3'>
-                    <FaEnvelope size={20} className='text-deepOlive' aria-label="Email" />
+                    <FaEnvelope size={20} className='text-saddleBrown' aria-label="Email" />
                     <p>azro1.development@gmail.com</p>
                 </li>
                 <li className='flex gap-3 pb-3'>
-                    <FaMapMarkerAlt size={20} className='text-deepOlive' aria-label="Address" />
+                    <FaMapMarkerAlt size={20} className='text-saddleBrown' aria-label="Address" />
                     <p>Sienna Court, New Southgate, London N11 2RG</p>
                 </li>
             </ul>

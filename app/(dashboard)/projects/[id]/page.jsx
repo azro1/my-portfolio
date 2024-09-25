@@ -60,7 +60,7 @@ const Project = async ({ params }) => {
   
   return (
     <>
-      <h2 className='subheading font-b text-deepOlive'>{project.title}</h2>
+      <h2 className='subheading font-b text-saddleBrown'>{project.title}</h2>
       <div className='grid gap-y-6 md:gap-y-10 md:grid-auto-rows md:grid-cols-2'>
 
         <Card values={'mt-6 p-3 rounded-md md:col-span-2 md:h-full'} >
@@ -71,7 +71,7 @@ const Project = async ({ params }) => {
 
         <div className='md:row-start-2 md:col-start-1 pb-3 md:col-span-2 relative'>
           <ProjectFavouriteButton className={'absolute right-0 top-1'} projectId={project.id} user={user} />
-          <h3 className='text-1.375 font-b text-deepOlive'>Project Description</h3>
+          <h3 className='text-1.375 font-b text-saddleBrown'>Project Description</h3>
           <p className='pt-3 leading-7' >{project.description}</p>
         </div>
 
@@ -112,7 +112,7 @@ const Project = async ({ params }) => {
             <div className='text-stoneGray text-base leading-7'>
               Project Url:{' '}
               <a href={project.url} target='_blank'>
-                <span className='text-deepOlive text-base'>
+                <span className='text-saddleBrown text-base'>
                   {project.url}
                 </span>
               </a>
