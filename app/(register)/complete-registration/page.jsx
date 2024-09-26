@@ -12,7 +12,7 @@ registerLocale('en-GB', enGB)
 setDefaultLocale('en-GB'); 
 
 
-import { FaCheckCircle } from 'react-icons/fa';
+import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 
 // components
 import AvatarUploader from "@/app/(profile)/profile/edit-profile/AvatarUploader";
@@ -25,6 +25,7 @@ import { useUpdateMetadata } from "@/app/hooks/useUpdateMetadata";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { usePathname } from 'next/navigation';
 
 
 const CompleteRegistration = () => {
@@ -40,16 +41,51 @@ const CompleteRegistration = () => {
     const { updateTable } = useUpdateTable();
     const { updateMetadata } = useUpdateMetadata();
 
-    const isValidPhoneNumber = (phoneNumber) => /^\+\d{1,15}$/.test(phoneNumber);
+    const isValidPhoneNumber = (phoneNumber) => /^\+(\d{1,3})\d{10,14}$/.test(phoneNumber);
 
     const [redirect, setRedirect] = useState(false);
     const router = useRouter();
+    const pathname = usePathname();
 
 
 
+    // prevents users from navigating back using the browser's back button by disabling it
+    useEffect(() => {
+        if (pathname === '/complete-registration') {
+            const handlePopState = () => {
+                // Replace current history entry with the same state to prevent going back
+                history.pushState(null, null, window.location.href);
+            };
+    
+            // Replace the current state when component mounts
+            history.pushState(null, null, window.location.href);
+    
+            // Listen to the popstate event and trigger handlePopState
+            window.addEventListener('popstate', handlePopState);
+    
+            return () => {
+                // Clean up the event listener when the component unmounts
+                window.removeEventListener('popstate', handlePopState);
+            };
+        }
+    }, [pathname]);
 
 
 
+    // triggers a confirmation dialog when the user tries to leave the page 
+    useEffect(() => {
+        const beforeUnloadListener = (event) => {
+            event.preventDefault();
+            return (event.returnValue = "");
+        };
+    
+        window.addEventListener("beforeunload", beforeUnloadListener);
+    
+        return () => window.removeEventListener("beforeunload", beforeUnloadListener);
+    }, []);
+    
+
+      
 
     // State to hold form input values
     const [formData, setFormData] = useState({
@@ -69,31 +105,47 @@ const CompleteRegistration = () => {
 
 
 
-    // Function to handle input changes and update form data
+    // function to handle input changes and update form data
     const handleInputChange = (e) => {
         const { name, value } = e.target;
 
-        if (name && value !== undefined) {
-            setFormData((prev) => ({ ...prev, [name]: value }));
+        if (name) {
+            let processedValue;
+    
+            // check if the value is a string before trimming
+            if (typeof value === 'string') {
+                processedValue = value.trim();
+            } else if (value instanceof Date) {
+                processedValue = value; // keep the Date object as is
+            } else {
+                processedValue = ''; // fallback for any other type (if necessary)
+            }
+    
+            setFormData((prev) => ({ ...prev, [name]: processedValue }));
+
+            // Check phone number length to enable/disable button
+            if (name === 'phone' && isValidPhoneNumber(processedValue)) {
+                setIsButtonDisabled(processedValue.length < 11);
+            } else {
+                setIsButtonDisabled(true)
+            }
         }
         setHasInteracted(true);
     };
       
 
 
-
-
     // useEffect to validate form inputs and set error messages
     useEffect(() => {
         const { firstName, lastName, dob, phone } = formData;
 
-        if (hasInteracted && !firstName.trim()) {
-            setErrors((prev) => ({ ...prev, firstName: 'Please enter a firstname.' }))
+        if (hasInteracted && !firstName) {
+            setErrors((prev) => ({ ...prev, firstName: 'Please enter your firstname.' }))
         } else {
             setErrors((prev) => ({ ...prev, firstName: '' }))
         }
 
-        if (hasInteracted && !lastName.trim()) {
+        if (hasInteracted && !lastName) {
             setErrors((prev) => ({ ...prev, lastName: 'Please provide your Lastname.' }));
         } else {
             setErrors((prev) => ({ ...prev, lastName: '' }))
@@ -115,13 +167,10 @@ const CompleteRegistration = () => {
             setErrors((prev) => ({ ...prev, phone: '' }))
         }
 
-        if (firstName && lastName && dob && phone) {
+        if (firstName && lastName && dob && phone && isValidPhoneNumber(phone)) {
             setIsButtonDisabled(false)
         }
     }, [formData, hasInteracted])
-
-
-
 
 
 
@@ -161,10 +210,6 @@ const CompleteRegistration = () => {
 
 
 
-
-
-
-
     // update user avatar
     const updateProfile = async ({ avatar_url }) => {
         setError(null)
@@ -196,10 +241,6 @@ const CompleteRegistration = () => {
 
 
 
-
-
-
-
     // redirect after form submission
     useEffect(() => {
         if (redirect) {
@@ -209,15 +250,7 @@ const CompleteRegistration = () => {
 
 
 
-
-
-
-
-    // prevent use of using certain keyboard keys when filling in certain fields
-    const handleKeyDown = (e) => {
-        if (e.key === 'Enter') e.preventDefault();
-    };
-
+    // phone number field validation
     const handlePhoneKeyDown = (e) => {
         if (e.key === 'Enter') e.preventDefault();
         if (!/[0-9+\(\)\-\s]/.test(e.key) && !['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete'].includes(e.key)) {
@@ -228,13 +261,8 @@ const CompleteRegistration = () => {
 
 
 
-
-
-
-
-    
     return (
-        <div className='flex flex-col  w-full'>
+        <div className='flex flex-col w-full'>
             <div className='flex flex-col w-full relative'>
 
                 <h2 className='text-3xl md:text-center leading-normal font-eb text-saddleBrown'>Set Up Your Account</h2>
@@ -246,9 +274,9 @@ const CompleteRegistration = () => {
                 </div>
 
 
-                <div className='mt-8 flex flex-col  gap-6 md:flex-row md:justify-evenly h-fit w-full'>
+                <div className='mt-8 flex flex-col gap-6 md:flex-row md:justify-evenly h-fit w-full'>
 
-                    <form className='flex-1 order-2 flex flex-col gap-4 md:order-1'>
+                    <form className='flex-1 order-2 flex flex-col gap-5 md:order-1'>
                         <div className='relative max-w-sm'>
                             <label>
                                 <span className='mb-2 text-base text-stoneGray block'>First Name</span>
@@ -262,9 +290,18 @@ const CompleteRegistration = () => {
                                     onChange={handleInputChange}
                                 />
                             </label>
-                            <FaCheckCircle className={`absolute bottom-3.5 right-4 ${errors.firstName ? 'text-red-900' : (formData.firstName ? 'text-green-800' : 'text-stoneGray')}`} size={21} />
-                            <p className='text-sm text-red-700 absolute'>{errors.firstName}</p>
-
+                            {!errors.firstName && !formData.firstName ? (
+                                <FaTimesCircle className={'absolute bottom-3.5 right-4 text-stoneGray'} size={21} />
+                            ) : (
+                                <>
+                                    {errors.firstName ? (
+                                        <FaTimesCircle className={'absolute bottom-3.5 right-4 text-red-900'} size={21} />
+                                    ) : (
+                                        <FaCheckCircle className={'absolute bottom-3.5 right-4 text-green-800'} size={21} />
+                                    )}
+                                </>
+                            )}
+                            <p className='text-sm text-red-700 absolute mt-0.21'>{errors.firstName}</p>
                         </div>
 
 
@@ -280,8 +317,18 @@ const CompleteRegistration = () => {
                                     onChange={handleInputChange}
                                 />
                             </label>
-                            <FaCheckCircle className={`absolute bottom-3.5 right-4 ${errors.lastName ? 'text-red-900' : (formData.lastName ? 'text-green-800' : 'text-stoneGray')}`} size={21} />
-                            <p className='text-sm text-red-700 absolute'>{errors.lastName}</p>
+                            {!errors.lastName && !formData.lastName ? (
+                                <FaTimesCircle className={'absolute bottom-3.5 right-4 text-stoneGray'} size={21} />
+                            ) : (
+                                <>
+                                    {errors.lastName ? (
+                                        <FaTimesCircle className={'absolute bottom-3.5 right-4 text-red-900'} size={21} />
+                                    ) : (
+                                        <FaCheckCircle className={'absolute bottom-3.5 right-4 text-green-800'} size={21} />
+                                    )}
+                                </>
+                            )}
+                            <p className='text-sm text-red-700 absolute mt-0.21'>{errors.lastName}</p>
                         </div>
 
 
@@ -299,8 +346,18 @@ const CompleteRegistration = () => {
                                     placeholderText='DD/MM/YYYY'
                                 />
                             </label>
-                            <FaCheckCircle className={`absolute bottom-3.5 right-4 ${errors.dob ? 'text-red-900' : (formData.dob ? 'text-green-800' : 'text-stoneGray')}`} size={21} />
-                            <p className='text-sm text-red-700 absolute'>{errors.dob}</p>
+                            {!errors.dob && !formData.dob ? (
+                                <FaTimesCircle className={'absolute bottom-3.5 right-4 text-stoneGray'} size={21} />
+                            ) : (
+                                <>
+                                    {errors.dob ? (
+                                        <FaTimesCircle className={'absolute bottom-3.5 right-4 text-red-900'} size={21} />
+                                    ) : (
+                                        <FaCheckCircle className={'absolute bottom-3.5 right-4 text-green-800'} size={21} />
+                                    )}
+                                </>
+                            )}
+                            <p className='text-sm text-red-700 absolute mt-0.21'>{errors.dob}</p>
                         </div>
 
 
@@ -319,8 +376,18 @@ const CompleteRegistration = () => {
                                     onKeyDown={handlePhoneKeyDown}
                                 />
                             </label>
-                            <FaCheckCircle className={`absolute bottom-3.5 right-4 ${errors.phone || (formData.phone && !isValidPhoneNumber(formData.phone)) ? 'text-red-900' : (formData.phone && isValidPhoneNumber(formData.phone) ? 'text-green-800' : 'text-stoneGray')}`} size={21} />
-                            <p className='text-sm text-red-700 absolute'>{errors.phone}</p>
+                            {!errors.phone && (!formData.phone && !isValidPhoneNumber(formData.phone)) ? (
+                                <FaTimesCircle className={'absolute bottom-3.5 right-4 text-stoneGray'} size={21} />
+                            ) : (
+                                <>
+                                    {errors.phone || (!formData.phone && !isValidPhoneNumber(formData.phone)) ? (
+                                        <FaTimesCircle className={'absolute bottom-3.5 right-4 text-red-900'} size={21} />
+                                    ) : (
+                                        <FaCheckCircle className={'absolute bottom-3.5 right-4 text-green-800'} size={21} />
+                                    )}
+                                </>
+                            )}
+                            <p className='text-sm text-red-700 absolute mt-0.21'>{errors.phone}</p>
                         </div>
                     </form>
 
@@ -339,7 +406,7 @@ const CompleteRegistration = () => {
                     </div>
                 </div>
 
-                <button className='btn block w-fit mt-6 bg-saddleBrown' disabled={isButtonDisabled} onClick={handleUpdateProfile}>
+                <button className='btn block w-fit mt-7 bg-saddleBrown' disabled={isButtonDisabled} onClick={handleUpdateProfile}>
                     {isLoading ? 'Registering...' : 'Register'}
                 </button>
             </div>

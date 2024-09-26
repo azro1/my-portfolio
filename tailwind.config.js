@@ -31,6 +31,7 @@ export default {
         'barlow': ['Barlow', 'sans-serif'],
         'os': ['Open Sans', 'sans-serif'],
         'cn': ['Courier New', 'monospace'],
+        'roboto': ['Roboto', 'sans-serif']
       },
       fontSize: {
         '1.375': '1.375rem', //22px
