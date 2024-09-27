@@ -70,15 +70,12 @@ img {
 
 /* input placeholders */
 input::placeholder {
-  filter: brightness(30%)
+  filter: brightness(40%)
 }
 
 .fieye-container:hover .fieye, .fieye-container:hover .fieye-off {
   filter: brightness(100%)
 }
-
-
-
 
 
 
@@ -143,11 +140,11 @@ input::placeholder {
 
 /* Footer styles */
 footer .newsletter h3 {
-  @apply subheading font-b text-deepOlive;
+  @apply subheading font-b text-saddleBrown;
 }
 
 footer h4 {
-  @apply font-b text-deepOlive;
+  @apply font-b text-saddleBrown;
 }
 
 footer p {
@@ -183,7 +180,7 @@ footer span {
 
 /* Error messages with a strong emphasis */
 .error {
-  @apply text-stoneGray font-medium shadow-outer p-3 text-base rounded-md leading-normal;
+  @apply text-stoneGray border-2 border-stoneGray bg-deepCharcoal font-b p-3 text-base rounded-md leading-normal;
 }
 
 /* Modal form error messages */
@@ -193,7 +190,7 @@ footer span {
 
 /* Success messages with a distinct style */
 .success {
-  @apply text-nightSky bg-green-200 p-3 font-medium text-base rounded-md leading-normal;
+  @apply text-white bg-green-600 p-3 font-b text-base font-roboto rounded-md leading-normal;
 }
 
 

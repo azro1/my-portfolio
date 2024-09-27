@@ -104,7 +104,6 @@ const DobForm = ({ user, profile }) => {
                                 className='w-full p-1.5 rounded-md border-2'
                                 type='date'
                                 value={draftDob || ''}
-                                placeholder='Dob'
                                 autoFocus='true'
                                 spellCheck='false'
                                 maxLength={'10'}
@@ -113,8 +112,8 @@ const DobForm = ({ user, profile }) => {
                             />
                         </label>
                     </form>
-                    <button className='btn bg-deepOlive mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                    <button className='btn bg-deepOlive mt-3' onClick={handleUpdateDob}>
+                    <button className='btn bg-saddleBrown mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
+                    <button className='btn bg-saddleBrown mt-3' onClick={handleUpdateDob}>
                         {saving ? 'Saving...' : 'Save'}
                     </button>
                     {(profileError || formError) && (

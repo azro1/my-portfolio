@@ -34,6 +34,7 @@ const OtpForm = ({ storageStr, verificationType, redirectUrl, subHeading, succes
     // verify otp
     const handleVerifyOtp = async (e) => {
         e.preventDefault()
+        setOtp('')
         setIsLoading(true)
 
         if (!otp) {
@@ -56,8 +57,12 @@ const OtpForm = ({ storageStr, verificationType, redirectUrl, subHeading, succes
         localStorage.removeItem(storageStr)
 
         let email, phone;
-
-        if (contactMethod.includes('@')) {
+        
+        
+        if (!contactMethod) {
+            setError('Verification failed. Please request a new security code.')
+            setTimeout(() => setError(null), 2000)
+        } else if (contactMethod.includes('@')) {
             email = contactMethod
         } else {
             phone = contactMethod
@@ -71,7 +76,7 @@ const OtpForm = ({ storageStr, verificationType, redirectUrl, subHeading, succes
 
         if (error) {
             setIsLoading(false)
-            setError('Verification failed. Please try again.')
+            setError('Verification failed. Please request a new security code.')
             console.log(error.message)
             return
 
@@ -135,13 +140,13 @@ const OtpForm = ({ storageStr, verificationType, redirectUrl, subHeading, succes
 
             <div className="flex relative max-w-sm">
 
-                <div className="absolute -top-20 w-full text-center">
+                <div className="absolute -top-28 w-full">
                     {successMsg && <div className='success'>{successMsg}</div>}
                     {error && <div className="error">{error}</div>}
                 </div>
 
                 <form className="max-w-max" onSubmit={handleVerifyOtp}>
-                    <h2 className='text-3xl leading-normal mb-6 font-eb text-deepOlive'>Verify Your Email</h2>
+                    <h2 className='text-3xl leading-normal mb-4 font-eb text-saddleBrown'>Verify Your Email</h2>
                     <p className='mb-4'>{subHeading}</p>
 
                     <label>
@@ -150,7 +155,7 @@ const OtpForm = ({ storageStr, verificationType, redirectUrl, subHeading, succes
                         </span>
                         <div className='relative max-w-xs'>
                             <input
-                                className={`w-full max-w-xs p-2.5 rounded-md text-stoneGray bg-deepCharcoal border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-deepOlive focus:ring-1 focus:ring-deepOlive`}
+                                className={`w-full max-w-xs p-2.5 rounded-md text-stoneGray bg-deepCharcoal border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-saddleBrown focus:ring-1 focus:ring-saddleBrown`}
                                 type={`${isEyeOpen ? 'text' : 'password'}`}
                                 spellCheck='false'
                                 autoComplete="off"
@@ -179,7 +184,7 @@ const OtpForm = ({ storageStr, verificationType, redirectUrl, subHeading, succes
                             </div>
                         </div>
                     </label>
-                    <button className='btn block mt-3.5 bg-deepOlive' disabled={isLoading}>{isLoading ? 'Verifying...' : 'Submit'}</button>
+                    <button className='btn block mt-3.5 bg-saddleBrown' disabled={isLoading}>{isLoading ? 'Verifying...' : 'Submit'}</button>
                 </form>
 
             </div>

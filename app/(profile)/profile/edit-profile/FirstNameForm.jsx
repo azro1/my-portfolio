@@ -49,9 +49,12 @@ const FirstNameForm = ({ user, profile }) => {
 
         // update user metadata
         updateMetadata({ first_name: draftFirstName })
-        
+
         // update profiles
         await updateTable(user, 'profiles', { first_name: draftFirstName }, 'id')
+        
+        // update comments
+        await updateTable(user, 'comments', { first_name: draftFirstName }, 'comment_id')
 
         setFirstName(draftFirstName)
         setTimeout(() => setShowForm(false), 1000)
@@ -111,8 +114,8 @@ const FirstNameForm = ({ user, profile }) => {
                             />
                         </label>
                     </form>
-                    <button className='btn bg-deepOlive mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                    <button className='btn bg-deepOlive mt-3' onClick={handleNameUpdate}>
+                    <button className='btn bg-saddleBrown mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
+                    <button className='btn bg-saddleBrown mt-3' onClick={handleNameUpdate}>
                         {saving ? 'Saving...' : 'Save'}
                     </button>
                     {(profileError || formError) && (

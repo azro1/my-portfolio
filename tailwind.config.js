@@ -13,7 +13,7 @@ export default {
     },
     extend: {
       colors: {
-        deepOlive: '#556B2F',
+        saddleBrown: '#A52A2A',
         deepCharcoal: '#131519',
         softCharcoal: '#191b20',
         onyx: '#16181C',
@@ -31,6 +31,7 @@ export default {
         'barlow': ['Barlow', 'sans-serif'],
         'os': ['Open Sans', 'sans-serif'],
         'cn': ['Courier New', 'monospace'],
+        'roboto': ['Roboto', 'sans-serif']
       },
       fontSize: {
         '1.375': '1.375rem', //22px

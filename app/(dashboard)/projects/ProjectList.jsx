@@ -20,7 +20,7 @@ const ProjectList = async () => {
 
   return (
     <main>
-      <h2 className="subheading font-b text-deepOlive text-center pb-4">My Projects</h2>
+      <h2 className="subheading font-b text-saddleBrown text-center pb-4">My Projects</h2>
       <section className="mx-auto w-full">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 md:grid-flow-col md:auto-cols-fr">
 

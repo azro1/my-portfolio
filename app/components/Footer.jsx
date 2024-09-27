@@ -4,7 +4,7 @@ import { FaLinkedin, FaGithub, FaInstagramSquare, FaYoutube } from 'react-icons/
 
 const Footer = () => {
   return (
-    <footer className="bg-frostWhite border-t-8 border-deepOlive p-1.625">
+    <footer className="bg-frostWhite border-t-8 border-saddleBrown p-1.625">
        <main className="my-2.375 md:mt-4.1875 max-w-screen-lg mx-auto" >
           <div className="newsletter flex flex-col items-center text-center gap-y-6">
             <h3>Get News, Insights & Updates</h3>
@@ -82,7 +82,7 @@ const Footer = () => {
             
             <div className="md:text-left flex-1">
               <Link href="/">
-                <h2 className="mainheading font-eb text-deepOlive pb-3">Port<span>folio</span></h2>
+                <h2 className="mainheading font-eb text-saddleBrown pb-3">Port<span>folio</span></h2>
               </Link>
               <p className="">&copy; 2024 Simon Sutherland. All rights reserved.</p>
             </div>

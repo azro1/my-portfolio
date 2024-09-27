@@ -130,13 +130,13 @@ const Signup = () => {
 
         <div className="flex w-full max-w-xs h-72 md:h-96 relative">
           
-          <div className="absolute -top-16 md:-top-10 w-full text-center">
+          <div className="absolute -top-16 md:-top-12 w-full text-center">
             {error && <div className="error"> {error}</div>}
             {checkBoxError && <p className="error leading-tight">{checkBoxError}</p>}
           </div>
 
           <form onSubmit={handleSubmit} className="h-fit self-end">
-            <h2 className='text-3xl mb-6 font-eb text-deepOlive'>Sign up</h2>
+            <h2 className='text-3xl mb-6 font-eb text-saddleBrown'>Sign up</h2>
             <p className='mb-4'>Enter your email address to recieve a security code to create your account</p>
             
             <label>
@@ -144,7 +144,7 @@ const Signup = () => {
                 Email
               </span>
               <input
-                className={`w-full p-2.5 rounded-md text-stoneGray bg-deepCharcoal border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-deepOlive focus:ring-1 focus:ring-deepOlive`}
+                className={`w-full p-2.5 rounded-md text-stoneGray bg-deepCharcoal border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-saddleBrown focus:ring-1 focus:ring-saddleBrown`}
                 type='text'
                 spellCheck='false'
                 placeholder='name@domain.com'
@@ -155,11 +155,11 @@ const Signup = () => {
 
             <div className="mt-5 flex items-center">
               <input className="self-start mt-0.21 max-w-min transform scale-125" type="checkbox" value={isChecked} onChange={handleCheckbox}/>
-              <span className="text-base block text-stoneGray ml-2.5 -mt-1">By signing up I agree to the{' '}<Link className="text-deepOlive text-base" href='#'>Privacy Policy</Link>{' '}and{' '}<Link className='text-deepOlive text-base' href='#'>Terms of Service</Link>
+              <span className="text-base block text-stoneGray ml-2.5 -mt-1">By signing up I agree to the{' '}<Link className="text-saddleBrown text-base" href='#'>Privacy Policy</Link>{' '}and{' '}<Link className='text-saddleBrown text-base' href='#'>Terms of Service</Link>
               .</span>
             </div>
 
-            <button className='btn block mt-4 bg-deepOlive' disabled={isLoading}>{isLoading ? 'Processing...' : 'Signup'}</button>
+            <button className='btn block mt-4 bg-saddleBrown' disabled={isLoading}>{isLoading ? 'Processing...' : 'Signup'}</button>
           </form>
         </div>
 
@@ -171,7 +171,7 @@ const Signup = () => {
           <SocialButtons text={"Continue"} />
           <div className="mt-7">
             <p className='inline mt-8 pr-2'>Have an account?</p>
-            <Link className='text-base text-deepOlive' href='/login'>Login</Link>
+            <Link className='text-base text-saddleBrown' href='/login'>Login</Link>
           </div>
         </div>
 

@@ -121,13 +121,13 @@ const ForgotEmail = () => {
                 </div>
 
                 <form className='max-w-max h-fit place-self-end' onSubmit={handleSubmit}>
-                    <h2 className='text-3xl mb-4 font-eb text-deepOlive'>Recover Your email</h2>
+                    <h2 className='text-3xl mb-4 font-eb text-saddleBrown'>Recover Your email</h2>
                     <p className='mb-4 max-w-lg'>Enter the phone number you provided during your account setup to help us recover your email address.</p>
 
                     <label>
                         <span className='max-w-min mb-2 text-base text-stoneGray block'>Phone</span>
                         <input
-                            className={`w-full max-w-xs p-2.5 rounded-md text-stoneGray bg-deepCharcoal border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-deepOlive focus:ring-1 focus:ring-deepOlive`}
+                            className={`w-full max-w-xs p-2.5 rounded-md text-stoneGray bg-deepCharcoal border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-saddleBrown focus:ring-1 focus:ring-saddleBrown`}
                             type='tel'
                             value={phone}
                             spellCheck='false'
@@ -137,7 +137,7 @@ const ForgotEmail = () => {
                             onKeyDown={handleKeyDown}
                         />
                     </label>
-                    <button className='btn block mt-4 bg-deepOlive' disabled={isLoading}>{isLoading ? 'Processing...' : 'Submit'}</button>
+                    <button className='btn block mt-4 bg-saddleBrown' disabled={isLoading}>{isLoading ? 'Processing...' : 'Submit'}</button>
 
                 </form>
             </div>

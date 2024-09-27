@@ -103,7 +103,7 @@ const Login = () => {
         </div>
 
         <form className="h-fit self-end" onSubmit={handleSubmit}>
-          <h2 className='text-3xl mb-6 font-eb text-deepOlive'>Login</h2>
+          <h2 className='text-3xl mb-6 font-eb text-saddleBrown'>Login</h2>
           <p className='mb-4'>Enter your email address to recieve a security code for quick and secure login</p>
 
           <label>
@@ -111,7 +111,7 @@ const Login = () => {
               Email
             </span>
             <input
-              className={`w-full p-2.5 rounded-md bg-deepCharcoal text-stoneGray border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-deepOlive focus:ring-1 focus:ring-deepOlive`}
+              className={`w-full p-2.5 rounded-md bg-deepCharcoal text-stoneGray border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-saddleBrown focus:ring-1 focus:ring-saddleBrown`}
               type='text'
               placeholder='name@domain.com'
               spellCheck='false'
@@ -121,9 +121,9 @@ const Login = () => {
           </label>
 
           <div className="flex">
-            <button className='mt-4 btn bg-deepOlive' disabled={isLoading}>{isLoading ? 'Logging in...' : 'Login'}</button>
+            <button className='mt-4 btn bg-saddleBrown' disabled={isLoading}>{isLoading ? 'Logging in...' : 'Login'}</button>
             <Link className='ml-auto mt-2' href={'/forgot-email'}>
-              <span className='text-deepOlive text-base'>Forgot email?</span>
+              <span className='text-saddleBrown text-base'>Forgot email?</span>
             </Link>
           </div>
         </form>
@@ -136,7 +136,7 @@ const Login = () => {
         <SocialButtons text={"Login"} />
         <div className="mt-7">
           <p className='mt-8 inline pr-2'>Don't have an account?</p>
-          <Link className='text-deepOlive text-base' href='/signup'>Sign up</Link>
+          <Link className='text-saddleBrown text-base' href='/signup'>Sign up</Link>
         </div>
       </div>
     </div>
