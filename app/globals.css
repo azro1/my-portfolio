@@ -180,7 +180,7 @@ footer span {
 
 /* Error messages with a strong emphasis */
 .error {
-  @apply text-stoneGray border-2 border-stoneGray bg-deepCharcoal font-b p-3 text-base rounded-md leading-normal;
+  @apply text-nightSky bg-yellow-200 px-3 py-2 font-b text-base rounded-md leading-normal;
 }
 
 /* Modal form error messages */

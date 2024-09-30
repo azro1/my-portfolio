@@ -12,7 +12,7 @@ registerLocale('en-GB', enGB)
 setDefaultLocale('en-GB'); 
 
 
-import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
+import { FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
 
 // components
 import AvatarUploader from "@/app/(profile)/profile/edit-profile/AvatarUploader";
@@ -29,7 +29,7 @@ import { usePathname } from 'next/navigation';
 
 
 const CompleteRegistration = () => {
-    const [hasInteracted, setHasInteracted] = useState(false);
+    const [formIsSubmitted, setFormIsSubmitted] = useState(false)
     const [isLoading, setIsLoading] = useState(false);
     const [isButtonDisabled, setIsButtonDisabled] = useState(true)
     
@@ -41,7 +41,17 @@ const CompleteRegistration = () => {
     const { updateTable } = useUpdateTable();
     const { updateMetadata } = useUpdateMetadata();
 
-    const isValidPhoneNumber = (phoneNumber) => /^\+(\d{1,3})\d{10,14}$/.test(phoneNumber);
+
+
+
+    const isValidName = (name) => /^[A-Z].*$/.test(name);
+    const isValidPhoneNumber = (phoneNumber) => /^(0\d{10}|(\+\d{1,3}\d{1,14}))$/.test(phoneNumber);
+
+
+    // State to track name length for each input
+    const [isFirstNameLongEnough, setIsFirstNameLongEnough] = useState(false);
+    const [isLastNameLongEnough, setIsLastNameLongEnough] = useState(false);
+
 
     const [redirect, setRedirect] = useState(false);
     const router = useRouter();
@@ -105,92 +115,137 @@ const CompleteRegistration = () => {
 
 
 
+
     // function to handle input changes and update form data
     const handleInputChange = (e) => {
         const { name, value } = e.target;
 
-        if (name) {
-            let processedValue;
-    
-            // check if the value is a string before trimming
-            if (typeof value === 'string') {
-                processedValue = value.trim();
-            } else if (value instanceof Date) {
-                processedValue = value; // keep the Date object as is
-            } else {
-                processedValue = ''; // fallback for any other type (if necessary)
-            }
-    
-            setFormData((prev) => ({ ...prev, [name]: processedValue }));
+        let processedValue;
 
-            // Check phone number length to enable/disable button
-            if (name === 'phone' && isValidPhoneNumber(processedValue)) {
-                setIsButtonDisabled(processedValue.length < 11);
-            } else {
-                setIsButtonDisabled(true)
-            }
+        // check if the value is a string before trimming
+        if (typeof value === 'string') {
+            processedValue = value.trim();
+        } else if (value instanceof Date) {
+            processedValue = value; // keep the Date object as is
+        } else {
+            processedValue = ''; // fallback for any other type (if necessary)
         }
-        setHasInteracted(true);
+
+        setFormData((prev) => ({ ...prev, [name]: processedValue }));
+
+
+        // Check name length dynamically
+        if (name === 'firstName') {
+            setIsFirstNameLongEnough(value.length >= 3);
+        } else if (name === 'lastName') {
+            setIsLastNameLongEnough(value.length >= 2);
+        }
     };
       
 
 
-    // useEffect to validate form inputs and set error messages
+
+
+
+    // useEffect to disable button if form fields have values
     useEffect(() => {
         const { firstName, lastName, dob, phone } = formData;
 
-        if (hasInteracted && !firstName) {
-            setErrors((prev) => ({ ...prev, firstName: 'Please enter your firstname.' }))
-        } else {
-            setErrors((prev) => ({ ...prev, firstName: '' }))
-        }
-
-        if (hasInteracted && !lastName) {
-            setErrors((prev) => ({ ...prev, lastName: 'Please provide your Lastname.' }));
-        } else {
-            setErrors((prev) => ({ ...prev, lastName: '' }))
-        }
-
-        if (hasInteracted && !dob) {
-            setErrors((prev) => ({ ...prev, dob: 'Please provide your Date of Birth.' }));
-        } else {
-            setErrors((prev) => ({ ...prev, dob: '' }))
-        }
-
-        if (hasInteracted && !phone) {
-            setErrors((prev) => ({ ...prev, phone: 'Please provide your Phone Number.' }));
-        } else if (hasInteracted && !isValidPhoneNumber(phone)) {
-            setErrors((prev) => ({ ...prev, phone: 'Please use an international code eg: +44 (UK) or +1 (US).' }));
-        } else if (hasInteracted && phone.length < 10) {
-            setErrors((prev) => ({ ...prev, phone: 'International phone numbers should be at least 10 digits.' }))
-        } else {
-            setErrors((prev) => ({ ...prev, phone: '' }))
-        }
-
-        if (firstName && lastName && dob && phone && isValidPhoneNumber(phone)) {
+        if (firstName && lastName && dob && phone) {
             setIsButtonDisabled(false)
         }
-    }, [formData, hasInteracted])
+        
+    }, [formData])
+
+
+
+
+
+
+
+    // function to convert uk mobile numbers into E.164 format
+    const convertToInternationalFormat = (phoneNumber) => {
+        // replace local prefix '0' with international code '+44' if it exists
+        if (phoneNumber.startsWith('0')) return phoneNumber.replace('0', '+44');
+    
+        // return as is if already in international format
+        return phoneNumber.startsWith('+') ? phoneNumber : phoneNumber;
+    };
+    
+    
 
 
 
 
     // update raw_user_metadata and profiles table
     const handleUpdateProfile = async () => {
+        setFormIsSubmitted(true)
         const { firstName, lastName, dob, phone } = formData;
+        let formIsValid = true;
 
-        if (user) {
-            const formattedDate = dob.toLocaleDateString()
+
+        if (!firstName) {
+            setErrors((prev) => ({ ...prev, firstName: 'Please enter your firstname.' }))
+            formIsValid = false;
+        } else if (!isFirstNameLongEnough) {
+            setErrors((prev) => ({ ...prev, firstName: 'Firstnames must be at least 3 characters.' }))
+            formIsValid = false;
+        
+        } else if (!isValidName(firstName)) {
+            setErrors((prev) => ({ ...prev, firstName: 'Firstnames should start with a uppercase letter.' }))
+            formIsValid = false;
+        } else {
+            setErrors((prev) => ({ ...prev, firstName: '' }))
+
+        }
+
+        if (!lastName) {
+            setErrors((prev) => ({ ...prev, lastName: 'Please provide your Lastname.' }));
+            formIsValid = false;
+        } else if (!isLastNameLongEnough) {
+            setErrors((prev) => ({ ...prev, lastName: 'Lastnames must be at least 2 characters.' }))
+            formIsValid = false;
+        } else if (!isValidName(lastName)) {
+            setErrors((prev) => ({ ...prev, lastName: 'Lastnames should start with a uppercase letter.' }))
+            formIsValid = false;         
+        } else {
+            setErrors((prev) => ({ ...prev, lastName: '' }))
+        }
+
+
+        if (!dob) {
+            setErrors((prev) => ({ ...prev, dob: 'Please provide your Date of Birth.' }));
+            formIsValid = false;
+        } else {
+            setErrors((prev) => ({ ...prev, dob: '' }))
+        }
+
+
+        if (!phone) {
+            setErrors((prev) => ({ ...prev, phone: 'Please provide your Phone Number.' }));
+            formIsValid = false;
+        } else if (!isValidPhoneNumber(phone)) {
+            setErrors((prev) => ({ ...prev, phone: 'Please enter a valid mobile number (11 digits, starting with 0) or an international code (e.g., +44 for UK, +1 for US).'}))
+            formIsValid = false;
+        } else {
+            setErrors((prev) => ({ ...prev, phone: '' }))
+        }
+
+
+
+        if (user && formIsValid) {
+            const formattedDate = dob.toLocaleDateString('en-GB')
+            const convertedPhoneNumber = convertToInternationalFormat(phone);
 
             try {
                 // update raw_user_metadata object
-                const metadata = { first_name: firstName, last_name: lastName, phone };
+                const metadata = { first_name: firstName, last_name: lastName };
                 await updateMetadata(metadata);
 
                 const profileData = {
                     first_name: firstName,
                     last_name: lastName,
-                    phone,
+                    phone: convertedPhoneNumber,
                     dob: formattedDate,
                     updated_at: new Date().toISOString()
                 };
@@ -258,6 +313,23 @@ const CompleteRegistration = () => {
         }
     };
 
+    // date field validation
+    const handleDateKeyDown = (e) => {
+        const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '/', 'Backspace', 'ArrowLeft', 'ArrowRight', 'Tab'];
+        if (!allowedKeys.includes(e.key)) {
+          e.preventDefault(); // Prevent any key that's not a number, slash, or navigation key
+        }
+    }
+
+
+
+    // name field validation
+    const handleNameKeyDown = (e) => {
+        if (!/^[A-Za-z]$/.test(e.key) && e.key !== 'Backspace' && e.key !== ' ') {
+            e.preventDefault()
+        }
+    }
+
 
 
 
@@ -276,127 +348,109 @@ const CompleteRegistration = () => {
 
                 <div className='mt-8 flex flex-col gap-6 md:flex-row md:justify-evenly h-fit w-full'>
 
-                    <form className='flex-1 order-2 flex flex-col gap-5 md:order-1'>
-                        <div className='relative max-w-sm'>
-                            <label>
-                                <span className='mb-2 text-base text-stoneGray block'>First Name</span>
-                                <input
-                                    className={`w-full max-w-sm p-2.5 rounded-md text-stoneGray shadow-inner bg-nightSky border-2 ${errors.firstName ? 'border-red-800' : (formData.firstName ? 'border-green-800' : 'border-stoneGray')}`}
-                                    type='text'
-                                    spellCheck='false'
-                                    value={formData.firstName}
-                                    name='firstName'
-                                    placeholder='John'
-                                    onChange={handleInputChange}
-                                />
-                            </label>
-                            {!errors.firstName && !formData.firstName ? (
-                                <FaTimesCircle className={'absolute bottom-3.5 right-4 text-stoneGray'} size={21} />
-                            ) : (
-                                <>
-                                    {errors.firstName ? (
-                                        <FaTimesCircle className={'absolute bottom-3.5 right-4 text-red-900'} size={21} />
-                                    ) : (
-                                        <FaCheckCircle className={'absolute bottom-3.5 right-4 text-green-800'} size={21} />
-                                    )}
-                                </>
-                            )}
-                            <p className='text-sm text-red-700 absolute mt-0.21'>{errors.firstName}</p>
+                    <form className={`flex-1 order-2 flex flex-col gap-2 md:order-1`}>
+                        <div>
+                            <div className='relative max-w-sm'>
+                                <label>
+                                    <span className='mb-2 text-base text-stoneGray block'>First Name</span>
+                                    <input
+                                        className='w-full max-w-sm p-2.5 rounded-md text-stoneGray bg-nightSky shadow-inner border-2 border-stoneGray'
+                                        type='text'
+                                        spellCheck='false'
+                                        value={formData.firstName}
+                                        name='firstName'
+                                        maxLength='15'
+                                        placeholder='John'
+                                        onChange={handleInputChange}
+                                        onKeyDown={handleNameKeyDown}
+                                        minLength='3'
+
+                                    />
+                                </label>
+                                {formIsSubmitted && (errors.firstName || !isValidName(formData.firstName) || !isFirstNameLongEnough) ? <FaExclamationCircle className={'absolute bottom-3.5 right-4 text-red-900'} size={21} /> : (formIsSubmitted && !errors.firstName ? <FaCheckCircle className={'absolute bottom-3.5 right-4 text-green-800'} size={21} /> : '' )}
+                            
+                            </div>
+                               {(errors.firstName || !isValidName(formData.firstName) || !isFirstNameLongEnough)  && <p className='text-sm text-red-700 mt-1'>{errors.firstName}</p>}
                         </div>
 
 
-                        <div className='relative max-w-sm'>
-                            <label>
-                                <span className='mb-2 text-base text-stoneGray block'>Last Name</span>
-                                <input
-                                    className={`w-full max-w-sm p-2.5 rounded-md text-stoneGray shadow-inner bg-nightSky border-2 ${errors.lastName ? 'border-red-800' : (formData.lastName ? 'border-green-800' : 'border-stoneGray')}`}
-                                    type='text'
-                                    value={formData.lastName}
-                                    name='lastName'
-                                    placeholder='Smith'
-                                    onChange={handleInputChange}
-                                />
-                            </label>
-                            {!errors.lastName && !formData.lastName ? (
-                                <FaTimesCircle className={'absolute bottom-3.5 right-4 text-stoneGray'} size={21} />
-                            ) : (
-                                <>
-                                    {errors.lastName ? (
-                                        <FaTimesCircle className={'absolute bottom-3.5 right-4 text-red-900'} size={21} />
-                                    ) : (
-                                        <FaCheckCircle className={'absolute bottom-3.5 right-4 text-green-800'} size={21} />
-                                    )}
-                                </>
-                            )}
-                            <p className='text-sm text-red-700 absolute mt-0.21'>{errors.lastName}</p>
+                        <div>
+                            <div className='relative max-w-sm'>
+                                <label>
+                                    <span className='mb-2 text-base text-stoneGray block'>Last Name</span>
+                                    <input
+                                        className='w-full max-w-sm p-2.5 rounded-md text-stoneGray bg-nightSky shadow-inner border-2 border-stoneGray'
+                                        type='text'
+                                        value={formData.lastName}
+                                        name='lastName'
+                                        maxLength='25'
+                                        placeholder='Smith'
+                                        onChange={handleInputChange}
+                                        onKeyDown={handleNameKeyDown}
+                                        minLength='2'
+                                    />
+                                </label>
+                                {formIsSubmitted && (errors.lastName || !isValidName(formData.lastName) || !isLastNameLongEnough) ? <FaExclamationCircle className={'absolute bottom-3.5 right-4 text-red-900'} size={21} /> : (formIsSubmitted && !errors.lastName ? <FaCheckCircle className={'absolute bottom-3.5 right-4 text-green-800'} size={21} /> : '')}
+                            </div>
+                            {(errors.lastName || !isValidName(formData.lastName) || !isLastNameLongEnough) && <p className='text-sm text-red-700 mt-1'>{errors.lastName}</p>}
                         </div>
 
 
-                        <div className='relative max-w-sm'>
-                            <label>
-                                <span className='mb-2 text-base text-stoneGray block'>Date of Birth</span>
-                                <DatePicker
-                                    className={`w-full max-w-sm p-2.5 rounded-md text-stoneGray shadow-inner bg-nightSky border-2 ${errors.dob ? 'border-red-800' : (formData.dob ? 'border-green-800' : 'border-stoneGray')}`}
-                                    wrapperClassName='w-full'
-                                    locale="en-GB"
-                                    dateFormat="dd/MM/yyyy"
-                                    selected={formData.dob}
-                                    onChange={(date) => handleInputChange({ target: { name: 'dob', value: date } })}
-                                    name='dob'
-                                    placeholderText='DD/MM/YYYY'
-                                />
-                            </label>
-                            {!errors.dob && !formData.dob ? (
-                                <FaTimesCircle className={'absolute bottom-3.5 right-4 text-stoneGray'} size={21} />
-                            ) : (
-                                <>
-                                    {errors.dob ? (
-                                        <FaTimesCircle className={'absolute bottom-3.5 right-4 text-red-900'} size={21} />
-                                    ) : (
-                                        <FaCheckCircle className={'absolute bottom-3.5 right-4 text-green-800'} size={21} />
-                                    )}
-                                </>
-                            )}
-                            <p className='text-sm text-red-700 absolute mt-0.21'>{errors.dob}</p>
+
+                        <div>
+                            <div className='relative max-w-sm'>
+                                <label>
+                                    <span className='mb-2 text-base text-stoneGray block'>Date of Birth</span>
+                                    <DatePicker
+                                        className='last:w-full max-w-sm p-2.5 rounded-md text-stoneGray bg-nightSky shadow-inner border-2 border-stoneGray'
+                                        wrapperClassName='w-full'
+                                        locale="en-GB"
+                                        dateFormat="dd/MM/yyyy"
+                                        selected={formData.dob}
+                                        onChange={(date) => handleInputChange({ target: { name: 'dob', value: date } })}
+                                        onKeyDown={handleDateKeyDown}
+                                        name='dob'
+                                        placeholderText='DD/MM/YYYY'
+                                        maxDate={new Date()}
+                                        maxLength={'8'}
+                                    />
+                                </label>
+                                {formIsSubmitted && (errors.dob || !formData.dob) ? <FaExclamationCircle className={'absolute bottom-3.5 right-4 text-red-900'} size={21} /> : (!errors.dob && formData.dob && formIsSubmitted ? <FaCheckCircle className={'absolute bottom-3.5 right-4 text-green-800'} size={21} /> : '')}
+                            </div>
+                            {(errors.dob && !formData.dob) && <p className='text-sm text-red-700 mt-1'>{errors.dob}</p>}
                         </div>
 
 
-                        <div className='relative max-w-sm'>
-                            <label>
-                                <span className='max-w-min mb-2 text-base text-stoneGray block'>Phone</span>
-                                <input className={`w-full max-w-sm p-2.5 rounded-md text-stoneGray shadow-inner bg-nightSky border-2 ${errors.phone || (formData.phone && !isValidPhoneNumber(formData.phone)) ? 'border-red-800' : (formData.phone && isValidPhoneNumber(formData.phone) ? 'border-green-800' : 'border-stoneGray')}`}
-                                    type='tel'
-                                    value={formData.phone}
-                                    spellCheck='false'
-                                    pattern='^\+\d{1,15}$'
-                                    maxLength="15"
-                                    name='phone'
-                                    placeholder="e.g., +14155552671"
-                                    onChange={handleInputChange}
-                                    onKeyDown={handlePhoneKeyDown}
-                                />
-                            </label>
-                            {!errors.phone && (!formData.phone && !isValidPhoneNumber(formData.phone)) ? (
-                                <FaTimesCircle className={'absolute bottom-3.5 right-4 text-stoneGray'} size={21} />
-                            ) : (
-                                <>
-                                    {errors.phone || (!formData.phone && !isValidPhoneNumber(formData.phone)) ? (
-                                        <FaTimesCircle className={'absolute bottom-3.5 right-4 text-red-900'} size={21} />
-                                    ) : (
-                                        <FaCheckCircle className={'absolute bottom-3.5 right-4 text-green-800'} size={21} />
-                                    )}
-                                </>
-                            )}
-                            <p className='text-sm text-red-700 absolute mt-0.21'>{errors.phone}</p>
+                        <div>
+                            <div className='relative max-w-sm'>
+                                <label>
+                                    <span className='max-w-min mb-2 text-base text-stoneGray block'>Phone</span>
+                                    <input className='w-full max-w-sm p-2.5 rounded-md text-stoneGray bg-nightSky shadow-inner border-2 border-stoneGray'
+                                        type='tel'
+                                        value={formData.phone}
+                                        spellCheck='false'
+                                        pattern='^\+\d{1,15}$'
+                                        maxLength="15"
+                                        name='phone'
+                                        placeholder="e.g., +14155552671"
+                                        onChange={handleInputChange}
+                                        onKeyDown={handlePhoneKeyDown}
+                                    />
+                                </label>
+                                {formIsSubmitted && (errors.phone || !isValidPhoneNumber(formData.phone)) ? <FaExclamationCircle className={'absolute bottom-3.5 right-4 text-red-900'} size={21} /> : (!errors.phone && isValidPhoneNumber(formData.phone) ? <FaCheckCircle className={'absolute bottom-3.5 right-4 text-green-800'} size={21} /> : '')}
+                            </div>
+                            {(errors.phone || !isValidPhoneNumber(formData.phone)) && <p className='text-sm text-red-700 mt-1'>{errors.phone}</p>}
                         </div>
+
                     </form>
 
                     <div className='flex-1 order-1 h-fit md:mt-4 md:order-2 md:shadow-outer md:p-5 rounded-md'>
-                        <div className='p-6 bg-deepCharcoal border-2 border-saddleBrown rounded-md'>
+                        <div className='md:p-2 rounded-md'>
                             <AvatarUploader
                                 user={user}
                                 updateProfile={updateProfile}
-                                title='Add a profile avatar'
+                                title='Upload a Profile Picture'
+                                text='This helps others recognize you. You can change it later in your profile settings. (Optional)'
                                 displayTitle={true}
                                 btnColor='bg-saddleBrown'
                                 btnText='Add'
@@ -406,7 +460,7 @@ const CompleteRegistration = () => {
                     </div>
                 </div>
 
-                <button className='btn block w-fit mt-7 bg-saddleBrown' disabled={isButtonDisabled} onClick={handleUpdateProfile}>
+                <button className={`btn block w-fit mt-4 bg-saddleBrown transition duration-500 ${isButtonDisabled ? 'opacity-65' : 'opacity-100'}`} disabled={isButtonDisabled} onClick={handleUpdateProfile}>
                     {isLoading ? 'Registering...' : 'Register'}
                 </button>
             </div>

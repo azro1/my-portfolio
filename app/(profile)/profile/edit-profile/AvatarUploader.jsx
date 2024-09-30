@@ -13,7 +13,7 @@ import Modal from './Modal';
 
 
 
-const AvatarUploader = ({ user, updateProfile, updateError, title, displayTitle, btnColor, btnText }) => {
+const AvatarUploader = ({ user, updateProfile, updateError, title, text, displayTitle, btnColor, btnText }) => {
 
     // custom hook to update comments after user updates personal info
     const { updateTable } = useUpdateTable()
@@ -95,7 +95,7 @@ const AvatarUploader = ({ user, updateProfile, updateError, title, displayTitle,
                 {displayTitle &&  (
                     <h2 className='text-2xl text-stoneGray mb-3'>{title}</h2>
                 )}
-                <p className='leading-normal'>Personalize your account by uploading your own avatar</p>
+                <p className='leading-normal'>{text}</p>
                 <div className='mb-2 mt-4 h-14 w-14 relative '>
                     {imgSrc ? (
                         <Image

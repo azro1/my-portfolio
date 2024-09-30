@@ -6,7 +6,6 @@ import { useState, useEffect } from "react"
 // custom hooks
 import { useFetchUser } from '@/app/hooks/useFetchUser';
 import { useFetchProfile } from '@/app/hooks/useFetchProfile';
-import { useUpdateTable } from '@/app/hooks/useUpdateTable';
 
 // components
 import AvatarUploader from './AvatarUploader';
@@ -32,9 +31,6 @@ const EditProfilePage = () => {
     // custom hook to fetch profile
     const { error: profileError, profile, fetchProfile } = useFetchProfile()
 
-    // custom hook to update comments after user updates personal info
-    const { updateTable } = useUpdateTable()
-
     const supabase = createClientComponentClient()
 
 
@@ -54,8 +50,6 @@ const EditProfilePage = () => {
     // update users avatar in profiles table
     const updateProfile = async ({ avatar_url }) => {
         try {
-            setUpdating(true)
-
             const profileData = {
                 id: user.id,
                 avatar_url,
@@ -88,6 +82,7 @@ const EditProfilePage = () => {
                 <AvatarUploader
                     user={user}
                     updateProfile={updateProfile}
+                    text='Personalize your account by uploading your own avatar'
                     updateError={updateError}
                     btnColor='bg-nightSky'
                     btnText='Upload'
