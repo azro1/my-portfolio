@@ -178,19 +178,24 @@ footer span {
 
 
 
-/* Error messages with a strong emphasis */
+/* error messages */
 .error {
   @apply text-nightSky bg-yellow-200 px-3 py-2 font-b text-base rounded-md leading-normal;
 }
 
-/* Modal form error messages */
+/* modal form error messages */
 .modal-form-error {
   @apply text-red-600 text-sm;
 }
 
-/* Success messages with a distinct style */
+/* success messages */
 .success {
-  @apply text-white bg-green-600 p-3 font-b text-base font-roboto rounded-md leading-normal;
+  @apply text-white bg-green-600 p-3 font-b text-base rounded-md leading-normal;
+}
+
+/* info messages */
+.info {
+  @apply text-white bg-saddleBrown p-2 font-medium text-base leading-normal;
 }
 
 

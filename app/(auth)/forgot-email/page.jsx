@@ -16,8 +16,22 @@ const ForgotEmail = () => {
 
 
 
+
+    // function to convert uk mobile numbers into E.164 format
+    const convertToInternationalFormat = (phoneNumber) => {
+        // replace local prefix '0' with international code '+44' if it exists
+        if (phoneNumber.startsWith('0')) return phoneNumber.replace('0', '+44');
+    
+        // return as is if already in international format
+        return phoneNumber.startsWith('+') ? phoneNumber : phoneNumber;
+    };
+
+
+
+
+
     // Phone number validation function
-    const isValidPhoneNumber = (phoneNumber) => /^\+\d{1,15}$/.test(phoneNumber);
+    const isValidPhoneNumber = (phoneNumber) => /^(0\d{10}|\+\d{1,3}\d{1,14})$/.test(phoneNumber);
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -32,15 +46,13 @@ const ForgotEmail = () => {
     
         if (!isValidPhoneNumber(phone)) {
             setIsLoading(false)
-            setError('Invalid format. Use: +14155552671');
+            setError('Phone numbers must be between 10 - 15 digits.');
             setTimeout(() => setError(null), 2000)
             return
         }
         
         setIsLoading(true)
-
-
-
+        const convertedPhoneNumber = convertToInternationalFormat(phone);
 
         try {
             // create api route to check db for phone number and get assocated email
@@ -50,7 +62,7 @@ const ForgotEmail = () => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    phone
+                    phone: convertedPhoneNumber
                 })
             })
 
@@ -103,7 +115,7 @@ const ForgotEmail = () => {
     // prevent enter submission
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') e.preventDefault();
-        if (!/[0-9+\(\)\-\s]/.test(e.key) && !['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete'].includes(e.key)) {
+        if (!/[0-9+]/.test(e.key) && !['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete'].includes(e.key)) {
             e.preventDefault();
         }
     }
@@ -127,12 +139,12 @@ const ForgotEmail = () => {
                     <label>
                         <span className='max-w-min mb-2 text-base text-stoneGray block'>Phone</span>
                         <input
-                            className={`w-full max-w-xs p-2.5 rounded-md text-stoneGray bg-deepCharcoal border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-saddleBrown focus:ring-1 focus:ring-saddleBrown`}
+                            className={`w-full max-w-xs py-2 px-3 text-lg rounded-md text-stoneGray bg-deepCharcoal border-2 tracking-widest ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-saddleBrown focus:ring-1 focus:ring-saddleBrown`}
                             type='tel'
                             value={phone}
                             spellCheck='false'
                             maxLength="15"
-                            placeholder="e.g., +14155552671"
+                            placeholder="+0123456789"
                             onChange={(e) => setPhone(e.target.value)}
                             onKeyDown={handleKeyDown}
                         />

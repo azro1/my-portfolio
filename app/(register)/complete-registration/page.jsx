@@ -35,6 +35,7 @@ const CompleteRegistration = () => {
     
     const [error, setError] = useState(null)
     const [successMsg, setSuccessMsg] = useState(null);
+    const [infoMsg, setInfoMsg] = useState(null);
     
     // custom hooks
     const { user } = useFetchUser();
@@ -43,15 +44,15 @@ const CompleteRegistration = () => {
 
 
 
-
-    const isValidName = (name) => /^[A-Z].*$/.test(name);
-    const isValidPhoneNumber = (phoneNumber) => /^(0\d{10}|(\+\d{1,3}\d{1,14}))$/.test(phoneNumber);
+    // regex validation functions
+    const startsWithCaps = (name) => /^[A-Z].*$/.test(name);
+    const allLowerCase = (name) => /^[A-Z][a-z]*$/.test(name);
+    const isValidPhoneNumber = (phoneNumber) => /^(0\d{10}|\+\d{1,3}\d{1,14})$/.test(phoneNumber);
 
 
     // State to track name length for each input
     const [isFirstNameLongEnough, setIsFirstNameLongEnough] = useState(false);
     const [isLastNameLongEnough, setIsLastNameLongEnough] = useState(false);
-
 
     const [redirect, setRedirect] = useState(false);
     const router = useRouter();
@@ -119,20 +120,20 @@ const CompleteRegistration = () => {
     // function to handle input changes and update form data
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-
         let processedValue;
 
         // check if the value is a string before trimming
         if (typeof value === 'string') {
             processedValue = value.trim();
         } else if (value instanceof Date) {
-            processedValue = value; // keep the Date object as is
+           // keep the Date object as is
+            processedValue = value; 
         } else {
-            processedValue = ''; // fallback for any other type (if necessary)
+           // fallback for any other type (if necessary)
+            processedValue = ''; 
         }
 
         setFormData((prev) => ({ ...prev, [name]: processedValue }));
-
 
         // Check name length dynamically
         if (name === 'firstName') {
@@ -153,8 +154,16 @@ const CompleteRegistration = () => {
 
         if (firstName && lastName && dob && phone) {
             setIsButtonDisabled(false)
+        } else {
+            setIsButtonDisabled(true)
         }
         
+        if (startsWithCaps(firstName) && allLowerCase(firstName) && startsWithCaps(lastName) && allLowerCase(lastName) && dob && isValidPhoneNumber(phone)) {
+            setInfoMsg("Upload an avatar before you register!")
+        } else {
+            setInfoMsg(null)
+        }
+
     }, [formData])
 
 
@@ -178,11 +187,11 @@ const CompleteRegistration = () => {
 
 
     // update raw_user_metadata and profiles table
-    const handleUpdateProfile = async () => {
+    const handleUpdateProfile = async (e) => {
+        e.preventDefault()
         setFormIsSubmitted(true)
         const { firstName, lastName, dob, phone } = formData;
         let formIsValid = true;
-
 
         if (!firstName) {
             setErrors((prev) => ({ ...prev, firstName: 'Please enter your firstname.' }))
@@ -190,13 +199,14 @@ const CompleteRegistration = () => {
         } else if (!isFirstNameLongEnough) {
             setErrors((prev) => ({ ...prev, firstName: 'Firstnames must be at least 3 characters.' }))
             formIsValid = false;
-        
-        } else if (!isValidName(firstName)) {
+        } else if (!startsWithCaps(firstName)) {
             setErrors((prev) => ({ ...prev, firstName: 'Firstnames should start with a uppercase letter.' }))
+            formIsValid = false;
+        } else if (!allLowerCase(firstName)) {
+            setErrors((prev) => ({ ...prev, firstName: 'Firstnames cannot be entirely uppercase.' }))
             formIsValid = false;
         } else {
             setErrors((prev) => ({ ...prev, firstName: '' }))
-
         }
 
         if (!lastName) {
@@ -205,13 +215,15 @@ const CompleteRegistration = () => {
         } else if (!isLastNameLongEnough) {
             setErrors((prev) => ({ ...prev, lastName: 'Lastnames must be at least 2 characters.' }))
             formIsValid = false;
-        } else if (!isValidName(lastName)) {
+        } else if (!startsWithCaps(lastName)) {
             setErrors((prev) => ({ ...prev, lastName: 'Lastnames should start with a uppercase letter.' }))
-            formIsValid = false;         
+            formIsValid = false;    
+        } else if (!allLowerCase(lastName)) {
+            setErrors((prev) => ({ ...prev, lastName: 'Lastnames cannot be entirely uppercase.' }))
+            formIsValid = false;     
         } else {
             setErrors((prev) => ({ ...prev, lastName: '' }))
         }
-
 
         if (!dob) {
             setErrors((prev) => ({ ...prev, dob: 'Please provide your Date of Birth.' }));
@@ -219,7 +231,6 @@ const CompleteRegistration = () => {
         } else {
             setErrors((prev) => ({ ...prev, dob: '' }))
         }
-
 
         if (!phone) {
             setErrors((prev) => ({ ...prev, phone: 'Please provide your Phone Number.' }));
@@ -268,7 +279,8 @@ const CompleteRegistration = () => {
     // update user avatar
     const updateProfile = async ({ avatar_url }) => {
         setError(null)
-
+        setInfoMsg(null)
+        
         try {
             const updatedProfile = {
                 id: user.id,
@@ -305,30 +317,28 @@ const CompleteRegistration = () => {
 
 
 
-    // phone number field validation
-    const handlePhoneKeyDown = (e) => {
+
+
+    // function to handle onKeyDown events
+    const handleKeyDown = (e) => {
         if (e.key === 'Enter') e.preventDefault();
-        if (!/[0-9+\(\)\-\s]/.test(e.key) && !['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete'].includes(e.key)) {
-            e.preventDefault();
-        }
-    };
 
-    // date field validation
-    const handleDateKeyDown = (e) => {
-        const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '/', 'Backspace', 'ArrowLeft', 'ArrowRight', 'Tab'];
-        if (!allowedKeys.includes(e.key)) {
-          e.preventDefault(); // Prevent any key that's not a number, slash, or navigation key
-        }
-    }
-
-
-
-    // name field validation
-    const handleNameKeyDown = (e) => {
-        if (!/^[A-Za-z]$/.test(e.key) && e.key !== 'Backspace' && e.key !== ' ') {
-            e.preventDefault()
+        if (e.target.name === 'firstName' || e.target.name === 'lastName') {
+            if (!/^[A-Za-z]$/.test(e.key) && e.key !== 'Backspace' && e.key !== ' ') {
+                e.preventDefault()
+            }
+        } else if (e.target.name === 'dob') {
+            const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '/', 'Backspace', 'ArrowLeft', 'ArrowRight', 'Tab'];
+            if (!allowedKeys.includes(e.key)) {
+                e.preventDefault();
+            }
+        } else if (e.target.name === 'phone') {
+            if (!/[0-9+]/.test(e.key) && !['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete'].includes(e.key)) {
+                e.preventDefault();
+            }
         }
     }
+    
 
 
 
@@ -336,18 +346,19 @@ const CompleteRegistration = () => {
     return (
         <div className='flex flex-col w-full'>
             <div className='flex flex-col w-full relative'>
-
                 <h2 className='text-3xl md:text-center leading-normal font-eb text-saddleBrown'>Set Up Your Account</h2>
 
 
                 <div className="absolute -top-16 text-center w-full place-self-center">
-                    {successMsg && <div className='success text-center'>{successMsg}</div>}
-                    {error && <div className='error text-center'>{error}</div>}
+                    {successMsg || error ? (
+                        <div className={successMsg ? 'success text-center' : 'error text-center'}>
+                            {successMsg || error}
+                        </div>
+                    ) : null}
                 </div>
 
 
-                <div className='mt-8 flex flex-col gap-6 md:flex-row md:justify-evenly h-fit w-full'>
-
+                <div className='mt-8 flex flex-col gap-6 md:flex-row md:justify-evenly  w-full'>
                     <form className={`flex-1 order-2 flex flex-col gap-2 md:order-1`}>
                         <div>
                             <div className='relative max-w-sm'>
@@ -362,15 +373,15 @@ const CompleteRegistration = () => {
                                         maxLength='15'
                                         placeholder='John'
                                         onChange={handleInputChange}
-                                        onKeyDown={handleNameKeyDown}
+                                        onKeyDown={handleKeyDown}
                                         minLength='3'
 
                                     />
                                 </label>
-                                {formIsSubmitted && (errors.firstName || !isValidName(formData.firstName) || !isFirstNameLongEnough) ? <FaExclamationCircle className={'absolute bottom-3.5 right-4 text-red-900'} size={21} /> : (formIsSubmitted && !errors.firstName ? <FaCheckCircle className={'absolute bottom-3.5 right-4 text-green-800'} size={21} /> : '' )}
+                                {formIsSubmitted && (errors.firstName || !isFirstNameLongEnough || !startsWithCaps(formData.firstName) || !allLowerCase(formData.firstName)) ? <FaExclamationCircle className={'absolute bottom-3.5 right-4 text-red-800'} size={21} /> : (formIsSubmitted && !errors.firstName ? <FaCheckCircle className={'absolute bottom-3.5 right-4 text-green-600'} size={21} /> : '' )}
                             
                             </div>
-                               {(errors.firstName || !isValidName(formData.firstName) || !isFirstNameLongEnough)  && <p className='text-sm text-red-700 mt-1'>{errors.firstName}</p>}
+                               {(errors.firstName || !isFirstNameLongEnough || !startsWithCaps(formData.firstName) || !allLowerCase(formData.firstName))  && <p className='text-sm text-red-700 mt-1'>{errors.firstName}</p>}
                         </div>
 
 
@@ -386,13 +397,13 @@ const CompleteRegistration = () => {
                                         maxLength='25'
                                         placeholder='Smith'
                                         onChange={handleInputChange}
-                                        onKeyDown={handleNameKeyDown}
+                                        onKeyDown={handleKeyDown}
                                         minLength='2'
                                     />
                                 </label>
-                                {formIsSubmitted && (errors.lastName || !isValidName(formData.lastName) || !isLastNameLongEnough) ? <FaExclamationCircle className={'absolute bottom-3.5 right-4 text-red-900'} size={21} /> : (formIsSubmitted && !errors.lastName ? <FaCheckCircle className={'absolute bottom-3.5 right-4 text-green-800'} size={21} /> : '')}
+                                {formIsSubmitted && (errors.lastName || !isLastNameLongEnough || !startsWithCaps(formData.lastName) || !allLowerCase(formData.lastName)) ? <FaExclamationCircle className={'absolute bottom-3.5 right-4 text-red-800'} size={21} /> : (formIsSubmitted && !errors.lastName ? <FaCheckCircle className={'absolute bottom-3.5 right-4 text-green-600'} size={21} /> : '')}
                             </div>
-                            {(errors.lastName || !isValidName(formData.lastName) || !isLastNameLongEnough) && <p className='text-sm text-red-700 mt-1'>{errors.lastName}</p>}
+                            {(errors.lastName || !isLastNameLongEnough || !startsWithCaps(formData.lastName) || !allLowerCase(formData.lastName)) && <p className='text-sm text-red-700 mt-1'>{errors.lastName}</p>}
                         </div>
 
 
@@ -408,16 +419,16 @@ const CompleteRegistration = () => {
                                         dateFormat="dd/MM/yyyy"
                                         selected={formData.dob}
                                         onChange={(date) => handleInputChange({ target: { name: 'dob', value: date } })}
-                                        onKeyDown={handleDateKeyDown}
+                                        onKeyDown={handleKeyDown}
                                         name='dob'
                                         placeholderText='DD/MM/YYYY'
                                         maxDate={new Date()}
                                         maxLength={'8'}
                                     />
                                 </label>
-                                {formIsSubmitted && (errors.dob || !formData.dob) ? <FaExclamationCircle className={'absolute bottom-3.5 right-4 text-red-900'} size={21} /> : (!errors.dob && formData.dob && formIsSubmitted ? <FaCheckCircle className={'absolute bottom-3.5 right-4 text-green-800'} size={21} /> : '')}
+                                {formIsSubmitted && (errors.dob || !formData.dob) ? <FaExclamationCircle className={'absolute bottom-3.5 right-4 text-red-800'} size={21} /> : (!errors.dob && formData.dob && formIsSubmitted ? <FaCheckCircle className={'absolute bottom-3.5 right-4 text-green-600'} size={21} /> : '')}
                             </div>
-                            {(errors.dob && !formData.dob) && <p className='text-sm text-red-700 mt-1'>{errors.dob}</p>}
+                            {(errors.dob && !formData.dob || formData.dob) && <p className='text-sm text-red-700 pt-1'>{errors.dob}</p>}
                         </div>
 
 
@@ -432,39 +443,40 @@ const CompleteRegistration = () => {
                                         pattern='^\+\d{1,15}$'
                                         maxLength="15"
                                         name='phone'
-                                        placeholder="e.g., +14155552671"
+                                        placeholder="+0123456789"
                                         onChange={handleInputChange}
-                                        onKeyDown={handlePhoneKeyDown}
+                                        onKeyDown={handleKeyDown}
                                     />
                                 </label>
-                                {formIsSubmitted && (errors.phone || !isValidPhoneNumber(formData.phone)) ? <FaExclamationCircle className={'absolute bottom-3.5 right-4 text-red-900'} size={21} /> : (!errors.phone && isValidPhoneNumber(formData.phone) ? <FaCheckCircle className={'absolute bottom-3.5 right-4 text-green-800'} size={21} /> : '')}
+                                {formIsSubmitted && (errors.phone || !isValidPhoneNumber(formData.phone)) ? <FaExclamationCircle className={'absolute bottom-3.5 right-4 text-red-800'} size={21} /> : (!errors.phone && isValidPhoneNumber(formData.phone) && formIsSubmitted ? <FaCheckCircle className={'absolute bottom-3.5 right-4 text-green-600'} size={21} /> : '')}
                             </div>
                             {(errors.phone || !isValidPhoneNumber(formData.phone)) && <p className='text-sm text-red-700 mt-1'>{errors.phone}</p>}
                         </div>
 
+                        <button className={`btn block w-fit mt-1.5 bg-saddleBrown transition duration-500 ${isButtonDisabled ? 'opacity-65' : 'opacity-100'}`}    disabled={isButtonDisabled} onClick={handleUpdateProfile}>
+                            {isLoading ? 'Registering...' : 'Register'}
+                        </button>
                     </form>
-
-                    <div className='flex-1 order-1 h-fit md:mt-4 md:order-2 md:shadow-outer md:p-5 rounded-md'>
-                        <div className='md:p-2 rounded-md'>
-                            <AvatarUploader
-                                user={user}
-                                updateProfile={updateProfile}
-                                title='Upload a Profile Picture'
-                                text='This helps others recognize you. You can change it later in your profile settings. (Optional)'
-                                displayTitle={true}
-                                btnColor='bg-saddleBrown'
-                                btnText='Add'
-                            />
+                   
+                   <div className='flex-1 order-1 h-fit md:mt-4 md:order-2 '>
+                        <div className='md:shadow-outer md:p-5 rounded-md max-h-max'>
+                            <div className='md:p-2 rounded-md'>
+                                <AvatarUploader
+                                    user={user}
+                                    updateProfile={updateProfile}
+                                    title='Upload a Profile Picture'
+                                    text='This helps others recognize you. You can change it later in your profile settings. (Optional)'
+                                    displayTitle={true}
+                                    btnColor='bg-saddleBrown'
+                                    show3DAvatar={true}
+                                />
+                            </div>
                         </div>
+                        {infoMsg && <div className='info text-center mt-3'>{infoMsg}</div>}
+                   </div>
 
-                    </div>
                 </div>
-
-                <button className={`btn block w-fit mt-4 bg-saddleBrown transition duration-500 ${isButtonDisabled ? 'opacity-65' : 'opacity-100'}`} disabled={isButtonDisabled} onClick={handleUpdateProfile}>
-                    {isLoading ? 'Registering...' : 'Register'}
-                </button>
             </div>
-
         </div>
 
     );

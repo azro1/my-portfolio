@@ -5,10 +5,6 @@ import { useState, useEffect } from 'react'
 import { useRouter } from "next/navigation";
 
 
-// custom hooks
-import { useUpdateTable } from '@/app/hooks/useUpdateTable'
-import { useUpdateMetadata } from '@/app/hooks/useUpdateMetadata';
-
 
 // components
 import Modal from './Modal'
@@ -19,15 +15,10 @@ const PhoneForm = ({ user, profile }) => {
     const [draftPhone, setDraftPhone] = useState('');
     const [showForm, setShowForm] = useState(false)
     const [formError, setFormError] = useState(null)
-    const [saving, setSaving] = useState(false)
+    const [isUpdating, setIsUpdating] = useState(false)
     
-    const router = useRouter()
-  
-    // custom hook to update profiles table
-    const { error: profileError, updateTable } = useUpdateTable()
+    const router = useRouter();
 
-    // custom hook to update user metadata
-    const { updateMetadata } = useUpdateMetadata()
 
 
     // populate form fields from profiles table
@@ -36,46 +27,61 @@ const PhoneForm = ({ user, profile }) => {
             setDraftPhone(profile.phone || '')
             setPhone(profile.phone || '')
         }
+    }, [user, profile])
 
-        if (profileError) {
-           return;
-        }
-    }, [user, profile, profileError])
+
+
+    // function to convert uk mobile numbers into E.164 format
+    const convertToInternationalFormat = (phoneNumber) => {
+        // replace local prefix '0' with international code '+44' if it exists
+        if (phoneNumber.startsWith('0')) return phoneNumber.replace('0', '+44');
+    
+        // return as is if already in international format
+        return phoneNumber.startsWith('+') ? phoneNumber : phoneNumber;
+    };
+
+
 
 
     // Phone number validation function
     const isValidPhoneNumber = (phoneNumber) => {
         // Check that the phone number follows E.164 format
-        const phoneRegex = /^\+\d{1,15}$/;
+        const phoneRegex = /^(0\d{10}|\+\d{1,3}\d{1,14})$/;
         return phoneRegex.test(phoneNumber);
     }
 
 
     // update last name
     const handlePhoneUpdate = async () => {
-        setSaving(true)
+        setIsUpdating(true)
 
         if (!draftPhone) {
-            setSaving(false)
+            setIsUpdating(false)
             setFormError('Please add a Phone Number')
             setTimeout(() => setFormError(null), 2000)
             return
         }
 
         if (!isValidPhoneNumber(draftPhone)) {
-            setSaving(false)
-            setFormError('Please enter a valid phone number (e.g., +123456789).')
+            setIsUpdating(false)
+            setFormError('Phone numbers must be between 10 - 15 digits.')
             setTimeout(() => setFormError(null), 2000)
             return
+        } else if (profile.phone === draftPhone) {
+            setIsUpdating(false)
+            setFormError('Please enter your new phone number.')
+            setTimeout(() => setFormError(null), 2000)
+            return  
         }
 
+        const convertedPhoneNumber = convertToInternationalFormat(draftPhone);
         // store phone temporarily in local storage
-        localStorage.setItem('phone', draftPhone)
+        localStorage.setItem('phone', convertedPhoneNumber)
 
         try {
             const supabase = createClientComponentClient()
             const { data, error } = await supabase.auth.updateUser({
-                phone: draftPhone
+                phone: convertedPhoneNumber
             })
     
             if (error) {
@@ -91,7 +97,7 @@ const PhoneForm = ({ user, profile }) => {
 
         setTimeout(() => {
             setShowForm(false)
-            setPhone(draftPhone)
+            setPhone(convertedPhoneNumber)
         }, 1000)
     }
 
@@ -99,7 +105,7 @@ const PhoneForm = ({ user, profile }) => {
     // handleOpenForm function
     const handleOpenForm = () => {
         setShowForm(true)
-        setSaving(false)
+        setIsUpdating(false)
     }
 
 
@@ -115,7 +121,7 @@ const PhoneForm = ({ user, profile }) => {
             e.preventDefault()
 
         // Allow only numeric keys, backspace, and arrow keys
-        } else if (!/[0-9+\(\)\-\s]/.test(e.key) && !['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete'].includes(e.key)) {
+        } else if (!/[0-9+]/.test(e.key) && !['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete'].includes(e.key)) {
           e.preventDefault();
         }
     }
@@ -126,8 +132,8 @@ const PhoneForm = ({ user, profile }) => {
             <div className='my-4'>
                 <div className="flex items-center justify-between pb-1">
                     <span className="inline-block text-stoneGray">Phone Number</span>
-                    <span className={`${phone ? 'text-red-600' : 'text-stoneGray'} cursor-pointer`} onClick={handleOpenForm}>
-                        {phone ? 'Edit' : 'Add'}
+                    <span className='text-red-600 cursor-pointer' onClick={handleOpenForm}>
+                        Edit
                     </span>
                 </div>
                 <p className="text-nightSky frostWhitespace-normal break-words">{phone}</p>
@@ -137,9 +143,8 @@ const PhoneForm = ({ user, profile }) => {
                 <Modal>
                     <form>
                         <label>
-                            <span className='block mb-2 text-xl'>
-                                {phone ? 'Edit Phone Number' : 'Add Phone Number'}
-                            </span>
+                            <span className='block mb-2 text-xl'>Edit Phone Number</span>
+                            <p className='mb-3 font-os text-sm leading-normal'>Please enter your new phone number. Ensure it's a valid 11-digit mobile number starting with 0 for local, or include the international code (e.g., +44 for UK, +1 for US). This number will be used for account verification purposes.</p>
                             <input
                                 className='w-full p-2.5 rounded-md border-2'
                                 type='tel'
@@ -156,11 +161,11 @@ const PhoneForm = ({ user, profile }) => {
                     </form>
                     <button className='btn bg-saddleBrown mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
                     <button className='btn bg-saddleBrown mt-3' onClick={handlePhoneUpdate}>
-                        {saving ? 'Saving...' : 'Save'}
+                        {isUpdating ? 'Updating...' : 'Submit'}
                     </button>
-                    {(profileError || formError) && (
+                    {formError && (
                         <div className="absolute">
-                            <p className='modal-form-error'>* {profileError || formError}</p>
+                            <p className='modal-form-error'>* {formError}</p>
                         </div>
                     )}
                 </Modal>

@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import SocialButtons from "../SocialButtons";
 
 const Login = () => {
-  const [email, setEmail] = useState('')
+  const [tempEmail, setTempEmail] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const router = useRouter()
@@ -23,12 +23,12 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    if (!email) {
+    if (!tempEmail) {
       setError('Please provide your email');
       setTimeout(() => setError(null), 2000)
       return
 
-    } else if (!isValidEmail(email)) {
+    } else if (!isValidEmail(tempEmail)) {
       setError('Invalid format. Please try again.');
       setTimeout(() => setError(null), 2000)
       setIsLoading(false)
@@ -36,7 +36,8 @@ const Login = () => {
     }
 
     setIsLoading(true)
-
+    // convert email to lowercase
+    const email = tempEmail.toLowerCase();
 
 
 
@@ -52,20 +53,20 @@ const Login = () => {
         })
       })
      
-      // await json response from server and store in const userEmail
-      const userEmail = await res.json()
+      // await json response from server and store in const serverEmail
+      const serverEmail = await res.json()
 
       if (res.status === 404) {
         setIsLoading(false)
         setError('There is no account associated with that email. Please signup.')
         return
 
-      } else if (userEmail.error) {
+      } else if (serverEmail.error) {
         setIsLoading(false)
-        setError(userEmail.error)
+        setError(serverEmail.error)
         return
 
-      } else if (userEmail.exists && res.status === 409) {
+      } else if (serverEmail.exists && res.status === 409) {
         // store email temporarily in local storage
         localStorage.setItem('email', email)
 
@@ -111,12 +112,12 @@ const Login = () => {
               Email
             </span>
             <input
-              className={`w-full p-2.5 rounded-md bg-deepCharcoal text-stoneGray border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-saddleBrown focus:ring-1 focus:ring-saddleBrown`}
+              className={`w-full py-2.5 px-3 rounded-md bg-deepCharcoal text-stoneGray border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-saddleBrown focus:ring-1 focus:ring-saddleBrown`}
               type='text'
               placeholder='name@domain.com'
               spellCheck='false'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={tempEmail}
+              onChange={(e) => setTempEmail(e.target.value)}
             />
           </label>
 

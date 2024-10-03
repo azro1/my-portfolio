@@ -59,9 +59,13 @@ export default {
         '13.5': '13.5rem', // 216px
         '15.75': '15.75rem', // 252px
       },
+      letterSpacing: {
+        'extra-wide': '0.3rem', 
+      },
       inset: {
-        '26': '26rem',
+        '1.5': '0.375rem', // 6px
         '8.625': '8.625rem', // 136px
+        '26': '26rem', // 416px
       },
       height: {
         // Small heights

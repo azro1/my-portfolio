@@ -12,7 +12,7 @@ import { useUpdateTable } from "@/app/hooks/useUpdateTable";
 import { useUpdateMetadata } from "@/app/hooks/useUpdateMetadata";
 
 
-const OtpForm = ({ storageStr, verificationType, redirectUrl, subHeading, successMessage }) => {
+const OtpForm = ({ storageStr, verificationType, redirectUrl, title, subHeading, successMessage }) => {
     const [otp, setOtp] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
@@ -60,14 +60,15 @@ const OtpForm = ({ storageStr, verificationType, redirectUrl, subHeading, succes
         
         
         if (!contactMethod) {
-            setError('Verification failed. Please request a new security code.')
+            setError('Verification failed. Please request a new code.')
             setTimeout(() => setError(null), 2000)
         } else if (contactMethod.includes('@')) {
             email = contactMethod
         } else {
             phone = contactMethod
         }
-
+         
+        // create verification objects
         const otpVerificationData = email ? { email, token: otp, type: verificationType } : { phone, token: otp, type: verificationType }
         const appData = email ? { email: email } : { phone: phone }
 
@@ -76,7 +77,7 @@ const OtpForm = ({ storageStr, verificationType, redirectUrl, subHeading, succes
 
         if (error) {
             setIsLoading(false)
-            setError('Verification failed. Please request a new security code.')
+            setError('Verification failed. Please request a new code.')
             console.log(error.message)
             return
 
@@ -140,13 +141,13 @@ const OtpForm = ({ storageStr, verificationType, redirectUrl, subHeading, succes
 
             <div className="flex relative max-w-sm">
 
-                <div className="absolute -top-28 w-full">
+                <div className="absolute -top-24 w-full text-center">
                     {successMsg && <div className='success'>{successMsg}</div>}
                     {error && <div className="error">{error}</div>}
                 </div>
 
                 <form className="max-w-max" onSubmit={handleVerifyOtp}>
-                    <h2 className='text-3xl leading-normal mb-4 font-eb text-saddleBrown'>Verify Your Email</h2>
+                    <h2 className='text-3xl leading-normal mb-4 font-eb text-saddleBrown'>{title}</h2>
                     <p className='mb-4'>{subHeading}</p>
 
                     <label>
@@ -155,27 +156,28 @@ const OtpForm = ({ storageStr, verificationType, redirectUrl, subHeading, succes
                         </span>
                         <div className='relative max-w-xs'>
                             <input
-                                className={`w-full max-w-xs p-2.5 rounded-md text-stoneGray bg-deepCharcoal border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-saddleBrown focus:ring-1 focus:ring-saddleBrown`}
+                                className={`w-full max-w-xs py-2 px-3 text-lg rounded-md text-stoneGray bg-deepCharcoal border-2 tracking-extra-wide ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-saddleBrown focus:ring-1 focus:ring-saddleBrown`}
                                 type={`${isEyeOpen ? 'text' : 'password'}`}
                                 spellCheck='false'
                                 autoComplete="off"
+                                placeholder="123456"
                                 value={otp}
                                 maxLength='6'
                                 onChange={handleOtpChange}
                             />
                             {!isEyeOpen ? (
-                                <div className="absolute right-2 top-2 p-2 group bg-nightSky hover:bg-stoneGray transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
+                                <div className="absolute right-1.5 top-1.5 p-2 group bg-nightSky hover:bg-stoneGray transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
                                     <FiEye
                                         className='text-stoneGray group-hover:text-deepCharcoal transition duration-300 fieye'
-                                        size={17}
+                                        size={20}
                                     />
                                 </div>
 
                             ) : (
-                                <div className="absolute right-2 top-2 p-2 group bg-nightSky hover:bg-stoneGray transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
+                                <div className="absolute right-1.5 top-1.5 p-2 group bg-nightSky hover:bg-stoneGray transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
                                     <FiEyeOff
                                         className='text-stoneGray group-hover:text-deepCharcoal transition duration-300 fieye-off'
-                                        size={17}
+                                        size={20}
                                     />
                                 </div>
                             )}

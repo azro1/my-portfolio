@@ -9,17 +9,15 @@ import { useRouter } from "next/navigation"
 import Modal from './Modal'
 
 
-const EmailForm = ({ user, profile, profileError }) => {
+const EmailForm = ({ user, profile }) => {
     const [email, setEmail] = useState('')
     const [draftEmail, setDraftEmail] = useState('');
     const [formError, setFormError] = useState(null)
-    const [isSending, setIsSending] = useState(false)
+    const [isUpdating, setIsUpdating] = useState(false)
     const [showForm, setShowForm] = useState(false)
-
 
     const router = useRouter()
     const supabase = createClientComponentClient()
-
 
 
     // populate form fields from profiles table
@@ -31,9 +29,9 @@ const EmailForm = ({ user, profile, profileError }) => {
     }, [user, profile])
 
 
-
     const handleEmailUpdate = async () => {
         setFormError(null)
+        setIsUpdating(true)
 
         // check if a given string is a valid email address
         const isValidEmail = (value) => {
@@ -42,53 +40,27 @@ const EmailForm = ({ user, profile, profileError }) => {
         }
 
         if (!isValidEmail(draftEmail)) {
+            setIsUpdating(false)
             setFormError('Please enter a valid email address')
             setTimeout(() => setFormError(''), 2000)
             return;
         } else if (profile.email === draftEmail.trim()) {
-            setFormError('Please change your email address')
+            setIsUpdating(false)
+            setFormError('Please enter your new email address')
             setTimeout(() => setFormError(''), 2000)
             return;
         } else {
 
+            try {
+                const emailToLowercase = draftEmail.trim().toLowerCase();
 
-
-
-        // sent email to server endpoint to check if email already exists within profiles table
-        try {
-            setIsSending(true)
-            const res = await fetch(`${location.origin}/api/auth/email-exists`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    email: draftEmail
-                })
-            })
-    
-            // await json response from server and store in const userEmail
-            const userEmail = await res.json()    
-    
-            if (res.status === 409) {
-                setIsSending(false)
-                setFormError('This email is already associated with an account')
-                return
-    
-            } else if (userEmail.error) {
-                setIsSending(false)
-                setFormError(userEmail.error)
-                return
-    
-            } else if (!userEmail.exists && res.status === 404) {
-                
                 // store email temporarily in local storage
-                localStorage.setItem('email', draftEmail)
+                localStorage.setItem('email', emailToLowercase)
 
                 const { data, error } = await supabase.auth.updateUser({
-                    email: draftEmail,
+                    email: emailToLowercase,
                 })
-                
+
                 if (error) {
                     throw new Error(error.message)
                 }
@@ -96,11 +68,10 @@ const EmailForm = ({ user, profile, profileError }) => {
                 if (data) {
                     router.push('/profile/verify-email-otp')
                 }
-            }
 
-        } catch(error) {
-            console.log(error.message)
-        }
+            } catch (error) {
+                console.log(error.message)
+            }
 
         }
     }
@@ -144,8 +115,9 @@ const EmailForm = ({ user, profile, profileError }) => {
                     <form >
                         <label>
                             <span className='block mb-2 text-xl'>
-                                Edit Email
+                                Edit Email Address
                             </span>
+                            <p className='mb-3 font-os text-sm leading-normal'>Please enter your new email address. Ensure it’s a valid email format (e.g., example@domain.com). This email will be used for account notifications and verification purposes.</p>
                             <input
                                 className='w-full p-2.5 rounded-md border-2'
                                 type='email'
@@ -161,11 +133,11 @@ const EmailForm = ({ user, profile, profileError }) => {
                     </form>
                     <button className='btn bg-saddleBrown mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
                     <button className={`btn bg-saddleBrown mt-3`} onClick={handleEmailUpdate}>
-                        {isSending ? 'Updating...' : 'Submit'}
+                        {isUpdating ? 'Updating...' : 'Submit'}
                     </button>
-                    {(profileError || formError) && (
+                    {formError && (
                         <div className="absolute">
-                            <p className='modal-form-error'>* {profileError || formError}</p>
+                            <p className='modal-form-error'>* {formError}</p>
                         </div>
                     )}
                 </Modal>

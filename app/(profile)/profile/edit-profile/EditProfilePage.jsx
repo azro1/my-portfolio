@@ -22,12 +22,10 @@ import DobForm from './DobForm';
 
 
 const EditProfilePage = () => {
-    // const [phone, setPhone] = useState(null)
     const [updateError, setUpdateError] = useState(null)
 
     // custom hook to fetch user
     const { user } = useFetchUser()
-    
     // custom hook to fetch profile
     const { error: profileError, profile, fetchProfile } = useFetchProfile()
 
@@ -85,7 +83,7 @@ const EditProfilePage = () => {
                     text='Personalize your account by uploading your own avatar'
                     updateError={updateError}
                     btnColor='bg-nightSky'
-                    btnText='Upload'
+                    show3DAvatar={false}
                 />
             </div>
  
@@ -115,7 +113,6 @@ const EditProfilePage = () => {
                 <EmailForm 
                     user={user}
                     profile={profile}
-                    profileError={profileError}
                 />
 
                 <PhoneForm
@@ -123,7 +120,8 @@ const EditProfilePage = () => {
                     profile={profile}
                 />
             </div>
-
+            
+            {profileError && <div className='error'>{profileError}</div>}
         </div>
     )
 }

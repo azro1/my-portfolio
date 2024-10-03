@@ -13,7 +13,7 @@ import Modal from './Modal';
 
 
 
-const AvatarUploader = ({ user, updateProfile, updateError, title, text, displayTitle, btnColor, btnText }) => {
+const AvatarUploader = ({ user, updateProfile, updateError, title, text, displayTitle, btnColor, show3DAvatar }) => {
 
     // custom hook to update comments after user updates personal info
     const { updateTable } = useUpdateTable()
@@ -93,38 +93,52 @@ const AvatarUploader = ({ user, updateProfile, updateError, title, text, display
         <div>
             <div>
                 {displayTitle &&  (
-                    <h2 className='text-2xl text-stoneGray mb-3'>{title}</h2>
+                    <h2 className='text-2xl text-stoneGray mb-3 font-medium'>{title}</h2>
                 )}
                 <p className='leading-normal'>{text}</p>
-                <div className='mb-2 mt-4 h-14 w-14 relative '>
-                    {imgSrc ? (
-                        <Image
-                            src={imgSrc}
-                            alt="A user's selected image"
-                            fill={true}
-                            quality={100}
-                            sizes="100%"
-                        />
-                    ) : (
-                        <FaUserCircle size={56} color="gray" />
+                
+                <div className={`${show3DAvatar ? 'mt-5 grid grid-flow-col auto-cols-auto' : '' }`}>
+
+                     <div>
+                        <div className='mb-2 mt-4 h-14 w-14 relative'>
+                            {imgSrc ? (
+                                <Image
+                                    src={imgSrc}
+                                    alt="A user's selected image"
+                                    fill={true}
+                                    quality={100}
+                                    sizes="100%"
+                                />
+                            ) : (
+                                <FaUserCircle size={56} color="gray" />
+                            )}
+                        </div>
+                        <form ref={formRef} className='w-full'>
+                            <input
+                                className='text-stoneGray file:cursor-pointer file:mr-3 w-full max-w-xs'
+                                type='file'
+                                id='single'
+                                accept='image/*'
+                                onChange={handleFileInputChange}
+                                disabled={uploading || (user && user.user_metadata.name)}
+                            />
+                        </form>
+                        <button className={`small-btn ${btnColor} block ${uploadError ? 'mt-2' : 'mt-3'}`}
+                            onClick={uploadAvatar}
+                            disabled={uploading || (user && user.user_metadata.name)}
+                        >
+                            {uploading ? 'Uploading...' : 'Upload'}
+                        </button>
+                    </div>
+
+                    {show3DAvatar && (
+                        <div className='col-start-1 place-self-center justify-self-start md:col-start-2 md:justify-self-end'>
+                            <img src="/images/registration/avatar.svg" className='w-full' alt="a profile avatar" />
+                        </div>
                     )}
+
                 </div>
-                <form ref={formRef}>
-                    <input
-                        className='text-stoneGray file:cursor-pointer file:mr-3'
-                        type='file'
-                        id='single'
-                        accept='image/*'
-                        onChange={handleFileInputChange}
-                        disabled={uploading || (user && user.user_metadata.name)}
-                    />
-                </form>
-                <button className={`small-btn ${btnColor} block ${uploadError ? 'mt-2' : 'mt-3'}`}
-                    onClick={uploadAvatar}
-                    disabled={uploading || (user && user.user_metadata.name)}
-                >
-                    {uploading ? 'Uploading...' : `${btnText}`}
-                </button>
+
             </div>
 
             {(uploadError || fileInputError || updateError) && (
