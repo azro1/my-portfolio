@@ -31,6 +31,7 @@ import { usePathname } from 'next/navigation';
 const CompleteRegistration = () => {
     const [formIsSubmitted, setFormIsSubmitted] = useState(false)
     const [isLoading, setIsLoading] = useState(false);
+    const [isCheckingPhone, setIsCheckingPhone] = useState(false);
     const [isButtonDisabled, setIsButtonDisabled] = useState(true)
     
     const [error, setError] = useState(null)
@@ -53,6 +54,7 @@ const CompleteRegistration = () => {
     // State to track name length for each input
     const [isFirstNameLongEnough, setIsFirstNameLongEnough] = useState(false);
     const [isLastNameLongEnough, setIsLastNameLongEnough] = useState(false);
+    const [phoneExists, setPhoneExists] = useState(false);
 
     const [redirect, setRedirect] = useState(false);
     const router = useRouter();
@@ -163,7 +165,6 @@ const CompleteRegistration = () => {
         } else {
             setInfoMsg(null)
         }
-
     }, [formData])
 
 
@@ -180,6 +181,42 @@ const CompleteRegistration = () => {
         // return as is if already in international format
         return phoneNumber.startsWith('+') ? phoneNumber : phoneNumber;
     };
+
+
+
+
+
+    // function to check if phone number already exists
+    const isPhoneNumberUnique = async (phoneNumber) => {
+        setIsCheckingPhone(true);
+        const convertedPhoneNumber = convertToInternationalFormat(phoneNumber);
+
+        try {
+            const res = await fetch(`${location.origin}/api/auth/phone-exists`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 
+                    phone: convertedPhoneNumber
+                })
+            })
+            
+            // if theres a problem with the json on the server this will reject promise which we catch
+            const serverPhoneNumber = await res.json();
+            setPhoneExists(serverPhoneNumber)
+
+            if (res.status === 409 && serverPhoneNumber.exists) {
+                return serverPhoneNumber.exists
+            }    
+            return serverPhoneNumber.exists
+
+        } catch (error) {
+            console.log(error.message)
+        } finally {
+            setIsCheckingPhone(false)
+        }
+    }
     
     
 
@@ -190,6 +227,7 @@ const CompleteRegistration = () => {
     const handleUpdateProfile = async (e) => {
         e.preventDefault()
         setFormIsSubmitted(true)
+        setInfoMsg(null)
         const { firstName, lastName, dob, phone } = formData;
         let formIsValid = true;
 
@@ -203,7 +241,7 @@ const CompleteRegistration = () => {
             setErrors((prev) => ({ ...prev, firstName: 'Firstnames should start with a uppercase letter.' }))
             formIsValid = false;
         } else if (!allLowerCase(firstName)) {
-            setErrors((prev) => ({ ...prev, firstName: 'Firstnames cannot be entirely uppercase.' }))
+            setErrors((prev) => ({ ...prev, firstName: 'Only the initial character may be uppercase.' }))
             formIsValid = false;
         } else {
             setErrors((prev) => ({ ...prev, firstName: '' }))
@@ -219,7 +257,7 @@ const CompleteRegistration = () => {
             setErrors((prev) => ({ ...prev, lastName: 'Lastnames should start with a uppercase letter.' }))
             formIsValid = false;    
         } else if (!allLowerCase(lastName)) {
-            setErrors((prev) => ({ ...prev, lastName: 'Lastnames cannot be entirely uppercase.' }))
+            setErrors((prev) => ({ ...prev, lastName: 'Only the initial character may be uppercase.' }))
             formIsValid = false;     
         } else {
             setErrors((prev) => ({ ...prev, lastName: '' }))
@@ -238,6 +276,14 @@ const CompleteRegistration = () => {
         } else if (!isValidPhoneNumber(phone)) {
             setErrors((prev) => ({ ...prev, phone: 'Please enter a valid mobile number (11 digits, starting with 0) or an international code (e.g., +44 for UK, +1 for US).'}))
             formIsValid = false;
+        } else if (phone && isValidPhoneNumber(phone)) {
+            const exists = await isPhoneNumberUnique(phone);
+            if (exists) {
+                setErrors((prev) => ({ ...prev, phone: 'Phone number is already in use.' }));
+                formIsValid = false;
+            } else {
+                setErrors((prev) => ({ ...prev, phone: '' }))
+            }
         } else {
             setErrors((prev) => ({ ...prev, phone: '' }))
         }
@@ -448,12 +494,12 @@ const CompleteRegistration = () => {
                                         onKeyDown={handleKeyDown}
                                     />
                                 </label>
-                                {formIsSubmitted && (errors.phone || !isValidPhoneNumber(formData.phone)) ? <FaExclamationCircle className={'absolute bottom-3.5 right-4 text-red-800'} size={21} /> : (!errors.phone && isValidPhoneNumber(formData.phone) && formIsSubmitted ? <FaCheckCircle className={'absolute bottom-3.5 right-4 text-green-600'} size={21} /> : '')}
+                                {formIsSubmitted && (errors.phone || !isValidPhoneNumber(formData.phone)) ? (<FaExclamationCircle className={'absolute bottom-3.5 right-4 text-red-800'} size={21} />) : (!errors.phone && isValidPhoneNumber(formData.phone) && formIsSubmitted && !isCheckingPhone ? (<FaCheckCircle className={'absolute bottom-3.5 right-4 text-green-600'} size={21} />) : null)}
                             </div>
                             {(errors.phone || !isValidPhoneNumber(formData.phone)) && <p className='text-sm text-red-700 mt-1'>{errors.phone}</p>}
                         </div>
 
-                        <button className={`btn block w-fit mt-1.5 bg-saddleBrown transition duration-500 ${isButtonDisabled ? 'opacity-65' : 'opacity-100'}`}    disabled={isButtonDisabled} onClick={handleUpdateProfile}>
+                        <button className={`btn block w-fit mt-1.5 bg-saddleBrown transition duration-500 ${isButtonDisabled ? 'opacity-65' : 'opacity-100'}`}  disabled={isButtonDisabled} onClick={handleUpdateProfile}>
                             {isLoading ? 'Registering...' : 'Register'}
                         </button>
                     </form>
