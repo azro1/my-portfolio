@@ -23,11 +23,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    if (!tempEmail) {
+    if (!tempEmail.trim()) {
       setError('Please provide your email');
       setTimeout(() => setError(null), 2000)
       return
-
     } else if (!isValidEmail(tempEmail)) {
       setError('Invalid format. Please try again.');
       setTimeout(() => setError(null), 2000)
@@ -113,16 +112,25 @@ const Login = () => {
             </span>
             <input
               className={`w-full py-2.5 px-3 rounded-md bg-deepCharcoal text-stoneGray border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-saddleBrown focus:ring-1 focus:ring-saddleBrown`}
-              type='text'
-              placeholder='name@domain.com'
-              spellCheck='false'
+              type='email'
+              placeholder='Enter your email'
+              spellCheck={false}
               value={tempEmail}
               onChange={(e) => setTempEmail(e.target.value)}
             />
           </label>
 
           <div className="flex">
-            <button className='mt-4 btn bg-saddleBrown' disabled={isLoading}>{isLoading ? 'Logging in...' : 'Login'}</button>
+            <button className='mt-4 btn bg-saddleBrown' disabled={isLoading}>
+              {isLoading ? (
+                <div className='flex items-center gap-2'>
+                  <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />
+                  <span>Logging in</span>
+                </div>
+              ) : (
+                'Login'
+              )}
+            </button>
             <Link className='ml-auto mt-2' href={'/forgot-email'}>
               <span className='text-saddleBrown text-base'>Forgot email?</span>
             </Link>

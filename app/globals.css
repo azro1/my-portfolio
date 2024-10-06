@@ -48,11 +48,11 @@ main {
 }
 
 .btn {
-  @apply py-2.5 px-4 rounded-lg font-medium text-frostWhite;
+  @apply py-2.5 p-3 rounded-lg font-medium text-frostWhite;
 }
 
-.small-btn {
-  @apply py-2 px-4 rounded-lg font-medium text-frostWhite;
+.btn-small {
+  @apply py-2 px-3 rounded-lg font-medium text-frostWhite;
 }
 
 form input {
@@ -173,6 +173,27 @@ footer span {
 .techstack:last-child::after {
   content: ''
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

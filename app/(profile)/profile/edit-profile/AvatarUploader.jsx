@@ -123,11 +123,18 @@ const AvatarUploader = ({ user, updateProfile, updateError, title, text, display
                                 disabled={uploading || (user && user.user_metadata.name)}
                             />
                         </form>
-                        <button className={`small-btn ${btnColor} block ${uploadError ? 'mt-2' : 'mt-3'}`}
+                        <button className={`btn-small ${btnColor} block ${uploadError ? 'mt-2' : 'mt-3'}`}
                             onClick={uploadAvatar}
                             disabled={uploading || (user && user.user_metadata.name)}
                         >
-                            {uploading ? 'Uploading...' : 'Upload'}
+                            {uploading ? (
+                                <div className='flex items-center gap-2'>
+                                    <img className="w-5 h-5 opacity-50" src="../../images/loading/spinner.svg" alt="Loading indicator" />
+                                    <span>Uploading</span>
+                                </div>
+                            ) : (
+                                'Upload'
+                            )}
                         </button>
                     </div>
 

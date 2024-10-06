@@ -24,7 +24,7 @@ export default {
         discordPurple: '#6A5ACD',
         githubDark: '#323439',
         googleRed: '#DC2626',
-        'modal-translucent': 'rgb(28, 30, 36, 0.70)'
+        'modal-translucent': 'rgb(28, 30, 36, 0.80)'
       },
       fontFamily: {
         'rubik': ['Rubik', 'sans-serif'],

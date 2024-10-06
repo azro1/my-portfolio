@@ -194,9 +194,17 @@ const EnquiriesForm = ({ user }) => {
                 ></textarea>
             </label>
 
-        
-    
-            <button className='btn block mt-2 bg-saddleBrown'>{isLoading ? 'Sending...' : 'Send'}</button>
+            <button className='btn block mt-2 bg-saddleBrown'>
+                {isLoading ? (
+                    <div className='flex items-center gap-2'>
+                        <img className="w-5 h-5 opacity-50" src="../images/loading/spinner.svg" alt="Loading indicator" />
+                        <span>Sending</span>
+                    </div>
+                ) : (
+                    'Send'
+                )}
+            </button>
+
             <div className="mt-5 h-5 text-center">
                 {formError && <p className='error'>{formError}</p>}
                 {successMsg && <p className='success'>{successMsg}</p>}

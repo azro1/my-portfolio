@@ -41,8 +41,6 @@ const PhoneForm = ({ user, profile }) => {
     };
 
 
-
-
     // Phone number validation function
     const isValidPhoneNumber = (phoneNumber) => {
         // Check that the phone number follows E.164 format
@@ -54,51 +52,50 @@ const PhoneForm = ({ user, profile }) => {
     // update last name
     const handlePhoneUpdate = async () => {
         setIsUpdating(true)
-
+        
         if (!draftPhone) {
-            setIsUpdating(false)
-            setFormError('Please add a Phone Number')
-            setTimeout(() => setFormError(null), 2000)
-            return
-        }
-
-        if (!isValidPhoneNumber(draftPhone)) {
-            setIsUpdating(false)
-            setFormError('Phone numbers must be between 10 - 15 digits.')
-            setTimeout(() => setFormError(null), 2000)
-            return
-        } else if (profile.phone === draftPhone) {
             setIsUpdating(false)
             setFormError('Please enter your new phone number.')
             setTimeout(() => setFormError(null), 2000)
-            return  
-        }
+            return
+        } else if (!isValidPhoneNumber(draftPhone)) {
+            setIsUpdating(false)
+            setFormError('Invalid phone number.')
+            setTimeout(() => setFormError(null), 2000)
+            return
+        } else if (phone === draftPhone) {
+            setIsUpdating(false)
+            setFormError('Please update your phone number before saving.')
+            setTimeout(() => setFormError(null), 2000)
+            return
+        } else {
 
-        const convertedPhoneNumber = convertToInternationalFormat(draftPhone);
-        // store phone temporarily in local storage
-        localStorage.setItem('phone', convertedPhoneNumber)
-
-        try {
-            const supabase = createClientComponentClient()
-            const { data, error } = await supabase.auth.updateUser({
-                phone: convertedPhoneNumber
-            })
+            const convertedPhoneNumber = convertToInternationalFormat(draftPhone);
+            // store phone temporarily in local storage
+            localStorage.setItem('phone', convertedPhoneNumber)
     
-            if (error) {
-                throw new Error(error.message)
+            try {
+                const supabase = createClientComponentClient()
+                const { data, error } = await supabase.auth.updateUser({
+                    phone: convertedPhoneNumber
+                })
+        
+                if (error) {
+                    throw new Error(error.message)
+                }
+        
+                if (data) {
+                    router.push('/profile/verify-phone-otp')
+                }  
+            } catch (error) {
+                console.log(error.message)
             }
     
-            if (data) {
-                router.push('/profile/verify-phone-otp')
-            }  
-        } catch (error) {
-            console.log(error.message)
+            setTimeout(() => {
+                setShowForm(false)
+                setPhone(convertedPhoneNumber)
+            }, 1000)
         }
-
-        setTimeout(() => {
-            setShowForm(false)
-            setPhone(convertedPhoneNumber)
-        }, 1000)
     }
 
 
@@ -144,25 +141,34 @@ const PhoneForm = ({ user, profile }) => {
                     <form>
                         <label>
                             <span className='block mb-2 text-xl'>Edit Phone Number</span>
-                            <p className='mb-3 font-os text-sm leading-normal'>Please enter your new phone number. Ensure it's a valid 11-digit mobile number starting with 0 for local, or include the international code (e.g., +44 for UK, +1 for US). This number will be used for account verification purposes.</p>
+                            <p className='mb-3'>Please enter your new phone number. Ensure it's a valid 11-digit mobile number starting with 0 for local, or include the international code (e.g., +44 for UK, +1 for US). This number will be used for account verification purposes.</p>
                             <input
                                 className='w-full p-2.5 rounded-md border-2'
                                 type='tel'
                                 value={draftPhone || ''}
                                 placeholder='Phone'
-                                spellCheck='false'
-                                autoFocus='true'
-                                pattern='^\+\d{1,15}$' 
-                                maxLength="15"
+                                spellCheck={false}
+                                autoFocus={true}
+                                maxLength={15}
                                 onChange={(e) => setDraftPhone(e.target.value)}
                                 onKeyDown={handleKeyDown}
                             />
                         </label>
                     </form>
-                    <button className='btn bg-saddleBrown mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                    <button className='btn bg-saddleBrown mt-3' onClick={handlePhoneUpdate}>
-                        {isUpdating ? 'Updating...' : 'Submit'}
-                    </button>
+                    <div className='flex items-center'>
+                        <button className='btn-small bg-saddleBrown mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
+                        <button className='btn-small bg-saddleBrown mt-3' onClick={handlePhoneUpdate}>
+                            {isUpdating ? (
+                                <div className='flex items-center gap-2'>
+                                    <img className="w-5 h-5 opacity-50" src="../../images/loading/spinner.svg" alt="Loading indicator" />
+                                    <span>Save</span>
+                                </div>
+                            ) : (
+                                'Save'
+                            )}
+                        </button>
+                    </div>
+
                     {formError && (
                         <div className="absolute">
                             <p className='modal-form-error'>* {formError}</p>

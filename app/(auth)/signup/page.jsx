@@ -43,7 +43,7 @@ const Signup = () => {
     setError(null)
     
     // form validation
-    if (!tempEmail) {
+    if (!tempEmail.trim()) {
       setError('Please provide your email');
       setTimeout(() => setError(null), 2000);
       setIsLoading(false);
@@ -116,9 +116,9 @@ const Signup = () => {
       }
 
     } catch (error) {
-      setIsLoading(false)
-      console.log(error.message)
-      setError('An unexpected error occurred. Please try again.');
+        setIsLoading(false)
+        console.log(error.message)
+        setError('An unexpected error occurred. Please try again.');
     }
 
   }
@@ -147,9 +147,9 @@ const Signup = () => {
               </span>
               <input
                 className={`w-full py-2.5 px-3 rounded-md text-stoneGray bg-deepCharcoal border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-saddleBrown focus:ring-1 focus:ring-saddleBrown`}
-                type='text'
-                spellCheck='false'
-                placeholder='name@domain.com'
+                type='email'
+                spellCheck={false}
+                placeholder='Enter your email'
                 value={tempEmail}
                 onChange={(e) => setTempEmail(e.target.value)}
               />
@@ -161,7 +161,16 @@ const Signup = () => {
               .</span>
             </div>
 
-            <button className='btn block mt-4 bg-saddleBrown' disabled={isLoading}>{isLoading ? 'Processing...' : 'Signup'}</button>
+            <button className='btn block mt-4 bg-saddleBrown' disabled={isLoading}>
+              {isLoading ? (
+                <div className='flex items-center gap-2'>
+                  <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />
+                  <span>Please wait</span>
+                </div>
+              ) : (
+                'Signup'
+              )}
+            </button>
           </form>
         </div>
 

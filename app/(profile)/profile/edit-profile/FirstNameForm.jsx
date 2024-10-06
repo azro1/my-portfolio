@@ -17,7 +17,7 @@ const FirstNameForm = ({ user, profile }) => {
     const [saving, setSaving] = useState(false)
 
     // custom hook to update profiles table
-    const { error: profileError, updateTable } = useUpdateTable()
+    const { error: updateError, updateTable } = useUpdateTable()
 
     // custom hook to update user metadata
     const { updateMetadata } = useUpdateMetadata()
@@ -30,10 +30,10 @@ const FirstNameForm = ({ user, profile }) => {
             setFirstName(profile.first_name || user.user_metadata.name || '')
         }
 
-        if (profileError) {
+        if (updateError) {
            return;
         }
-    }, [user, profile, profileError])
+    }, [user, profile, updateError])
 
 
     // update first name
@@ -42,7 +42,12 @@ const FirstNameForm = ({ user, profile }) => {
 
         if (!draftFirstName.trim()) {
             setSaving(false)
-            setFormError('Please add a First Name')
+            setFormError('Please add a first name')
+            setTimeout(() => setFormError(null), 2000)
+            return
+        } else if (first_name === draftFirstName) {
+            setSaving(false)
+            setFormError('Please update your first name before saving.')
             setTimeout(() => setFormError(null), 2000)
             return
         }
@@ -77,7 +82,9 @@ const FirstNameForm = ({ user, profile }) => {
 
     // prevent enter submission
     const handleKeyDown = (e) => {
-        if (e.key === 'Enter') {
+        if (e.key === 'Enter') e.preventDefault()
+        
+        if (!/^[A-Za-z]$/.test(e.key) && !['Backspace', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(e.key)) {
             e.preventDefault()
         }
     }
@@ -102,25 +109,37 @@ const FirstNameForm = ({ user, profile }) => {
                             <span className='block mb-2 text-xl'>
                                 Edit First Name
                             </span>
+                            <p className='mb-3'>Please enter your first name as you'd like it to appear in your profile.</p>
                             <input
                                 className='w-full p-2.5 rounded-md border-2'
                                 type='text'
                                 value={draftFirstName || ''}
                                 placeholder='First Name'
-                                spellCheck='false'
-                                autoFocus='true'
+                                spellCheck={false}
+                                autoFocus={true}
+                                maxLength={15}
                                 onChange={(e) => setDraftFirstName(e.target.value)}
                                 onKeyDown={handleKeyDown}
                             />
                         </label>
                     </form>
-                    <button className='btn bg-saddleBrown mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                    <button className='btn bg-saddleBrown mt-3' onClick={handleNameUpdate}>
-                        {saving ? 'Saving...' : 'Save'}
-                    </button>
-                    {(profileError || formError) && (
+                    <div className='flex items-center'>
+                        <button className='btn-small bg-saddleBrown mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
+                        <button className='btn-small bg-saddleBrown mt-3' onClick={handleNameUpdate}>
+                            {saving ? (
+                                <div className='flex items-center gap-2'>
+                                    <img className="w-5 h-5 opacity-50" src="../../images/loading/spinner.svg" alt="Loading indicator" />
+                                    <span>Save</span>
+                                </div>
+                            ) : (
+                                'Save'
+                            )}
+                        </button>
+                    </div>
+
+                    {(updateError || formError) && (
                         <div className="absolute">
-                            <p className='modal-form-error'>* {profileError || formError}</p>
+                            <p className='modal-form-error'>* {updateError || formError}</p>
                         </div>
                     )}
                 </Modal>

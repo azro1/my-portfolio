@@ -139,17 +139,26 @@ const ForgotEmail = () => {
                     <label>
                         <span className='max-w-min mb-2 text-base text-stoneGray block'>Phone</span>
                         <input
-                            className={`w-full max-w-xs py-2 px-3 text-lg rounded-md text-stoneGray bg-deepCharcoal border-2 tracking-widest ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-saddleBrown focus:ring-1 focus:ring-saddleBrown`}
+                            className={`w-full max-w-xs py-2.5 px-3 rounded-md text-stoneGray bg-deepCharcoal border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-saddleBrown focus:ring-1 focus:ring-saddleBrown`}
                             type='tel'
                             value={phone}
-                            spellCheck='false'
-                            maxLength="15"
-                            placeholder="+0123456789"
+                            spellCheck={false}
+                            maxLength={15}
+                            placeholder="Enter your phone number"
                             onChange={(e) => setPhone(e.target.value)}
                             onKeyDown={handleKeyDown}
                         />
                     </label>
-                    <button className='btn block mt-4 bg-saddleBrown' disabled={isLoading}>{isLoading ? 'Processing...' : 'Submit'}</button>
+                    <button className='btn block mt-4 bg-saddleBrown' disabled={isLoading}>
+                        {isLoading ? (
+                            <div className='flex items-center gap-2'>
+                                <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />
+                                <span>Submit</span>
+                            </div>
+                        ) : (
+                            'Submit'
+                        )}
+                    </button>
 
                 </form>
             </div>

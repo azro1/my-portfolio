@@ -18,7 +18,7 @@ const EmailForm = ({ user, profile }) => {
 
     const router = useRouter()
     const supabase = createClientComponentClient()
-
+    
 
     // populate form fields from profiles table
     useEffect(() => {
@@ -39,15 +39,20 @@ const EmailForm = ({ user, profile }) => {
             return emailRegex.test(value);
         }
 
-        if (!isValidEmail(draftEmail)) {
+        if (!draftEmail) {
             setIsUpdating(false)
-            setFormError('Please enter a valid email address')
-            setTimeout(() => setFormError(''), 2000)
+            setFormError('Please enter your new email address.')
+            setTimeout(() => setFormError(null), 2000)
+            return
+        } else if (!isValidEmail(draftEmail)) {
+            setIsUpdating(false)
+            setFormError('Please enter a valid email address.')
+            setTimeout(() => setFormError(null), 2000)
             return;
-        } else if (profile.email === draftEmail.trim()) {
+        } else if (email === draftEmail.trim()) {
             setIsUpdating(false)
-            setFormError('Please enter your new email address')
-            setTimeout(() => setFormError(''), 2000)
+            setFormError('Please update your email before saving.')
+            setTimeout(() => setFormError(null), 2000)
             return;
         } else {
 
@@ -114,27 +119,37 @@ const EmailForm = ({ user, profile }) => {
                 <Modal>
                     <form >
                         <label>
-                            <span className='block mb-2 text-xl'>
+                            <span className='block mb-3 text-xl'>
                                 Edit Email Address
                             </span>
-                            <p className='mb-3 font-os text-sm leading-normal'>Please enter your new email address. Ensure it’s a valid email format (e.g., example@domain.com). This email will be used for account notifications and verification purposes.</p>
+                            <p className='mb-3'>Please provide your new email address, ensuring it follows a valid format (e.g., example@domain.com). This email will be used for account verification and notifications.</p>
                             <input
                                 className='w-full p-2.5 rounded-md border-2'
                                 type='email'
                                 value={draftEmail || ''}
                                 placeholder='Email'
                                 maxLength={40}
-                                spellCheck='false'
-                                autoFocus='true'
+                                spellCheck={false}
+                                autoFocus={true}
                                 onChange={(e) => setDraftEmail(e.target.value)}
                                 onKeyDown={handleKeyDown}
                             />
                         </label>
                     </form>
-                    <button className='btn bg-saddleBrown mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                    <button className={`btn bg-saddleBrown mt-3`} onClick={handleEmailUpdate}>
-                        {isUpdating ? 'Updating...' : 'Submit'}
-                    </button>
+                    <div className='flex items-center'>
+                        <button className='btn-small bg-saddleBrown mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
+                        <button className={`btn-small bg-saddleBrown mt-3`} onClick={handleEmailUpdate}>
+                            {isUpdating ? (
+                                <div className='flex items-center gap-2'>
+                                    <img className="w-5 h-5 opacity-50" src="../../images/loading/spinner.svg" alt="Loading indicator" />
+                                    <span>Save</span>
+                                </div>
+                            ) : (
+                                'Save'
+                            )}
+                        </button>
+                    </div>
+
                     {formError && (
                         <div className="absolute">
                             <p className='modal-form-error'>* {formError}</p>

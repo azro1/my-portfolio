@@ -23,6 +23,8 @@ import DobForm from './DobForm';
 
 const EditProfilePage = () => {
     const [updateError, setUpdateError] = useState(null)
+    const [successMsg, setSuccessMsg] = useState(null)
+
 
     // custom hook to fetch user
     const { user } = useFetchUser()
@@ -68,14 +70,25 @@ const EditProfilePage = () => {
         }
     }
 
+    
 
+    // function to display messages
+    const displayMsgs = (msg) => {
+        if (msg) {
+            setSuccessMsg(msg)
+            setTimeout(() => setSuccessMsg(null), 2000)
+
+        }
+    }
 
 
 
 
     return (
         <div className='flex flex-col gap-6'>
-          
+            
+          {successMsg && <div className='absolute top-1/2  success text-center'>{successMsg}</div>}
+
             <div className='mt-6 bg-frostWhite p-4'>
                 <AvatarUploader
                     user={user}
@@ -108,6 +121,7 @@ const EditProfilePage = () => {
                 <DobForm
                     user={user}
                     profile={profile}
+                    displayMsgs={displayMsgs}
                 />
 
                 <EmailForm 

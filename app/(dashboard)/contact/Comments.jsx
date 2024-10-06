@@ -179,7 +179,16 @@ const Comments = ({ user }) => {
                             required
                         ></textarea>
                         {commentError && <div className='error'>{commentError}</div>}
-                            <button className='btn block mt-2 bg-saddleBrown'>{isLoading ? 'Adding...' : 'Add Comment'}</button>
+                            <button className='btn block mt-2 bg-saddleBrown'>
+                                {isLoading ? (
+                                    <div className='flex items-center gap-2'>
+                                        <img className="w-5 h-5 opacity-50" src="../images/loading/spinner.svg" alt="Loading indicator" />
+                                        <span>Adding</span>
+                                    </div>
+                                ) : (
+                                    'Add Comment'
+                                )}
+                            </button>
                     </form>
                 </div>
             )}

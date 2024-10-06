@@ -156,28 +156,28 @@ const OtpForm = ({ storageStr, verificationType, redirectUrl, title, subHeading,
                         </span>
                         <div className='relative max-w-xs'>
                             <input
-                                className={`w-full max-w-xs py-2 px-3 text-lg rounded-md text-stoneGray bg-deepCharcoal border-2 tracking-extra-wide ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-saddleBrown focus:ring-1 focus:ring-saddleBrown`}
+                                className={`w-full max-w-xs py-2.5 px-3 rounded-md text-stoneGray bg-deepCharcoal border-2 tracking-extra-wide ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-saddleBrown focus:ring-1 focus:ring-saddleBrown`}
                                 type={`${isEyeOpen ? 'text' : 'password'}`}
-                                spellCheck='false'
+                                spellCheck={false}
                                 autoComplete="off"
                                 placeholder="123456"
                                 value={otp}
-                                maxLength='6'
+                                maxLength={6}
                                 onChange={handleOtpChange}
                             />
                             {!isEyeOpen ? (
-                                <div className="absolute right-1.5 top-1.5 p-2 group bg-nightSky hover:bg-stoneGray transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
+                                <div className="absolute right-2 top-2 p-2 group bg-nightSky hover:bg-stoneGray transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
                                     <FiEye
                                         className='text-stoneGray group-hover:text-deepCharcoal transition duration-300 fieye'
-                                        size={20}
+                                        size={17}
                                     />
                                 </div>
 
                             ) : (
-                                <div className="absolute right-1.5 top-1.5 p-2 group bg-nightSky hover:bg-stoneGray transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
+                                <div className="absolute right-2 top-2 p-2 group bg-nightSky hover:bg-stoneGray transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
                                     <FiEyeOff
                                         className='text-stoneGray group-hover:text-deepCharcoal transition duration-300 fieye-off'
-                                        size={20}
+                                        size={17}
                                     />
                                 </div>
                             )}
@@ -186,7 +186,16 @@ const OtpForm = ({ storageStr, verificationType, redirectUrl, title, subHeading,
                             </div>
                         </div>
                     </label>
-                    <button className='btn block mt-3.5 bg-saddleBrown' disabled={isLoading}>{isLoading ? 'Verifying...' : 'Submit'}</button>
+                    <button className='btn block mt-3.5 bg-saddleBrown' disabled={isLoading}>
+                        {isLoading ? (
+                            <div className='flex items-center gap-2'>
+                                <img className="w-5 h-5 opacity-50" src="../images/loading/spinner.svg" alt="Loading indicator" />
+                                <span>Verifying</span>
+                            </div>
+                        ) : (
+                            'Verify'
+                        )}
+                    </button>
                 </form>
 
             </div>

@@ -9,51 +9,55 @@ import { useUpdateTable } from '@/app/hooks/useUpdateTable'
 // components
 import Modal from "./Modal";
 
-const DobForm = ({ user, profile }) => {
+const DobForm = ({ user, profile, displayMsgs }) => {
     const [dob, setDob] = useState('')
-    const [draftDob, setDraftDob] = useState('');
+    const [draftDob, setDraftDob] = useState('')
     const [saving, setSaving] = useState(false)
     const [formError, setFormError] = useState(null)
     const [showForm, setShowForm] = useState(false)
-  
+
 
     // custom hook to update profiles table
-    const { error: profileError, updateTable } = useUpdateTable()
+    const { error: updateError, updateTable } = useUpdateTable()
 
 
     // populate form fields from profiles table
     useEffect(() => {
         if (user && profile) {
             setDob(profile.dob || '')
-            setDraftDob(profile.dob || '')
         }
 
-        if (profileError) {
-            return;
+        if (updateError) {
+            setFormError(updateError)
          }
-    }, [user, profile])
+         return () => setFormError(null);
+
+    }, [user, profile, updateError])
     
 
 
     // update bio
     const handleUpdateDob = async () => {     
-        setSaving(true)
-
         if (!draftDob.trim()) {
             setSaving(false)
-            setFormError('Please add your Date of birth')
+            setFormError('Please enter your date of birth')
             setTimeout(() => setFormError(null), 2000)
             return
         }
 
         const formattedDate = format(parseISO(draftDob.trim()), 'dd/MM/yyyy');
-        console.log(formattedDate)
 
+        setSaving(true)
         await updateTable(user, 'profiles', { dob: formattedDate }, 'id')
+        
         setTimeout(() => {
+            setSaving(false)
             setShowForm(false)
             setDob(formattedDate)
-        }, 1000) 
+            setDraftDob('')
+            displayMsgs('Date of birth updated successfully!')
+        }, 2000)
+
     }
     
 
@@ -67,7 +71,7 @@ const DobForm = ({ user, profile }) => {
     // handleCloseForm function
     const handleCloseForm = () => {
         setShowForm(false)
-        setDraftDob(dob)
+        setDraftDob('')
     }
 
 
@@ -79,13 +83,14 @@ const DobForm = ({ user, profile }) => {
     }
 
 
+
     return (
         <div>
             <div className='my-4'>
                 <div className="flex items-center justify-between pb-1">
                     <span className="inline-block text-stoneGray">Dob</span>
-                    <span className={`${dob ? 'text-red-600' : 'text-stoneGray'} cursor-pointer`} onClick={handleOpenForm}>
-                        {dob ? 'Edit' : 'Add'}
+                    <span className='text-red-600 cursor-pointer' onClick={handleOpenForm}>
+                        Edit
                     </span> 
                 </div>
                 <p className="text-nightSky frostWhitespace-normal break-words">{dob}</p>
@@ -98,27 +103,38 @@ const DobForm = ({ user, profile }) => {
                     <form >
                         <label>
                             <span className="block mb-2 text-xl">
-                                {dob ? 'Edit Dob' : 'Add Dob'}
+                                Edit Dob
                             </span>
+                            <p className='mb-3'>Please enter a valid date of birth to keep your account accurate and up-to-date.</p>
                             <input
                                 className='w-full p-1.5 rounded-md border-2'
                                 type='date'
                                 value={draftDob || ''}
-                                autoFocus='true'
-                                spellCheck='false'
-                                maxLength={'10'}
+                                autoFocus={true}
+                                spellCheck={false}
+                                max={new Date().toISOString().split("T")[0]}
                                 onChange={(e) => setDraftDob(e.target.value)}
                                 onKeyDown={handleKeyDown}
                             />
                         </label>
                     </form>
-                    <button className='btn bg-saddleBrown mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                    <button className='btn bg-saddleBrown mt-3' onClick={handleUpdateDob}>
-                        {saving ? 'Saving...' : 'Save'}
-                    </button>
-                    {(profileError || formError) && (
+                    <div className='flex items-center'>
+                        <button className='btn-small bg-saddleBrown mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
+                        <button className='btn-small bg-saddleBrown mt-3' disabled={saving} onClick={handleUpdateDob}>
+                            {saving ? (
+                                <div className='flex items-center gap-2'>
+                                    <img className="w-5 h-5 opacity-50" src="../../images/loading/spinner.svg" alt="Loading indicator" />
+                                    <span>Save</span>
+                                </div>
+                            ) : (
+                                'Save'
+                            )}
+                        </button>
+                    </div>
+
+                    {formError && (
                         <div className="absolute">
-                            <p className='modal-form-error'>* {profileError || formError}</p>
+                            <p className='modal-form-error'>* {formError}</p>
                         </div>
                     )}
                 </Modal>
