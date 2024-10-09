@@ -13,7 +13,7 @@ const LoggedOutMenu = ({ handleCloseMenu }) => {
   return (
     <>
       <Link href='/'>
-        <div className='flex items-center p-3 mb-1 bg-nightSky group hover:bg-softCharcoal' onClick={handleCloseMenu}>
+        <div className='flex items-center p-3 mb-1 bg-nightSky group hover:bg-softCharcoal rounded-tl-md rounded-tr-md' onClick={handleCloseMenu}>
           <FaHome className="text-saddleBrown" size={18} />
           <span className='text-stoneGray group-hover:text-frostWhite transition duration-300 text-base ml-3.5'>Home</span>
         </div>
@@ -43,7 +43,7 @@ const LoggedOutMenu = ({ handleCloseMenu }) => {
         </div>
       </Link>
       <Link href='/help'>
-        <div className='flex items-center p-3 bg-nightSky group hover:bg-softCharcoal' onClick={handleCloseMenu}>
+        <div className='flex items-center p-3 bg-nightSky group hover:bg-softCharcoal rounded-bl-md rounded-br-md' onClick={handleCloseMenu}>
           <FaQuestionCircle className="text-saddleBrown" size={18} />
           <span className='text-stoneGray group-hover:text-frostWhite transition duration-300 text-base ml-3.5'>Help</span>
         </div>

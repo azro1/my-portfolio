@@ -103,7 +103,7 @@ const CommentList = ({ user }) => {
                             {!isCommentsLoading && !successMsg && <p className='p-4'>No Comments.</p>}
                         </div>
                 )}
-                {successMsg && <p className="success place-self-center absolute bottom-2">{successMsg}</p>}
+                {successMsg && <p className="success text-center place-self-center absolute bottom-2">{successMsg}</p>}
                 {errorMsg && <p className="error place-self-center">{errorMsg}</p>}
             </div>
     </div>

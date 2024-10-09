@@ -109,10 +109,10 @@ const CompleteRegistration = () => {
 
     // State to track errors for each input field
     const [errors, setErrors] = useState({
-        firstName: false,
-        lastName: false,
-        dob: false,
-        phone: false
+        firstName: '',
+        lastName: '',
+        dob: '',
+        phone: ''
     })
 
 
@@ -160,7 +160,7 @@ const CompleteRegistration = () => {
         }
         
         if (startsWithCaps(firstName) && allLowerCase(firstName) && startsWithCaps(lastName) && allLowerCase(lastName) && dob && isValidPhoneNumber(phone)) {
-            setInfoMsg("Upload an avatar before you register!")
+            setInfoMsg("Upload an avatar before you register ?")
         } else {
             setInfoMsg(null)
         }
@@ -229,6 +229,7 @@ const CompleteRegistration = () => {
         const { firstName, lastName, dob, phone } = formData;
         let formIsValid = true;
 
+        // firstname validation
         if (!firstName) {
             setErrors((prev) => ({ ...prev, firstName: 'Please enter your first name.' }))
             formIsValid = false;
@@ -245,6 +246,7 @@ const CompleteRegistration = () => {
             setErrors((prev) => ({ ...prev, firstName: '' }))
         }
 
+        // lastname validation
         if (!lastName) {
             setErrors((prev) => ({ ...prev, lastName: 'Please provide your last name.' }));
             formIsValid = false;
@@ -261,6 +263,7 @@ const CompleteRegistration = () => {
             setErrors((prev) => ({ ...prev, lastName: '' }))
         }
 
+        // dob validation
         if (!dob) {
             setErrors((prev) => ({ ...prev, dob: 'Please provide your date of birth.' }));
             formIsValid = false;
@@ -268,6 +271,7 @@ const CompleteRegistration = () => {
             setErrors((prev) => ({ ...prev, dob: '' }))
         }
 
+        // phone validation
         if (!phone) {
             setErrors((prev) => ({ ...prev, phone: 'Please provide your phone number.' }));
             formIsValid = false;
@@ -394,7 +398,7 @@ const CompleteRegistration = () => {
                 <h2 className='text-3xl md:text-center leading-normal font-eb text-saddleBrown'>Set Up Your Account</h2>
 
 
-                <div className="absolute -top-16 text-center w-full place-self-center">
+                <div className="absolute -top-20 text-center w-full place-self-center">
                     {successMsg || error ? (
                         <div className={successMsg ? 'success text-center' : 'error text-center'}>
                             {successMsg || error}
@@ -403,14 +407,14 @@ const CompleteRegistration = () => {
                 </div>
 
 
-                <div className='mt-8 flex flex-col gap-6 md:flex-row md:justify-evenly  w-full'>
+                <div className='mt-8 flex flex-col gap-6 md:flex-row md:justify-evenly w-full'>
                     <form className={`flex-1 order-2 flex flex-col gap-2 md:order-1`}>
                         <div>
                             <div className='relative max-w-sm'>
                                 <label>
                                     <span className='mb-2 text-base text-stoneGray block'>First Name</span>
                                     <input
-                                        className='w-full max-w-sm p-2.5 rounded-md text-stoneGray bg-nightSky shadow-inner border-2 border-stoneGray'
+                                        className='w-full max-w-sm p-2.5 rounded-md text-black'
                                         type='text'
                                         spellCheck='false'
                                         value={formData.firstName}
@@ -423,10 +427,10 @@ const CompleteRegistration = () => {
 
                                     />
                                 </label>
-                                {formIsSubmitted && (errors.firstName || !isFirstNameLongEnough || !startsWithCaps(formData.firstName) || !allLowerCase(formData.firstName)) ? <FaExclamationCircle className={'absolute bottom-3.5 right-4 text-red-800'} size={21} /> : (formIsSubmitted && !errors.firstName && !isCheckingPhone ? <FaCheckCircle className={'absolute bottom-3.5 right-4 text-green-600'} size={21} /> : '' )}
+                                {formIsSubmitted && (errors.firstName || !isFirstNameLongEnough || !startsWithCaps(formData.firstName) || !allLowerCase(formData.firstName)) ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-800'} size={21} /> : (formIsSubmitted && !errors.firstName && !isCheckingPhone ? <FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} /> : '' )}
                             
                             </div>
-                               {(errors.firstName || !isFirstNameLongEnough || !startsWithCaps(formData.firstName) || !allLowerCase(formData.firstName))  && <p className='text-sm text-red-700 mt-1'>{errors.firstName}</p>}
+                               {errors.firstName && <p className='text-sm text-red-700 mt-1'>{errors.firstName}</p>}
                         </div>
 
 
@@ -435,7 +439,7 @@ const CompleteRegistration = () => {
                                 <label>
                                     <span className='mb-2 text-base text-stoneGray block'>Last Name</span>
                                     <input
-                                        className='w-full max-w-sm p-2.5 rounded-md text-stoneGray bg-nightSky shadow-inner border-2 border-stoneGray'
+                                        className='w-full max-w-sm p-2.5 rounded-md text-black'
                                         type='text'
                                         value={formData.lastName}
                                         name='lastName'
@@ -446,9 +450,9 @@ const CompleteRegistration = () => {
                                         minLength='2'
                                     />
                                 </label>
-                                {formIsSubmitted && (errors.lastName || !isLastNameLongEnough || !startsWithCaps(formData.lastName) || !allLowerCase(formData.lastName)) ? <FaExclamationCircle className={'absolute bottom-3.5 right-4 text-red-800'} size={21} /> : (formIsSubmitted && !errors.lastName && !isCheckingPhone ? <FaCheckCircle className={'absolute bottom-3.5 right-4 text-green-600'} size={21} /> : '')}
+                                {formIsSubmitted && (errors.lastName || !isLastNameLongEnough || !startsWithCaps(formData.lastName) || !allLowerCase(formData.lastName)) ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-800'} size={21} /> : (formIsSubmitted && !errors.lastName && !isCheckingPhone ? <FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} /> : '')}
                             </div>
-                            {(errors.lastName || !isLastNameLongEnough || !startsWithCaps(formData.lastName) || !allLowerCase(formData.lastName)) && <p className='text-sm text-red-700 mt-1'>{errors.lastName}</p>}
+                            {errors.lastName && <p className='text-sm text-red-700 mt-1'>{errors.lastName}</p>}
                         </div>
 
 
@@ -458,7 +462,7 @@ const CompleteRegistration = () => {
                                 <label>
                                     <span className='mb-2 text-base text-stoneGray block'>Date of Birth</span>
                                     <DatePicker
-                                        className='w-full max-w-sm p-2.5 rounded-md text-stoneGray bg-nightSky shadow-inner border-2 border-stoneGray'
+                                        className='w-full max-w-sm p-2.5 rounded-md text-black'
                                         wrapperClassName='w-full'
                                         locale="en-GB"
                                         dateFormat="dd/MM/yyyy"
@@ -471,9 +475,9 @@ const CompleteRegistration = () => {
                                         maxLength={'8'}
                                     />
                                 </label>
-                                {formIsSubmitted && (errors.dob || !formData.dob) ? <FaExclamationCircle className={'absolute bottom-3.5 right-4 text-red-800'} size={21} /> : (!errors.dob && formData.dob && formIsSubmitted && !isCheckingPhone ? <FaCheckCircle className={'absolute bottom-3.5 right-4 text-green-600'} size={21} /> : '')}
+                                {formIsSubmitted && (errors.dob || !formData.dob) ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-800'} size={21} /> : (!errors.dob && formData.dob && formIsSubmitted && !isCheckingPhone ? <FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} /> : '')}
                             </div>
-                            {(errors.dob && !formData.dob || formData.dob) && <p className='text-sm text-red-700 pt-1'>{errors.dob}</p>}
+                            {errors.dob && <p className='text-sm text-red-700 pt-1'>{errors.dob}</p>}
                         </div>
 
 
@@ -481,7 +485,7 @@ const CompleteRegistration = () => {
                             <div className='relative max-w-sm'>
                                 <label>
                                     <span className='max-w-min mb-2 text-base text-stoneGray block'>Phone</span>
-                                    <input className='w-full max-w-sm p-2.5 rounded-md text-stoneGray bg-nightSky shadow-inner border-2 border-stoneGray'
+                                    <input className='w-full max-w-sm p-2.5 rounded-md text-black'
                                         type='tel'
                                         value={formData.phone}
                                         spellCheck={false}
@@ -492,9 +496,9 @@ const CompleteRegistration = () => {
                                         onKeyDown={handleKeyDown}
                                     />
                                 </label>
-                                {formIsSubmitted && (errors.phone || !isValidPhoneNumber(formData.phone)) ? (<FaExclamationCircle className={'absolute bottom-3.5 right-4 text-red-800'} size={21} />) : (!errors.phone && isValidPhoneNumber(formData.phone) && formIsSubmitted && !isCheckingPhone ? (<FaCheckCircle className={'absolute bottom-3.5 right-4 text-green-600'} size={21} />) : '')}
+                                {formIsSubmitted && (errors.phone || !isValidPhoneNumber(formData.phone)) ? (<FaExclamationCircle className={'absolute bottom-3 right-4 text-red-800'} size={21} />) : (!errors.phone && isValidPhoneNumber(formData.phone) && formIsSubmitted && !isCheckingPhone ? (<FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} />) : '')}
                             </div>
-                            {(errors.phone || !isValidPhoneNumber(formData.phone)) && <p className='text-sm text-red-700 mt-1'>{errors.phone}</p>}
+                            {errors.phone && <p className='text-sm text-red-700 mt-1'>{errors.phone}</p>}
                         </div>
 
                         <button className={`btn block w-fit mt-1.5 bg-saddleBrown transition duration-500 ${isButtonDisabled ? 'opacity-65' : 'opacity-100'}`} disabled={isButtonDisabled} onClick={handleUpdateProfile}>

@@ -1,6 +1,6 @@
 const AvailabilityInfo = () => {
     return (
-        <div className='h-44 row-start-4 col-start-1 col-span-2 md:row-start-2 md:col-start-1 md:col-span-1 md:place-self-end md:justify-self-start'>
+        <div className='mt-10'>
             <h3 className='text-xl font-b font-rubik text-saddleBrown mb-4'>
                 When You Can Reach Me
             </h3>

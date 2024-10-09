@@ -156,7 +156,7 @@ const OtpForm = ({ storageStr, verificationType, redirectUrl, title, subHeading,
                         </span>
                         <div className='relative max-w-xs'>
                             <input
-                                className={`w-full max-w-xs py-2.5 px-3 rounded-md text-stoneGray bg-deepCharcoal border-2 tracking-extra-wide ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-saddleBrown focus:ring-1 focus:ring-saddleBrown`}
+                                className='w-full max-w-xs py-2.5 px-3 rounded-md text-black tracking-extra-wide'
                                 type={`${isEyeOpen ? 'text' : 'password'}`}
                                 spellCheck={false}
                                 autoComplete="off"
@@ -166,17 +166,17 @@ const OtpForm = ({ storageStr, verificationType, redirectUrl, title, subHeading,
                                 onChange={handleOtpChange}
                             />
                             {!isEyeOpen ? (
-                                <div className="absolute right-2 top-2 p-2 group bg-nightSky hover:bg-stoneGray transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
+                                <div className="absolute right-1 top-1 p-2.5 group bg-nightSky hover:bg-saddleBrown transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
                                     <FiEye
-                                        className='text-stoneGray group-hover:text-deepCharcoal transition duration-300 fieye'
+                                        className='text-stoneGray group-hover:text-frostWhite transition duration-300 fieye'
                                         size={17}
                                     />
                                 </div>
 
                             ) : (
-                                <div className="absolute right-2 top-2 p-2 group bg-nightSky hover:bg-stoneGray transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
+                                <div className="absolute right-1 top-1 p-2.5 group bg-nightSky hover:bg-saddleBrown transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
                                     <FiEyeOff
-                                        className='text-stoneGray group-hover:text-deepCharcoal transition duration-300 fieye-off'
+                                        className='text-stoneGray group-hover:text-frostWhite transition duration-300 fieye-off'
                                         size={17}
                                     />
                                 </div>

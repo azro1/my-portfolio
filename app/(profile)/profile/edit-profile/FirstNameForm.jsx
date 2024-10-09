@@ -80,7 +80,7 @@ const FirstNameForm = ({ user, profile }) => {
     }
 
 
-    // prevent enter submission
+    // prevent enter submission and only specified keys
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') e.preventDefault()
         

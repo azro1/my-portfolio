@@ -139,7 +139,7 @@ const ForgotEmail = () => {
                     <label>
                         <span className='max-w-min mb-2 text-base text-stoneGray block'>Phone</span>
                         <input
-                            className={`w-full max-w-xs py-2.5 px-3 rounded-md text-stoneGray bg-deepCharcoal border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-saddleBrown focus:ring-1 focus:ring-saddleBrown`}
+                            className='w-full max-w-xs py-2.5 px-3 rounded-md text-black'
                             type='tel'
                             value={phone}
                             spellCheck={false}

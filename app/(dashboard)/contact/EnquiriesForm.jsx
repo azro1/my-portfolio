@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { v4 as uuidv4 } from "uuid"
-
+import { FaCaretUp, FaCaretDown } from 'react-icons/fa';
 
 // custom hooks
 import { useFetchProfile } from '@/app/hooks/useFetchProfile';
@@ -17,6 +17,7 @@ const EnquiriesForm = ({ user }) => {
     const [formError, setFormError] = useState(null)
     const [successMsg, setSuccessMsg] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
+    const [toggleCaret, setToggleCaret] = useState(false)
 
     // custom hook to fetch a users profile
     const { error, profile, fetchProfile } = useFetchProfile()
@@ -39,6 +40,9 @@ const EnquiriesForm = ({ user }) => {
         return emailRegex.test(value)
     };
 
+    // validation function returns regex to strip out harmful chars
+    const containsInvalidChars = (value) => /[<>\/\\`"'&]/.test(value);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -46,27 +50,32 @@ const EnquiriesForm = ({ user }) => {
         if (profile) {
 
             if (!name) {
-                setFormError('Please provide a name')
+                setFormError('First name is required.')
+                setTimeout(() => setFormError(null), 2000)
+                return
+
+            } else if (containsInvalidChars(name)) {
+                setFormError('Invalid characters detected.')
                 setTimeout(() => setFormError(null), 2000)
                 return
 
             } else if (!email) {
-                setFormError('Please provide your email')
+                setFormError('Email is required.')
                 setTimeout(() => setFormError(null), 2000)
                 return
 
             } else if (!isValidEmail(email)) {
-                setFormError('Unable to validate email address: invalid format')
-                setTimeout(() => setFormError(null), 2000)
-                return
-
-            } else if (!subject) {
-                setFormError('Please provide a subject')
+                setFormError('Invalid email format.')
                 setTimeout(() => setFormError(null), 2000)
                 return
 
             } else if (!message) {
-                setFormError('Please enter your message')
+                setFormError('Message is required.')
+                setTimeout(() => setFormError(null), 2000)
+                return
+
+            }  else if (containsInvalidChars(message)) {
+                setFormError('Invalid characters detected.')
                 setTimeout(() => setFormError(null), 2000)
                 return
             }
@@ -81,7 +90,7 @@ const EnquiriesForm = ({ user }) => {
             if (enquiriesError) {
                 setIsLoading(false)
                 console.log('enquiriesError:', enquiriesError)
-                setFormError('Something went wrong. Please try again later')
+                setFormError('Something went wrong. Please try again later.')
                 setTimeout(() => setFormError(null), 2000)
                 return;
             } else {
@@ -89,10 +98,16 @@ const EnquiriesForm = ({ user }) => {
 
                 if (userEnquiries.length >= 2) {
                     setIsLoading(false)
-                    setFormError('You have reached the maximum number of enquiries')
+                    setFormError('Enquiry limit reached.')
                     setTimeout(() => setFormError(null), 2000)
                     return;
                 }
+
+
+
+                 // here i log the value
+                 console.log(subject)
+
 
                 const { data, error } = await supabase.from('enquiries')
                     .insert({
@@ -109,7 +124,7 @@ const EnquiriesForm = ({ user }) => {
 
                 if (error) {
                     setIsLoading(false)
-                    setFormError('Something went wrong. Please try again later');
+                    setFormError('Something went wrong. Please try again later.');
                     setTimeout(() => setFormError(null), 2000)
                 }
 
@@ -127,89 +142,124 @@ const EnquiriesForm = ({ user }) => {
 
         } else {
             setIsLoading(false)
-            setFormError('Please sign up to make an enquiry')
+            setFormError('Please sign up.')
             setTimeout(() => setFormError(null), 2000)
         }
     };
 
 
+    // prevent enter submission and only specified keys
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') e.preventDefault()
+        
+        if (!/^[A-Za-z]$/.test(e.key) && !['Backspace', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(e.key)) {
+            e.preventDefault()
+        }
+    }
+
+    // toggle caret icon for select
+    const handleToggleCaret = () => {
+        setToggleCaret(prev => !prev);
+    }
+
+
     return (
-        <form onSubmit={handleSubmit}
-            className='w-full row-start-2 col-start-1 col-span-2 sm:max-w-xs  md:col-span-1 md:row-start-2 md:col-start-2 md:justify-self-end'
-        >
-            <h3 className='mb-4 text-2xl font-b text-saddleBrown'>
-                Enquiries
-            </h3>
-            <label>
-                {error && <p className='error'>{error}</p>}
-                <span className="className='max-w-min mb-2 text-base text-stoneGray block">
-                    Name
-                </span>
-                <input
-                    className='w-full p-2.5 rounded-md'
-                    type='text'
-                    spellCheck='false'
-                    placeholder='Name'
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
-            </label>
-            <label>
-                <span className="className='max-w-min mt-4 mb-2 text-base text-stoneGray block">
-                    Email
-                </span>
-                <input
-                    className='w-full p-2.5 rounded-md'
-                    type='text'
-                    spellCheck='false'
-                    placeholder='Email'
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-            </label>
-            <label>
-                <span className="className='max-w-min mt-4 mb-2 text-base text-stoneGray block">
-                    Subject
-                </span>
-                <input
-                    className='w-full p-2.5 rounded-md'
-                    type='text'
-                    spellCheck='false'
-                    placeholder='Subject'
-                    value={subject}
-                    onChange={(e) => setSubject(e.target.value)}
-                />
-            </label>
-            <label>
-                <span className="className='max-w-min mt-4 mb-2 text-base text-stoneGray block">
-                    Your Message
-                </span>
-                <textarea
-                    className='p-2 outline-none text-base w-4/5'
-                    placeholder='Enter you message here...'
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    cols='30'
-                    rows='4'
-                ></textarea>
-            </label>
-
-            <button className='btn block mt-2 bg-saddleBrown'>
-                {isLoading ? (
-                    <div className='flex items-center gap-2'>
-                        <img className="w-5 h-5 opacity-50" src="../images/loading/spinner.svg" alt="Loading indicator" />
-                        <span>Sending</span>
+        <>
+            <form onSubmit={handleSubmit}>
+                <h3 className='mb-4 text-2xl font-b text-saddleBrown'>
+                    Enquiries
+                </h3>
+                <label>
+                    {error && <p className='error'>{error}</p>}
+                    <span className="className='max-w-min mb-2 text-base text-stoneGray block">
+                        First name
+                    </span>
+                    <input
+                        className='w-full p-2.5 rounded-md text-black'
+                        type='text'
+                        spellCheck='false'
+                        placeholder='Name'
+                        maxLength={30}
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                    />
+                </label>
+                <label>
+                    <span className="className='max-w-min mt-4 mb-2 text-base text-stoneGray block">
+                        Email
+                    </span>
+                    <input
+                        className='w-full p-2.5 rounded-md text-black border-2'
+                        type='text'
+                        spellCheck='false'
+                        placeholder='Email'
+                        maxLength={50}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                </label>
+                <label>
+                    <span className="className='max-w-min mt-4 mb-2 text-base text-stoneGray block">
+                        Subject
+                    </span>
+                    <div className='custom-select relative'>
+                        <select 
+                            className='w-full py-2.5 px-1.5 rounded-md outline-none text-black border-2 cursor-pointer' 
+                            onClick={handleToggleCaret} 
+                            onChange={(e) => setSubject(e.target.value)}
+                        >
+                            <option>General Inquiry</option>
+                            <option>Collaboration Opportunity</option>
+                            <option>Portfolio Feedback</option>
+                            <option>Project Proposal</option>
+                            <option>Job Opportunity</option>
+                            <option>Request for Services</option>
+                            <option>Website Issue or Bug</option>
+                        </select>
+                        <span className='absolute top-0 right-0 w-10 bg-white border-t-2 border-r-2 border-b-2 rounded-tr-md rounded-br-md h-full pointer-events-none flex items-center justify-center'>
+                            {!toggleCaret ? (
+                                <FaCaretUp className='text-nightSky' size={18} />
+                            ) : (
+                                <FaCaretDown className='text-nightSky' size={18} />
+                            )}
+                        </span>
                     </div>
-                ) : (
-                    'Send'
-                )}
-            </button>
 
-            <div className="mt-5 h-5 text-center">
+
+                
+                </label>
+                <label>
+                    <span className="className='max-w-min mt-4 mb-2 text-base text-stoneGray block">
+                        Your Message
+                    </span>
+                    <textarea
+                        className='py-2 px-2.5 outline-none rounded-md w-4/5 text-black'
+                        placeholder='Enter your message here...'
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        cols='30'
+                        rows='4'
+                    ></textarea>
+                </label>
+
+                <button className='btn block mt-2 bg-saddleBrown'>
+                    {isLoading ? (
+                        <div className='flex items-center gap-2'>
+                            <img className="w-5 h-5 opacity-50" src="../images/loading/spinner.svg" alt="Loading indicator" />
+                            <span>Sending</span>
+                        </div>
+                    ) : (
+                        'Send'
+                    )}
+                </button>
+            </form>
+            <div className="absolute -bottom-14 text-center w-full">
                 {formError && <p className='error'>{formError}</p>}
                 {successMsg && <p className='success'>{successMsg}</p>}
             </div>
-        </form>
+        </>
+
     )
 }
 

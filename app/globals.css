@@ -68,9 +68,10 @@ img {
 
 
 
+
 /* input placeholders */
-input::placeholder {
-  filter: brightness(40%)
+input::placeholder, textarea::placeholder {
+  filter: brightness(100%)
 }
 
 .fieye-container:hover .fieye, .fieye-container:hover .fieye-off {
@@ -182,42 +183,64 @@ footer span {
 
 
 
+/* Messages */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* error messages */
+/* error */
 .error {
-  @apply text-nightSky bg-yellow-200 px-3 py-2 font-b text-base rounded-md leading-normal;
+  @apply bg-red-200 text-red-950 font-bold text-base rounded-md p-2 leading-normal flex items-center justify-center shadow-lg border-2 border-red-900;
+  border-left: 4px solid #c53030;
 }
 
-/* modal form error messages */
+.error::before {
+  content: '×'; 
+  @apply text-white bg-red-600 rounded-md mr-3; 
+  font-size: 1.25rem; 
+  width: 1.7rem;  
+  height: 1.6rem;
+  line-height: 1;
+  font-size: 1.2rem; 
+  border: 2px solid #7f1d1d;
+}
+
 .modal-form-error {
   @apply text-red-600 text-sm;
 }
 
-/* success messages */
+/* success */
 .success {
-  @apply text-white bg-green-600 p-3 font-b text-base rounded-md leading-normal;
+  @apply bg-green-200 text-green-950 font-bold text-base rounded-md p-2 leading-normal flex items-center justify-center shadow-lg border-2 border-green-900;
+  border-left: 4px solid #38a169;
 }
 
-/* info messages */
-.info {
-  @apply text-white bg-saddleBrown p-2 font-medium text-base leading-normal;
+.success::before {
+  content: '✓'; 
+  @apply text-frostWhite bg-green-600 rounded-md mr-3; 
+  font-size: 1.25rem; 
+  width: 1.7rem;  
+  height: 1.6rem;
+  line-height: 1.4;
+  font-size: 1rem; 
+  border: 2px solid #065f46;
 }
+
+/* info */
+.info {
+  @apply bg-blue-300 text-blue-950 font-bold text-base rounded-md p-2 leading-normal flex items-center justify-center shadow-lg border-2 border-blue-900;
+  border-left: 4px solid #3891a1;
+}
+
+.info::before {
+  content: 'i'; 
+  @apply text-frostWhite bg-blue-600 rounded-md mr-3; 
+  font-size: 1.25rem; 
+  width: 1.7rem;  
+  height: 1.6rem;
+  line-height: 1.2;
+  font-size: 1.1rem; 
+  border: 2px solid #1E3A8A;
+}
+
+
 
 
 

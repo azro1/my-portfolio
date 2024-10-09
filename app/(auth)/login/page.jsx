@@ -111,7 +111,7 @@ const Login = () => {
               Email
             </span>
             <input
-              className={`w-full py-2.5 px-3 rounded-md bg-deepCharcoal text-stoneGray border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-saddleBrown focus:ring-1 focus:ring-saddleBrown`}
+              className='w-full py-2.5 px-3 rounded-md text-black'
               type='email'
               placeholder='Enter your email'
               spellCheck={false}
