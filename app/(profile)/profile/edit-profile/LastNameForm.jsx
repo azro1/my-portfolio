@@ -11,7 +11,7 @@ import { useUpdateMetadata } from '@/app/hooks/useUpdateMetadata';
 import Modal from './Modal'
 
 
-const LastNameForm = ({ user, profile }) => {
+const LastNameForm = ({ user, profile, displayGlobalMsg }) => {
     const [last_name, setLastName] = useState('')
     const [draftLastName, setDraftLastName] = useState('');
     const [showForm, setShowForm] = useState(false)
@@ -20,7 +20,7 @@ const LastNameForm = ({ user, profile }) => {
 
 
     // custom hook to update profiles table
-    const { error: updateError, updateTable } = useUpdateTable()
+    const { error: updateTableError, updateTable } = useUpdateTable()
 
     // custom hook to update user metadata
     const { updateMetadata } = useUpdateMetadata()
@@ -33,12 +33,12 @@ const LastNameForm = ({ user, profile }) => {
             setLastName(profile.last_name || '')
         }
 
-        if (updateError) {
-           setFormError(updateError)
+        if (updateTableError) {
+           setFormError(updateTableError)
         }
         return () => setFormError(null)
 
-    }, [user, profile, updateError])
+    }, [user, profile, updateTableError])
 
 
     // update last name
@@ -66,6 +66,7 @@ const LastNameForm = ({ user, profile }) => {
         setTimeout(() => {
             setShowForm(false)
             setLastName(draftLastName)
+            displayGlobalMsg('success', 'Last name updated!')
         }, 1000)
     }
 
@@ -141,11 +142,7 @@ const LastNameForm = ({ user, profile }) => {
                         </button>
                     </div>
 
-                    {formError && (
-                        <div className="absolute">
-                            <p className='modal-form-error'>* {formError}</p>
-                        </div>
-                    )}
+                    {formError && <p className='modal-form-error'>{formError}</p>}
                 </Modal>
             )}
         </div>

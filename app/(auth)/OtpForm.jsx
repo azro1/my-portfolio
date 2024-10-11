@@ -4,18 +4,25 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation";
 
+// react icons
 import { FiEye, FiEyeOff } from 'react-icons/fi'
+
+// custom hook to display global messages
+import { useMessage } from "../hooks/useMessage";
 
 
 const OtpForm = ({ redirectUrl, subHeading, successMessage }) => {
     const [otp, setOtp] = useState('')
     const [isLoading, setIsLoading] = useState(false)
-    const [error, setError] = useState(null)
-    const [successMsg, setSuccessMsg] = useState(null)
     const [isEyeOpen, setIsEyeOpen] = useState(false)
     const [redirect, setRedirect] = useState(false)
 
     const router = useRouter()
+
+
+    // global messages function
+    const { changeMessage } = useMessage()
+
 
     // verify otp
     const handleVerifyOtp = async (e) => {
@@ -23,21 +30,16 @@ const OtpForm = ({ redirectUrl, subHeading, successMessage }) => {
         setIsLoading(true)
 
         if (!otp) {
-            setError('Please enter your verification code');
-            setTimeout(() => setError(null), 2000)
             setIsLoading(false)
+            changeMessage('error', 'Please enter the verification code sent to your email');
             return
-        } 
-        
-        if (otp.length !== 6) {
-            setError('The code cannot be less than 6 digits');
-            setTimeout(() => setError(null), 2000)
+        } else if (otp.length !== 6) {
             setIsLoading(false)
+            changeMessage('error', 'The verification code must be exactly 6 digits long. Please check and try again.');
             return
         }
 
-
-        // get and remove email from local storage
+        // retrieve and remove email from local storage
         const email = localStorage.getItem('email')
         localStorage.removeItem('email')
 
@@ -51,19 +53,19 @@ const OtpForm = ({ redirectUrl, subHeading, successMessage }) => {
 
         if (error) {
             setIsLoading(false)
-            setError('Verification failed. Please request a new code.')
+            changeMessage('error', "We couldn't verify your code. Please request a new verification code and try again.")
             console.log(error.message)
             return
-
         } else if (session) {
-            setSuccessMsg(successMessage)
+            setIsLoading(false);
+            changeMessage('success', successMessage)
             setTimeout(() => setRedirect(true), 3000)
         }
     }
 
 
 
-
+    // redirect if otp verification is successful
     useEffect(() => {
         if (redirect) {
             router.push(redirectUrl)
@@ -97,69 +99,58 @@ const OtpForm = ({ redirectUrl, subHeading, successMessage }) => {
     return (
         <div className="flex items-center justify-center h-auth-page-height">
 
-            <div className="flex relative h-80">
+            <form className="max-w-max" onSubmit={handleVerifyOtp}>
+                <h2 className='text-3xl leading-normal mb-4 font-eb text-saddleBrown'>Email Verification Required</h2>
+                <p className='mb-4 max-w-lg'>{subHeading}</p>
 
-                <div className="absolute -top-24 sm:-top-8 w-full text-center">
-                    {successMsg && <div className='success'>{successMsg}</div>}
-                    {error && <div className="error">{error}</div>}
-                </div>
-
-                <form className="max-w-max h-fit place-self-end" onSubmit={handleVerifyOtp}>
-                    <h2 className='text-3xl leading-normal mb-4 font-eb text-saddleBrown'>Email Verification Required</h2>
-                    <p className='mb-4 max-w-lg'>{subHeading}</p>
-
-                    <label>
-                        <span className='max-w-min mb-2 text-base text-stoneGray block'>
-                            Code:
-                        </span>
-                        <div className='relative max-w-xs'>
-                            <input
-                                className='w-full max-w-xs py-2.5 px-3 rounded-md text-black tracking-extra-wide'
-                                type={`${isEyeOpen ? 'text' : 'password'}`}
-                                spellCheck={false}
-                                autoComplete="off"
-                                placeholder="123456"
-                                value={otp}
-                                maxLength={6}
-                                onChange={handleOtpChange}
-                            />
-                            {!isEyeOpen ? (
-                                <div className="absolute right-1 top-1 p-2.5 group bg-nightSky hover:bg-saddleBrown transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
-                                    <FiEye
-                                        className='text-stoneGray group-hover:text-frostWhite transition duration-300 fieye'
-                                        size={17}
-                                    />
-                                </div>
-
-                            ) : (
-                                <div className="absolute right-1 top-1 p-2.5 group bg-nightSky hover:bg-saddleBrown transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
-                                    <FiEyeOff
-                                        className='text-stoneGray group-hover:text-frostWhite transition duration-300 fieye-off'
-                                        size={17}
-                                    />
-                                </div>
-                            )}
-                            <div>
-
+                <label>
+                    <span className='max-w-min mb-2 text-base text-stoneGray block'>
+                        Code:
+                    </span>
+                    <div className='relative max-w-xs'>
+                        <input
+                            className='w-full max-w-xs py-2.5 px-3 rounded-md text-black tracking-extra-wide'
+                            type={`${isEyeOpen ? 'text' : 'password'}`}
+                            spellCheck={false}
+                            autoComplete="off"
+                            placeholder="123456"
+                            value={otp}
+                            maxLength={6}
+                            onChange={handleOtpChange}
+                        />
+                        {!isEyeOpen ? (
+                            <div className="absolute right-1 top-1 p-2.5 group bg-nightSky hover:bg-saddleBrown transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
+                                <FiEye
+                                    className='text-stoneGray group-hover:text-frostWhite transition duration-300 fieye'
+                                    size={17}
+                                />
                             </div>
-                        </div>
-                    </label>
 
-                    <button className='btn block mt-3.5 bg-saddleBrown' disabled={isLoading}>
-                        {isLoading ? (
-                            <div className='flex items-center gap-2'>
-                                 <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />
-                                 <span>Verifying</span>
-                            </div>
                         ) : (
-                            'Verify'
+                            <div className="absolute right-1 top-1 p-2.5 group bg-nightSky hover:bg-saddleBrown transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
+                                <FiEyeOff
+                                    className='text-stoneGray group-hover:text-frostWhite transition duration-300 fieye-off'
+                                    size={17}
+                                />
+                            </div>
                         )}
-                    </button>
+                        <div>
 
-                </form>
+                        </div>
+                    </div>
+                </label>
 
-            </div>
-
+                <button className='btn block mt-3.5 bg-saddleBrown' disabled={isLoading}>
+                    {isLoading ? (
+                        <div className='flex items-center gap-2'>
+                                <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />
+                                <span>Verifying</span>
+                        </div>
+                    ) : (
+                        'Verify'
+                    )}
+                </button>
+            </form>
 
         </div>
     )

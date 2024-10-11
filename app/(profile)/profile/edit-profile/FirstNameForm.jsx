@@ -9,7 +9,7 @@ import { useUpdateMetadata } from '@/app/hooks/useUpdateMetadata'
 // components
 import Modal from './Modal'
 
-const FirstNameForm = ({ user, profile }) => {
+const FirstNameForm = ({ user, profile, displayGlobalMsg }) => {
     const [first_name, setFirstName] = useState('')
     const [draftFirstName, setDraftFirstName] = useState('');
     const [showForm, setShowForm] = useState(false)
@@ -17,7 +17,7 @@ const FirstNameForm = ({ user, profile }) => {
     const [saving, setSaving] = useState(false)
 
     // custom hook to update profiles table
-    const { error: updateError, updateTable } = useUpdateTable()
+    const { error: updateTableError, updateTable } = useUpdateTable()
 
     // custom hook to update user metadata
     const { updateMetadata } = useUpdateMetadata()
@@ -30,10 +30,10 @@ const FirstNameForm = ({ user, profile }) => {
             setFirstName(profile.first_name || user.user_metadata.name || '')
         }
 
-        if (updateError) {
-           return;
+        if (updateTableError) {
+           setFormError(updateTableError)
         }
-    }, [user, profile, updateError])
+    }, [user, profile, updateTableError])
 
 
     // update first name
@@ -42,7 +42,7 @@ const FirstNameForm = ({ user, profile }) => {
 
         if (!draftFirstName.trim()) {
             setSaving(false)
-            setFormError('Please add a first name')
+            setFormError('Please add a first name.')
             setTimeout(() => setFormError(null), 2000)
             return
         } else if (first_name === draftFirstName) {
@@ -61,8 +61,11 @@ const FirstNameForm = ({ user, profile }) => {
         // update comments
         await updateTable(user, 'comments', { first_name: draftFirstName }, 'comment_id')
 
-        setFirstName(draftFirstName)
-        setTimeout(() => setShowForm(false), 1000)
+        setTimeout(() => {
+            setShowForm(false)
+            setFirstName(draftFirstName)
+            displayGlobalMsg('success', 'First name updated!')
+        }, 1000)
     }
 
 
@@ -136,12 +139,7 @@ const FirstNameForm = ({ user, profile }) => {
                             )}
                         </button>
                     </div>
-
-                    {(updateError || formError) && (
-                        <div className="absolute">
-                            <p className='modal-form-error'>* {updateError || formError}</p>
-                        </div>
-                    )}
+                    {formError && <p className='modal-form-error'>{formError}</p>}
                 </Modal>
             )}
         </div>

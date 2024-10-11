@@ -6,6 +6,8 @@ import Link from "next/link"
 import { useState } from "react"
 import { useRouter } from "next/navigation";
 
+// custom hook to display global messages
+import { useMessage } from "@/app/hooks/useMessage";
 
 // components
 import SocialButtons from "../SocialButtons";
@@ -16,10 +18,11 @@ const Signup = () => {
   const [tempEmail, setTempEmail] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [isChecked, setIsChecked] = useState(false)
-  const [error, setError] = useState(null)
-  const [checkBoxError, setCheckBoxError] = useState(null)
   const router = useRouter()
 
+
+  // global messages function
+  const { changeMessage } = useMessage()
 
   // check if a given string is a valid email address
   const isValidEmail = (value) => {
@@ -35,30 +38,18 @@ const Signup = () => {
 
 
 
-
-
-
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setError(null)
     
     // form validation
     if (!tempEmail.trim()) {
-      setError('Please provide your email');
-      setTimeout(() => setError(null), 2000);
-      setIsLoading(false);
+      changeMessage('error', 'Please enter your email address to proceed.');
       return;
     } else if (!isValidEmail(tempEmail)) {
-      setError('Invalid format. Please try again.');
-      setTimeout(() => setError(null), 2000);
-      setIsLoading(false);
+      changeMessage('error', "That doesn't look like a valid email. Please check and try again.");
       return;
     } else if (!isChecked) {
-      setCheckBoxError(
-        'Please confirm you have agreed to the privacy policy and terms of service.'
-      );
-      setTimeout(() => setCheckBoxError(null), 2000);
-      setIsLoading(false);
+      changeMessage('error', 'You need to agree to our privacy policy and terms of service before signing up.');
       return;
     }
 
@@ -86,14 +77,12 @@ const Signup = () => {
 
       if (res.status === 409) {
         setIsLoading(false)
-        setError('This email is already associated with an account. Please login.')
+        changeMessage('error', 'It looks like this email is already linked to an account. Please log in instead.')
         return
-
       } else if (serverEmail.error) {
         setIsLoading(false)
-        setError(serverEmail.error)
+        changeMessage('error', serverEmail.error)
         return
-
       } else if (!serverEmail.exists && res.status === 404) {
         // store email temporarily in local storage
         localStorage.setItem('email', email)
@@ -105,20 +94,17 @@ const Signup = () => {
 
         if (error) {
           setIsLoading(false);
-          setError(error.message)
-          setTimeout(() => setError(null), 2000)
-        }
-
-        if (!error) {
+          changeMessage('error', error.message)
+        } else {
+          setIsLoading(false);
           router.push('/verify-signup-otp')
         }
-
       }
 
     } catch (error) {
         setIsLoading(false)
         console.log(error.message)
-        setError('An unexpected error occurred. Please try again.');
+        changeMessage('error', 'An unexpected error occurred. Please try again later or contact support if the issue persists.');
     }
 
   }
@@ -130,14 +116,8 @@ const Signup = () => {
     return (
       <div className='flex flex-col items-center gap-6 mb-4.5 md:justify-evenly md:gap-0 md:flex-row md:h-auth-page-height'>
 
-        <div className="flex w-full max-w-xs h-72 md:h-96 relative">
           
-          <div className="absolute -top-16 md:-top-12 w-full text-center">
-            {error && <div className="error"> {error}</div>}
-            {checkBoxError && <p className="error leading-tight">{checkBoxError}</p>}
-          </div>
-
-          <form onSubmit={handleSubmit} className="h-fit self-end">
+          <form className="w-full max-w-xs" onSubmit={handleSubmit} >
             <h2 className='text-3xl mb-6 font-eb text-saddleBrown'>Sign up</h2>
             <p className='mb-4'>Enter your email address to recieve a security code to create your account</p>
             
@@ -147,7 +127,7 @@ const Signup = () => {
               </span>
               <input
                 className='w-full py-2.5 px-3 rounded-md text-black'
-                type='email'
+                type='text'
                 spellCheck={false}
                 placeholder='Enter your email'
                 value={tempEmail}
@@ -172,11 +152,8 @@ const Signup = () => {
               )}
             </button>
           </form>
-        </div>
 
   
-
-
         <div className='flex flex-col items-center md:grid-col-start-1 md:grid-row-start-2 md:col-span-2'>
           <p className='mb-8'>or Sign up using</p>
           <SocialButtons text={"Continue"} />

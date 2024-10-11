@@ -7,20 +7,21 @@ import { FaCaretUp, FaCaretDown } from 'react-icons/fa';
 
 // custom hooks
 import { useFetchProfile } from '@/app/hooks/useFetchProfile';
-
+// custom hook to display global messages
+import { useMessage } from '@/app/hooks/useMessage';
 
 const EnquiriesForm = ({ user }) => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
-    const [subject, setSubject] = useState('')
+    const [subject, setSubject] = useState('General Enquiry')
     const [message, setMessage] = useState('')
-    const [formError, setFormError] = useState(null)
-    const [successMsg, setSuccessMsg] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
     const [toggleCaret, setToggleCaret] = useState(false)
 
     // custom hook to fetch a users profile
     const { error, profile, fetchProfile } = useFetchProfile()
+    // global messages function
+    const { changeMessage } = useMessage()
 
     const supabase = createClientComponentClient()
 
@@ -50,33 +51,27 @@ const EnquiriesForm = ({ user }) => {
         if (profile) {
 
             if (!name) {
-                setFormError('First name is required.')
-                setTimeout(() => setFormError(null), 2000)
+                changeMessage('error', 'Please enter your first name to proceed.')
                 return
 
             } else if (containsInvalidChars(name)) {
-                setFormError('Invalid characters detected.')
-                setTimeout(() => setFormError(null), 2000)
+                changeMessage('error', 'Your name contains invalid characters. Please use letters only.')
                 return
 
             } else if (!email) {
-                setFormError('Email is required.')
-                setTimeout(() => setFormError(null), 2000)
+                changeMessage('error', 'We need your email address to respond to your enquiry.')
                 return
 
             } else if (!isValidEmail(email)) {
-                setFormError('Invalid email format.')
-                setTimeout(() => setFormError(null), 2000)
+                changeMessage('error', 'That doesn’t seem like a valid email address. Please check and try again.')
                 return
 
             } else if (!message) {
-                setFormError('Message is required.')
-                setTimeout(() => setFormError(null), 2000)
+                changeMessage('error', 'Please include a message so we can assist you better.')
                 return
 
             }  else if (containsInvalidChars(message)) {
-                setFormError('Invalid characters detected.')
-                setTimeout(() => setFormError(null), 2000)
+                changeMessage('error', 'Your message contains characters that are not allowed. Please remove them and try again.')
                 return
             }
             
@@ -90,30 +85,22 @@ const EnquiriesForm = ({ user }) => {
             if (enquiriesError) {
                 setIsLoading(false)
                 console.log('enquiriesError:', enquiriesError)
-                setFormError('Something went wrong. Please try again later.')
-                setTimeout(() => setFormError(null), 2000)
+                changeMessage('error', 'Oops! We encountered an issue while fetching your enquiries. Please try again later.')
                 return;
             } else {
                 const userEnquiries = enquiries[0].enquiries;
 
                 if (userEnquiries.length >= 2) {
                     setIsLoading(false)
-                    setFormError('Enquiry limit reached.')
-                    setTimeout(() => setFormError(null), 2000)
+                    changeMessage('error', "You've reached the limit for the maximum number of enquiries allowed. Please check back later to submit more.")
                     return;
                 }
-
-
-
-                 // here i log the value
-                 console.log(subject)
-
 
                 const { data, error } = await supabase.from('enquiries')
                     .insert({
                         id: uuidv4(),
                         created_at: new Date().toISOString(),
-                        name,
+                        first_name: name,
                         email,
                         subject,
                         message,
@@ -124,14 +111,12 @@ const EnquiriesForm = ({ user }) => {
 
                 if (error) {
                     setIsLoading(false)
-                    setFormError('Something went wrong. Please try again later.');
-                    setTimeout(() => setFormError(null), 2000)
+                    changeMessage('error', 'Oops! We encountered an issue while submitting your enquiry. Please try again in a moment.');
                 }
 
                 if (data) {
                     setIsLoading(false);
-                    setSuccessMsg('Message Sent!')
-                    setTimeout(() => setSuccessMsg(null), 2000)
+                    changeMessage('success', "Your message has been sent successfully! We'll get back to you soon.")
 
                     setName('')
                     setEmail('')
@@ -142,8 +127,7 @@ const EnquiriesForm = ({ user }) => {
 
         } else {
             setIsLoading(false)
-            setFormError('Please sign up.')
-            setTimeout(() => setFormError(null), 2000)
+            changeMessage('error', "It seems you don’t have an account yet. Please sign up to make an enquiry.")
         }
     };
 
@@ -170,7 +154,6 @@ const EnquiriesForm = ({ user }) => {
                     Enquiries
                 </h3>
                 <label>
-                    {error && <p className='error'>{error}</p>}
                     <span className="className='max-w-min mb-2 text-base text-stoneGray block">
                         First name
                     </span>
@@ -225,9 +208,6 @@ const EnquiriesForm = ({ user }) => {
                             )}
                         </span>
                     </div>
-
-
-                
                 </label>
                 <label>
                     <span className="className='max-w-min mt-4 mb-2 text-base text-stoneGray block">
@@ -254,10 +234,6 @@ const EnquiriesForm = ({ user }) => {
                     )}
                 </button>
             </form>
-            <div className="absolute -bottom-14 text-center w-full">
-                {formError && <p className='error'>{formError}</p>}
-                {successMsg && <p className='success'>{successMsg}</p>}
-            </div>
         </>
 
     )

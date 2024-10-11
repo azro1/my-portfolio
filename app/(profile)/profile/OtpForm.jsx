@@ -10,23 +10,23 @@ import { FiEye, FiEyeOff } from 'react-icons/fi'
 // hooks
 import { useUpdateTable } from "@/app/hooks/useUpdateTable";
 import { useUpdateMetadata } from "@/app/hooks/useUpdateMetadata";
+// custom hook to display global messages
+import { useMessage } from "@/app/hooks/useMessage";
 
 
 const OtpForm = ({ storageStr, verificationType, redirectUrl, title, subHeading, successMessage }) => {
     const [otp, setOtp] = useState('')
     const [isLoading, setIsLoading] = useState(false)
-    const [error, setError] = useState(null)
-    const [successMsg, setSuccessMsg] = useState(null)
     const [isEyeOpen, setIsEyeOpen] = useState(false)
     const [redirect, setRedirect] = useState(false)
 
     
-
     // custom hook to update profiles table
     const { error: updateTableError, updateTable } = useUpdateTable()
     // custom hook to update metadata
     const { error: updateMetadataError, updateMetadata } = useUpdateMetadata()
-
+    // global messages function
+    const { changeMessage } = useMessage()
 
 
     const router = useRouter()
@@ -38,19 +38,14 @@ const OtpForm = ({ storageStr, verificationType, redirectUrl, title, subHeading,
         setIsLoading(true)
 
         if (!otp) {
-            setError('Please enter your verification code');
-            setTimeout(() => setError(null), 2000)
             setIsLoading(false)
+            changeMessage('error', 'Please enter your verification code.');
             return
-        } 
-        
-        if (otp.length !== 6) {
-            setError('The code cannot be less than 6 digits');
-            setTimeout(() => setError(null), 2000)
+        } else if (otp.length !== 6) {
             setIsLoading(false)
+            changeMessage('error', 'The verification code must be exactly 6 digits long. Please check and try again.');
             return
         }
-
 
         // get and remove email from local storage
         const contactMethod = localStorage.getItem(storageStr)
@@ -60,8 +55,7 @@ const OtpForm = ({ storageStr, verificationType, redirectUrl, title, subHeading,
         
         
         if (!contactMethod) {
-            setError('Verification failed. Please request a new code.')
-            setTimeout(() => setError(null), 2000)
+            changeMessage('error', "We couldn't verify your code. Please request a new verification code and try again.")
         } else if (contactMethod.includes('@')) {
             email = contactMethod
         } else {
@@ -77,12 +71,12 @@ const OtpForm = ({ storageStr, verificationType, redirectUrl, title, subHeading,
 
         if (error) {
             setIsLoading(false)
-            setError('Verification failed. Please request a new code.')
+            changeMessage('error', "We couldn't verify your code. Please request a new verification code and try again.")
             console.log(error.message)
             return
 
         } else if (session) {
-            setSuccessMsg(successMessage)
+            changeMessage('success', successMessage)
 
             // update raw_user_meta_data
             await updateMetadata(appData)
@@ -91,11 +85,11 @@ const OtpForm = ({ storageStr, verificationType, redirectUrl, title, subHeading,
             
             if (updateMetadataError) {
                setIsLoading(false)
-               setError(updateMetadataError)
+               changeMessage('error', "Oops! Somethings gone wrong on our end. We're working on it. Please try again later.")
                return
             } else if (updateTableError) {
                setIsLoading(false)
-               setError(updateTableError)
+               changeMessage('error', "Oops! Somethings gone wrong on our end. We're working on it. Please try again later.")
                return
             } else {
                setTimeout(() => setRedirect(true), 3000)
@@ -139,12 +133,7 @@ const OtpForm = ({ storageStr, verificationType, redirectUrl, title, subHeading,
     return (
         <div className="flex items-center justify-center h-profile-page-height">
 
-            <div className="flex relative max-w-sm">
-
-                <div className="absolute -top-24 w-full text-center">
-                    {successMsg && <div className='success'>{successMsg}</div>}
-                    {error && <div className="error">{error}</div>}
-                </div>
+            <div className="flex max-w-sm">
 
                 <form className="max-w-max" onSubmit={handleVerifyOtp}>
                     <h2 className='text-3xl leading-normal mb-4 font-eb text-saddleBrown'>{title}</h2>

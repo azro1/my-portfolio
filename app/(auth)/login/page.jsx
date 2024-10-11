@@ -5,14 +5,20 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+// custom hook to display global messages
+import { useMessage } from "@/app/hooks/useMessage";
+
 // components
 import SocialButtons from "../SocialButtons";
 
 const Login = () => {
   const [tempEmail, setTempEmail] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState('')
   const router = useRouter()
+
+  // global messages function
+  const { changeMessage } = useMessage()
+  
 
   // check if a given string is a valid email address
   const isValidEmail = (value) => {
@@ -24,13 +30,10 @@ const Login = () => {
     e.preventDefault()
 
     if (!tempEmail.trim()) {
-      setError('Please provide your email');
-      setTimeout(() => setError(null), 2000)
+      changeMessage('error', 'Please enter your email address to continue.');
       return
     } else if (!isValidEmail(tempEmail)) {
-      setError('Invalid format. Please try again.');
-      setTimeout(() => setError(null), 2000)
-      setIsLoading(false)
+      changeMessage('error', "Hmm, that doesn't look like a valid email. Double-check and try again.");
       return
     }
 
@@ -57,12 +60,12 @@ const Login = () => {
 
       if (res.status === 404) {
         setIsLoading(false)
-        setError('There is no account associated with that email. Please signup.')
+        changeMessage('error', "We couldn't find an account with that email. Please sign up or check your email for typos.")
         return
 
       } else if (serverEmail.error) {
         setIsLoading(false)
-        setError(serverEmail.error)
+        changeMessage('error', serverEmail.error)
         return
 
       } else if (serverEmail.exists && res.status === 409) {
@@ -76,11 +79,11 @@ const Login = () => {
 
         if (error) {
           setIsLoading(false);
-          setError(error.message)
-          setTimeout(() => setError(null), 2000)
+          changeMessage('error', error.message)
         }
 
         if (!error) {
+          setIsLoading(false);
           router.push('/verify-login-otp')
         }
       }
@@ -88,7 +91,7 @@ const Login = () => {
     } catch (error) {
       setIsLoading(false)
       console.log(error)
-      setError('An unexpected error occurred. Please try again.');
+      changeMessage('error', 'Oops! Something went wrong on our end. Please try again in a moment.');
     }
 
   }
@@ -96,13 +99,7 @@ const Login = () => {
   return (
     <div className='flex flex-col items-center md:justify-evenly md:flex-row md:h-auth-page-height'>
 
-
-      <div className="flex w-full max-w-xs relative h-72 md:h-80">
-        <div className="absolute -top-16 md:-top-10 w-full text-center">
-          {error && <div className="error">{error}</div>}
-        </div>
-
-        <form className="h-fit self-end" onSubmit={handleSubmit}>
+        <form className="w-full max-w-xs" onSubmit={handleSubmit}>
           <h2 className='text-3xl mb-6 font-eb text-saddleBrown'>Login</h2>
           <p className='mb-4'>Enter your email address to recieve a security code for quick and secure login</p>
 
@@ -112,7 +109,7 @@ const Login = () => {
             </span>
             <input
               className='w-full py-2.5 px-3 rounded-md text-black'
-              type='email'
+              type='text'
               placeholder='Enter your email'
               spellCheck={false}
               value={tempEmail}
@@ -136,9 +133,6 @@ const Login = () => {
             </Link>
           </div>
         </form>
-      </div>
-
-
 
       <div className='flex flex-col items-center mb-4.5 md:col-start-2 md:mb-0'>
         <p className='mb-8'>or Login using</p>

@@ -187,8 +187,7 @@ footer span {
 
 /* error */
 .error {
-  @apply bg-red-200 text-red-950 font-bold text-base rounded-md p-2 leading-normal flex items-center justify-center shadow-lg border-2 border-red-900;
-  border-left: 4px solid #c53030;
+  @apply bg-red-200 text-red-950 font-b text-base p-3 leading-normal flex items-center justify-center shadow-lg;
 }
 
 .error::before {
@@ -203,13 +202,12 @@ footer span {
 }
 
 .modal-form-error {
-  @apply text-red-600 text-sm;
+  @apply text-red-600 text-sm mt-2;
 }
 
 /* success */
 .success {
-  @apply bg-green-200 text-green-950 font-bold text-base rounded-md p-2 leading-normal flex items-center justify-center shadow-lg border-2 border-green-900;
-  border-left: 4px solid #38a169;
+  @apply bg-green-200 text-green-950 font-b text-base p-3 leading-normal flex items-center justify-center shadow-lg;
 }
 
 .success::before {
@@ -225,8 +223,7 @@ footer span {
 
 /* info */
 .info {
-  @apply bg-blue-300 text-blue-950 font-bold text-base rounded-md p-2 leading-normal flex items-center justify-center shadow-lg border-2 border-blue-900;
-  border-left: 4px solid #3891a1;
+  @apply bg-blue-200 text-blue-950 font-b text-base p-3 leading-normal flex items-center justify-center shadow-lg;
 }
 
 .info::before {

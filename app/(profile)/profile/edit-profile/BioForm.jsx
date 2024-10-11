@@ -8,7 +8,7 @@ import { useUpdateTable } from '@/app/hooks/useUpdateTable'
 // components
 import Modal from "./Modal";
 
-const BioForm = ({ user, profile }) => {
+const BioForm = ({ user, profile, displayGlobalMsg }) => {
     const [bio, setBio] = useState('')
     const [draftBio, setDraftBio] = useState('');
     const [saving, setSaving] = useState(false)
@@ -17,7 +17,7 @@ const BioForm = ({ user, profile }) => {
   
 
     // custom hook to update profiles table
-    const { error: updateError, updateTable } = useUpdateTable()
+    const { error: updateTableError, updateTable } = useUpdateTable()
 
 
     // populate form fields from profiles table
@@ -27,11 +27,11 @@ const BioForm = ({ user, profile }) => {
             setDraftBio(profile.bio || '')
         }
 
-        if (updateError) {
-            setFormError(updateError)
+        if (updateTableError) {
+            setFormError(updateTableError)
          }
          return () => setFormError(null)
-    }, [user, profile, updateError])
+    }, [user, profile, updateTableError])
     
 
 
@@ -41,7 +41,7 @@ const BioForm = ({ user, profile }) => {
 
         if (!draftBio.trim()) {
             setSaving(false)
-            setFormError('Please add your new bio')
+            setFormError('Please add your new bio.')
             setTimeout(() => setFormError(null), 2000)
             return
         } else if (bio === draftBio) {
@@ -55,6 +55,7 @@ const BioForm = ({ user, profile }) => {
         setTimeout(() => {
             setShowForm(false)
             setBio(draftBio)
+            displayGlobalMsg('success', 'Bio updated!')
         }, 1000) 
     }
     
@@ -134,12 +135,7 @@ const BioForm = ({ user, profile }) => {
                             )}
                         </button>
                     </div>
-
-                    {formError && (
-                        <div className="absolute">
-                            <p className='modal-form-error'>* {formError}</p>
-                        </div>
-                    )}
+                    {formError && <p className='modal-form-error'>{formError}</p>}
                 </Modal>
             )}
         </div>

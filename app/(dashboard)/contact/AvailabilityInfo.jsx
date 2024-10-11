@@ -1,6 +1,6 @@
 const AvailabilityInfo = () => {
     return (
-        <div className='mt-10'>
+        <div>
             <h3 className='text-xl font-b font-rubik text-saddleBrown mb-4'>
                 When You Can Reach Me
             </h3>

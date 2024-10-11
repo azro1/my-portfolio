@@ -149,12 +149,7 @@ const EmailForm = ({ user, profile }) => {
                             )}
                         </button>
                     </div>
-
-                    {formError && (
-                        <div className="absolute">
-                            <p className='modal-form-error'>* {formError}</p>
-                        </div>
-                    )}
+                    {formError && <p className='modal-form-error'>{formError}</p>}
                 </Modal>
             )}
 

@@ -6,6 +6,8 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 // hooks
 import { useFetchProfile } from '@/app/hooks/useFetchProfile';
+// custom hook to display global messages
+import { useMessage } from '@/app/hooks/useMessage';
 
 // components
 import ProfileAvatar from '@/app/(profile)/profile/ProfileAvatar';
@@ -22,6 +24,8 @@ const Comments = ({ user }) => {
 
     // custom hooks
     const { profile, fetchProfile } = useFetchProfile()
+    // global messages function
+    const { changeMessage } = useMessage()
 
     // validation function returns regex to strip out harmful chars
     const containsInvalidChars = (value) => /[<>\/\\`"'&]/.test(value);
@@ -66,7 +70,8 @@ const Comments = ({ user }) => {
                 setComments(data)
             }
         } catch (error) {
-            setCommentError(error.message);
+            changeMessage('error', 'Failed to fetch comments. Please try again later.')
+            console(error.message);
         } finally {
             setIsCommentsLoading(false)
         }
@@ -107,8 +112,8 @@ const Comments = ({ user }) => {
                     setHasMore(data.length > 0);
                 }
             } catch (error) {
+                changeMessage('error', "Sorry we're unable to load more comments right now.");
                 console.log(error.message)
-                setCommentError('Unable to load more comments.');
             } finally {
                 setIsCommentsLoading(false)
             }
@@ -145,19 +150,16 @@ const Comments = ({ user }) => {
     const handleComment = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-        // setCommentError(null);
         setComment('');
           
 
         if (!comment) {
             setIsLoading(false);
-            setCommentError('Comment is required.');
-            setTimeout(() => setCommentError(null), 2000)
+            changeMessage('error', 'Oops! The comment field is empty. Please share your thoughts before submitting.');
             return
         } else if (containsInvalidChars(comment)) {
             setIsLoading(false);
-            setCommentError('Invalid Characters detected.');
-            setTimeout(() => setCommentError(null), 2000)
+            changeMessage('error', 'Your comment contains characters that are not allowed. Please remove them and try again.');
             return 
         }
 
@@ -183,7 +185,6 @@ const Comments = ({ user }) => {
           }
     
           if (json.data) {
-            // console.log(json.data)
             setIsLoading(false)
             updateComments(json.data);
           }
@@ -230,22 +231,16 @@ const Comments = ({ user }) => {
                             )}
                         </button>
                     </form>
-                    {commentError && <p className='absolute -bottom-14 error text-center w-full'>{commentError}</p>}
-
                 </div>
             )}
             
 
             {isCommentsLoading ? (
-                <div className='mt-20'>
-                   <img className="w-20" src="/images/loading/loading.gif" alt="a loading gif" />
-                </div>
+                <img className="w-20" src="/images/loading/loading.gif" alt="a loading gif" />
             ) : (
                 <>
                     {user !== null && comments.length === 0 && (
-                        <div className='mt-20'>
-                            <p>No comments.</p>
-                        </div>
+                        <p>No comments.</p>
                     )}
                 </>
             )}
@@ -253,7 +248,7 @@ const Comments = ({ user }) => {
 
 
             {comments !== null && comments.length > 0 && (
-                <div className='w-full sm:max-w-xl mt-16'>
+                <div className='w-full sm:max-w-xl'>
                     <h3 className='text-xl font-b text-saddleBrown mb-8'>
                         Comments
                     </h3>

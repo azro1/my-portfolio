@@ -3,17 +3,20 @@
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation";
 
+// custom hook to display global messages
+import { useMessage } from "@/app/hooks/useMessage";
+
 
 const ForgotEmail = () => {
     const [phone, setPhone] = useState('')
     const [isLoading, setIsLoading] = useState(false)
-    const [error, setError] = useState(null)
     const [successMsg, setSuccessMsg] = useState(null)
     const [redirect, setRedirect] = useState(false)
 
     const router = useRouter()
 
-
+    // global messages function
+    const { changeMessage } = useMessage()
 
 
 
@@ -28,27 +31,21 @@ const ForgotEmail = () => {
 
 
 
-
-
     // Phone number validation function
     const isValidPhoneNumber = (phoneNumber) => /^(0\d{10}|\+\d{1,3}\d{1,14})$/.test(phoneNumber);
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        setError(null)
 
         if (!phone) {
-          setError('Please provide your phone number');
-          setTimeout(() => setError(null), 2000)
-          setIsLoading(false)
+          changeMessage('error', 'Please enter your phone number to continue.');
           return
-        }
-    
-        if (!isValidPhoneNumber(phone)) {
-            setIsLoading(false)
-            setError('Phone numbers must be between 10 - 15 digits.');
-            setTimeout(() => setError(null), 2000)
-            return
+        } else if (phone.length < 10) {
+          changeMessage('error', 'The phone number you entered seems invalid. It should be between 10 and 15 digits. Please check and try again.')
+          return
+        } else if (!isValidPhoneNumber(phone)) {
+          changeMessage('error', 'Please enter a valid mobile number starting with 0 or an international code (e.g., +44, +1).');
+          return
         }
         
         setIsLoading(true)
@@ -67,35 +64,32 @@ const ForgotEmail = () => {
             })
 
             // await json response from server and store in const email
-            const email = await res.json()
+            const serverEmail = await res.json()
 
             if (res.status === 404) {
                 setIsLoading(false)
-                setError('There is no account associated with that phone number.')
+                changeMessage('error', "We couldn't find an account associated with that phone number. Please check the number or try a different one.")
                 return
-
-            } else if (email.error) {
+            } else if (serverEmail.error) {
                 setIsLoading(false)
-                setError(email.error)
+                changeMessage('error', "We're having trouble processing your request. Please try again later.")
                 return
-
-            } else if (email.exists && res.status === 200) {
-                setSuccessMsg("We've located your account. A verification code has been sent to your email.")
+            } else if (serverEmail.exists && res.status === 200) {
+                setIsLoading(false)
+                changeMessage('success', "Success! We've located your account. A verification code has been sent to your email.")
 
                 // store email temporarily in local storage
-                localStorage.setItem('email', email.email)
+                localStorage.setItem('email', serverEmail.email)
                 setTimeout(() => setRedirect(true), 3000)
             }
 
         } catch (error) {
             setIsLoading(false)
+            changeMessage('error', 'Oops, something went wrong. Please try again or contact support if the problem persists.');
             console.log(error.message)
-            setError('An unexpected error occurred. Please try again.');
         }
 
       }
-
-
 
 
 
@@ -106,7 +100,6 @@ const ForgotEmail = () => {
             router.push('/verify-email-otp')
          }
       }, [router, redirect])
-
 
 
 
@@ -126,42 +119,34 @@ const ForgotEmail = () => {
     return (
         <div className='flex items-center justify-center h-auth-page-height'>
 
-            <div className='flex h-80 relative'>
-                <div className="absolute -top-10 sm:-top-8 w-full text-center">
-                    {error && <div className="error">{error}</div>}
-                    {successMsg && <div className='success mt-2'>{successMsg}</div>}
-                </div>
+            <form className='max-w-max' onSubmit={handleSubmit}>
+                <h2 className='text-3xl mb-4 font-eb text-saddleBrown'>Recover Your email</h2>
+                <p className='mb-4 max-w-lg'>Enter the phone number you provided during your account setup to help us recover your email address.</p>
 
-                <form className='max-w-max h-fit place-self-end' onSubmit={handleSubmit}>
-                    <h2 className='text-3xl mb-4 font-eb text-saddleBrown'>Recover Your email</h2>
-                    <p className='mb-4 max-w-lg'>Enter the phone number you provided during your account setup to help us recover your email address.</p>
-
-                    <label>
-                        <span className='max-w-min mb-2 text-base text-stoneGray block'>Phone</span>
-                        <input
-                            className='w-full max-w-xs py-2.5 px-3 rounded-md text-black'
-                            type='tel'
-                            value={phone}
-                            spellCheck={false}
-                            maxLength={15}
-                            placeholder="Enter your phone number"
-                            onChange={(e) => setPhone(e.target.value)}
-                            onKeyDown={handleKeyDown}
-                        />
-                    </label>
-                    <button className='btn block mt-4 bg-saddleBrown' disabled={isLoading}>
-                        {isLoading ? (
-                            <div className='flex items-center gap-2'>
-                                <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />
-                                <span>Submit</span>
-                            </div>
-                        ) : (
-                            'Submit'
-                        )}
-                    </button>
-
-                </form>
-            </div>
+                <label>
+                    <span className='max-w-min mb-2 text-base text-stoneGray block'>Phone</span>
+                    <input
+                        className='w-full max-w-xs py-2.5 px-3 rounded-md text-black'
+                        type='tel'
+                        value={phone}
+                        spellCheck={false}
+                        maxLength={15}
+                        placeholder="Enter your phone number"
+                        onChange={(e) => setPhone(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                    />
+                </label>
+                <button className='btn block mt-4 bg-saddleBrown' disabled={isLoading}>
+                    {isLoading ? (
+                        <div className='flex items-center gap-2'>
+                            <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />
+                            <span>Submit</span>
+                        </div>
+                    ) : (
+                        'Submit'
+                    )}
+                </button>
+            </form>
 
         </div>
     )

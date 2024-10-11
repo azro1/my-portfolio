@@ -11,21 +11,20 @@ import { enGB } from 'date-fns/locale';
 registerLocale('en-GB', enGB)
 setDefaultLocale('en-GB'); 
 
-
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { usePathname } from 'next/navigation';
 import { FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
-
-// components
-import AvatarUploader from "@/app/(profile)/profile/edit-profile/AvatarUploader";
 
 // hooks
 import { useFetchUser } from "@/app/hooks/useFetchUser";
 import { useUpdateTable } from "@/app/hooks/useUpdateTable";
 import { useUpdateMetadata } from "@/app/hooks/useUpdateMetadata";
+import { useMessage } from '@/app/hooks/useMessage';
 
+// components
+import AvatarUploader from "@/app/(profile)/profile/edit-profile/AvatarUploader";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { usePathname } from 'next/navigation';
 
 
 const CompleteRegistration = () => {
@@ -33,31 +32,29 @@ const CompleteRegistration = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [isCheckingPhone, setIsCheckingPhone] = useState(false);
     const [isButtonDisabled, setIsButtonDisabled] = useState(true)
+    const [redirect, setRedirect] = useState(false);
+    const router = useRouter();
+    const pathname = usePathname();
+
+    // State to track name length for each input
+    const [isFirstNameLongEnough, setIsFirstNameLongEnough] = useState(false);
+    const [isLastNameLongEnough, setIsLastNameLongEnough] = useState(false);
     
-    const [error, setError] = useState(null)
-    const [successMsg, setSuccessMsg] = useState(null);
+    // State for messages
     const [infoMsg, setInfoMsg] = useState(null);
     
     // custom hooks
     const { user } = useFetchUser();
     const { updateTable } = useUpdateTable();
     const { updateMetadata } = useUpdateMetadata();
-
-
+    // global messages function
+    const { changeMessage } = useMessage()
 
     // regex validation functions
     const startsWithCaps = (name) => /^[A-Z].*$/.test(name);
     const allLowerCase = (name) => /^[A-Z][a-z]*$/.test(name);
     const isValidPhoneNumber = (phoneNumber) => /^(0\d{10}|\+\d{1,3}\d{1,14})$/.test(phoneNumber);
 
-
-    // State to track name length for each input
-    const [isFirstNameLongEnough, setIsFirstNameLongEnough] = useState(false);
-    const [isLastNameLongEnough, setIsLastNameLongEnough] = useState(false);
-
-    const [redirect, setRedirect] = useState(false);
-    const router = useRouter();
-    const pathname = usePathname();
 
 
 
@@ -84,6 +81,8 @@ const CompleteRegistration = () => {
 
 
 
+
+
     // triggers a confirmation dialog when the user tries to leave the page 
     useEffect(() => {
         const beforeUnloadListener = (event) => {
@@ -97,8 +96,10 @@ const CompleteRegistration = () => {
     }, []);
     
 
-      
 
+
+
+      
     // State to hold form input values
     const [formData, setFormData] = useState({
         firstName: '',
@@ -114,6 +115,7 @@ const CompleteRegistration = () => {
         dob: '',
         phone: ''
     })
+
 
 
 
@@ -148,8 +150,7 @@ const CompleteRegistration = () => {
 
 
 
-
-    // useEffect to disable button if form fields have values
+    // useEffect to disable button if all form fields have values
     useEffect(() => {
         const { firstName, lastName, dob, phone } = formData;
 
@@ -160,7 +161,7 @@ const CompleteRegistration = () => {
         }
         
         if (startsWithCaps(firstName) && allLowerCase(firstName) && startsWithCaps(lastName) && allLowerCase(lastName) && dob && isValidPhoneNumber(phone)) {
-            setInfoMsg("Upload an avatar before you register ?")
+            setInfoMsg('Upload an avatar before you register')
         } else {
             setInfoMsg(null)
         }
@@ -182,6 +183,7 @@ const CompleteRegistration = () => {
     };
 
 
+    
 
 
 
@@ -224,8 +226,9 @@ const CompleteRegistration = () => {
     // update raw_user_metadata and profiles table
     const handleUpdateProfile = async (e) => {
         e.preventDefault()
-        setFormIsSubmitted(true)
         setInfoMsg(null)
+        setFormIsSubmitted(true)
+
         const { firstName, lastName, dob, phone } = formData;
         let formIsValid = true;
 
@@ -313,10 +316,10 @@ const CompleteRegistration = () => {
                 // update profiles table
                 await updateTable(user, 'profiles', profileData, 'id');
 
-                setSuccessMsg('Finalizing account setup');
+                changeMessage('success', 'Finalizing account setup');
                 setTimeout(() => setRedirect(true), 3000);
             } catch (err) {
-                setError('An error occurred. Please try again later.');
+                changeMessage('error', 'An error occurred. Please try again later.');
             } finally {
                 setIsLoading(false);
             }
@@ -327,7 +330,6 @@ const CompleteRegistration = () => {
 
     // update user avatar
     const updateProfile = async ({ avatar_url }) => {
-        setError(null)
         setInfoMsg(null)
         
         try {
@@ -343,15 +345,12 @@ const CompleteRegistration = () => {
             if (error) {
                 throw new Error(error.message)
             } else {
-                setSuccessMsg('Avatar added!');
-                setTimeout(() => setSuccessMsg(null), 2000)    
+                changeMessage('success', 'Avatar added!');
             }
 
         } catch (error) {
-            setError('Failed to upload avatar.')
+            changeMessage('error', 'Failed to upload avatar.')
             console.log(error.message)
-        } finally {
-            setTimeout(() => setError(null), 2000)    
         }
     }
 
@@ -394,17 +393,8 @@ const CompleteRegistration = () => {
 
     return (
         <div className='flex flex-col w-full'>
-            <div className='flex flex-col w-full relative'>
+            <div className='flex flex-col w-full'>
                 <h2 className='text-3xl md:text-center leading-normal font-eb text-saddleBrown'>Set Up Your Account</h2>
-
-
-                <div className="absolute -top-20 text-center w-full place-self-center">
-                    {successMsg || error ? (
-                        <div className={successMsg ? 'success text-center' : 'error text-center'}>
-                            {successMsg || error}
-                        </div>
-                    ) : null}
-                </div>
 
 
                 <div className='mt-8 flex flex-col gap-6 md:flex-row md:justify-evenly w-full'>
@@ -427,10 +417,10 @@ const CompleteRegistration = () => {
 
                                     />
                                 </label>
-                                {formIsSubmitted && (errors.firstName || !isFirstNameLongEnough || !startsWithCaps(formData.firstName) || !allLowerCase(formData.firstName)) ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-800'} size={21} /> : (formIsSubmitted && !errors.firstName && !isCheckingPhone ? <FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} /> : '' )}
+                                {formIsSubmitted && (errors.firstName || !isFirstNameLongEnough || !startsWithCaps(formData.firstName) || !allLowerCase(formData.firstName)) ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : (formIsSubmitted && !errors.firstName && !isCheckingPhone ? <FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} /> : '' )}
                             
                             </div>
-                               {errors.firstName && <p className='text-sm text-red-700 mt-1'>{errors.firstName}</p>}
+                               {errors.firstName && <p className='text-sm text-red-600 mt-1'>{errors.firstName}</p>}
                         </div>
 
 
@@ -450,9 +440,9 @@ const CompleteRegistration = () => {
                                         minLength='2'
                                     />
                                 </label>
-                                {formIsSubmitted && (errors.lastName || !isLastNameLongEnough || !startsWithCaps(formData.lastName) || !allLowerCase(formData.lastName)) ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-800'} size={21} /> : (formIsSubmitted && !errors.lastName && !isCheckingPhone ? <FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} /> : '')}
+                                {formIsSubmitted && (errors.lastName || !isLastNameLongEnough || !startsWithCaps(formData.lastName) || !allLowerCase(formData.lastName)) ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : (formIsSubmitted && !errors.lastName && !isCheckingPhone ? <FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} /> : '')}
                             </div>
-                            {errors.lastName && <p className='text-sm text-red-700 mt-1'>{errors.lastName}</p>}
+                            {errors.lastName && <p className='text-sm text-red-600 mt-1'>{errors.lastName}</p>}
                         </div>
 
 
@@ -475,9 +465,9 @@ const CompleteRegistration = () => {
                                         maxLength={'8'}
                                     />
                                 </label>
-                                {formIsSubmitted && (errors.dob || !formData.dob) ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-800'} size={21} /> : (!errors.dob && formData.dob && formIsSubmitted && !isCheckingPhone ? <FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} /> : '')}
+                                {formIsSubmitted && (errors.dob || !formData.dob) ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : (!errors.dob && formData.dob && formIsSubmitted && !isCheckingPhone ? <FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} /> : '')}
                             </div>
-                            {errors.dob && <p className='text-sm text-red-700 pt-1'>{errors.dob}</p>}
+                            {errors.dob && <p className='text-sm text-red-600 pt-1'>{errors.dob}</p>}
                         </div>
 
 
@@ -496,9 +486,9 @@ const CompleteRegistration = () => {
                                         onKeyDown={handleKeyDown}
                                     />
                                 </label>
-                                {formIsSubmitted && (errors.phone || !isValidPhoneNumber(formData.phone)) ? (<FaExclamationCircle className={'absolute bottom-3 right-4 text-red-800'} size={21} />) : (!errors.phone && isValidPhoneNumber(formData.phone) && formIsSubmitted && !isCheckingPhone ? (<FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} />) : '')}
+                                {formIsSubmitted && (errors.phone || !isValidPhoneNumber(formData.phone)) ? (<FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} />) : (!errors.phone && isValidPhoneNumber(formData.phone) && formIsSubmitted && !isCheckingPhone ? (<FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} />) : '')}
                             </div>
-                            {errors.phone && <p className='text-sm text-red-700 mt-1'>{errors.phone}</p>}
+                            {errors.phone && <p className='text-sm text-red-600 mt-1'>{errors.phone}</p>}
                         </div>
 
                         <button className={`btn block w-fit mt-1.5 bg-saddleBrown transition duration-500 ${isButtonDisabled ? 'opacity-65' : 'opacity-100'}`} disabled={isButtonDisabled} onClick={handleUpdateProfile}>

@@ -9,7 +9,7 @@ import { useUpdateTable } from '@/app/hooks/useUpdateTable'
 // components
 import Modal from "./Modal";
 
-const DobForm = ({ user, profile, displayMsgs }) => {
+const DobForm = ({ user, profile, displayGlobalMsg }) => {
     const [dob, setDob] = useState('')
     const [draftDob, setDraftDob] = useState('')
     const [saving, setSaving] = useState(false)
@@ -18,7 +18,7 @@ const DobForm = ({ user, profile, displayMsgs }) => {
 
 
     // custom hook to update profiles table
-    const { error: updateError, updateTable } = useUpdateTable()
+    const { error: updateTableError, updateTable } = useUpdateTable()
 
 
     // populate form fields from profiles table
@@ -27,12 +27,12 @@ const DobForm = ({ user, profile, displayMsgs }) => {
             setDob(profile.dob || '')
         }
 
-        if (updateError) {
-            setFormError(updateError)
+        if (updateTableError) {
+            setFormError(updateTableError)
          }
          return () => setFormError(null);
 
-    }, [user, profile, updateError])
+    }, [user, profile, updateTableError])
     
 
 
@@ -55,7 +55,7 @@ const DobForm = ({ user, profile, displayMsgs }) => {
             setShowForm(false)
             setDob(formattedDate)
             setDraftDob('')
-            displayMsgs('Date of birth updated successfully!')
+            displayGlobalMsg('success', 'Date of birth updated!')
         }, 2000)
 
     }
@@ -131,12 +131,7 @@ const DobForm = ({ user, profile, displayMsgs }) => {
                             )}
                         </button>
                     </div>
-
-                    {formError && (
-                        <div className="absolute">
-                            <p className='modal-form-error'>* {formError}</p>
-                        </div>
-                    )}
+                    {formError && <p className='modal-form-error'>{formError}</p>}
                 </Modal>
             )}
         </div>
