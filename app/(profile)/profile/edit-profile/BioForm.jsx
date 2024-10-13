@@ -8,7 +8,7 @@ import { useUpdateTable } from '@/app/hooks/useUpdateTable'
 // components
 import Modal from "./Modal";
 
-const BioForm = ({ user, profile, displayGlobalMsg }) => {
+const BioForm = ({ user, profile, changeMessage }) => {
     const [bio, setBio] = useState('')
     const [draftBio, setDraftBio] = useState('');
     const [saving, setSaving] = useState(false)
@@ -55,7 +55,7 @@ const BioForm = ({ user, profile, displayGlobalMsg }) => {
         setTimeout(() => {
             setShowForm(false)
             setBio(draftBio)
-            displayGlobalMsg('success', 'Bio updated!')
+            changeMessage('success', 'Bio updated!')
         }, 1000) 
     }
     

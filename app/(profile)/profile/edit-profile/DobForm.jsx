@@ -9,7 +9,7 @@ import { useUpdateTable } from '@/app/hooks/useUpdateTable'
 // components
 import Modal from "./Modal";
 
-const DobForm = ({ user, profile, displayGlobalMsg }) => {
+const DobForm = ({ user, profile, changeMessage }) => {
     const [dob, setDob] = useState('')
     const [draftDob, setDraftDob] = useState('')
     const [saving, setSaving] = useState(false)
@@ -55,7 +55,7 @@ const DobForm = ({ user, profile, displayGlobalMsg }) => {
             setShowForm(false)
             setDob(formattedDate)
             setDraftDob('')
-            displayGlobalMsg('success', 'Date of birth updated!')
+            changeMessage('success', 'Date of birth updated!')
         }, 2000)
 
     }

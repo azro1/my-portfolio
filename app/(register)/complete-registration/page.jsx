@@ -14,7 +14,7 @@ setDefaultLocale('en-GB');
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { usePathname } from 'next/navigation';
-import { FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
+import { FaCheckCircle, FaExclamationCircle, FaInfoCircle } from 'react-icons/fa';
 
 // hooks
 import { useFetchUser } from "@/app/hooks/useFetchUser";
@@ -40,9 +40,6 @@ const CompleteRegistration = () => {
     const [isFirstNameLongEnough, setIsFirstNameLongEnough] = useState(false);
     const [isLastNameLongEnough, setIsLastNameLongEnough] = useState(false);
     
-    // State for messages
-    const [infoMsg, setInfoMsg] = useState(null);
-    
     // custom hooks
     const { user } = useFetchUser();
     const { updateTable } = useUpdateTable();
@@ -54,6 +51,35 @@ const CompleteRegistration = () => {
     const startsWithCaps = (name) => /^[A-Z].*$/.test(name);
     const allLowerCase = (name) => /^[A-Z][a-z]*$/.test(name);
     const isValidPhoneNumber = (phoneNumber) => /^(0\d{10}|\+\d{1,3}\d{1,14})$/.test(phoneNumber);
+
+    const supabase = createClientComponentClient()
+
+
+
+
+
+    // profile completion check to prevent users from returning to complete-registration route if they have updated their profile data
+    useEffect(() => {
+        const checkProfileCompletion = async () => {
+            if (user) {
+                const { data, error } = await supabase
+                .from('profiles')
+                .select()
+                .eq('id', user.id)
+                .single()
+
+                if (error) {
+                    console.error('Error fetching profile:', error)
+                    return
+                }
+                if (data.first_name && data.last_name && data.dob && data.phone) {
+                    router.replace('/')
+                }
+            }
+        }
+        checkProfileCompletion()
+    }, [user, router, supabase])
+
 
 
 
@@ -159,12 +185,6 @@ const CompleteRegistration = () => {
         } else {
             setIsButtonDisabled(true)
         }
-        
-        if (startsWithCaps(firstName) && allLowerCase(firstName) && startsWithCaps(lastName) && allLowerCase(lastName) && dob && isValidPhoneNumber(phone)) {
-            setInfoMsg('Upload an avatar before you register')
-        } else {
-            setInfoMsg(null)
-        }
     }, [formData])
 
 
@@ -226,7 +246,6 @@ const CompleteRegistration = () => {
     // update raw_user_metadata and profiles table
     const handleUpdateProfile = async (e) => {
         e.preventDefault()
-        setInfoMsg(null)
         setFormIsSubmitted(true)
 
         const { firstName, lastName, dob, phone } = formData;
@@ -330,7 +349,6 @@ const CompleteRegistration = () => {
 
     // update user avatar
     const updateProfile = async ({ avatar_url }) => {
-        setInfoMsg(null)
         
         try {
             const updatedProfile = {
@@ -339,7 +357,6 @@ const CompleteRegistration = () => {
                 updated_at: new Date().toISOString(),
             }
 
-            const supabase = createClientComponentClient()
             const { error } = await supabase.from('profiles').upsert(updatedProfile)
 
             if (error) {
@@ -518,7 +535,6 @@ const CompleteRegistration = () => {
                                 />
                             </div>
                         </div>
-                        {infoMsg && <div className='info text-center mt-3'>{infoMsg}</div>}
                    </div>
 
                 </div>

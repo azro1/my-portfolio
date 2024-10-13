@@ -9,7 +9,7 @@ import { useUpdateMetadata } from '@/app/hooks/useUpdateMetadata'
 // components
 import Modal from './Modal'
 
-const FirstNameForm = ({ user, profile, displayGlobalMsg }) => {
+const FirstNameForm = ({ user, profile, changeMessage }) => {
     const [first_name, setFirstName] = useState('')
     const [draftFirstName, setDraftFirstName] = useState('');
     const [showForm, setShowForm] = useState(false)
@@ -64,7 +64,7 @@ const FirstNameForm = ({ user, profile, displayGlobalMsg }) => {
         setTimeout(() => {
             setShowForm(false)
             setFirstName(draftFirstName)
-            displayGlobalMsg('success', 'First name updated!')
+            changeMessage('success', 'First name updated!')
         }, 1000)
     }
 

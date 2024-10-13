@@ -11,7 +11,7 @@ import { useUpdateMetadata } from '@/app/hooks/useUpdateMetadata';
 import Modal from './Modal'
 
 
-const LastNameForm = ({ user, profile, displayGlobalMsg }) => {
+const LastNameForm = ({ user, profile, changeMessage }) => {
     const [last_name, setLastName] = useState('')
     const [draftLastName, setDraftLastName] = useState('');
     const [showForm, setShowForm] = useState(false)
@@ -66,7 +66,7 @@ const LastNameForm = ({ user, profile, displayGlobalMsg }) => {
         setTimeout(() => {
             setShowForm(false)
             setLastName(draftLastName)
-            displayGlobalMsg('success', 'Last name updated!')
+            changeMessage('success', 'Last name updated!')
         }, 1000)
     }
 

@@ -1,7 +1,6 @@
 "use client"
 
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 
 // custom hooks
 import { useFetchUser } from '@/app/hooks/useFetchUser';
@@ -29,8 +28,6 @@ const EditProfilePage = () => {
     const { changeMessage } = useMessage()
   
 
-    const supabase = createClientComponentClient()
-
 
     // make sure we have a user before calling fetchProfile
     useEffect(() => {
@@ -43,13 +40,6 @@ const EditProfilePage = () => {
     }, [user])
 
 
-    // function to display global messages
-    const displayGlobalMsg = (type, message) => {
-        if (message) {
-            changeMessage(type, message)
-        }
-    }
-
 
     return (
         <div className='flex flex-col gap-6'>
@@ -60,7 +50,6 @@ const EditProfilePage = () => {
                     text='Personalize your account by uploading your own avatar'
                     btnColor='bg-nightSky'
                     show3DAvatar={false}
-                    displayGlobalMsg={displayGlobalMsg}
                 />
             </div>
  
@@ -68,7 +57,7 @@ const EditProfilePage = () => {
                 <BioForm
                     user={user}
                     profile={profile}
-                    displayGlobalMsg={displayGlobalMsg}
+                    changeMessage={changeMessage}
                 />
             </div>
 
@@ -76,19 +65,19 @@ const EditProfilePage = () => {
                 <FirstNameForm
                     user={user}
                     profile={profile}
-                    displayGlobalMsg={displayGlobalMsg}
+                    changeMessage={changeMessage}
                 />
 
                 <LastNameForm
                     user={user}
                     profile={profile}
-                    displayGlobalMsg={displayGlobalMsg}
+                    changeMessage={changeMessage}
                 />
 
                 <DobForm
                     user={user}
                     profile={profile}
-                    displayGlobalMsg={displayGlobalMsg}
+                    changeMessage={changeMessage}
                 />
 
                 <EmailForm 

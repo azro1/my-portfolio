@@ -7,16 +7,15 @@ import { FaUserCircle } from "react-icons/fa";
 
 // custom hooks
 import { useUpdateTable } from '@/app/hooks/useUpdateTable';
-
-// components
-import Modal from './Modal';
+import { useMessage } from '@/app/hooks/useMessage';
 
 
 
-const AvatarUploader = ({ user, title, text, displayTitle, btnColor, show3DAvatar, displayGlobalMsg }) => {
-
+const AvatarUploader = ({ user, title, text, displayTitle, btnColor, show3DAvatar }) => {
     // custom hook to update comments after user updates personal info
     const { updateTable } = useUpdateTable()
+    // global messages function
+    const { changeMessage } = useMessage()
 
     const [selectedFile, setSelectedFile] = useState(null)
     const [imgSrc, setImgSrc] = useState('')
@@ -40,7 +39,7 @@ const AvatarUploader = ({ user, title, text, displayTitle, btnColor, show3DAvata
             }
             reader.readAsDataURL(file)
         } else {
-            displayGlobalMsg('error', 'Could not select file. Please try again.')
+            changeMessage('error', 'Could not select file. Please try again.')
         }
     }
 
@@ -68,7 +67,7 @@ const AvatarUploader = ({ user, title, text, displayTitle, btnColor, show3DAvata
 
                 // update comments avatar
                 await updateTable(user, 'comments', { avatar_url: filePath }, 'comment_id')
-                displayGlobalMsg('success', 'Avatar uploaded!')
+                changeMessage('success', 'Avatar uploaded!')
 
                 if (formRef.current) {
                     setImgSrc('')
@@ -77,7 +76,7 @@ const AvatarUploader = ({ user, title, text, displayTitle, btnColor, show3DAvata
                 }
             }
         } catch (error) {
-            displayGlobalMsg('error', error.message)
+            changeMessage('error', error.message)
         } finally {
             setUploading(false)
         }
@@ -102,7 +101,7 @@ const AvatarUploader = ({ user, title, text, displayTitle, btnColor, show3DAvata
             }
             
         } catch (error) {
-            displayGlobalMsg('error', 'Failed to update avatar in profiles table.')
+            changeMessage('error', 'Failed to update avatar in profiles table.')
             console.log(error.message)
         }
     }
