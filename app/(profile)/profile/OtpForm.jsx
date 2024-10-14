@@ -14,86 +14,97 @@ import { useUpdateMetadata } from "@/app/hooks/useUpdateMetadata";
 import { useMessage } from "@/app/hooks/useMessage";
 
 
-const OtpForm = ({ storageStr, verificationType, redirectUrl, title, subHeading, successMessage }) => {
+const OtpForm = ({ contact, storageStr, verificationType, redirectUrl, title, subHeading, successMessage }) => {
     const [otp, setOtp] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [isEyeOpen, setIsEyeOpen] = useState(false)
     const [redirect, setRedirect] = useState(false)
 
     
-    // custom hook to update profiles table
+    // custom hooks
     const { error: updateTableError, updateTable } = useUpdateTable()
-    // custom hook to update metadata
-    const { error: updateMetadataError, updateMetadata } = useUpdateMetadata()
-    // global messages function
+    const { updateMetadata } = useUpdateMetadata()
     const { changeMessage } = useMessage()
 
 
     const router = useRouter()
 
+
+
+    // added useEffect to watch hook errors and fire if any detected
+    useEffect(() => {
+        if (updateTableError) {
+           changeMessage('error', `An unexpected error occurred and we couldn't update your ${contact}. Please try again later. If the issue persists, contact support.`)
+        }
+    }, [updateTableError])
+
+
+
+
+
+
     // verify otp
     const handleVerifyOtp = async (e) => {
         e.preventDefault()
-        setOtp('')
-        setIsLoading(true)
+
+        const handleError = (errorMessage) => {
+            setIsLoading(false);
+            changeMessage('error', errorMessage);
+        }
 
         if (!otp) {
-            setIsLoading(false)
-            changeMessage('error', 'Please enter your verification code.');
+            handleError('Please enter your verification code.');
             return
         } else if (otp.length !== 6) {
-            setIsLoading(false)
-            changeMessage('error', 'The verification code must be exactly 6 digits long. Please check and try again.');
+            handleError('The verification code must be exactly 6 digits long. Please check and try again.');
             return
         }
+
+        setIsLoading(true)
 
         // get and remove email from local storage
         const contactMethod = localStorage.getItem(storageStr)
         localStorage.removeItem(storageStr)
-
-        let email, phone;
         
         
         if (!contactMethod) {
-            changeMessage('error', "We couldn't verify your code. Please request a new verification code and try again.")
-        } else if (contactMethod.includes('@')) {
-            email = contactMethod
-        } else {
-            phone = contactMethod
+            setOtp('')
+            handleError("We couldn't verify your code. Please request a new verification code and try again.")
         }
          
         // create verification objects
-        const otpVerificationData = email ? { email, token: otp, type: verificationType } : { phone, token: otp, type: verificationType }
-        const appData = email ? { email: email } : { phone: phone }
+        const appData = contactMethod?.includes('@') ? { email: contactMethod } : { phone: contactMethod };
+        const otpVerificationData = { ...appData, token: otp, type: verificationType };
 
         const supabase = createClientComponentClient()
         const { data: { session }, error } = await supabase.auth.verifyOtp(otpVerificationData)
 
+
         if (error) {
-            setIsLoading(false)
-            changeMessage('error', "We couldn't verify your code. Please request a new verification code and try again.")
+            setOtp('')
+            handleError("We couldn't verify your code. Please request a new verification code and try again.")
             console.log(error.message)
             return
 
         } else if (session) {
-            changeMessage('success', successMessage)
 
-            // update raw_user_meta_data
-            await updateMetadata(appData)
-            // update profiles table with new email
-            await updateTable(session.user, 'profiles', appData, 'id')
-            
-            if (updateMetadataError) {
-               setIsLoading(false)
-               changeMessage('error', "Oops! Somethings gone wrong on our end. We're working on it. Please try again later.")
-               return
-            } else if (updateTableError) {
-               setIsLoading(false)
-               changeMessage('error', "Oops! Somethings gone wrong on our end. We're working on it. Please try again later.")
-               return
-            } else {
-               setTimeout(() => setRedirect(true), 3000)
+            // check for successful metadata update if not log out error
+            const updateMetadataResult = await updateMetadata(appData)
+            if (!updateMetadataResult.success) {
+               console.log('metadata update error:', updateMetadataResult.error)
             }
+
+            // check for successful profiles update if not exit out of function
+            const updateTableResult = await updateTable(session.user, 'profiles', appData, 'id')
+            if (!updateTableResult.success) {
+                setIsLoading(false)
+                setOtp('')
+                return
+            } 
+
+            changeMessage('success', successMessage)
+            setTimeout(() => setRedirect(true), 3000)
+        
         }
     }
 

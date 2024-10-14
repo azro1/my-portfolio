@@ -51,7 +51,6 @@ const PhoneForm = ({ user, profile }) => {
 
     // update last name
     const handlePhoneUpdate = async () => {
-        setIsUpdating(true)
         
         if (!draftPhone) {
             setIsUpdating(false)
@@ -69,6 +68,7 @@ const PhoneForm = ({ user, profile }) => {
             setTimeout(() => setFormError(null), 2000)
             return
         } else {
+            setIsUpdating(true)
 
             const convertedPhoneNumber = convertToInternationalFormat(draftPhone);
             // store phone temporarily in local storage
@@ -77,7 +77,8 @@ const PhoneForm = ({ user, profile }) => {
             try {
                 const supabase = createClientComponentClient()
                 const { data, error } = await supabase.auth.updateUser({
-                    phone: convertedPhoneNumber
+                    phone: convertedPhoneNumber,
+                    updated_at: new Date().toISOString()
                 })
         
                 if (error) {
@@ -85,16 +86,16 @@ const PhoneForm = ({ user, profile }) => {
                 }
         
                 if (data) {
-                    router.push('/profile/verify-phone-otp')
+                    setPhone(convertedPhoneNumber)
+                    setTimeout(() => router.push('/profile/verify-phone-otp'), 1000)
                 }  
             } catch (error) {
+                setIsUpdating(false)
+                setPhone(phone)
+                setFormError('An unexpected error occurred while updating your phone number. Please try again later. If the issue persists, contact support.')
                 console.log(error.message)
             }
-    
-            setTimeout(() => {
-                setShowForm(false)
-                setPhone(convertedPhoneNumber)
-            }, 1000)
+
         }
     }
 
@@ -108,6 +109,7 @@ const PhoneForm = ({ user, profile }) => {
 
     // handleCloseForm function
     const handleCloseForm = () => {
+        setFormError(null)
         setShowForm(false)
         setDraftPhone(phone)
     }

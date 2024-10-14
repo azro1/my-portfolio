@@ -8,6 +8,8 @@ const useUpdateMetadata = () => {
     const supabase = createClientComponentClient()
 
     const updateMetadata = async (obj) => {
+        setError(null)
+
         try {
             // update user metadata
             const { error } = await supabase.auth.updateUser({
@@ -17,9 +19,11 @@ const useUpdateMetadata = () => {
             if (error) {
                 throw new Error(error.message)
             }
+
+            return { success: true }
         } catch (error) {
             setError(error.message)
-            console.log('useUpdateMetadata:', error)
+            return { success: false, error: error.message }
         }
     }
     return { error, updateMetadata }

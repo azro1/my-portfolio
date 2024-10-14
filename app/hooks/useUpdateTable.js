@@ -9,6 +9,8 @@ const useUpdateTable = () => {
 
     // update a component table
     const updateTable = async (user, table, obj, column) => {
+        setError(null);
+
         try {
             const { error } = await supabase
                 .from(table)
@@ -18,9 +20,12 @@ const useUpdateTable = () => {
             if (error) {
                 throw new Error(error.message)
             }
+
+            return { success: true }
         } catch (error) {
-            console.log(error.message)
-            setError(`failed to update ${table}.`)
+            console.log('useUpdateTable:', error.message)
+            setError(error.message)
+            return { success: false }
         }
     }
 

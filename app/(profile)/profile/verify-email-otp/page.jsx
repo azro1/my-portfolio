@@ -5,6 +5,7 @@ const VerifyEmailOtp = () => {
 
     return (
         <OtpForm 
+            contact='email address'
             storageStr='email'
             verificationType='email_change'
             redirectUrl='/profile/edit-profile'

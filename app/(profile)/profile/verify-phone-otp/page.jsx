@@ -23,6 +23,7 @@ const VerifyPhoneOtp = () => {
 
   return (
       <OtpForm 
+          contact='phone number'
           storageStr='phone'
           verificationType='phone_change'
           redirectUrl='/profile/edit-profile'

@@ -85,7 +85,6 @@ const EnquiriesForm = ({ user }) => {
             if (enquiriesError) {
                 setIsLoading(false)
                 console.log('enquiriesError:', enquiriesError)
-                changeMessage('error', 'Oops! We encountered an issue while fetching your enquiries. Please try again later.')
                 return;
             } else {
                 const userEnquiries = enquiries[0].enquiries;

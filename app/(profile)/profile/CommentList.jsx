@@ -72,7 +72,7 @@ const CommentList = ({ user }) => {
 
 
   const handleDelete = async (id) => {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('comments')
       .delete()
       .eq('id', id)

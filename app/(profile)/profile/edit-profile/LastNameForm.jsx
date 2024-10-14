@@ -20,7 +20,7 @@ const LastNameForm = ({ user, profile, changeMessage }) => {
 
 
     // custom hook to update profiles table
-    const { error: updateTableError, updateTable } = useUpdateTable()
+    const { error: lastNameUpdateError, updateTable } = useUpdateTable()
 
     // custom hook to update user metadata
     const { updateMetadata } = useUpdateMetadata()
@@ -33,12 +33,12 @@ const LastNameForm = ({ user, profile, changeMessage }) => {
             setLastName(profile.last_name || '')
         }
 
-        if (updateTableError) {
-           setFormError(updateTableError)
+        if (lastNameUpdateError) {
+           setFormError("An unexpected error occurred and we couldn't update your last name. Please try again later. If the issue persists, contact support.")
         }
         return () => setFormError(null)
 
-    }, [user, profile, updateTableError])
+    }, [user, profile, lastNameUpdateError])
 
 
     // update last name
@@ -57,15 +57,28 @@ const LastNameForm = ({ user, profile, changeMessage }) => {
             return  
         }
 
-        // update user metadata
-        updateMetadata({ last_name: draftLastName })
+        // check for successful metadata update if not log out error
+        const updateMetadataResult = await updateMetadata({ last_name: draftLastName })
+        if (!updateMetadataResult.success) {
+            console.log('metadata update error:', updateMetadataResult.error)
+        }
 
-        // update profiles
-        await updateTable(user, 'profiles', { last_name: draftLastName }, 'id')
+        // check for successful profiles update if not exit out of function
+        const updateProfilesResult = await updateTable(user, 'profiles', { 
+            last_name: draftLastName,
+            updated_at: new Date().toISOString() 
+        }, 'id');
+
+        if (!updateProfilesResult.success) {
+            setSaving(false)
+            setLastName(last_name)
+            return
+        }
+        
+        setLastName(draftLastName)
 
         setTimeout(() => {
             setShowForm(false)
-            setLastName(draftLastName)
             changeMessage('success', 'Last name updated!')
         }, 1000)
     }
@@ -80,6 +93,7 @@ const LastNameForm = ({ user, profile, changeMessage }) => {
 
     // handleCloseForm function
     const handleCloseForm = () => {
+        setFormError(null)
         setShowForm(false)
         setDraftLastName(last_name)
     }

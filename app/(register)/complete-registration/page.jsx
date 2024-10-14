@@ -42,7 +42,7 @@ const CompleteRegistration = () => {
     
     // custom hooks
     const { user } = useFetchUser();
-    const { updateTable } = useUpdateTable();
+    const { error: updateTableError, updateTable } = useUpdateTable();
     const { updateMetadata } = useUpdateMetadata();
     // global messages function
     const { changeMessage } = useMessage()
@@ -54,6 +54,13 @@ const CompleteRegistration = () => {
 
     const supabase = createClientComponentClient()
 
+
+
+    useEffect(() => {
+        if (updateTableError) {
+            changeMessage('error', "An unexpected error occurred and we couldn't save your profile information. Please try again later. If the issue persists, contact support.")
+        }
+    }, [updateTableError])
 
 
 
@@ -321,21 +328,33 @@ const CompleteRegistration = () => {
 
             try {
                 // update raw_user_metadata object
-                const metadata = { first_name: firstName, last_name: lastName };
-                await updateMetadata(metadata);
+                const metadata = { 
+                    first_name: firstName,
+                    last_name: lastName,
+                    phone: convertedPhoneNumber 
+                };
+
+                const updateMetadataResult = await updateMetadata(metadata);
+                if (!updateMetadataResult.success) {
+                   console.log('metadata update error:', updateMetadataResult.error)
+                }
 
                 const profileData = {
                     first_name: firstName,
                     last_name: lastName,
                     phone: convertedPhoneNumber,
                     dob: formattedDate,
-                    updated_at: new Date().toISOString()
+                    created_at: new Date().toISOString()
                 };
  
                 // update profiles table
-                await updateTable(user, 'profiles', profileData, 'id');
+                const updateTableResult = await updateTable(user, 'profiles', profileData, 'id');
+                if (!updateTableResult.success) {
+                    setIsLoading(false)
+                    return;
+                }
 
-                changeMessage('success', 'Finalizing account setup');
+                changeMessage('success', 'Finalizing account setup...');
                 setTimeout(() => setRedirect(true), 3000);
             } catch (err) {
                 changeMessage('error', 'An error occurred. Please try again later.');
@@ -347,7 +366,7 @@ const CompleteRegistration = () => {
 
 
 
-    // update user avatar
+    // update user avatar in profiles table
     const updateProfile = async ({ avatar_url }) => {
         
         try {

@@ -64,6 +64,7 @@ const EmailForm = ({ user, profile }) => {
 
                 const { data, error } = await supabase.auth.updateUser({
                     email: emailToLowercase,
+                    updated_at: new Date().toISOString()
                 })
 
                 if (error) {
@@ -75,6 +76,8 @@ const EmailForm = ({ user, profile }) => {
                 }
 
             } catch (error) {
+                setIsUpdating(false)
+                setFormError('An unexpected error occurred while updating your email. Please try again later. If the issue persists, contact support.')
                 console.log(error.message)
             }
 
@@ -90,6 +93,7 @@ const EmailForm = ({ user, profile }) => {
 
     // handleCloseForm function
     const handleCloseForm = () => {
+        setFormError(null)
         setShowForm(false)
         setDraftEmail(email)
     }

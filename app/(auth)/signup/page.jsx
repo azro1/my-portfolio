@@ -94,7 +94,8 @@ const Signup = () => {
 
         if (error) {
           setIsLoading(false);
-          changeMessage('error', error.message)
+          changeMessage('error', 'An unexpected error occurred. Please try again later or contact support if the issue persists.');
+          console.log(error.message)
         } else {
           setIsLoading(false);
           router.push('/verify-signup-otp')
@@ -103,8 +104,8 @@ const Signup = () => {
 
     } catch (error) {
         setIsLoading(false)
-        console.log(error.message)
         changeMessage('error', 'An unexpected error occurred. Please try again later or contact support if the issue persists.');
+        console.log(error.message)
     }
 
   }

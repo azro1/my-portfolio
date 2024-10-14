@@ -18,7 +18,7 @@ const DobForm = ({ user, profile, changeMessage }) => {
 
 
     // custom hook to update profiles table
-    const { error: updateTableError, updateTable } = useUpdateTable()
+    const { error: updateDobError, updateTable } = useUpdateTable()
 
 
     // populate form fields from profiles table
@@ -27,17 +27,18 @@ const DobForm = ({ user, profile, changeMessage }) => {
             setDob(profile.dob || '')
         }
 
-        if (updateTableError) {
-            setFormError(updateTableError)
+        if (updateDobError) {
+            setFormError("An unexpected error occurred and we couldn't update your date of birth. Please try again later. If the issue persists, contact support.")
          }
          return () => setFormError(null);
 
-    }, [user, profile, updateTableError])
+    }, [user, profile, updateDobError])
     
 
 
     // update bio
     const handleUpdateDob = async () => {     
+        
         if (!draftDob.trim()) {
             setSaving(false)
             setFormError('Please enter your date of birth')
@@ -46,10 +47,19 @@ const DobForm = ({ user, profile, changeMessage }) => {
         }
 
         const formattedDate = format(parseISO(draftDob.trim()), 'dd/MM/yyyy');
-
         setSaving(true)
-        await updateTable(user, 'profiles', { dob: formattedDate }, 'id')
+
+        const updateProfilesResult = await updateTable(user, 'profiles', { 
+            dob: formattedDate,
+            updated_at: new Date().toISOString() 
+        }, 'id');
         
+        if (!updateProfilesResult.success) {
+            setSaving(false)
+            setDob(dob)
+            return;
+        }
+
         setTimeout(() => {
             setSaving(false)
             setShowForm(false)

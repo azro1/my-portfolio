@@ -17,7 +17,7 @@ const BioForm = ({ user, profile, changeMessage }) => {
   
 
     // custom hook to update profiles table
-    const { error: updateTableError, updateTable } = useUpdateTable()
+    const { error: updateBioError, updateTable } = useUpdateTable()
 
 
     // populate form fields from profiles table
@@ -27,16 +27,16 @@ const BioForm = ({ user, profile, changeMessage }) => {
             setDraftBio(profile.bio || '')
         }
 
-        if (updateTableError) {
-            setFormError(updateTableError)
+        if (updateBioError) {
+            setFormError("An unexpected error occurred and we couldn't update your bio. Please try again later. If the issue persists, contact support.")
          }
          return () => setFormError(null)
-    }, [user, profile, updateTableError])
+    }, [user, profile, updateBioError])
     
 
 
     // update bio
-    const handleUpdateBio = async () => {     
+    const handleUpdateBio = async () => {    
         setSaving(true)
 
         if (!draftBio.trim()) {
@@ -50,11 +50,23 @@ const BioForm = ({ user, profile, changeMessage }) => {
             setTimeout(() => setFormError(null), 2000)
             return
         }
+        
+        // check for successful update if not exit out of function
+        const updateProfilesResult = await updateTable(user, 'profiles', { 
+            bio: draftBio,
+            updated_at: new Date().toISOString()
+        }, 'id');
 
-        await updateTable(user, 'profiles', { bio: draftBio }, 'id')
+        if (!updateProfilesResult.success) {
+            setSaving(false)
+            setBio(bio)
+            return
+        }
+        
+        setBio(draftBio)
+
         setTimeout(() => {
             setShowForm(false)
-            setBio(draftBio)
             changeMessage('success', 'Bio updated!')
         }, 1000) 
     }
@@ -69,6 +81,7 @@ const BioForm = ({ user, profile, changeMessage }) => {
 
     // handleCloseForm function
     const handleCloseForm = () => {
+        setFormError(null)
         setShowForm(false)
         setDraftBio(bio)
     }
