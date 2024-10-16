@@ -8,7 +8,7 @@ import { useUpdateTable } from '@/app/hooks/useUpdateTable'
 // components
 import Modal from "./Modal";
 
-const BioForm = ({ user, profile, changeMessage }) => {
+const BioForm = ({ user, profile, fetchProfile, changeMessage }) => {
     const [bio, setBio] = useState('')
     const [draftBio, setDraftBio] = useState('');
     const [saving, setSaving] = useState(false)
@@ -17,7 +17,7 @@ const BioForm = ({ user, profile, changeMessage }) => {
   
 
     // custom hook to update profiles table
-    const { error: updateBioError, updateTable } = useUpdateTable()
+    const { updateTable } = useUpdateTable()
 
 
     // populate form fields from profiles table
@@ -26,18 +26,13 @@ const BioForm = ({ user, profile, changeMessage }) => {
             setBio(profile.bio || '')
             setDraftBio(profile.bio || '')
         }
-
-        if (updateBioError) {
-            setFormError("An unexpected error occurred and we couldn't update your bio. Please try again later. If the issue persists, contact support.")
-         }
-         return () => setFormError(null)
-    }, [user, profile, updateBioError])
+    }, [user, profile])
     
+
 
 
     // update bio
     const handleUpdateBio = async () => {    
-        setSaving(true)
 
         if (!draftBio.trim()) {
             setSaving(false)
@@ -51,26 +46,34 @@ const BioForm = ({ user, profile, changeMessage }) => {
             return
         }
         
-        // check for successful update if not exit out of function
-        const updateProfilesResult = await updateTable(user, 'profiles', { 
-            bio: draftBio,
-            updated_at: new Date().toISOString()
-        }, 'id');
+        try {
+            setSaving(true)
 
-        if (!updateProfilesResult.success) {
+            // check for successful update if not throw new error
+            const updateProfilesResult = await updateTable(user, 'profiles', { 
+                bio: draftBio,
+                updated_at: new Date().toISOString()
+            }, 'id');
+
+            if (!updateProfilesResult.success) {
+                throw new Error("An unexpected error occurred and we couldn't update your bio. Please try again later. If the issue persists, contact support.")
+            } 
+
+            setBio(draftBio)
+    
+            setTimeout(() => {
+                setShowForm(false)
+                changeMessage('success', 'Bio updated!')
+            }, 1000) 
+
+        } catch (error) {
             setSaving(false)
-            setBio(bio)
-            return
+            setFormError(error.message)
+            fetchProfile(user)
         }
-        
-        setBio(draftBio)
-
-        setTimeout(() => {
-            setShowForm(false)
-            changeMessage('success', 'Bio updated!')
-        }, 1000) 
     }
     
+
 
     // handleOpenForm function
     const handleOpenForm = () => {

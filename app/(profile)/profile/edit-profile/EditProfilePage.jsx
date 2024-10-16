@@ -58,6 +58,7 @@ const EditProfilePage = () => {
                     user={user}
                     profile={profile}
                     changeMessage={changeMessage}
+                    fetchProfile={fetchProfile}
                 />
             </div>
 
@@ -66,18 +67,21 @@ const EditProfilePage = () => {
                     user={user}
                     profile={profile}
                     changeMessage={changeMessage}
+                    fetchProfile={fetchProfile}
                 />
 
                 <LastNameForm
                     user={user}
                     profile={profile}
                     changeMessage={changeMessage}
+                    fetchProfile={fetchProfile}
                 />
 
                 <DobForm
                     user={user}
                     profile={profile}
                     changeMessage={changeMessage}
+                    fetchProfile={fetchProfile}
                 />
 
                 <EmailForm 

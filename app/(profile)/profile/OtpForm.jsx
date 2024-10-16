@@ -22,25 +22,12 @@ const OtpForm = ({ contact, storageStr, verificationType, redirectUrl, title, su
 
     
     // custom hooks
-    const { error: updateTableError, updateTable } = useUpdateTable()
+    const { updateTable } = useUpdateTable()
     const { updateMetadata } = useUpdateMetadata()
     const { changeMessage } = useMessage()
 
 
     const router = useRouter()
-
-
-
-    // added useEffect to watch hook errors and fire if any detected
-    useEffect(() => {
-        if (updateTableError) {
-           changeMessage('error', `An unexpected error occurred and we couldn't update your ${contact}. Please try again later. If the issue persists, contact support.`)
-        }
-    }, [updateTableError])
-
-
-
-
 
 
     // verify otp
@@ -60,7 +47,6 @@ const OtpForm = ({ contact, storageStr, verificationType, redirectUrl, title, su
             return
         }
 
-        setIsLoading(true)
 
         // get and remove email from local storage
         const contactMethod = localStorage.getItem(storageStr)
@@ -68,7 +54,7 @@ const OtpForm = ({ contact, storageStr, verificationType, redirectUrl, title, su
         
         
         if (!contactMethod) {
-            setOtp('')
+            setRedirect(true)
             handleError("We couldn't verify your code. Please request a new verification code and try again.")
         }
          
@@ -79,32 +65,37 @@ const OtpForm = ({ contact, storageStr, verificationType, redirectUrl, title, su
         const supabase = createClientComponentClient()
         const { data: { session }, error } = await supabase.auth.verifyOtp(otpVerificationData)
 
-
         if (error) {
-            setOtp('')
             handleError("We couldn't verify your code. Please request a new verification code and try again.")
+            setRedirect(true)
             console.log(error.message)
             return
 
         } else if (session) {
 
-            // check for successful metadata update if not log out error
-            const updateMetadataResult = await updateMetadata(appData)
-            if (!updateMetadataResult.success) {
-               console.log('metadata update error:', updateMetadataResult.error)
-            }
+            try {
+                setIsLoading(true)
 
-            // check for successful profiles update if not exit out of function
-            const updateTableResult = await updateTable(session.user, 'profiles', appData, 'id')
-            if (!updateTableResult.success) {
+                // check for successful metadata update if not log out error
+                const updateMetadataResult = await updateMetadata(appData)
+                if (!updateMetadataResult.success) {
+                    console.log('metadata update error:', updateMetadataResult.error)
+                }
+
+                // check for successful profiles update if not throw new error
+                const updateTableResult = await updateTable(session.user, 'profiles', appData, 'id')
+                if (!updateTableResult.success) {
+                    throw new Error(`An unexpected error occurred and we couldn't update your ${contact}. Please try again later. If the issue persists, contact support.`)
+                } 
+
+                changeMessage('success', successMessage)
+
+            } catch (error) {
+                changeMessage('error', error.message)
+            } finally {
                 setIsLoading(false)
-                setOtp('')
-                return
-            } 
-
-            changeMessage('success', successMessage)
-            setTimeout(() => setRedirect(true), 3000)
-        
+                setRedirect(true)
+            }
         }
     }
 

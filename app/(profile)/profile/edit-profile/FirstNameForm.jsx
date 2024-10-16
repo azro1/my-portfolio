@@ -9,7 +9,7 @@ import { useUpdateMetadata } from '@/app/hooks/useUpdateMetadata'
 // components
 import Modal from './Modal'
 
-const FirstNameForm = ({ user, profile, changeMessage }) => {
+const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
     const [first_name, setFirstName] = useState('')
     const [draftFirstName, setDraftFirstName] = useState('');
     const [showForm, setShowForm] = useState(false)
@@ -17,7 +17,7 @@ const FirstNameForm = ({ user, profile, changeMessage }) => {
     const [saving, setSaving] = useState(false)
 
     // custom hook to update profiles table
-    const { error: firstNameUpdateError, updateTable } = useUpdateTable()
+    const { updateTable } = useUpdateTable()
 
     // custom hook to update user metadata
     const { updateMetadata } = useUpdateMetadata()
@@ -29,17 +29,12 @@ const FirstNameForm = ({ user, profile, changeMessage }) => {
             setDraftFirstName(profile.first_name || user.user_metadata.name || '')
             setFirstName(profile.first_name || user.user_metadata.name || '')
         }
-
-        if (firstNameUpdateError) {
-           setFormError("An unexpected error occurred and we couldn't update your first name. Please try again later. If the issue persists, contact support.")
-        }
-    }, [user, profile, firstNameUpdateError])
+    }, [user, profile])
 
 
 
     // update first name
     const handleNameUpdate = async () => {
-        setSaving(true)
 
         if (!draftFirstName.trim()) {
             setSaving(false)
@@ -53,42 +48,53 @@ const FirstNameForm = ({ user, profile, changeMessage }) => {
             return
         }
 
-        // check for successful metadata update if not log out error
-        const updateMetadataResult = await updateMetadata({ first_name: draftFirstName })
-        if (!updateMetadataResult.success) {
-            console.log('metadata update error:', updateMetadataResult.error)
-        }
+        try {
+            setSaving(true)
 
-        // check for successful profiles update if not exit out of function
-        const updateProfilesResult = await updateTable(user, 'profiles', { 
-            first_name: draftFirstName,
-            updated_at: new Date().toISOString(), 
-        }, 'id');
+            // check for successful metadata update if not log out error
+            const updateMetadataResult = await updateMetadata({ first_name: draftFirstName })
+            if (!updateMetadataResult.success) {
+                console.log('metadata update error:', updateMetadataResult.error)
+            }
 
-        if (!updateProfilesResult.success) {
+            // check for successful profiles update if not throw new error
+            const updateProfilesResult = await updateTable(user, 'profiles', { 
+                first_name: draftFirstName,
+                updated_at: new Date().toISOString(), 
+            }, 'id');
+
+            if (!updateProfilesResult.success) {
+                throw new Error("An unexpected error occurred and we couldn't update your first name. Please try again later. If the issue persists, contact support.")
+            }
+
+
+            // check for successful comments update if not throw new error
+            const updateCommentsResult = await updateTable(user, 'comments', { 
+                first_name: draftFirstName,
+                updated_at: new Date().toISOString(), 
+            }, 'comment_id');
+
+            if (!updateCommentsResult.success) {
+                setSaving(false)
+                fetchProfile(user)
+                throw new Error("An unexpected error occurred. Your first name was updated but we couldn't update your comments. Please try again later. If the issue persists, contact support.")
+            }
+
+
+            if (updateProfilesResult.success && updateCommentsResult.success) {
+                setFirstName(draftFirstName)
+                
+                setTimeout(() => {
+                    setShowForm(false)
+                    changeMessage('success', 'First name updated!')
+                }, 1000)
+            }
+   
+        } catch (error) {
+            setFormError(error.message)
             setSaving(false)
-            setFirstName(first_name)
-            return
+            fetchProfile(user)
         }
-
-        // check for successful comments update if not exit out of function
-        const updateCommentsResult = await updateTable(user, 'comments', { 
-            first_name: draftFirstName,
-            updated_at: new Date().toISOString(), 
-        }, 'comment_id');
-
-        if (!updateCommentsResult.success) {
-            setSaving(false)
-            setFirstName(first_name)
-            return
-        }
-
-        setFirstName(draftFirstName)
-
-        setTimeout(() => {
-            setShowForm(false)
-            changeMessage('success', 'First name updated!')
-        }, 1000)
     }
 
 

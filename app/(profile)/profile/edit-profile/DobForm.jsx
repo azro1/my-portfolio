@@ -9,7 +9,7 @@ import { useUpdateTable } from '@/app/hooks/useUpdateTable'
 // components
 import Modal from "./Modal";
 
-const DobForm = ({ user, profile, changeMessage }) => {
+const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
     const [dob, setDob] = useState('')
     const [draftDob, setDraftDob] = useState('')
     const [saving, setSaving] = useState(false)
@@ -18,7 +18,7 @@ const DobForm = ({ user, profile, changeMessage }) => {
 
 
     // custom hook to update profiles table
-    const { error: updateDobError, updateTable } = useUpdateTable()
+    const { updateTable } = useUpdateTable()
 
 
     // populate form fields from profiles table
@@ -26,13 +26,7 @@ const DobForm = ({ user, profile, changeMessage }) => {
         if (user && profile) {
             setDob(profile.dob || '')
         }
-
-        if (updateDobError) {
-            setFormError("An unexpected error occurred and we couldn't update your date of birth. Please try again later. If the issue persists, contact support.")
-         }
-         return () => setFormError(null);
-
-    }, [user, profile, updateDobError])
+    }, [user, profile])
     
 
 
@@ -41,33 +35,37 @@ const DobForm = ({ user, profile, changeMessage }) => {
         
         if (!draftDob.trim()) {
             setSaving(false)
-            setFormError('Please enter your date of birth')
+            setFormError('Please enter your date of birth.')
             setTimeout(() => setFormError(null), 2000)
             return
         }
 
         const formattedDate = format(parseISO(draftDob.trim()), 'dd/MM/yyyy');
-        setSaving(true)
 
-        const updateProfilesResult = await updateTable(user, 'profiles', { 
-            dob: formattedDate,
-            updated_at: new Date().toISOString() 
-        }, 'id');
-        
-        if (!updateProfilesResult.success) {
-            setSaving(false)
-            setDob(dob)
-            return;
-        }
+        try {
+            setSaving(true)
 
-        setTimeout(() => {
-            setSaving(false)
-            setShowForm(false)
+            const updateProfilesResult = await updateTable(user, 'profiles', { 
+                dob: formattedDate,
+                updated_at: new Date().toISOString() 
+            }, 'id');
+            
+            if (!updateProfilesResult.success) {
+                throw new Error("An unexpected error occurred and we couldn't update your date of birth. Please try again later. If the issue persists, contact support.")
+            }
             setDob(formattedDate)
-            setDraftDob('')
-            changeMessage('success', 'Date of birth updated!')
-        }, 2000)
 
+            setTimeout(() => {
+                setSaving(false)
+                setShowForm(false)
+                changeMessage('success', 'Date of birth updated!')
+            }, 2000)
+
+        } catch (error) {
+            setSaving(false)
+            setFormError(error.message)
+            fetchProfile(user)
+        }
     }
     
 

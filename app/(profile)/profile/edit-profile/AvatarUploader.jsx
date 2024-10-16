@@ -13,7 +13,7 @@ import { useMessage } from '@/app/hooks/useMessage';
 
 const AvatarUploader = ({ user, title, text, displayTitle, btnColor, show3DAvatar }) => {
     // custom hook to update comments after user updates personal info
-    const { error: avatarUpdateError, updateTable } = useUpdateTable()
+    const { updateTable } = useUpdateTable()
     // global messages function
     const { changeMessage } = useMessage()
 
@@ -24,13 +24,7 @@ const AvatarUploader = ({ user, title, text, displayTitle, btnColor, show3DAvata
 
     const supabase = createClientComponentClient()
 
-
-    useEffect(() => {
-        if (avatarUpdateError) {
-            changeMessage('error', "Your profile picture was uploaded successfully, but we encountered an issue updating your comments. Please try again later. If the issue persists, contact support.")
-        }
-    }, [avatarUpdateError])
-
+    
 
     /* This function is triggered when a user selects a file. If a file is selected, the FileReader object reads the file as a data URL. The FileReader API is used to asynchronously read the contents of files stored on the user's computer. The readAsDataURL method of FileReader reads the content of the file and converts it into a base64-encoded string, called a data URL. A data URL is a string that represents the file's data and includes a media type prefix. The FileReader's onload event is triggered once the file is read, and the result (data URL) is stored in imgSrc. This data URL can be used to display the image directly in the browser */
     const handleFileInputChange = (event) => {
@@ -66,15 +60,13 @@ const AvatarUploader = ({ user, title, text, displayTitle, btnColor, show3DAvata
                 .from('avatars')
                 .upload(filePath, selectedFile, { upsert: true })
             if (error) {
-                changeMessage('error', "An unexpected error occurred and we couldn't upload your avatar. Please try again later. If the issue persists, contact support.")
-                console.log(error.message)
+                throw new Error("An unexpected error occurred and we couldn't upload your avatar. Please try again later. If the issue persists, contact support.")
             } else {
                 
                 // update profiles avatar
                 const avatarUpdateProfilesResult = await updateProfile({ avatar_url: filePath })
                 if (!avatarUpdateProfilesResult.success) {
-                    setUploading(false)
-                    return
+                    throw new Error("An unexpected error occurred and we couldn't upload your avatar. Please try again later. If the issue persists, contact support.")
                 }
 
                 // update comments avatar
@@ -84,8 +76,7 @@ const AvatarUploader = ({ user, title, text, displayTitle, btnColor, show3DAvata
                 }, 'comment_id');
 
                 if (!avatarUpdateCommentsResult.success) {
-                    setUploading(false)
-                    return
+                    throw new Error("Your profile picture was uploaded successfully, but we encountered an issue updating your comments. Please try again later. If the issue persists, contact support.")
                 }
                 
                 changeMessage('success', 'Avatar uploaded!')
@@ -124,8 +115,7 @@ const AvatarUploader = ({ user, title, text, displayTitle, btnColor, show3DAvata
             
             return { success: true }
         } catch (error) {
-            changeMessage('error', "An unexpected error occurred and we couldn't upload your avatar. Please try again later. If the issue persists, contact support.")
-            console.log(error.message)
+            console.log('profile update error:', error.message)
             return { success: false }
         }
     }

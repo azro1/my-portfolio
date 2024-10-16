@@ -11,7 +11,7 @@ import { useUpdateMetadata } from '@/app/hooks/useUpdateMetadata';
 import Modal from './Modal'
 
 
-const LastNameForm = ({ user, profile, changeMessage }) => {
+const LastNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
     const [last_name, setLastName] = useState('')
     const [draftLastName, setDraftLastName] = useState('');
     const [showForm, setShowForm] = useState(false)
@@ -20,7 +20,7 @@ const LastNameForm = ({ user, profile, changeMessage }) => {
 
 
     // custom hook to update profiles table
-    const { error: lastNameUpdateError, updateTable } = useUpdateTable()
+    const { updateTable } = useUpdateTable()
 
     // custom hook to update user metadata
     const { updateMetadata } = useUpdateMetadata()
@@ -32,18 +32,11 @@ const LastNameForm = ({ user, profile, changeMessage }) => {
             setDraftLastName(profile.last_name || '')
             setLastName(profile.last_name || '')
         }
-
-        if (lastNameUpdateError) {
-           setFormError("An unexpected error occurred and we couldn't update your last name. Please try again later. If the issue persists, contact support.")
-        }
-        return () => setFormError(null)
-
-    }, [user, profile, lastNameUpdateError])
+    }, [user, profile])
 
 
     // update last name
     const handleNameUpdate = async () => {
-        setSaving(true)
 
         if (!draftLastName.trim()) {
             setSaving(false)
@@ -57,30 +50,36 @@ const LastNameForm = ({ user, profile, changeMessage }) => {
             return  
         }
 
-        // check for successful metadata update if not log out error
-        const updateMetadataResult = await updateMetadata({ last_name: draftLastName })
-        if (!updateMetadataResult.success) {
-            console.log('metadata update error:', updateMetadataResult.error)
-        }
+        try {
+            setSaving(true)
 
-        // check for successful profiles update if not exit out of function
-        const updateProfilesResult = await updateTable(user, 'profiles', { 
-            last_name: draftLastName,
-            updated_at: new Date().toISOString() 
-        }, 'id');
+            // check for successful metadata update if not log out error
+            const updateMetadataResult = await updateMetadata({ last_name: draftLastName })
+            if (!updateMetadataResult.success) {
+                console.log('metadata update error:', updateMetadataResult.error)
+            }
 
-        if (!updateProfilesResult.success) {
+            // check for successful profiles update if not throw new error
+            const updateProfilesResult = await updateTable(user, 'profiles', { 
+                last_name: draftLastName,
+                updated_at: new Date().toISOString() 
+            }, 'id');
+
+            if (!updateProfilesResult.success) {
+                throw new Error("An unexpected error occurred and we couldn't update your last name. Please try again later. If the issue persists, contact support.")
+            }
+            setLastName(draftLastName)
+
+            setTimeout(() => {
+                setShowForm(false)
+                changeMessage('success', 'Last name updated!')
+            }, 1000)
+
+        } catch (error) {
             setSaving(false)
-            setLastName(last_name)
-            return
+            setFormError(error.message)
+            fetchProfile(user)
         }
-        
-        setLastName(draftLastName)
-
-        setTimeout(() => {
-            setShowForm(false)
-            changeMessage('success', 'Last name updated!')
-        }, 1000)
     }
 
 

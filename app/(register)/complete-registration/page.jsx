@@ -14,7 +14,7 @@ setDefaultLocale('en-GB');
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { usePathname } from 'next/navigation';
-import { FaCheckCircle, FaExclamationCircle, FaInfoCircle } from 'react-icons/fa';
+import { FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
 
 // hooks
 import { useFetchUser } from "@/app/hooks/useFetchUser";
@@ -28,10 +28,11 @@ import AvatarUploader from "@/app/(profile)/profile/edit-profile/AvatarUploader"
 
 
 const CompleteRegistration = () => {
-    const [formIsSubmitted, setFormIsSubmitted] = useState(false)
+    const [formIsSubmitted, setFormIsSubmitted] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [isCheckingPhone, setIsCheckingPhone] = useState(false);
-    const [isButtonDisabled, setIsButtonDisabled] = useState(true)
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+    const [updateStatus, setUpdateStatus] = useState(null);
     const [redirect, setRedirect] = useState(false);
     const router = useRouter();
     const pathname = usePathname();
@@ -42,7 +43,7 @@ const CompleteRegistration = () => {
     
     // custom hooks
     const { user } = useFetchUser();
-    const { error: updateTableError, updateTable } = useUpdateTable();
+    const { updateTable } = useUpdateTable();
     const { updateMetadata } = useUpdateMetadata();
     // global messages function
     const { changeMessage } = useMessage()
@@ -53,14 +54,6 @@ const CompleteRegistration = () => {
     const isValidPhoneNumber = (phoneNumber) => /^(0\d{10}|\+\d{1,3}\d{1,14})$/.test(phoneNumber);
 
     const supabase = createClientComponentClient()
-
-
-
-    useEffect(() => {
-        if (updateTableError) {
-            changeMessage('error', "An unexpected error occurred and we couldn't save your profile information. Please try again later. If the issue persists, contact support.")
-        }
-    }, [updateTableError])
 
 
 
@@ -322,11 +315,12 @@ const CompleteRegistration = () => {
 
 
         if (user && formIsValid) {
-            setIsLoading(true)
             const formattedDate = dob.toLocaleDateString('en-GB')
             const convertedPhoneNumber = convertToInternationalFormat(phone);
 
             try {
+                setIsLoading(true)
+
                 // update raw_user_metadata object
                 const metadata = { 
                     first_name: firstName,
@@ -350,14 +344,16 @@ const CompleteRegistration = () => {
                 // update profiles table
                 const updateTableResult = await updateTable(user, 'profiles', profileData, 'id');
                 if (!updateTableResult.success) {
-                    setIsLoading(false)
-                    return;
-                }
+                    throw new Error("An unexpected error occurred and we couldn't save your profile information. Please try again later. If the issue persists, contact support."
+)                }
 
-                changeMessage('success', 'Finalizing account setup...');
-                setTimeout(() => setRedirect(true), 3000);
-            } catch (err) {
-                changeMessage('error', 'An error occurred. Please try again later.');
+                changeMessage('success', 'Your account has been created and you are now logged in.');
+                setUpdateStatus('success')
+                setRedirect(true)
+            } catch (error) {
+                setRedirect(false)
+                setUpdateStatus('error')
+                changeMessage('error', error.message);
             } finally {
                 setIsLoading(false);
             }
@@ -453,7 +449,8 @@ const CompleteRegistration = () => {
 
                                     />
                                 </label>
-                                {formIsSubmitted && (errors.firstName || !isFirstNameLongEnough || !startsWithCaps(formData.firstName) || !allLowerCase(formData.firstName)) ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : (formIsSubmitted && !errors.firstName && !isCheckingPhone ? <FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} /> : '' )}
+
+                                {formIsSubmitted && (errors.firstName || !isFirstNameLongEnough || !startsWithCaps(formData.firstName) || !allLowerCase(formData.firstName)) ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : (formIsSubmitted && !errors.firstName && !isCheckingPhone && updateStatus === 'success' ? <FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} /> : (updateStatus === 'error' ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : ''))}
                             
                             </div>
                                {errors.firstName && <p className='text-sm text-red-600 mt-1'>{errors.firstName}</p>}
@@ -476,7 +473,7 @@ const CompleteRegistration = () => {
                                         minLength='2'
                                     />
                                 </label>
-                                {formIsSubmitted && (errors.lastName || !isLastNameLongEnough || !startsWithCaps(formData.lastName) || !allLowerCase(formData.lastName)) ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : (formIsSubmitted && !errors.lastName && !isCheckingPhone ? <FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} /> : '')}
+                                {formIsSubmitted && (errors.lastName || !isLastNameLongEnough || !startsWithCaps(formData.lastName) || !allLowerCase(formData.lastName)) ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : (formIsSubmitted && !errors.lastName && !isCheckingPhone && updateStatus === 'success' ? <FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} /> : (updateStatus === 'error' ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : ''))}
                             </div>
                             {errors.lastName && <p className='text-sm text-red-600 mt-1'>{errors.lastName}</p>}
                         </div>
@@ -501,7 +498,7 @@ const CompleteRegistration = () => {
                                         maxLength={'8'}
                                     />
                                 </label>
-                                {formIsSubmitted && (errors.dob || !formData.dob) ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : (!errors.dob && formData.dob && formIsSubmitted && !isCheckingPhone ? <FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} /> : '')}
+                                {formIsSubmitted && (errors.dob || !formData.dob) ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : (!errors.dob && formData.dob && formIsSubmitted && !isCheckingPhone && updateStatus === 'success' ? <FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} /> : (updateStatus === 'error' ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : ''))}
                             </div>
                             {errors.dob && <p className='text-sm text-red-600 pt-1'>{errors.dob}</p>}
                         </div>
@@ -522,7 +519,7 @@ const CompleteRegistration = () => {
                                         onKeyDown={handleKeyDown}
                                     />
                                 </label>
-                                {formIsSubmitted && (errors.phone || !isValidPhoneNumber(formData.phone)) ? (<FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} />) : (!errors.phone && isValidPhoneNumber(formData.phone) && formIsSubmitted && !isCheckingPhone ? (<FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} />) : '')}
+                                {formIsSubmitted && (errors.phone || !isValidPhoneNumber(formData.phone)) ? (<FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} />) : (!errors.phone && isValidPhoneNumber(formData.phone) && formIsSubmitted && !isCheckingPhone && updateStatus === 'success' ? (<FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} />) : (updateStatus === 'error' ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : ''))}
                             </div>
                             {errors.phone && <p className='text-sm text-red-600 mt-1'>{errors.phone}</p>}
                         </div>
