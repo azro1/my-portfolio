@@ -59,7 +59,7 @@ const OtpForm = ({ redirectUrl, subHeading, successMessage }) => {
         } else if (session) {
             setIsLoading(false);
             changeMessage('success', successMessage)
-            setTimeout(() => setRedirect(true), 3000)
+            setRedirect(true)
         }
     }
 

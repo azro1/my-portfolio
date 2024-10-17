@@ -3,7 +3,6 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 
 async function getProjects() {
-  await new Promise(resolve => setTimeout(resolve, 5000))
   const supabase = createServerComponentClient({ cookies })
   const { data, error } = await supabase.from('projects')
   .select()

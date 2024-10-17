@@ -23,7 +23,6 @@ export async function generateMetadata({ params }) {
 }
 
 async function getProject(id) {
-  await new Promise(resolve => setTimeout(resolve, 5000))
   const supabase = createServerComponentClient({ cookies })
   const { data } = await supabase.from('projects')
   .select()

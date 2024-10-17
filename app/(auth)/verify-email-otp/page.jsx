@@ -4,7 +4,7 @@ const VerifyEmailOtp = () => {
     return (
         <OtpForm
             subHeading='Enter the verification code sent to your email to recover your account.'
-            successMessage='Awesome! Your OTP is verified. Welcome back, logging you in...'
+            successMessage='OTP verified. Welcome back! You are now logged in.'
             redirectUrl='/'
         />
     )

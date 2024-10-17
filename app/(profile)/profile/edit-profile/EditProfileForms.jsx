@@ -18,12 +18,12 @@ import DobForm from './DobForm';
 
 
 
-const EditProfilePage = () => {
+const EditProfileForms = () => {
 
     // custom hook to fetch user
     const { user } = useFetchUser()
     // custom hook to fetch profile
-    const { error: profileError, profile, fetchProfile } = useFetchProfile()
+    const { profile, fetchProfile } = useFetchProfile()
     // global messages function
     const { changeMessage } = useMessage()
   
@@ -32,10 +32,7 @@ const EditProfilePage = () => {
     // make sure we have a user before calling fetchProfile
     useEffect(() => {
         if (user) {
-            async function getUserProfile() {
-                await fetchProfile(user)
-            }
-            getUserProfile()
+            fetchProfile(user)
         }
     }, [user])
 
@@ -94,10 +91,8 @@ const EditProfilePage = () => {
                     profile={profile}
                 />
             </div>
-            
-            {profileError && <div className='error'>{profileError}</div>}
         </div>
     )
 }
 
-export default EditProfilePage
+export default EditProfileForms

@@ -87,7 +87,7 @@ const PhoneForm = ({ user, profile }) => {
         
                 if (data) {
                     setPhone(convertedPhoneNumber)
-                    setTimeout(() => router.push('/profile/verify-phone-otp'), 1000)
+                    router.push('/profile/verify-phone-otp')
                 }  
             } catch (error) {
                 setIsUpdating(false)

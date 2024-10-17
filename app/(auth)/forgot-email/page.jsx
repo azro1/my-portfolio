@@ -80,7 +80,7 @@ const ForgotEmail = () => {
 
                 // store email temporarily in local storage
                 localStorage.setItem('email', serverEmail.email)
-                setTimeout(() => setRedirect(true), 3000)
+                setRedirect(true)
             }
 
         } catch (error) {

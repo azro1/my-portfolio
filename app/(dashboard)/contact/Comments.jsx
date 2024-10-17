@@ -17,7 +17,6 @@ const Comments = ({ user }) => {
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([])
     const [hasMore, setHasMore] = useState(true);
-    const [commentError, setCommentError] = useState(null)
     const [isLoading, setIsLoading] = useState(false);
     const [isCommentsLoading, setIsCommentsLoading] = useState(true);
     const commentsContainerRef = useRef(null);
@@ -32,7 +31,7 @@ const Comments = ({ user }) => {
 
   
 
-    // watch user value to get users profile
+    // watch user value to get users profile and show profile error is there is one
     useEffect(() => {
       if (user) {
         fetchProfile(user)
@@ -150,7 +149,6 @@ const Comments = ({ user }) => {
     const handleComment = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-        setComment('');
           
 
         if (!comment) {
@@ -163,6 +161,12 @@ const Comments = ({ user }) => {
             return 
         }
 
+
+        if (!profile) {
+            setIsLoading(false)
+            changeMessage('error', "An error occured at our end and we're fixing it. Please try again later. If the issue persists, contact support.");
+            return
+        }
 
 
         try {
@@ -178,20 +182,22 @@ const Comments = ({ user }) => {
           })  
     
           // handle response
-          const json = await res.json()
+          const serverComment = await res.json()
     
-          if (json.error) {
-            throw new Error(json.error);
+          if (serverComment.error) {
+            throw new Error("We're having trouble saving your comment right now. Please try again in a bit. If the issue persists, contact support.");
           }
     
-          if (json.data) {
+          if (serverComment.data) {
             setIsLoading(false)
-            updateComments(json.data);
+            updateComments(serverComment.data);
+            changeMessage('success', 'Comment added!')
+            setComment('')
           }
       
         } catch (error) {
-            setIsCommentsLoading(false)
-            console.log(error.message)
+            setIsLoading(false)
+            changeMessage('error', error.message)
         }
     };
 

@@ -23,13 +23,14 @@ const useFetchProfile = () => {
   
           if (data) {
             setProfile(data)
+            return true
           }
 
         } catch (error) {
+            setError(error)
             console.log(error.message)
-            setError('Failed to fetch profile. Try again later.')
+            return false
         }
-
     }
 
     return { error, profile, fetchProfile }

@@ -1,6 +1,6 @@
 
 // components
-import EditProfilePage from './EditProfilePage';
+import EditProfileForms from './EditProfileForms';
 import ProfileHeader from '../ProfileHeader';
 
 
@@ -16,7 +16,7 @@ const EditProfile = () => {
       <div className="bg-cloudGray p-4 pt-10">
       <h2 className='text-xl text-nightSky font-b'>Basic Information</h2>
 
-          <EditProfilePage />
+          <EditProfileForms />
       </div>
     </div>
   )

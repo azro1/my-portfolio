@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid"
 
 export async function POST(request) {
   const { profile, comment } = await request.json()
-  
+
   // get supabase instance
   const supabase = createRouteHandlerClient({ cookies })
 
@@ -25,11 +25,15 @@ export async function POST(request) {
     .single()
 
     if (error) {
-        console.log(error)
+        console.log('comments error:', error.message)
+        return NextResponse.json({ error: error.message }, { 
+          status: 500 
+        })
     } 
 
     if (data) {
-        return NextResponse.json({ data, error })
+        return NextResponse.json({ data }, { 
+          status: 201 
+        })
     }
-
 }
