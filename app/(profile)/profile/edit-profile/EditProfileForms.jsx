@@ -31,9 +31,16 @@ const EditProfileForms = () => {
 
     // make sure we have a user before calling fetchProfile
     useEffect(() => {
-        if (user) {
-            fetchProfile(user)
+        const fetchProfileResult = async () => {
+            if (user) {
+                const profileResult = await fetchProfile(user);
+                if (!profileResult) {
+                    changeMessage('error', "Sorry, we couldn't load some of your profile information at this time. Please check your internet connection or refresh the page. If the issuse persist, contact support.");
+                    return
+                }
+            }
         }
+        fetchProfileResult()
     }, [user])
 
 

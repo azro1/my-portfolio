@@ -4,21 +4,23 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useState, useEffect } from "react"
 
 const useFetchProjectsById = (user, table, column) => {
-    const [retrievedProjects, setRetrievedProjects] = useState('')
+    const [retrievedProjects, setRetrievedProjects] = useState([])
     const [isProjectsLoading, setIsProjectsloading] = useState(true)
+    const [errorMessage, setErrorMessage] = useState(null);
 
     const supabase = createClientComponentClient()
-
-    useEffect(() => {
-        async function getProjectsById() {
-            try {
+    
+    const getProjectsById = async () => {
+        try {
+            if (user) {
                 // get table entries
                 const { data: rows, error: rowsError } = await supabase.from(table)
                     .select()
                     .eq(column, user.id)
 
                 if (rowsError) {
-                    throw new Error(rowsError)
+                    setErrorMessage(`Sorry! We're currently unbale to display your ${table.replace('_', ' ')} right now. Please try refreshing the page or check back later.`);
+                    console.log('table error:', rowsError.message)
                 }
 
                 if (rows && rows.length > 0) {
@@ -33,7 +35,8 @@ const useFetchProjectsById = (user, table, column) => {
                         .in('id', projectIdsInt)
 
                     if (projectsError) {
-                        throw new Error(projectsError.message)
+                        setErrorMessage("An unexpected error occured and we are unable to display your activity feed data at this time. Please try refreshing the page or try again later. If the issue persists, contact support.");
+                        console.log('projects error:', projectsError.message)
                     } else {
 
                         // Associate projects with their corresponding table rows
@@ -47,19 +50,17 @@ const useFetchProjectsById = (user, table, column) => {
                         setRetrievedProjects(extendedProjects)
                     }
                 }
-            } catch (error) {
-                console.log(error.message)
-            } finally {
-                setIsProjectsloading(false)
             }
+            return true
+        } catch (error) {
+            console.log(error.message)
+            return false
+        } finally {
+            setIsProjectsloading(false)
         }
+    }
 
-        if (user) {
-            getProjectsById()
-        }
-    }, [user])
-
-    return { retrievedProjects, isProjectsLoading }
+    return { retrievedProjects, isProjectsLoading, errorMessage, getProjectsById }
 }
 
 export { useFetchProjectsById }

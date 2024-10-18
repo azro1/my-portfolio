@@ -226,7 +226,7 @@ const Comments = ({ user }) => {
                             onChange={(e) => setComment(e.target.value)}
                         ></textarea>
 
-                        <button className='btn block mt-2 bg-saddleBrown'>
+                        <button className='btn block mt-2 bg-saddleBrown' disabled={isLoading}>
                             {isLoading ? (
                                 <div className='flex items-center gap-2'>
                                     <img className="w-5 h-5 opacity-50" src="../images/loading/spinner.svg" alt="Loading indicator" />

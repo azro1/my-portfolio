@@ -41,12 +41,12 @@ const Project = async ({ params }) => {
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
   
-    const { error } = await supabase.from('activity')
+    const { error } = await supabase.from('project_views')
     .upsert({
         id: uuidv4(),
         updated_at: new Date().toISOString(),
         project_id: params.id,
-        activity_id: user ? user.id : null
+        user_id: user ? user.id : null
       })
     .select()
     .single()
