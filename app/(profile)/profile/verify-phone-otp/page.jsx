@@ -26,7 +26,6 @@ const VerifyPhoneOtp = () => {
           contact='phone number'
           storageStr='phone'
           verificationType='phone_change'
-          redirectUrl='/profile/edit-profile'
           title='Verify Your Phone'
           subHeading={<>A verification code was sent to <strong> ****{converPhoneNumber(phoneNumber)}</strong>. Please enter the code below to complete your phone update.</>}
           successMessage='OTP verifcation was successful. Your phone number has been updated.'

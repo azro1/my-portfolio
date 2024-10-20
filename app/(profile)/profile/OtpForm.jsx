@@ -14,7 +14,7 @@ import { useUpdateMetadata } from "@/app/hooks/useUpdateMetadata";
 import { useMessage } from "@/app/hooks/useMessage";
 
 
-const OtpForm = ({ contact, storageStr, verificationType, redirectUrl, title, subHeading, successMessage }) => {
+const OtpForm = ({ contact, storageStr, verificationType, title, subHeading, successMessage }) => {
     const [otp, setOtp] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [isEyeOpen, setIsEyeOpen] = useState(false)
@@ -54,8 +54,10 @@ const OtpForm = ({ contact, storageStr, verificationType, redirectUrl, title, su
         
         
         if (!contactMethod) {
-            setRedirect(true)
-            handleError("We couldn't verify your code. Please request a new verification code and try again.")
+            handleError("We couldn't verify your code. Please request a new verification code and try again.");
+            // set cookie to false to revoke access to this form from server and user will be redirected to login page
+            document.cookie = "canAccessOtpPage=false; path=/";
+            router.refresh();
         }
          
         // create verification objects
@@ -66,8 +68,10 @@ const OtpForm = ({ contact, storageStr, verificationType, redirectUrl, title, su
         const { data: { session }, error } = await supabase.auth.verifyOtp(otpVerificationData)
 
         if (error) {
-            handleError("We couldn't verify your code. Please request a new verification code and try again.")
-            setRedirect(true)
+            handleError("We couldn't verify your code. Please request a new verification code and try again.");
+            // set cookie to false to revoke access to this form from server and user will be redirected to login page
+            document.cookie = "canAccessOtpPage=false; path=/";
+            router.refresh();
             console.log(error.message)
             return
 
@@ -86,15 +90,19 @@ const OtpForm = ({ contact, storageStr, verificationType, redirectUrl, title, su
                 const updateTableResult = await updateTable(session.user, 'profiles', appData, 'id')
                 if (!updateTableResult.success) {
                     throw new Error(`An unexpected error occurred and we couldn't update your ${contact}. Please try again later. If the issue persists, contact support.`)
-                } 
+                }
 
+                setIsLoading(false)
+                // clear cookie after successful verification
+                document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+                router.refresh();
                 changeMessage('success', successMessage)
 
             } catch (error) {
+                // clear cookie if profiles update fails
+                document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+                router.refresh();
                 changeMessage('error', error.message)
-            } finally {
-                setIsLoading(false)
-                setRedirect(true)
             }
         }
     }
@@ -102,11 +110,6 @@ const OtpForm = ({ contact, storageStr, verificationType, redirectUrl, title, su
 
 
 
-    useEffect(() => {
-        if (redirect) {
-            router.push(redirectUrl)
-        }
-    }, [redirect, router, redirectUrl]);
 
 
 

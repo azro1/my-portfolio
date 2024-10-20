@@ -69,8 +69,13 @@ const Login = () => {
         return
 
       } else if (serverEmail.exists && res.status === 409) {
+        
         // store email temporarily in local storage
-        localStorage.setItem('email', email)
+        localStorage.setItem('email', email);
+
+        // only from this form and only after all client-side validation checks and form submission set cookie to true which is checked on server(middleware.js) to allow a user access to otp page 
+        document.cookie = "canAccessOtpPage=true; path=/; SameSite=Strict";
+
 
         const supabase = createClientComponentClient()
         const { error } = await supabase.auth.signInWithOtp({
@@ -78,8 +83,7 @@ const Login = () => {
         })
 
         if (error) {
-          setIsLoading(false);
-          changeMessage('error', error.message)
+          throw new Error(error.message)
         }
 
         if (!error) {
@@ -89,9 +93,11 @@ const Login = () => {
       }
 
     } catch (error) {
-      setIsLoading(false)
-      console.log(error)
-      changeMessage('error', 'Oops! Something went wrong on our end. Please try again in a moment.');
+        setIsLoading(false);
+        // clear cookie if there's an error
+        document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+        changeMessage('error', 'Oops! Something went wrong on our end. Please try again in a moment or contact support if the issue persists.');
+        console.log('login error:', error.message)
     }
 
   }
@@ -122,7 +128,7 @@ const Login = () => {
               {isLoading ? (
                 <div className='flex items-center gap-2'>
                   <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />
-                  <span>Logging in</span>
+                  <span>Login</span>
                 </div>
               ) : (
                 'Login'

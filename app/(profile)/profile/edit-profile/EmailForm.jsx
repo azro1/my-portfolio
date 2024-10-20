@@ -60,7 +60,11 @@ const EmailForm = ({ user, profile }) => {
                 const emailToLowercase = draftEmail.trim().toLowerCase();
 
                 // store email temporarily in local storage
-                localStorage.setItem('email', emailToLowercase)
+                localStorage.setItem('email', emailToLowercase);
+
+                // set cookie to true which is checked on server to allow a user access to otp page only from this form
+                document.cookie = "canAccessOtpPage=true; path=/; SameSite=Strict";
+
 
                 const { data, error } = await supabase.auth.updateUser({
                     email: emailToLowercase,
@@ -68,7 +72,8 @@ const EmailForm = ({ user, profile }) => {
                 })
 
                 if (error) {
-                    throw new Error(error.message)
+                    console.log('email form error:', error.message)
+                    throw new Error('An unexpected error occurred while updating your email. Please try again later. If the issue persists, contact support.')
                 }
 
                 if (data) {
@@ -77,10 +82,10 @@ const EmailForm = ({ user, profile }) => {
 
             } catch (error) {
                 setIsUpdating(false)
-                setFormError('An unexpected error occurred while updating your email. Please try again later. If the issue persists, contact support.')
-                console.log(error.message)
+                // clear cookie if there's an error
+                document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+                setFormError(error.message)
             }
-
         }
     }
 

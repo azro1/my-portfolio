@@ -67,26 +67,26 @@ const ForgotEmail = () => {
             const serverEmail = await res.json()
 
             if (res.status === 404) {
-                setIsLoading(false)
-                changeMessage('error', "We couldn't find an account associated with that phone number. Please check the number or try a different one.")
-                return
+                throw new Error("We couldn't find an account associated with that phone number. Please check the number or try a different one.")
             } else if (serverEmail.error) {
-                setIsLoading(false)
-                changeMessage('error', "We're having trouble processing your request. Please try again later.")
-                return
+                throw new Error("We're having trouble processing your request. Please try again later. If the issue persists, contact support.")
             } else if (serverEmail.exists && res.status === 200) {
                 setIsLoading(false)
                 changeMessage('success', "Success! We've located your account. A verification code has been sent to your email.")
 
                 // store email temporarily in local storage
                 localStorage.setItem('email', serverEmail.email)
+
+                // only from this form and only after all client and server checks and form submission set cookie to true which is checked on server(middleware.js) to allow a user access to otp page 
+                document.cookie = "canAccessOtpPage=true; path=/; SameSite=Strict";
                 setRedirect(true)
             }
 
         } catch (error) {
-            setIsLoading(false)
-            changeMessage('error', 'Oops, something went wrong. Please try again or contact support if the problem persists.');
-            console.log(error.message)
+            setIsLoading(false);
+            // clear cookie if there's an error
+            document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+            changeMessage('error', error.message);
         }
 
       }
@@ -97,7 +97,7 @@ const ForgotEmail = () => {
       // once email associated with phone number is found send otp from server to recovered email and redirect them to verify-login-otp page
       useEffect(() => {
          if (redirect) {
-            router.push('/verify-email-otp')
+            router.push('/verify-forgot-email-otp')
          }
       }, [router, redirect])
 

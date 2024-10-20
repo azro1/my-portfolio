@@ -72,7 +72,10 @@ const PhoneForm = ({ user, profile }) => {
 
             const convertedPhoneNumber = convertToInternationalFormat(draftPhone);
             // store phone temporarily in local storage
-            localStorage.setItem('phone', convertedPhoneNumber)
+            localStorage.setItem('phone', convertedPhoneNumber);
+
+            // set cookie to true which is checked on server to allow a user access to otp page only from this form
+            document.cookie = "canAccessOtpPage=true; path=/; SameSite=Strict";
     
             try {
                 const supabase = createClientComponentClient()
@@ -82,7 +85,8 @@ const PhoneForm = ({ user, profile }) => {
                 })
         
                 if (error) {
-                    throw new Error(error.message)
+                    console.log('phone form error:', error.message)
+                    throw new Error('An unexpected error occurred while updating your phone number. Please try again later. If the issue persists, contact support.')
                 }
         
                 if (data) {
@@ -91,9 +95,10 @@ const PhoneForm = ({ user, profile }) => {
                 }  
             } catch (error) {
                 setIsUpdating(false)
+                // clear cookie if there's an error
+                document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
                 setPhone(phone)
-                setFormError('An unexpected error occurred while updating your phone number. Please try again later. If the issue persists, contact support.')
-                console.log(error.message)
+                setFormError(error.message)
             }
 
         }

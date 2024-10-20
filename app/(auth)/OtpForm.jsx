@@ -43,23 +43,31 @@ const OtpForm = ({ redirectUrl, subHeading, successMessage }) => {
         const email = localStorage.getItem('email')
         localStorage.removeItem('email')
 
+        try {
+            const supabase = createClientComponentClient()
+            const { data: { session }, error } = await supabase.auth.verifyOtp({
+                email,
+                token: otp,
+                type: 'email'
+            })
 
-        const supabase = createClientComponentClient()
-        const { data: { session }, error } = await supabase.auth.verifyOtp({
-            email,
-            token: otp,
-            type: 'email'
-        })
+            if (error) {
+                console.log('auth otp error:', error.message);
+                throw new Error("We couldn't verify your code. Please request a new verification code and try again.");
+            } else if (session) {
+                setIsLoading(false);
+                // clear cookie after successful verification
+                document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+                changeMessage('success', successMessage);
+                setRedirect(true);
+            }
 
-        if (error) {
-            setIsLoading(false)
-            changeMessage('error', "We couldn't verify your code. Please request a new verification code and try again.")
-            console.log(error.message)
-            return
-        } else if (session) {
+        } catch (error) {
             setIsLoading(false);
-            changeMessage('success', successMessage)
-            setRedirect(true)
+            // clear cookie to revoke access to this form from server and user will be redirected to login page as long as we use refresh below to make new request to server
+            document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+            router.refresh();
+            changeMessage('error', error.message);
         }
     }
 
@@ -68,7 +76,7 @@ const OtpForm = ({ redirectUrl, subHeading, successMessage }) => {
     // redirect if otp verification is successful
     useEffect(() => {
         if (redirect) {
-            router.push(redirectUrl)
+            router.push(redirectUrl);
         }
     }, [redirect, redirectUrl, router]);
 

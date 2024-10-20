@@ -58,8 +58,6 @@ const Signup = () => {
     const email = tempEmail.toLowerCase();
 
 
-
-
     // sent email to server endpoint to check if email already exists within profiles table
     try {
       const res = await fetch(`${location.origin}/api/auth/email-exists`, {
@@ -84,8 +82,12 @@ const Signup = () => {
         changeMessage('error', serverEmail.error)
         return
       } else if (!serverEmail.exists && res.status === 404) {
+
         // store email temporarily in local storage
-        localStorage.setItem('email', email)
+        localStorage.setItem('email', email);
+
+        // only from this form and only after all client-side validation checks and form submission set cookie to true which is checked on server(middleware.js) to allow a user access to otp page 
+        document.cookie = "canAccessOtpPage=true; path=/; SameSite=Strict";
 
         const supabase = createClientComponentClient()
         const { error } = await supabase.auth.signInWithOtp({
@@ -93,9 +95,7 @@ const Signup = () => {
         })
 
         if (error) {
-          setIsLoading(false);
-          changeMessage('error', 'An unexpected error occurred. Please try again later or contact support if the issue persists.');
-          console.log(error.message)
+          throw new Error(error.message);
         } else {
           setIsLoading(false);
           router.push('/verify-signup-otp')
@@ -103,11 +103,12 @@ const Signup = () => {
       }
 
     } catch (error) {
-        setIsLoading(false)
+        setIsLoading(false);
+        // clear cookie if there's an error
+        document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
         changeMessage('error', 'An unexpected error occurred. Please try again later or contact support if the issue persists.');
-        console.log(error.message)
+        console.log('sign up error:', error.message)
     }
-
   }
 
 
