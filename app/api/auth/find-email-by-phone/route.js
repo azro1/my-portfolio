@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from "next/server"
-
+import { cookies } from 'next/headers'; 
 
 export async function POST(request) {
     const { phone } = await request.json()
@@ -36,10 +36,13 @@ export async function POST(request) {
                 status: 500
             })
         } 
-
-        return NextResponse.json({ exists, email }, {
-            status: 200
-        });
+        
+        if (!otpError) {
+            cookies().set('canAccessOtpPage', 'true', { path: '/' }); // Set cookie for OTP access
+            return NextResponse.json({ exists, email }, {
+                status: 200
+            });
+        }
     } else {
         return NextResponse.json({ exists }, { 
             status: 404

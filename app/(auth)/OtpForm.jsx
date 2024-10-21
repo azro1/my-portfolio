@@ -19,7 +19,6 @@ const OtpForm = ({ redirectUrl, subHeading, successMessage }) => {
 
     const router = useRouter()
 
-
     // global messages function
     const { changeMessage } = useMessage()
 
@@ -56,7 +55,7 @@ const OtpForm = ({ redirectUrl, subHeading, successMessage }) => {
                 throw new Error("We couldn't verify your code. Please request a new verification code and try again.");
             } else if (session) {
                 setIsLoading(false);
-                // clear cookie after successful verification
+                // clear cookie from server after successful verification
                 document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
                 changeMessage('success', successMessage);
                 setRedirect(true);
@@ -64,7 +63,7 @@ const OtpForm = ({ redirectUrl, subHeading, successMessage }) => {
 
         } catch (error) {
             setIsLoading(false);
-            // clear cookie to revoke access to this form from server and user will be redirected to login page as long as we use refresh below to make new request to server
+            // clear cookie from server if there's an error
             document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
             router.refresh();
             changeMessage('error', error.message);

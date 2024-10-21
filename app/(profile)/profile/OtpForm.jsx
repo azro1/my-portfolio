@@ -55,8 +55,8 @@ const OtpForm = ({ contact, storageStr, verificationType, title, subHeading, suc
         
         if (!contactMethod) {
             handleError("We couldn't verify your code. Please request a new verification code and try again.");
-            // set cookie to false to revoke access to this form from server and user will be redirected to login page
-            document.cookie = "canAccessOtpPage=false; path=/";
+            // clear cookie from server if there's no contact method in local storage
+            document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
             router.refresh();
         }
          
@@ -69,8 +69,8 @@ const OtpForm = ({ contact, storageStr, verificationType, title, subHeading, suc
 
         if (error) {
             handleError("We couldn't verify your code. Please request a new verification code and try again.");
-            // set cookie to false to revoke access to this form from server and user will be redirected to login page
-            document.cookie = "canAccessOtpPage=false; path=/";
+            // clear cookie from server if code is invalid or expired
+            document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
             router.refresh();
             console.log(error.message)
             return

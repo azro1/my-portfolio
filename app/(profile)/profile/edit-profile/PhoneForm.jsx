@@ -49,7 +49,7 @@ const PhoneForm = ({ user, profile }) => {
     }
 
 
-    // update last name
+    // update phone
     const handlePhoneUpdate = async () => {
         
         if (!draftPhone) {
@@ -73,33 +73,75 @@ const PhoneForm = ({ user, profile }) => {
             const convertedPhoneNumber = convertToInternationalFormat(draftPhone);
             // store phone temporarily in local storage
             localStorage.setItem('phone', convertedPhoneNumber);
-
-            // set cookie to true which is checked on server to allow a user access to otp page only from this form
-            document.cookie = "canAccessOtpPage=true; path=/; SameSite=Strict";
     
+
+
             try {
-                const supabase = createClientComponentClient()
-                const { data, error } = await supabase.auth.updateUser({
-                    phone: convertedPhoneNumber,
-                    updated_at: new Date().toISOString()
+                const res = await fetch(`${location.origin}/api/auth/phone-update`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                            phone: convertedPhoneNumber
+                        })
                 })
-        
-                if (error) {
-                    console.log('phone form error:', error.message)
-                    throw new Error('An unexpected error occurred while updating your phone number. Please try again later. If the issue persists, contact support.')
-                }
-        
-                if (data) {
-                    setPhone(convertedPhoneNumber)
+
+                const serverPhone = await res.json();
+
+                if (!res.ok && serverPhone.error) {
+                    throw new Error(error.message)
+                } else if (res.status === 200 && !serverPhone.error) {
                     router.push('/profile/verify-phone-otp')
-                }  
+                }
+
             } catch (error) {
                 setIsUpdating(false)
-                // clear cookie if there's an error
+                // clear cookie if there's an error that comes back from server
                 document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-                setPhone(phone)
-                setFormError(error.message)
+                setFormError('An unexpected error occurred while updating your email. Please try again later. If the issue persists, contact support.')
+                console.log(error.message)
             }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // try {
+            //     const supabase = createClientComponentClient()
+            //     const { data, error } = await supabase.auth.updateUser({
+            //         phone: convertedPhoneNumber,
+            //         updated_at: new Date().toISOString()
+            //     })
+        
+            //     if (error) {
+            //         console.log('phone form error:', error.message)
+            //         throw new Error('An unexpected error occurred while updating your phone number. Please try again later. If the issue persists, contact support.')
+            //     }
+        
+            //     if (data) {
+            //         setPhone(convertedPhoneNumber)
+            //         router.push('/profile/verify-phone-otp')
+            //     }  
+            // } catch (error) {
+            //     setIsUpdating(false)
+            //     // clear cookie if there's an error
+            //     document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+            //     setPhone(phone)
+            //     setFormError(error.message)
+            // }
 
         }
     }

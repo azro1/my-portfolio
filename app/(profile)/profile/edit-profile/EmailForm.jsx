@@ -62,29 +62,31 @@ const EmailForm = ({ user, profile }) => {
                 // store email temporarily in local storage
                 localStorage.setItem('email', emailToLowercase);
 
-                // set cookie to true which is checked on server to allow a user access to otp page only from this form
-                document.cookie = "canAccessOtpPage=true; path=/; SameSite=Strict";
-
-
-                const { data, error } = await supabase.auth.updateUser({
-                    email: emailToLowercase,
-                    updated_at: new Date().toISOString()
+                const res = await fetch(`${location.origin}/api/auth/email-update`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                            email: emailToLowercase
+                        })
                 })
 
-                if (error) {
-                    console.log('email form error:', error.message)
-                    throw new Error('An unexpected error occurred while updating your email. Please try again later. If the issue persists, contact support.')
-                }
+                const serverEmail = await res.json();
 
-                if (data) {
+                if (!res.ok && serverEmail.error) {
+                    throw new Error(error.message)
+                } else if (res.status === 200 && !serverEmail.error) {
                     router.push('/profile/verify-email-otp')
                 }
-
+                
+              
             } catch (error) {
                 setIsUpdating(false)
-                // clear cookie if there's an error
+                // clear cookie if there's an error that comes back from server
                 document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-                setFormError(error.message)
+                setFormError('An unexpected error occurred while updating your email. Please try again later. If the issue persists, contact support.')
+                console.log(error.message)
             }
         }
     }

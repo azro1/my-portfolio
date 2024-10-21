@@ -66,7 +66,9 @@ const Signup = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          email
+          email,
+          type: 'signup'
+
         })
       })
 
@@ -81,13 +83,10 @@ const Signup = () => {
         setIsLoading(false)
         changeMessage('error', serverEmail.error)
         return
-      } else if (!serverEmail.exists && res.status === 404) {
+      } else if (!serverEmail.exists && res.status === 200) {
 
         // store email temporarily in local storage
         localStorage.setItem('email', email);
-
-        // only from this form and only after all client-side validation checks and form submission set cookie to true which is checked on server(middleware.js) to allow a user access to otp page 
-        document.cookie = "canAccessOtpPage=true; path=/; SameSite=Strict";
 
         const supabase = createClientComponentClient()
         const { error } = await supabase.auth.signInWithOtp({
@@ -104,7 +103,7 @@ const Signup = () => {
 
     } catch (error) {
         setIsLoading(false);
-        // clear cookie if there's an error
+        // clear cookie from server if there's an error
         document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
         changeMessage('error', 'An unexpected error occurred. Please try again later or contact support if the issue persists.');
         console.log('sign up error:', error.message)

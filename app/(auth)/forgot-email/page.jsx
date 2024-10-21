@@ -10,7 +10,6 @@ import { useMessage } from "@/app/hooks/useMessage";
 const ForgotEmail = () => {
     const [phone, setPhone] = useState('')
     const [isLoading, setIsLoading] = useState(false)
-    const [successMsg, setSuccessMsg] = useState(null)
     const [redirect, setRedirect] = useState(false)
 
     const router = useRouter()
@@ -76,9 +75,6 @@ const ForgotEmail = () => {
 
                 // store email temporarily in local storage
                 localStorage.setItem('email', serverEmail.email)
-
-                // only from this form and only after all client and server checks and form submission set cookie to true which is checked on server(middleware.js) to allow a user access to otp page 
-                document.cookie = "canAccessOtpPage=true; path=/; SameSite=Strict";
                 setRedirect(true)
             }
 

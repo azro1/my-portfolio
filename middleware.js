@@ -8,7 +8,7 @@ export async function middleware(req) {
   const supabase = createMiddlewareClient({ req, res })
   
   // Refresh session if expired - required for Server Components
-  const { data: { user} } = await supabase.auth.getUser()
+  const { data: { user }} = await supabase.auth.getUser()
   
 
   const otpRoutes = [
@@ -27,7 +27,6 @@ export async function middleware(req) {
   
   const canAccessOtpPage = req.cookies.get("canAccessOtpPage");
   const canAccessOtpPageValue = canAccessOtpPage ? canAccessOtpPage.value === 'true' : false;
-  console.log('server middleware:', canAccessOtpPageValue)
   
      // for unauthenticated users who access any otp route that do not have permission
      if (!user && (isOtpRoute && !canAccessOtpPageValue)) {
@@ -35,13 +34,13 @@ export async function middleware(req) {
       redirectUrl.pathname = '/login';
       return NextResponse.redirect(redirectUrl);
     }
-     // for authenticated users who access any otp route that do not have permission
+    //  // for authenticated users who access any otp route that do not have permission
      if (user && (isOtpRoute && !canAccessOtpPageValue)) {
         const redirectUrl = req.nextUrl.clone();
         redirectUrl.pathname = '/';
         return NextResponse.redirect(redirectUrl);
      } 
-     // for authenticated users who access any profile otp route that do not have permission
+    //  // for authenticated users who access any profile otp route that do not have permission
       if (user && (isProfileOtpRoute && !canAccessOtpPageValue)) {
         const redirectUrl = req.nextUrl.clone();
         redirectUrl.pathname = '/profile/edit-profile'; 
