@@ -3,7 +3,7 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation";
 
 // custom hook to display global messages
@@ -20,9 +20,14 @@ const Signup = () => {
   const [isChecked, setIsChecked] = useState(false)
   const router = useRouter()
 
-
   // global messages function
   const { changeMessage } = useMessage()
+
+  useEffect(() => {
+    router.refresh();
+    // clear cookie from server if user navigates back to this page so they have to enter email again to get new otp
+    document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+  }, [router]);
 
   // check if a given string is a valid email address
   const isValidEmail = (value) => {
@@ -33,7 +38,6 @@ const Signup = () => {
   const handleCheckbox = (e) => {
     setIsChecked(e.target.checked)
   }
-
 
 
 

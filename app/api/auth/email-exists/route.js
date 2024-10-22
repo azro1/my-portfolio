@@ -4,7 +4,6 @@ import { cookies } from 'next/headers';
 
 export async function POST(request) {
   const { email, type } = await request.json()
-  console.log('server:', email, type)
 
   // Initialize Supabase client with Service Role Key
   const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);

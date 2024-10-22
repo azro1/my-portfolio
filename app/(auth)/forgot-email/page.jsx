@@ -17,7 +17,11 @@ const ForgotEmail = () => {
     // global messages function
     const { changeMessage } = useMessage()
 
-
+    useEffect(() => {
+        router.refresh();
+        // clear cookie from server if user navigates back to this page so they have to enter phone again to get new otp
+        document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+    }, [router]);
 
     // function to convert uk mobile numbers into E.164 format
     const convertToInternationalFormat = (phoneNumber) => {

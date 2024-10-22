@@ -1,7 +1,7 @@
 "use client"
 
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -18,6 +18,13 @@ const Login = () => {
 
   // global messages function
   const { changeMessage } = useMessage()
+
+
+  useEffect(() => {
+    router.refresh();
+    // clear cookie from server if user navigates back to this page so they have to enter email again to get new otp
+    document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+  }, [router]);
   
 
   // check if a given string is a valid email address

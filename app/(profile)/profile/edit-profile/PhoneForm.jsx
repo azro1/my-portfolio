@@ -20,6 +20,12 @@ const PhoneForm = ({ user, profile }) => {
     const router = useRouter();
 
 
+    useEffect(() => {
+        router.refresh();
+        // clear cookie from server if user navigates back to this page so they have to enter phone again to get new otp
+        document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+      }, [router]);
+
 
     // populate form fields from profiles table
     useEffect(() => {
@@ -102,46 +108,6 @@ const PhoneForm = ({ user, profile }) => {
                 setFormError('An unexpected error occurred while updating your email. Please try again later. If the issue persists, contact support.')
                 console.log(error.message)
             }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            // try {
-            //     const supabase = createClientComponentClient()
-            //     const { data, error } = await supabase.auth.updateUser({
-            //         phone: convertedPhoneNumber,
-            //         updated_at: new Date().toISOString()
-            //     })
-        
-            //     if (error) {
-            //         console.log('phone form error:', error.message)
-            //         throw new Error('An unexpected error occurred while updating your phone number. Please try again later. If the issue persists, contact support.')
-            //     }
-        
-            //     if (data) {
-            //         setPhone(convertedPhoneNumber)
-            //         router.push('/profile/verify-phone-otp')
-            //     }  
-            // } catch (error) {
-            //     setIsUpdating(false)
-            //     // clear cookie if there's an error
-            //     document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-            //     setPhone(phone)
-            //     setFormError(error.message)
-            // }
 
         }
     }

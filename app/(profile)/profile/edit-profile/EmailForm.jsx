@@ -1,6 +1,5 @@
 "use client"
 
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 
@@ -16,9 +15,15 @@ const EmailForm = ({ user, profile }) => {
     const [isUpdating, setIsUpdating] = useState(false)
     const [showForm, setShowForm] = useState(false)
 
-    const router = useRouter()
-    const supabase = createClientComponentClient()
+    const router = useRouter();
+
     
+    useEffect(() => {
+        router.refresh();
+        // clear cookie from server if user navigates back to this page so they have to enter email again to get new otp
+        document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+      }, [router]);
+
 
     // populate form fields from profiles table
     useEffect(() => {
@@ -26,7 +31,7 @@ const EmailForm = ({ user, profile }) => {
             setEmail(profile.email || '')
             setDraftEmail(profile.email || '')
         }
-    }, [user, profile])
+    }, [user, profile]);
 
 
     const handleEmailUpdate = async () => {
