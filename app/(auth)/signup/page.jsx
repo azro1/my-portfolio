@@ -78,16 +78,22 @@ const Signup = () => {
 
       // await json response from server and store in const serverEmail
       const serverEmail = await res.json()
+      const { accountStatus } = serverEmail;
 
-      if (res.status === 409) {
-        setIsLoading(false)
-        changeMessage('error', 'It looks like this email is already linked to an account. Please log in instead.')
-        return
+      if (serverEmail === undefined || serverEmail === null) {
+         throw new Error('server email does not exist.');
+         
       } else if (serverEmail.error) {
         setIsLoading(false)
         changeMessage('error', serverEmail.error)
         return
-      } else if (!serverEmail.exists && res.status === 200) {
+
+      } else if (serverEmail.exists && res.status === 409 && accountStatus.is_verified) {
+        setIsLoading(false)
+        changeMessage('error', 'It looks like this email is already linked to an account. Please log in instead.')
+        return
+
+      } else if ((!serverEmail.exists && res.status === 200) || (serverEmail.exists && res.status === 200 && !accountStatus.is_verified)) {
 
         // store email temporarily in local storage
         localStorage.setItem('email', email);
@@ -104,7 +110,7 @@ const Signup = () => {
           router.push('/verify-signup-otp')
         }
       }
-
+      
     } catch (error) {
         setIsLoading(false);
         // clear cookie from server if there's an error

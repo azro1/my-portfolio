@@ -7,7 +7,8 @@ import { useRouter } from "next/navigation";
 // react icons
 import { FiEye, FiEyeOff } from 'react-icons/fi'
 
-// custom hook to display global messages
+// custom hooks
+import { useUpdateTable } from "../hooks/useUpdateTable";
 import { useMessage } from "../hooks/useMessage";
 
 
@@ -19,9 +20,9 @@ const OtpForm = ({ redirectUrl, subHeading, successMessage }) => {
 
     const router = useRouter()
 
-    // global messages function
+    // destructure custom hooks
+    const { updateTable } = useUpdateTable()
     const { changeMessage } = useMessage()
-
 
     // verify otp
     const handleVerifyOtp = async (e) => {
@@ -54,7 +55,15 @@ const OtpForm = ({ redirectUrl, subHeading, successMessage }) => {
                 console.log('auth otp error:', error.message);
                 throw new Error("We couldn't verify your code. Please request a new verification code and try again.");
             } else if (session) {
+               // after otp verification is successful it's at this point we have access to user object
                 setIsLoading(false);
+
+                // update is_verified column in profiles table
+                const is_verifiedResult = await updateTable(session.user, 'profiles', { is_verified: true }, 'id');
+                if (!is_verifiedResult.success) {
+                    console.log('auth otp page: could not update otp verification status')
+                }
+
                 // clear cookie from server after successful verification
                 document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
                 changeMessage('success', successMessage);

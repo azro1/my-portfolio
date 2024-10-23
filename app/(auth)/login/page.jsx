@@ -65,18 +65,22 @@ const Login = () => {
      
       // await json response from server and store in const serverEmail
       const serverEmail = await res.json()
+      const { accountStatus } = serverEmail;
 
-      if (res.status === 404) {
-        setIsLoading(false)
-        changeMessage('error', "We couldn't find an account with that email. Please sign up or check your email for typos.")
-        return
-
+      if (serverEmail === undefined || serverEmail === null) {
+         throw new Error('server email does not exist.');
+         
       } else if (serverEmail.error) {
         setIsLoading(false)
         changeMessage('error', serverEmail.error)
         return
 
-      } else if (serverEmail.exists && res.status === 200) {
+      } else if ((!serverEmail.exists && res.status === 404) || (serverEmail.exists && res.status === 401 && !accountStatus.is_verified)) {
+        setIsLoading(false)
+        changeMessage('error', "We couldn't find an account with that email. Please sign up or check your email for typos.")
+        return
+
+      } else if ((serverEmail.exists && res.status === 200 && accountStatus.is_verified)) {
         
         // store email temporarily in local storage
         localStorage.setItem('email', email);
