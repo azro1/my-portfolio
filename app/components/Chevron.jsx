@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import {
   FaChevronDown,
   FaChevronUp
@@ -12,7 +12,25 @@ import Dropdown from './navbar/Dropdown'
 
 const Chevron = ({ order, user }) => {
   const [isOpen, setIsOpen] = useState(false)
+  const dropDownRef = useRef()
 
+
+  
+  // close menus if user clicks on page
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (event.target !== dropDownRef.current && isOpen) {
+        setIsOpen(false)
+      }
+    }
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [isOpen, dropDownRef])
+
+
+  
   const handleToggleMenu = () => {
     setIsOpen(!isOpen)
   }
@@ -21,9 +39,10 @@ const Chevron = ({ order, user }) => {
     setIsOpen(false)
   }
 
+
   return (
      <>
-       <button onClick={handleToggleMenu} className={`${order} p-1.5 text-base text-stoneGray bg-nightSky border-deepCharcoal rounded-md border-4 shadow-outer`}>
+       <button onClick={handleToggleMenu} className={`${order} p-1.5 text-base text-stoneGray bg-nightSky border-deepCharcoal rounded-md border-4 shadow-outer`} ref={dropDownRef}>
          {isOpen ? (
            <FaChevronUp size={22} />
          ) : (

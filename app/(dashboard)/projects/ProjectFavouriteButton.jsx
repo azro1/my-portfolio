@@ -11,7 +11,6 @@ const ProjectFavouriteButton = ({ className, projectId, user }) => {
   const [isFavourite, setIsFavourite] = useState(false);
   const [favouriteProjects, setFavouriteProjects] = useState([])
   const [message, setMessage] = useState('');
-  const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const supabase = createClientComponentClient()

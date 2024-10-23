@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 // custom hooks
 import { useFetchUser } from '@/app/hooks/useFetchUser';
 import { useFetchProfile } from '@/app/hooks/useFetchProfile';
+import { useMessage } from '@/app/hooks/useMessage';
 
 
 const ProfileHeader = ({ title, subheading, showAvatar }) => {
@@ -20,24 +21,25 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
    // custom hooks
    const { user, isLoading } = useFetchUser(true)
    const { profile, fetchProfile } = useFetchProfile()
+   const { changeMessage } = useMessage();
 
    const supabase = createClientComponentClient()
 
 
-
-
-
    useEffect(() => {
-     if (user) {
-       fetchProfile(user)
-     }
+      const fetchProfileResult = async () => {
+         if (user) {
+            const profileResult = await fetchProfile(user);
+            if (!profileResult) {
+               changeMessage('error', "Sorry, we couldn't load some of your profile information at this time. Please check your internet connection or refresh the page. If the issuse persist, contact support.");
+               return
+            }
+         }
+      }
+      fetchProfileResult()
    }, [user])
 
    
-
-
-
-
    useEffect(() => {
       if (profile) {
          setIsProfileLoading(false)
@@ -46,9 +48,6 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
          setBio(profile.bio)
       }
    }, [profile])
-
-
-
 
 
 
@@ -68,10 +67,6 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
   
       return () => supabase.removeChannel(channel)
     }, [supabase])
-
-
-
-
 
 
 

@@ -5,6 +5,8 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useState, useEffect } from "react";
 import ProfileAvatar from "@/app/(profile)/profile/ProfileAvatar";
 import { FaUserCircle } from "react-icons/fa";
+import { useRouter } from 'next/navigation';
+
 
 
 const Avatar = ({ user }) => {
@@ -12,6 +14,7 @@ const Avatar = ({ user }) => {
     const [avatar_url, setAvatarUrl] = useState('');
     const [isProfileLoading, setIsProfileLoading] = useState(true);
 
+    const router = useRouter();
     const supabase = createClientComponentClient();
     
     // Subscription to realtime changes on profiles table
@@ -62,9 +65,10 @@ const Avatar = ({ user }) => {
         }
 
         if (user && user.id) {
+            router.refresh();
             getProfile();
         }
-    }, [avatar_url, first_name, user && user.id]);
+    }, [avatar_url, first_name, user && user.id, router]);
  
     return (
         <>

@@ -1,18 +1,31 @@
 "use client"
 
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+
+// custom hook to display global messages
+import { useMessage } from "@/app/hooks/useMessage";
 
 // components
 import SocialButtons from "../SocialButtons";
 
 const Login = () => {
-  const [email, setEmail] = useState('')
+  const [tempEmail, setTempEmail] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState('')
   const router = useRouter()
+
+  // global messages function
+  const { changeMessage } = useMessage()
+
+
+  useEffect(() => {
+    router.refresh();
+    // clear cookie from server if user navigates back to this page so they have to enter email again to get new otp
+    document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+  }, [router]);
+  
 
   // check if a given string is a valid email address
   const isValidEmail = (value) => {
@@ -23,20 +36,17 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    if (!email) {
-      setError('Please provide your email');
-      setTimeout(() => setError(null), 2000)
+    if (!tempEmail.trim()) {
+      changeMessage('error', 'Please enter your email address to continue.');
       return
-
-    } else if (!isValidEmail(email)) {
-      setError('Invalid format. Please try again.');
-      setTimeout(() => setError(null), 2000)
-      setIsLoading(false)
+    } else if (!isValidEmail(tempEmail)) {
+      changeMessage('error', "Hmm, that doesn't look like a valid email. Double-check and try again.");
       return
     }
 
     setIsLoading(true)
-
+    // convert email to lowercase
+    const email = tempEmail.toLowerCase();
 
 
 
@@ -48,26 +58,32 @@ const Login = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          email
+          email,
+          type: 'login'
         })
       })
      
-      // await json response from server and store in const userEmail
-      const userEmail = await res.json()
+      // await json response from server and store in const serverEmail
+      const serverEmail = await res.json()
+      const { accountStatus } = serverEmail;
 
-      if (res.status === 404) {
+      if (serverEmail === undefined || serverEmail === null) {
+         throw new Error('server email does not exist.');
+         
+      } else if (serverEmail.error) {
         setIsLoading(false)
-        setError('There is no account associated with that email. Please signup.')
+        changeMessage('error', serverEmail.error)
         return
 
-      } else if (userEmail.error) {
+      } else if ((!serverEmail.exists && res.status === 404) || (serverEmail.exists && res.status === 401 && !accountStatus.is_verified)) {
         setIsLoading(false)
-        setError(userEmail.error)
+        changeMessage('error', "We couldn't find an account with that email. Please sign up or check your email for typos.")
         return
 
-      } else if (userEmail.exists && res.status === 409) {
+      } else if ((serverEmail.exists && res.status === 200 && accountStatus.is_verified)) {
+        
         // store email temporarily in local storage
-        localStorage.setItem('email', email)
+        localStorage.setItem('email', email);
 
         const supabase = createClientComponentClient()
         const { error } = await supabase.auth.signInWithOtp({
@@ -75,20 +91,21 @@ const Login = () => {
         })
 
         if (error) {
-          setIsLoading(false);
-          setError(error.message)
-          setTimeout(() => setError(null), 2000)
+          throw new Error(error.message)
         }
 
         if (!error) {
+          setIsLoading(false);
           router.push('/verify-login-otp')
         }
       }
 
     } catch (error) {
-      setIsLoading(false)
-      console.log(error)
-      setError('An unexpected error occurred. Please try again.');
+        setIsLoading(false);
+        // clear cookie from server if there's an error
+        document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+        changeMessage('error', 'Oops! Something went wrong on our end. Please try again in a moment or contact support if the issue persists.');
+        console.log('login error:', error.message)
     }
 
   }
@@ -96,13 +113,7 @@ const Login = () => {
   return (
     <div className='flex flex-col items-center md:justify-evenly md:flex-row md:h-auth-page-height'>
 
-
-      <div className="flex w-full max-w-xs relative h-72 md:h-80">
-        <div className="absolute -top-16 md:-top-10 w-full text-center">
-          {error && <div className="error">{error}</div>}
-        </div>
-
-        <form className="h-fit self-end" onSubmit={handleSubmit}>
+        <form className="w-full max-w-xs" onSubmit={handleSubmit}>
           <h2 className='text-3xl mb-6 font-eb text-saddleBrown'>Login</h2>
           <p className='mb-4'>Enter your email address to recieve a security code for quick and secure login</p>
 
@@ -111,25 +122,31 @@ const Login = () => {
               Email
             </span>
             <input
-              className={`w-full p-2.5 rounded-md bg-deepCharcoal text-stoneGray border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-saddleBrown focus:ring-1 focus:ring-saddleBrown`}
+              className='w-full py-2.5 px-3 rounded-md text-black'
               type='text'
-              placeholder='name@domain.com'
-              spellCheck='false'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              placeholder='Enter your email'
+              spellCheck={false}
+              value={tempEmail}
+              onChange={(e) => setTempEmail(e.target.value)}
             />
           </label>
 
           <div className="flex">
-            <button className='mt-4 btn bg-saddleBrown' disabled={isLoading}>{isLoading ? 'Logging in...' : 'Login'}</button>
+            <button className='mt-4 btn bg-saddleBrown' disabled={isLoading}>
+              {isLoading ? (
+                <div className='flex items-center gap-2'>
+                  <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />
+                  <span>Login</span>
+                </div>
+              ) : (
+                'Login'
+              )}
+            </button>
             <Link className='ml-auto mt-2' href={'/forgot-email'}>
               <span className='text-saddleBrown text-base'>Forgot email?</span>
             </Link>
           </div>
         </form>
-      </div>
-
-
 
       <div className='flex flex-col items-center mb-4.5 md:col-start-2 md:mb-0'>
         <p className='mb-8'>or Login using</p>

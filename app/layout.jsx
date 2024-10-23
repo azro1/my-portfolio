@@ -1,5 +1,8 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
+// global messages
+import { MessageProvider } from './context/MessageContext'
+import MessageBanner from './components/MessageBanner'
 
 // tell next to render dynamic and not static pages at build time
 export const dynamic = 'force-dynamic'
@@ -20,7 +23,10 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <div className="main-container max-w-screen-lg mx-auto">
-          {children}
+          <MessageProvider>
+            <MessageBanner />
+            {children}
+          </MessageProvider>
         </div>
         <Footer />
       </body>

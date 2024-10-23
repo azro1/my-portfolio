@@ -1,6 +1,5 @@
 "use client"
 
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 
@@ -9,17 +8,21 @@ import { useRouter } from "next/navigation"
 import Modal from './Modal'
 
 
-const EmailForm = ({ user, profile, profileError }) => {
+const EmailForm = ({ user, profile }) => {
     const [email, setEmail] = useState('')
     const [draftEmail, setDraftEmail] = useState('');
     const [formError, setFormError] = useState(null)
-    const [isSending, setIsSending] = useState(false)
+    const [isUpdating, setIsUpdating] = useState(false)
     const [showForm, setShowForm] = useState(false)
 
+    const router = useRouter();
 
-    const router = useRouter()
-    const supabase = createClientComponentClient()
-
+    
+    useEffect(() => {
+        router.refresh();
+        // clear cookie from server if user navigates back to this page so they have to enter email again to get new otp
+        document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+      }, [router]);
 
 
     // populate form fields from profiles table
@@ -28,12 +31,12 @@ const EmailForm = ({ user, profile, profileError }) => {
             setEmail(profile.email || '')
             setDraftEmail(profile.email || '')
         }
-    }, [user, profile])
-
+    }, [user, profile]);
 
 
     const handleEmailUpdate = async () => {
         setFormError(null)
+        setIsUpdating(true)
 
         // check if a given string is a valid email address
         const isValidEmail = (value) => {
@@ -41,67 +44,55 @@ const EmailForm = ({ user, profile, profileError }) => {
             return emailRegex.test(value);
         }
 
-        if (!isValidEmail(draftEmail)) {
-            setFormError('Please enter a valid email address')
-            setTimeout(() => setFormError(''), 2000)
+        if (!draftEmail) {
+            setIsUpdating(false)
+            setFormError('Please enter your new email address.')
+            setTimeout(() => setFormError(null), 2000)
+            return
+        } else if (!isValidEmail(draftEmail)) {
+            setIsUpdating(false)
+            setFormError('Please enter a valid email address.')
+            setTimeout(() => setFormError(null), 2000)
             return;
-        } else if (profile.email === draftEmail.trim()) {
-            setFormError('Please change your email address')
-            setTimeout(() => setFormError(''), 2000)
+        } else if (email === draftEmail.trim()) {
+            setIsUpdating(false)
+            setFormError('Please update your email before saving.')
+            setTimeout(() => setFormError(null), 2000)
             return;
         } else {
 
+            try {
+                const emailToLowercase = draftEmail.trim().toLowerCase();
 
-
-
-        // sent email to server endpoint to check if email already exists within profiles table
-        try {
-            setIsSending(true)
-            const res = await fetch(`${location.origin}/api/auth/email-exists`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    email: draftEmail
-                })
-            })
-    
-            // await json response from server and store in const userEmail
-            const userEmail = await res.json()    
-    
-            if (res.status === 409) {
-                setIsSending(false)
-                setFormError('This email is already associated with an account')
-                return
-    
-            } else if (userEmail.error) {
-                setIsSending(false)
-                setFormError(userEmail.error)
-                return
-    
-            } else if (!userEmail.exists && res.status === 404) {
-                
                 // store email temporarily in local storage
-                localStorage.setItem('email', draftEmail)
+                localStorage.setItem('email', emailToLowercase);
 
-                const { data, error } = await supabase.auth.updateUser({
-                    email: draftEmail,
+                const res = await fetch(`${location.origin}/api/auth/email-update`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                            email: emailToLowercase
+                        })
                 })
-                
-                if (error) {
-                    throw new Error(error.message)
-                }
 
-                if (data) {
+                const serverEmail = await res.json();
+
+                if (!res.ok && serverEmail.error) {
+                    throw new Error(error.message)
+                } else if (res.status === 200 && !serverEmail.error) {
                     router.push('/profile/verify-email-otp')
                 }
+                
+              
+            } catch (error) {
+                setIsUpdating(false)
+                // clear cookie if there's an error that comes back from server
+                document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+                setFormError('An unexpected error occurred while updating your email. Please try again later. If the issue persists, contact support.')
+                console.log(error.message)
             }
-
-        } catch(error) {
-            console.log(error.message)
-        }
-
         }
     }
 
@@ -114,6 +105,7 @@ const EmailForm = ({ user, profile, profileError }) => {
 
     // handleCloseForm function
     const handleCloseForm = () => {
+        setFormError(null)
         setShowForm(false)
         setDraftEmail(email)
     }
@@ -143,31 +135,37 @@ const EmailForm = ({ user, profile, profileError }) => {
                 <Modal>
                     <form >
                         <label>
-                            <span className='block mb-2 text-xl'>
-                                Edit Email
+                            <span className='block mb-3 text-xl'>
+                                Edit Email Address
                             </span>
+                            <p className='mb-3'>Please provide your new email address, ensuring it follows a valid format (e.g., example@domain.com). This email will be used for account verification and notifications.</p>
                             <input
                                 className='w-full p-2.5 rounded-md border-2'
                                 type='email'
                                 value={draftEmail || ''}
                                 placeholder='Email'
                                 maxLength={40}
-                                spellCheck='false'
-                                autoFocus='true'
+                                spellCheck={false}
+                                autoFocus={true}
                                 onChange={(e) => setDraftEmail(e.target.value)}
                                 onKeyDown={handleKeyDown}
                             />
                         </label>
                     </form>
-                    <button className='btn bg-saddleBrown mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                    <button className={`btn bg-saddleBrown mt-3`} onClick={handleEmailUpdate}>
-                        {isSending ? 'Updating...' : 'Submit'}
-                    </button>
-                    {(profileError || formError) && (
-                        <div className="absolute">
-                            <p className='modal-form-error'>* {profileError || formError}</p>
-                        </div>
-                    )}
+                    <div className='flex items-center'>
+                        <button className='btn-small bg-saddleBrown mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
+                        <button className={`btn-small bg-saddleBrown mt-3`} onClick={handleEmailUpdate}>
+                            {isUpdating ? (
+                                <div className='flex items-center gap-2'>
+                                    <img className="w-5 h-5 opacity-50" src="../../images/loading/spinner.svg" alt="Loading indicator" />
+                                    <span>Save</span>
+                                </div>
+                            ) : (
+                                'Save'
+                            )}
+                        </button>
+                    </div>
+                    {formError && <p className='modal-form-error'>{formError}</p>}
                 </Modal>
             )}
 

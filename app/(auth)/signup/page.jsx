@@ -3,9 +3,11 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation";
 
+// custom hook to display global messages
+import { useMessage } from "@/app/hooks/useMessage";
 
 // components
 import SocialButtons from "../SocialButtons";
@@ -13,13 +15,19 @@ import SocialButtons from "../SocialButtons";
 
 const Signup = () => {
 
-  const [email, setEmail] = useState('')
+  const [tempEmail, setTempEmail] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [isChecked, setIsChecked] = useState(false)
-  const [error, setError] = useState(null)
-  const [checkBoxError, setCheckBoxError] = useState(null)
   const router = useRouter()
 
+  // global messages function
+  const { changeMessage } = useMessage()
+
+  useEffect(() => {
+    router.refresh();
+    // clear cookie from server if user navigates back to this page so they have to enter email again to get new otp
+    document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+  }, [router]);
 
   // check if a given string is a valid email address
   const isValidEmail = (value) => {
@@ -34,37 +42,24 @@ const Signup = () => {
 
 
 
-
-
-
-
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setError(null)
     
     // form validation
-    if (!email) {
-      setError('Please provide your email');
-      setTimeout(() => setError(null), 2000);
-      setIsLoading(false);
+    if (!tempEmail.trim()) {
+      changeMessage('error', 'Please enter your email address to proceed.');
       return;
-    } else if (!isValidEmail(email)) {
-      setError('Invalid format. Please try again.');
-      setTimeout(() => setError(null), 2000);
-      setIsLoading(false);
+    } else if (!isValidEmail(tempEmail)) {
+      changeMessage('error', "That doesn't look like a valid email. Please check and try again.");
       return;
     } else if (!isChecked) {
-      setCheckBoxError(
-        'Please confirm you have agreed to the privacy policy and terms of service.'
-      );
-      setTimeout(() => setCheckBoxError(null), 2000);
-      setIsLoading(false);
+      changeMessage('error', 'You need to agree to our privacy policy and terms of service before signing up.');
       return;
     }
 
     setIsLoading(true)
-
-
+    // convert email to lowercase
+    const email = tempEmail.toLowerCase();
 
 
     // sent email to server endpoint to check if email already exists within profiles table
@@ -75,26 +70,33 @@ const Signup = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          email
+          email,
+          type: 'signup'
+
         })
       })
 
-      // await json response from server and store in const userEmail
-      const userEmail = await res.json()
+      // await json response from server and store in const serverEmail
+      const serverEmail = await res.json()
+      const { accountStatus } = serverEmail;
 
-      if (res.status === 409) {
+      if (serverEmail === undefined || serverEmail === null) {
+         throw new Error('server email does not exist.');
+         
+      } else if (serverEmail.error) {
         setIsLoading(false)
-        setError('This email is already associated with an account. Please login.')
+        changeMessage('error', serverEmail.error)
         return
 
-      } else if (userEmail.error) {
+      } else if (serverEmail.exists && res.status === 409 && accountStatus.is_verified) {
         setIsLoading(false)
-        setError(userEmail.error)
+        changeMessage('error', 'It looks like this email is already linked to an account. Please log in instead.')
         return
 
-      } else if (!userEmail.exists && res.status === 404) {
+      } else if ((!serverEmail.exists && res.status === 200) || (serverEmail.exists && res.status === 200 && !accountStatus.is_verified)) {
+
         // store email temporarily in local storage
-        localStorage.setItem('email', email)
+        localStorage.setItem('email', email);
 
         const supabase = createClientComponentClient()
         const { error } = await supabase.auth.signInWithOtp({
@@ -102,23 +104,20 @@ const Signup = () => {
         })
 
         if (error) {
+          throw new Error(error.message);
+        } else {
           setIsLoading(false);
-          setError(error.message)
-          setTimeout(() => setError(null), 2000)
-        }
-
-        if (!error) {
           router.push('/verify-signup-otp')
         }
-
       }
-
+      
     } catch (error) {
-      setIsLoading(false)
-      console.log(error.message)
-      setError('An unexpected error occurred. Please try again.');
+        setIsLoading(false);
+        // clear cookie from server if there's an error
+        document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+        changeMessage('error', 'An unexpected error occurred. Please try again later or contact support if the issue persists.');
+        console.log('sign up error:', error.message)
     }
-
   }
 
 
@@ -128,14 +127,8 @@ const Signup = () => {
     return (
       <div className='flex flex-col items-center gap-6 mb-4.5 md:justify-evenly md:gap-0 md:flex-row md:h-auth-page-height'>
 
-        <div className="flex w-full max-w-xs h-72 md:h-96 relative">
           
-          <div className="absolute -top-16 md:-top-12 w-full text-center">
-            {error && <div className="error"> {error}</div>}
-            {checkBoxError && <p className="error leading-tight">{checkBoxError}</p>}
-          </div>
-
-          <form onSubmit={handleSubmit} className="h-fit self-end">
+          <form className="w-full max-w-xs" onSubmit={handleSubmit} >
             <h2 className='text-3xl mb-6 font-eb text-saddleBrown'>Sign up</h2>
             <p className='mb-4'>Enter your email address to recieve a security code to create your account</p>
             
@@ -144,12 +137,12 @@ const Signup = () => {
                 Email
               </span>
               <input
-                className={`w-full p-2.5 rounded-md text-stoneGray bg-deepCharcoal border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-saddleBrown focus:ring-1 focus:ring-saddleBrown`}
+                className='w-full py-2.5 px-3 rounded-md text-black'
                 type='text'
-                spellCheck='false'
-                placeholder='name@domain.com'
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                spellCheck={false}
+                placeholder='Enter your email'
+                value={tempEmail}
+                onChange={(e) => setTempEmail(e.target.value)}
               />
             </label>
 
@@ -159,13 +152,19 @@ const Signup = () => {
               .</span>
             </div>
 
-            <button className='btn block mt-4 bg-saddleBrown' disabled={isLoading}>{isLoading ? 'Processing...' : 'Signup'}</button>
+            <button className='btn block mt-4 bg-saddleBrown' disabled={isLoading}>
+              {isLoading ? (
+                <div className='flex items-center gap-2'>
+                  <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />
+                  <span>Please wait</span>
+                </div>
+              ) : (
+                'Signup'
+              )}
+            </button>
           </form>
-        </div>
 
   
-
-
         <div className='flex flex-col items-center md:grid-col-start-1 md:grid-row-start-2 md:col-span-2'>
           <p className='mb-8'>or Sign up using</p>
           <SocialButtons text={"Continue"} />

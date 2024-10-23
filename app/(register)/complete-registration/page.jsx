@@ -11,41 +11,76 @@ import { enGB } from 'date-fns/locale';
 registerLocale('en-GB', enGB)
 setDefaultLocale('en-GB'); 
 
-
-import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
-
-// components
-import AvatarUploader from "@/app/(profile)/profile/edit-profile/AvatarUploader";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { usePathname } from 'next/navigation';
+import { FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
 
 // hooks
 import { useFetchUser } from "@/app/hooks/useFetchUser";
 import { useUpdateTable } from "@/app/hooks/useUpdateTable";
 import { useUpdateMetadata } from "@/app/hooks/useUpdateMetadata";
+import { useMessage } from '@/app/hooks/useMessage';
 
+// components
+import AvatarUploader from "@/app/(profile)/profile/edit-profile/AvatarUploader";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { usePathname } from 'next/navigation';
 
 
 const CompleteRegistration = () => {
-    const [hasInteracted, setHasInteracted] = useState(false);
+    const [formIsSubmitted, setFormIsSubmitted] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [isButtonDisabled, setIsButtonDisabled] = useState(true)
-    
-    const [error, setError] = useState(null)
-    const [successMsg, setSuccessMsg] = useState(null);
+    const [isCheckingPhone, setIsCheckingPhone] = useState(false);
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+    const [updateStatus, setUpdateStatus] = useState(null);
+    const [redirect, setRedirect] = useState(false);
+    const router = useRouter();
+    const pathname = usePathname();
+
+    // State to track name length for each input
+    const [isFirstNameLongEnough, setIsFirstNameLongEnough] = useState(false);
+    const [isLastNameLongEnough, setIsLastNameLongEnough] = useState(false);
     
     // custom hooks
     const { user } = useFetchUser();
     const { updateTable } = useUpdateTable();
     const { updateMetadata } = useUpdateMetadata();
+    // global messages function
+    const { changeMessage } = useMessage()
 
-    const isValidPhoneNumber = (phoneNumber) => /^\+(\d{1,3})\d{10,14}$/.test(phoneNumber);
+    // regex validation functions
+    const startsWithCaps = (name) => /^[A-Z].*$/.test(name);
+    const allLowerCase = (name) => /^[A-Z][a-z]*$/.test(name);
+    const isValidPhoneNumber = (phoneNumber) => /^(0\d{10}|\+\d{1,3}\d{1,14})$/.test(phoneNumber);
 
-    const [redirect, setRedirect] = useState(false);
-    const router = useRouter();
-    const pathname = usePathname();
+    const supabase = createClientComponentClient()
+
+
+
+
+    // profile completion check to prevent users from returning to complete-registration route if they have updated their profile data
+    useEffect(() => {
+        const checkProfileCompletion = async () => {
+            if (user) {
+                const { data, error } = await supabase
+                .from('profiles')
+                .select()
+                .eq('id', user.id)
+                .single()
+
+                if (error) {
+                    console.error('Error fetching profile:', error)
+                    return
+                }
+                if (data.first_name && data.last_name && data.dob && data.phone) {
+                    router.replace('/')
+                }
+            }
+        }
+        checkProfileCompletion()
+    }, [user, router, supabase])
+
+
 
 
 
@@ -72,6 +107,8 @@ const CompleteRegistration = () => {
 
 
 
+
+
     // triggers a confirmation dialog when the user tries to leave the page 
     useEffect(() => {
         const beforeUnloadListener = (event) => {
@@ -85,8 +122,10 @@ const CompleteRegistration = () => {
     }, []);
     
 
-      
 
+
+
+      
     // State to hold form input values
     const [formData, setFormData] = useState({
         firstName: '',
@@ -97,111 +136,224 @@ const CompleteRegistration = () => {
 
     // State to track errors for each input field
     const [errors, setErrors] = useState({
-        firstName: false,
-        lastName: false,
-        dob: false,
-        phone: false
+        firstName: '',
+        lastName: '',
+        dob: '',
+        phone: ''
     })
+
+
 
 
 
     // function to handle input changes and update form data
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+        let processedValue;
 
-        if (name) {
-            let processedValue;
-    
-            // check if the value is a string before trimming
-            if (typeof value === 'string') {
-                processedValue = value.trim();
-            } else if (value instanceof Date) {
-                processedValue = value; // keep the Date object as is
-            } else {
-                processedValue = ''; // fallback for any other type (if necessary)
-            }
-    
-            setFormData((prev) => ({ ...prev, [name]: processedValue }));
-
-            // Check phone number length to enable/disable button
-            if (name === 'phone' && isValidPhoneNumber(processedValue)) {
-                setIsButtonDisabled(processedValue.length < 11);
-            } else {
-                setIsButtonDisabled(true)
-            }
+        // check if the value is a string before trimming
+        if (typeof value === 'string') {
+            processedValue = value.trim();
+        } else if (value instanceof Date) {
+           // keep the Date object as is
+            processedValue = value; 
+        } else {
+           // fallback for any other type (if necessary)
+            processedValue = ''; 
         }
-        setHasInteracted(true);
+
+        setFormData((prev) => ({ ...prev, [name]: processedValue }));
+
+        // Check name length dynamically
+        if (name === 'firstName') {
+            setIsFirstNameLongEnough(value.length >= 3);
+        } else if (name === 'lastName') {
+            setIsLastNameLongEnough(value.length >= 2);
+        }
     };
       
 
 
-    // useEffect to validate form inputs and set error messages
+
+
+    // useEffect to disable button if all form fields have values
     useEffect(() => {
         const { firstName, lastName, dob, phone } = formData;
 
-        if (hasInteracted && !firstName) {
-            setErrors((prev) => ({ ...prev, firstName: 'Please enter your firstname.' }))
-        } else {
-            setErrors((prev) => ({ ...prev, firstName: '' }))
-        }
-
-        if (hasInteracted && !lastName) {
-            setErrors((prev) => ({ ...prev, lastName: 'Please provide your Lastname.' }));
-        } else {
-            setErrors((prev) => ({ ...prev, lastName: '' }))
-        }
-
-        if (hasInteracted && !dob) {
-            setErrors((prev) => ({ ...prev, dob: 'Please provide your Date of Birth.' }));
-        } else {
-            setErrors((prev) => ({ ...prev, dob: '' }))
-        }
-
-        if (hasInteracted && !phone) {
-            setErrors((prev) => ({ ...prev, phone: 'Please provide your Phone Number.' }));
-        } else if (hasInteracted && !isValidPhoneNumber(phone)) {
-            setErrors((prev) => ({ ...prev, phone: 'Please use an international code eg: +44 (UK) or +1 (US).' }));
-        } else if (hasInteracted && phone.length < 10) {
-            setErrors((prev) => ({ ...prev, phone: 'International phone numbers should be at least 10 digits.' }))
-        } else {
-            setErrors((prev) => ({ ...prev, phone: '' }))
-        }
-
-        if (firstName && lastName && dob && phone && isValidPhoneNumber(phone)) {
+        if (firstName && lastName && dob && phone) {
             setIsButtonDisabled(false)
+        } else {
+            setIsButtonDisabled(true)
         }
-    }, [formData, hasInteracted])
+    }, [formData])
+
+
+
+
+
+
+
+    // function to convert uk mobile numbers into E.164 format
+    const convertToInternationalFormat = (phoneNumber) => {
+        // replace local prefix '0' with international code '+44' if it exists
+        if (phoneNumber.startsWith('0')) return phoneNumber.replace('0', '+44');
+    
+        // return as is if already in international format
+        return phoneNumber.startsWith('+') ? phoneNumber : phoneNumber;
+    };
+
+
+    
+
+
+
+    // function to check if phone number already exists
+    const isPhoneNumberUnique = async (phoneNumber) => {
+        setIsCheckingPhone(true);
+        const convertedPhoneNumber = convertToInternationalFormat(phoneNumber);
+
+        try {
+            const res = await fetch(`${location.origin}/api/auth/phone-exists`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 
+                    phone: convertedPhoneNumber
+                })
+            })
+            
+            // if theres a problem with the json on the server this will reject promise which we catch
+            const serverPhoneNumber = await res.json();
+
+            if (res.status === 409 && serverPhoneNumber.exists) {
+                return serverPhoneNumber.exists
+            }    
+            return serverPhoneNumber.exists
+
+        } catch (error) {
+            console.log(error.message)
+        } finally {
+            setIsCheckingPhone(false)
+        }
+    }
+    
+    
 
 
 
 
     // update raw_user_metadata and profiles table
-    const handleUpdateProfile = async () => {
-        const { firstName, lastName, dob, phone } = formData;
+    const handleUpdateProfile = async (e) => {
+        e.preventDefault()
+        setFormIsSubmitted(true)
 
-        if (user) {
-            const formattedDate = dob.toLocaleDateString()
+        const { firstName, lastName, dob, phone } = formData;
+        let formIsValid = true;
+
+        // firstname validation
+        if (!firstName) {
+            setErrors((prev) => ({ ...prev, firstName: 'Please enter your first name.' }))
+            formIsValid = false;
+        } else if (!isFirstNameLongEnough) {
+            setErrors((prev) => ({ ...prev, firstName: 'First names must be at least 3 characters.' }))
+            formIsValid = false;
+        } else if (!startsWithCaps(firstName)) {
+            setErrors((prev) => ({ ...prev, firstName: 'First names should start with a uppercase letter.' }))
+            formIsValid = false;
+        } else if (!allLowerCase(firstName)) {
+            setErrors((prev) => ({ ...prev, firstName: 'Only the initial character may be uppercase.' }))
+            formIsValid = false;
+        } else {
+            setErrors((prev) => ({ ...prev, firstName: '' }))
+        }
+
+        // lastname validation
+        if (!lastName) {
+            setErrors((prev) => ({ ...prev, lastName: 'Please provide your last name.' }));
+            formIsValid = false;
+        } else if (!isLastNameLongEnough) {
+            setErrors((prev) => ({ ...prev, lastName: 'Last names must be at least 2 characters.' }))
+            formIsValid = false;
+        } else if (!startsWithCaps(lastName)) {
+            setErrors((prev) => ({ ...prev, lastName: 'Last names should start with a uppercase letter.' }))
+            formIsValid = false;    
+        } else if (!allLowerCase(lastName)) {
+            setErrors((prev) => ({ ...prev, lastName: 'Only the initial character may be uppercase.' }))
+            formIsValid = false;     
+        } else {
+            setErrors((prev) => ({ ...prev, lastName: '' }))
+        }
+
+        // dob validation
+        if (!dob) {
+            setErrors((prev) => ({ ...prev, dob: 'Please provide your date of birth.' }));
+            formIsValid = false;
+        } else {
+            setErrors((prev) => ({ ...prev, dob: '' }))
+        }
+
+        // phone validation
+        if (!phone) {
+            setErrors((prev) => ({ ...prev, phone: 'Please provide your phone number.' }));
+            formIsValid = false;
+        } else if (!isValidPhoneNumber(phone)) {
+            setErrors((prev) => ({ ...prev, phone: 'Please enter a valid mobile number (11 digits, starting with 0) or an international code (e.g., +44 for UK, +1 for US).'}))
+            formIsValid = false;
+        } else if (phone && isValidPhoneNumber(phone)) {
+            const exists = await isPhoneNumberUnique(phone);
+            if (exists) {
+                setErrors((prev) => ({ ...prev, phone: 'Phone number is already in use.' }));
+                formIsValid = false;
+            } else {
+                setErrors((prev) => ({ ...prev, phone: '' }))
+            }
+        } else {
+            setErrors((prev) => ({ ...prev, phone: '' }))
+        }
+
+
+
+        if (user && formIsValid) {
+            const formattedDate = dob.toLocaleDateString('en-GB')
+            const convertedPhoneNumber = convertToInternationalFormat(phone);
 
             try {
+                setIsLoading(true)
+
                 // update raw_user_metadata object
-                const metadata = { first_name: firstName, last_name: lastName, phone };
-                await updateMetadata(metadata);
+                const metadata = { 
+                    first_name: firstName,
+                    last_name: lastName,
+                    phone: convertedPhoneNumber 
+                };
+
+                const updateMetadataResult = await updateMetadata(metadata);
+                if (!updateMetadataResult.success) {
+                   console.log('metadata update error:', updateMetadataResult.error)
+                }
 
                 const profileData = {
                     first_name: firstName,
                     last_name: lastName,
-                    phone,
+                    phone: convertedPhoneNumber,
                     dob: formattedDate,
-                    updated_at: new Date().toISOString()
+                    created_at: new Date().toISOString()
                 };
  
                 // update profiles table
-                await updateTable(user, 'profiles', profileData, 'id');
+                const updateTableResult = await updateTable(user, 'profiles', profileData, 'id');
+                if (!updateTableResult.success) {
+                    throw new Error("An unexpected error occurred and we couldn't save your profile information. Please try again later. If the issue persists, contact support."
+)                }
 
-                setSuccessMsg('Finalizing account setup');
-                setTimeout(() => setRedirect(true), 3000);
-            } catch (err) {
-                setError('An error occurred. Please try again later.');
+                changeMessage('success', 'Your account has been created and you are now logged in.');
+                setUpdateStatus('success')
+                setRedirect(true)
+            } catch (error) {
+                setRedirect(false)
+                setUpdateStatus('error')
+                changeMessage('error', error.message);
             } finally {
                 setIsLoading(false);
             }
@@ -210,10 +362,9 @@ const CompleteRegistration = () => {
 
 
 
-    // update user avatar
+    // update user avatar in profiles table
     const updateProfile = async ({ avatar_url }) => {
-        setError(null)
-
+        
         try {
             const updatedProfile = {
                 id: user.id,
@@ -221,21 +372,17 @@ const CompleteRegistration = () => {
                 updated_at: new Date().toISOString(),
             }
 
-            const supabase = createClientComponentClient()
             const { error } = await supabase.from('profiles').upsert(updatedProfile)
 
             if (error) {
                 throw new Error(error.message)
             } else {
-                setSuccessMsg('Avatar added!');
-                setTimeout(() => setSuccessMsg(null), 2000)    
+                changeMessage('success', 'Avatar added!');
             }
 
         } catch (error) {
-            setError('Failed to upload avatar.')
+            changeMessage('error', 'Failed to upload avatar.')
             console.log(error.message)
-        } finally {
-            setTimeout(() => setError(null), 2000)    
         }
     }
 
@@ -250,167 +397,164 @@ const CompleteRegistration = () => {
 
 
 
-    // phone number field validation
-    const handlePhoneKeyDown = (e) => {
+
+
+    // function to handle onKeyDown events
+    const handleKeyDown = (e) => {
         if (e.key === 'Enter') e.preventDefault();
-        if (!/[0-9+\(\)\-\s]/.test(e.key) && !['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete'].includes(e.key)) {
-            e.preventDefault();
+
+        if (e.target.name === 'firstName' || e.target.name === 'lastName') {
+            if (!/^[A-Za-z]$/.test(e.key) && !['Backspace', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(e.key)) {
+                e.preventDefault()
+            }
+        } else if (e.target.name === 'dob') {
+            const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '/', 'Backspace', 'ArrowLeft', 'ArrowRight', 'Tab'];
+            if (!allowedKeys.includes(e.key)) {
+                e.preventDefault();
+            }
+        } else if (e.target.name === 'phone') {
+            if (!/[0-9+]/.test(e.key) && !['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete'].includes(e.key)) {
+                e.preventDefault();
+            }
         }
-    };
+    }
+    
 
 
 
 
     return (
         <div className='flex flex-col w-full'>
-            <div className='flex flex-col w-full relative'>
-
+            <div className='flex flex-col w-full'>
                 <h2 className='text-3xl md:text-center leading-normal font-eb text-saddleBrown'>Set Up Your Account</h2>
 
 
-                <div className="absolute -top-16 text-center w-full place-self-center">
-                    {successMsg && <div className='success text-center'>{successMsg}</div>}
-                    {error && <div className='error text-center'>{error}</div>}
-                </div>
+                <div className='mt-8 flex flex-col gap-6 md:flex-row md:justify-evenly w-full'>
+                    <form className={`flex-1 order-2 flex flex-col gap-2 md:order-1`}>
+                        <div>
+                            <div className='relative max-w-sm'>
+                                <label>
+                                    <span className='mb-2 text-base text-stoneGray block'>First Name</span>
+                                    <input
+                                        className='w-full max-w-sm p-2.5 rounded-md text-black'
+                                        type='text'
+                                        spellCheck='false'
+                                        value={formData.firstName}
+                                        name='firstName'
+                                        maxLength='15'
+                                        placeholder='eg., John'
+                                        onChange={handleInputChange}
+                                        onKeyDown={handleKeyDown}
+                                        minLength='3'
 
+                                    />
+                                </label>
 
-                <div className='mt-8 flex flex-col gap-6 md:flex-row md:justify-evenly h-fit w-full'>
-
-                    <form className='flex-1 order-2 flex flex-col gap-5 md:order-1'>
-                        <div className='relative max-w-sm'>
-                            <label>
-                                <span className='mb-2 text-base text-stoneGray block'>First Name</span>
-                                <input
-                                    className={`w-full max-w-sm p-2.5 rounded-md text-stoneGray shadow-inner bg-nightSky border-2 ${errors.firstName ? 'border-red-800' : (formData.firstName ? 'border-green-800' : 'border-stoneGray')}`}
-                                    type='text'
-                                    spellCheck='false'
-                                    value={formData.firstName}
-                                    name='firstName'
-                                    placeholder='John'
-                                    onChange={handleInputChange}
-                                />
-                            </label>
-                            {!errors.firstName && !formData.firstName ? (
-                                <FaTimesCircle className={'absolute bottom-3.5 right-4 text-stoneGray'} size={21} />
-                            ) : (
-                                <>
-                                    {errors.firstName ? (
-                                        <FaTimesCircle className={'absolute bottom-3.5 right-4 text-red-900'} size={21} />
-                                    ) : (
-                                        <FaCheckCircle className={'absolute bottom-3.5 right-4 text-green-800'} size={21} />
-                                    )}
-                                </>
-                            )}
-                            <p className='text-sm text-red-700 absolute mt-0.21'>{errors.firstName}</p>
+                                {formIsSubmitted && (errors.firstName || !isFirstNameLongEnough || !startsWithCaps(formData.firstName) || !allLowerCase(formData.firstName)) ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : (formIsSubmitted && !errors.firstName && !isCheckingPhone && updateStatus === 'success' ? <FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} /> : (updateStatus === 'error' ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : ''))}
+                            
+                            </div>
+                               {errors.firstName && <p className='text-sm text-red-600 mt-1'>{errors.firstName}</p>}
                         </div>
 
 
-                        <div className='relative max-w-sm'>
-                            <label>
-                                <span className='mb-2 text-base text-stoneGray block'>Last Name</span>
-                                <input
-                                    className={`w-full max-w-sm p-2.5 rounded-md text-stoneGray shadow-inner bg-nightSky border-2 ${errors.lastName ? 'border-red-800' : (formData.lastName ? 'border-green-800' : 'border-stoneGray')}`}
-                                    type='text'
-                                    value={formData.lastName}
-                                    name='lastName'
-                                    placeholder='Smith'
-                                    onChange={handleInputChange}
-                                />
-                            </label>
-                            {!errors.lastName && !formData.lastName ? (
-                                <FaTimesCircle className={'absolute bottom-3.5 right-4 text-stoneGray'} size={21} />
-                            ) : (
-                                <>
-                                    {errors.lastName ? (
-                                        <FaTimesCircle className={'absolute bottom-3.5 right-4 text-red-900'} size={21} />
-                                    ) : (
-                                        <FaCheckCircle className={'absolute bottom-3.5 right-4 text-green-800'} size={21} />
-                                    )}
-                                </>
-                            )}
-                            <p className='text-sm text-red-700 absolute mt-0.21'>{errors.lastName}</p>
+                        <div>
+                            <div className='relative max-w-sm'>
+                                <label>
+                                    <span className='mb-2 text-base text-stoneGray block'>Last Name</span>
+                                    <input
+                                        className='w-full max-w-sm p-2.5 rounded-md text-black'
+                                        type='text'
+                                        value={formData.lastName}
+                                        name='lastName'
+                                        maxLength='25'
+                                        placeholder='eg., Smith'
+                                        onChange={handleInputChange}
+                                        onKeyDown={handleKeyDown}
+                                        minLength='2'
+                                    />
+                                </label>
+                                {formIsSubmitted && (errors.lastName || !isLastNameLongEnough || !startsWithCaps(formData.lastName) || !allLowerCase(formData.lastName)) ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : (formIsSubmitted && !errors.lastName && !isCheckingPhone && updateStatus === 'success' ? <FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} /> : (updateStatus === 'error' ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : ''))}
+                            </div>
+                            {errors.lastName && <p className='text-sm text-red-600 mt-1'>{errors.lastName}</p>}
                         </div>
 
 
-                        <div className='relative max-w-sm'>
-                            <label>
-                                <span className='mb-2 text-base text-stoneGray block'>Date of Birth</span>
-                                <DatePicker
-                                    className={`w-full max-w-sm p-2.5 rounded-md text-stoneGray shadow-inner bg-nightSky border-2 ${errors.dob ? 'border-red-800' : (formData.dob ? 'border-green-800' : 'border-stoneGray')}`}
-                                    wrapperClassName='w-full'
-                                    locale="en-GB"
-                                    dateFormat="dd/MM/yyyy"
-                                    selected={formData.dob}
-                                    onChange={(date) => handleInputChange({ target: { name: 'dob', value: date } })}
-                                    name='dob'
-                                    placeholderText='DD/MM/YYYY'
-                                />
-                            </label>
-                            {!errors.dob && !formData.dob ? (
-                                <FaTimesCircle className={'absolute bottom-3.5 right-4 text-stoneGray'} size={21} />
-                            ) : (
-                                <>
-                                    {errors.dob ? (
-                                        <FaTimesCircle className={'absolute bottom-3.5 right-4 text-red-900'} size={21} />
-                                    ) : (
-                                        <FaCheckCircle className={'absolute bottom-3.5 right-4 text-green-800'} size={21} />
-                                    )}
-                                </>
-                            )}
-                            <p className='text-sm text-red-700 absolute mt-0.21'>{errors.dob}</p>
+
+                        <div>
+                            <div className='relative max-w-sm'>
+                                <label>
+                                    <span className='mb-2 text-base text-stoneGray block'>Date of Birth</span>
+                                    <DatePicker
+                                        className='w-full max-w-sm p-2.5 rounded-md text-black'
+                                        wrapperClassName='w-full'
+                                        locale="en-GB"
+                                        dateFormat="dd/MM/yyyy"
+                                        selected={formData.dob}
+                                        onChange={(date) => handleInputChange({ target: { name: 'dob', value: date } })}
+                                        onKeyDown={handleKeyDown}
+                                        name='dob'
+                                        placeholderText='DD/MM/YYYY'
+                                        maxDate={new Date()}
+                                        maxLength={'8'}
+                                    />
+                                </label>
+                                {formIsSubmitted && (errors.dob || !formData.dob) ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : (!errors.dob && formData.dob && formIsSubmitted && !isCheckingPhone && updateStatus === 'success' ? <FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} /> : (updateStatus === 'error' ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : ''))}
+                            </div>
+                            {errors.dob && <p className='text-sm text-red-600 pt-1'>{errors.dob}</p>}
                         </div>
 
 
-                        <div className='relative max-w-sm'>
-                            <label>
-                                <span className='max-w-min mb-2 text-base text-stoneGray block'>Phone</span>
-                                <input className={`w-full max-w-sm p-2.5 rounded-md text-stoneGray shadow-inner bg-nightSky border-2 ${errors.phone || (formData.phone && !isValidPhoneNumber(formData.phone)) ? 'border-red-800' : (formData.phone && isValidPhoneNumber(formData.phone) ? 'border-green-800' : 'border-stoneGray')}`}
-                                    type='tel'
-                                    value={formData.phone}
-                                    spellCheck='false'
-                                    pattern='^\+\d{1,15}$'
-                                    maxLength="15"
-                                    name='phone'
-                                    placeholder="e.g., +14155552671"
-                                    onChange={handleInputChange}
-                                    onKeyDown={handlePhoneKeyDown}
-                                />
-                            </label>
-                            {!errors.phone && (!formData.phone && !isValidPhoneNumber(formData.phone)) ? (
-                                <FaTimesCircle className={'absolute bottom-3.5 right-4 text-stoneGray'} size={21} />
-                            ) : (
-                                <>
-                                    {errors.phone || (!formData.phone && !isValidPhoneNumber(formData.phone)) ? (
-                                        <FaTimesCircle className={'absolute bottom-3.5 right-4 text-red-900'} size={21} />
-                                    ) : (
-                                        <FaCheckCircle className={'absolute bottom-3.5 right-4 text-green-800'} size={21} />
-                                    )}
-                                </>
-                            )}
-                            <p className='text-sm text-red-700 absolute mt-0.21'>{errors.phone}</p>
+                        <div>
+                            <div className='relative max-w-sm'>
+                                <label>
+                                    <span className='max-w-min mb-2 text-base text-stoneGray block'>Phone</span>
+                                    <input className='w-full max-w-sm p-2.5 rounded-md text-black'
+                                        type='tel'
+                                        value={formData.phone}
+                                        spellCheck={false}
+                                        maxLength={15}
+                                        name='phone'
+                                        placeholder="e.g., +44XXXXXXXXX or 07XXXXXXXX"
+                                        onChange={handleInputChange}
+                                        onKeyDown={handleKeyDown}
+                                    />
+                                </label>
+                                {formIsSubmitted && (errors.phone || !isValidPhoneNumber(formData.phone)) ? (<FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} />) : (!errors.phone && isValidPhoneNumber(formData.phone) && formIsSubmitted && !isCheckingPhone && updateStatus === 'success' ? (<FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} />) : (updateStatus === 'error' ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : ''))}
+                            </div>
+                            {errors.phone && <p className='text-sm text-red-600 mt-1'>{errors.phone}</p>}
                         </div>
+
+                        <button className={`btn block w-fit mt-1.5 bg-saddleBrown transition duration-500 ${isButtonDisabled ? 'opacity-65' : 'opacity-100'}`} disabled={isButtonDisabled} onClick={handleUpdateProfile}>
+                            {isLoading ? (
+                                <div className='flex items-center gap-2'>
+                                    <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />
+                                    <span>Registering</span>
+                                </div>
+                            ) : (
+                                'Register'
+                            )}
+                        </button>
+                        
                     </form>
-
-                    <div className='flex-1 order-1 h-fit md:mt-4 md:order-2 md:shadow-outer md:p-5 rounded-md'>
-                        <div className='p-6 bg-deepCharcoal border-2 border-saddleBrown rounded-md'>
-                            <AvatarUploader
-                                user={user}
-                                updateProfile={updateProfile}
-                                title='Add a profile avatar'
-                                displayTitle={true}
-                                btnColor='bg-saddleBrown'
-                                btnText='Add'
-                            />
+                   
+                   <div className='flex-1 order-1 h-fit md:mt-4 md:order-2 '>
+                        <div className='md:shadow-outer md:p-5 rounded-md max-h-max'>
+                            <div className='md:p-2 rounded-md'>
+                                <AvatarUploader
+                                    user={user}
+                                    updateProfile={updateProfile}
+                                    title='Upload a Profile Picture'
+                                    text='This helps others recognize you. You can change it later in your profile settings. (Optional)'
+                                    displayTitle={true}
+                                    btnColor='bg-saddleBrown'
+                                    show3DAvatar={true}
+                                />
+                            </div>
                         </div>
+                   </div>
 
-                    </div>
                 </div>
-
-                <button className='btn block w-fit mt-7 bg-saddleBrown' disabled={isButtonDisabled} onClick={handleUpdateProfile}>
-                    {isLoading ? 'Registering...' : 'Register'}
-                </button>
             </div>
-
         </div>
 
     );

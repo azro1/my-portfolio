@@ -23,7 +23,6 @@ export async function generateMetadata({ params }) {
 }
 
 async function getProject(id) {
-  await new Promise(resolve => setTimeout(resolve, 5000))
   const supabase = createServerComponentClient({ cookies })
   const { data } = await supabase.from('projects')
   .select()
@@ -42,12 +41,12 @@ const Project = async ({ params }) => {
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
   
-    const { error } = await supabase.from('activity')
+    const { error } = await supabase.from('project_views')
     .upsert({
         id: uuidv4(),
         updated_at: new Date().toISOString(),
         project_id: params.id,
-        activity_id: user ? user.id : null
+        user_id: user ? user.id : null
       })
     .select()
     .single()

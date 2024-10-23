@@ -6,6 +6,8 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 // hooks
 import { useFetchProfile } from '@/app/hooks/useFetchProfile';
+// custom hook to display global messages
+import { useMessage } from '@/app/hooks/useMessage';
 
 // components
 import ProfileAvatar from '@/app/(profile)/profile/ProfileAvatar';
@@ -15,16 +17,21 @@ const Comments = ({ user }) => {
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([])
     const [hasMore, setHasMore] = useState(true);
-    const [commentError, setCommentError] = useState('')
     const [isLoading, setIsLoading] = useState(false);
     const [isCommentsLoading, setIsCommentsLoading] = useState(true);
     const commentsContainerRef = useRef(null);
 
     // custom hooks
-    const { profile, fetchProfile } = useFetchProfile() 
+    const { profile, fetchProfile } = useFetchProfile()
+    // global messages function
+    const { changeMessage } = useMessage()
+
+    // validation function returns regex to strip out harmful chars
+    const containsInvalidChars = (value) => /[<>\/\\`"'&]/.test(value);
+
   
 
-    // watch user value to get users profile
+    // watch user value to get users profile and show profile error is there is one
     useEffect(() => {
       if (user) {
         fetchProfile(user)
@@ -38,6 +45,10 @@ const Comments = ({ user }) => {
         setComments(prevComments => [newComment, ...prevComments]);
     }
 
+
+
+
+    
 
     // as soon as component mounts fetch 5 comments to be displayed on page
     const fetchComments = async () => {
@@ -58,7 +69,8 @@ const Comments = ({ user }) => {
                 setComments(data)
             }
         } catch (error) {
-            setError(error.message);
+            changeMessage('error', 'Failed to fetch comments. Please try again later.')
+            console(error.message);
         } finally {
             setIsCommentsLoading(false)
         }
@@ -67,6 +79,11 @@ const Comments = ({ user }) => {
     useEffect(() => {
         fetchComments();
     }, [])
+
+
+
+
+
 
 
 
@@ -94,8 +111,8 @@ const Comments = ({ user }) => {
                     setHasMore(data.length > 0);
                 }
             } catch (error) {
+                changeMessage('error', "Sorry we're unable to load more comments right now.");
                 console.log(error.message)
-                setError('Unable to load more comments.');
             } finally {
                 setIsCommentsLoading(false)
             }
@@ -121,13 +138,37 @@ const Comments = ({ user }) => {
 
 
 
+
+
+
+
+
+
+
     // send comment to sever api endpoint
     const handleComment = async (e) => {
         e.preventDefault();
-        setIsLoading(true)
-        setCommentError('')
-        setComment('')
+        setIsLoading(true);
           
+
+        if (!comment) {
+            setIsLoading(false);
+            changeMessage('error', 'Oops! The comment field is empty. Please share your thoughts before submitting.');
+            return
+        } else if (containsInvalidChars(comment)) {
+            setIsLoading(false);
+            changeMessage('error', 'Your comment contains characters that are not allowed. Please remove them and try again.');
+            return 
+        }
+
+
+        if (!profile) {
+            setIsLoading(false)
+            changeMessage('error', "An error occured at our end and we're fixing it. Please try again later. If the issue persists, contact support.");
+            return
+        }
+
+
         try {
           const res = await fetch(`${location.origin}/api/comments`, {
             method: 'POST',
@@ -141,60 +182,71 @@ const Comments = ({ user }) => {
           })  
     
           // handle response
-          const json = await res.json()
+          const serverComment = await res.json()
     
-          if (json.error) {
-            throw new Error(json.error);
+          if (serverComment.error) {
+            throw new Error("We're having trouble saving your comment right now. Please try again in a bit. If the issue persists, contact support.");
           }
     
-          if (json.data) {
-            // console.log(json.data)
+          if (serverComment.data) {
             setIsLoading(false)
-            updateComments(json.data);
+            updateComments(serverComment.data);
+            changeMessage('success', 'Comment added!')
+            setComment('')
           }
       
         } catch (error) {
-            setIsCommentsLoading(false)
-            console.log(error.message)
+            setIsLoading(false)
+            changeMessage('error', error.message)
         }
     };
 
 
+
+
+
+
+
+
     return (
-        <div className='place-self-start'>
+        <>
             {user && (
-                <div>
+                <div className='relative max-w-max'>
                     <h3 className='mb-2 text-xl font-b text-saddleBrown'>
                         Leave a Comment
                     </h3>
                     <form onSubmit={handleComment}>
                         <textarea
-                            className='p-2 outline-none text-base'
+                            className='py-2 px-2.5 outline-none text-base text-black rounded-md'
                             cols='40'
                             rows='4'
                             spellCheck='false'
                             placeholder="Tell us what's on your mind..."
                             value={comment}
                             onChange={(e) => setComment(e.target.value)}
-                            required
                         ></textarea>
-                        {commentError && <div className='error'>{commentError}</div>}
-                            <button className='btn block mt-2 bg-saddleBrown'>{isLoading ? 'Adding...' : 'Add Comment'}</button>
+
+                        <button className='btn block mt-2 bg-saddleBrown' disabled={isLoading}>
+                            {isLoading ? (
+                                <div className='flex items-center gap-2'>
+                                    <img className="w-5 h-5 opacity-50" src="../images/loading/spinner.svg" alt="Loading indicator" />
+                                    <span>Adding</span>
+                                </div>
+                            ) : (
+                                'Add Comment'
+                            )}
+                        </button>
                     </form>
                 </div>
             )}
             
 
             {isCommentsLoading ? (
-                <div className='mt-20'>
-                   <img className="w-20" src="/images/loading/loading.gif" alt="a loading gif" />
-                </div>
+                <img className="w-20" src="/images/loading/loading.gif" alt="a loading gif" />
             ) : (
                 <>
                     {user !== null && comments.length === 0 && (
-                        <div className='md:row-start-3 col-start-1 mt-4'>
-                            <p>No comments.</p>
-                        </div>
+                        <p>No comments.</p>
                     )}
                 </>
             )}
@@ -202,7 +254,7 @@ const Comments = ({ user }) => {
 
 
             {comments !== null && comments.length > 0 && (
-                <div className='w-full sm:max-w-xl mt-20'>
+                <div className='w-full sm:max-w-xl'>
                     <h3 className='text-xl font-b text-saddleBrown mb-8'>
                         Comments
                     </h3>
@@ -240,7 +292,7 @@ const Comments = ({ user }) => {
 
                 </div>
             )}
-        </div>
+        </>
     )
 }
 

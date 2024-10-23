@@ -7,32 +7,27 @@ import { FaUserCircle } from "react-icons/fa";
 
 // custom hooks
 import { useUpdateTable } from '@/app/hooks/useUpdateTable';
-
-// components
-import Modal from './Modal';
+import { useMessage } from '@/app/hooks/useMessage';
 
 
 
-const AvatarUploader = ({ user, updateProfile, updateError, title, displayTitle, btnColor, btnText }) => {
-
+const AvatarUploader = ({ user, title, text, displayTitle, btnColor, show3DAvatar }) => {
     // custom hook to update comments after user updates personal info
     const { updateTable } = useUpdateTable()
+    // global messages function
+    const { changeMessage } = useMessage()
 
-    const [fileInputError, setFileInputError] = useState(null)
     const [selectedFile, setSelectedFile] = useState(null)
     const [imgSrc, setImgSrc] = useState('')
     const [uploading, setUploading] = useState(false)
-    const [uploadError, setUploadError] = useState(null)
     const formRef = useRef(null)
 
     const supabase = createClientComponentClient()
 
-
+    
 
     /* This function is triggered when a user selects a file. If a file is selected, the FileReader object reads the file as a data URL. The FileReader API is used to asynchronously read the contents of files stored on the user's computer. The readAsDataURL method of FileReader reads the content of the file and converts it into a base64-encoded string, called a data URL. A data URL is a string that represents the file's data and includes a media type prefix. The FileReader's onload event is triggered once the file is read, and the result (data URL) is stored in imgSrc. This data URL can be used to display the image directly in the browser */
     const handleFileInputChange = (event) => {
-        setFileInputError('')
-
         const file = event.target.files[0];
         setSelectedFile(file)
 
@@ -44,8 +39,7 @@ const AvatarUploader = ({ user, updateProfile, updateError, title, displayTitle,
             }
             reader.readAsDataURL(file)
         } else {
-            setFileInputError('Could not select file. Please try again')
-            setTimeout(() => setFileInputError(null), 2000)
+            changeMessage('error', 'No file selected. Please choose a file to continue.')
         }
     }
 
@@ -58,7 +52,7 @@ const AvatarUploader = ({ user, updateProfile, updateError, title, displayTitle,
             setUploading(true)
 
             if (!selectedFile) {
-                throw new Error('You must select an image to upload')
+                throw new Error("Oops! You need to select an image to upload.")
             }
             const fileExt = selectedFile.name.split('.').pop()
             const filePath = `${user.id}-${Math.random()}.${fileExt}`;
@@ -66,74 +60,127 @@ const AvatarUploader = ({ user, updateProfile, updateError, title, displayTitle,
                 .from('avatars')
                 .upload(filePath, selectedFile, { upsert: true })
             if (error) {
-                throw new Error(error.message)
-            }
-            // update profiles avatar
-            await updateProfile({ avatar_url: filePath })
+                throw new Error("An unexpected error occurred and we couldn't upload your avatar. Please try again later. If the issue persists, contact support.")
+            } else {
+                
+                // update profiles avatar
+                const avatarUpdateProfilesResult = await updateProfile({ avatar_url: filePath })
+                if (!avatarUpdateProfilesResult.success) {
+                    throw new Error("An unexpected error occurred and we couldn't upload your avatar. Please try again later. If the issue persists, contact support.")
+                }
 
-            // update comments avatar
-            await updateTable(user, 'comments', { avatar_url: filePath }, 'comment_id') 
-            
-            if (formRef.current) {
-                setImgSrc('')
-                setSelectedFile('')
-                formRef.current.reset()
+                // update comments avatar
+                const avatarUpdateCommentsResult = await updateTable(user, 'comments', { 
+                    avatar_url: filePath,
+                    updated_at: new Date().toISOString()
+                }, 'comment_id');
+
+                if (!avatarUpdateCommentsResult.success) {
+                    throw new Error("Your profile picture was uploaded successfully, but we encountered an issue updating your comments. Please try again later. If the issue persists, contact support.")
+                }
+                
+                changeMessage('success', 'Avatar uploaded!')
+
+                if (formRef.current) {
+                    setImgSrc('')
+                    setSelectedFile('')
+                    formRef.current.reset()
+                }
             }
         } catch (error) {
-            setUploadError(error.message)
+            changeMessage('error', error.message)
         } finally {
             setUploading(false)
-            setTimeout(() => setUploadError(null), 2000)
         }
     }
 
+
+
+
+    // update users avatar in profiles table
+    const updateProfile = async ({ avatar_url }) => {
+        try {
+            const profileData = {
+                id: user.id,
+                avatar_url,
+                updated_at: new Date().toISOString(),
+                last_avatar_update_at: new Date().toISOString()
+            }
+
+            const { error } = await supabase.from('profiles').upsert(profileData)
+
+            if (error) {
+                throw new Error(error.message)
+            }
+            
+            return { success: true }
+        } catch (error) {
+            console.log('profile update error:', error.message)
+            return { success: false }
+        }
+    }
+    
 
 
     return (
         <div>
             <div>
                 {displayTitle &&  (
-                    <h2 className='text-2xl text-stoneGray mb-3'>{title}</h2>
+                    <h2 className='text-2xl text-stoneGray mb-3 font-medium'>{title}</h2>
                 )}
-                <p className='leading-normal'>Personalize your account by uploading your own avatar</p>
-                <div className='mb-2 mt-4 h-14 w-14 relative '>
-                    {imgSrc ? (
-                        <Image
-                            src={imgSrc}
-                            alt="A user's selected image"
-                            fill={true}
-                            quality={100}
-                            sizes="100%"
-                        />
-                    ) : (
-                        <FaUserCircle size={56} color="gray" />
+                <p className='leading-normal'>{text}</p>
+                
+                <div className={`${show3DAvatar ? 'mt-5 grid grid-flow-col auto-cols-auto' : '' }`}>
+
+                     <div>
+                        <div className='mb-2 mt-4 h-14 w-14 relative'>
+                            {imgSrc ? (
+                                <Image
+                                    src={imgSrc}
+                                    alt="A user's selected image"
+                                    fill={true}
+                                    quality={100}
+                                    sizes="100%"
+                                />
+                            ) : (
+                                <FaUserCircle size={56} color="gray" />
+                            )}
+                        </div>
+                        <form ref={formRef} className='w-full'>
+                            <input
+                                className='text-stoneGray file:cursor-pointer file:mr-3 w-full max-w-xs'
+                                type='file'
+                                id='single'
+                                accept='image/*'
+                                onChange={handleFileInputChange}
+                                disabled={uploading || (user && user.user_metadata.name)}
+                            />
+                        </form>
+                        <button className={`btn-small ${btnColor} block mt-2`}
+                            onClick={uploadAvatar}
+                            disabled={uploading || (user && user.user_metadata.name)}
+                        >
+                            {uploading ? (
+                                <div className='flex items-center gap-2'>
+                                    <img className="w-5 h-5 opacity-50" src="../../images/loading/spinner.svg" alt="Loading indicator" />
+                                    <span>Uploading</span>
+                                </div>
+                            ) : (
+                                'Upload'
+                            )}
+                        </button>
+                    </div>
+
+                    {show3DAvatar && (
+                        <div className='col-start-1 place-self-center justify-self-start md:col-start-2 md:justify-self-end'>
+                            <img src="/images/registration/avatar.svg" className='w-full' alt="a profile avatar" />
+                        </div>
                     )}
+
                 </div>
-                <form ref={formRef}>
-                    <input
-                        className='text-stoneGray file:cursor-pointer file:mr-3'
-                        type='file'
-                        id='single'
-                        accept='image/*'
-                        onChange={handleFileInputChange}
-                        disabled={uploading || (user && user.user_metadata.name)}
-                    />
-                </form>
-                <button className={`small-btn ${btnColor} block ${uploadError ? 'mt-2' : 'mt-3'}`}
-                    onClick={uploadAvatar}
-                    disabled={uploading || (user && user.user_metadata.name)}
-                >
-                    {uploading ? 'Uploading...' : `${btnText}`}
-                </button>
+
             </div>
 
-            {(uploadError || fileInputError || updateError) && (
-                <Modal>
-                    <div className="text-center">
-                        <p className='modal-form-error'>* {uploadError || fileInputError || updateError}</p>
-                    </div>
-                </Modal>
-            )}
         </div>
     )
 }

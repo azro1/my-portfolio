@@ -4,18 +4,25 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation";
 
+// react icons
 import { FiEye, FiEyeOff } from 'react-icons/fi'
+
+// custom hooks
+import { useUpdateTable } from "../hooks/useUpdateTable";
+import { useMessage } from "../hooks/useMessage";
 
 
 const OtpForm = ({ redirectUrl, subHeading, successMessage }) => {
     const [otp, setOtp] = useState('')
     const [isLoading, setIsLoading] = useState(false)
-    const [error, setError] = useState(null)
-    const [successMsg, setSuccessMsg] = useState(null)
     const [isEyeOpen, setIsEyeOpen] = useState(false)
     const [redirect, setRedirect] = useState(false)
 
     const router = useRouter()
+
+    // destructure custom hooks
+    const { updateTable } = useUpdateTable()
+    const { changeMessage } = useMessage()
 
     // verify otp
     const handleVerifyOtp = async (e) => {
@@ -23,50 +30,61 @@ const OtpForm = ({ redirectUrl, subHeading, successMessage }) => {
         setIsLoading(true)
 
         if (!otp) {
-            setError('Please enter your verification code');
-            setTimeout(() => setError(null), 2000)
             setIsLoading(false)
+            changeMessage('error', 'Please enter the verification code sent to your email');
             return
-        } 
-        
-        if (otp.length !== 6) {
-            setError('The code cannot be less than 6 digits');
-            setTimeout(() => setError(null), 2000)
+        } else if (otp.length !== 6) {
             setIsLoading(false)
+            changeMessage('error', 'The verification code must be exactly 6 digits long. Please check and try again.');
             return
         }
 
-
-        // get and remove email from local storage
+        // retrieve and remove email from local storage
         const email = localStorage.getItem('email')
         localStorage.removeItem('email')
 
+        try {
+            const supabase = createClientComponentClient()
+            const { data: { session }, error } = await supabase.auth.verifyOtp({
+                email,
+                token: otp,
+                type: 'email'
+            })
 
-        const supabase = createClientComponentClient()
-        const { data: { session }, error } = await supabase.auth.verifyOtp({
-            email,
-            token: otp,
-            type: 'email'
-        })
+            if (error) {
+                console.log('auth otp error:', error.message);
+                throw new Error("We couldn't verify your code. Please request a new verification code and try again.");
+            } else if (session) {
+               // after otp verification is successful it's at this point we have access to user object
+                setIsLoading(false);
 
-        if (error) {
-            setIsLoading(false)
-            setError('Verification failed. Please try again.')
-            console.log(error.message)
-            return
+                // update is_verified column in profiles table
+                const is_verifiedResult = await updateTable(session.user, 'profiles', { is_verified: true }, 'id');
+                if (!is_verifiedResult.success) {
+                    console.log('auth otp page: could not update otp verification status')
+                }
 
-        } else if (session) {
-            setSuccessMsg(successMessage)
-            setTimeout(() => setRedirect(true), 3000)
+                // clear cookie from server after successful verification
+                document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+                changeMessage('success', successMessage);
+                setRedirect(true);
+            }
+
+        } catch (error) {
+            setIsLoading(false);
+            // clear cookie from server if there's an error
+            document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+            router.refresh();
+            changeMessage('error', error.message);
         }
     }
 
 
 
-
+    // redirect if otp verification is successful
     useEffect(() => {
         if (redirect) {
-            router.push(redirectUrl)
+            router.push(redirectUrl);
         }
     }, [redirect, redirectUrl, router]);
 
@@ -97,60 +115,58 @@ const OtpForm = ({ redirectUrl, subHeading, successMessage }) => {
     return (
         <div className="flex items-center justify-center h-auth-page-height">
 
-            <div className="flex relative h-80">
+            <form className="max-w-max" onSubmit={handleVerifyOtp}>
+                <h2 className='text-3xl leading-normal mb-4 font-eb text-saddleBrown'>Email Verification Required</h2>
+                <p className='mb-4 max-w-lg'>{subHeading}</p>
 
-                <div className="absolute -top-24 sm:-top-8 w-full text-center">
-                    {successMsg && <div className='success'>{successMsg}</div>}
-                    {error && <div className="error">{error}</div>}
-                </div>
-
-                <form className="max-w-max h-fit place-self-end" onSubmit={handleVerifyOtp}>
-                    <h2 className='text-3xl leading-normal mb-4 font-eb text-saddleBrown'>Email Verification Required</h2>
-                    <p className='mb-4 max-w-lg'>{subHeading}</p>
-
-                    <label>
-                        <span className='max-w-min mb-2 text-base text-stoneGray block'>
-                            Code:
-                        </span>
-                        <div className='relative max-w-xs'>
-                            <input
-                                className={`w-full max-w-xs p-2.5 rounded-md text-stoneGray bg-deepCharcoal border-2 ${error ? 'border-red-900' : 'border-stoneGray'} focus:border-saddleBrown focus:ring-1 focus:ring-saddleBrown`}
-                                type={`${isEyeOpen ? 'text' : 'password'}`}
-                                spellCheck='false'
-                                autoComplete="off"
-                                placeholder="123456"
-                                value={otp}
-                                maxLength='6'
-                                onChange={handleOtpChange}
-                            />
-                            {!isEyeOpen ? (
-                                <div className="absolute right-2 top-2 p-2 group bg-nightSky hover:bg-stoneGray transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
-                                    <FiEye
-                                        className='text-stoneGray group-hover:text-deepCharcoal transition duration-300 fieye'
-                                        size={17}
-                                    />
-                                </div>
-
-                            ) : (
-                                <div className="absolute right-2 top-2 p-2 group bg-nightSky hover:bg-stoneGray transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
-                                    <FiEyeOff
-                                        className='text-stoneGray group-hover:text-deepCharcoal transition duration-300 fieye-off'
-                                        size={17}
-                                    />
-                                </div>
-                            )}
-                            <div>
-
+                <label>
+                    <span className='max-w-min mb-2 text-base text-stoneGray block'>
+                        Code:
+                    </span>
+                    <div className='relative max-w-xs'>
+                        <input
+                            className='w-full max-w-xs py-2.5 px-3 rounded-md text-black tracking-extra-wide'
+                            type={`${isEyeOpen ? 'text' : 'password'}`}
+                            spellCheck={false}
+                            autoComplete="off"
+                            placeholder="123456"
+                            value={otp}
+                            maxLength={6}
+                            onChange={handleOtpChange}
+                        />
+                        {!isEyeOpen ? (
+                            <div className="absolute right-1 top-1 p-2.5 group bg-nightSky hover:bg-saddleBrown transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
+                                <FiEye
+                                    className='text-stoneGray group-hover:text-frostWhite transition duration-300 fieye'
+                                    size={17}
+                                />
                             </div>
+
+                        ) : (
+                            <div className="absolute right-1 top-1 p-2.5 group bg-nightSky hover:bg-saddleBrown transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
+                                <FiEyeOff
+                                    className='text-stoneGray group-hover:text-frostWhite transition duration-300 fieye-off'
+                                    size={17}
+                                />
+                            </div>
+                        )}
+                        <div>
+
                         </div>
-                    </label>
+                    </div>
+                </label>
 
-                    <button className='btn block mt-3.5 bg-saddleBrown' disabled={isLoading}>{isLoading ? 'Verifying...' : 'Submit'}</button>
-
-                </form>
-
-            </div>
-
+                <button className='btn block mt-3.5 bg-saddleBrown' disabled={isLoading}>
+                    {isLoading ? (
+                        <div className='flex items-center gap-2'>
+                                <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />
+                                <span>Verifying</span>
+                        </div>
+                    ) : (
+                        'Verify'
+                    )}
+                </button>
+            </form>
 
         </div>
     )
