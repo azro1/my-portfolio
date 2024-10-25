@@ -8,7 +8,7 @@ import { useFetchProfile } from '@/app/hooks/useFetchProfile';
 import { useMessage } from '@/app/hooks/useMessage';
 
 // components
-import AvatarUploader from './AvatarUploader';
+import AvatarUploader from '../../../components/AvatarUploader';
 import BioForm from './BioForm';
 import FirstNameForm from './FirstNameForm';
 import EmailForm from './EmailForm';
@@ -54,6 +54,7 @@ const EditProfileForms = () => {
                     text='Personalize your account by uploading your own avatar'
                     btnColor='bg-nightSky'
                     show3DAvatar={false}
+                    isFirstUpload={false}
                 />
             </div>
  

@@ -10,7 +10,7 @@ export const metadata = {
 // components
 import ContactHeader from './ContactHeader';
 import ContactInfo from './ContactInfo';
-import Comments from './Comments';
+import Comments from '../../components/Comments';
 import EnquiriesForm from './EnquiriesForm';
 import AvailabilityInfo from './AvailabilityInfo';
 

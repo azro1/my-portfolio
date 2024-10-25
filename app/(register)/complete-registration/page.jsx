@@ -23,7 +23,7 @@ import { useUpdateMetadata } from "@/app/hooks/useUpdateMetadata";
 import { useMessage } from '@/app/hooks/useMessage';
 
 // components
-import AvatarUploader from "@/app/(profile)/profile/edit-profile/AvatarUploader";
+import AvatarUploader from "@/app/components/AvatarUploader";
 
 
 
@@ -527,8 +527,8 @@ const CompleteRegistration = () => {
                         <button className={`btn block w-fit mt-1.5 bg-saddleBrown transition duration-500 ${isButtonDisabled ? 'opacity-65' : 'opacity-100'}`} disabled={isButtonDisabled} onClick={handleUpdateProfile}>
                             {isLoading ? (
                                 <div className='flex items-center gap-2'>
-                                    <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />
-                                    <span>Registering</span>
+                                    <img className="w-5 h-5 opacity-50" src="../images/loading/spinner.svg" alt="Loading indicator" />
+                                    <span>Register</span>
                                 </div>
                             ) : (
                                 'Register'
@@ -544,6 +544,7 @@ const CompleteRegistration = () => {
                                     user={user}
                                     updateProfile={updateProfile}
                                     title='Upload a Profile Picture'
+                                    isFirstUpload={true}
                                     text='This helps others recognize you. You can change it later in your profile settings. (Optional)'
                                     displayTitle={true}
                                     btnColor='bg-saddleBrown'
