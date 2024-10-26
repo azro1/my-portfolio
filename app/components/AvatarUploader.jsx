@@ -175,11 +175,11 @@ const AvatarUploader = ({ user, title, text, isFirstUpload, displayTitle, btnCol
         <div>
             <div>
                 {displayTitle &&  (
-                    <h2 className='text-2xl text-stoneGray mb-3 font-medium'>{title}</h2>
+                    <h2 className='text-2xl text-stoneGray mb-3 font-eb font-rubik'>{title}</h2>
                 )}
                 <p className='leading-normal'>{text}</p>
                 {isFirstUpload && (
-                    <em><p className='text-sm mt-3 leading-normal'> Please note that after your first upload, you can only change your avatar once a week.</p></em>
+                    <em><p className='text-sm mt-1 leading-normal'> (Optional) Please note that after your first upload, you can only change your avatar once a week.</p></em>
                 )}
                 <div className={`${show3DAvatar ? 'mt-5 grid grid-flow-col auto-cols-auto' : '' }`}>
 
