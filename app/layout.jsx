@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <div className="main-container max-w-screen-lg mx-auto">
+        <div className="main-container">
           <MessageProvider>
             <MessageBanner />
             {children}

@@ -111,7 +111,7 @@ const Login = () => {
   }
 
   return (
-    <div className='flex flex-col items-center md:justify-evenly md:flex-row md:h-auth-page-height'>
+    <div className='flex flex-col items-center gap-12 md:justify-evenly md:flex-row md:gap-0'>
 
         <form className="w-full max-w-xs" onSubmit={handleSubmit}>
           <h2 className='text-3xl mb-6 font-eb text-saddleBrown'>Login</h2>
@@ -148,7 +148,7 @@ const Login = () => {
           </div>
         </form>
 
-      <div className='flex flex-col items-center mb-4.5 md:col-start-2 md:mb-0'>
+      <div className='flex flex-col items-center md:col-start-2'>
         <p className='mb-8'>or Login using</p>
         <SocialButtons text={"Login"} />
         <div className="mt-7">

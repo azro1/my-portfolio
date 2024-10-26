@@ -113,7 +113,7 @@ const OtpForm = ({ redirectUrl, subHeading, successMessage }) => {
 
 
     return (
-        <div className="flex items-center justify-center h-auth-page-height">
+        <div className='max-w-lg mx-auto'>
 
             <form className="max-w-max" onSubmit={handleVerifyOtp}>
                 <h2 className='text-3xl leading-normal mb-4 font-eb text-saddleBrown'>Email Verification Required</h2>

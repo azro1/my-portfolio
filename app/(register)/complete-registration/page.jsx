@@ -424,7 +424,7 @@ const CompleteRegistration = () => {
 
 
     return (
-        <div className='flex flex-col w-full'>
+        <div className='flex flex-col w-full mb-32'>
             <div className='flex flex-col w-full'>
                 <h2 className='text-3xl md:text-center leading-normal font-eb text-saddleBrown'>Set Up Your Account</h2>
 

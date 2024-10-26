@@ -125,9 +125,8 @@ const Signup = () => {
 
 
     return (
-      <div className='flex flex-col items-center gap-6 mb-4.5 md:justify-evenly md:gap-0 md:flex-row md:h-auth-page-height'>
+      <div className='flex flex-col items-center gap-12 md:justify-evenly md:flex-row md:gap-0'>
 
-          
           <form className="w-full max-w-xs" onSubmit={handleSubmit} >
             <h2 className='text-3xl mb-6 font-eb text-saddleBrown'>Sign up</h2>
             <p className='mb-4'>Enter your email address to recieve a security code to create your account</p>
@@ -156,7 +155,7 @@ const Signup = () => {
               {isLoading ? (
                 <div className='flex items-center gap-2'>
                   <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />
-                  <span>Please wait</span>
+                  <span>Signup</span>
                 </div>
               ) : (
                 'Signup'

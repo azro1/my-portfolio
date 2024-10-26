@@ -29,7 +29,7 @@ export default async function RegisterLayout ({ children }) {
 
   return (
     <main>
-      <div className="min-h-custom-lg flex flex-col gap-20">
+      <div className="flex flex-col gap-20">
 
         <nav className='flex items-center h-9.5 relative'>
             <div className='shadow-3xl pt-1.5 px-4 pb-0.5 rounded-xl bg-deepCharcoal'>

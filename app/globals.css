@@ -40,7 +40,7 @@ p {
 }
 
 .main-container {
-  @apply p-1.625;
+  @apply p-1.625 min-h-screen max-w-screen-lg mx-auto;
 }
 
 main {
