@@ -45,7 +45,9 @@ export default async function AuthLayout ({ children }) {
           </div>
 
         </nav>
-        {children}
+        <div className='mb-40'>
+          {children}
+        </div>
       </div>
     </main>
   )

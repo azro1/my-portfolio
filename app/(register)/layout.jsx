@@ -39,7 +39,9 @@ export default async function RegisterLayout ({ children }) {
             </div>
         </nav>
 
-        {children}
+        <div className='mb-40'>
+          {children}
+        </div>
 
       </div>
     </main>
