@@ -26,7 +26,7 @@ const MessageBanner = () => {
                   className='error flex items-center justify-center gap-1.5 max-w-max mx-auto'
               >    
                   {iconSizes.map((obj, index) => (
-                      <div className={`${obj.className} bg-white rounded-full`} key={index}>
+                      <div className={`${obj.className} place-self-start bg-white rounded-full`} key={index}>
                           <FaExclamationCircle className='text-red-600' size={obj.size} />
                       </div>
                   ))}
@@ -43,7 +43,7 @@ const MessageBanner = () => {
                       className='success flex items-center justify-center gap-1.5 max-w-max mx-auto'
                   >
                       {iconSizes.map((obj, index) => (
-                          <div className={`${obj.className} bg-white rounded-full`} key={index}>
+                          <div className={`${obj.className} place-self-start bg-white rounded-full`} key={index}>
                               <FaCheckCircle className='text-green-600' size={obj.size} />
                           </div>
                       ))}
@@ -60,7 +60,7 @@ const MessageBanner = () => {
                       className='info flex items-center justify-center gap-1.5 max-w-max mx-auto'
                   >
                       {iconSizes.map((obj, index) => (
-                          <div className={`${obj.className} bg-white rounded-full`} key={index}>
+                          <div className={`${obj.className} place-self-start bg-white rounded-full`} key={index}>
                               <FaInfoCircle className='text-blue-600' size={obj.size} />
                           </div>
                       ))}

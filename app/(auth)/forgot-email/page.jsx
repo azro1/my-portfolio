@@ -117,11 +117,11 @@ const ForgotEmail = () => {
 
     
     return (
-        <div className='flex items-center justify-center h-auth-page-height'>
+        <div className='max-w-lg mx-auto'>
 
-            <form className='max-w-max' onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <h2 className='text-3xl mb-4 font-eb text-saddleBrown'>Recover Your email</h2>
-                <p className='mb-4 max-w-lg'>Enter the phone number you provided during your account setup to help us recover your email address.</p>
+                <p className='mb-4'>Enter the phone number you provided during your account setup to help us recover your email address.</p>
 
                 <label>
                     <span className='max-w-min mb-2 text-base text-stoneGray block'>Phone</span>
