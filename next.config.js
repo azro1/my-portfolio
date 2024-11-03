@@ -7,6 +7,7 @@ const nextConfig = {
   swcMinify: true, 
   images: {
     formats: ['image/avif', 'image/webp'],
+    domains: ['localhost'],
     remotePatterns: [{
       protocol: 'https',
       hostname: 'sjvdjiblyhtpmryrmrlr.supabase.co',

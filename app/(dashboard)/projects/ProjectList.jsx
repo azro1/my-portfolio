@@ -1,46 +1,69 @@
+"use client"
+
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+import { useState, useEffect } from "react"
 import Link from "next/link"
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
-import { cookies } from "next/headers"
+import Image from 'next/image';
+import { Carousel } from "react-responsive-carousel"
+import 'react-responsive-carousel/lib/styles/carousel.min.css'; // Import the CSS for the carousel
 
-async function getProjects() {
-  const supabase = createServerComponentClient({ cookies })
-  const { data, error } = await supabase.from('projects')
-  .select()
+
+
+const ProjectList = () => {
+  const [projects, setProjects] = useState([]);
+
+
   
-  if (error) {
-    console.log(error.message)
-  }
+  useEffect(() => {
+    async function getProjects() {
+      const supabase = createClientComponentClient();
+      const { data, error } = await supabase.from('projects')
+      .select()
+      
+      if (error) {
+        console.log(error.message)
+      }
+      
+      if (data.length > 0) {
+        setProjects(data);
+      }
+    }
+    getProjects()
+  }, [])
 
-  return data
-}
 
-const ProjectList = async () => {
-  const projects = await getProjects();
 
   return (
-    <main>
-      <h2 className="subheading font-b text-saddleBrown text-center pb-4">My Projects</h2>
-      <section className="mx-auto w-full">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 md:grid-flow-col md:auto-cols-fr">
+    <section>
+      <h2 className="subheading font-b text-saddleBrown text-center pb-5">My Projects</h2>
+      <div>
 
-          {projects && projects.map((project) => (
-            <div className="mt-4 md:mt-0" key={project.id}>
-              <div className="flex flex-col items-center mx-auto max-w-max mb-3 transform transition-transform hover:scale-105">
-                <Link href={`/projects/${project.id}`}>
-                    <img
-                      className="bg-frostWhite p-1 w-full h-48 object-cover object-left-top"
-                      src={project.image_url}
-                      alt={project.list_alt_desc}
-                    />
-                </Link>
-              </div>
-                  <h4 className="font-os font-r text-stoneGray text-center text-md flex-1">{project.title}</h4>  
-            </div>
-          ))}
+          <Carousel showStatus={false} showThumbs={false} transitionTime={500} interval={5000} swipeable={true} >
+             
+              {projects && projects.map((project) => (
+                <div key={project.id}>
 
-        </div>
-      </section>
-    </main>
+                    <Link href={`/projects/${project.id}`}>
+                        <div className='relative w-full h-[380px] lg:h-[450px]'>
+                            <Image className='object-cover object-left-top md:object-contain'
+                                src={project.image_url}
+                                alt={project.list_alt_desc}
+                                fill
+                                sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 976px) 50vw, (max-width: 1440px) 33vw, 25vw"               
+                                priority                   
+                            />
+                        </div>
+                    </Link>
+
+                </div>
+              ))}
+
+          </Carousel>
+
+        
+      </div>
+    </section>
+    
   )
 }
 
