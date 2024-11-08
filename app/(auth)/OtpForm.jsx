@@ -159,8 +159,8 @@ const OtpForm = ({ redirectUrl, subHeading, successMessage }) => {
                 <button className='btn block mt-3.5 bg-saddleBrown' disabled={isLoading}>
                     {isLoading ? (
                         <div className='flex items-center gap-2'>
-                                <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />
-                                <span>Verifying</span>
+                            <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />
+                            <span>Verifying</span>
                         </div>
                     ) : (
                         'Verify'

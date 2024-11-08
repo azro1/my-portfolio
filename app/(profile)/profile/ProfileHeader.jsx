@@ -1,10 +1,12 @@
 "use client"
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-
-import ProfileAvatar from "./ProfileAvatar";
 import { FaUserCircle } from "react-icons/fa";
 import { useState, useEffect } from "react";
+import Image from 'next/image';
+
+// components
+import Avatar from "../../components/Avatar";
 
 // custom hooks
 import { useFetchUser } from '@/app/hooks/useFetchUser';
@@ -84,8 +86,16 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
                   <div className='mt-6'>
                      <div className='flex items-center gap-1 bg-frostWhite p-4'>
                         {avatar_url ? (
-                           <div className="border-2 border-cloudGray rounded-full overflow-hidden p-1 w-fit">
-                              <img className="inline-block w-20 h-20 object-cover" src={avatar_url} alt="a user avatar" />
+                           <div className="border-2 border-cloudGray rounded-full overflow-hidden p-1 relative w-20 h-20">
+                              <Image 
+                                 className="object-cover" 
+                                 src={avatar_url} 
+                                 alt="a user avatar"
+                                 fill
+                                 sizes="(max-width: 480px) 40px, (max-width: 768px) 60px, (max-width: 1024px) 80px, 100px"
+                                 quality={100}
+                                 priority
+                              />
                            </div>
                         )  : (
                            <div className="rounded-full border-2 border-cloudGray overflow-hidden p-1 w-fit ">
@@ -113,7 +123,7 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
                   <div className='mt-6'>
                      <div className='flex items-center gap-1 bg-frostWhite p-4'>
                         <div className='border-2 border-cloudGray rounded-full p-1 w-fit'>
-                           <ProfileAvatar
+                           <Avatar
                               url={avatar_url}
                               size={'w-20 h-20'}
                               lgSize={'w-20 h-20'}

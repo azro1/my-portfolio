@@ -189,9 +189,10 @@ const AvatarUploader = ({ user, title, text, isFirstUpload, displayTitle, btnCol
                                 <Image
                                     src={imgSrc}
                                     alt="A user's selected image"
-                                    fill={true}
+                                    fill
                                     quality={100}
-                                    sizes="100%"
+                                    sizes="(max-width: 480px) 40px, (max-width: 768px) 60px, (max-width: 1024px) 80px, 100px"
+                                    priority
                                 />
                             ) : (
                                 <FaUserCircle size={56} color="gray" />
@@ -207,7 +208,7 @@ const AvatarUploader = ({ user, title, text, isFirstUpload, displayTitle, btnCol
                                 disabled={uploading || (user && user.user_metadata.name)}
                             />
                         </form>
-                        <button className={`btn-small ${btnColor} block mt-2`}
+                        <button className={`btn-small ${btnColor} block mt-3`}
                             onClick={uploadAvatar}
                             disabled={uploading || (user && user.user_metadata.name)}
                         >
@@ -223,8 +224,14 @@ const AvatarUploader = ({ user, title, text, isFirstUpload, displayTitle, btnCol
                     </div>
 
                     {show3DAvatar && (
-                        <div className='col-start-1 place-self-center justify-self-start md:col-start-2 md:justify-self-end'>
-                            <img src="/images/registration/avatar.svg" className='w-full' alt="a profile avatar" />
+                        <div className='col-start-1 place-self-center justify-self-start md:col-start-2 md:justify-self-end relative w-[150px] h-[150px]'>
+                            <Image 
+                                src="/images/registration/avatar.svg" 
+                                alt="an image of a 3D avatar"
+                                fill
+                                quality={100}
+                                priority
+                            />
                         </div>
                     )}
 

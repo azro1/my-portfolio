@@ -1,5 +1,6 @@
 "use client"
 
+import Image from 'next/image';
 import { useState, useEffect, useRef } from 'react';
 import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
@@ -10,7 +11,7 @@ import { useFetchProfile } from '@/app/hooks/useFetchProfile';
 import { useMessage } from '@/app/hooks/useMessage';
 
 // components
-import ProfileAvatar from '@/app/(profile)/profile/ProfileAvatar';
+import Avatar from '@/app/components/Avatar';
 
 
 const Comments = ({ user }) => {
@@ -265,11 +266,19 @@ const Comments = ({ user }) => {
                             <>
                                 <div className="flex items-start gap-3">
                                     {comment.avatar_url?.includes('https') ? (
-                                        <div className="overflow-hidden rounded-full min-w-max h-12">
-                                            <img className="inline-block w-full h-full object-cover" src={comment.avatar_url} alt="a user avatar" />
+                                        <div className="overflow-hidden rounded-full min-w-max relative w-12 h-12">
+                                            <Image 
+                                                className="inline-block w-full h-full object-cover" 
+                                                src={comment.avatar_url} 
+                                                alt="a user avatar"
+                                                fill
+                                                sizes="(max-width: 480px) 40px, (max-width: 768px) 60px, (max-width: 1024px) 80px, 100px"
+                                                quality={100}
+                                                priority 
+                                            />
                                         </div>
                                     ) : (
-                                        <ProfileAvatar
+                                        <Avatar
                                             url={comment.avatar_url}
                                             size={'h-12 w-12'}
                                             phSize={50}

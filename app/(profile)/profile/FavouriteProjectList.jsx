@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { FaHeart } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 
 // custom hooks
@@ -34,16 +35,22 @@ const FavouriteProjectList = ({ user }) => {
             {!errorMessage ? (
                 <div className='flex items-center min-h-52 bg-frostWhite p-4'>
                     {!isProjectsLoading && (
-                        <div className='flex flex-wrap gap-3'>
+                        <div className='flex flex-wrap gap-4'>
                             {retrievedProjects.length > 0 && (retrievedProjects.map((project) => (
                                 <div key={project.id}>
-                                    <div className='max-w-36 relative'>
+                                    <div className='relative'>
                                         <div className='bg-frostWhite p-1 shadow-outer' >
                                             <Link href={`/projects/${project.id}`}>
-                                                <img className='w-full h-30 object-cover object-left-top'
-                                                    src={project.image_url}
-                                                    alt={project.list_alt_desc}
-                                                />
+                                                <div className='relative w-[136px] h-[120px]'>
+                                                    <Image 
+                                                        className='object-cover object-left-top'
+                                                        src={project.image_url}
+                                                        alt={project.list_alt_desc}
+                                                        fill
+                                                        quality={100}
+                                                        priority
+                                                    />
+                                                </div>
                                             </Link>
                                         </div>
                                         <FaHeart className='absolute bottom-1 left-1' size='18' color='red' />

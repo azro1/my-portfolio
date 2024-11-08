@@ -1,5 +1,5 @@
 import Link from "next/link"
-import Avatar from "./Avatar";
+import NavbarAvatar from "./NavbarAvatar";
 
 // components
 import Chevron from "../Chevron";
@@ -19,7 +19,7 @@ const Navbar = ({ user }) => {
         </Link>
 
         <Chevron order={'order-1'} user={user} />
-        {user && <Avatar user={user} />}
+        {user && <NavbarAvatar user={user} />}
 
 
       </nav>

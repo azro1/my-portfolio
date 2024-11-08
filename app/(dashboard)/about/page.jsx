@@ -9,13 +9,16 @@ export const metadata = {
 const About = () => {
   return (
     <div className="grid grid-cols-1 gap-y-6.25 md:gap-y-10.25">
-      <div className="flex flex-col items-center md:flex-row md:justify-between md:items-end md:gap-8">
-        <div className="w-full h-80 md:h-96 relative">
+      <div className="flex flex-col items-center md:flex-row md:gap-8">
+        <div className="md:w-[80%]">
           <Image
-            src={'/images/about/untitled.png'}
+            className="w-full"
+            src={'/images/about/placeholder.png'}
             alt={'a picture of me'}
-            fill={true}
-            objectFit="scale-down"
+            width={378}
+            height={340}
+            priority
+            quality={100}
           />
         </div>
         <div className="flex flex-col text-center mt-16 md:mt-0 md:text-left md:w-full">
@@ -32,13 +35,16 @@ const About = () => {
           <p className="leading-7">With a foundation built on diverse tools across different technologies, I create digital solutions that are tailored to users needs and preferences</p>
         </div>
         
-        <div className="w-full h-64 md:h-74 relative">
-          <Image
-            src={'/images/about/triangle.svg'}
-            alt={'a triangle shape'}
-            fill={true}
-            objectFit="scale-down"
-          />
+        <div className="w-[85%] sm:w-[70%] md:w-[50%]">
+           <Image 
+              className="w-full"
+              src="/images/about/history.svg" 
+              alt="an illustration of a man at his computer"
+              width={64}
+              height={64}
+              quality={100}
+              priority
+           />
         </div>
       </div>
 
@@ -51,6 +57,8 @@ const About = () => {
               alt={'an icon for front end development'} 
               width={30} 
               height={30} 
+              quality={100}
+              priority
             />
             <p>Front End Development</p>
           </li>
@@ -59,7 +67,9 @@ const About = () => {
               src={'/images/about/gd.svg'}
               alt={'an icon for graphic design'} 
               width={30} 
-              height={30} 
+              height={30}
+              quality={100}
+              priority 
             />
             <p>Graphic Design</p>
           </li>
@@ -68,7 +78,9 @@ const About = () => {
               src={'/images/about/rd.svg'}
               alt={'an icon for responsive design'} 
               width={30} 
-              height={30} 
+              height={30}
+              quality={100}
+              priority
             />
             <p>Responsive Design</p>
           </li>
@@ -77,7 +89,9 @@ const About = () => {
               src={'/images/about/uid.svg'}
               alt={'an icon for responsive design'} 
               width={30} 
-              height={30} 
+              height={30}
+              quality={100}
+              priority
             />
             <p>UI Design</p>
           </li>
@@ -86,7 +100,9 @@ const About = () => {
               src={'/images/about/bed.svg'}
               alt={'an icon for responsive design'} 
               width={30} 
-              height={30} 
+              height={30}
+              quality={100}
+              priority 
             />
             <p>Back End Development</p>
           </li>
@@ -94,19 +110,22 @@ const About = () => {
         <p className="leading-7 md:max-w-3xl self-center">Over time, my expertise has evolved considerably from initially grasping fundamental concepts to now comprehensively understanding the complexities of both front-end and back-end development, my journey has been marked by continuous learning and growth</p>
       </div>
 
-      <div className="flex flex-col items-center md:flex-row md:justify-between md:items-end md:gap-8">
-        <div className="w-full h-80 md:h-96 relative">
+      <div className="flex flex-col items-center md:flex-row md:justify-between md:gap-8">
+        <div className="md:w-[80%]">
           <Image
-            src={'/images/about/untitled.png'}
+            className="w-full"
+            src={'/images/about/placeholder.png'}
             alt={'a picture of me'}
-            fill={true}
-            objectFit="scale-down"
+            width={378}
+            height={340}
+            priority
+            quality={100}
           />
         </div>
         <div className="flex flex-col text-center mt-16 md:mt-0 md:text-left md:w-full">
           <h2 className="subheading font-b text-saddleBrown pb-3">Contributing</h2>
           <p className="leading-7 pb-4">Beginning my open-source journey with simple HTML projects, I'm eager to learn, grow, and contribute. It's just the start as I strive to refine my skills and make an impact in web development.</p> 
-          <p className="leading-7">Check out my <a className="text-saddleBrown" href="https://github.com/azro1" target="_blank">GitHub</a> repository for a closer look at my community engagements and open-source contributions</p>
+          <p className="leading-7">Check out my <a className="text-base text-saddleBrown" href="https://github.com/azro1" target="_blank">GitHub</a> repository for a closer look at my community engagements and open-source contributions</p>
         </div>
       </div>
 
@@ -114,25 +133,31 @@ const About = () => {
       <div className="flex flex-col-reverse text-center items-center md:flex-row md:gap-8">
         <div className="flex flex-col mt-16 md:mt-0 md:justify-center md:text-left md:w-full">
           <h2 className="subheading font-b text-saddleBrown pb-3">Teaching</h2>
-          <p className="leading-7 pb-4">I'm passionate about sharing knowledge through my <a className="text-saddleBrown" href="https://www.youtube.com/channel/UCSK7zfwlgMq3r88lkchHsSw" target="_blank">YouTube channel</a> offering tutorials on web development, graphic design, and more. Teaching via video content broadens my reach, empowering others to explore these creative realms</p> 
+          <p className="leading-7 pb-4">I'm passionate about sharing knowledge through my <a className="text-base text-saddleBrown" href="https://www.youtube.com/channel/UCSK7zfwlgMq3r88lkchHsSw" target="_blank">YouTube channel</a> offering tutorials on web development, graphic design, and more. Teaching via video content broadens my reach, empowering others to explore these creative realms</p> 
         </div>
-        <div className="w-full h-64 md:h-74 relative">
+        <div className="w-[90%] sm:w-[75%] md:w-[60%]">
           <Image
-            src={'/images/about/ellipse.svg'}
-            alt={'a triangle shape'}
-            fill={true}
-            objectFit="scale-down"
+          className="w-full"
+            src={'/images/about/teaching.svg'}
+            alt="an illustration of a woman watching a youtube video"
+            width={64}
+            height={64}
+            priority
+            quality={100}
           />
         </div>
       </div>
 
       <div className="flex flex-col text-center items-center md:flex-row md:gap-8">
-        <div className="w-full h-64 md:h-74 relative">
+        <div className="w-[75%] sm:w-[60%] md:w-[45%]">
           <Image
-            src={'/images/about/triangle.svg'}
-            alt={'a triangle shape'}
-            fill={true}
-            objectFit="scale-down"
+            className="w-full"
+            src={'/images/about/interests.svg'}
+            alt="an illustration of a man cooking at a barbecue"
+            width={64}
+            height={64}
+            priority
+            quality={100}
           />
         </div>
         <div className="flex flex-col mt-16 md:mt-0 md:justify-center md:text-left md:w-full">

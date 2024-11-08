@@ -49,8 +49,9 @@ const ProjectList = () => {
                                 src={project.image_url}
                                 alt={project.list_alt_desc}
                                 fill
-                                sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 976px) 50vw, (max-width: 1440px) 33vw, 25vw"               
-                                priority                   
+                                sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 976px) 50vw, (max-width: 1440px) 33vw, 25vw"              
+                                quality={100}
+                                priority
                             />
                         </div>
                     </Link>

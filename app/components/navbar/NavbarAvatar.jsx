@@ -1,15 +1,15 @@
 "use client"
 
-// Avatar.jsx
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useState, useEffect } from "react";
-import ProfileAvatar from "@/app/(profile)/profile/ProfileAvatar";
+import Avatar from "@/app/components/Avatar";
 import { FaUserCircle } from "react-icons/fa";
 import { useRouter } from 'next/navigation';
+import Image from "next/image";
 
 
 
-const Avatar = ({ user }) => {
+const NavbarAvatar = ({ user }) => {
     const [first_name, setFirstName] = useState(user ? user.user_metadata.full_name : '');
     const [avatar_url, setAvatarUrl] = useState('');
     const [isProfileLoading, setIsProfileLoading] = useState(true);
@@ -83,8 +83,16 @@ const Avatar = ({ user }) => {
                         ) : (
                             <>
                                 {avatar_url ? (
-                                    <div className="overflow-hidden rounded-full w-12 h-12">
-                                        <img className="inline-block w-full h-full object-cover" src={avatar_url} alt="a user avatar" />
+                                    <div className="overflow-hidden rounded-full relative w-12 h-12">
+                                        <Image 
+                                            className="w-full h-full object-cover" 
+                                            src={avatar_url} 
+                                            alt="a user avatar"
+                                            fill
+                                            sizes="(max-width: 480px) 40px, (max-width: 768px) 60px, (max-width: 1024px) 80px, 100px"
+                                            quality={100}
+                                            priority
+                                        />
                                     </div>
                                 ) : (
                                     <div className="overflow-hidden rounded-full min-w-max h-auto">
@@ -112,7 +120,7 @@ const Avatar = ({ user }) => {
                             </div>
                         ) : (
                             <>
-                                <ProfileAvatar
+                                <Avatar
                                     url={avatar_url}
                                     size={'w-12 h-12'}
                                     lgSize={'w-12 h-12'}
@@ -128,4 +136,4 @@ const Avatar = ({ user }) => {
     );
 };
 
-export default Avatar;
+export default NavbarAvatar;
