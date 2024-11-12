@@ -136,7 +136,7 @@ const OtpForm = ({ contact, storageStr, verificationType, title, subHeading, suc
 
 
     return (
-        <div className="flex items-center justify-center h-profile-page-height">
+        <div className="flex items-center justify-center h-[60vh] bg-softCharcoal">
 
             <div className="flex max-w-sm">
 
@@ -145,7 +145,7 @@ const OtpForm = ({ contact, storageStr, verificationType, title, subHeading, suc
                     <p className='mb-4'>{subHeading}</p>
 
                     <label>
-                        <span className='max-w-min mb-2 text-base text-stoneGray block'>
+                        <span className='max-w-min mb-2 text-base text-ashGray block'>
                             Code:
                         </span>
                         <div className='relative max-w-xs'>
@@ -162,7 +162,7 @@ const OtpForm = ({ contact, storageStr, verificationType, title, subHeading, suc
                             {!isEyeOpen ? (
                                 <div className="absolute right-1 top-1 p-2.5 group bg-nightSky hover:bg-saddleBrown transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
                                     <FiEye
-                                        className='text-stoneGray group-hover:text-frostWhite transition duration-300 fieye'
+                                        className='text-ashGray group-hover:text-frostWhite transition duration-300 fieye'
                                         size={17}
                                     />
                                 </div>
@@ -170,7 +170,7 @@ const OtpForm = ({ contact, storageStr, verificationType, title, subHeading, suc
                             ) : (
                                 <div className="absolute right-1 top-1 p-2.5 group bg-nightSky hover:bg-saddleBrown transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
                                     <FiEyeOff
-                                        className='text-stoneGray group-hover:text-frostWhite transition duration-300 fieye-off'
+                                        className='text-ashGray group-hover:text-frostWhite transition duration-300 fieye-off'
                                         size={17}
                                     />
                                 </div>
@@ -184,7 +184,7 @@ const OtpForm = ({ contact, storageStr, verificationType, title, subHeading, suc
                         {isLoading ? (
                             <div className='flex items-center gap-2'>
                                 <img className="w-5 h-5 opacity-50" src="../images/loading/spinner.svg" alt="Loading indicator" />
-                                <span>Verifying</span>
+                                <span>Verify</span>
                             </div>
                         ) : (
                             'Verify'

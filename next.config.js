@@ -7,6 +7,7 @@ const nextConfig = {
   swcMinify: true, 
   images: {
     formats: ['image/avif', 'image/webp'],
+    domains: ['localhost', 'lh3.googleusercontent.com', 'avatars.githubusercontent.com', 'cdn.discordapp.com'],
     remotePatterns: [{
       protocol: 'https',
       hostname: 'sjvdjiblyhtpmryrmrlr.supabase.co',

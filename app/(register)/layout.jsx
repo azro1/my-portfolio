@@ -34,7 +34,7 @@ export default async function RegisterLayout ({ children }) {
         <nav className='flex items-center h-9.5 relative'>
             <div className='shadow-3xl pt-1.5 px-4 pb-0.5 rounded-xl bg-deepCharcoal'>
               <h2 className='mainheading font-eb text-saddleBrown'>
-                Port<span className="text-stoneGray">folio</span>
+                Port<span className="text-ashGray">folio</span>
               </h2>
             </div>
         </nav>

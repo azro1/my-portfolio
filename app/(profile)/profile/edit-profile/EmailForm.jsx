@@ -80,7 +80,7 @@ const EmailForm = ({ user, profile }) => {
                 const serverEmail = await res.json();
 
                 if (!res.ok && serverEmail.error) {
-                    throw new Error(error.message)
+                    throw new Error(serverEmail.error)
                 } else if (res.status === 200 && !serverEmail.error) {
                     router.push('/profile/verify-email-otp')
                 }
@@ -123,13 +123,13 @@ const EmailForm = ({ user, profile }) => {
 
             <div className='my-4'>
                 <div className="flex items-center justify-between pb-1">
-                    <span className="inline-block text-stoneGray">Email</span>
-                    <span className="text-red-600 cursor-pointer" onClick={handleOpenForm}>Edit</span>
+                    <span className="inline-block text-ashGray">Email</span>
+                    <span className="text-red-800 cursor-pointer" onClick={handleOpenForm}>Edit</span>
                 </div>
-                <p className="text-nightSky frostWhitespace-normal break-words">{email}</p>
+                <p className="text-cloudGray frostWhitespace-normal break-words">{email}</p>
             </div>
 
-            <div className='bg-cloudGray h-px'></div>
+            <div className='bg-onyx h-[2px]'></div>
 
             {showForm && (
                 <Modal>

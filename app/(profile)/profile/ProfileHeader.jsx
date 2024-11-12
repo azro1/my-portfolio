@@ -1,10 +1,12 @@
 "use client"
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-
-import ProfileAvatar from "./ProfileAvatar";
 import { FaUserCircle } from "react-icons/fa";
 import { useState, useEffect } from "react";
+import Image from 'next/image';
+
+// components
+import Avatar from "../../components/Avatar";
 
 // custom hooks
 import { useFetchUser } from '@/app/hooks/useFetchUser';
@@ -76,16 +78,24 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
       <>
          {user && user.app_metadata.provider !== "email" ? (
 
-            <div className='flex-1 p-4 pt-6 bg-cloudGray'>
-               <h2 className='subheading font-b'>{title}</h2>
+            <div className='pt-16'>
+               <h2 className='subheading font-b text-stoneGray'>{title}</h2>
                <p className='mt-4 leading-normal'>{subheading}</p>
 
                {showAvatar && (
-                  <div className='mt-6'>
-                     <div className='flex items-center gap-1 bg-frostWhite p-4'>
+                  <div className='mt-6 h-[500px] bg-softCharcoal'>
+                     <div className='flex items-center gap-1 p-4'>
                         {avatar_url ? (
-                           <div className="border-2 border-cloudGray rounded-full overflow-hidden p-1 w-fit">
-                              <img className="inline-block w-20 h-20 object-cover" src={avatar_url} alt="a user avatar" />
+                           <div className="border-2 border-cloudGray rounded-full overflow-hidden p-1 relative w-20 h-20">
+                              <Image 
+                                 className="object-cover" 
+                                 src={avatar_url} 
+                                 alt="a user avatar"
+                                 fill
+                                 sizes="(max-width: 480px) 40px, (max-width: 768px) 60px, (max-width: 1024px) 80px, 100px"
+                                 quality={100}
+                                 priority
+                              />
                            </div>
                         )  : (
                            <div className="rounded-full border-2 border-cloudGray overflow-hidden p-1 w-fit ">
@@ -93,8 +103,8 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
                            </div>
                         )} 
                         {!loading && (
-                           <div className='pl-2 flex-1 min-w-0'>
-                              <p className='text-nightSky font-b'>{first_name}</p>
+                           <div className='pl-2 min-w-0'>
+                              <p className='text-stoneGray font-b'>{first_name}</p>
                               <p className='whitespace-normal break-words'>{bio ? `${bio}` : `"Add your Bio"`}</p>
                            </div>
                         )}
@@ -105,15 +115,15 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
          )
             :
          (
-            <div className='flex-1 p-4 pt-6 bg-cloudGray'>
-               <h2 className='subheading font-b'>{title}</h2>
-               <p className='mt-4 leading-normal'>{subheading}</p>
+            <div className='pt-16'>
+               <h2 className='subheading font-b text-stoneGray'>{title}</h2>
+               <p className='mt-4 leading-normal text-ashGray'>{subheading}</p>
 
                {showAvatar && (
-                  <div className='mt-6'>
-                     <div className='flex items-center gap-1 bg-frostWhite p-4'>
+                  <div className='mt-6 h-[480px] bg-softCharcoal'>
+                     <div className='flex items-center gap-1 p-4'>
                         <div className='border-2 border-cloudGray rounded-full p-1 w-fit'>
-                           <ProfileAvatar
+                           <Avatar
                               url={avatar_url}
                               size={'w-20 h-20'}
                               lgSize={'w-20 h-20'}
@@ -121,13 +131,14 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
                            />
                         </div>
                         {!loading && (
-                           <div className='pl-2 flex-1 min-w-0'>
-                              <p className='text-nightSky text-xl font-b'>Welcome, {first_name}</p>
-                              <p className='whitespace-normal break-words pt-1'>{bio ? `${bio}` : `"Add your Bio"`}</p>
+                           <div className='pl-2 min-w-0'>
+                              <p className='text-cloudGray text-xl font-b'>Welcome, {first_name}</p>
+                              <p className='whitespace-normal break-words pt-1'>{bio ? <span className='text-stoneGray'>{bio}</span> : `"Add your Bio"`}</p>
                            </div>
                         )}
                      </div>
                   </div>
+                  
                )}
             </div>
          )}

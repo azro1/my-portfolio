@@ -177,7 +177,7 @@ const AvatarUploader = ({ user, title, text, isFirstUpload, displayTitle, btnCol
                 {displayTitle &&  (
                     <h2 className='text-2xl text-stoneGray mb-3 font-eb font-rubik'>{title}</h2>
                 )}
-                <p className='leading-normal'>{text}</p>
+                <p className='leading-normal text-ashGray'>{text}</p>
                 {isFirstUpload && (
                     <em><p className='text-sm mt-1 leading-normal'> (Optional) Please note that after your first upload, you can only change your avatar once a week.</p></em>
                 )}
@@ -189,9 +189,10 @@ const AvatarUploader = ({ user, title, text, isFirstUpload, displayTitle, btnCol
                                 <Image
                                     src={imgSrc}
                                     alt="A user's selected image"
-                                    fill={true}
+                                    fill
                                     quality={100}
-                                    sizes="100%"
+                                    sizes="(max-width: 480px) 40px, (max-width: 768px) 60px, (max-width: 1024px) 80px, 100px"
+                                    priority
                                 />
                             ) : (
                                 <FaUserCircle size={56} color="gray" />
@@ -199,7 +200,7 @@ const AvatarUploader = ({ user, title, text, isFirstUpload, displayTitle, btnCol
                         </div>
                         <form ref={formRef} className='w-full'>
                             <input
-                                className='text-stoneGray file:cursor-pointer file:mr-3 w-full max-w-xs'
+                                className='text-ashGray file:cursor-pointer file:mr-3 w-full max-w-xs'
                                 type='file'
                                 id='single'
                                 accept='image/*'
@@ -207,7 +208,7 @@ const AvatarUploader = ({ user, title, text, isFirstUpload, displayTitle, btnCol
                                 disabled={uploading || (user && user.user_metadata.name)}
                             />
                         </form>
-                        <button className={`btn-small ${btnColor} block mt-2`}
+                        <button className={`btn-small ${btnColor} block mt-3`}
                             onClick={uploadAvatar}
                             disabled={uploading || (user && user.user_metadata.name)}
                         >
@@ -223,8 +224,14 @@ const AvatarUploader = ({ user, title, text, isFirstUpload, displayTitle, btnCol
                     </div>
 
                     {show3DAvatar && (
-                        <div className='col-start-1 place-self-center justify-self-start md:col-start-2 md:justify-self-end'>
-                            <img src="/images/registration/avatar.svg" className='w-full' alt="a profile avatar" />
+                        <div className='col-start-1 place-self-center justify-self-start md:col-start-2 md:justify-self-end relative w-[150px] h-[150px]'>
+                            <Image 
+                                src="/images/registration/avatar.svg" 
+                                alt="an image of a 3D avatar"
+                                fill
+                                quality={100}
+                                priority
+                            />
                         </div>
                     )}
 

@@ -120,7 +120,7 @@ const OtpForm = ({ redirectUrl, subHeading, successMessage }) => {
                 <p className='mb-4 max-w-lg'>{subHeading}</p>
 
                 <label>
-                    <span className='max-w-min mb-2 text-base text-stoneGray block'>
+                    <span className='max-w-min mb-2 text-base text-ashGray block'>
                         Code:
                     </span>
                     <div className='relative max-w-xs'>
@@ -137,7 +137,7 @@ const OtpForm = ({ redirectUrl, subHeading, successMessage }) => {
                         {!isEyeOpen ? (
                             <div className="absolute right-1 top-1 p-2.5 group bg-nightSky hover:bg-saddleBrown transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
                                 <FiEye
-                                    className='text-stoneGray group-hover:text-frostWhite transition duration-300 fieye'
+                                    className='text-ashGray group-hover:text-frostWhite transition duration-300 fieye'
                                     size={17}
                                 />
                             </div>
@@ -145,7 +145,7 @@ const OtpForm = ({ redirectUrl, subHeading, successMessage }) => {
                         ) : (
                             <div className="absolute right-1 top-1 p-2.5 group bg-nightSky hover:bg-saddleBrown transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
                                 <FiEyeOff
-                                    className='text-stoneGray group-hover:text-frostWhite transition duration-300 fieye-off'
+                                    className='text-ashGray group-hover:text-frostWhite transition duration-300 fieye-off'
                                     size={17}
                                 />
                             </div>
@@ -159,8 +159,8 @@ const OtpForm = ({ redirectUrl, subHeading, successMessage }) => {
                 <button className='btn block mt-3.5 bg-saddleBrown' disabled={isLoading}>
                     {isLoading ? (
                         <div className='flex items-center gap-2'>
-                                <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />
-                                <span>Verifying</span>
+                            <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />
+                            <span>Verify</span>
                         </div>
                     ) : (
                         'Verify'

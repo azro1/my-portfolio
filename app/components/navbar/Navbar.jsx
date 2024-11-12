@@ -1,5 +1,5 @@
 import Link from "next/link"
-import Avatar from "./Avatar";
+import NavbarAvatar from "./NavbarAvatar";
 
 // components
 import Chevron from "../Chevron";
@@ -9,20 +9,30 @@ const Navbar = ({ user }) => {
 
   return (
     <main>
-      <nav className={`flex items-center h-9.5 relative ${user && user.user_metadata.avatar_url || user && user.user_metadata.first_name  ? 'mb-36 md:mb-0' : 'mb-0'}`}>
-        <Link className="mr-auto" href='/'>
-          <Card values={'shadow-3xl pt-1.5 px-4 pb-0.5 rounded-xl bg-deepCharcoal'}>
-            <h2 className='mainheading font-eb text-saddleBrown'>
-              Port<span className="text-stoneGray">folio</span>
-            </h2>
-          </Card>
-        </Link>
+      <div className='relative'>
+        <nav className='grid grid-cols-[minmax(200px,_1fr)_minmax(40px,_40px)] grid-rows-[minmax(152px,_auto)_minmax(90px,_90px)] md:grid-cols-[minmax(200px,_1fr)_minmax(70px,_70px)_minmax(40px,_40px)] md:grid-rows-[minmax(152px,_1fr)] md:gap-3'>
 
-        <Chevron order={'order-1'} user={user} />
-        {user && <Avatar user={user} />}
+          <Link className="col-start-1 row-start-1 justify-self-start place-self-center" href='/'>
+            <Card values={'shadow-3xl pt-1.5 px-4 pb-0.5 rounded-xl bg-deepCharcoal'}>
+              <h2 className='mainheading font-eb text-saddleBrown'>
+                Port<span className="text-stoneGray">folio</span>
+              </h2>
+            </Card>
+          </Link>
+          
+          <div className='col-start-2 row-start-1 place-self-center md:col-start-3'>
+            <Chevron user={user} />
+          </div>
 
+          {user && (
+            <div className='col-start-1 row-start-2 justify-self-start place-self-center md:col-start-2 md:row-start-1 md:justify-self-center'>
+              <NavbarAvatar className user={user} />
+            </div>
+          )}
 
-      </nav>
+        </nav>
+      </div>
+
     </main>
   );
 }

@@ -3,6 +3,8 @@ export const dynamicParams = true;
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { v4 as uuidv4 } from "uuid"
+import Image from 'next/image';
+
 
 // components
 import Card from "@/app/components/Card";
@@ -60,12 +62,19 @@ const Project = async ({ params }) => {
   return (
     <>
       <h2 className='subheading font-b text-saddleBrown'>{project.title}</h2>
-      <div className='grid gap-y-6 md:gap-y-10 md:grid-auto-rows md:grid-cols-2'>
+      <div className='mt-8 grid gap-y-6 md:grid-auto-rows md:grid-cols-2'>
 
-        <Card values={'mt-6 p-3 rounded-md md:col-span-2 md:h-full'} >
-          <div className='bg-frostWhite p-3 h-full'>
-              <img className='w-full h-96 object-cover object-left-top' src={project.image_url} alt={project.alt_desc} />
-          </div>
+        <Card values={'p-3 rounded-md md:col-span-2 relative w-full h-[380px] lg:h-auto'} >
+              <Image 
+                  className='w-full h-full object-cover' 
+                  src={project.image_url} 
+                  alt={project.alt_desc}
+                  width={1348}
+                  height={596}
+                  sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 976px) 50vw, (max-width: 1440px) 33vw, 25vw"
+                  quality={100}
+                  priority
+              />
         </Card>
 
         <div className='md:row-start-2 md:col-start-1 pb-3 md:col-span-2 relative'>
@@ -76,23 +85,23 @@ const Project = async ({ params }) => {
 
         <div className='row-start-3 col-start-1 md:col-start-1 md:row-start-3'>
           <div className='pb-6 md:pb-8'>
-            <div className='text-stoneGray text-base leading-7'>
+            <div className='text-ashGray text-base leading-7'>
               Start Date:{' '}
-              <span className='text-stoneGray text-base'>
+              <span className='text-ashGray text-base'>
                 {project.start}
               </span>
             </div>
-            <div className='text-stoneGray text-base leading-7'>
+            <div className='text-ashGray text-base leading-7'>
               End Date:{' '}
-              <span className='text-stoneGray text-base'>
+              <span className='text-ashGray text-base'>
                 {project.end}
               </span>
             </div>
           </div>
           <div className='pb-6 md:pb-8'>
-            <div className='text-stoneGray text-base leading-7'>
+            <div className='text-ashGray text-base leading-7'>
               Tech Stack:{' '}
-              <span className='text-stoneGray text-base'>
+              <span className='text-ashGray text-base'>
                 {project.techstack.map((stack) => (
                    <span className='techstack ' key={stack}>
                     {stack}
@@ -100,15 +109,15 @@ const Project = async ({ params }) => {
                 ))}
               </span>
             </div>
-            <div className='text-stoneGray text-base leading-7'>
+            <div className='text-ashGray text-base leading-7'>
               Key Contributors:{' '}
-              <span className='text-stoneGray text-base'>
+              <span className='text-ashGray text-base'>
                 {project.contributions}
               </span>
             </div>
           </div>
           <div>
-            <div className='text-stoneGray text-base leading-7'>
+            <div className='text-ashGray text-base leading-7'>
               Project Url:{' '}
               <a href={project.url} target='_blank'>
                 <span className='text-saddleBrown text-base'>

@@ -1,46 +1,84 @@
-import Link from "next/link"
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
-import { cookies } from "next/headers"
+"use client"
 
-async function getProjects() {
-  const supabase = createServerComponentClient({ cookies })
-  const { data, error } = await supabase.from('projects')
-  .select()
-  
-  if (error) {
-    console.log(error.message)
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+import { useState, useEffect } from "react"
+import Link from "next/link"
+import Image from 'next/image';
+import { Carousel } from "react-responsive-carousel"
+import 'react-responsive-carousel/lib/styles/carousel.min.css'; // Import the CSS for the carousel
+
+
+const ProjectList = () => {
+  const [projects, setProjects] = useState([]);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+
+  useEffect(() => {
+    async function getProjects() {
+      const supabase = createClientComponentClient();
+      const { data, error } = await supabase.from('projects')
+      .select()
+      
+      if (error) {
+        console.log(error.message)
+      }
+      
+      if (data.length > 0) {
+        setProjects(data);
+        setLoading(false); 
+      }
+    }
+    getProjects()
+  }, [])
+
+
+  if (loading) {
+    return (
+      <div className='min-h-[600px] flex items-center justify-center'> 
+          <img className='w-32' src="../images/loading/loading.gif" alt="a loading gif" />
+      </div>
+    );
   }
 
-  return data
-}
-
-const ProjectList = async () => {
-  const projects = await getProjects();
 
   return (
-    <main>
-      <h2 className="subheading font-b text-saddleBrown text-center pb-4">My Projects</h2>
-      <section className="mx-auto w-full">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 md:grid-flow-col md:auto-cols-fr">
-
-          {projects && projects.map((project) => (
-            <div className="mt-4 md:mt-0" key={project.id}>
-              <div className="flex flex-col items-center mx-auto max-w-max mb-3 transform transition-transform hover:scale-105">
-                <Link href={`/projects/${project.id}`}>
-                    <img
-                      className="bg-frostWhite p-1 w-full h-48 object-cover object-left-top"
-                      src={project.image_url}
-                      alt={project.list_alt_desc}
-                    />
-                </Link>
+    <section>
+      <h2 className="subheading font-b text-saddleBrown text-center pb-5">My Projects</h2>
+      <Carousel showStatus={false} transitionTime={500} interval={5000} swipeable={true} showThumbs={true} selectedItem={selectedIndex} autoPlay infiniteLoop onChange={(index) => setSelectedIndex(index)} renderThumbs={() =>
+        projects.map((project) => (
+          <div key={project.id}>
+            <Image
+              src={project.image_url}
+              alt={project.list_alt_desc}
+              width={50}
+              height={50}
+              className="object-cover"
+            />
+          </div>
+        ))
+      }
+      >
+        {projects && projects.map((project) => (
+          <div key={project.id}>
+            <Link href={`/projects/${project.id}`}>
+              <div className='relative w-full h-[380px] lg:h-[450px]'>
+                <Image className='object-cover object-left-top md:object-contain'
+                  src={project.image_url}
+                  alt={project.list_alt_desc}
+                  fill
+                  sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 976px) 50vw, (max-width: 1440px) 33vw, 25vw"
+                  quality={100}
+                  priority
+                />
               </div>
-                  <h4 className="font-os font-r text-stoneGray text-center text-md flex-1">{project.title}</h4>  
-            </div>
-          ))}
+            </Link>
 
-        </div>
-      </section>
-    </main>
+          </div>
+        ))}
+      </Carousel>
+    </section>
+
   )
 }
 

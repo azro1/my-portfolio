@@ -6,13 +6,13 @@ import Image from 'next/image';
 import { FaUserCircle } from "react-icons/fa";
 
 
-const ProfileAvatar = ({ url, size, lgSize, phSize }) => {
+const Avatar = ({ url, size, lgSize, phSize }) => {
     const [signedUrl, setSignedUrl] = useState(null);
     const [error, setError] = useState(null);
     const supabase = createClientComponentClient();
     const [isLoading, setIsLoading] = useState(false);
 
-    // the temporary URL is used to create a signed URL using Supabase's createSignedUrls function. This signedURL is then used to display the image in the ProfileAvatar component which we pass through as a prop.
+    // The url that we take in as a prop is used to create a signed URL using Supabase's createSignedUrls function. This signedURL is then used in JSX to display the image.
     useEffect(() => {
         const fetchSignedUrl = async () => {
             setIsLoading(true)
@@ -55,10 +55,11 @@ const ProfileAvatar = ({ url, size, lgSize, phSize }) => {
                         <div className={`overflow-hidden rounded-full ${size} relative`}>
                             <Image
                                 src={signedUrl}
-                                alt="Avatar"
-                                width={80}
-                                height={70}
+                                alt="a user avatar"
+                                fill
                                 quality={100}
+                                priority
+                                objectFit='cover'
                             />
                         </div>
                     ) : (
@@ -70,7 +71,7 @@ const ProfileAvatar = ({ url, size, lgSize, phSize }) => {
     );
 };
 
-export default ProfileAvatar;
+export default Avatar;
 
 
 

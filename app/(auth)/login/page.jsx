@@ -118,7 +118,7 @@ const Login = () => {
           <p className='mb-4'>Enter your email address to recieve a security code for quick and secure login</p>
 
           <label>
-            <span className='max-w-min mb-2 text-base text-stoneGray block'>
+            <span className='max-w-min mb-2 text-base text-ashGray block'>
               Email
             </span>
             <input

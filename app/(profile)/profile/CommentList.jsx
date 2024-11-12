@@ -94,23 +94,23 @@ const CommentList = ({ user }) => {
 
   return (
     <div>
-        <h3 className='text-lg font-b text-nightSky mb-3'>Comments</h3>
+        <h3 className='text-lg font-b text-stoneGray mb-3'>Comments</h3>
 
             {!error ? (
-                <div className='flex flex-col gap-2 text-left min-h-96 max-h-96 overflow-y-scroll hide-scrollbar md:max-w-xs relative bg-frostWhite'>
+                <div className='flex flex-col  text-left min-h-96 max-h-96 overflow-y-scroll hide-scrollbar md:max-w-xs relative bg-softCharcoal'>
                     {comments && comments.length > 0 ? (
                         comments.map(comment => (
-                            <div className='flex items-start gap-1 justify-between p-3 bg-nightSky' key={comment.id}>
+                            <div className='flex items-start gap-1 justify-between p-3 bg-softCharcoal border-b-2 border-onyx' key={comment.id}>
                                 <div>
                                     <span className="text-stoneGray text-sm pb-1 leading-normal block">{comment.text}</span>
-                                    <span className='text-sm text-saddleBrown'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
+                                    <span className='text-sm text-cloudGray filter brightness-75'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
                                 </div>
                                     <MdDeleteForever className="min-w-max cursor-pointer text-saddleBrown" size={25} onClick={() => handleDelete(comment.id)}/>
                             </div>
                         ))
                     ) : (
-                            <div className="min-h-96 bg-frostWhite">
-                                {!isCommentsLoading && <p className='p-4'>No Comments.</p>}
+                            <div className="min-h-96 bg-softCharcoal">
+                                {!isCommentsLoading && <p className='text-ashGray p-4'>No Comments.</p>}
                             </div>
                     )}
                 </div>
