@@ -177,7 +177,7 @@ const AvatarUploader = ({ user, title, text, isFirstUpload, displayTitle, btnCol
                 {displayTitle &&  (
                     <h2 className='text-2xl text-stoneGray mb-3 font-eb font-rubik'>{title}</h2>
                 )}
-                <p className='leading-normal'>{text}</p>
+                <p className='leading-normal text-ashGray'>{text}</p>
                 {isFirstUpload && (
                     <em><p className='text-sm mt-1 leading-normal'> (Optional) Please note that after your first upload, you can only change your avatar once a week.</p></em>
                 )}
@@ -200,7 +200,7 @@ const AvatarUploader = ({ user, title, text, isFirstUpload, displayTitle, btnCol
                         </div>
                         <form ref={formRef} className='w-full'>
                             <input
-                                className='text-stoneGray file:cursor-pointer file:mr-3 w-full max-w-xs'
+                                className='text-ashGray file:cursor-pointer file:mr-3 w-full max-w-xs'
                                 type='file'
                                 id='single'
                                 accept='image/*'

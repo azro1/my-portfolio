@@ -42,7 +42,7 @@ const Chevron = ({ order, user }) => {
 
   return (
      <>
-       <button onClick={handleToggleMenu} className={`${order} p-1.5 text-base text-stoneGray bg-nightSky border-deepCharcoal rounded-md border-4 shadow-outer`} ref={dropDownRef}>
+       <button onClick={handleToggleMenu} className='p-1.5 text-base text-stoneGray bg-nightSky border-deepCharcoal rounded-md border-4 shadow-outer' ref={dropDownRef}>
          {isOpen ? (
            <FaChevronUp size={22} />
          ) : (

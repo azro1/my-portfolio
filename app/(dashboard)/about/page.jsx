@@ -10,7 +10,7 @@ const About = () => {
   return (
     <div className="grid grid-cols-1 gap-y-6.25 md:gap-y-10.25">
       <div className="flex flex-col items-center md:flex-row md:gap-8">
-        <div className="md:w-[80%]">
+        <div className="w-full md:w-[80%]">
           <Image
             className="w-full"
             src={'/images/about/placeholder.png'}
@@ -111,7 +111,7 @@ const About = () => {
       </div>
 
       <div className="flex flex-col items-center md:flex-row md:justify-between md:gap-8">
-        <div className="md:w-[80%]">
+        <div className="w-full md:w-[80%]">
           <Image
             className="w-full"
             src={'/images/about/placeholder.png'}

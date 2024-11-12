@@ -36,7 +36,7 @@ a {
 }
 
 p {
-  @apply font-r text-base text-stoneGray;
+  @apply font-r text-base text-ashGray;
 }
 
 .main-container {
@@ -81,12 +81,27 @@ input::placeholder, textarea::placeholder {
 
 
 
-/* profile layout navs */
-.layout-nav.md a.active {
-  @apply font-b text-nightSky;
+/* react carousel thumbnails */
+.carousel .thumbs-wrapper {
+  @apply flex justify-center;
 }
 
-.layout-nav.sm a.active {
+.carousel .thumb {
+  width: 100px !important;
+}
+.carousel .thumb.selected {
+  border-color: #A52A2A !important;
+}
+
+
+
+
+/* profile layout navs */
+.profile-nav.md a.active {
+  @apply bg-softCharcoal text-cloudGray;
+}
+
+.profile-nav.sm a.active {
   @apply text-frostWhite;
 }
 
@@ -100,7 +115,7 @@ input::placeholder, textarea::placeholder {
 }
 
 .tooltiptext {
-  @apply invisible absolute min-w-max text-stoneGray font-r -top-1.875 opacity-0 transition-opacity duration-500 ease-in-out;
+  @apply invisible absolute min-w-max text-ashGray font-r -top-1.875 opacity-0 transition-opacity duration-500 ease-in-out;
 
 }
 

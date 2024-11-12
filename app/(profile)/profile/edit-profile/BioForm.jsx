@@ -110,10 +110,10 @@ const BioForm = ({ user, profile, fetchProfile, changeMessage }) => {
         <div>
             <div>
                 <div className="flex items-center justify-between pb-1">
-                    <span className="inline-block text-base text-stoneGray">Bio</span>
-                    <span className='text-red-600 text-base cursor-pointer' onClick={handleOpenForm}>Edit</span> 
+                    <span className="inline-block text-base text-ashGray">Bio</span>
+                    <span className='text-red-800 text-base cursor-pointer' onClick={handleOpenForm}>Edit</span> 
                 </div>
-                <p className="text-nightSky frost whitespace-normal break-words">{bio}</p>
+                <p className="text-cloudGray frost whitespace-normal break-words">{bio}</p>
             </div>
 
             {showForm && (

@@ -434,7 +434,7 @@ const CompleteRegistration = () => {
                         <div>
                             <div className='relative max-w-sm'>
                                 <label>
-                                    <span className='mb-2 text-base text-stoneGray block'>First Name</span>
+                                    <span className='mb-2 text-base text-ashGray block'>First Name</span>
                                     <input
                                         className='w-full max-w-sm p-2.5 rounded-md text-black'
                                         type='text'
@@ -460,7 +460,7 @@ const CompleteRegistration = () => {
                         <div>
                             <div className='relative max-w-sm'>
                                 <label>
-                                    <span className='mb-2 text-base text-stoneGray block'>Last Name</span>
+                                    <span className='mb-2 text-base text-ashGray block'>Last Name</span>
                                     <input
                                         className='w-full max-w-sm p-2.5 rounded-md text-black'
                                         type='text'
@@ -483,7 +483,7 @@ const CompleteRegistration = () => {
                         <div>
                             <div className='relative max-w-sm'>
                                 <label>
-                                    <span className='mb-2 text-base text-stoneGray block'>Date of Birth</span>
+                                    <span className='mb-2 text-base text-ashGray block'>Date of Birth</span>
                                     <DatePicker
                                         className='w-full max-w-sm p-2.5 rounded-md text-black'
                                         wrapperClassName='w-full'
@@ -507,7 +507,7 @@ const CompleteRegistration = () => {
                         <div>
                             <div className='relative max-w-sm'>
                                 <label>
-                                    <span className='max-w-min mb-2 text-base text-stoneGray block'>Phone</span>
+                                    <span className='max-w-min mb-2 text-base text-ashGray block'>Phone</span>
                                     <input className='w-full max-w-sm p-2.5 rounded-md text-black'
                                         type='tel'
                                         value={formData.phone}

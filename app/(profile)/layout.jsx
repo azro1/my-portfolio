@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 
 // components
 import Navbar from '../components/navbar/Navbar';
-import LayoutNav from './profile/LayoutNav';
+import ProfileNav from './profile/ProfileNav';
 
 export default async function ProfileLayout({ children }) {
   const supabase = createServerComponentClient({ cookies });
@@ -17,13 +17,10 @@ export default async function ProfileLayout({ children }) {
   return (
     <>
       <Navbar user={user && user} />
-      <main className='mt-20 mb-4.5 md:mb-28'>
-         <LayoutNav />
-
-        <div className='mt-4 bg-frostWhite sm:p-3'>
+      <main className='mt-6 md:mt-20 mb-4.5 md:mb-0'>
+         <ProfileNav />
+         <div className='bg-ashGray h-px'></div>
           {children}
-        </div>
-        
       </main>
     </>
   );

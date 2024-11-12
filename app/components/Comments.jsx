@@ -266,7 +266,7 @@ const Comments = ({ user }) => {
                             <>
                                 <div className="flex items-start gap-3">
                                     {comment.avatar_url?.includes('https') ? (
-                                        <div className="overflow-hidden rounded-full min-w-max relative w-12 h-12">
+                                        <div className="overflow-hidden rounded-full min-w-max relative w-14 h-14">
                                             <Image 
                                                 className="inline-block w-full h-full object-cover" 
                                                 src={comment.avatar_url} 
@@ -280,14 +280,15 @@ const Comments = ({ user }) => {
                                     ) : (
                                         <Avatar
                                             url={comment.avatar_url}
-                                            size={'h-12 w-12'}
+                                            size={'h-14 w-14'}
+                                            lgSize={'w-14 h-14'}
                                             phSize={50}
                                         />
                                     )}
                                     <div>
                                         <div className='flex gap-2 items-center mb-2'>
                                             <h6 className='text-base text-saddleBrown font-b'>{comment.first_name ? comment.first_name : comment.full_name}</h6>
-                                            <span className='text-sm text-stoneGray'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
+                                            <span className='text-sm text-cloudGray filter brightness-75'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
                                         </div>
                                         <p>{comment.text}</p>
                                     </div>

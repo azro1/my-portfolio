@@ -48,17 +48,17 @@ const EditProfileForms = () => {
     return (
         <div className='flex flex-col gap-6'>
             
-            <div className='mt-6 bg-frostWhite p-4'>
+            <div className='mt-4 h-[500px] bg-softCharcoal p-4'>
                 <AvatarUploader
                     user={user}
                     text='Personalize your account by uploading your own avatar'
-                    btnColor='bg-nightSky'
+                    btnColor='bg-saddleBrown'
                     show3DAvatar={false}
                     isFirstUpload={false}
                 />
             </div>
  
-            <div className='bg-frostWhite p-4'>
+            <div className='bg-softCharcoal p-4'>
                 <BioForm
                     user={user}
                     profile={profile}
@@ -67,7 +67,7 @@ const EditProfileForms = () => {
                 />
             </div>
 
-            <div className='flex flex-col bg-frostWhite p-4'>
+            <div className='flex flex-col bg-softCharcoal p-4'>
                 <FirstNameForm
                     user={user}
                     profile={profile}

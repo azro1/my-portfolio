@@ -28,7 +28,7 @@ export async function POST(request) {
       })
     } else {
       return NextResponse.json({ exists }, {
-        status: 404
+        status: 200
       })
     }
 }

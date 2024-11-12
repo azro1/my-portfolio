@@ -96,15 +96,15 @@ const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
         <div>
             <div className='my-4'>
                 <div className="flex items-center justify-between pb-1">
-                    <span className="inline-block text-stoneGray">Dob</span>
-                    <span className='text-red-600 cursor-pointer' onClick={handleOpenForm}>
+                    <span className="inline-block text-ashGray">Dob</span>
+                    <span className='text-red-800 cursor-pointer' onClick={handleOpenForm}>
                         Edit
                     </span> 
                 </div>
-                <p className="text-nightSky frostWhitespace-normal break-words">{dob}</p>
+                <p className="text-cloudGray frostWhitespace-normal break-words">{dob}</p>
             </div>
 
-            <div className='bg-cloudGray h-px'></div>
+            <div className='bg-onyx h-[2px]'></div>
 
             {showForm && (
                 <Modal >

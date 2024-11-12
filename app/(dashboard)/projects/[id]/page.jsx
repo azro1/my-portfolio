@@ -85,23 +85,23 @@ const Project = async ({ params }) => {
 
         <div className='row-start-3 col-start-1 md:col-start-1 md:row-start-3'>
           <div className='pb-6 md:pb-8'>
-            <div className='text-stoneGray text-base leading-7'>
+            <div className='text-ashGray text-base leading-7'>
               Start Date:{' '}
-              <span className='text-stoneGray text-base'>
+              <span className='text-ashGray text-base'>
                 {project.start}
               </span>
             </div>
-            <div className='text-stoneGray text-base leading-7'>
+            <div className='text-ashGray text-base leading-7'>
               End Date:{' '}
-              <span className='text-stoneGray text-base'>
+              <span className='text-ashGray text-base'>
                 {project.end}
               </span>
             </div>
           </div>
           <div className='pb-6 md:pb-8'>
-            <div className='text-stoneGray text-base leading-7'>
+            <div className='text-ashGray text-base leading-7'>
               Tech Stack:{' '}
-              <span className='text-stoneGray text-base'>
+              <span className='text-ashGray text-base'>
                 {project.techstack.map((stack) => (
                    <span className='techstack ' key={stack}>
                     {stack}
@@ -109,15 +109,15 @@ const Project = async ({ params }) => {
                 ))}
               </span>
             </div>
-            <div className='text-stoneGray text-base leading-7'>
+            <div className='text-ashGray text-base leading-7'>
               Key Contributors:{' '}
-              <span className='text-stoneGray text-base'>
+              <span className='text-ashGray text-base'>
                 {project.contributions}
               </span>
             </div>
           </div>
           <div>
-            <div className='text-stoneGray text-base leading-7'>
+            <div className='text-ashGray text-base leading-7'>
               Project Url:{' '}
               <a href={project.url} target='_blank'>
                 <span className='text-saddleBrown text-base'>

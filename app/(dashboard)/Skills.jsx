@@ -217,136 +217,142 @@ const Skills = () => {
       <div className='flex flex-col place-items-center gap-y-6.25 md:flex-row md:items-stretch'>
 
         <div className='w-full flex-1'>
-          <h2 className='subheading font-b text-saddleBrown text-center pb-4'>
-            Technical Skills
-          </h2>
+          <div className='mx-auto md:mx-0 max-w-xs'>
+            <h2 className='subheading font-b text-saddleBrown text-center pb-8'>
+              Technical Skills
+            </h2>
 
-            <div className='ts-inner-wrapper text-stoneGray w-4/5 sm:w-3/5 md:w-3/4 lg:w-3/5 mx-auto flex flex-col gap-5'>
-
-              <div className='relative'>
-                <p>Hmtl</p>
-                <div className='progress-bar shadow-inner mt-2 p-0.312'>
-                  <div></div>
+              <div className='ts-inner-wrapper text-ashGray flex flex-col gap-6'>
+                <div className='relative'>
+                  <p>Hmtl</p>
+                  <div className='progress-bar shadow-inner mt-4 p-0.312'>
+                    <div></div>
+                  </div>
+                  <p className='absolute right-0 top-0 text-ashGray' ref={htmlPercentId}>{htmlPercent}%</p>
                 </div>
-                <p className='absolute right-0 top-0 text-stoneGray' ref={htmlPercentId}>{htmlPercent}%</p>
-              </div>
-              <div className='relative'>
-                <p>Css</p>
-                <div className='progress-bar shadow-inner mt-2 p-0.312'>
-                  <div></div>
+                <div className='relative'>
+                  <p>Css</p>
+                  <div className='progress-bar shadow-inner mt-4 p-0.312'>
+                    <div></div>
+                  </div>
+                  <p className='absolute right-0 top-0 text-ashGray' ref={cssPercentId}>{cssPercent}%</p>
                 </div>
-                <p className='absolute right-0 top-0 text-stoneGray' ref={cssPercentId}>{cssPercent}%</p>
-              </div>
-              <div className='relative'>
-                <p>JavaScript</p>
-                <div className='progress-bar shadow-inner mt-2 p-0.312'>
-                  <div></div>
+                <div className='relative'>
+                  <p>JavaScript</p>
+                  <div className='progress-bar shadow-inner mt-4 p-0.312'>
+                    <div></div>
+                  </div>
+                  <p className='absolute right-0 top-0 text-ashGray' ref={jsPercentId}>{jsPercent}%</p>
                 </div>
-                <p className='absolute right-0 top-0 text-stoneGray' ref={jsPercentId}>{jsPercent}%</p>
-              </div>
-              <div className='relative'>
-                <p>Php</p>
-                <div className='progress-bar shadow-inner mt-2 p-0.312'>
-                  <div></div>
+                <div className='relative'>
+                  <p>Php</p>
+                  <div className='progress-bar shadow-inner mt-4 p-0.312'>
+                    <div></div>
+                  </div>
+                  <p className='absolute right-0 top-0 text-ashGray' ref={phpPercentId}>{phpPercent}%</p>
                 </div>
-                <p className='absolute right-0 top-0 text-stoneGray' ref={phpPercentId}>{phpPercent}%</p>
-              </div>
-              
+            </div>
           </div>
         </div>
 
-        <div className='flex-1 flex flex-col justify-end'>
-          <h2 className='subheading font-b text-saddleBrown text-center pb-4'>
-            Professional Skills
-          </h2>
 
-          <ul className='text-stoneGray text-center flex flex-wrap w-3/5 mx-auto gap-y-2.5'>
-            <li className='organisation flex flex-col items-center justify-center gap-1 px-2 flex-1'>
-              <div className='progress-circle mb-1'>
-                <div className="outer">
-                  <div className="inner">
-                     <div className="text-stoneGray" ref={communicationPercentId}>{communicationPercent}%</div>
+
+
+        <div className='flex-1 flex flex-col'>
+          <div className='max-w-xs ml-auto'>
+            <h2 className='subheading font-b text-saddleBrown text-center pb-8'>
+              Professional Skills
+            </h2>
+
+            <ul className='text-ashGray text-center flex flex-wrap gap-y-6'>
+              <li className='organisation flex flex-col items-center justify-center gap-1 px-2 flex-1'>
+                <div className='progress-circle mb-1'>
+                  <div className="outer">
+                    <div className="inner">
+                      <div className="text-ashGray" ref={communicationPercentId}>{communicationPercent}%</div>
+                    </div>
                   </div>
-                </div>
-                
-                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="160px" height="160px">
-                  <defs>
-                     <linearGradient id="GradientColor">
-                        <stop offset="0%" stopColor="#e91e63" />
-                        <stop offset="100%" stopColor="#673ab7" />
-                     </linearGradient>
-                  </defs>
-                  <circle cx="80" cy="80" r="45" strokeLinecap="butt" />
-                </svg>
+                  
+                  <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="160px" height="160px">
+                    <defs>
+                      <linearGradient id="GradientColor">
+                          <stop offset="0%" stopColor="#e91e63" />
+                          <stop offset="100%" stopColor="#673ab7" />
+                      </linearGradient>
+                    </defs>
+                    <circle cx="80" cy="80" r="45" strokeLinecap="butt" />
+                  </svg>
 
-              </div>
-              <p>Organisation</p>
-            </li>
-            <li className='teamwork flex flex-col items-center justify-center gap-1  px-2 flex-1'>
-              <div className='progress-circle mb-1'>
-                <div className="outer">
-                  <div className="inner">
-                    <div className="text-stoneGray" ref={teamworkPercentId}>{teamworkPercent}%</div>
+                </div>
+                <p>Organisation</p>
+              </li>
+              <li className='teamwork flex flex-col items-center justify-center gap-1  px-2 flex-1'>
+                <div className='progress-circle mb-1'>
+                  <div className="outer">
+                    <div className="inner">
+                      <div className="text-ashGray" ref={teamworkPercentId}>{teamworkPercent}%</div>
+                    </div>
                   </div>
+
+                  <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="160px" height="160px">
+                    <defs>
+                      <linearGradient id="GradientColor">
+                          <stop offset="0%" stopColor="#e91e63" />
+                          <stop offset="100%" stopColor="#673ab7" />
+                      </linearGradient>
+                    </defs>
+                    <circle cx="80" cy="80" r="45" strokeLinecap="butt" />
+                  </svg>
+
                 </div>
+                <p>Teamwork</p>
+              </li>
+              <li className='adaptability flex flex-col items-center justify-center gap-1 px-2 flex-1'>
+                <div className='progress-circle mb-1'>
+                  <div className="outer">
+                    <div className="inner">
+                      <div className="text-ashGray" ref={adaptabilityPercentId}>{adaptabilityPercent}%</div>
 
-                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="160px" height="160px">
-                  <defs>
-                     <linearGradient id="GradientColor">
-                        <stop offset="0%" stopColor="#e91e63" />
-                        <stop offset="100%" stopColor="#673ab7" />
-                     </linearGradient>
-                  </defs>
-                  <circle cx="80" cy="80" r="45" strokeLinecap="butt" />
-                </svg>
-
-              </div>
-              <p>Teamwork</p>
-            </li>
-            <li className='adaptability flex flex-col items-center justify-center gap-1 px-2 flex-1'>
-              <div className='progress-circle mb-1'>
-                <div className="outer">
-                  <div className="inner">
-                    <div className="text-stoneGray" ref={adaptabilityPercentId}>{adaptabilityPercent}%</div>
-
+                    </div>
                   </div>
+
+                  <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="160px" height="160px">
+                    <defs>
+                      <linearGradient id="GradientColor">
+                          <stop offset="0%" stopColor="#e91e63" />
+                          <stop offset="100%" stopColor="#673ab7" />
+                      </linearGradient>
+                    </defs>
+                    <circle cx="80" cy="80" r="45" strokeLinecap="butt" />
+                  </svg>
+
                 </div>
+                <p>Adaptability</p>
+              </li>
+              <li className='research-skills flex flex-col items-center justify-center gap-1 px-2 flex-1'>
+                <div className='progress-circle mb-1'>
+                  <div className="outer">
+                    <div className="inner">
+                    <div className="text-ashGray" ref={problemSolvingPercentId}>{problemSolvingPercent}%</div>
 
-                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="160px" height="160px">
-                  <defs>
-                     <linearGradient id="GradientColor">
-                        <stop offset="0%" stopColor="#e91e63" />
-                        <stop offset="100%" stopColor="#673ab7" />
-                     </linearGradient>
-                  </defs>
-                  <circle cx="80" cy="80" r="45" strokeLinecap="butt" />
-                </svg>
-
-              </div>
-              <p>Adaptability</p>
-            </li>
-            <li className='research-skills flex flex-col items-center justify-center gap-1 px-2 flex-1'>
-              <div className='progress-circle mb-1'>
-                <div className="outer">
-                  <div className="inner">
-                  <div className="text-stoneGray" ref={problemSolvingPercentId}>{problemSolvingPercent}%</div>
-
+                    </div>
                   </div>
-                </div>
 
-                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="160px" height="160px">
-                  <defs>
-                     <linearGradient id="GradientColor">
-                        <stop offset="0%" stopColor="#e91e63" />
-                        <stop offset="100%" stopColor="#673ab7" />
-                     </linearGradient>
-                  </defs>
-                  <circle cx="80" cy="80" r="45" strokeLinecap="butt" />
-                </svg>
-              </div>
-              <p className="frostWhitespace-nowrap">Research-skills</p>
-            </li>
-          </ul>
+                  <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="160px" height="160px">
+                    <defs>
+                      <linearGradient id="GradientColor">
+                          <stop offset="0%" stopColor="#e91e63" />
+                          <stop offset="100%" stopColor="#673ab7" />
+                      </linearGradient>
+                    </defs>
+                    <circle cx="80" cy="80" r="45" strokeLinecap="butt" />
+                  </svg>
+                </div>
+                <p className="frostWhitespace-nowrap">Research-skills</p>
+              </li>
+            </ul>
+          </div>
+
           
         </div>
       </div>

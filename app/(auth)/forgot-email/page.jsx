@@ -124,7 +124,7 @@ const ForgotEmail = () => {
                 <p className='mb-4'>Enter the phone number you provided during the signup process to help us recover your account.</p>
 
                 <label>
-                    <span className='max-w-min mb-2 text-base text-stoneGray block'>Phone</span>
+                    <span className='max-w-min mb-2 text-base text-ashGray block'>Phone</span>
                     <input
                         className='w-full max-w-xs py-2.5 px-3 rounded-md text-black'
                         type='tel'

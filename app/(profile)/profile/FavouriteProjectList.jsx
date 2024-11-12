@@ -31,9 +31,9 @@ const FavouriteProjectList = ({ user }) => {
 
     return (
         <div>
-            <h3 className='text-nightSky text-lg font-b mb-4'>Favourite Projects</h3>
+            <h3 className='text-stoneGray text-lg font-b mb-4'>Favourite Projects</h3>
             {!errorMessage ? (
-                <div className='flex items-center min-h-52 bg-frostWhite p-4'>
+                <div className='flex items-center min-h-52 bg-softCharcoal p-4'>
                     {!isProjectsLoading && (
                         <div className='flex flex-wrap gap-4'>
                             {retrievedProjects.length > 0 && (retrievedProjects.map((project) => (
@@ -55,12 +55,12 @@ const FavouriteProjectList = ({ user }) => {
                                         </div>
                                         <FaHeart className='absolute bottom-1 left-1' size='18' color='red' />
                                     </div>
-                                    <h4 className="font-os font-r text-stoneGray text-center text-sm mt-2">{project.title}</h4>
+                                    <h4 className="font-os font-r text-ashGray text-center text-sm mt-2">{project.title}</h4>
                                 </div>))
                             )}
                         </div>
                     )}
-                    {!isProjectsLoading && retrievedProjects.length === 0 && !projectsError && <p className='place-self-start'>No Projects Views.</p>}
+                    {!isProjectsLoading && retrievedProjects.length === 0 && !projectsError && <p className='text-ashGray place-self-start'>No Projects Views.</p>}
                 </div>
             ) : (
                 <p className='place-self-start'>Currently unable to display project views. Try refreshing the page.</p>

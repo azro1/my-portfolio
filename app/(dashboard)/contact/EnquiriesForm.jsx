@@ -157,7 +157,7 @@ const EnquiriesForm = ({ user }) => {
                     Enquiries
                 </h3>
                 <label>
-                    <span className="className='max-w-min mb-2 text-base text-stoneGray block">
+                    <span className="className='max-w-min mb-2 text-base text-ashGray block">
                         First name
                     </span>
                     <input
@@ -172,7 +172,7 @@ const EnquiriesForm = ({ user }) => {
                     />
                 </label>
                 <label>
-                    <span className="className='max-w-min mt-4 mb-2 text-base text-stoneGray block">
+                    <span className="className='max-w-min mt-4 mb-2 text-base text-ashGray block">
                         Email
                     </span>
                     <input
@@ -186,7 +186,7 @@ const EnquiriesForm = ({ user }) => {
                     />
                 </label>
                 <label>
-                    <span className="className='max-w-min mt-4 mb-2 text-base text-stoneGray block">
+                    <span className="className='max-w-min mt-4 mb-2 text-base text-ashGray block">
                         Subject
                     </span>
                     <div className='custom-select relative'>
@@ -215,7 +215,7 @@ const EnquiriesForm = ({ user }) => {
                     </div>
                 </label>
                 <label>
-                    <span className="className='max-w-min mt-4 mb-2 text-base text-stoneGray block">
+                    <span className="className='max-w-min mt-4 mb-2 text-base text-ashGray block">
                         Your Message
                     </span>
                     <textarea

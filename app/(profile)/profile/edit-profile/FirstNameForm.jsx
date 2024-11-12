@@ -127,13 +127,13 @@ const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
         <div>
             <div className='mb-4'>
                 <div className="flex items-center justify-between pb-1">
-                    <span className="inline-block text-stoneGray">First Name</span>
-                    <span className="text-red-600 cursor-pointer" onClick={handleOpenForm}>Edit</span>
+                    <span className="inline-block text-ashGray">First Name</span>
+                    <span className="text-red-800 cursor-pointer" onClick={handleOpenForm}>Edit</span>
                 </div>
-                <p className="text-nightSky frostWhitespace-normal break-words">{first_name}</p>
+                <p className="text-cloudGray frostWhitespace-normal break-words">{first_name}</p>
             </div>
   
-            <div className='bg-cloudGray h-px'></div>
+            <div className='bg-onyx h-[2px]'></div>
                         
             {showForm && (
                 <Modal>

@@ -143,12 +143,12 @@ const PhoneForm = ({ user, profile }) => {
         <div>
             <div className='my-4'>
                 <div className="flex items-center justify-between pb-1">
-                    <span className="inline-block text-stoneGray">Phone Number</span>
-                    <span className='text-red-600 cursor-pointer' onClick={handleOpenForm}>
+                    <span className="inline-block text-ashGray">Phone Number</span>
+                    <span className='text-red-800 cursor-pointer' onClick={handleOpenForm}>
                         Edit
                     </span>
                 </div>
-                <p className="text-nightSky frostWhitespace-normal break-words">{phone}</p>
+                <p className="text-cloudGray frostWhitespace-normal break-words">{phone}</p>
             </div>
   
             {showForm && (

@@ -132,7 +132,7 @@ const Signup = () => {
             <p className='mb-4'>Enter your email address to recieve a security code to create your account</p>
             
             <label>
-              <span className='max-w-min mt-4 mb-2 text-base text-stoneGray block'>
+              <span className='max-w-min mt-4 mb-2 text-base text-ashGray block'>
                 Email
               </span>
               <input
@@ -147,7 +147,7 @@ const Signup = () => {
 
             <div className="mt-5 flex items-center">
               <input className="self-start mt-0.21 max-w-min transform scale-125" type="checkbox" value={isChecked} onChange={handleCheckbox}/>
-              <span className="text-base block text-stoneGray ml-2.5 -mt-1">By signing up I agree to the{' '}<Link className="text-saddleBrown text-base" href='#'>Privacy Policy</Link>{' '}and{' '}<Link className='text-saddleBrown text-base' href='#'>Terms of Service</Link>
+              <span className="text-base block text-ashGray ml-2.5 -mt-1">By signing up I agree to the{' '}<Link className="text-saddleBrown text-base" href='#'>Privacy Policy</Link>{' '}and{' '}<Link className='text-saddleBrown text-base' href='#'>Terms of Service</Link>
               .</span>
             </div>
 

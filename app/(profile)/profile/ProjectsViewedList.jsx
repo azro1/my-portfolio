@@ -27,9 +27,9 @@ const ProjectsViewedList = ({ user }) => {
 
   return (
       <div>
-          <h3 className='text-lg text-deepCharcoal font-b mb-4'>Project Views</h3>
+          <h3 className='text-lg text-stoneGray font-b mb-4'>Project Views</h3>
               {!errorMessage ? (
-                <div className='min-h-52 flex items-center bg-frostWhite p-4'>
+                <div className='min-h-52 flex items-center bg-softCharcoal p-4'>
                   {!isProjectsLoading && (
                       <div className='flex flex-wrap gap-4'>
                           {retrievedProjects.length > 0 && (retrievedProjects.map((project) => (
@@ -49,12 +49,12 @@ const ProjectsViewedList = ({ user }) => {
 
                                       </Link>
                                   </div>
-                                  <h4 className="font-r text-stoneGray text-center text-sm mt-2">{project.title}</h4>
+                                  <h4 className="font-r text-ashGray text-center text-sm mt-2">{project.title}</h4>
                               </div>))
                           )}
                       </div>
                   )}
-                  {!isProjectsLoading && retrievedProjects.length === 0 && !errorMessage && <p className='place-self-start'>No Projects Views.</p>}
+                  {!isProjectsLoading && retrievedProjects.length === 0 && !errorMessage && <p className='text-ashGray place-self-start'>No Projects Views.</p>}
                 </div>
               ) : (
                 <p className='place-self-start'>Currently unable to display project views. Try refreshing the page.</p>

@@ -57,9 +57,9 @@ const Avatar = ({ url, size, lgSize, phSize }) => {
                                 src={signedUrl}
                                 alt="a user avatar"
                                 fill
-                                sizes="(max-width: 480px) 40px, (max-width: 768px) 60px, (max-width: 1024px) 80px, 100px"
                                 quality={100}
                                 priority
+                                objectFit='cover'
                             />
                         </div>
                     ) : (

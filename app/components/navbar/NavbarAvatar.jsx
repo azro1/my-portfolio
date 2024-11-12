@@ -70,69 +70,69 @@ const NavbarAvatar = ({ user }) => {
         }
     }, [avatar_url, first_name, user && user.id, router]);
  
+
+
     return (
-        <>
-            <div>
-                {user && user.app_metadata.provider !== "email" ? (
-                    <div className="flex flex-col items-center gap-1 absolute left-0 top-8.625 md:static mr-8">
+        <div>
+            {user && user.app_metadata.provider !== "email" ? (
+                <div className="flex flex-col items-center gap-1">
 
-                        {isProfileLoading ? (
-                            <div className='overflow-hidden w-12 h-12'>
-                                <img src="../../images/loading/loader.gif" alt="a loading gif" />
-                            </div>
-                        ) : (
-                            <>
-                                {avatar_url ? (
-                                    <div className="overflow-hidden rounded-full relative w-12 h-12">
-                                        <Image 
-                                            className="w-full h-full object-cover" 
-                                            src={avatar_url} 
-                                            alt="a user avatar"
-                                            fill
-                                            sizes="(max-width: 480px) 40px, (max-width: 768px) 60px, (max-width: 1024px) 80px, 100px"
-                                            quality={100}
-                                            priority
-                                        />
-                                    </div>
-                                ) : (
-                                    <div className="overflow-hidden rounded-full min-w-max h-auto">
-                                        <FaUserCircle size={48} color="gray" />
-                                    </div>
-                                )}
-                            </>
-                        )}
+                    {isProfileLoading ? (
+                        <div className='overflow-hidden w-12 h-12'>
+                            <img src="../../images/loading/loader.gif" alt="a loading gif" />
+                        </div>
+                    ) : (
+                        <>
+                            {avatar_url ? (
+                                <div className="overflow-hidden rounded-full relative w-14 h-14">
+                                    <Image 
+                                        className="w-full h-full object-cover" 
+                                        src={avatar_url} 
+                                        alt="a user avatar"
+                                        fill
+                                        sizes="(max-width: 480px) 40px, (max-width: 768px) 60px, (max-width: 1024px) 80px, 100px"
+                                        quality={100}
+                                        priority
+                                    />
+                                </div>
+                            ) : (
+                                <div className="overflow-hidden rounded-full min-w-max h-auto">
+                                    <FaUserCircle size={48} color="gray" />
+                                </div>
+                            )}
+                        </>
+                    )}
 
-                        {isProfileLoading ? (
-                          <div></div>
-                        ) : (
+                    {isProfileLoading ? (
+                        <div></div>
+                    ) : (
 
-                          <h6 className="font-os text-sm font-b text-saddleBrown">{first_name}</h6>
-
-                        )}
-                    </div>
-                )
-            :
-                (
-                    <div className="flex flex-col items-center justify-center gap-1 absolute left-0 top-8.625 md:static mr-8">
-                        {isProfileLoading ? (
-                            <div className='overflow-hidden w-12 h-12'>
-                                <img src="../../images/loading/loader.gif" alt="a loading gif" />
-                            </div>
-                        ) : (
-                            <>
-                                <Avatar
-                                    url={avatar_url}
-                                    size={'w-12 h-12'}
-                                    lgSize={'w-12 h-12'}
-                                    phSize={50}
-                                />
-                            </>
-                        )}
                         <h6 className="font-os text-sm font-b text-saddleBrown">{first_name}</h6>
-                    </div>
-                )}
-            </div>
-        </>
+
+                    )}
+                </div>
+            )
+        :
+            (
+                <div className="flex flex-col items-center gap-1">
+                    {isProfileLoading ? (
+                        <div className='overflow-hidden w-12 h-12'>
+                            <img src="../../images/loading/loader.gif" alt="a loading gif" />
+                        </div>
+                    ) : (
+                        <>
+                            <Avatar
+                                url={avatar_url}
+                                size={'w-14 h-14'}
+                                lgSize={'w-14 h-14'}
+                                phSize={50}
+                            />
+                        </>
+                    )}
+                    <h6 className="font-os text-sm font-b text-saddleBrown">{first_name}</h6>
+                </div>
+            )}
+        </div>
     );
 };
 
