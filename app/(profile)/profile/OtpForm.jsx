@@ -136,7 +136,7 @@ const OtpForm = ({ contact, storageStr, verificationType, title, subHeading, suc
 
 
     return (
-        <div className="flex items-center justify-center h-[60vh] bg-softCharcoal">
+        <div className="flex items-center justify-center h-[80vh] bg-softCharcoal">
 
             <div className="flex max-w-sm">
 
