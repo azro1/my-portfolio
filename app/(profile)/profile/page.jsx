@@ -12,7 +12,7 @@ const Profile = async () => {
   const { data: { user } } = await supabase.auth.getUser()
 
   return (
-      <div className='overflow-y-scroll hide-scrollbar h-[60vh]'>
+      <div className='overflow-y-scroll hide-scrollbar h-[80vh]'>
         <ProfileHeader title={'My Profile'} subheading={'Here you can view and edit your recent activity, update your personal information and security preferences, view your data and personalize your privacy settings.'} showAvatar={true} />
         
 
