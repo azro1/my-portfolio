@@ -2,8 +2,8 @@
 const Loading = () => {
   return (
     <main>
-      <div className="flex items-center justify-center h-[50vh]">
-        <img className="w-32" src="/images/loading/loading.gif" alt="a loading gif" />
+      <div className="flex items-center justify-center min-h-screen">
+        <img className="w-32 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" src="/images/loading/loading.gif" alt="a loading gif" />
       </div>
     </main>
   )
