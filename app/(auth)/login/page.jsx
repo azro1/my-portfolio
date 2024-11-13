@@ -111,7 +111,7 @@ const Login = () => {
   }
 
   return (
-    <div className='flex flex-col items-center gap-12 md:justify-evenly md:flex-row md:gap-0'>
+    <div className='flex flex-col items-center justify-center gap-12 md:justify-evenly md:flex-row md:gap-0 h-[70vh]'>
 
         <form className="w-full max-w-xs" onSubmit={handleSubmit}>
           <h2 className='text-3xl mb-6 font-eb text-saddleBrown'>Login</h2>

@@ -10,7 +10,7 @@ const Navbar = ({ user }) => {
   return (
     <main>
       <div className='relative'>
-        <nav className='grid grid-cols-[minmax(200px,_1fr)_minmax(40px,_40px)] grid-rows-[minmax(152px,_auto)_minmax(90px,_90px)] md:grid-cols-[minmax(200px,_1fr)_minmax(70px,_70px)_minmax(40px,_40px)] md:grid-rows-[minmax(152px,_1fr)] md:gap-3'>
+        <nav className={`grid grid-cols-[minmax(200px,_1fr)_minmax(40px,_40px)] ${user ? 'grid-rows-[minmax(152px,_auto)_minmax(90px,_90px)]' : 'grid-rows-[minmax(152px,_auto)]'} md:grid-cols-[minmax(200px,_1fr)_minmax(70px,_70px)_minmax(40px,_40px)] md:grid-rows-[minmax(152px,_1fr)] md:gap-3`}>
 
           <Link className="col-start-1 row-start-1 justify-self-start place-self-center" href='/'>
             <Card values={'shadow-3xl pt-1.5 px-4 pb-0.5 rounded-xl bg-deepCharcoal'}>

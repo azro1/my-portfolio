@@ -25,6 +25,7 @@ export async function generateMetadata({ params }) {
 }
 
 async function getProject(id) {
+  await new Promise((resolve) => setTimeout(resolve, 3000))
   const supabase = createServerComponentClient({ cookies })
   const { data } = await supabase.from('projects')
   .select()
@@ -60,7 +61,7 @@ const Project = async ({ params }) => {
   
   
   return (
-    <>
+    <div className='flex flex-col justify-start'>
       <h2 className='subheading font-b text-saddleBrown'>{project.title}</h2>
       <div className='mt-8 grid gap-y-6 md:grid-auto-rows md:grid-cols-2'>
 
@@ -128,7 +129,7 @@ const Project = async ({ params }) => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

@@ -136,65 +136,57 @@ const OtpForm = ({ contact, storageStr, verificationType, title, subHeading, suc
 
 
     return (
-        <div className="flex items-center justify-center h-[80vh] bg-softCharcoal">
+        <form className="max-w-sm" onSubmit={handleVerifyOtp}>
+            <h2 className='text-3xl leading-normal mb-4 font-eb text-saddleBrown'>{title}</h2>
+            <p className='mb-4'>{subHeading}</p>
 
-            <div className="flex max-w-sm">
-
-                <form className="max-w-max" onSubmit={handleVerifyOtp}>
-                    <h2 className='text-3xl leading-normal mb-4 font-eb text-saddleBrown'>{title}</h2>
-                    <p className='mb-4'>{subHeading}</p>
-
-                    <label>
-                        <span className='max-w-min mb-2 text-base text-ashGray block'>
-                            Code:
-                        </span>
-                        <div className='relative max-w-xs'>
-                            <input
-                                className='w-full max-w-xs py-2.5 px-3 rounded-md text-black tracking-extra-wide'
-                                type={`${isEyeOpen ? 'text' : 'password'}`}
-                                spellCheck={false}
-                                autoComplete="off"
-                                placeholder="123456"
-                                value={otp}
-                                maxLength={6}
-                                onChange={handleOtpChange}
+            <label>
+                <span className='max-w-min mb-2 text-base text-ashGray block'>
+                    Code:
+                </span>
+                <div className='relative max-w-xs'>
+                    <input
+                        className='w-full max-w-xs py-2.5 px-3 rounded-md text-black tracking-extra-wide'
+                        type={`${isEyeOpen ? 'text' : 'password'}`}
+                        spellCheck={false}
+                        autoComplete="off"
+                        placeholder="123456"
+                        value={otp}
+                        maxLength={6}
+                        onChange={handleOtpChange}
+                    />
+                    {!isEyeOpen ? (
+                        <div className="absolute right-1 top-1 p-2.5 group bg-ashGray hover:bg-nightSky transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
+                            <FiEye
+                                className='text-white group-hover:text-frostWhite transition duration-300 fieye'
+                                size={17}
                             />
-                            {!isEyeOpen ? (
-                                <div className="absolute right-1 top-1 p-2.5 group bg-nightSky hover:bg-saddleBrown transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
-                                    <FiEye
-                                        className='text-ashGray group-hover:text-frostWhite transition duration-300 fieye'
-                                        size={17}
-                                    />
-                                </div>
-
-                            ) : (
-                                <div className="absolute right-1 top-1 p-2.5 group bg-nightSky hover:bg-saddleBrown transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
-                                    <FiEyeOff
-                                        className='text-ashGray group-hover:text-frostWhite transition duration-300 fieye-off'
-                                        size={17}
-                                    />
-                                </div>
-                            )}
-                            <div>
-
-                            </div>
                         </div>
-                    </label>
-                    <button className='btn block mt-3.5 bg-saddleBrown' disabled={isLoading}>
-                        {isLoading ? (
-                            <div className='flex items-center gap-2'>
-                                <img className="w-5 h-5 opacity-50" src="../images/loading/spinner.svg" alt="Loading indicator" />
-                                <span>Verify</span>
-                            </div>
-                        ) : (
-                            'Verify'
-                        )}
-                    </button>
-                </form>
 
-            </div>
+                    ) : (
+                        <div className="absolute right-1 top-1 p-2.5 group bg-ashGray hover:bg-nightSky transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
+                            <FiEyeOff
+                                className='text-white group-hover:text-frostWhite transition duration-300 fieye-off'
+                                size={17}
+                            />
+                        </div>
+                    )}
+                    <div>
 
-        </div>
+                    </div>
+                </div>
+            </label>
+            <button className='btn block mt-3.5 bg-saddleBrown' disabled={isLoading}>
+                {isLoading ? (
+                    <div className='flex items-center gap-2'>
+                        <img className="w-5 h-5 opacity-50" src="../images/loading/spinner.svg" alt="Loading indicator" />
+                        <span>Verify</span>
+                    </div>
+                ) : (
+                    'Verify'
+                )}
+            </button>
+        </form>
     )
 }
 

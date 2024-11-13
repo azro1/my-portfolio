@@ -22,14 +22,16 @@ const VerifyPhoneOtp = () => {
   }
 
   return (
-      <OtpForm 
-          contact='phone number'
-          storageStr='phone'
-          verificationType='phone_change'
-          title='Verify Your Phone'
-          subHeading={<>A verification code was sent to <strong> ****{converPhoneNumber(phoneNumber)}</strong>. Please enter the code below to complete your phone update.</>}
-          successMessage='OTP verifcation was successful. Your phone number has been updated.'
+    <div className='flex items-center justify-center h-[90vh]'>
+      <OtpForm
+        contact='phone number'
+        storageStr='phone'
+        verificationType='phone_change'
+        title='Verify Your Phone'
+        subHeading={<>We've sent a verification code to your number ending in <strong> ****{converPhoneNumber(phoneNumber)}</strong>. Please enter the code below to complete your phone update.</>}
+        successMessage='OTP verifcation was successful. Your phone number has been updated.'
       />
+    </div>
   )
 }
 
