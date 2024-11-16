@@ -18,7 +18,6 @@ const OtpForm = ({ contact, storageStr, verificationType, title, subHeading, suc
     const [otp, setOtp] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [isEyeOpen, setIsEyeOpen] = useState(false)
-    const [redirect, setRedirect] = useState(false)
 
     
     // custom hooks
@@ -54,7 +53,7 @@ const OtpForm = ({ contact, storageStr, verificationType, title, subHeading, suc
         
         
         if (!contactMethod) {
-            handleError("We couldn't verify your code. Please request a new verification code and try again.");
+            handleError("Verification failed. To update your personal information, please request a new verification code.");
             // clear cookie from server if there's no contact method in local storage
             document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
             router.refresh();
@@ -68,7 +67,7 @@ const OtpForm = ({ contact, storageStr, verificationType, title, subHeading, suc
         const { data: { session }, error } = await supabase.auth.verifyOtp(otpVerificationData)
 
         if (error) {
-            handleError("We couldn't verify your code. Please request a new verification code and try again.");
+            handleError("Verification failed. To update your personal information, please request a new verification code.");
             // clear cookie from server if code is invalid or expired
             document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
             router.refresh();
@@ -136,7 +135,7 @@ const OtpForm = ({ contact, storageStr, verificationType, title, subHeading, suc
 
 
     return (
-        <form className="max-w-sm" onSubmit={handleVerifyOtp}>
+        <form className="max-w-sm min-w-sm" onSubmit={handleVerifyOtp}>
             <h2 className='text-3xl leading-normal mb-4 font-eb text-saddleBrown'>{title}</h2>
             <p className='mb-4'>{subHeading}</p>
 
@@ -156,17 +155,17 @@ const OtpForm = ({ contact, storageStr, verificationType, title, subHeading, suc
                         onChange={handleOtpChange}
                     />
                     {!isEyeOpen ? (
-                        <div className="absolute right-1 top-1 p-2.5 group bg-ashGray hover:bg-nightSky transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
+                        <div className="absolute right-1 top-1 p-2.5 group bg-eyeBgBase hover:bg-eyeBgHover transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
                             <FiEye
-                                className='text-white group-hover:text-frostWhite transition duration-300 fieye'
+                                className='text-black transition duration-300 fieye'
                                 size={17}
                             />
                         </div>
 
                     ) : (
-                        <div className="absolute right-1 top-1 p-2.5 group bg-ashGray hover:bg-nightSky transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
+                        <div className="absolute right-1 top-1 p-2.5 group bg-eyeBgBase hover:bg-eyeBgHover transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
                             <FiEyeOff
-                                className='text-white group-hover:text-frostWhite transition duration-300 fieye-off'
+                                className='text-black transition duration-300 fieye-off'
                                 size={17}
                             />
                         </div>

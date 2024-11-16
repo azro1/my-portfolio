@@ -29,8 +29,6 @@ export default async function RegisterLayout ({ children }) {
 
   return (
     <main>
-      <div className="flex flex-col gap-20">
-
         <nav className='flex items-center h-9.5 relative'>
             <div className='shadow-3xl pt-1.5 px-4 pb-0.5 rounded-xl bg-deepCharcoal'>
               <h2 className='mainheading font-eb text-saddleBrown'>
@@ -38,12 +36,7 @@ export default async function RegisterLayout ({ children }) {
               </h2>
             </div>
         </nav>
-
-        <div className='mb-40'>
-          {children}
-        </div>
-
-      </div>
+        {children}
     </main>
   )
 }

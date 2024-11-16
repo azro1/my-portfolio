@@ -111,42 +111,45 @@ const Login = () => {
   }
 
   return (
-    <div className='flex flex-col items-center justify-center gap-12 md:justify-evenly md:flex-row md:gap-0 h-[70vh]'>
+    <div className='flex flex-col items-center justify-center gap-12 h-[100vh] min-h-[820px] md:justify-evenly md:flex-row md:gap-0 md:min-h-0 md:h-[70vh]'>
 
-        <form className="w-full max-w-xs" onSubmit={handleSubmit}>
-          <h2 className='text-3xl mb-6 font-eb text-saddleBrown'>Login</h2>
-          <p className='mb-4'>Enter your email address to recieve a security code for quick and secure login</p>
+        <div className='shadow-outer p-8 sm:p-10 rounded-xl'>
+          <form className="w-full max-w-xs min-w-xs" onSubmit={handleSubmit}>
+            <h2 className='text-3xl mb-6 font-eb text-saddleBrown'>Login</h2>
+            <p className='mb-5'>Enter your email address to recieve a security code for quick and secure login</p>
 
-          <label>
-            <span className='max-w-min mb-2 text-base text-ashGray block'>
-              Email
-            </span>
-            <input
-              className='w-full py-2.5 px-3 rounded-md text-black'
-              type='text'
-              placeholder='Enter your email'
-              spellCheck={false}
-              value={tempEmail}
-              onChange={(e) => setTempEmail(e.target.value)}
-            />
-          </label>
+            <label>
+              <span className='max-w-min mb-2 text-base text-ashGray block'>
+                Email
+              </span>
+              <input
+                className='w-full py-2.5 px-3 rounded-md text-black'
+                type='text'
+                placeholder='Enter your email'
+                spellCheck={false}
+                value={tempEmail}
+                onChange={(e) => setTempEmail(e.target.value)}
+              />
+            </label>
 
-          <div className="flex">
-            <button className='mt-4 btn bg-saddleBrown' disabled={isLoading}>
-              {isLoading ? (
-                <div className='flex items-center gap-2'>
-                  <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />
-                  <span>Login</span>
-                </div>
-              ) : (
-                'Login'
-              )}
-            </button>
-            <Link className='ml-auto mt-2' href={'/forgot-email'}>
-              <span className='text-saddleBrown text-base'>Forgot email?</span>
-            </Link>
-          </div>
-        </form>
+            <div className="flex">
+              <button className='mt-4 btn bg-saddleBrown' disabled={isLoading}>
+                {isLoading ? (
+                  <div className='flex items-center gap-2'>
+                    <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />
+                    <span>Login</span>
+                  </div>
+                ) : (
+                  'Login'
+                )}
+              </button>
+              <Link className='ml-auto mt-2' href={'/forgot-email'}>
+                <span className='text-saddleBrown text-base'>Forgot email?</span>
+              </Link>
+            </div>
+          </form>
+        </div>
+
 
       <div className='flex flex-col items-center md:col-start-2'>
         <p className='mb-8'>or Login using</p>

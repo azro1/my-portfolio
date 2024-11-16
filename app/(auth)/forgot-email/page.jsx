@@ -72,6 +72,7 @@ const ForgotEmail = () => {
             if (res.status === 404) {
                 throw new Error("We couldn't find an account associated with that phone number. Please check the number or try a different one.")
             } else if (serverEmail.error) {
+                console.log('forgot email error:', serverEmail.error)
                 throw new Error("We're having trouble processing your request. Please try again later. If the issue persists, contact support.")
             } else if (serverEmail.exists && res.status === 200) {
                 setIsLoading(false)
@@ -117,37 +118,39 @@ const ForgotEmail = () => {
 
     
     return (
-        <div className='flex flex-col items-center justify-center h-[70vh]'>
+        <div className='flex items-center justify-center h-[100vh] min-h-[820px] md:min-h-0 md:h-[70vh]'>
 
-            <form className='w-full max-w-sm' onSubmit={handleSubmit}>
-                <h2 className='text-3xl mb-4 font-eb text-saddleBrown'>Recover Your Account</h2>
-                <p className='mb-5'>Please enter the phone number you used during signup to help us recover your account.</p>
+            <div className='shadow-outer p-8 sm:p-10 rounded-xl'>
+                <form className='w-full max-w-xs min-w-xs' onSubmit={handleSubmit}>
+                    <h2 className='text-3xl mb-5 font-eb text-saddleBrown'>Recover Your Account</h2>
+                    <p className='mb-5'>Please enter the phone number you used during signup to help us recover your account.</p>
 
-                <label>
-                    <span className='max-w-min mb-2 text-base text-ashGray block'>Phone</span>
-                    <input
-                        className='w-full max-w-xs py-2.5 px-3 rounded-md text-black'
-                        type='tel'
-                        value={phone}
-                        spellCheck={false}
-                        maxLength={15}
-                        placeholder="Enter your phone number"
-                        onChange={(e) => setPhone(e.target.value)}
-                        onKeyDown={handleKeyDown}
-                    />
-                </label>
-                <button className='btn block mt-4 bg-saddleBrown' disabled={isLoading}>
-                    {isLoading ? (
-                        <div className='flex items-center gap-2'>
-                            <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />
-                            <span>Submit</span>
-                        </div>
-                    ) : (
-                        'Submit'
-                    )}
-                </button>
-            </form>
-
+                    <label>
+                        <span className='max-w-min mb-2 text-base text-ashGray block'>Phone</span>
+                        <input
+                            className='w-full max-w-xs py-2.5 px-3 rounded-md text-black'
+                            type='tel'
+                            value={phone}
+                            spellCheck={false}
+                            maxLength={15}
+                            placeholder="Enter your phone number"
+                            onChange={(e) => setPhone(e.target.value)}
+                            onKeyDown={handleKeyDown}
+                        />
+                    </label>
+                    <button className='btn block mt-4 bg-saddleBrown' disabled={isLoading}>
+                        {isLoading ? (
+                            <div className='flex items-center gap-2'>
+                                <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />
+                                <span>Submit</span>
+                            </div>
+                        ) : (
+                            'Submit'
+                        )}
+                    </button>
+                </form>
+            </div>
+            
         </div>
     )
 }

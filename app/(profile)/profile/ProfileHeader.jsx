@@ -80,7 +80,7 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
 
             <div className='pt-16'>
                <h2 className='subheading font-b text-stoneGray'>{title}</h2>
-               <p className='mt-4 leading-normal'>{subheading}</p>
+               <p className='mt-4 leading-normal text-ashGray'>{subheading}</p>
 
                {showAvatar && (
                   <div className='mt-6 h-[500px] bg-softCharcoal'>
@@ -104,8 +104,8 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
                         )} 
                         {!loading && (
                            <div className='pl-2 min-w-0'>
-                              <p className='text-stoneGray font-b'>{first_name}</p>
-                              <p className='whitespace-normal break-words'>{bio ? `${bio}` : `"Add your Bio"`}</p>
+                              <p className='text-stoneGray text-2xl font-b'>Welcome, {first_name}</p>
+                              <p className='whitespace-normal break-words'>{bio ? <span className='text-cloudGray'>${bio}</span> : `"Add your Bio"`}</p>
                            </div>
                         )}
                      </div>
@@ -132,7 +132,7 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
                         </div>
                         {!loading && (
                            <div className='pl-2 min-w-0'>
-                              <p className='text-stoneGray text-2xl font-b'>Welcome, {first_name}!</p>
+                              <p className='text-stoneGray text-2xl font-b'>Welcome, {first_name}</p>
                               <p className='whitespace-normal break-words pt-1'>{bio ? <span className='text-cloudGray'>{bio}</span> : `"Add your Bio"`}</p>
                            </div>
                         )}

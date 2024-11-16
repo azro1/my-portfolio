@@ -12,7 +12,7 @@ import { useUpdateTable } from "../hooks/useUpdateTable";
 import { useMessage } from "../hooks/useMessage";
 
 
-const OtpForm = ({ redirectUrl, subHeading, successMessage }) => {
+const OtpForm = ({ method, redirectUrl, subHeading, successMessage }) => {
     const [otp, setOtp] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [isEyeOpen, setIsEyeOpen] = useState(false)
@@ -53,7 +53,7 @@ const OtpForm = ({ redirectUrl, subHeading, successMessage }) => {
 
             if (error) {
                 console.log('auth otp error:', error.message);
-                throw new Error("We couldn't verify your code. Please request a new verification code and try again.");
+                throw new Error(`Verification failed. To ${method}, please request a new verification code.`);
             } else if (session) {
                // after otp verification is successful it's at this point we have access to user object
                 setIsLoading(false);
@@ -113,58 +113,61 @@ const OtpForm = ({ redirectUrl, subHeading, successMessage }) => {
 
 
     return (
-        <form className="max-w-xs" onSubmit={handleVerifyOtp}>
-            <h2 className='text-3xl leading-normal mb-4 font-eb text-saddleBrown'>Verification Required</h2>
-            <p className='mb-4 max-w-lg'>{subHeading}</p>
+        <div className='shadow-outer p-8 sm:p-10 rounded-xl'> 
+            <form className="max-w-xs min-w-xs" onSubmit={handleVerifyOtp}>
+                <h2 className='text-3xl leading-normal mb-4 font-eb text-saddleBrown'>Verification Required</h2>
+                <p className='mb-5 max-w-lg'>{subHeading}</p>
 
-            <label>
-                <span className='max-w-min mb-2 text-base text-ashGray block'>
-                    Code:
-                </span>
-                <div className='relative max-w-xs'>
-                    <input
-                        className='w-full max-w-xs py-2.5 px-3 rounded-md text-black tracking-extra-wide'
-                        type={`${isEyeOpen ? 'text' : 'password'}`}
-                        spellCheck={false}
-                        autoComplete="off"
-                        placeholder="123456"
-                        value={otp}
-                        maxLength={6}
-                        onChange={handleOtpChange}
-                    />
-                    {!isEyeOpen ? (
-                        <div className="absolute right-1 top-1 p-2.5 group bg-ashGray hover:bg-nightSky transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
-                            <FiEye
-                                className='text-white group-hover:text-frostWhite transition duration-300 fieye'
-                                size={17}
-                            />
+                <label>
+                    <span className='max-w-min mb-2 text-base text-ashGray block'>
+                        Code:
+                    </span>
+                    <div className='relative max-w-xs'>
+                        <input
+                            className='w-full max-w-xs py-2.5 px-3 rounded-md text-black tracking-extra-wide'
+                            type={`${isEyeOpen ? 'text' : 'password'}`}
+                            spellCheck={false}
+                            autoComplete="off"
+                            placeholder="123456"
+                            value={otp}
+                            maxLength={6}
+                            onChange={handleOtpChange}
+                        />
+                        {!isEyeOpen ? (
+                            <div className="absolute right-1 top-1 p-2.5 group bg-eyeBgBase hover:bg-eyeBgHover transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
+                                <FiEye
+                                    className='text-black transition duration-300'
+                                    size={17}
+                                />
+                            </div>
+
+                        ) : (
+                            <div className="absolute right-1 top-1 p-2.5 group bg-eyeBgBase hover:bg-eyeBgHover transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
+                                <FiEyeOff
+                                    className='text-black transition duration-300'
+                                    size={17}
+                                />
+                            </div>
+                        )}
+                        <div>
+
                         </div>
+                    </div>
+                </label>
 
+                <button className='btn block mt-3.5 bg-saddleBrown' disabled={isLoading}>
+                    {isLoading ? (
+                        <div className='flex items-center gap-2'>
+                            <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />
+                            <span>Verify</span>
+                        </div>
                     ) : (
-                        <div className="absolute right-1 top-1 p-2.5 group bg-ashGray hover:bg-nightSky transition duration-300 rounded-md cursor-pointer fieye-container" onClick={handleShowCode}>
-                            <FiEyeOff
-                                className='text-white group-hover:text-frostWhite transition duration-300 fieye-off'
-                                size={17}
-                            />
-                        </div>
+                        'Verify'
                     )}
-                    <div>
+                </button>
+            </form>
+        </div>
 
-                    </div>
-                </div>
-            </label>
-
-            <button className='btn block mt-3.5 bg-saddleBrown' disabled={isLoading}>
-                {isLoading ? (
-                    <div className='flex items-center gap-2'>
-                        <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />
-                        <span>Verify</span>
-                    </div>
-                ) : (
-                    'Verify'
-                )}
-            </button>
-        </form>
     )
 }
 

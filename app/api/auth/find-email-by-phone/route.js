@@ -32,6 +32,7 @@ export async function POST(request) {
         })
 
         if (otpError) {
+            console.log('otp error:', otpError)
             return NextResponse.json({ error: otpError.message }, {
                 status: 500
             })

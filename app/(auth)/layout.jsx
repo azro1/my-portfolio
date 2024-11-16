@@ -17,9 +17,8 @@ export default async function AuthLayout ({ children }) {
 
   return (
     <main>
-      <div className='flex flex-col'>
         <nav className='flex items-center h-9.5 relative'>
-          <Link href='/' className='mr-auto shadow-3xl pt-1.5 px-4 pb-0.5 rounded-xl bg-deepCharcoal'>
+          <Link href='/' className='mr-auto shadow-3xl pt-1.5 px-4 pb-0.5 rounded-xl bg-softCharcoal'>
             <h2 className='mainheading font-eb text-saddleBrown'>
               Port<span className="text-stoneGray">folio</span>
             </h2>
@@ -44,8 +43,7 @@ export default async function AuthLayout ({ children }) {
             </Link>
           </div>
         </nav>
-          {children}
-      </div>
+        {children}
     </main>
   )
 }
