@@ -424,8 +424,8 @@ const CompleteRegistration = () => {
 
 
     return (
-        <div className='flex flex-col w-full'>
-            <div className='flex flex-col w-full'>
+            <div className='flex flex-col items-center justify-center h-[100vh] min-h-[1120px] md:min-h-[768px] md:h-[70vh]'>
+                
                 <h2 className='text-3xl mb-4 md:text-center leading-normal font-eb text-saddleBrown'>Create Your Profile</h2>
                 <p className='leading-normal md:text-center'>Please fill out the information below to create your profile. This helps us personalize your experience and allows other users to recognize you. All fields are required unless marked as optional.</p>
 
@@ -555,7 +555,6 @@ const CompleteRegistration = () => {
 
                 </div>
             </div>
-        </div>
 
     );
 };

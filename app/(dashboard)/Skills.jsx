@@ -214,57 +214,16 @@ const Skills = () => {
 
   return (
     <section>
-      <div className='flex flex-col place-items-center gap-y-6.25 md:flex-row md:items-stretch'>
-
-        <div className='w-full flex-1'>
-          <div className='mx-auto md:mx-0 max-w-xs'>
-            <h2 className='subheading font-b text-saddleBrown text-center pb-8'>
-              Technical Skills
-            </h2>
-
-              <div className='ts-inner-wrapper text-ashGray flex flex-col gap-6'>
-                <div className='relative'>
-                  <p>Hmtl</p>
-                  <div className='progress-bar shadow-inner mt-4 p-0.312'>
-                    <div></div>
-                  </div>
-                  <p className='absolute right-0 top-0 text-ashGray' ref={htmlPercentId}>{htmlPercent}%</p>
-                </div>
-                <div className='relative'>
-                  <p>Css</p>
-                  <div className='progress-bar shadow-inner mt-4 p-0.312'>
-                    <div></div>
-                  </div>
-                  <p className='absolute right-0 top-0 text-ashGray' ref={cssPercentId}>{cssPercent}%</p>
-                </div>
-                <div className='relative'>
-                  <p>JavaScript</p>
-                  <div className='progress-bar shadow-inner mt-4 p-0.312'>
-                    <div></div>
-                  </div>
-                  <p className='absolute right-0 top-0 text-ashGray' ref={jsPercentId}>{jsPercent}%</p>
-                </div>
-                <div className='relative'>
-                  <p>Php</p>
-                  <div className='progress-bar shadow-inner mt-4 p-0.312'>
-                    <div></div>
-                  </div>
-                  <p className='absolute right-0 top-0 text-ashGray' ref={phpPercentId}>{phpPercent}%</p>
-                </div>
-            </div>
-          </div>
-        </div>
+      <div className='flex flex-col place-items-center gap-16 lg:flex-row lg:items-stretch'>
 
 
-
-
-        <div className='flex-1 flex flex-col'>
-          <div className='max-w-xs ml-auto'>
+        <div className='flex-1 flex flex-col shadow-inner rounded-xl w-full md:w-1/2 h-full place-self-center p-12 lg:py-12 '>
+          <div className='max-w-xs mx-auto '>
             <h2 className='subheading font-b text-saddleBrown text-center pb-8'>
               Professional Skills
             </h2>
 
-            <ul className='text-ashGray text-center flex flex-wrap gap-y-6'>
+            <ul className='text-ashGray text-center flex flex-wrap max-w-[290px]  mx-auto gap-y-4'>
               <li className='organisation flex flex-col items-center justify-center gap-1 px-2 flex-1'>
                 <div className='progress-circle mb-1'>
                   <div className="outer">
@@ -348,13 +307,55 @@ const Skills = () => {
                     <circle cx="80" cy="80" r="45" strokeLinecap="butt" />
                   </svg>
                 </div>
-                <p className="frostWhitespace-nowrap">Research-skills</p>
+                <p className="whitespace-nowrap">Research-skills</p>
               </li>
             </ul>
           </div>
 
-          
         </div>
+
+
+
+        <div className='flex-1 shadow-inner rounded-xl w-full md:w-1/2 h-full place-self-center p-12 lg:py-12'>
+          <div className=' max-w-xs mx-auto'>
+            <h2 className='subheading font-b text-saddleBrown text-center pb-8'>
+              Technical Skills
+            </h2>
+
+              <div className='ts-inner-wrapper text-ashGray flex flex-col gap-6'>
+                <div className='relative'>
+                  <p>Hmtl</p>
+                  <div className='progress-bar shadow-inner mt-4 p-0.312'>
+                    <div></div>
+                  </div>
+                  <p className='absolute right-0 top-0 text-ashGray' ref={htmlPercentId}>{htmlPercent}%</p>
+                </div>
+                <div className='relative'>
+                  <p>Css</p>
+                  <div className='progress-bar shadow-inner mt-4 p-0.312'>
+                    <div></div>
+                  </div>
+                  <p className='absolute right-0 top-0 text-ashGray' ref={cssPercentId}>{cssPercent}%</p>
+                </div>
+                <div className='relative'>
+                  <p>JavaScript</p>
+                  <div className='progress-bar shadow-inner mt-4 p-0.312'>
+                    <div></div>
+                  </div>
+                  <p className='absolute right-0 top-0 text-ashGray' ref={jsPercentId}>{jsPercent}%</p>
+                </div>
+                <div className='relative'>
+                  <p>Php</p>
+                  <div className='progress-bar shadow-inner mt-4 p-0.312'>
+                    <div></div>
+                  </div>
+                  <p className='absolute right-0 top-0 text-ashGray' ref={phpPercentId}>{phpPercent}%</p>
+                </div>
+            </div>
+          </div>
+        </div>
+
+
       </div>
     </section>
   );

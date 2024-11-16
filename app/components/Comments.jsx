@@ -28,7 +28,7 @@ const Comments = ({ user }) => {
     const { changeMessage } = useMessage()
 
     // validation function returns regex to strip out harmful chars
-    const containsInvalidChars = (value) => /[<>\/\\`"'&]/.test(value);
+    const containsInvalidChars = (value) => /[<>\/\\`"&]/.test(value);
 
   
 

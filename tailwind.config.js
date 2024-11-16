@@ -19,6 +19,8 @@ export default {
         onyx: '#16181C',
         stoneGray: '#757575',
         ashGray: '#6B6B6B',
+        eyeBgBase: '#D0D0D0',
+        eyeBgHover: '#C0C0C0',
         nightSky: '#1C1E24',
         frostWhite: '#f2f2f2',
         cloudGray: '#E0E0E3',
