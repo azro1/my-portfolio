@@ -424,138 +424,141 @@ const CompleteRegistration = () => {
 
 
     return (
-            <div className='flex flex-col items-center justify-center h-[100vh] min-h-[1120px] md:min-h-[768px] md:h-[70vh]'>
-                
-                <h2 className='text-3xl mb-4 md:text-center leading-normal font-eb text-saddleBrown'>Create Your Profile</h2>
-                <p className='leading-normal md:text-center'>Please fill out the information below to create your profile. This helps us personalize your experience and allows other users to recognize you. All fields are required unless marked as optional.</p>
+        <div>
+            <div className='flex flex-col items-center justify-center w-full'>
 
-                <div className='mt-10 flex flex-col gap-6 md:flex-row md:justify-evenly w-full'>
-                    <form className={`flex-1 order-2 flex flex-col gap-2 md:order-1`}>
-                        <div>
-                            <div className='relative max-w-sm'>
-                                <label>
-                                    <span className='mb-2 text-base text-ashGray block'>First Name</span>
-                                    <input
-                                        className='w-full max-w-sm p-2.5 rounded-md text-black'
-                                        type='text'
-                                        spellCheck='false'
-                                        value={formData.firstName}
-                                        name='firstName'
-                                        maxLength='15'
-                                        placeholder='eg., John'
-                                        onChange={handleInputChange}
-                                        onKeyDown={handleKeyDown}
-                                        minLength='3'
+                <div className='max-w-sm md:max-w-none'>
+                    <h2 className='text-3xl mb-4 md:text-center leading-normal font-eb text-saddleBrown'>Create Your Profile</h2>
+                    <p className='leading-normal md:text-center'>Please fill out the information below to create your profile. This helps us personalize your experience and allows other users to recognize you. All fields are required unless marked as optional.</p>
 
-                                    />
-                                </label>
+                    <div className='mt-10 flex flex-col gap-6 lg:gap-0 md:flex-row md:justify-evenly w-full'>
+                        <form className={`flex-1 order-2 flex flex-col gap-2 md:order-1 max-w-sm`}>
+                            <div>
+                                <div className='relative max-w-sm'>
+                                    <label>
+                                        <span className='mb-2 text-base text-ashGray block'>First Name</span>
+                                        <input
+                                            className='w-full max-w-sm p-2.5 rounded-md text-black'
+                                            type='text'
+                                            spellCheck='false'
+                                            value={formData.firstName}
+                                            name='firstName'
+                                            maxLength='15'
+                                            placeholder='eg., John'
+                                            onChange={handleInputChange}
+                                            onKeyDown={handleKeyDown}
+                                            minLength='3'
 
-                                {formIsSubmitted && (errors.firstName || !isFirstNameLongEnough || !startsWithCaps(formData.firstName) || !allLowerCase(formData.firstName)) ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : (formIsSubmitted && !errors.firstName && !isCheckingPhone && updateStatus === 'success' ? <FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} /> : (updateStatus === 'error' ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : ''))}
-                            
-                            </div>
-                               {errors.firstName && <p className='text-sm text-red-600 mt-1'>{errors.firstName}</p>}
-                        </div>
+                                        />
+                                    </label>
 
+                                    {formIsSubmitted && (errors.firstName || !isFirstNameLongEnough || !startsWithCaps(formData.firstName) || !allLowerCase(formData.firstName)) ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : (formIsSubmitted && !errors.firstName && !isCheckingPhone && updateStatus === 'success' ? <FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} /> : (updateStatus === 'error' ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : ''))}
 
-                        <div>
-                            <div className='relative max-w-sm'>
-                                <label>
-                                    <span className='mb-2 text-base text-ashGray block'>Last Name</span>
-                                    <input
-                                        className='w-full max-w-sm p-2.5 rounded-md text-black'
-                                        type='text'
-                                        value={formData.lastName}
-                                        name='lastName'
-                                        maxLength='25'
-                                        placeholder='eg., Smith'
-                                        onChange={handleInputChange}
-                                        onKeyDown={handleKeyDown}
-                                        minLength='2'
-                                    />
-                                </label>
-                                {formIsSubmitted && (errors.lastName || !isLastNameLongEnough || !startsWithCaps(formData.lastName) || !allLowerCase(formData.lastName)) ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : (formIsSubmitted && !errors.lastName && !isCheckingPhone && updateStatus === 'success' ? <FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} /> : (updateStatus === 'error' ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : ''))}
-                            </div>
-                            {errors.lastName && <p className='text-sm text-red-600 mt-1'>{errors.lastName}</p>}
-                        </div>
-
-
-
-                        <div>
-                            <div className='relative max-w-sm'>
-                                <label>
-                                    <span className='mb-2 text-base text-ashGray block'>Date of Birth</span>
-                                    <DatePicker
-                                        className='w-full max-w-sm p-2.5 rounded-md text-black'
-                                        wrapperClassName='w-full'
-                                        locale="en-GB"
-                                        dateFormat="dd/MM/yyyy"
-                                        selected={formData.dob}
-                                        onChange={(date) => handleInputChange({ target: { name: 'dob', value: date } })}
-                                        onKeyDown={handleKeyDown}
-                                        name='dob'
-                                        placeholderText='DD/MM/YYYY'
-                                        maxDate={new Date()}
-                                        maxLength={'8'}
-                                    />
-                                </label>
-                                {formIsSubmitted && (errors.dob || !formData.dob) ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : (!errors.dob && formData.dob && formIsSubmitted && !isCheckingPhone && updateStatus === 'success' ? <FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} /> : (updateStatus === 'error' ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : ''))}
-                            </div>
-                            {errors.dob && <p className='text-sm text-red-600 pt-1'>{errors.dob}</p>}
-                        </div>
-
-
-                        <div>
-                            <div className='relative max-w-sm'>
-                                <label>
-                                    <span className='max-w-min mb-2 text-base text-ashGray block'>Phone</span>
-                                    <input className='w-full max-w-sm p-2.5 rounded-md text-black'
-                                        type='tel'
-                                        value={formData.phone}
-                                        spellCheck={false}
-                                        maxLength={15}
-                                        name='phone'
-                                        placeholder="e.g., +44XXXXXXXXX or 07XXXXXXXX"
-                                        onChange={handleInputChange}
-                                        onKeyDown={handleKeyDown}
-                                    />
-                                </label>
-                                {formIsSubmitted && (errors.phone || !isValidPhoneNumber(formData.phone)) ? (<FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} />) : (!errors.phone && isValidPhoneNumber(formData.phone) && formIsSubmitted && !isCheckingPhone && updateStatus === 'success' ? (<FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} />) : (updateStatus === 'error' ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : ''))}
-                            </div>
-                            {errors.phone && <p className='text-sm text-red-600 mt-1'>{errors.phone}</p>}
-                        </div>
-
-                        <button className={`btn block w-fit mt-1.5 bg-saddleBrown transition duration-500 ${isButtonDisabled ? 'opacity-65' : 'opacity-100'}`} disabled={isButtonDisabled} onClick={handleUpdateProfile}>
-                            {isLoading ? (
-                                <div className='flex items-center gap-2'>
-                                    <img className="w-5 h-5 opacity-50" src="../images/loading/spinner.svg" alt="Loading indicator" />
-                                    <span>Register</span>
                                 </div>
-                            ) : (
-                                'Register'
-                            )}
-                        </button>
-                        
-                    </form>
-                   
-                   <div className='flex-1 order-1 h-fit md:mt-4 md:order-2 '>
-                        <div className='md:shadow-outer md:p-5 rounded-md max-h-max'>
-                            <div className='md:p-2 rounded-md'>
-                                <AvatarUploader
-                                    user={user}
-                                    updateProfile={updateProfile}
-                                    title='Upload a Profile Picture'
-                                    isFirstUpload={true}
-                                    displayTitle={true}
-                                    btnColor='bg-saddleBrown'
-                                    show3DAvatar={true}
-                                />
+                                {errors.firstName && <p className='text-sm text-red-600 mt-1'>{errors.firstName}</p>}
+                            </div>
+
+
+                            <div>
+                                <div className='relative max-w-sm'>
+                                    <label>
+                                        <span className='mb-2 text-base text-ashGray block'>Last Name</span>
+                                        <input
+                                            className='w-full max-w-sm p-2.5 rounded-md text-black'
+                                            type='text'
+                                            value={formData.lastName}
+                                            name='lastName'
+                                            maxLength='25'
+                                            placeholder='eg., Smith'
+                                            onChange={handleInputChange}
+                                            onKeyDown={handleKeyDown}
+                                            minLength='2'
+                                        />
+                                    </label>
+                                    {formIsSubmitted && (errors.lastName || !isLastNameLongEnough || !startsWithCaps(formData.lastName) || !allLowerCase(formData.lastName)) ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : (formIsSubmitted && !errors.lastName && !isCheckingPhone && updateStatus === 'success' ? <FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} /> : (updateStatus === 'error' ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : ''))}
+                                </div>
+                                {errors.lastName && <p className='text-sm text-red-600 mt-1'>{errors.lastName}</p>}
+                            </div>
+
+
+
+                            <div>
+                                <div className='relative max-w-sm'>
+                                    <label>
+                                        <span className='mb-2 text-base text-ashGray block'>Date of Birth</span>
+                                        <DatePicker
+                                            className='w-full max-w-sm p-2.5 rounded-md text-black'
+                                            wrapperClassName='w-full'
+                                            locale="en-GB"
+                                            dateFormat="dd/MM/yyyy"
+                                            selected={formData.dob}
+                                            onChange={(date) => handleInputChange({ target: { name: 'dob', value: date } })}
+                                            onKeyDown={handleKeyDown}
+                                            name='dob'
+                                            placeholderText='DD/MM/YYYY'
+                                            maxDate={new Date()}
+                                            maxLength={'8'}
+                                        />
+                                    </label>
+                                    {formIsSubmitted && (errors.dob || !formData.dob) ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : (!errors.dob && formData.dob && formIsSubmitted && !isCheckingPhone && updateStatus === 'success' ? <FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} /> : (updateStatus === 'error' ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : ''))}
+                                </div>
+                                {errors.dob && <p className='text-sm text-red-600 pt-1'>{errors.dob}</p>}
+                            </div>
+
+
+                            <div>
+                                <div className='relative max-w-sm'>
+                                    <label>
+                                        <span className='max-w-min mb-2 text-base text-ashGray block'>Phone</span>
+                                        <input className='w-full max-w-sm p-2.5 rounded-md text-black'
+                                            type='tel'
+                                            value={formData.phone}
+                                            spellCheck={false}
+                                            maxLength={15}
+                                            name='phone'
+                                            placeholder="e.g., +44XXXXXXXXX or 07XXXXXXXX"
+                                            onChange={handleInputChange}
+                                            onKeyDown={handleKeyDown}
+                                        />
+                                    </label>
+                                    {formIsSubmitted && (errors.phone || !isValidPhoneNumber(formData.phone)) ? (<FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} />) : (!errors.phone && isValidPhoneNumber(formData.phone) && formIsSubmitted && !isCheckingPhone && updateStatus === 'success' ? (<FaCheckCircle className={'absolute bottom-3 right-4 text-green-600'} size={21} />) : (updateStatus === 'error' ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : ''))}
+                                </div>
+                                {errors.phone && <p className='text-sm text-red-600 mt-1'>{errors.phone}</p>}
+                            </div>
+
+                            <button className={`btn block w-fit mt-1.5 bg-saddleBrown transition duration-500 ${isButtonDisabled ? 'opacity-65' : 'opacity-100'}`} disabled={isButtonDisabled} onClick={handleUpdateProfile}>
+                                {isLoading ? (
+                                    <div className='flex items-center gap-2'>
+                                        <img className="w-5 h-5 opacity-50" src="../images/loading/spinner.svg" alt="Loading indicator" />
+                                        <span>Register</span>
+                                    </div>
+                                ) : (
+                                    'Register'
+                                )}
+                            </button>
+
+                        </form>
+
+                        <div className='flex-1 order-1 h-fit md:mt-4 md:order-2 md:max-w-md'>
+                            <div className='md:shadow-outer md:p-10 md:rounded-xl max-h-max'>
+                                    <AvatarUploader
+                                        user={user}
+                                        updateProfile={updateProfile}
+                                        title='Upload a Profile Picture'
+                                        isFirstUpload={true}
+                                        displayTitle={true}
+                                        btnColor='bg-saddleBrown'
+                                        show3DAvatar={true}
+                                    />
                             </div>
                         </div>
-                   </div>
+
+                    </div>
 
                 </div>
-            </div>
 
+            </div>
+        </div>
     );
 };
 

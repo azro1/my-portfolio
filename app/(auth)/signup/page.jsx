@@ -124,49 +124,48 @@ const Signup = () => {
 
 
 
-    return (
-      <div className='flex flex-col items-center justify-center gap-12 h-[100vh] min-h-[820px] md:justify-evenly md:flex-row md:gap-0 md:min-h-0 md:h-[70vh]'>
-           
-          <div className='shadow-outer p-8 sm:p-10 rounded-xl'>
-            <form className="w-full max-w-xs min-w-xs" onSubmit={handleSubmit} >
-              <h2 className='text-3xl mb-6 font-eb text-saddleBrown'>Sign up</h2>
-              <p className='mb-5'>Enter your email address to recieve a security code to create your account</p>
-              
-              <label>
-                <span className='max-w-min mt-4 mb-2 text-base text-ashGray block'>
-                  Email
-                </span>
-                <input
-                  className='w-full py-2.5 px-3 rounded-md text-black'
-                  type='text'
-                  spellCheck={false}
-                  placeholder='Enter your email'
-                  value={tempEmail}
-                  onChange={(e) => setTempEmail(e.target.value)}
-                />
-              </label>
+  return (
+    <div>
+      <div className='flex flex-col items-center justify-center gap-12 md:flex-row'>
+        <div className='sm:shadow-outer sm:p-10 sm:rounded-xl'>
+          <form className="w-full max-w-xs min-w-xs" onSubmit={handleSubmit} >
+            <h2 className='text-3xl mb-6 font-eb text-saddleBrown'>Sign up</h2>
+            <p className='mb-5'>Enter your email address to recieve a security code to create your account</p>
 
-              <div className="mt-5 flex items-center">
-                <input className="self-start mt-0.21 max-w-min transform scale-125" type="checkbox" value={isChecked} onChange={handleCheckbox}/>
-                <span className="text-base block text-ashGray ml-2.5 -mt-1">By signing up I agree to the{' '}<Link className="text-saddleBrown text-base" href='#'>Privacy Policy</Link>{' '}and{' '}<Link className='text-saddleBrown text-base' href='#'>Terms of Service</Link>
+            <label>
+              <span className='max-w-min mt-4 mb-2 text-base text-ashGray block'>
+                Email
+              </span>
+              <input
+                className='w-full py-2.5 px-3 rounded-md text-black'
+                type='text'
+                spellCheck={false}
+                placeholder='Enter your email'
+                value={tempEmail}
+                onChange={(e) => setTempEmail(e.target.value)}
+              />
+            </label>
+
+            <div className="mt-5 flex items-center">
+              <input className="self-start mt-0.21 max-w-min transform scale-125" type="checkbox" value={isChecked} onChange={handleCheckbox} />
+              <span className="text-base block text-ashGray ml-2.5 -mt-1">By signing up I agree to the{' '}<Link className="text-saddleBrown text-base" href='#'>Privacy Policy</Link>{' '}and{' '}<Link className='text-saddleBrown text-base' href='#'>Terms of Service</Link>
                 .</span>
-              </div>
+            </div>
 
-              <button className='btn block mt-4 bg-saddleBrown' disabled={isLoading}>
-                {isLoading ? (
-                  <div className='flex items-center gap-2'>
-                    <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />
-                    <span>Signup</span>
-                  </div>
-                ) : (
-                  'Signup'
-                )}
-              </button>
-            </form>
-          </div>
+            <button className='btn block mt-4 bg-saddleBrown' disabled={isLoading}>
+              {isLoading ? (
+                <div className='flex items-center gap-2'>
+                  <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />
+                  <span>Signup</span>
+                </div>
+              ) : (
+                'Signup'
+              )}
+            </button>
+          </form>
+        </div>
 
 
-  
         <div className='flex flex-col items-center md:grid-col-start-1 md:grid-row-start-2 md:col-span-2'>
           <p className='mb-8'>or Sign up using</p>
           <SocialButtons text={"Continue"} />
@@ -175,10 +174,10 @@ const Signup = () => {
             <Link className='text-base text-saddleBrown' href='/login'>Login</Link>
           </div>
         </div>
-
       </div>
-    );
-  }
+    </div>
+  );
+}
 
 
   export default Signup
