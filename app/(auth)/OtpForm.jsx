@@ -113,7 +113,7 @@ const OtpForm = ({ method, redirectUrl, subHeading, successMessage }) => {
 
 
     return (
-        <div className='shadow-outer p-8 sm:p-10 rounded-xl'> 
+        <div className='sm:shadow-outer sm:p-10 sm:rounded-xl'> 
             <form className="max-w-xs min-w-xs" onSubmit={handleVerifyOtp}>
                 <h2 className='text-3xl leading-normal mb-4 font-eb text-saddleBrown'>Verification Required</h2>
                 <p className='mb-5 max-w-lg'>{subHeading}</p>

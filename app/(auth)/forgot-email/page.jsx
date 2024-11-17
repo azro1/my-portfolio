@@ -118,39 +118,41 @@ const ForgotEmail = () => {
 
     
     return (
-        <div className='flex items-center justify-center h-[100vh] min-h-[820px] md:min-h-0 md:h-[70vh]'>
+        <div>
+            <div className='flex items-center justify-center sm:shadow-outer sm:p-10 sm:rounded-xl'>
 
-            <div className='shadow-outer p-8 sm:p-10 rounded-xl'>
-                <form className='w-full max-w-xs min-w-xs' onSubmit={handleSubmit}>
-                    <h2 className='text-3xl mb-5 font-eb text-saddleBrown'>Recover Your Account</h2>
-                    <p className='mb-5'>Please enter the phone number you used during signup to help us recover your account.</p>
+                <form onSubmit={handleSubmit}>
+                    <div className='max-w-[330px]'>
+                        <h2 className='text-3xl mb-5 font-eb text-saddleBrown'>Recover Your Account</h2>
+                        <p className='mb-5 '>Please enter the phone number you used during signup to help us recover your account.</p>
 
-                    <label>
-                        <span className='max-w-min mb-2 text-base text-ashGray block'>Phone</span>
-                        <input
-                            className='w-full max-w-xs py-2.5 px-3 rounded-md text-black'
-                            type='tel'
-                            value={phone}
-                            spellCheck={false}
-                            maxLength={15}
-                            placeholder="Enter your phone number"
-                            onChange={(e) => setPhone(e.target.value)}
-                            onKeyDown={handleKeyDown}
-                        />
-                    </label>
-                    <button className='btn block mt-4 bg-saddleBrown' disabled={isLoading}>
-                        {isLoading ? (
-                            <div className='flex items-center gap-2'>
-                                <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />
-                                <span>Submit</span>
-                            </div>
-                        ) : (
-                            'Submit'
-                        )}
-                    </button>
+                        <label>
+                            <span className='max-w-min mb-2 text-base text-ashGray block'>Phone</span>
+                            <input
+                                className='w-full max-w-xs py-2.5 px-3 rounded-md text-black'
+                                type='tel'
+                                value={phone}
+                                spellCheck={false}
+                                maxLength={15}
+                                placeholder="Enter your phone number"
+                                onChange={(e) => setPhone(e.target.value)}
+                                onKeyDown={handleKeyDown}
+                            />
+                        </label>
+                        <button className='btn block mt-4 bg-saddleBrown' disabled={isLoading}>
+                            {isLoading ? (
+                                <div className='flex items-center gap-2'>
+                                    <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />
+                                    <span>Submit</span>
+                                </div>
+                            ) : (
+                                'Submit'
+                            )}
+                        </button>
+                    </div>
                 </form>
+
             </div>
-            
         </div>
     )
 }

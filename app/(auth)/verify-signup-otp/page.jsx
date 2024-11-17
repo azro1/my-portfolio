@@ -3,7 +3,7 @@ import OtpForm from "../OtpForm";
 
 const VerifySignupOtp = () => {
     return (
-        <div className='flex items-center justify-center h-100vh min-h-[820px] md:min-h-0 md:h-[70vh]'>
+        <div className='flex items-center justify-center'>
             <OtpForm
                 redirectUrl='/complete-registration'
                 method='signup'
