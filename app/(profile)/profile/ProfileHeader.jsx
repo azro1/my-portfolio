@@ -123,12 +123,18 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
                   <div className='mt-6 h-[480px] bg-softCharcoal'>
                      <div className='flex items-center gap-1 p-4'>
                         <div className='border-2 border-cloudGray rounded-full p-1 w-fit'>
-                           <Avatar
-                              url={avatar_url}
-                              size={'w-20 h-20'}
-                              lgSize={'w-20 h-20'}
-                              phSize={80}
-                           />
+                           {loading ? (
+                              <div className='w-20 h-20 bg-nightSky rounded-full overflow-hidden flex items-center justify-center'>
+                                <img src="../images/loading/loader.gif" className='w-16 h-16 ' alt="a loading gif" />
+                              </div>
+                           ) : (
+                              <Avatar
+                                 url={avatar_url}
+                                 size={'w-20 h-20'}
+                                 lgSize={'w-20 h-20'}
+                                 phSize={80}
+                              />
+                           )}
                         </div>
                         {!loading && (
                            <div className='pl-2 min-w-0'>

@@ -218,7 +218,7 @@ const Comments = ({ user }) => {
                     </h3>
                     <form onSubmit={handleComment}>
                         <textarea
-                            className='py-2 px-2.5 outline-none text-base text-black rounded-md'
+                            className='py-2 px-2.5 outline-none text-base rounded-md text-stoneGray bg-softCharcoal border-2 border-ashGray border-opacity-55 '
                             cols='40'
                             rows='4'
                             spellCheck='false'

@@ -41,19 +41,19 @@ const ProfileNav = () => {
             <div className='hidden md:flex md:flex-row profile-nav md'>
                 <div className='flex items gap-1.5 '>
                     <Link 
-                        className={`${activeLink === '/profile' ? 'active' : ''} text-ashGray text-base bg-nightSky py-2 px-3 border-[1px] border-b-0 border-ashGray rounded-tl-lg rounded-tr-lg`} 
+                        className={`${activeLink === '/profile' ? 'active' : ''} text-ashGray text-base py-2.5 px-3.5 border-[1px] border-b-0 border-ashGray rounded-tl-lg rounded-tr-lg hover:bg-softCharcoal`} 
                         href={'/profile'} 
                         onClick={() => handleActiveLink('/profile')}>
                             <span>Dashboard</span>
                     </Link>
                     <Link 
-                        className={`${activeLink === '/profile/edit-profile' ? 'active' : ''} text-ashGray text-base bg-nightSky py-2 px-3 border-[1px] border-b-0 border-ashGray rounded-tl-lg rounded-tr-lg`} 
+                        className={`${activeLink === '/profile/edit-profile' ? 'active' : ''} text-ashGray text-base py-2.5 px-3.5 border-[1px] border-b-0 border-ashGray rounded-tl-lg rounded-tr-lg hover:bg-softCharcoal`} 
                         href={'/profile/edit-profile'} 
                         onClick={() => handleActiveLink('/profile/edit-profile')}>
                             <span>Edit Profile</span>
                     </Link>
                     <Link 
-                        className={`${activeLink === '/profile/data-privacy' ? 'active' : ''} text-ashGray text-base bg-nightSky py-2 px-3 border-[1px] border-b-0 border-ashGray rounded-tl-lg rounded-tr-lg`} 
+                        className={`${activeLink === '/profile/data-privacy' ? 'active' : ''} text-ashGray text-base py-2.5 px-3.5 border-[1px] border-b-0 border-ashGray rounded-tl-lg rounded-tr-lg hover:bg-softCharcoal`} 
                         href={'/profile/data-privacy'} 
                         onClick={() => handleActiveLink('/profile/data-privacy')}>
                             <span>Your Data</span>

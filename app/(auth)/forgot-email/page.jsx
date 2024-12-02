@@ -1,14 +1,35 @@
 "use client"
 
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { motion, AnimatePresence } from "framer-motion"
+
 
 // custom hook to display global messages
 import { useMessage } from "@/app/hooks/useMessage";
 
 
+// yup validation schema
+const schema = yup.object({
+    phone: yup
+    .string()
+    .required('Phone is required')
+    .test('has-valid-prefix', "Phone must start with 0 or a country code (e.g., +44 +1)", value => {
+        return value ? value.startsWith('0') || value.startsWith('+') : false;
+    })
+    .matches(/^(0\d{10,14}|\+\d{1,3}\d{8,12})$/, "Phone should be between 10 and 15 digits")
+});
+
+
+
+
+
+
+
 const ForgotEmail = () => {
-    const [phone, setPhone] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [redirect, setRedirect] = useState(false)
 
@@ -19,9 +40,10 @@ const ForgotEmail = () => {
 
     useEffect(() => {
         router.refresh();
-        // clear cookie from server if user navigates back to this page so they have to enter phone again to get new otp
+        // clear cookie from server if user refreshes or navigates back to this page so they have to enter phone again to get new otp
         document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
     }, [router]);
+
 
     // function to convert uk mobile numbers into E.164 format
     const convertToInternationalFormat = (phoneNumber) => {
@@ -34,24 +56,31 @@ const ForgotEmail = () => {
 
 
 
-    // Phone number validation function
-    const isValidPhoneNumber = (phoneNumber) => /^(0\d{10}|\+\d{1,3}\d{1,14})$/.test(phoneNumber);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
 
-        if (!phone) {
-          changeMessage('error', 'Please enter your phone number to continue.');
-          return
-        } else if (phone.length < 10) {
-          changeMessage('error', 'The phone number you entered seems invalid. It should be between 10 and 15 digits. Please check and try again.')
-          return
-        } else if (!isValidPhoneNumber(phone)) {
-          changeMessage('error', 'Please enter a valid mobile number starting with 0 or an international code (e.g., +44, +1).');
-          return
-        }
-        
+
+
+
+
+    // react-hook-form
+    const form = useForm({
+        resolver: yupResolver(schema),
+        mode: 'onSubmit'
+    })
+
+    // allows us to register a form control
+    const { register, handleSubmit, formState } = form;
+    const { errors } = formState;
+ 
+
+
+
+
+
+    const onSubmit = async (data) => {
+
         setIsLoading(true)
+        const phone = data.phone;
         const convertedPhoneNumber = convertToInternationalFormat(phone);
 
         try {
@@ -104,13 +133,11 @@ const ForgotEmail = () => {
 
 
 
-
-
     // prevent enter submission
     const handleKeyDown = (e) => {
-        if (e.key === 'Enter') e.preventDefault();
-        if (!/[0-9+]/.test(e.key) && !['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete'].includes(e.key)) {
-            e.preventDefault();
+        const regex = /^[0-9]$/;
+        if (!regex.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete') {
+            e.preventDefault(); // Prevent non-digit characters
         }
     }
 
@@ -121,25 +148,39 @@ const ForgotEmail = () => {
         <div>
             <div className='flex items-center justify-center sm:shadow-outer sm:p-10 sm:rounded-xl'>
 
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit(onSubmit)} noValidate as={motion.form}
+                    transition={{ type: 'spring', stiffness: 150, damping: 30 }}
+                >
                     <div className='max-w-[330px]'>
-                        <h2 className='text-3xl mb-5 font-eb text-saddleBrown'>Recover Your Account</h2>
-                        <p className='mb-5 '>Please enter the phone number you used during signup to help us recover your account.</p>
+                        <h2 className='text-3xl mb-4 font-eb text-saddleBrown'>Forgot Email?</h2>
+                        <p className='mb-4'>Please provide the phone number you used when you signed up</p>
 
-                        <label>
-                            <span className='max-w-min mb-2 text-base text-ashGray block'>Phone</span>
-                            <input
-                                className='w-full max-w-xs py-2.5 px-3 rounded-md text-black'
-                                type='tel'
-                                value={phone}
-                                spellCheck={false}
-                                maxLength={15}
-                                placeholder="Enter your phone number"
-                                onChange={(e) => setPhone(e.target.value)}
-                                onKeyDown={handleKeyDown}
-                            />
-                        </label>
-                        <button className='btn block mt-4 bg-saddleBrown' disabled={isLoading}>
+                        <label className='max-w-min mb-2 text-base text-ashGray block' htmlFor='phone'>Phone</label>
+                        <motion.input
+                            transition={{ type: 'spring', stiffness: 150, damping: 25 }}
+                            className={`w-full max-w-xs py-2.5 px-4 rounded-md text-stoneGray bg-softCharcoal border-[1px] border-ashGray  ${errors.phone ? 'border-red-700' : 'border-ashGray'}`}
+                            id='phone'
+                            type='tel'
+                            maxLength={15}
+                            placeholder="e.g., 01234 or +44 1234"
+                            {...register('phone')}
+                            onKeyDown={handleKeyDown}
+                        />
+
+                        <AnimatePresence>
+                            {errors.phone && (
+                                <motion.p
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    transition={{ type: 'tween' }}
+                                    className="text-red-600 mt-2 text-sm">
+                                    {errors.phone.message}
+                                </motion.p>
+                            )}
+                        </AnimatePresence>
+                        
+                        <button transition={{ type: 'spring', stiffness: 200, damping: 30 }} className={`btn block mt-4 bg-saddleBrown ${isLoading ? 'opacity-65' : 'opacity-100'}`} disabled={isLoading}>
                             {isLoading ? (
                                 <div className='flex items-center gap-2'>
                                     <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />

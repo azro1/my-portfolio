@@ -1,35 +1,33 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useEffect, useRef } from "react";
 
 // components
-import OtpForm from "../OtpForm"
+import ProfilePhoneOtpForm from "../ProfilePhoneOtpForm"
 
 
 const VerifyPhoneOtp = () => {
-  const [phoneNumber, setPhoneNumber] = useState('');
+
+  const phoneRef = useRef(null);
 
   useEffect(() => {
-     const phone = localStorage.getItem('phone')
-     setPhoneNumber(phone)
+    const userPhone = localStorage.getItem('phone');
+    
+    if (userPhone) {
+      phoneRef.current = userPhone;
+      localStorage.removeItem('phone')
+    }
   }, [])
 
-  const converPhoneNumber = (phone) => {
-    if (phone) {
-      return phone.slice(-4);
-    }
-    return ''
-  }
-
   return (
-    <div className='flex items-center justify-center h-[90vh]'>
-      <OtpForm
+    <div className='flex items-center justify-center min-h-[580px]'>
+      <ProfilePhoneOtpForm
         contact='phone number'
-        storageStr='phone'
         verificationType='phone_change'
-        title='Verify Your Phone'
-        subHeading={<>We've sent a verification code to your number ending in <strong> ****{converPhoneNumber(phoneNumber)}</strong>. Please enter the code below to complete your phone update.</>}
+        title='Update Phone'
+        subHeading='Enter the code sent to your new phone number to complete the update'
         successMessage='OTP verifcation was successful. Your phone number has been updated.'
+        profilePhoneRef={phoneRef}
       />
     </div>
   )
