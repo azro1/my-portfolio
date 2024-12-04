@@ -13,7 +13,7 @@ const Profile = async () => {
 
   return (
       <div className='overflow-y-scroll hide-scrollbar h-[90vh]'>
-        <ProfileHeader title={'My Profile'} subheading={'Here you can view and edit your recent activity, update your personal information and security preferences, view your data and personalize your privacy settings.'} showAvatar={true} />
+        <ProfileHeader title={'My Profile'} subheading={'This is your profile dashboard. Here you can view your most recent activity across the website.'} showAvatar={true} />
         
 
         {user && (

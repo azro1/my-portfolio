@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useCallback } from "react"
 
 // custom hooks
 import { useFetchUser } from '@/app/hooks/useFetchUser';
@@ -29,22 +29,23 @@ const EditProfileForms = () => {
   
 
 
-    // make sure we have a user before calling fetchProfile
-    useEffect(() => {
-        const fetchProfileResult = async () => {
-            if (user) {
-                const profileResult = await fetchProfile(user);
-                if (!profileResult) {
-                    changeMessage('error', "Sorry, we couldn't load some of your profile information at this time. Please check your internet connection or refresh the page. If the issuse persist, contact support.");
-                    return
-                }
+    // Memoize fetchProfile using useCallback
+    const memoizedFetchProfile = useCallback(async () => {
+        if (user && !profile) {
+            const profileResult = await fetchProfile(user);
+            if (!profileResult) {
+                changeMessage('error', "Sorry, we couldn't load some of your profile information at this time. Please check your internet connection or refresh the page. If the issuse persist, contact support.");
             }
         }
-        fetchProfileResult()
-    }, [user])
+    }, [user, fetchProfile, changeMessage]);
+
+    useEffect(() => {
+        memoizedFetchProfile();
+    }, [memoizedFetchProfile]);
 
 
 
+    
     return (
         <div className='flex flex-col gap-6'>
             
@@ -57,17 +58,16 @@ const EditProfileForms = () => {
                     isFirstUpload={false}
                 />
             </div>
- 
-            <div className='bg-softCharcoal p-4'>
+
+
+            <div className='flex flex-col bg-softCharcoal p-4'>
                 <BioForm
                     user={user}
                     profile={profile}
                     changeMessage={changeMessage}
                     fetchProfile={fetchProfile}
                 />
-            </div>
 
-            <div className='flex flex-col bg-softCharcoal p-4'>
                 <FirstNameForm
                     user={user}
                     profile={profile}

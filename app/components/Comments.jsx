@@ -218,7 +218,7 @@ const Comments = ({ user }) => {
                     </h3>
                     <form onSubmit={handleComment}>
                         <textarea
-                            className='py-2 px-2.5 outline-none text-base text-black rounded-md'
+                            className='py-2 px-2.5 outline-none text-base rounded-md text-stoneGray bg-softCharcoal border-2 border-ashGray border-opacity-55 '
                             cols='40'
                             rows='4'
                             spellCheck='false'
@@ -263,37 +263,50 @@ const Comments = ({ user }) => {
                     {comments.map(comment => (
                         <div className='mb-8' key={comment.id}>
 
-                            <>
-                                <div className="flex items-start gap-3">
-                                    {comment.avatar_url?.includes('https') ? (
-                                        <div className="overflow-hidden rounded-full min-w-max relative w-14 h-14">
-                                            <Image 
-                                                className="inline-block w-full h-full object-cover" 
-                                                src={comment.avatar_url} 
-                                                alt="a user avatar"
-                                                fill
-                                                sizes="(max-width: 480px) 40px, (max-width: 768px) 60px, (max-width: 1024px) 80px, 100px"
-                                                quality={100}
-                                                priority 
-                                            />
-                                        </div>
-                                    ) : (
-                                        <Avatar
-                                            url={comment.avatar_url}
-                                            size={'h-14 w-14'}
-                                            lgSize={'w-14 h-14'}
-                                            phSize={50}
-                                        />
-                                    )}
-                                    <div>
-                                        <div className='flex gap-2 items-center mb-2'>
-                                            <h6 className='text-base text-saddleBrown font-b'>{comment.first_name ? comment.first_name : comment.full_name}</h6>
-                                            <span className='text-sm text-cloudGray filter brightness-75'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
-                                        </div>
-                                        <p>{comment.text}</p>
-                                    </div>
-                                </div>
-                            </>
+                    <>
+                    <div className="flex items-start gap-3">
+                        <div className="overflow-hidden rounded-full min-w-max relative w-14 h-14">
+                            {comment.avatar_url ? (
+                                comment.avatar_url.startsWith("http") ? (
+                                <Image
+                                    className="inline-block w-full h-full object-cover"
+                                    src={comment.avatar_url}
+                                    alt="User avatar"
+                                    fill
+                                    sizes="(max-width: 480px) 40px, (max-width: 768px) 60px, (max-width: 1024px) 80px, 100px"
+                                    quality={100}
+                                    priority
+                                />
+                                ) : (
+                                <Avatar
+                                    url={comment.avatar_url}
+                                    size={'h-14 w-14'}
+                                    lgSize={'w-14 h-14'}
+                                    phSize={50}
+                                />
+                                )
+                            ) : (
+                                <Image
+                                    className="inline-block w-full h-full object-cover"
+                                    src={user.user_metadata.avatar_url}
+                                    alt="Fallback user avatar"
+                                    fill
+                                    sizes="(max-width: 480px) 40px, (max-width: 768px) 60px, (max-width: 1024px) 80px, 100px"
+                                    quality={100}
+                                    priority
+                                />
+                            )}
+                        </div>
+                        <div>
+                            <div className="flex gap-2 items-center mb-2">
+                                <h6 className="text-base text-saddleBrown font-b">{comment.first_name || comment.full_name}</h6>
+                                <span className="text-sm text-ashGray">{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
+                            </div>
+                            <p>{comment.text}</p>
+                        </div>
+                    </div>
+                    </>
+
 
                         </div>
                     ))}

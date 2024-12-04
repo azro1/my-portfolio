@@ -1,7 +1,11 @@
 "use client"
 
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useState, useEffect } from "react"
-import { format, parseISO } from "date-fns";
+import { format, parse, parseISO } from "date-fns";
+import { useForm } from "react-hook-form";
+
 
 // custom hooks
 import { useUpdateTable } from '@/app/hooks/useUpdateTable'
@@ -9,19 +13,51 @@ import { useUpdateTable } from '@/app/hooks/useUpdateTable'
 // components
 import Modal from "./Modal";
 
+
+
+
+
+
+
+const schema = yup.object({
+    draftDob: yup
+      .string()
+      .required('Please enter a valid date of birth.')
+      .test('max-date', 'Date of birth cannot be in the future', value => {
+        const selectedDate = new Date(value);
+        const today = new Date();
+        return selectedDate <= today;  // Ensure the selected date is not in the future
+      })
+      .transform(value => value.trim())
+  });
+
+
+
+
+
+
+
+
 const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
     const [dob, setDob] = useState('')
-    const [draftDob, setDraftDob] = useState('')
+    const [reformattedDob, setReformattedDob] = useState('');
     const [saving, setSaving] = useState(false)
     const [formError, setFormError] = useState(null)
+    const [formSuccess, setFormSuccess] = useState(null)
     const [showForm, setShowForm] = useState(false)
+    const [hasInteracted, setHasInteracted] = useState(false)
+
 
 
     // custom hook to update profiles table
     const { updateTable } = useUpdateTable()
 
 
-    // populate form fields from profiles table
+
+
+
+
+    // populate form fields with dob from profiles table
     useEffect(() => {
         if (user && profile) {
             setDob(profile.dob || '')
@@ -29,18 +65,81 @@ const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
     }, [user, profile])
     
 
+    // re-format dob for validation
+    useEffect(() => {
+        if (dob){
+            const reversedDate = format(parse(dob, 'dd/MM/yyyy', new Date()), 'yyyy-MM-dd');
+            setReformattedDob(reversedDate)
+        }
+    }, [dob])
 
-    // update bio
-    const handleUpdateDob = async () => {     
-        
-        if (!draftDob.trim()) {
-            setSaving(false)
-            setFormError('Please enter your date of birth.')
-            setTimeout(() => setFormError(null), 2000)
-            return
+
+
+
+
+
+
+
+    // react-hook-form
+    const form = useForm({
+        resolver: yupResolver(schema),
+        mode: 'onChange'
+    })
+
+    // allows us to register a form control
+    const { register, handleSubmit, formState, watch, reset } = form;
+    const { errors } = formState;
+
+    // Watch the draftFirstName value
+    const draftDob = watch("draftDob", "");
+
+    useEffect(() => {
+
+        if (draftDob !== "") {
+            setHasInteracted(true);
         }
 
-        const formattedDate = format(parseISO(draftDob.trim()), 'dd/MM/yyyy');
+        if (draftDob === "" || reformattedDob === "") {
+            setFormSuccess(null);
+        }
+    
+        // Handle validation errors
+        if (errors.draftDob) {
+            setFormError(errors.draftDob.message);
+            setFormSuccess(null);
+
+        } else if (hasInteracted) {
+            // Show success message if names are different
+            if (draftDob !== reformattedDob) {
+                setFormSuccess('Your date of birth looks good.');
+                setFormError(null);
+            } else {
+                setFormSuccess(null); // Reset success message if names are the same
+                setFormError('Date of birth cannot be the same.');
+            }
+        }
+    
+        return () => {
+            setFormError(null);
+            setFormSuccess(null);
+        };
+    }, [errors.draftDob, draftDob, reformattedDob, hasInteracted]);
+
+
+
+
+
+
+
+
+
+    // update bio
+    const handleUpdateDob = async (data) => {                            
+        const formattedDate = format(parseISO(data.draftDob), 'dd/MM/yyyy');
+        
+        if (formattedDate === dob) {
+            return;
+        }
 
         try {
             setSaving(true)
@@ -53,16 +152,18 @@ const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
             if (!updateProfilesResult.success) {
                 throw new Error("An unexpected error occurred and we couldn't update your date of birth. Please try again later. If the issue persists, contact support.")
             }
-            setDob(formattedDate)
 
-            setTimeout(() => {
-                setSaving(false)
-                setShowForm(false)
-                changeMessage('success', 'Date of birth updated!')
-            }, 2000)
+            setSaving(false)
+            setShowForm(false)
+            reset({ draftDob: '' });
+            changeMessage('success', 'Date of birth updated!')
+
+            // Refresh profile data after update
+            fetchProfile(user);
 
         } catch (error) {
             setSaving(false)
+            setFormSuccess(null);
             setFormError(error.message)
             fetchProfile(user)
         }
@@ -71,15 +172,15 @@ const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
 
     // handleOpenForm function
     const handleOpenForm = () => {
+        setFormSuccess(null)
         setShowForm(true)
-        setSaving(false)
     }
 
 
     // handleCloseForm function
     const handleCloseForm = () => {
+        reset({ draftDob: '' });
         setShowForm(false)
-        setDraftDob('')
     }
 
 
@@ -94,7 +195,7 @@ const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
 
     return (
         <div>
-            <div className='my-4'>
+            <div className='py-4'>
                 <div className="flex items-center justify-between pb-1">
                     <span className="inline-block text-ashGray">Dob</span>
                     <span className='text-red-800 cursor-pointer' onClick={handleOpenForm}>
@@ -108,27 +209,21 @@ const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
 
             {showForm && (
                 <Modal >
-                    <form >
-                        <label>
-                            <span className="block mb-2 text-xl">
-                                Edit Dob
-                            </span>
-                            <p className='mb-3'>Please enter a valid date of birth to keep your account accurate and up-to-date.</p>
-                            <input
-                                className='w-full p-1.5 rounded-md border-2'
-                                type='date'
-                                value={draftDob || ''}
-                                autoFocus={true}
-                                spellCheck={false}
-                                max={new Date().toISOString().split("T")[0]}
-                                onChange={(e) => setDraftDob(e.target.value)}
-                                onKeyDown={handleKeyDown}
-                            />
-                        </label>
+                    <form noValidate>
+                        <label className="block mb-2 text-xl" htmlFor='draftDob'>Edit Dob</label>
+                        <p className='mb-3'>Please enter a valid date of birth to keep your account accurate and up-to-date.</p>
+                        <input
+                            className='w-full p-1.5 rounded-md border-2'
+                            id='draftDob'
+                            type='date'
+                            spellCheck={false}
+                            {...register('draftDob')}
+                            onKeyDown={handleKeyDown}
+                        />
                     </form>
                     <div className='flex items-center'>
                         <button className='btn-small bg-saddleBrown mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                        <button className='btn-small bg-saddleBrown mt-3' disabled={saving} onClick={handleUpdateDob}>
+                        <button className='btn-small bg-saddleBrown mt-3' disabled={saving} onClick={handleSubmit(handleUpdateDob)}>
                             {saving ? (
                                 <div className='flex items-center gap-2'>
                                     <img className="w-5 h-5 opacity-50" src="../../images/loading/spinner.svg" alt="Loading indicator" />
@@ -140,6 +235,7 @@ const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
                         </button>
                     </div>
                     {formError && <p className='modal-form-error'>{formError}</p>}
+                    {formSuccess && <p className='modal-form-success'>{formSuccess}</p>}
                 </Modal>
             )}
         </div>

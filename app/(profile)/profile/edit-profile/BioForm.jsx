@@ -1,6 +1,9 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
 
 // custom hooks
 import { useUpdateTable } from '@/app/hooks/useUpdateTable'
@@ -8,12 +11,43 @@ import { useUpdateTable } from '@/app/hooks/useUpdateTable'
 // components
 import Modal from "./Modal";
 
+
+
+
+
+
+
+// yup validation schema
+const schema = yup.object({
+    draftBio: yup
+      .string()
+      .required('Please add your new bio.')
+      .transform(value => value.trim())
+      .test('has-no-digits', "Your bio should not include any digits.", value => {
+        return !value || !/\d/.test(value); // Block digits
+      })
+  });
+  
+
+
+
+
+
+
+
+
+
+
+
+
 const BioForm = ({ user, profile, fetchProfile, changeMessage }) => {
     const [bio, setBio] = useState('')
-    const [draftBio, setDraftBio] = useState('');
     const [saving, setSaving] = useState(false)
     const [formError, setFormError] = useState(null)
+    const [formSuccess, setFormSuccess] = useState(null)
     const [showForm, setShowForm] = useState(false)
+    const [hasInteracted, setHasInteracted] = useState(false);
+
   
 
     // custom hook to update profiles table
@@ -24,26 +58,82 @@ const BioForm = ({ user, profile, fetchProfile, changeMessage }) => {
     useEffect(() => {
         if (user && profile) {
             setBio(profile.bio || '')
-            setDraftBio(profile.bio || '')
         }
     }, [user, profile])
     
 
 
 
-    // update bio
-    const handleUpdateBio = async () => {    
 
-        if (!draftBio.trim()) {
-            setSaving(false)
-            setFormError('Please add your new bio.')
-            setTimeout(() => setFormError(null), 2000)
-            return
-        } else if (bio === draftBio) {
-            setSaving(false)
-            setFormError('Please update your bio before saving.')
-            setTimeout(() => setFormError(null), 2000)
-            return
+
+    // react-hook-form
+    const form = useForm({
+        resolver: yupResolver(schema),
+        mode: 'onChange'
+    })
+
+    // allows us to register a form control
+    const { register, handleSubmit, formState, watch, reset } = form;
+    const { errors } = formState;
+
+    // Watch the draftBio value
+    const draftBio = watch("draftBio", "");
+
+    useEffect(() => {
+        if (draftBio !== "") {
+            setHasInteracted(true);
+        }
+
+        if (draftBio === "") {
+            setFormSuccess(null);
+        }
+
+        // Handle validation errors
+        if (errors.draftBio) {
+            setFormError(errors.draftBio.message)
+            setFormSuccess(null);
+
+        } else if (hasInteracted) {
+            // Show success message if names are different
+            if (draftBio !== bio) {
+                setFormSuccess('Your bio looks good.');
+                setFormError(null);
+            } else {
+                setFormSuccess(null); // Reset success message if names are the same
+                setFormError('Bio cannot be the same.');
+            }
+        }
+
+        return () => {
+            setFormError(null)
+            setFormSuccess(null)
+        };
+    }, [errors.draftBio, draftBio, bio, hasInteracted])
+
+
+
+
+
+
+
+
+    // update bio
+    const handleUpdateBio = async (data) => {    
+
+        const sanitizeInput = (input) => {
+            return input.replace(/[&<>]/g, (char) => {
+                const entityMap = {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                };
+                return entityMap[char] || char;
+            });
+        };
+
+        const sanitizedBio = sanitizeInput(data.draftBio);
+        if (sanitizedBio === bio) {
+            return;
         }
         
         try {
@@ -51,7 +141,7 @@ const BioForm = ({ user, profile, fetchProfile, changeMessage }) => {
 
             // check for successful update if not throw new error
             const updateProfilesResult = await updateTable(user, 'profiles', { 
-                bio: draftBio,
+                bio: sanitizedBio,
                 updated_at: new Date().toISOString()
             }, 'id');
 
@@ -59,88 +149,86 @@ const BioForm = ({ user, profile, fetchProfile, changeMessage }) => {
                 throw new Error("An unexpected error occurred and we couldn't update your bio. Please try again later. If the issue persists, contact support.")
             } 
 
-            setBio(draftBio)
-    
-            setTimeout(() => {
-                setShowForm(false)
-                changeMessage('success', 'Bio updated!')
-            }, 1000) 
+            setSaving(false)
+            setShowForm(false)
+            reset({ draftBio: '' });
+            changeMessage('success', 'Bio updated!')
+
+            // Refresh profile data after update
+            fetchProfile(user);
+
 
         } catch (error) {
             setSaving(false)
-            setFormError(error.message)
+            setFormSuccess(null);
             fetchProfile(user)
         }
     }
     
 
 
+
+
+
+
     // handleOpenForm function
     const handleOpenForm = () => {
+        setFormSuccess(null)
         setShowForm(true)
-        setSaving(false)
     }
 
 
     // handleCloseForm function
     const handleCloseForm = () => {
-        setFormError(null)
+        reset({ draftBio: '' });
         setShowForm(false)
-        setDraftBio(bio)
     }
 
 
     // prevent enter submission
     const handleKeyDown = (e) => {
-        if (e.key === 'Enter') e.preventDefault()
-
-        if (!/^[A-Za-z]$/.test(e.key) && !['Backspace', 'ArrowLeft', 'ArrowRight', 'Tab', ' '].includes(e.key)) {
+        if (e.key === 'Enter') {
             e.preventDefault()
         }
-
-        // Allow only one space between words
-        const currentValue = e.target.value;
-        if (e.key === ' ' && currentValue.endsWith(' ')) {
-            e.preventDefault();
-        }
     }
+    
+
+
+
 
 
     return (
         <div>
-            <div>
+            <div className='mb-4'>
                 <div className="flex items-center justify-between pb-1">
                     <span className="inline-block text-base text-ashGray">Bio</span>
                     <span className='text-red-800 text-base cursor-pointer' onClick={handleOpenForm}>Edit</span> 
                 </div>
-                <p className="text-cloudGray frost whitespace-normal break-words">{bio}</p>
+                <p className={`text-cloudGray frost whitespace-normal break-words ${!bio ? 'py-2.5' : ''}`}>{bio}</p>
             </div>
+
+            <div className='bg-onyx h-[2px]'></div>
 
             {showForm && (
                 <Modal >
-                    <form >
-                        <label>
-                            <span className="block mb-2 text-xl">
-                                Edit Bio
-                            </span>
-                            <p className='mb-3'>Please enter your updated bio. Keep it brief and relevant, as this will be displayed on your profile dashboard.</p>
-                            <input
-                                className='w-full p-1.5 rounded-md border-2'
-                                type='text'
-                                value={draftBio || ''}
-                                placeholder='Bio'
-                                pattern='^(?!.* {2})[A-Za-z]+( [A-Za-z]+)*$'
-                                autoFocus={true}
-                                spellCheck={false}
-                                maxLength={80}
-                                onChange={(e) => setDraftBio(e.target.value)}
-                                onKeyDown={handleKeyDown}
-                            />
-                        </label>
+                    <form noValidate>
+                        <label className="block mb-2 text-xl" htmlFor="draftBio">Edit Bio</label>
+                        <p className='mb-3'>Please enter your updated bio. Keep it brief and relevant, as this will be displayed on your profile dashboard.</p>
+                        <input
+                            className='w-full p-1.5 rounded-md border-2'
+                            id='draftBio'
+                            type='text'
+                            placeholder='Bio'
+                            autoFocus={true}
+                            spellCheck={false}
+                            maxLength={80}
+                            {...register('draftBio')}
+                            onKeyDown={handleKeyDown}
+                        />
                     </form>
                     <div className='flex items-center'>
                         <button className='btn-small bg-saddleBrown mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                        <button className='btn-small bg-saddleBrown mt-3' onClick={handleUpdateBio}>
+                        <button className='btn-small bg-saddleBrown mt-3' onClick={handleSubmit(handleUpdateBio)}>
                             {saving ? (
                                 <div className='flex items-center gap-2'>
                                     <img className="w-5 h-5 opacity-50" src="../../images/loading/spinner.svg" alt="Loading indicator" />
@@ -152,6 +240,7 @@ const BioForm = ({ user, profile, fetchProfile, changeMessage }) => {
                         </button>
                     </div>
                     {formError && <p className='modal-form-error'>{formError}</p>}
+                    {formSuccess && <p className='modal-form-success'>{formSuccess}</p>}
                 </Modal>
             )}
         </div>

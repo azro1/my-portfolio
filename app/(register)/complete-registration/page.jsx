@@ -516,7 +516,7 @@ const CompleteRegistration = () => {
                                             spellCheck={false}
                                             maxLength={15}
                                             name='phone'
-                                            placeholder="e.g., +44XXXXXXXXX or 07XXXXXXXX"
+                                            placeholder="e.g., 01234 or +44 1234"
                                             onChange={handleInputChange}
                                             onKeyDown={handleKeyDown}
                                         />

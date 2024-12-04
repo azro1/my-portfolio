@@ -3,7 +3,9 @@
 import { useState, useEffect } from "react";
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { v4 as uuidv4 } from "uuid"
-import { FaCaretUp, FaCaretDown } from 'react-icons/fa';
+
+// components
+import CustomSelectDropdown from "./CustomSelectDropdown";
 
 // custom hooks
 import { useFetchProfile } from '@/app/hooks/useFetchProfile';
@@ -16,12 +18,21 @@ const EnquiriesForm = ({ user }) => {
     const [subject, setSubject] = useState('')
     const [message, setMessage] = useState('')
     const [isLoading, setIsLoading] = useState(false)
-    const [toggleCaret, setToggleCaret] = useState(false)
 
     // custom hook to fetch a users profile
     const { profile, fetchProfile } = useFetchProfile()
     // global messages function
     const { changeMessage } = useMessage()
+
+    const options = [
+        "General Inquiry",
+        "Collaboration Opportunity",
+        "Portfolio Feedback",
+        "Project Proposal",
+        "Job Opportunity",
+        "Request for Services",
+        "Website Issue or Bug",
+    ];
 
     const supabase = createClientComponentClient()
 
@@ -144,10 +155,6 @@ const EnquiriesForm = ({ user }) => {
         }
     }
 
-    // toggle caret icon for select
-    const handleToggleCaret = () => {
-        setToggleCaret(prev => !prev);
-    }
 
 
     return (
@@ -161,7 +168,7 @@ const EnquiriesForm = ({ user }) => {
                         First name
                     </span>
                     <input
-                        className='w-full p-2.5 rounded-md text-black'
+                        className='w-full p-2.5 rounded-md text-stoneGray bg-softCharcoal border-2 border-ashGray border-opacity-55'
                         type='text'
                         spellCheck='false'
                         placeholder='Name'
@@ -176,7 +183,7 @@ const EnquiriesForm = ({ user }) => {
                         Email
                     </span>
                     <input
-                        className='w-full p-2.5 rounded-md text-black border-2'
+                        className='w-full p-2.5 rounded-md text-stoneGray bg-softCharcoal border-2 border-ashGray border-opacity-55'
                         type='text'
                         spellCheck='false'
                         placeholder='Email'
@@ -185,41 +192,20 @@ const EnquiriesForm = ({ user }) => {
                         onChange={(e) => setEmail(e.target.value)}
                     />
                 </label>
-                <label>
-                    <span className="className='max-w-min mt-4 mb-2 text-base text-ashGray block">
-                        Subject
-                    </span>
-                    <div className='custom-select relative'>
-                        <select 
-                            className='w-full py-2.5 px-1.5 rounded-md outline-none text-black border-2 cursor-pointer' 
-                            onClick={handleToggleCaret} 
-                            onChange={(e) => setSubject(e.target.value)}
-                            value={subject}
-                        >
-                            <option value="" disabled>Select a subject</option>
-                            <option>General Inquiry</option>
-                            <option>Collaboration Opportunity</option>
-                            <option>Portfolio Feedback</option>
-                            <option>Project Proposal</option>
-                            <option>Job Opportunity</option>
-                            <option>Request for Services</option>
-                            <option>Website Issue or Bug</option>
-                        </select>
-                        <span className='absolute top-0 right-0 w-10 bg-white border-t-2 border-r-2 border-b-2 rounded-tr-md rounded-br-md h-full pointer-events-none flex items-center justify-center'>
-                            {!toggleCaret ? (
-                                <FaCaretDown className='text-nightSky' size={18} />
-                            ) : (
-                                <FaCaretUp className='text-nightSky' size={18} />
-                            )}
-                        </span>
-                    </div>
-                </label>
+  
+                <CustomSelectDropdown 
+                    label='Subject'
+                    options={options}
+                    setSubject={setSubject}
+                    subject={subject}
+                />
+
                 <label>
                     <span className="className='max-w-min mt-4 mb-2 text-base text-ashGray block">
                         Your Message
                     </span>
                     <textarea
-                        className='py-2 px-2.5 outline-none rounded-md w-4/5 text-black'
+                        className='py-2 px-2.5 outline-none rounded-md w-4/5 text-stoneGray bg-softCharcoal border-2 border-ashGray border-opacity-55'
                         placeholder='Enter your message here...'
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}

@@ -70,10 +70,9 @@ img {
 
 
 /* input placeholder */
-input::placeholder, textarea::placeholder {
-  @apply placeholder-ashGray placeholder-opacity-60;
+input::placeholder, textarea::placeholder{
+  @apply opacity-30;
 }
-
 
 
 
@@ -93,7 +92,7 @@ input::placeholder, textarea::placeholder {
 
 
 
-/* profile layout navs */
+/* profile layout nav */
 .profile-nav.md a.active {
   @apply bg-softCharcoal text-cloudGray;
 }
@@ -203,21 +202,27 @@ footer span {
   border-left: 5px solid #dc2626;
 }
 
-.modal-form-error {
-  @apply text-red-600 text-sm mt-2;
-}
 /* success */
 .success {
   @apply bg-green-100 text-green-950 font-b text-base p-3 leading-normal shadow-lg border-2 border-green-600 rounded-md;
   border-left: 5px solid #16a34a;
 }
 
-
 /* info */
 .info {
   @apply bg-blue-100 text-blue-950 font-b text-base p-3 leading-normal shadow-lg border-2 border-blue-600 rounded-md;
   border-left: 5px solid #2563eb;
 }
+
+.modal-form-error {
+  @apply text-red-600 text-sm mt-2;
+}
+
+.modal-form-success {
+  @apply text-green-600 text-sm mt-2;
+}
+
+
 
 
 

@@ -1,14 +1,30 @@
+"use client"
+
+import { useEffect, useRef } from "react";
+
 // components
-import OtpForm from "../OtpForm";
+import AuthOtpForm from "../AuthOtpForm";
 
 const VerifySignupOtp = () => {
+
+    const authGroupEmailRef = useRef(null);
+
+    useEffect(() => {
+        const userEmail = localStorage.getItem('email');
+        if (userEmail) {
+            authGroupEmailRef.current = userEmail;            
+            localStorage.removeItem('email');
+        } 
+    }, []);
+
     return (
         <div className='flex items-center justify-center'>
-            <OtpForm
+            <AuthOtpForm
                 redirectUrl='/complete-registration'
-                method='signup'
-                subHeading='A verification code has been sent to your email. Enter the code below to activate your account.'
+                title='Sign up'
+                subHeading='Enter the verification code sent to your email to activate your account'
                 successMessage="Success! Your code has been verified and we're creating your account."
+                authGroupEmailRef={authGroupEmailRef}
             />
         </div>
     )

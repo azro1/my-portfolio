@@ -1,8 +1,8 @@
 
 const Modal = ({ children }) => {
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-modal-translucent z-50">
-       <div className="bg-frostWhite p-8 w-96 mx-auto rounded-md"> 
+    <div className="fixed inset-0 flex items-center justify-center bg-modal-translucent z-50 p-6">
+       <div className="bg-frostWhite p-6 sm:p-10 w-[420px] mx-auto rounded-xl"> 
           {children}
        </div>
     </div>

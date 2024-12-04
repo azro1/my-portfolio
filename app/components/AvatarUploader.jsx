@@ -205,12 +205,12 @@ const AvatarUploader = ({ user, title, text, isFirstUpload, displayTitle, btnCol
                                 id='single'
                                 accept='image/*'
                                 onChange={handleFileInputChange}
-                                disabled={uploading || (user && user.user_metadata.name)}
+                                disabled={uploading}
                             />
                         </form>
                         <button className={`btn-small ${btnColor} block mt-3`}
                             onClick={uploadAvatar}
-                            disabled={uploading || (user && user.user_metadata.name)}
+                            disabled={uploading}
                         >
                             {uploading ? (
                                 <div className='flex items-center gap-2'>
