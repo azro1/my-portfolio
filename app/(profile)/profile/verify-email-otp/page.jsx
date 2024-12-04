@@ -24,7 +24,7 @@ const VerifyEmailOtp = () => {
                 contact='email address'
                 verificationType='email_change'
                 title='Update Email'
-                subHeading='Enter the code we sent to your email address to complete the update'
+                subHeading='Enter the code we sent to your new email address to complete the update'
                 successMessage='OTP verifcation was successful. Your email address has been updated.'
                 profileEmailRef={emailRef}
             />

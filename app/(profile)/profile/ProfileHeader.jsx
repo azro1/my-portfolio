@@ -46,7 +46,7 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
       if (profile) {
          setIsProfileLoading(false)
          setFirstName(profile.first_name || user.user_metadata.name || '')
-         setAvatarUrl(profile.avatar_url)
+         setAvatarUrl(profile.avatar_url || user.user_metadata.avatar_url || '')
          setBio(profile.bio)
       }
    }, [profile])
@@ -75,80 +75,60 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
    const loading = isLoading || isProfileLoading;
    
    return (
-      <>
-         {user && user.app_metadata.provider !== "email" ? (
+      <div className='pt-16'>
+            <h2 className='subheading font-b text-stoneGray'>{title}</h2>
+            <p className='mt-4 leading-normal text-ashGray'>{subheading}</p>
 
-            <div className='pt-16'>
-               <h2 className='subheading font-b text-stoneGray'>{title}</h2>
-               <p className='mt-4 leading-normal text-ashGray'>{subheading}</p>
-
-               {showAvatar && (
-                  <div className='mt-6 h-[500px] bg-softCharcoal'>
-                     <div className='flex items-center gap-1 p-4'>
-                        {avatar_url ? (
-                           <div className="border-2 border-cloudGray rounded-full overflow-hidden p-1 relative w-20 h-20">
-                              <Image 
-                                 className="object-cover" 
-                                 src={avatar_url} 
-                                 alt="a user avatar"
-                                 fill
-                                 sizes="(max-width: 480px) 40px, (max-width: 768px) 60px, (max-width: 1024px) 80px, 100px"
-                                 quality={100}
-                                 priority
+            {showAvatar && (
+               <div className='mt-6 h-[480px] bg-softCharcoal'>
+                  <div className='flex items-center gap-1 p-4'>
+                        {loading ? (
+                           <div className='w-20 h-20 bg-nightSky rounded-full overflow-hidden flex items-center justify-center'>
+                              <img
+                                 src="../images/loading/loader.gif"
+                                 className='w-16 h-16'
+                                 alt="Loading avatar"
                               />
                            </div>
-                        )  : (
-                           <div className="rounded-full border-2 border-cloudGray overflow-hidden p-1 w-fit ">
-                              <FaUserCircle size={80} color="gray" />
-                           </div>
-                        )} 
-                        {!loading && (
-                           <div className='pl-2 min-w-0'>
-                              <p className='text-stoneGray text-2xl font-b'>Welcome, {first_name}</p>
-                              <p className='whitespace-normal break-words'>{bio ? <span className='text-cloudGray'>${bio}</span> : `"Add your Bio"`}</p>
-                           </div>
-                        )}
-                     </div>
-                  </div>
-               )}
-            </div>
-         )
-            :
-         (
-            <div className='pt-16'>
-               <h2 className='subheading font-b text-stoneGray'>{title}</h2>
-               <p className='mt-4 leading-normal text-ashGray'>{subheading}</p>
-
-               {showAvatar && (
-                  <div className='mt-6 h-[480px] bg-softCharcoal'>
-                     <div className='flex items-center gap-1 p-4'>
-                        <div className='border-2 border-cloudGray rounded-full p-1 w-fit'>
-                           {loading ? (
-                              <div className='w-20 h-20 bg-nightSky rounded-full overflow-hidden flex items-center justify-center'>
-                                <img src="../images/loading/loader.gif" className='w-16 h-16 ' alt="a loading gif" />
+                        ) : avatar_url ? (
+                           avatar_url.startsWith("http") ? (
+                              <div className="border-2 border-cloudGray rounded-full overflow-hidden p-1 relative w-20 h-20">
+                                 <Image 
+                                    className="object-cover" 
+                                    src={avatar_url} 
+                                    alt="a user avatar"
+                                    fill
+                                    sizes="(max-width: 480px) 40px, (max-width: 768px) 60px, (max-width: 1024px) 80px, 100px"
+                                    quality={100}
+                                    priority
+                                 />
                               </div>
                            ) : (
-                              <Avatar
-                                 url={avatar_url}
-                                 size={'w-20 h-20'}
-                                 lgSize={'w-20 h-20'}
-                                 phSize={80}
-                              />
-                           )}
-                        </div>
-                        {!loading && (
-                           <div className='pl-2 min-w-0'>
-                              <p className='text-stoneGray text-2xl font-b'>Welcome, {first_name}</p>
-                              <p className='whitespace-normal break-words pt-1'>{bio ? <span className='text-cloudGray'>{bio}</span> : `"Add your Bio"`}</p>
-                           </div>
+                              <div className='border-2 border-cloudGray rounded-full p-1 w-fit'>
+                                 <Avatar
+                                    url={avatar_url}
+                                    size={'w-20 h-20'}
+                                    lgSize={'w-20 h-20'}
+                                    phSize={80}
+                                 />
+                              </div>
+                           )
+                        ) : (
+                           <FaUserCircle size={80} color="gray" />
                         )}
-                     </div>
+                     
+                     {!loading && (
+                        <div className='pl-2 min-w-0'>
+                           <p className='text-stoneGray text-2xl font-b'>Welcome, {first_name}</p>
+                           <p className='whitespace-normal break-words pt-1'>
+                              {bio ? <span className='text-cloudGray'>{bio}</span> : `"Add your Bio"`}
+                           </p>
+                        </div>
+                     )}
                   </div>
-                  
-               )}
-            </div>
-         )}
-      </>
+               </div>
+            )}
+         </div>
    )
 }
 

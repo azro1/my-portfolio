@@ -160,6 +160,9 @@ const LastNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
             reset({ draftLastName: '' });
             changeMessage('success', 'Last name updated!')
 
+            // Refresh profile data after update
+            fetchProfile(user);
+
         } catch (error) {
             setSaving(false)
             setFormSuccess(null);

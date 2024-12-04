@@ -31,7 +31,7 @@ const EditProfileForms = () => {
 
     // Memoize fetchProfile using useCallback
     const memoizedFetchProfile = useCallback(async () => {
-        if (user) {
+        if (user && !profile) {
             const profileResult = await fetchProfile(user);
             if (!profileResult) {
                 changeMessage('error', "Sorry, we couldn't load some of your profile information at this time. Please check your internet connection or refresh the page. If the issuse persist, contact support.");

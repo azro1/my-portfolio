@@ -53,7 +53,7 @@ const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
     // populate form fields from profiles table
     useEffect(() => {
         if (user && profile) {
-            setFirstName(profile.first_name || user.user_metadata.name || '')
+            setFirstName(profile.first_name || profile.full_name || '')
         }
     }, [user, profile])
 
@@ -131,13 +131,13 @@ const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
 
         try {
             setSaving(true)
-            
+
             // check for successful metadata update if not log out error
             const updateMetadataResult = await updateMetadata({ first_name: sanitizedFirstName })
             if (!updateMetadataResult.success) {
                 console.log('metadata update error:', updateMetadataResult.error)
             }
-
+            
             // check for successful profiles update if not throw new error
             const updateProfilesResult = await updateTable(user, 'profiles', { 
                 first_name: sanitizedFirstName,
@@ -167,6 +167,9 @@ const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
                 setShowForm(false)
                 reset({ draftFirstName: '' });
                 changeMessage('success', 'First name updated!')
+
+                // Refresh profile data after update
+                fetchProfile(user);
             }
 
    

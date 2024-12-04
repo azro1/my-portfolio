@@ -158,6 +158,9 @@ const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
             reset({ draftDob: '' });
             changeMessage('success', 'Date of birth updated!')
 
+            // Refresh profile data after update
+            fetchProfile(user);
+
         } catch (error) {
             setSaving(false)
             setFormSuccess(null);

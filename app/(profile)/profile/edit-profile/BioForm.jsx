@@ -154,6 +154,10 @@ const BioForm = ({ user, profile, fetchProfile, changeMessage }) => {
             reset({ draftBio: '' });
             changeMessage('success', 'Bio updated!')
 
+            // Refresh profile data after update
+            fetchProfile(user);
+
+
         } catch (error) {
             setSaving(false)
             setFormSuccess(null);

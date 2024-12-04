@@ -28,6 +28,7 @@ const useFetchProfile = () => {
 
         } catch (error) {
             setError(error)
+            setProfile(null)
             console.log(error.message)
             return false
         }
