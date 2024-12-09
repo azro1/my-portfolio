@@ -22,7 +22,7 @@ const schema = yup.object({
   email: yup
     .string()
     .required('Email cannot be empty')
-    .transform(value => value.trim())
+    .transform(value => value.trim().toLowerCase())
     .test('has-at-symbol', "Please include an '@' symbol", value => {
       return value ? value.includes('@') : true;
     })
@@ -80,10 +80,8 @@ const Login = () => {
 
   const onSubmit = async (data) => {
 
-    // convert email to lowercase
-    const email = data.email.toLowerCase();
+    const email = data.email;
     
-
     // send email to server endpoint to check if email already exists within profiles table
     try {
       setIsLoading(true)

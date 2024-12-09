@@ -10,6 +10,7 @@ export const dynamic = 'force-dynamic'
 const inter = Inter({ subsets: ['latin'] })
 
 // components
+import Sidebar from './components/Sidebar'
 import Footer from './components/Footer'
 
 // metadata
@@ -22,11 +23,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <div className="main-container">
-          <MessageProvider>
-            <MessageBanner />
-            {children}
-          </MessageProvider>
+        <div className="flex flex-col xl:flex-row">
+          <Sidebar />
+          <div className="main-container flex-1 uw:relative uw:right-[200px]">
+            <MessageProvider>
+              <MessageBanner />
+              {children}
+            </MessageProvider>
+          </div>
         </div>
         <Footer />
       </body>

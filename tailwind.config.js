@@ -9,7 +9,8 @@ export default {
       sm: '480px',
       md: '768px',
       lg: '976px',
-      xl: '1440px'
+      xl: '1440px',
+      uw: '1920px'
     },
     extend: {
       colors: {
@@ -27,6 +28,7 @@ export default {
         discordPurple: '#6A5ACD',
         githubDark: '#323439',
         googleRed: '#DC2626',
+        chatbox: '#323439',
         'modal-translucent': 'rgb(28, 30, 36, 0.80)'
       },
       fontFamily: {
