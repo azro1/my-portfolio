@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from 'react';
 // components
 import Comments from "@/app/components/Comments"
 import CommentForm from "@/app/components/CommentForm"
+import Chevron from '@/app/components/Chevron';
 
 // hooks
 import { useFetchUser } from "@/app/hooks/useFetchUser"
@@ -117,26 +118,39 @@ const loadMoreComments = async () => {
 
 
 
-  return (
-    <div>
-       {/* <h2 className="subheading font-b text-frostWhite">Community Forum</h2> */}
-       <div className="flex flex-col h-full p-8">
-       <Comments 
-         user={user}
-         comments={comments}
-         loadComments={loadMoreComments}
-       />
+return (
+    <div className="flex flex-col min-h-screen overflow-hidden">
+      {/* Header */}
+      <div className="p-6 text-center">
+        <h2 className="subheading text-stoneGray font-b">Welcome to the Community Forum</h2>
+        <p className='mt-1.5 text-stoneGray'>Before engaging, please take a moment to read and understand the community rules. We encourage respectful discussions and a positive atmosphere. Enjoy your stay!</p>
+      </div>
+      
+      <div className='bg-midnightSlate mx-2 h-[1px]'></div>
 
-       <CommentForm 
-         user={user}
-         profile={profile}
-         updateComments={updateComments}
-       />
-
-       </div>
+      {/* Content Area */}
+      <div className="flex-grow flex flex-col w-full">
+        {/* Comments Section */}
+        <div className="flex-grow sm:flex-grow-0 overflow-y-auto h-full">
+          <Comments 
+            user={user}
+            comments={comments}
+            loadComments={loadMoreComments}
+          />
+        </div>
+  
+        {/* Input Section */}
+        <div className="p-4">
+          <CommentForm 
+            user={user}
+            profile={profile}
+            updateComments={updateComments}
+          />
+        </div>
+      </div>
     </div>
-
-  )
+  );
+  
 }
 
 export default Forum

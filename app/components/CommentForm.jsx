@@ -92,7 +92,7 @@ const CommentForm = ({ user, profile, updateComments }) => {
 
 
     return (
-        <div className="">
+        <div>
                 {user && (
                     <div>
                         <form onSubmit={handleSubmit(handleComment)}>
@@ -104,21 +104,8 @@ const CommentForm = ({ user, profile, updateComments }) => {
                                     required: 'Comment is required'
                                 })}
                                 placeholder="Tell us what's on your mind..."
-                                className='mt-3 p-3 w-full outline-none text-base rounded-md text-stoneGray bg-softCharcoal border-[1px] border-ashGray block'
+                                className='py-3 px-4 w-full outline-none text-base rounded-md text-stoneGray bg-midnightSlate block'
                             ></input>
-
-                            <p className='text-red-600 text-sm mt-1'>{errors.comment?.message}</p>       
-
-                            <button className='btn block mt-2.5 bg-saddleBrown' disabled={isLoading}>
-                                {isLoading ? (
-                                    <div className='flex items-center gap-2'>
-                                        <img className="w-5 h-5 opacity-50" src="../images/loading/spinner.svg" alt="Loading indicator" />
-                                        <span>Post</span>
-                                    </div>
-                                ) : (
-                                    'Post'
-                                )}
-                            </button>
                         </form>
                     </div>
                 )}

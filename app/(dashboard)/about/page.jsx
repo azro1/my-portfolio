@@ -18,6 +18,7 @@ const About = () => {
             fill
             priority
             quality={100}
+            sizes="(max-width: 768px) 100vw, 378px"
           />
         </div>
 
@@ -123,6 +124,7 @@ const About = () => {
             fill
             priority
             quality={100}
+            sizes="(max-width: 768px) 100vw, 378px"
           />
         </div>
 

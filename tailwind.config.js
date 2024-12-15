@@ -28,7 +28,7 @@ export default {
         discordPurple: '#6A5ACD',
         githubDark: '#323439',
         googleRed: '#DC2626',
-        chatbox: '#323439',
+        midnightSlate: '#25272E',
         'modal-translucent': 'rgb(28, 30, 36, 0.80)'
       },
       fontFamily: {
@@ -36,7 +36,8 @@ export default {
         'barlow': ['Barlow', 'sans-serif'],
         'os': ['Open Sans', 'sans-serif'],
         'cn': ['Courier New', 'monospace'],
-        'roboto': ['Roboto', 'sans-serif']
+        'roboto': ['Roboto', 'sans-serif'],
+        'verdana': ['Verdana', 'sans-serif']
       },
       fontSize: {
         '1.375': '1.375rem', //22px
@@ -50,54 +51,22 @@ export default {
       spacing: {
         '0.21': '0.21rem', // 3.36px
         '0.5': '0.5rem', // 8px
-        '1.375': '1.375rem', // 22px
         '1.625': '1.625rem', // 26px
         '1.875': '1.875rem', // 30px
-        '2.375': '2.375rem', //38px
-        '3.125': '3.125rem', // 50px
+        '2.375': '2.375rem', // 38px
         '4.1875': '4.1875rem', // 67px
         '4.5': '4.5rem', // 72px
         '6.25': '6.25rem', // 100px
-        '8.375': '8.375rem', // 134px
         '10.25': '10.25rem', // 164px
-        '12.5': '12.5rem', // 200px
-        '13.5': '13.5rem', // 216px
-        '15.75': '15.75rem', // 252px
-      },
-      letterSpacing: {
-        'extra-wide': '0.3rem', 
-      },
-      inset: {
-        '1.5': '0.375rem', // 6px
-        '8.625': '8.625rem', // 136px
-        '26': '26rem', // 416px
       },
       height: {
-        // Small heights
-        '4.75': '4.75rem', // 76px
         '9.5': '9.5rem', // 152px
-        '9.8': '9.8rem', // 156.8px
-        '30': '7.5rem', // 120px
-
-        // Large heights
-        '34': '34rem', // 544px
       },
       boxShadow: {
         '3xl': '0px 0px 12px 0 #757575',
         inner: 'inset -2px 0px 18px 10px #131519',
         outer: '0px 0px 16px 4px #131519'
-      },
-      maxHeight: {
-        'custom-sm': '25vh',
-        'custom-md': '50vh',
-        'custom-lg': '75vh',
-        'custom-fixed': '890px'
-      },
-      minHeight: {
-        'custom-sm': '25vh',
-        'custom-md': '50vh',
-        'custom-lg': '75vh'
-      },
+      }
     },
   },
   plugins: [

@@ -1,17 +1,17 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
-// global messages
-import { MessageProvider } from './context/MessageContext'
-import MessageBanner from './components/MessageBanner'
 
 // tell next to render dynamic and not static pages at build time
 export const dynamic = 'force-dynamic'
+
+// global messages
+import { MessageProvider } from './context/MessageContext'
+import MessageBanner from './components/MessageBanner'
 
 const inter = Inter({ subsets: ['latin'] })
 
 // components
 import Sidebar from './components/Sidebar'
-import Footer from './components/Footer'
 
 // metadata
 export const metadata = {
@@ -23,16 +23,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <div className="flex flex-col xl:flex-row">
-          <Sidebar />
-          <div className="main-container flex-1 uw:relative uw:right-[200px]">
-            <MessageProvider>
-              <MessageBanner />
-              {children}
-            </MessageProvider>
+          <div className="flex flex-col">
+            <Sidebar />
+            <div>
+              <MessageProvider>
+                <MessageBanner />
+                {children}
+              </MessageProvider>
+            </div>
           </div>
-        </div>
-        <Footer />
       </body>
     </html>
   )

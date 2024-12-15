@@ -3,6 +3,8 @@ import { cookies } from "next/headers"
 
 // components
 import Navbar from "../components/navbar/Navbar"
+import Footer from "../components/Footer"
+
 
 export default async function DashboardLayout ({ children }) {
   const supabase = createServerComponentClient({ cookies })
@@ -10,10 +12,17 @@ export default async function DashboardLayout ({ children }) {
   
   return (
     <>
-      <Navbar user={user} />
-      <main className="mt-20 mb-4.5 md:mb-10.25 ">
-        {children}
-      </main>
+      <div className="main-container">
+        <main>
+          <Navbar user={user} />
+        </main>
+        <main className="pt-20 pb-10.25">
+          <div className="relative w-full flex items-center justify-center">
+            {children}
+          </div>
+        </main>
+      </div>
+      <Footer />
     </>
   )
 }

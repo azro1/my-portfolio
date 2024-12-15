@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { formatDistanceToNow } from "date-fns";
+import { format } from "date-fns";
 import { useState, useEffect, useRef } from "react";
 
 // components
@@ -104,20 +104,19 @@ const Comments = ({ user, comments, loadComments }) => {
 
 
     return (
-        <div className="h-[85vh] overflow-y-scroll hide-scrollbar">
+        <div className="h-[calc(100vh-200px)] overflow-y-scroll hide-scrollbar p-4">
             {comments && comments.length > 0 ? (
                 <div
                     className="overflow-y-auto hide-scrollbar h-full flex flex-col"
                     ref={commentsContainerRef}
                 >
                     {comments.map((comment) => (
-                        <div className="mb-10" key={comment.id}>
-                            <div className="flex gap-4">
-                                <div className="rounded-full min-w-max relative w-12 h-12">
-                                    {comment.avatar_url ? (
-                                        comment.avatar_url.startsWith("http") ? (
+                        <div className="mb-14 flex items-center gap-3" key={comment.id}>
+                                {comment.avatar_url ? (
+                                    comment.avatar_url.startsWith("http") ? (
+                                        <div className="overflow-hidden rounded-full relative w-12 h-12">
                                             <Image
-                                                className="inline-block w-full h-full object-cover"
+                                                className="w-full h-full object-cover"
                                                 src={comment.avatar_url}
                                                 alt="User avatar"
                                                 fill
@@ -125,17 +124,19 @@ const Comments = ({ user, comments, loadComments }) => {
                                                 quality={100}
                                                 priority
                                             />
-                                        ) : (
-                                            <Avatar
-                                                url={comment.avatar_url}
-                                                size={"h-12 w-12"}
-                                                lgSize={"w-12 h-12"}
-                                                phSize={50}
-                                            />
-                                        )
+                                        </div>
                                     ) : (
+                                        <Avatar
+                                            url={comment.avatar_url}
+                                            size={"h-12 w-12"}
+                                            lgSize={"w-12 h-12"}
+                                            phSize={50}
+                                        />
+                                    )
+                                ) : (
+                                    <div className="overflow-hidden rounded-full relative w-14 h-14">
                                         <Image
-                                            className="inline-block w-full h-full object-cover"
+                                            className="w-full h-full object-cover"
                                             src={user.user_metadata.avatar_url}
                                             alt="Fallback user avatar"
                                             fill
@@ -143,27 +144,22 @@ const Comments = ({ user, comments, loadComments }) => {
                                             quality={100}
                                             priority
                                         />
-                                    )}
-                                </div>
-                                <div className="w-full ">
+                                    </div>
+                                )}
+                                <div className="flex-1">
                                     <div className="flex gap-2 items-center">
-                                        <h6 className="text-base text-saddleBrown font-medium">
+                                        <h6 className="text-lg text-saddleBrown font-medium">
                                             {comment.first_name || comment.full_name}
                                         </h6>
                                         <span className="text-sm text-ashGray">
-                                            {formatDistanceToNow(new Date(comment.created_at), {
-                                                addSuffix: true,
-                                            })}
+                                            {format(new Date(comment.created_at), 'd/M/yy, h:mm a')}
                                         </span>
                                     </div>
-                                    <div className="p-4 mt-3 w-fit rounded-xl bg-chatbox max-w-3xl">
-                                        <p className="text-base text-stoneGray font-os whitespace-normal break-words">
-                                            <span>{comment.text}</span>
-                                        </p>
-                                    </div>
+                                    <p className="text-base text-ashGray whitespace-normal break-words">
+                                        <span>{comment.text}</span>
+                                    </p>
                                 </div>
                             </div>
-                        </div>
                     ))}
                 </div>
             ) : (

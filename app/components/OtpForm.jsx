@@ -14,7 +14,7 @@ const OtpForm = ({ containerStyles, handleSubmit, onSubmit, title, subHeading, f
                 {fields.map((field, index) => (
                     <div key={field.id}>
                         <label htmlFor={`codes[${index}].code`} className="max-w-min mb-2 text-base text-ashGray"></label>
-                        <motion.input
+                        <input
                             transition={{ type: 'spring', stiffness: 150, damping: 25 }}
                             {...register(`codes[${index}].code`)}
                             id={`codes[${index}].code`}

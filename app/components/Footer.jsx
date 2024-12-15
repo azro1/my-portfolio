@@ -4,7 +4,7 @@ import { FaLinkedin, FaGithub, FaInstagramSquare, FaYoutube } from 'react-icons/
 
 const Footer = () => {
   return (
-    <footer className="bg-frostWhite border-t-8 border-saddleBrown p-1.625 absolute w-full">
+    <footer className="bg-frostWhite border-t-8 border-saddleBrown p-1.625 absolute left-0 w-full z-50">
        <main className="my-2.375 md:mt-4.1875 max-w-screen-lg mx-auto" >
           <div className="newsletter flex flex-col items-center text-center gap-y-6">
             <h3>Get News, Insights & Updates</h3>

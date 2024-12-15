@@ -1,10 +1,16 @@
-
 const Loading = () => {
   return (
-    <main>
-      <img className="w-32 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" src="/images/loading/loading.gif" alt="a loading gif" />
+    <main className="min-h-screen">
+      <div className="relative w-full min-h-screen flex items-center justify-center">
+        <img 
+          className="w-32 absolute top-[calc(50%-232px)] left-1/2 transform -translate-x-1/2" 
+          src="/images/loading/loading.gif" 
+          alt="a loading gif" 
+        />
+      </div>
     </main>
   )
 }
 
 export default Loading
+
