@@ -15,12 +15,12 @@ const MessageBanner = () => {
     const { message } = useContext(MessageContext);
 
     return (
-      <div className='w-max fixed top-0 left-1/2 transform -translate-x-1/2 text-center p-5'>
+      <div className='absolute left-1/2 transform -translate-x-1/2 w-11/12 z-50'>
           <AnimatePresence>
               {message.type === 'error' && 
               <motion.div
                   initial={{ y: -45, opacity: 0}}
-                  animate={{ y: 10, opacity: 1 }}
+                  animate={{ y: 20, opacity: 1 }}
                   exit={{ y: -45, opacity: 0 }}
                   transition={{ delay: 0.2, duration: 0.3, type: 'tween' }}
                   className='error flex items-center justify-center gap-1.5 max-w-max mx-auto'
@@ -37,7 +37,7 @@ const MessageBanner = () => {
               {message.type === 'success' && 
                   <motion.div
                       initial={{ y: -45, opacity: 0}}
-                      animate={{ y: 10, opacity: 1 }}
+                      animate={{ y: 20, opacity: 1 }}
                       exit={{ y: -45, opacity: 0 }}
                       transition={{ delay: 0.2, duration: 0.3, type: 'tween' }}
                       className='success flex items-center justify-center gap-1.5 max-w-max mx-auto'
@@ -54,7 +54,7 @@ const MessageBanner = () => {
               {message.type === 'info' && 
                   <motion.div
                       initial={{ y: -45, opacity: 0}}
-                      animate={{ y: 10, opacity: 1 }}
+                      animate={{ y: 20, opacity: 1 }}
                       exit={{ y: -45, opacity: 0 }}
                       transition={{ delay: 0.2, duration: 0.3, type: 'tween' }} 
                       className='info flex items-center justify-center gap-1.5 max-w-max mx-auto'
