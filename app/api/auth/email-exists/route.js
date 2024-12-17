@@ -12,7 +12,7 @@ export async function POST(request) {
   // returns an array of objects, each object containing only the email field for rows that match the specified email
   const { data: emailArr, error } = await supabase
     .from('profiles')
-    .select('email, is_verified')
+    .select('email, is_verified, isFirstReg')
     .eq('email', email)
     
 
@@ -59,8 +59,8 @@ export async function POST(request) {
         return NextResponse.json({ exists, accountStatus }, {
           status: 200
         })
-      } else if (exists && accountStatus.is_verified) {
-        return NextResponse.json({ exists, accountStatus }, {  // do not set any cookie because a verified account already exists
+      } else if (exists && accountStatus.is_verified || exists && !accountStatus.isFirstReg) {
+        return NextResponse.json({ exists, accountStatus }, {  // do not set any cookie because a verified account already exists or its not the first time a user has tried to register
           status: 409
         })
       }

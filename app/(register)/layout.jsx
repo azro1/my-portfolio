@@ -9,25 +9,27 @@ import Footer from "../components/Footer"
 export default async function RegisterLayout ({ children }) {
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
+  const cookie = cookies().get('canAccessRegPage');
 
   if (!user) {
     redirect('/login')
-  }
+  } 
   
-  // profile completion check to prevent users from returning to complete-registration route if they have updated their profile data
   const { data, error } = await supabase
     .from('profiles')
-    .select()
-    .eq('id', user.id)
+    .select('isFirstReg')
+    .eq('id', user?.id)
+    .limit(1)
     .single()
 
-    if (error) {
-      console.log(error)
-    } else {
-        if (data.first_name && data.last_name && data.dob && data.phone) {
-          redirect('/')
-        }
-    }
+  if (error) {
+    console.log(error)
+  }
+
+  if (!data?.isFirstReg && cookie?.value !== 'true') {
+    await supabase.auth.signOut();
+    redirect('/login');
+  }
 
   return (
     <>

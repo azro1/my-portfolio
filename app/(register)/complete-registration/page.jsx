@@ -58,52 +58,111 @@ const CompleteRegistration = () => {
 
 
 
-    // profile completion check to prevent users from returning to complete-registration route if they have updated their profile data
+
+    
+
+
+    
+
     useEffect(() => {
-        const checkProfileCompletion = async () => {
-            if (user) {
-                const { data, error } = await supabase
-                .from('profiles')
-                .select()
-                .eq('id', user.id)
-                .single()
+        if (user) {
+            const handleProcess = async () => {
+                const res = await fetch(`${location.origin}/api/auth/complete-registration`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        user
+                    })
+                })
+
+                const serverRes = await res.json()
+                // console.log(serverRes)
+
+                // update flag isFirstReg
+                const { error } = await supabase
+                    .from('profiles')
+                    .update({ isFirstReg: false })
+                    .eq('id', user.id)
+                    .select()
 
                 if (error) {
-                    console.error('Error fetching profile:', error)
-                    return
-                }
-                if (data.first_name && data.last_name && data.dob && data.phone) {
-                    router.replace('/')
+                    console.log('isFirstReg update error:', error)
                 }
             }
+            handleProcess()
         }
-        checkProfileCompletion()
-    }, [user, router, supabase])
+    }, [user]);
+
+
+
+
+
+    useEffect(() => {
+        const checkCanAccessRegPage = document.cookie.includes('canAccessRegPage=false');
+    
+        if (checkCanAccessRegPage) {
+          // Log the user out when the cookie is false
+          supabase.auth.signOut().then(() => {
+            router.push('/login');  // Redirect to login page
+          });
+        }
+      }, [router]);
+    
+
+
+
+
+
+
+
+    // profile completion check to prevent users from returning to complete-registration route if they have updated their profile data
+    // useEffect(() => {
+    //     const checkProfileCompletion = async () => {
+    //         if (user) {
+    //             const { data, error } = await supabase
+    //             .from('profiles')
+    //             .select()
+    //             .eq('id', user.id)
+    //             .single()
+
+    //             if (error) {
+    //                 console.error('Error fetching profile:', error)
+    //                 return
+    //             }
+    //             if (data.first_name && data.last_name && data.dob && data.phone) {
+    //                 router.replace('/')
+    //             }
+    //         }
+    //     }
+    //     checkProfileCompletion()
+    // }, [user, router, supabase])
 
 
 
 
 
     // prevents users from navigating back using the browser's back button by disabling it
-    useEffect(() => {
-        if (pathname === '/complete-registration') {
-            const handlePopState = () => {
-                // Replace current history entry with the same state to prevent going back
-                history.pushState(null, null, window.location.href);
-            };
+    // useEffect(() => {
+    //     if (pathname === '/complete-registration') {
+    //         const handlePopState = () => {
+    //             // Replace current history entry with the same state to prevent going back
+    //             history.pushState(null, null, window.location.href);
+    //         };
     
-            // Replace the current state when component mounts
-            history.pushState(null, null, window.location.href);
+    //         // Replace the current state when component mounts
+    //         history.pushState(null, null, window.location.href);
     
-            // Listen to the popstate event and trigger handlePopState
-            window.addEventListener('popstate', handlePopState);
+    //         // Listen to the popstate event and trigger handlePopState
+    //         window.addEventListener('popstate', handlePopState);
     
-            return () => {
-                // Clean up the event listener when the component unmounts
-                window.removeEventListener('popstate', handlePopState);
-            };
-        }
-    }, [pathname]);
+    //         return () => {
+    //             // Clean up the event listener when the component unmounts
+    //             window.removeEventListener('popstate', handlePopState);
+    //         };
+    //     }
+    // }, [pathname]);
 
 
 
@@ -112,6 +171,9 @@ const CompleteRegistration = () => {
     // triggers a confirmation dialog when the user tries to leave the page 
     useEffect(() => {
         const beforeUnloadListener = (event) => {
+            // clear cookie from server if user reloads page
+            document.cookie = "canAccessRegPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+
             event.preventDefault();
             return (event.returnValue = "");
         };
