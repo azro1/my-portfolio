@@ -15,7 +15,7 @@ const AuthForm = ({ handleSubmit, onSubmit, title, subHeading, register, errors,
 
             <label className='max-w-min mb-2 text-base text-ashGray block' htmlFor="email">Email</label>
             <input
-              className={`w-full py-2.5 px-4 rounded-md text-stoneGray bg-softCharcoal border-[1px] ${errors.email ? 'border-red-700' : 'border-ashGray'}`}
+              className={`w-full py-3 px-4 rounded-md text-stoneGray bg-softCharcoal border-[1px] ${errors.email ? 'border-red-700' : 'border-ashGray'}`}
               id="email"
               type="email"
               {...register('email')}

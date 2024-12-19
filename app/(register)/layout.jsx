@@ -13,24 +13,24 @@ export default async function RegisterLayout ({ children }) {
 
   if (!user) {
     redirect('/login')
-  } 
+  } else {
+      const { data, error } = await supabase
+      .from('profiles')
+      .select('is_first_reg')
+      .eq('id', user?.id)
+      .limit(1)
+      .single()
+
+    if (error) {
+      console.log(error)
+    }
+
+    if (!data?.is_first_reg && cookie?.value !== 'true') {
+      await supabase.auth.signOut();
+      redirect('/login');
+    }
+  }
   
-  const { data, error } = await supabase
-    .from('profiles')
-    .select('isFirstReg')
-    .eq('id', user?.id)
-    .limit(1)
-    .single()
-
-  if (error) {
-    console.log(error)
-  }
-
-  if (!data?.isFirstReg && cookie?.value !== 'true') {
-    await supabase.auth.signOut();
-    redirect('/login');
-  }
-
   return (
     <>
       <div className='main-container'>

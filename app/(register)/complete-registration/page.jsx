@@ -59,7 +59,39 @@ const CompleteRegistration = () => {
 
 
 
+
+
+
+
+
+    // prevents users from navigating back using the browser's back button by disabling it
+    useEffect(() => {
+        if (pathname === '/complete-registration') {
+            const handlePopState = () => {
+                // Replace current history entry with the same state to prevent going back
+                history.pushState(null, null, window.location.href);
+            };
     
+            // Replace the current state when component mounts
+            history.pushState(null, null, window.location.href);
+    
+            // Listen to the popstate event and trigger handlePopState
+            window.addEventListener('popstate', handlePopState);
+    
+            return () => {
+                // Clean up the event listener when the component unmounts
+                window.removeEventListener('popstate', handlePopState);
+            };
+        }
+    }, [pathname]);
+
+    
+
+
+
+
+
+
 
 
     
@@ -83,86 +115,24 @@ const CompleteRegistration = () => {
                 // update flag isFirstReg
                 const { error } = await supabase
                     .from('profiles')
-                    .update({ isFirstReg: false })
+                    .update({ is_first_reg: false })
                     .eq('id', user.id)
                     .select()
 
                 if (error) {
-                    console.log('isFirstReg update error:', error)
+                    console.log('is_first_reg update error:', error)
                 }
             }
             handleProcess()
         }
-    }, [user]);
-
-
-
-
-
-    useEffect(() => {
-        const checkCanAccessRegPage = document.cookie.includes('canAccessRegPage=false');
-    
-        if (checkCanAccessRegPage) {
-          // Log the user out when the cookie is false
-          supabase.auth.signOut().then(() => {
-            router.push('/login');  // Redirect to login page
-          });
-        }
-      }, [router]);
-    
+    }, [user, supabase]);
 
 
 
 
 
 
-
-    // profile completion check to prevent users from returning to complete-registration route if they have updated their profile data
-    // useEffect(() => {
-    //     const checkProfileCompletion = async () => {
-    //         if (user) {
-    //             const { data, error } = await supabase
-    //             .from('profiles')
-    //             .select()
-    //             .eq('id', user.id)
-    //             .single()
-
-    //             if (error) {
-    //                 console.error('Error fetching profile:', error)
-    //                 return
-    //             }
-    //             if (data.first_name && data.last_name && data.dob && data.phone) {
-    //                 router.replace('/')
-    //             }
-    //         }
-    //     }
-    //     checkProfileCompletion()
-    // }, [user, router, supabase])
-
-
-
-
-
-    // prevents users from navigating back using the browser's back button by disabling it
-    // useEffect(() => {
-    //     if (pathname === '/complete-registration') {
-    //         const handlePopState = () => {
-    //             // Replace current history entry with the same state to prevent going back
-    //             history.pushState(null, null, window.location.href);
-    //         };
-    
-    //         // Replace the current state when component mounts
-    //         history.pushState(null, null, window.location.href);
-    
-    //         // Listen to the popstate event and trigger handlePopState
-    //         window.addEventListener('popstate', handlePopState);
-    
-    //         return () => {
-    //             // Clean up the event listener when the component unmounts
-    //             window.removeEventListener('popstate', handlePopState);
-    //         };
-    //     }
-    // }, [pathname]);
+      
 
 
 
@@ -171,8 +141,6 @@ const CompleteRegistration = () => {
     // triggers a confirmation dialog when the user tries to leave the page 
     useEffect(() => {
         const beforeUnloadListener = (event) => {
-            // clear cookie from server if user reloads page
-            document.cookie = "canAccessRegPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
 
             event.preventDefault();
             return (event.returnValue = "");
@@ -183,6 +151,15 @@ const CompleteRegistration = () => {
         return () => window.removeEventListener("beforeunload", beforeUnloadListener);
     }, []);
     
+
+
+
+
+
+
+
+
+
 
 
 
@@ -400,6 +377,7 @@ const CompleteRegistration = () => {
                     last_name: lastName,
                     phone: convertedPhoneNumber,
                     dob: formattedDate,
+                    is_reg_complete: true,
                     created_at: new Date().toISOString()
                 };
  
@@ -407,12 +385,18 @@ const CompleteRegistration = () => {
                 const updateTableResult = await updateTable(user, 'profiles', profileData, 'id');
                 if (!updateTableResult.success) {
                     throw new Error("An unexpected error occurred and we couldn't save your profile information. Please try again later. If the issue persists, contact support."
-)                }
+)               }
+
+                // clear cookie from server once user completes registration
+                document.cookie = "canAccessRegPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
 
                 changeMessage('success', 'Your account has been created and you are now logged in.');
                 setUpdateStatus('success')
                 setRedirect(true)
             } catch (error) {
+                // clear cookie from server if theres an error
+                document.cookie = "canAccessRegPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+
                 setRedirect(false)
                 setUpdateStatus('error')
                 changeMessage('error', error.message);

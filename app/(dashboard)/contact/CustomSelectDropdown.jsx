@@ -15,7 +15,7 @@ const CustomSelectDropdown = ({ label, options, subject, setSubject }) => {
             <div className="custom-select relative">
                 {/* Dropdown header */}
                 <div
-                    className='w-full py-2.5 px-3 rounded-md outline-none  bg-softCharcoal border-[1px] border-ashGray cursor-pointer flex justify-between items-center relative'
+                    className='w-full py-3 px-4 rounded-md outline-none  bg-softCharcoal border-[1px] border-ashGray cursor-pointer flex justify-between items-center relative'
                     onClick={() => setDropdownOpen(!dropdownOpen)}
                 >
                     {subject ? (
@@ -39,7 +39,7 @@ const CustomSelectDropdown = ({ label, options, subject, setSubject }) => {
                         {options.map((option, index) => (
                             <li
                                 key={index}
-                                className="py-2 px-3 text-ashGray hover:text-cloudGray hover:bg-softCharcoal cursor-pointer"
+                                className="py-3 px-4 text-ashGray hover:text-cloudGray hover:bg-softCharcoal cursor-pointer"
                                 onClick={() => handleOptionClick(option)}
                             >
                                 {option}

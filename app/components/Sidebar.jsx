@@ -18,8 +18,6 @@ import {
 import { IoChatbubbleEllipses } from "react-icons/io5";
 
 
-// components
-import Card from "./Card";
 
 
 
@@ -27,6 +25,7 @@ import Card from "./Card";
 const Sidebar = () => {
   const [user, setUser] = useState(null)
   const [activeLink, setActiveLink] = useState('');
+  const [isRegComplete, setIsRegComplete] = useState(null)
 
   const pathName = usePathname()
   const router = useRouter()
@@ -38,7 +37,27 @@ const Sidebar = () => {
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
       if (session?.user) {
         setUser(session.user);
+
+        // registration status so logged in links are not shown until user has completed registering
+        const getRegStatus = async() => {
+          const { data, error } = await supabase
+            .from('profiles')
+            .select('is_reg_complete')
+            .eq('id', session.user.id)
+            .limit(1)
+            .single()
+    
+            if (error) {
+              console.log(error)
+            } 
+    
+            if (data) {
+              setIsRegComplete(data.is_reg_complete)
+            }
+        }
+        getRegStatus()
       }
+
     });
     return () => {
       if (authListener && typeof authListener.unsubscribe === 'function') {
@@ -47,7 +66,7 @@ const Sidebar = () => {
     };
   }, [supabase]);
 
-
+  
 
 
 
@@ -69,6 +88,7 @@ const Sidebar = () => {
 
     if (!error) {
       setUser(null);
+      setIsRegComplete(null);
       router.push('/login')
       router.refresh()
     }
@@ -84,18 +104,12 @@ const Sidebar = () => {
         <div className="h-full top-0 fixed z-50 cursor-pointer bg-softCharcoal border-r-[1px] border-midnightSlate sidebar">
             <div className="h-full flex flex-col ">
 
-                {/* <Link href="/">
-                    <div className="p-20 flex flex-col items-center">
-                        <Card values={'shadow-3xl pt-1.5 px-4 pb-0.5 rounded-xl bg-deepCharcoal'}>
-                            <h2 className='mainheading font-eb text-saddleBrown'>
-                                Port<span className="text-stoneGray">folio</span>
-                            </h2>
-                        </Card>
-                    </div>
-                    <div className='bg-nightSky h-[3px]'></div>
-                </Link> */}
-<div className='pt-[53px]'></div>
-<div className='bg-midnightSlate mx-2 h-[1px]'></div>
+
+
+
+
+              <div className='pt-[53px]'></div>
+              <div className='bg-midnightSlate mx-2 h-[1px]'></div>
 
                 <nav className="flex-1">
                   <ul className='flex flex-col '>
@@ -154,7 +168,7 @@ const Sidebar = () => {
                             </div>
                         </Link> 
                     </li>
-                    {user && (
+                    {(user && isRegComplete) && (
                       <li className={`m-2 mb-0 p-3 max-h-12 hover:bg-midnightSlate/40 transtion-bg duration-300 rounded-md ${activeLink === '/profile' ? 'bg-midnightSlate' : ''}`}>
                         <Link href={'/profile'} onClick={() => handleActiveLink('/profile')}>
                             <div className='flex items-center gap-3'>
@@ -169,7 +183,7 @@ const Sidebar = () => {
                         </Link> 
                       </li>
                     )}
-                    {user && (
+                    {(user && isRegComplete) && (
                       <li className={`m-2 mb-0 p-3 max-h-12 hover:bg-midnightSlate/40 transtion-bg duration-300 rounded-md ${activeLink === '/chat' ? 'bg-midnightSlate' : ''}`}>
                         <Link href={'/chat'} onClick={() => handleActiveLink('/chat')}>
                             <div className='flex items-center gap-3'>
@@ -200,7 +214,7 @@ const Sidebar = () => {
 
                     <div className='bg-midnightSlate mx-2 h-[1px]'></div>
 
-                    {user && (
+                    {(user && isRegComplete) && (
                       <div className='m-2 mb-0 p-3 max-h-12 hover:bg-midnightSlate/40 transtion-bg duration-300 rounded-md' onClick={handleLogout}>
                         <div className='flex items-center gap-3'>
                           <div className="flex items-center">

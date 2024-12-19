@@ -154,7 +154,7 @@ const ForgotEmail = () => {
 
                         <label className='max-w-min mb-2 text-base text-ashGray block' htmlFor='phone'>Phone</label>
                         <input
-                            className={`w-full max-w-xs py-2.5 px-4 rounded-md text-stoneGray bg-softCharcoal border-[1px] border-ashGray  ${errors.phone ? 'border-red-700' : 'border-ashGray'}`}
+                            className={`w-full max-w-xs py-3 px-4 rounded-md text-stoneGray bg-softCharcoal border-[1px] border-ashGray  ${errors.phone ? 'border-red-700' : 'border-ashGray'}`}
                             id='phone'
                             name='phone'
                             type='tel'

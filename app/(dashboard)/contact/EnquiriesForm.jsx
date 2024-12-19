@@ -226,7 +226,7 @@ const EnquiriesForm = ({ user }) => {
                         spellCheck='false'
                         placeholder='First name'
                         maxLength={30}
-                        className='w-full p-2.5 rounded-md text-stoneGray bg-softCharcoal border-[1px] border-ashGray'
+                        className='w-full py-3 px-4 rounded-md text-stoneGray bg-softCharcoal border-[1px] border-ashGray'
                     /> 
                     <p className='text-red-600 text-sm'>{errors.firstname?.message}</p>       
                 </div>
@@ -241,7 +241,7 @@ const EnquiriesForm = ({ user }) => {
                         placeholder='Email'
                         autoComplete="email"
                         maxLength={50}
-                        className='w-full p-2.5 rounded-md text-stoneGray bg-softCharcoal border-[1px] border-ashGray'
+                        className='w-full py-3 px-4 rounded-md text-stoneGray bg-softCharcoal border-[1px] border-ashGray'
                     />
                     <p className='text-red-600 text-sm'>{errors.email?.message}</p>       
                 </div>
@@ -270,7 +270,7 @@ const EnquiriesForm = ({ user }) => {
                         rows='4'
                         {...register('message')}
                         placeholder='Enter your message here...'
-                        className='py-2 px-2.5 outline-none rounded-md w-4/5 text-stoneGray bg-softCharcoal border-[1px] border-ashGray'
+                        className='py-2 pxy-3 px-4 outline-none rounded-md w-4/5 text-stoneGray bg-softCharcoal border-[1px] border-ashGray'
                     ></textarea>
                     <p className='text-red-600 text-sm'>{errors.message?.message}</p>       
                 </div>

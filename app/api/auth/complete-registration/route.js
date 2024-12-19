@@ -10,7 +10,7 @@ export async function POST(request) {
     const supabase = createRouteHandlerClient({ cookies })
     const { data, error } = await supabase
     .from('profiles')
-    .select('isFirstReg')
+    .select('is_first_reg')
     .eq('id', user.id)
     .limit(1)
     .single()
@@ -19,7 +19,7 @@ export async function POST(request) {
       console.log(error)
     } 
 
-    if (data.isFirstReg === true) {
+    if (data.is_first_reg === true) {
       cookies().set('canAccessRegPage', 'true', { path: '/' })
     }
   }
