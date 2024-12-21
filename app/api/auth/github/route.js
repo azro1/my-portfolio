@@ -23,7 +23,7 @@ export async function GET(request) {
     .eq('id', user.id)
 
   if (error) {
-    console.log('github is_verified:', error.message)
+    console.log('github:', error.message)
   }
 
   return NextResponse.redirect(url.origin)

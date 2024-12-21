@@ -21,9 +21,9 @@ import Modal from './Modal'
 const schema = yup.object({
     draftFirstName: yup
         .string()
-        .required('Please add a first name.')
+        .required('Please add a firstname.')
         .transform(value => value.trim())
-        .matches(/^[A-Z][a-z]*$/, "Your first name must start with an uppercase letter, with no digits or spaces."),
+        .matches(/^[A-Z][a-z]*$/, "Your firstname must start with an uppercase letter, with no digits or spaces."),
 });
 
 
@@ -91,11 +91,11 @@ const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
         } else if (hasInteracted) {
             // Show success message if names are different
             if (draftFirstName !== firstName) {
-                setFormSuccess('Your first name looks good.');
+                setFormSuccess('Your firstname looks good.');
                 setFormError(null);
             } else {
                 setFormSuccess(null); // Reset success message if names are the same
-                setFormError('First name cannot be the same.');
+                setFormError('Firstname cannot be the same.');
             }
         }
     
@@ -145,7 +145,7 @@ const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
             }, 'id');
 
             if (!updateProfilesResult.success) {
-                throw new Error("An unexpected error occurred and we couldn't update your first name. Please try again later. If the issue persists, contact support.")
+                throw new Error("An unexpected error occurred and we couldn't update your firstname. Please try again later. If the issue persists, contact support.")
             }
 
 
@@ -158,7 +158,7 @@ const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
             if (!updateCommentsResult.success) {
                 setSaving(false)
                 fetchProfile(user)
-                throw new Error("An unexpected error occurred. Your first name was updated but we couldn't update your comments. Please try again later. If the issue persists, contact support.")
+                throw new Error("An unexpected error occurred. Your firstname was updated but we couldn't update your comments. Please try again later. If the issue persists, contact support.")
             }
 
 
@@ -166,7 +166,7 @@ const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
                 setSaving(false)
                 setShowForm(false)
                 reset({ draftFirstName: '' });
-                changeMessage('success', 'First name updated!')
+                changeMessage('success', 'Firstname updated!')
 
                 // Refresh profile data after update
                 fetchProfile(user);

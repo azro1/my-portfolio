@@ -16,7 +16,7 @@ export default async function RegisterLayout ({ children }) {
   } else {
       const { data, error } = await supabase
       .from('profiles')
-      .select('is_first_reg')
+      .select('is_first_reg, is_reg_complete')
       .eq('id', user?.id)
       .limit(1)
       .single()
@@ -25,10 +25,14 @@ export default async function RegisterLayout ({ children }) {
       console.log(error)
     }
 
-    if (!data?.is_first_reg && cookie?.value !== 'true') {
+    if (!data?.is_first_reg && (data.is_reg_complete && cookie?.value !== 'true')) {
+      redirect('/');
+    }
+
+    if (!data?.is_first_reg && (!data.is_reg_complete && cookie?.value !== 'true')) {
       await supabase.auth.signOut();
       redirect('/login');
-    }
+    } 
   }
   
   return (

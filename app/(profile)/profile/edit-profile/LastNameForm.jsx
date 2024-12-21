@@ -22,9 +22,9 @@ import Modal from './Modal'
 const schema = yup.object({
     draftLastName: yup
         .string()
-        .required('Please add a last name.')
+        .required('Please add a lastname.')
         .transform(value => value.trim())
-        .matches(/^[A-Z][a-z]*$/, "Your last name must start with an uppercase letter, with no digits or spaces."),
+        .matches(/^[A-Z][a-z]*$/, "Your lastname must start with an uppercase letter, with no digits or spaces."),
 });
 
 
@@ -94,11 +94,11 @@ const LastNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
         } else if (hasInteracted) {
             // Show success message if names are different
             if (draftLastName !== lastName) {
-                setFormSuccess('Your last name looks good.');
+                setFormSuccess('Your lastname looks good.');
                 setFormError(null);
             } else {
                 setFormSuccess(null); // Reset success message if names are the same
-                setFormError('Last name cannot be the same.');
+                setFormError('Lastname cannot be the same.');
             }
         }
     
@@ -158,7 +158,7 @@ const LastNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
             setSaving(false)
             setShowForm(false)
             reset({ draftLastName: '' });
-            changeMessage('success', 'Last name updated!')
+            changeMessage('success', 'Lastname updated!')
 
             // Refresh profile data after update
             fetchProfile(user);

@@ -69,6 +69,31 @@ img {
 
 
 
+/* (registration form) auto show date picker when user clicks on field by making picker indicator full height and width of input */
+input[type="date"] {
+  border: none;
+  box-sizing: border-box;
+  outline: 0;
+  position: relative;
+  width: 100%;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  width: auto;
+  height: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  cursor: pointer;
+}
+
+
+
+
+
 
 
 /* sidebar */

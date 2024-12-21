@@ -23,7 +23,7 @@ export async function GET(request) {
     .eq('id', user.id)
 
   if (error) {
-    console.log('google is_verified:', error.message)
+    console.log('google:', error.message)
   }
 
 

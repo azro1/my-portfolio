@@ -56,6 +56,9 @@ const Sidebar = () => {
             }
         }
         getRegStatus()
+      } else {
+        setUser(null);
+        setIsRegComplete(null);
       }
 
     });

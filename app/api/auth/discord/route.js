@@ -23,7 +23,7 @@ export async function GET(request) {
     .eq('id', user.id)
 
   if (error) {
-    console.log('discord is_verified:', error.message)
+    console.log('discord:', error.message)
   }
 
   return NextResponse.redirect(url.origin)
