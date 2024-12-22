@@ -3,13 +3,14 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation";
 import { useForm, useFieldArray } from "react-hook-form";
 
 
 // components
 import OtpForm from "../components/OtpForm";
+import Loading from "./loading";
 
 // custom hooks
 import { useUpdateTable } from "../hooks/useUpdateTable";
@@ -55,14 +56,50 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
     const [isVerified, setIsVerified] = useState(false)
     const [buttonIsDisabled, setButtonIsDisabled] = useState(null)
     const [isActive, setIsActive] = useState(null)
-
-    
+    const [isBack, setIsBack] = useState(false)
+    const [hasVisitedRegPage, setHasVisitedRegPage] = useState(false);
  
     const router = useRouter()
 
     // destructure custom hooks
     const { updateTable } = useUpdateTable()
     const { changeMessage } = useMessage()
+
+
+
+
+
+
+
+
+
+    // check if user has been to reg page by checking local storage item set in registration page
+    useEffect(() => {
+        const visited = localStorage.getItem("hasVisitedRegPage");
+        if (visited === "true") {
+            setHasVisitedRegPage(true);
+            setIsBack(true);
+        }
+    }, []);
+
+    // log them out if they have
+    useEffect(() => {
+        if (isBack) {
+            const handleLogout = async () => {
+                const supabase = createClientComponentClient();
+                await supabase.auth.signOut();
+                router.push('/login');
+                localStorage.removeItem("hasVisitedRegPage")
+                changeMessage('error', "You're account was created but you have been logged out because your registration was aborted. Please log back in to finish setting up your account")
+            };
+
+            handleLogout();
+        }
+    }, [isBack, router]);
+
+
+
+
 
 
 
@@ -257,24 +294,31 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
 
 
     return (
-        <OtpForm
-            containerStyles={'sm:shadow-outer sm:p-10 sm:rounded-xl'}
-            handleSubmit={handleSubmit}
-            onSubmit={onSubmit}
-            title={title}
-            subHeading={subHeading}
-            fields={fields}
-            register={register}
-            handleInputChange={handleInputChange}
-            handleKeyDown={handleKeyDown}
-            errors={errors}
-            isLoading={isLoading}
-            formState={formState}
-            trigger={trigger}
-            authGroupEmailRef={authGroupEmailRef}
-            isButtonDisabled={isButtonDisabled}
-            isVerified={isVerified}
-        /> 
+        <>
+            {hasVisitedRegPage ? (
+                <Loading />
+            ) : (
+                <OtpForm
+                    containerStyles={'sm:shadow-outer sm:p-10 sm:rounded-xl'}
+                    handleSubmit={handleSubmit}
+                    onSubmit={onSubmit}
+                    title={title}
+                    subHeading={subHeading}
+                    fields={fields}
+                    register={register}
+                    handleInputChange={handleInputChange}
+                    handleKeyDown={handleKeyDown}
+                    errors={errors}
+                    isLoading={isLoading}
+                    formState={formState}
+                    trigger={trigger}
+                    authGroupEmailRef={authGroupEmailRef}
+                    isButtonDisabled={isButtonDisabled}
+                    isVerified={isVerified}
+            /> 
+        )}
+        </>
+
     )
 }
 

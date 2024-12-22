@@ -140,70 +140,11 @@ const CompleteRegistration = () => {
 
 
 
-
-
-    // prevents users from navigating back using the browser's back button by disabling it
+    // set indicator that user has been to this page to prevent them going back
     useEffect(() => {
-        if (pathname === '/complete-registration') {
-            const handlePopState = () => {
-                // Replace current history entry with the same state to prevent going back
-                history.pushState(null, null, window.location.href);
-            };
+        localStorage.setItem("hasVisitedRegPage", "true");
+    }, []);
     
-            // Replace the current state when component mounts
-            history.pushState(null, null, window.location.href);
-    
-            // Listen to the popstate event and trigger handlePopState
-            window.addEventListener('popstate', handlePopState);
-    
-            return () => {
-                // Clean up the event listener when the component unmounts
-                window.removeEventListener('popstate', handlePopState);
-            };
-        }
-    }, [pathname]);
-
-    
-
-
-
-
-
-
-
-
-    
-    // when page loads send user to server to set cookie and update is_first_reg flag in table
-    useEffect(() => {
-        if (user) {
-            const handleProcess = async () => {
-                const res = await fetch(`${location.origin}/api/auth/complete-registration`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        user
-                    })
-                })
-
-                const serverRes = await res.json()
-                // console.log(serverRes)
-
-                // update flag isFirstReg
-                const { error } = await supabase
-                    .from('profiles')
-                    .update({ is_first_reg: false })
-                    .eq('id', user.id)
-                    .select()
-
-                if (error) {
-                    console.log('is_first_reg update error:', error)
-                }
-            }
-            handleProcess()
-        }
-    }, [user, supabase]);
 
 
 
@@ -451,14 +392,13 @@ const CompleteRegistration = () => {
                     throw new Error("An unexpected error occurred and we couldn't save your profile information. Please try again later. If the issue persists, contact support.")
                 }
 
-                // clear cookie from server once user completes registration
-                document.cookie = "canAccessRegPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+                // Remove flag after successful profile update
+                localStorage.removeItem("hasVisitedRegPage")
+
                 changeMessage('success', 'Your account has been created and you are now logged in');
                 setRedirect(true)
 
             } catch (error) {
-                // clear cookie from server if theres an error
-                document.cookie = "canAccessRegPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
                 setRedirect(false)
                 changeMessage('error', error.message);
 
