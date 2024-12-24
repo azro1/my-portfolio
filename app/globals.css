@@ -26,7 +26,7 @@ body {
 
 
 
-
+/* base styles */
 h2 {
   @apply leading-normal;
 }
@@ -69,6 +69,82 @@ img {
 
 
 
+/* (registration form) auto show date picker when user clicks on field by making picker indicator full height and width of input */
+input[type="date"] {
+  border: none;
+  box-sizing: border-box;
+  outline: 0;
+  position: relative;
+  width: 100%;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  width: auto;
+  height: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+/* sidebar */
+.sidebar {
+  height: 100vh;
+  width: 64px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: width 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar:hover {
+  width: 236px;
+}
+
+.content-container {
+  opacity: 0;
+  transition: opacity 0.2s ease 0.1s; /* Adjusted to match sidebar speed */
+}
+
+.sidebar:hover .content-container {
+  opacity: 1; /* Fade in text when sidebar expands */
+}
+
+.sidebar:not(:hover) .content-container {
+  opacity: 0; /* Fade out text when sidebar is not hovered */
+  transition: opacity 0.1s ease; /* Same timing for fade-out */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* input placeholder */
 input::placeholder, textarea::placeholder{
   @apply opacity-30;
@@ -77,16 +153,9 @@ input::placeholder, textarea::placeholder{
 
 
 
-/* react carousel thumbnails */
-.carousel .thumbs-wrapper {
-  @apply flex justify-center;
-}
-
-.carousel .thumb {
-  width: 100px !important;
-}
-.carousel .thumb.selected {
-  border-color: #A52A2A !important;
+/* react carousel prev next controls */
+.carousel .control-prev, .control-next {
+  max-height: 410px !important;
 }
 
 
@@ -105,7 +174,7 @@ input::placeholder, textarea::placeholder{
 
 
 
-
+/* auth login and signup icons */
 .tooltip {
   @apply relative;
 }
@@ -119,7 +188,13 @@ input::placeholder, textarea::placeholder{
   @apply text-base visible opacity-100;
 }
 
-/* traingle for menu dropdown */
+
+
+
+
+
+
+/* traingle for loggedin and loggedout menu dropdown */
 .menu-links::after {
   content: '';
   position: absolute;
@@ -127,7 +202,7 @@ input::placeholder, textarea::placeholder{
   height: 0;
   border-left: 12px solid transparent; /* Adjust the size of the triangle */
   border-right: 7.5px solid transparent;
-  border-bottom: 19px solid '#131519';
+  border-bottom: 19px solid '#1C1E24';
   top: -15px;
   right: 14.3px;
 }
@@ -139,7 +214,7 @@ input::placeholder, textarea::placeholder{
   height: 0;
   border-left: 13px solid transparent; /* Adjust the size of the triangle */
   border-right: 7px solid transparent;
-  border-bottom: 20.5px solid #131519;
+  border-bottom: 20.5px solid #1C1E24;
   top: -19px;
   right: 14px;
 }
@@ -174,6 +249,9 @@ footer p {
 footer span {
   @apply text-nightSky;
 }
+
+
+
 
 
 

@@ -10,7 +10,6 @@ export const metadata = {
 // components
 import ContactHeader from './ContactHeader';
 import ContactInfo from './ContactInfo';
-import Comments from '../../components/Comments';
 import EnquiriesForm from './EnquiriesForm';
 import AvailabilityInfo from './AvailabilityInfo';
 
@@ -28,10 +27,7 @@ const Contact = async () => {
         <div className='row-start-3 col-start-1 col-span-2 md:row-start-2 md:col-start-1 md:col-span-1'>
           <div className='flex flex-col gap-20'>
               <ContactInfo user={user}/>
-              <Comments user={user} />
-              {!user && (
-                 <AvailabilityInfo />
-              )}
+              <AvailabilityInfo />
           </div>
         </div>
         

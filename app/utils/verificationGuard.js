@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 
-export async function VerificationGaurd(user, request) {
+export async function VerificationGuard(user, request) {
 
     const otpRoutes = [
       '/verify-signup-otp',

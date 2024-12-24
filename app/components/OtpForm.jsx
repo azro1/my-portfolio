@@ -1,4 +1,3 @@
-import { motion, AnimatePresence } from "framer-motion"
 import Timer from "./Timer"
 
 const OtpForm = ({ containerStyles, handleSubmit, onSubmit, title, subHeading, fields, register, handleInputChange, handleKeyDown, errors, isLoading, trigger, formState, authGroupEmailRef, profileEmailRef, profilePhoneRef, isButtonDisabled, isVerified }) => {
@@ -6,10 +5,7 @@ const OtpForm = ({ containerStyles, handleSubmit, onSubmit, title, subHeading, f
 
   return (
     <div className={containerStyles}> 
-        <form className="max-w-[340px]" onSubmit={handleSubmit(onSubmit)} noValidate 
-            as={motion.form}
-            transition={{ type: 'spring', stiffness: 150, damping: 30 }}
-        >
+        <form className="max-w-[340px]" onSubmit={handleSubmit(onSubmit)} noValidate>
             <h2 className='text-3xl leading-tight mb-4 font-eb text-saddleBrown'>{title}</h2>
             <p className='mb-4'>{subHeading}</p>
 
@@ -18,7 +14,7 @@ const OtpForm = ({ containerStyles, handleSubmit, onSubmit, title, subHeading, f
                 {fields.map((field, index) => (
                     <div key={field.id}>
                         <label htmlFor={`codes[${index}].code`} className="max-w-min mb-2 text-base text-ashGray"></label>
-                        <motion.input
+                        <input
                             transition={{ type: 'spring', stiffness: 150, damping: 25 }}
                             {...register(`codes[${index}].code`)}
                             id={`codes[${index}].code`}
@@ -30,38 +26,27 @@ const OtpForm = ({ containerStyles, handleSubmit, onSubmit, title, subHeading, f
                                 handleKeyDown(e, index)
                                 trigger('codes');
                             }}
-                            onKeyDown={(e) => handleKeyDown(e, index)} // Listen to key events
+                            onKeyDown={(e) => handleKeyDown(e, index)}
                         />
                     </div>
                 ))}
             </div>
 
 
-            <AnimatePresence>
-                {(formState.isSubmitted && typeof errors.codes === 'object' && !Array.isArray(errors.codes)) && (
-                    <motion.p
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ type: 'tween' }}
-                        className="text-red-600 mt-2 text-sm">
-                            {errors.codes.message}
-                    </motion.p>
-                )}
-                
-                {formState.isSubmitted && Array.isArray(errors.codes) && errors.codes.find((error) => error?.code?.message) ? (
-                    <motion.p
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ type: 'tween' }} 
-                        className="text-red-600 mt-2 text-sm">
-                        {errors.codes.find((error) => error?.code?.message)?.code?.message}
-                    </motion.p>
-                ) : null}
-            </AnimatePresence>
-
             
+            {(formState.isSubmitted && typeof errors.codes === 'object' && !Array.isArray(errors.codes)) && (
+                <p className="text-red-600 mt-2 text-sm">
+                    {errors.codes.message}
+                </p>
+            )}
+            
+            {formState.isSubmitted && Array.isArray(errors.codes) && errors.codes.find((error) => error?.code?.message) ? (
+                <p className="text-red-600 mt-2 text-sm">
+                    {errors.codes.find((error) => error?.code?.message)?.code?.message}
+                </p>
+            ) : null}
+
+
 
             <button className='btn block mt-5 bg-saddleBrown' disabled={isLoading}>
                 {isLoading ? (

@@ -1,28 +1,80 @@
 "use client"
 
-import { useState, useEffect } from "react";
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import disposableDomains from 'disposable-email-domains';
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useState, useEffect } from "react";
+import { useForm, Controller } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid"
 
 // components
 import CustomSelectDropdown from "./CustomSelectDropdown";
 
-// custom hooks
+// hooks
 import { useFetchProfile } from '@/app/hooks/useFetchProfile';
-// custom hook to display global messages
 import { useMessage } from '@/app/hooks/useMessage';
 
+
+
+
+
+
+
+
+
+// yup validation schema
+const schema = yup.object({
+    firstname: yup
+    .string()
+    .required('Firstname is required')
+    .transform(value => value.trim())
+    .matches(/^[A-Z][a-z]*$/, "Your first name must start with an uppercase letter, with no digits or spaces."),
+
+    email: yup
+      .string()
+      .required('Email is required')
+      .transform(value => value.trim().toLowerCase())
+      .test('has-at-symbol', "Please include an '@' symbol.", value => {
+        return value ? value.includes('@') : true;
+      })
+      .email("Please use a valid domain, e.g., gmail.com")
+      .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Please use a valid domain, e.g., gmail.com")
+      .test('is-not-disposable', 'Disposable email addresses are not allowed.', value => {
+        if (value) {
+          const domain = value.split('@')[1];  // Extract domain from email
+          return !disposableDomains.includes(domain);  // Check if domain is in disposable list
+        }
+        return true;  // If no value, pass validation
+      }),
+
+    subject: yup
+      .string()
+      .required('Subject is required'),
+
+    message: yup
+      .string()
+      .required('Message is required')
+      .transform(value => value.trim())
+  });
+
+
+
+
+
+
+
+
 const EnquiriesForm = ({ user }) => {
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
-    const [subject, setSubject] = useState('')
-    const [message, setMessage] = useState('')
+    // const [subject, setSubject] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 
     // custom hook to fetch a users profile
     const { profile, fetchProfile } = useFetchProfile()
     // global messages function
     const { changeMessage } = useMessage()
+
+    const supabase = createClientComponentClient()
 
     const options = [
         "General Inquiry",
@@ -34,9 +86,8 @@ const EnquiriesForm = ({ user }) => {
         "Website Issue or Bug",
     ];
 
-    const supabase = createClientComponentClient()
 
-     // watch user prop value to get users profile and show profile error if there is one
+    // watch user prop value to get users profile and show profile error if there is one
     useEffect(() => {
       if (user) {
         fetchProfile(user)
@@ -44,45 +95,60 @@ const EnquiriesForm = ({ user }) => {
     }, [user])
 
 
-    // check if a given string is a valid email address
-    const isValidEmail = (value) => {
-        const emailRegex = new RegExp('^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$', 'u')
-        return emailRegex.test(value)
-    };
-
-    // validation function returns regex to strip out harmful chars
-    const containsInvalidChars = (value) => /[<>\/\\`"'&]/.test(value);
 
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
 
+
+
+    // react-hook-form
+    const form = useForm({
+        resolver: yupResolver(schema),
+        mode: 'onSubmit',
+        defaultValues: {
+            subject: ''
+        }
+    })
+
+    // allows us to register a form control
+    const { register, handleSubmit, formState, control, reset } = form;
+    const { errors } = formState;
+
+
+
+
+
+
+
+
+
+    const onSubmit = async (data) => {
             if (user) {
-                if (!name) {
-                    changeMessage('error', 'Please enter your first name to proceed.')
-                    return
+                console.log('Submitted!')
 
-                } else if (containsInvalidChars(name)) {
-                    changeMessage('error', 'Your name contains invalid characters. Please use letters only.')
-                    return
 
-                } else if (!email) {
-                    changeMessage('error', 'We need your email address to respond to your enquiry.')
-                    return
+                const sanitizeInput = (input) => {
+                    return input.replace(/[&<>]/g, (char) => {
+                        const entityMap = {
+                            '&': '&amp;',
+                            '<': '&lt;',
+                            '>': '&gt;',
+                        };
+                        return entityMap[char] || char;
+                    });
+                };
 
-                } else if (!isValidEmail(email)) {
-                    changeMessage('error', "That doesn't seem like a valid email address. Please check and try again.")
-                    return
 
-                } else if (!message) {
-                    changeMessage('error', 'Please include a message so we can assist you better.')
-                    return
-
-                }  else if (containsInvalidChars(message)) {
-                    changeMessage('error', 'Your message contains characters that are not allowed. Please remove them and try again.')
-                    return
+                const sanitizedData = {
+                    firstname: sanitizeInput(data.firstname),
+                    message: sanitizeInput(data.message),
                 }
 
+                const first_name = sanitizedData.firstname;
+                const email = data.email;
+                const subject = data.subject;
+                const message = sanitizedData.message;
+
+                
                 setIsLoading(true)
 
                 const { data: enquiries, error: enquiriesError } = await supabase
@@ -101,6 +167,7 @@ const EnquiriesForm = ({ user }) => {
                     if (userEnquiries.length >= 2) {
                         setIsLoading(false)
                         changeMessage('error', "You've reached the maximum limit for enquiries. Please try again later.")
+                        reset();
                         return;
                     }
 
@@ -114,7 +181,7 @@ const EnquiriesForm = ({ user }) => {
                         .insert({
                             id: uuidv4(),
                             created_at: new Date().toISOString(),
-                            first_name: name,
+                            first_name,
                             email,
                             subject,
                             message,
@@ -131,11 +198,7 @@ const EnquiriesForm = ({ user }) => {
                     if (data) {
                         setIsLoading(false);
                         changeMessage('success', "Your message has been sent. We'll get back to you soon.")
-
-                        setName('')
-                        setEmail('')
-                        setSubject('')
-                        setMessage('')
+                        reset();
                     }
                 }
 
@@ -146,73 +209,71 @@ const EnquiriesForm = ({ user }) => {
     };
 
 
-    // prevent enter submission and only specified keys
-    const handleKeyDown = (e) => {
-        if (e.key === 'Enter') e.preventDefault()
-        
-        if (!/^[A-Za-z]$/.test(e.key) && !['Backspace', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(e.key)) {
-            e.preventDefault()
-        }
-    }
-
 
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)} noValidate>
                 <h3 className='mb-4 text-2xl font-b text-saddleBrown'>
                     Enquiries
                 </h3>
-                <label>
-                    <span className="className='max-w-min mb-2 text-base text-ashGray block">
-                        First name
-                    </span>
+                <div className='flex flex-col gap-2'>
+                    <label className='max-w-max text-base text-ashGray block' htmlFor='firstname'>First name</label>
                     <input
-                        className='w-full p-2.5 rounded-md text-stoneGray bg-softCharcoal border-2 border-ashGray border-opacity-55'
+                        id='firstname'
                         type='text'
+                        {...register('firstname')}
                         spellCheck='false'
-                        placeholder='Name'
+                        placeholder='First name'
                         maxLength={30}
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        onKeyDown={handleKeyDown}
-                    />
-                </label>
-                <label>
-                    <span className="className='max-w-min mt-4 mb-2 text-base text-ashGray block">
-                        Email
-                    </span>
+                        className='w-full py-3 px-4 rounded-md text-stoneGray bg-softCharcoal border-[1px] border-ashGray'
+                    /> 
+                    <p className='text-red-600 text-sm'>{errors.firstname?.message}</p>       
+                </div>
+
+                <div className='flex flex-col gap-2 mt-2'>
+                    <label className='max-w-min text-base text-ashGray block' htmlFor='email'>Email</label>
                     <input
-                        className='w-full p-2.5 rounded-md text-stoneGray bg-softCharcoal border-2 border-ashGray border-opacity-55'
+                        id='email'
                         type='text'
+                        {...register('email')}
                         spellCheck='false'
                         placeholder='Email'
+                        autoComplete="email"
                         maxLength={50}
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        className='w-full py-3 px-4 rounded-md text-stoneGray bg-softCharcoal border-[1px] border-ashGray'
                     />
-                </label>
-  
-                <CustomSelectDropdown 
-                    label='Subject'
-                    options={options}
-                    setSubject={setSubject}
-                    subject={subject}
-                />
+                    <p className='text-red-600 text-sm'>{errors.email?.message}</p>       
+                </div>
 
-                <label>
-                    <span className="className='max-w-min mt-4 mb-2 text-base text-ashGray block">
-                        Your Message
-                    </span>
+                <div>
+                    <Controller 
+                        name='subject'
+                        control={control}
+                        render={({ field }) => (
+                            <CustomSelectDropdown
+                                label="Subject"
+                                options={options}
+                                setSubject={field.onChange}
+                                subject={field.value}
+                            />
+                        )}
+                    />
+                    <p className='text-red-600 text-sm mt-2'>{errors.subject?.message}</p>       
+                </div>
+
+                <div className='flex flex-col gap-2 mt-4'>
+                    <label className="className='max-w-min text-base text-ashGray block" htmlFor='message'>Your Message</label>
                     <textarea
-                        className='py-2 px-2.5 outline-none rounded-md w-4/5 text-stoneGray bg-softCharcoal border-2 border-ashGray border-opacity-55'
-                        placeholder='Enter your message here...'
-                        value={message}
-                        onChange={(e) => setMessage(e.target.value)}
+                        id='message'
                         cols='30'
                         rows='4'
+                        {...register('message')}
+                        placeholder='Enter your message here...'
+                        className='py-2 pxy-3 px-4 outline-none rounded-md w-4/5 text-stoneGray bg-softCharcoal border-[1px] border-ashGray'
                     ></textarea>
-                </label>
+                    <p className='text-red-600 text-sm'>{errors.message?.message}</p>       
+                </div>
 
                 <button className='btn block mt-2 bg-saddleBrown' disabled={isLoading}>
                     {isLoading ? (

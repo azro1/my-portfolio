@@ -16,11 +16,14 @@ export async function GET(request) {
   // when a user logs in via github set is_verifed flag to true now that an account has been created so users cannot sign up again
   const { error } = await supabase
     .from('profiles')
-    .update({ is_verified: true })
+    .update({ 
+      is_verified: true,
+      is_reg_complete: true
+    })
     .eq('id', user.id)
 
   if (error) {
-    console.log('github is_verified:', error.message)
+    console.log('github:', error.message)
   }
 
   return NextResponse.redirect(url.origin)

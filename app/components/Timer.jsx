@@ -69,7 +69,6 @@ const Timer = memo(({ authGroupEmailRef, profileEmailRef, profilePhoneRef, isBut
 
     const supabase = createClientComponentClient();
     let data, error;
-    console.log(data)
 
     if (otpType === "auth") {
       // Auth email OTP

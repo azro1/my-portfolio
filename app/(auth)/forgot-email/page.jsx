@@ -5,7 +5,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { motion, AnimatePresence } from "framer-motion"
 
 
 // custom hook to display global messages
@@ -148,18 +147,16 @@ const ForgotEmail = () => {
         <div>
             <div className='flex items-center justify-center sm:shadow-outer sm:p-10 sm:rounded-xl'>
 
-                <form onSubmit={handleSubmit(onSubmit)} noValidate as={motion.form}
-                    transition={{ type: 'spring', stiffness: 150, damping: 30 }}
-                >
+                <form onSubmit={handleSubmit(onSubmit)} noValidate>
                     <div className='max-w-[330px]'>
                         <h2 className='text-3xl mb-4 font-eb text-saddleBrown'>Forgot Email?</h2>
                         <p className='mb-4'>Please provide the phone number you used when you signed up</p>
 
                         <label className='max-w-min mb-2 text-base text-ashGray block' htmlFor='phone'>Phone</label>
-                        <motion.input
-                            transition={{ type: 'spring', stiffness: 150, damping: 25 }}
-                            className={`w-full max-w-xs py-2.5 px-4 rounded-md text-stoneGray bg-softCharcoal border-[1px] border-ashGray  ${errors.phone ? 'border-red-700' : 'border-ashGray'}`}
+                        <input
+                            className={`w-full max-w-xs py-3 px-4 rounded-md text-stoneGray bg-softCharcoal border-[1px] border-ashGray  ${errors.phone ? 'border-red-700' : 'border-ashGray'}`}
                             id='phone'
+                            name='phone'
                             type='tel'
                             maxLength={15}
                             placeholder="e.g., 01234 or +44 1234"
@@ -167,20 +164,11 @@ const ForgotEmail = () => {
                             onKeyDown={handleKeyDown}
                         />
 
-                        <AnimatePresence>
-                            {errors.phone && (
-                                <motion.p
-                                    initial={{ opacity: 0, y: -10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -10 }}
-                                    transition={{ type: 'tween' }}
-                                    className="text-red-600 mt-2 text-sm">
-                                    {errors.phone.message}
-                                </motion.p>
-                            )}
-                        </AnimatePresence>
+                        {errors.phone && (
+                            <p className="text-red-600 mt-2 text-sm">{errors.phone.message}</p>
+                        )}
                         
-                        <button transition={{ type: 'spring', stiffness: 200, damping: 30 }} className={`btn block mt-4 bg-saddleBrown ${isLoading ? 'opacity-65' : 'opacity-100'}`} disabled={isLoading}>
+                        <button className={`btn block mt-4 bg-saddleBrown ${isLoading ? 'opacity-65' : 'opacity-100'}`} disabled={isLoading}>
                             {isLoading ? (
                                 <div className='flex items-center gap-2'>
                                     <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />

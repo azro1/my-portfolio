@@ -23,12 +23,12 @@ const schema = yup.object({
     draftEmail: yup
       .string()
       .required('Please enter your new email address.')
-      .transform(value => value.trim())
-      .test('has-at-symbol', "Please include an '@' symbol in your email address.", value => {
+      .transform(value => value.trim().toLowerCase())
+      .test('has-at-symbol', "Please include an '@' symbol.", value => {
         return value ? value.includes('@') : true;
       })
-      .email("Your email domain seems off. Ensure it's a valid domain (e.g., gmail.com or yahoo.com).")
-      .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Your email domain seems off. Ensure it's a valid domain (e.g., gmail.com or yahoo.com).")
+      .email("Please use a valid domain, e.g., gmail.com.")
+      .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Please use a valid domain, e.g., gmail.com.")
       .test('is-not-disposable', 'Disposable email addresses are not allowed. Please use a valid email.', value => {
         if (value) {
           const domain = value.split('@')[1];  // Extract domain from email
@@ -134,17 +134,17 @@ const EmailForm = ({ user, profile }) => {
 
 
     const handleEmailUpdate = async (data) => {
-        const emailToLowercase = data.draftEmail.toLowerCase();
+        const newEmail = data.draftEmail;
 
-        if (emailToLowercase === email) {
+        if (newEmail === email) {
             return;
         }
         
         try {
            setIsUpdating(true)
 
-            // store email temporarily in local storage
-            localStorage.setItem('email', emailToLowercase);
+            // store new email temporarily in local storage
+            localStorage.setItem('email', newEmail);
 
             const res = await fetch(`${location.origin}/api/auth/email-update`, {
                 method: 'POST',
@@ -152,7 +152,7 @@ const EmailForm = ({ user, profile }) => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                        email: emailToLowercase
+                        email: newEmail
                     })
             })
 
