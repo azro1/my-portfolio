@@ -10,12 +10,12 @@ const AuthForm = ({ handleSubmit, onSubmit, title, subHeading, register, errors,
         <div className='sm:shadow-outer sm:p-10 sm:rounded-xl'>
           <form className="max-w-xs min-w-xs" onSubmit={handleSubmit(onSubmit)} noValidate
           >
-            <h2 className='text-3xl mb-4 font-eb text-saddleBrown'>{title}</h2>
+            <h2 className='text-3xl mb-6 font-eb text-saddleBrown'>{title}</h2>
             <p className='mb-4'>{subHeading}</p>
 
             <label className='max-w-min mb-2 text-base text-ashGray block' htmlFor="email">Email</label>
             <input
-              className={`w-full py-3 px-4 rounded-md text-stoneGray bg-softCharcoal border-[1px] ${errors.email ? 'border-red-700' : 'border-ashGray'}`}
+              className={`w-full py-3 px-4 rounded-md text-ashGray bg-softCharcoal border-[1px] ${errors.email ? 'border-red-700' : 'border-ashGray'}`}
               id="email"
               type="email"
               {...register('email')}
@@ -46,7 +46,7 @@ const AuthForm = ({ handleSubmit, onSubmit, title, subHeading, register, errors,
                 )}
               </button>
               {!isSignup && (
-                <Link className='ml-auto mt-2' href={'/forgot-email'}>
+                <Link className='ml-auto -mt-2' href={'/forgot-email'}>
                   <span className='text-saddleBrown text-base'>Forgot email?</span>
                 </Link>
                )}

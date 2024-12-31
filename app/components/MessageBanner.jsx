@@ -15,7 +15,7 @@ const MessageBanner = () => {
     const { message } = useContext(MessageContext);
 
     return (
-      <div className='absolute left-1/2 transform -translate-x-1/2 w-11/12 z-50'>
+      <div className='fixed top-0 w-full z-50'>
           <AnimatePresence>
               {message.type === 'error' && 
               <motion.div

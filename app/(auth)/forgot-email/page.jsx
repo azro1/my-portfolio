@@ -104,7 +104,7 @@ const ForgotEmail = () => {
                 throw new Error("We're having trouble processing your request. Please try again later. If the issue persists, contact support.")
             } else if (serverEmail.exists && res.status === 200) {
                 setIsLoading(false)
-                changeMessage('success', "Success! We've located your account. A verification code has been sent to your email.")
+                changeMessage('success', "We've located your account. A verification code has been sent to your email.")
 
                 // store email temporarily in local storage
                 localStorage.setItem('email', serverEmail.email)

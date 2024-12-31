@@ -80,8 +80,8 @@ const NavbarAvatar = ({ user }) => {
                     </div>
                 </div>
             ) : (
-                <div className="flex flex-col items-center gap-1">
-                    <div className="overflow-hidden rounded-full relative w-14 h-14">
+                <div className="flex flex-col items-center">
+                    <div className="overflow-hidden rounded-full relative w-14 h-14 ">
                         {avatar_url ? (
                             avatar_url.startsWith("http") ? ( 
                                 /* Absolute URLs (e.g., third-party avatars or signed URLs) */
@@ -105,10 +105,13 @@ const NavbarAvatar = ({ user }) => {
                             )
                         ) : (
                             /* Placeholder for when no avatar exists */
-                            <FaUserCircle size={48} color="gray" />
+                            <div className="w-fit rounded-full justify-self-center">
+                              <FaUserCircle size={50} color="gray" />
+
+                            </div>
                         )}
                     </div>
-                    <h6 className="font-os text-sm font-b text-saddleBrown">{first_name}</h6>
+                    <h6 className="font-os text-sm font-b mt-1 text-saddleBrown">{first_name}</h6>
                 </div>
             )}
         </div>

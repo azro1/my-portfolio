@@ -19,13 +19,13 @@ const Contact = async () => {
   const { data: { user } } = await supabase.auth.getUser()
 
   return (
-    <div className='grid grid-flow-col auto-cols-fr gap-y-20 md:grid-cols-2 md:gap-x-6'>
-        <div className='row-start-1 col-start-1 col-span-2'>
+    <div className={`grid grid-flow-col auto-cols-fr gap-y-16 md:grid-cols-2 md:gap-x-6 ${user ? 'md:grid-rows-[minmax(_auto,_auto)_minmax(700px,_auto)]' : 'md:grid-rows-[minmax(180px,_auto)_minmax(700px,_auto)]'} `}>
+        <div className='row-start-1 col-start-1 col-span-2 self-end'>
             <ContactHeader />
         </div>
 
         <div className='row-start-3 col-start-1 col-span-2 md:row-start-2 md:col-start-1 md:col-span-1'>
-          <div className='flex flex-col gap-20'>
+          <div className='flex flex-col gap-16 h-full justify-evenly'>
               <ContactInfo user={user}/>
               <AvailabilityInfo />
           </div>

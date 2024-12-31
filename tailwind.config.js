@@ -35,9 +35,6 @@ export default {
         'rubik': ['Rubik', 'sans-serif'],
         'barlow': ['Barlow', 'sans-serif'],
         'os': ['Open Sans', 'sans-serif'],
-        'cn': ['Courier New', 'monospace'],
-        'roboto': ['Roboto', 'sans-serif'],
-        'verdana': ['Verdana', 'sans-serif']
       },
       fontSize: {
         '1.375': '1.375rem', //22px

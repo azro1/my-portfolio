@@ -1,361 +1,55 @@
-"use client"
+"use client";
 
-import { useState, useEffect, useRef } from "react";
+import React from "react";
+import { motion } from "framer-motion";
+import { FaHtml5, FaCss3Alt, FaJsSquare, FaReact, FaNodeJs, FaGithub } from "react-icons/fa";
+
+const technicalSkills = [
+  { icon: <FaHtml5 />, name: "HTML" },
+  { icon: <FaCss3Alt />, name: "CSS" },
+  { icon: <FaJsSquare />, name: "JavaScript" },
+  { icon: <FaReact />, name: "React" },
+  { icon: <FaNodeJs />, name: "Node.js" },
+  { icon: <FaGithub />, name: "GitHub" },
+];
 
 const Skills = () => {
-
-  // professional skills
-  const [communicationPercent, setCommunicationPercent] = useState(0)
-  const communicationPercentId = useRef()
-  const [teamworkPercent, setTeamworkPercent] = useState(0)
-  const teamworkPercentId = useRef()
-  const [adaptabilityPercent, setAdaptabilityPercent] = useState(0)
-  const adaptabilityPercentId = useRef()
-  const [problemSolvingPercent, setproblemSolvingPercent] = useState(0)
-  const problemSolvingPercentId = useRef()
-
-  const [isCommunicationPaused, setIsCommunicationPaused] = useState(false);
-  const [isTeamworkPaused, setIsTeamworkPaused] = useState(false);
-  const [isAdaptabilityPaused, setIsAdaptabilityPaused] = useState(false);
-  const [isProblemSolvingPaused, setProblemSolvingPaused] = useState(false)
-
-
-  // technical skills
-  const [htmlPercent, setHtmlPercent] = useState(0);
-  const htmlPercentId = useRef();
-  const [cssPercent, setCssPercent] = useState(0);
-  const cssPercentId = useRef();
-  const [jsPercent, setJsPercent] = useState(0);
-  const jsPercentId = useRef();
-  const [phpPercent, setPhpPercent] = useState(0);
-  const phpPercentId = useRef();
-
-  const [isHtmlPaused, setIsHtmlPaused] = useState(false)
-  const [isCssPaused, setIsCssPaused] = useState(false)
-  const [isJsPaused, setIsJsPaused] = useState(false)
-  const [isPhpPaused, setIsPhpPaused] = useState(false)
-
-
-  const [resetTrigger, setResetTrigger] = useState(false);
-
-
-  // Reset professional skill and technical skill counts after 100 seconds
-  useEffect(() => {
-    if (resetTrigger) {
-      setTimeout(() => {
-        // professional skills
-        setIsCommunicationPaused(false); // Unpause communication
-        setCommunicationPercent(0); // Reset communication count
-        setIsTeamworkPaused(false); // Unpause teamwork
-        setTeamworkPercent(0); // Reset teamwork count
-        setIsAdaptabilityPaused(false); // Unpause adaptability
-        setAdaptabilityPercent(0); // Reset adaptability count
-        setProblemSolvingPaused(false); // Unpause problemSolving
-        setproblemSolvingPercent(0); // Reset problemSolving count
-
-        // technical skills
-        setIsHtmlPaused(false)
-        setHtmlPercent(0);
-        setIsCssPaused(false);
-        setCssPercent(0);
-        setIsJsPaused(false);
-        setJsPercent(0);
-        setIsPhpPaused(false);
-        setPhpPercent(0);
-
-        setResetTrigger(false); // Reset the trigger
-      }, 99000); // 100000ms = 100 seconds(1 min 40s) but deducted 1 second here to compensate for 1 second animation delay
-    }
-  }, [resetTrigger]);
-
-
-  // communication
-  useEffect(() => {
-    communicationPercentId.current = setInterval(() => {
-      if (!isCommunicationPaused) {
-        setCommunicationPercent(prev => {
-          if (prev === 75) {
-            setIsCommunicationPaused(true);
-            setResetTrigger(true)
-            return prev;
-          }
-          return prev + 1;
-        })
-      }
-    }, 24)
-    return () => clearInterval(communicationPercentId.current)
-  }, [isCommunicationPaused])
-
-
-  // teamwork
-  useEffect(() => {
-    teamworkPercentId.current = setInterval(() => {
-      if (!isTeamworkPaused) {
-        setTeamworkPercent(prev => {
-          if (prev === 56) {
-            setIsTeamworkPaused(true);
-            setResetTrigger(true); 
-            return prev;
-          }
-          return prev + 1
-        })
-      }
-    }, 24)
-    return () => clearInterval(teamworkPercentId.current)
-  }, [isTeamworkPaused])
-
-
-  // adaptability
-  useEffect(() => {
-    adaptabilityPercentId.current = setInterval(() => {
-      if (!isAdaptabilityPaused) {
-        setAdaptabilityPercent(prev => {
-          if (prev === 45) {
-            setIsAdaptabilityPaused(true); // Pause the count
-            setResetTrigger(true);
-            return prev;
-          }
-          return prev + 1
-        })
-      }
-    }, 24)
-    return () => clearInterval(adaptabilityPercentId.current)
-  }, [isAdaptabilityPaused])
-
-
-  // // problem solving
-  useEffect(() => {
-    problemSolvingPercentId.current = setInterval(() => {
-      if (!isProblemSolvingPaused) {
-        setproblemSolvingPercent(prev => {
-          if (prev === 60) {
-            setProblemSolvingPaused(true);
-            setResetTrigger(true);
-            return prev;
-          }
-          return prev + 1
-        })
-      }
-    }, 24)
-    return () => clearInterval(problemSolvingPercentId.current)
-  }, [isProblemSolvingPaused])
-
-
-  // html
-  useEffect(() => {
-    htmlPercentId.current = setInterval(() => {
-      if (!isHtmlPaused) {
-        setHtmlPercent(prev => {
-          if (prev === 64) {
-            setIsHtmlPaused(true);
-            setResetTrigger(true);
-            return prev;
-          }
-          return prev + 1
-        })
-      }
-    }, 24)
-    return () => clearInterval(htmlPercentId.current)
-  }, [isHtmlPaused])
-  
-  
-  // css
-  useEffect(() => {
-    cssPercentId.current = setInterval(() => {
-      if (!isCssPaused) {
-        setCssPercent(prev => {
-          if (prev === 78) {
-            setIsCssPaused(true);
-            setResetTrigger(true);
-            return prev;
-          }
-          return prev + 1
-        })
-      }
-    }, 24)
-    return () => clearInterval(cssPercentId.current)
-  }, [isCssPaused])
-  
-
-  // js
-  useEffect(() => {
-    jsPercentId.current = setInterval(() => {
-      if (!isJsPaused) {
-        setJsPercent(prev => {
-          if (prev === 50) {
-            setIsJsPaused(true);
-            setResetTrigger(true);
-            return prev;
-          }
-          return prev + 1
-        })
-      }
-    }, 24)
-    return () => clearInterval(jsPercentId.current)
-  }, [isJsPaused])
-
-
-  // php
-  useEffect(() => {
-    phpPercentId.current = setInterval(() => {
-      if (!isPhpPaused) {
-        setPhpPercent(prev => {
-          if (prev === 35) {
-            setIsPhpPaused(true);
-            setResetTrigger(true);
-            return prev;
-          }
-          return prev + 1
-        })
-      }
-    }, 24)
-    return () => clearInterval(phpPercentId.current)
-  }, [isPhpPaused])
-
   return (
     <section>
-      <div className='flex flex-col place-items-center gap-16 lg:flex-row lg:items-stretch'>
-
-
-        <div className='flex-1 flex flex-col shadow-inner rounded-xl w-full md:w-1/2 h-full place-self-center p-12 lg:py-12 '>
-          <div className='max-w-xs mx-auto '>
-            <h2 className='subheading font-b text-saddleBrown text-center pb-8'>
-              Professional Skills
-            </h2>
-
-            <ul className='text-ashGray text-center flex flex-wrap max-w-[290px]  mx-auto gap-y-4'>
-              <li className='organisation flex flex-col items-center justify-center gap-1 px-2 flex-1'>
-                <div className='progress-circle mb-1'>
-                  <div className="outer">
-                    <div className="inner">
-                      <div className="text-ashGray" ref={communicationPercentId}>{communicationPercent}%</div>
-                    </div>
-                  </div>
-                  
-                  <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="160px" height="160px">
-                    <defs>
-                      <linearGradient id="GradientColor">
-                          <stop offset="0%" stopColor="#e91e63" />
-                          <stop offset="100%" stopColor="#673ab7" />
-                      </linearGradient>
-                    </defs>
-                    <circle cx="80" cy="80" r="45" strokeLinecap="butt" />
-                  </svg>
-
-                </div>
-                <p>Organisation</p>
-              </li>
-              <li className='teamwork flex flex-col items-center justify-center gap-1  px-2 flex-1'>
-                <div className='progress-circle mb-1'>
-                  <div className="outer">
-                    <div className="inner">
-                      <div className="text-ashGray" ref={teamworkPercentId}>{teamworkPercent}%</div>
-                    </div>
-                  </div>
-
-                  <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="160px" height="160px">
-                    <defs>
-                      <linearGradient id="GradientColor">
-                          <stop offset="0%" stopColor="#e91e63" />
-                          <stop offset="100%" stopColor="#673ab7" />
-                      </linearGradient>
-                    </defs>
-                    <circle cx="80" cy="80" r="45" strokeLinecap="butt" />
-                  </svg>
-
-                </div>
-                <p>Teamwork</p>
-              </li>
-              <li className='adaptability flex flex-col items-center justify-center gap-1 px-2 flex-1'>
-                <div className='progress-circle mb-1'>
-                  <div className="outer">
-                    <div className="inner">
-                      <div className="text-ashGray" ref={adaptabilityPercentId}>{adaptabilityPercent}%</div>
-
-                    </div>
-                  </div>
-
-                  <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="160px" height="160px">
-                    <defs>
-                      <linearGradient id="GradientColor">
-                          <stop offset="0%" stopColor="#e91e63" />
-                          <stop offset="100%" stopColor="#673ab7" />
-                      </linearGradient>
-                    </defs>
-                    <circle cx="80" cy="80" r="45" strokeLinecap="butt" />
-                  </svg>
-
-                </div>
-                <p>Adaptability</p>
-              </li>
-              <li className='research-skills flex flex-col items-center justify-center gap-1 px-2 flex-1'>
-                <div className='progress-circle mb-1'>
-                  <div className="outer">
-                    <div className="inner">
-                    <div className="text-ashGray" ref={problemSolvingPercentId}>{problemSolvingPercent}%</div>
-
-                    </div>
-                  </div>
-
-                  <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="160px" height="160px">
-                    <defs>
-                      <linearGradient id="GradientColor">
-                          <stop offset="0%" stopColor="#e91e63" />
-                          <stop offset="100%" stopColor="#673ab7" />
-                      </linearGradient>
-                    </defs>
-                    <circle cx="80" cy="80" r="45" strokeLinecap="butt" />
-                  </svg>
-                </div>
-                <p className="whitespace-nowrap">Research-skills</p>
-              </li>
-            </ul>
-          </div>
-
+      <div className="flex flex-col gap-8 items-center md:flex-row md:gap-16">
+        {/* Icons Section */}
+        <div className="flex-1 grid grid-cols-[minmax(136px,_auto)] md:grid-cols-[minmax(136px,_auto)_minmax(136px,_auto)] lg:grid-cols-[minmax(136px,_auto)_minmax(136px,_auto)_minmax(136px,_auto)] gap-2">
+          {technicalSkills.map((skill, index) => (
+            <motion.div
+              key={index}
+              className="flex flex-col items-center py-5 w-full rounded-lg bg-nightSky shadow-outer transition-shadow duration-300"
+              whileHover={{ 
+                scale: 1.1, 
+                zIndex: 20
+              }}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+            >
+              <div className="text-5xl text-saddleBrown mb-4">
+                {skill.icon}
+              </div>
+              <p className="text-lg font-medium text-frostWhite">{skill.name}</p>
+            </motion.div>
+          ))}
         </div>
 
-
-
-        <div className='flex-1 shadow-inner rounded-xl w-full md:w-1/2 h-full place-self-center p-12 lg:py-12'>
-          <div className=' max-w-xs mx-auto'>
-            <h2 className='subheading font-b text-saddleBrown text-center pb-8'>
-              Technical Skills
+        {/* Text Section */}
+        <div className="flex-1 flex flex-col justify-center text-center md:text-left lg:flex-none lg:w-1/2">
+          <div>
+            <h2 className="subheading font-bold text-saddleBrown mb-4">
+              My Skill Set
             </h2>
-
-              <div className='ts-inner-wrapper text-ashGray flex flex-col gap-6'>
-                <div className='relative'>
-                  <p>Hmtl</p>
-                  <div className='progress-bar shadow-inner mt-4 p-0.312'>
-                    <div></div>
-                  </div>
-                  <p className='absolute right-0 top-0 text-ashGray' ref={htmlPercentId}>{htmlPercent}%</p>
-                </div>
-                <div className='relative'>
-                  <p>Css</p>
-                  <div className='progress-bar shadow-inner mt-4 p-0.312'>
-                    <div></div>
-                  </div>
-                  <p className='absolute right-0 top-0 text-ashGray' ref={cssPercentId}>{cssPercent}%</p>
-                </div>
-                <div className='relative'>
-                  <p>JavaScript</p>
-                  <div className='progress-bar shadow-inner mt-4 p-0.312'>
-                    <div></div>
-                  </div>
-                  <p className='absolute right-0 top-0 text-ashGray' ref={jsPercentId}>{jsPercent}%</p>
-                </div>
-                <div className='relative'>
-                  <p>Php</p>
-                  <div className='progress-bar shadow-inner mt-4 p-0.312'>
-                    <div></div>
-                  </div>
-                  <p className='absolute right-0 top-0 text-ashGray' ref={phpPercentId}>{phpPercent}%</p>
-                </div>
-            </div>
+            <p className="text-ashGray">
+              I specialize in both front-end and back-end technologies to create user-friendly and efficient web applications
+            </p>
           </div>
         </div>
-
-
       </div>
     </section>
   );

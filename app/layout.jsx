@@ -10,9 +10,6 @@ import MessageBanner from './components/MessageBanner'
 
 const inter = Inter({ subsets: ['latin'] })
 
-// components
-import Sidebar from './components/Sidebar'
-
 // metadata
 export const metadata = {
   title: 'My Portfolio',
@@ -23,14 +20,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-          <div className="flex flex-col">
-            <Sidebar />
-            <div>
-              <MessageProvider>
-                <MessageBanner />
-                {children}
-              </MessageProvider>
-            </div>
+          <div>
+            <MessageProvider>
+              <MessageBanner />
+              {children}
+            </MessageProvider>
           </div>
       </body>
     </html>

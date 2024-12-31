@@ -2,13 +2,12 @@
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import Image from 'next/image';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { FaUserCircle } from "react-icons/fa";
 
 // custom hooks
 import { useUpdateTable } from '@/app/hooks/useUpdateTable';
 import { useMessage } from '@/app/hooks/useMessage';
-import { useFetchProfile } from '../hooks/useFetchProfile';
 
 
 
@@ -16,7 +15,6 @@ const AvatarUploader = ({ user, title, text, isFirstUpload, displayTitle, btnCol
     // custom hooks
     const { updateTable } = useUpdateTable()
     const { changeMessage } = useMessage()
-    const { profile, fetchProfile } = useFetchProfile()
 
     const [selectedFile, setSelectedFile] = useState(null)
     const [imgSrc, setImgSrc] = useState('')
@@ -26,13 +24,7 @@ const AvatarUploader = ({ user, title, text, isFirstUpload, displayTitle, btnCol
     const supabase = createClientComponentClient()
 
     
-    // we dont need to handle retrun value from fetchProfile here for user feedback because we are fetching profile in background just to check the last_avatar_update_at property to implement a cool off period for image uploads 
-    useEffect(() => {
-        if (user) {
-            fetchProfile(user)
-        }
-    }, [user])
-
+ 
 
 
     /* This function is triggered when a user changes a file or cancels a file. If a file is selected, the FileReader object reads the file as a data URL. The FileReader API is used to asynchronously read the contents of files stored on the user's computer. The readAsDataURL method of FileReader reads the content of the file and converts it into a base64-encoded string, called a data URL. A data URL is a string that represents the file's data and includes a media type prefix. The FileReader's onload event is triggered once the file is read, and the result (data URL) is stored in imgSrc. This data URL can be used to display the image directly in the browser */
@@ -84,22 +76,35 @@ const AvatarUploader = ({ user, title, text, isFirstUpload, displayTitle, btnCol
             }
 
             // check to see when a user last updated their avatar and deny them if its within a week
-            if (profile) {
-                const lastUploadTime = profile.last_avatar_update_at ? new Date(profile.last_avatar_update_at).getTime() : 0;
-                const currentTime = Date.now();
-                const oneWeekInMilliseconds = 7 * 24 * 60 * 60 * 1000; // 7 day limit
-        
-                // check if the cooling-off period has passed
-                if (currentTime - lastUploadTime < oneWeekInMilliseconds) {
-                    
-                    if (formRef.current) {
-                        setImgSrc('')
-                        setSelectedFile('')
-                        formRef.current.reset()
-                    }
-                    throw new Error("You have reached the upload limit for this week. Thank you for your patience!");
-                }
+            const { data, error: profileError } = await supabase
+            .from('profiles')
+            .select()
+            .eq('id', user.id)
+            .single();
+
+            if (profileError) {
+              console.log(profileError)
             }
+
+
+            const lastUploadTime = data.last_avatar_update_at ? new Date(data.last_avatar_update_at).getTime() : 0;
+            const currentTime = Date.now();
+            const oneWeekInMilliseconds = 7 * 24 * 60 * 60 * 1000; // 7 day limit
+    
+            // check if the cooling-off period has passed
+            if (currentTime - lastUploadTime < oneWeekInMilliseconds) {
+                const timeLeft = oneWeekInMilliseconds - (currentTime - lastUploadTime);
+                const daysLeft = Math.floor(timeLeft / (24 * 60 * 60 * 1000));
+                const hoursLeft = Math.floor((timeLeft % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+                
+                if (formRef.current) {
+                    setImgSrc('')
+                    setSelectedFile('')
+                    formRef.current.reset()
+                }
+                throw new Error(`You can update your avatar again in ${daysLeft} days and ${hoursLeft} hours`);
+            }
+            
 
             const fileExt = selectedFile.name.split('.').pop()
             const filePath = `${user.id}-${Math.random()}.${fileExt}`;
@@ -112,7 +117,6 @@ const AvatarUploader = ({ user, title, text, isFirstUpload, displayTitle, btnCol
                 
                 // update profiles avatar
                 const avatarUpdateProfilesResult = await updateProfile({ avatar_url: filePath })
-                await fetchProfile(user) // call fetchProfile immediately after to fetch latest profile data
 
                 if (!avatarUpdateProfilesResult.success) {
                     throw new Error("An unexpected error occurred and we couldn't upload your avatar. Please try again later. If the issue persists, contact support.")

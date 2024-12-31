@@ -18,7 +18,7 @@ import Modal from './Modal'
 const schema = yup.object({
     draftPhone: yup
     .string()
-    .required('Please enter your new phone number.')
+    .required('Phone is required')
     .test('has-valid-prefix', "Please enter a valid mobile number starting with 0 or an international code (e.g., +44, +1).", value => {
         return value ? value.startsWith('0') || value.startsWith('+') : false;
     })
@@ -252,8 +252,8 @@ const PhoneForm = ({ user, profile }) => {
             {showForm && (
                 <Modal>
                     <form noValidate>
-                        <label className='block mb-2 text-xl' htmlFor='draftPhone'>Edit Phone Number</label>
-                            <p className='mb-3'>Please enter your new phone number. Ensure it's a valid 11-digit mobile number starting with 0 for local, or include the international code (e.g., +44 for UK, +1 for US). This number will be used for account verification purposes.</p>
+                        <label className='block mb-4 text-xl' htmlFor='draftPhone'>Phone Number</label>
+                            <p className='mb-3'>Please enter your new phone number. This number will be used for account verification purposes</p>
                             <input
                                 className='w-full p-2.5 rounded-md border-2'
                                 id='draftPhone'

@@ -10,7 +10,7 @@ import Loading from "../components/Loading"
 
 const Home = ()=> {
   return (
-    <div className="flex flex-col gap-y-6.25 md:gap-y-10.25">
+    <div className="flex flex-col gap-y-56 md:gap-y-52">
       <Hero />
       <Services />
       <Skills />

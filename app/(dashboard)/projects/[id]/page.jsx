@@ -120,7 +120,7 @@ const Project = async ({ params }) => {
           <div>
             <div className='text-ashGray text-base leading-7'>
               Project Url:{' '}
-              <a href={project.url} target='_blank'>
+              <a href={project.url} target='_blank' rel="noopener noreferrer">
                 <span className='text-saddleBrown text-base'>
                   {project.url}
                 </span>

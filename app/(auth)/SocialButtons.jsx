@@ -64,7 +64,7 @@ const SocialButtons = ({ text }) => {
 
   return (
     <>
-      <button className='h-[50px] max-h-[50px] rounded-lg font-medium text-ashGray bg-softCharcoal mb-3 border-[1px] border-ashGray w-64 flex items-center justify-center hover:text-frostWhite hover:bg-nightSky duration-300 relative' onClick={handleGoogleClick}>
+      <button className='h-[50px] max-h-[50px] rounded-lg font-medium text-ashGray bg-nightSky mb-3 shadow-outer border-ashGray w-64 flex items-center justify-center hover:text-frostWhite hover:bg-softCharcoal duration-300 relative' onClick={handleGoogleClick}>
         <Image 
           src={"../images/auth/google.svg"} 
           className='mr-3' 
@@ -77,7 +77,7 @@ const SocialButtons = ({ text }) => {
         {text} with Google
       </button>
 
-      <button className='h-[50px] max-h-[50px] rounded-lg font-medium text-ashGray bg-softCharcoal mb-3 border-[1px] border-ashGray w-64 flex items-center justify-center hover:text-frostWhite hover:bg-nightSky duration-300 relative' onClick={handleGithubClick}>        
+      <button className='h-[50px] max-h-[50px] rounded-lg font-medium text-ashGray bg-nightSky mb-3 shadow-outer border-ashGray w-64 flex items-center justify-center hover:text-frostWhite hover:bg-softCharcoal duration-300 relative' onClick={handleGithubClick}>        
         <Image 
           src={"../images/auth/github.svg"} 
           className='mr-3' 
@@ -90,7 +90,7 @@ const SocialButtons = ({ text }) => {
         {text} with GitHub
       </button>
       
-      <button className='h-[50px] max-h-[50px] rounded-lg font-medium text-ashGray bg-softCharcoal border-[1px] border-ashGray w-64 flex items-center justify-center hover:text-frostWhite hover:bg-nightSky duration-500' onClick={handleDiscordClick}>
+      <button className='h-[50px] max-h-[50px] rounded-lg font-medium text-ashGray bg-nightSky shadow-outer border-ashGray w-64 flex items-center justify-center hover:text-frostWhite hover:bg-softCharcoal duration-500' onClick={handleDiscordClick}>
         <Image 
           src="../images/auth/discord.svg" 
           className='mr-3' 

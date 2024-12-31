@@ -42,7 +42,7 @@ const schema = yup.object({
         }
         return value; // Return the value if empty
       })
-      .matches(/^[A-Z][a-z]*$/, "Firstname must start with an uppercase letter, with no digits or spaces")
+      .matches(/^[A-Z][a-z]*$/, "Firstname should not contain any digits or spaces")
       .min(3, 'Firstname must be at least 3 characters long'),
 
     lastname: yup
@@ -54,7 +54,7 @@ const schema = yup.object({
         }
         return value;
       })
-      .matches(/^[A-Z][a-z]*$/, "Lastname must start with an uppercase letter, with no digits or spaces")
+      .matches(/^[A-Z][a-z]*$/, "Lastname should not contain any digits or spaces")
       .min(3, 'Lastname must be at least 3 characters long'),
 
     dob: yup
@@ -94,8 +94,6 @@ const CompleteRegistration = () => {
     const [phoneExists, setPhoneExists] = useState(null);
     const [redirect, setRedirect] = useState(false);
     const router = useRouter();
-    const pathname = usePathname();
-
     const isSubmittingRef = useRef(false);
 
 
@@ -151,24 +149,40 @@ const CompleteRegistration = () => {
 
 
 
-      
 
 
 
-
-
-    // triggers a confirmation dialog when the user tries to leave the page 
+    // log users out on page reload
     useEffect(() => {
-        const beforeUnloadListener = (event) => {
-
-            event.preventDefault();
-            return (event.returnValue = "");
+        const beforeUnloadListener = () => {
+            localStorage.setItem("forceLogout", "true");
         };
-    
+
         window.addEventListener("beforeunload", beforeUnloadListener);
-    
-        return () => window.removeEventListener("beforeunload", beforeUnloadListener);
+
+        return () => {
+            window.removeEventListener("beforeunload", beforeUnloadListener);
+        };
     }, []);
+
+    useEffect(() => {
+        const handleLogoutOnLoad = async () => {
+            if (localStorage.getItem("forceLogout") === "true") {
+                const supabase = createClientComponentClient();
+
+                try {
+                    await supabase.auth.signOut();
+                    localStorage.removeItem("hasVisitedRegPage");
+                    localStorage.removeItem("forceLogout");
+                    router.push("/login");
+                } catch (error) {
+                    console.error("Logout failed:", error);
+                }
+            }
+        };
+        handleLogoutOnLoad();
+    }, [router]);
+
     
 
 
@@ -447,13 +461,10 @@ const CompleteRegistration = () => {
 
 
 
-    
-
 
 
 
     return (
-        <div>
             <div className='flex flex-col items-center justify-center w-full'>
 
                 <div className='max-w-sm md:max-w-none'>
@@ -473,11 +484,11 @@ const CompleteRegistration = () => {
                                             placeholder='eg., John'
                                             minLength='3'
                                             {...register('firstname')}
-                                            className='w-full max-w-sm p-2.5 rounded-md text-black'
+                                            className='w-full max-w-sm py-3 px-4 text-ashGray  rounded-md bg-softCharcoal border-[1px] border-ashGray'
 
                                         />
 
-                                    {errors?.firstname ? <FaExclamationCircle className={'absolute bottom-3 right-3 text-red-600'} size={21} /> : (!errors?.firstname && firstnameStatus === 'success' ? <FaCheckCircle className={'absolute bottom-3 right-3 text-green-600'} size={21} /> : (firstnameStatus === 'error' ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : ''))}
+                                    {errors?.firstname ? <FaExclamationCircle className={'absolute bottom-3.5 right-3 text-red-600'} size={21} /> : (!errors?.firstname && firstnameStatus === 'success' ? <FaCheckCircle className={'absolute bottom-3.5 right-3 text-green-600'} size={21} /> : (firstnameStatus === 'error' ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : ''))}
 
                                 </div>
                                 {errors?.firstname && <p className='text-sm text-red-600 mt-1'>{errors.firstname.message}</p>}
@@ -494,10 +505,10 @@ const CompleteRegistration = () => {
                                             placeholder='eg., Smith'
                                             minLength='2'
                                             {...register('lastname')}
-                                            className='w-full max-w-sm p-2.5 rounded-md text-black'
+                                            className='w-full max-w-sm py-3 px-4 text-ashGray rounded-md bg-softCharcoal border-[1px] border-ashGray'
                                         />
                                      
-                                    {errors?.lastname ? <FaExclamationCircle className={'absolute bottom-3 right-3 text-red-600'} size={21} /> : (!errors?.lastname && lastnameStatus === 'success' ? <FaCheckCircle className={'absolute bottom-3 right-3 text-green-600'} size={21} /> : (lastnameStatus === 'error' ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : ''))}
+                                    {errors?.lastname ? <FaExclamationCircle className={'absolute bottom-3.5 right-3 text-red-600'} size={21} /> : (!errors?.lastname && lastnameStatus === 'success' ? <FaCheckCircle className={'absolute bottom-3.5 right-3 text-green-600'} size={21} /> : (lastnameStatus === 'error' ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : ''))}
                                 </div>
                                 {errors?.lastname && <p className='text-sm text-red-600 mt-1'>{errors.lastname.message}</p>}
                             </div>
@@ -511,10 +522,10 @@ const CompleteRegistration = () => {
                                         id='dob'
                                         type='date'
                                         {...register('dob')}
-                                        className='w-full max-w-sm p-2.5 rounded-md text-black'
+                                        className={`w-full max-w-sm py-3 px-4 text-ashGray ${!dob ? 'text-opacity-50' : 'text-opacity-100'}  rounded-md bg-softCharcoal border-[1px] border-ashGray`}
                                     />
 
-                                    {errors?.dob ? <FaExclamationCircle className={'absolute bottom-3 right-3 text-red-600'} size={21} /> : (!errors?.dob && dobStatus === 'success' ? <FaCheckCircle className={'absolute bottom-3 right-3 text-green-600'} size={21} /> : (dobStatus === 'error' ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : ''))}
+                                    {errors?.dob ? <FaExclamationCircle className={'absolute bottom-3.5 right-3.5 text-red-600'} size={21} /> : (!errors?.dob && dobStatus === 'success' ? <FaCheckCircle className={'absolute bottom-3.5 right-3 text-green-600'} size={21} /> : (dobStatus === 'error' ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : ''))}
                                 </div>
                                 {errors?.dob && <p className='text-sm text-red-600 pt-1'>{errors.dob.message}</p>}
                             </div>
@@ -530,10 +541,10 @@ const CompleteRegistration = () => {
                                             maxLength={15}
                                             placeholder="e.g., 01234 or +44 1234"
                                             {...register('phone')}
-                                            className='w-full max-w-sm p-2.5 rounded-md text-black'
+                                            className='w-full max-w-sm py-3 px-4 text-ashGray rounded-md bg-softCharcoal border-[1px] border-ashGray'
                                         />
                                     
-                                    {(errors?.phone || phoneExists) ? <FaExclamationCircle className={'absolute bottom-3 right-3 text-red-600'} size={21} /> : (!errors?.phone && phoneStatus === 'success' ? (<FaCheckCircle className={'absolute bottom-3 right-3 text-green-600'} size={21} />) : (phoneStatus === 'error' ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : ''))}
+                                    {(errors?.phone || phoneExists) ? <FaExclamationCircle className={'absolute bottom-3.5 right-3 text-red-600'} size={21} /> : (!errors?.phone && phoneStatus === 'success' ? (<FaCheckCircle className={'absolute bottom-3.5 right-3 text-green-600'} size={21} />) : (phoneStatus === 'error' ? <FaExclamationCircle className={'absolute bottom-3 right-4 text-red-600'} size={21} /> : ''))}
                                 </div>
                                 {errors?.phone && <p className='text-sm text-red-600 mt-1'>{errors.phone.message}</p>}
                                 {phoneExists && <p className='text-sm text-red-600 mt-1'>Phone already exists</p>}
@@ -570,7 +581,6 @@ const CompleteRegistration = () => {
                 </div>
 
             </div>
-        </div>
     );
 };
 

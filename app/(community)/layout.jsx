@@ -3,6 +3,7 @@ import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 
 import Link from "next/link"
+import Sidebar from "../components/Sidebar"
 
 export default async function CommunityLayout ({ children }) {
   const supabase = createServerComponentClient({ cookies })
@@ -13,17 +14,17 @@ export default async function CommunityLayout ({ children }) {
   }
 
   return (
-    <div className='min-h-screen'>
+    <div className='flex flex-col'>
+      <Sidebar />
+      <div className='min-h-screen'>
         <div className="flex">
 
           <div className='bg-midnightSlate w-[236px]'>
-            <div className='pl-[60px] pt-[45px] flex justify-center h-full'>
+            <div className='pl-[60px] pt-[45px] flex justify-center h-full bg-blue-900'>
               <nav>
                 <ul>
                   <li>
-                    <Link href={'/'}>
-                      <span className="text-base font-medium text-stoneGray hover:text-cloudGray transition-text duration-300">Home</span>
-                    </Link> 
+
                   </li>
                 </ul>
               </nav>
@@ -35,6 +36,8 @@ export default async function CommunityLayout ({ children }) {
           </div>
 
         </div>
+      </div>
     </div>
+
   )
 }

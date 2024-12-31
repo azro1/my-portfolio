@@ -20,6 +20,8 @@ const useFetchUser = (bool) => {
                 }
                 if (user) {
                     setUser(user);
+                } else {
+                    setUser(null)
                 }
             } catch (error) {
                 setIsLoading(false)

@@ -102,9 +102,9 @@ const Sidebar = () => {
   }
   
   return (
-    <div className='hidden xl:inline-block min-w-[60px] h-full items-center z-50'>
+    <div className='hidden xl:inline-block min-w-[60px] h-full items-center z-40'>
 
-        <div className="h-full top-0 fixed z-50 cursor-pointer bg-softCharcoal border-r-[1px] border-midnightSlate sidebar">
+        <div className="h-full top-0 fixed cursor-pointer bg-softCharcoal border-r-[1px] border-midnightSlate sidebar">
             <div className="h-full flex flex-col ">
 
 

@@ -26,10 +26,17 @@ import { useMessage } from '@/app/hooks/useMessage';
 // yup validation schema
 const schema = yup.object({
     firstname: yup
-    .string()
-    .required('Firstname is required')
-    .transform(value => value.trim())
-    .matches(/^[A-Z][a-z]*$/, "Your first name must start with an uppercase letter, with no digits or spaces."),
+      .string()
+      .required('Firstname is required')
+      .transform(value => {
+        if (value) {
+          // Transform to lowercase but keep the first letter uppercase
+          return value.trim().charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+        }
+        return value; // Return the value if empty
+      })
+      .matches(/^[A-Z][a-z]*$/, "Firstname should not contain any digits or spaces")
+      .min(3, 'Firstname must be at least 3 characters long'),
 
     email: yup
       .string()
@@ -123,8 +130,6 @@ const EnquiriesForm = ({ user }) => {
 
     const onSubmit = async (data) => {
             if (user) {
-                console.log('Submitted!')
-
 
                 const sanitizeInput = (input) => {
                     return input.replace(/[&<>]/g, (char) => {

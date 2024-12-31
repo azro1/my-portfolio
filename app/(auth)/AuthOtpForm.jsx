@@ -90,7 +90,7 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
                 await supabase.auth.signOut();
                 router.push('/login');
                 localStorage.removeItem("hasVisitedRegPage")
-                changeMessage('error', "You're account was created but you have been logged out because your registration was aborted. Please log back in to finish setting up your account")
+                changeMessage('error', "You have been logged out. Please log back in to finish setting up your account")
             };
 
             handleLogout();
@@ -253,18 +253,38 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
                // after otp verification is successful it's at this point we have access to user object
                 setIsLoading(false);
 
-                // update is_verified column in profiles table
-                const is_verifiedResult = await updateTable(session.user, 'profiles', { is_verified: true }, 'id');
-                if (!is_verifiedResult.success) {
-                    console.log('auth otp page: could not update otp verification status')
+
+
+                // check if they are verified but have not completed registration before allowing them to go any further
+                const { data, error } = await supabase
+                .from('profiles')
+                .select('is_verified, is_reg_complete')
+                .eq('id', session.user.id)
+                .limit(1)
+                .single()
+                    
+                if (error) {
+                    console.log(error)
                 }
 
-                // clear cookie from server after successful verification
-                document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-                setIsVerified(true)
-                reset({ codes: fields.map(() => ({ code: '' })) });
-                changeMessage('success', successMessage);
-                setRedirect(true);
+                if (data?.is_verified && !data?.is_reg_complete) {
+                    router.push('/complete-registration')
+                    changeMessage('success', `Welcome back, please finish creating your profile`)
+                    return;
+                } else {
+                    // update is_verified column in profiles table
+                    const is_verifiedResult = await updateTable(session.user, 'profiles', { is_verified: true }, 'id');
+                    if (!is_verifiedResult.success) {
+                        console.log('auth otp page: could not update otp verification status')
+                    }
+
+                    // clear cookie from server after successful verification
+                    document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+                    setIsVerified(true)
+                    reset({ codes: fields.map(() => ({ code: '' })) });
+                    changeMessage('success', successMessage);
+                    setRedirect(true);
+                }
             }
 
         } catch (error) {

@@ -20,7 +20,7 @@ const OtpForm = ({ containerStyles, handleSubmit, onSubmit, title, subHeading, f
                             id={`codes[${index}].code`}
                             type='text'
                             maxLength={1}
-                            className={`text-center w-[50px] h-[50px] rounded-md bg-softCharcoal border-[1px] text-lg text-stoneGray ${(formState.isSubmitted && typeof errors.codes === 'object' && !Array.isArray(errors.codes)) || (formState.isSubmitted && Array.isArray(errors.codes) && errors.codes.find((error) => error?.code?.message)) ? 'border-red-700' : 'border-ashGray'}`}
+                            className={`text-center w-[50px] h-[50px] rounded-md bg-softCharcoal border-[1px] text-lg text-ashGray ${(formState.isSubmitted && typeof errors.codes === 'object' && !Array.isArray(errors.codes)) || (formState.isSubmitted && Array.isArray(errors.codes) && errors.codes.find((error) => error?.code?.message)) ? 'border-red-700' : 'border-ashGray'}`}
                             onChange={(e) => {
                                 handleInputChange(e, index)
                                 handleKeyDown(e, index)

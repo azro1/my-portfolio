@@ -22,7 +22,7 @@ import Modal from './Modal'
 const schema = yup.object({
     draftEmail: yup
       .string()
-      .required('Please enter your new email address.')
+      .required('Email is required')
       .transform(value => value.trim().toLowerCase())
       .test('has-at-symbol', "Please include an '@' symbol.", value => {
         return value ? value.includes('@') : true;
@@ -216,8 +216,8 @@ const EmailForm = ({ user, profile }) => {
             {showForm && (
                 <Modal>
                     <form noValidate>
-                        <label className='block mb-3 text-xl' htmlFor='draftEmail'>Edit Email Address</label>
-                        <p className='mb-3'>Please provide your new email address, ensuring it follows a valid format (e.g., example@domain.com). This email will be used for account verification and notifications.</p>
+                        <label className='block mb-3 text-xl' htmlFor='draftEmail'>Email Address</label>
+                        <p className='mb-3'>Please enter your new email address. This email will be used for account verification and notifications</p>
                         <input
                             className='w-full p-2.5 rounded-md border-2'
                             id='draftEmail'
