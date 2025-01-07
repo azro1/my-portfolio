@@ -5,9 +5,9 @@ const OtpForm = ({ containerStyles, handleSubmit, onSubmit, title, subHeading, f
 
   return (
     <div className={containerStyles}> 
-        <form className="max-w-[340px]" onSubmit={handleSubmit(onSubmit)} noValidate>
-            <h2 className='text-3xl leading-tight mb-4 font-eb text-saddleBrown'>{title}</h2>
-            <p className='mb-4'>{subHeading}</p>
+        <form onSubmit={handleSubmit(onSubmit)} noValidate>
+            <h2 className='text-3xl leading-tight mb-4 font-b text-nightSky'>{title}</h2>
+            <p className='max-w-xs mb-4'>{subHeading}</p>
 
 
             <div className='flex flex-wrap gap-2'>
@@ -20,7 +20,7 @@ const OtpForm = ({ containerStyles, handleSubmit, onSubmit, title, subHeading, f
                             id={`codes[${index}].code`}
                             type='text'
                             maxLength={1}
-                            className={`text-center w-[50px] h-[50px] rounded-md bg-softCharcoal border-[1px] text-lg text-ashGray ${(formState.isSubmitted && typeof errors.codes === 'object' && !Array.isArray(errors.codes)) || (formState.isSubmitted && Array.isArray(errors.codes) && errors.codes.find((error) => error?.code?.message)) ? 'border-red-700' : 'border-ashGray'}`}
+                            className={`text-center w-[48px] h-[48px] rounded-md border-[1px] border-gray-300 text-lg text-nightSky ${(formState.isSubmitted && typeof errors.codes === 'object' && !Array.isArray(errors.codes)) || (formState.isSubmitted && Array.isArray(errors.codes) && errors.codes.find((error) => error?.code?.message)) ? 'border-red-600' : 'border-gray-300'}`}
                             onChange={(e) => {
                                 handleInputChange(e, index)
                                 handleKeyDown(e, index)
@@ -31,8 +31,6 @@ const OtpForm = ({ containerStyles, handleSubmit, onSubmit, title, subHeading, f
                     </div>
                 ))}
             </div>
-
-
             
             {(formState.isSubmitted && typeof errors.codes === 'object' && !Array.isArray(errors.codes)) && (
                 <p className="text-red-600 mt-2 text-sm">
@@ -48,17 +46,17 @@ const OtpForm = ({ containerStyles, handleSubmit, onSubmit, title, subHeading, f
 
 
 
-            <button className='btn block mt-5 bg-saddleBrown' disabled={isLoading}>
+            <button className={`btn block mt-5 w-full mb-3 ${isLoading ? 'opacity-65' : 'opacity-100'}`} disabled={isLoading}>
                 {isLoading ? (
-                    <div className='flex items-center gap-2'>
-                        <img className="w-5 h-5 opacity-50" src="../images/loading/spinner.svg" alt="Loading indicator" />
-                        <span>Verify</span>
+                    <div className='flex items-center justify-center gap-2'>
+                        <img className="w-6 h-6 opacity-65" src="../images/loading/spinner.svg" alt="Loading indicator" />
                     </div>
                 ) : (
                     'Verify'
                 )}
             </button>
         </form>
+
         <Timer 
             authGroupEmailRef={authGroupEmailRef}
             profileEmailRef={profileEmailRef}

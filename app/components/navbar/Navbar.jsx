@@ -3,7 +3,6 @@ import NavbarAvatar from "./NavbarAvatar";
 
 // components
 import Chevron from "../Chevron";
-import Card from "../Card";
 
 const Navbar = ({ user }) => {
 

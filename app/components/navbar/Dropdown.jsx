@@ -16,6 +16,7 @@ const Dropdown = ({ user, handleCloseMenu }) => {
     const {error} = await supabase.auth.signOut()
 
     if (!error) {
+      document.cookie = "isRegComplete=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
       router.push('/login')
       router.refresh()
     }

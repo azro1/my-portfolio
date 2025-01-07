@@ -14,7 +14,7 @@ export default async function CommunityLayout ({ children }) {
   }
 
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col bg-nightSky'>
       <Sidebar />
       <div className='min-h-screen'>
         <div className="flex">

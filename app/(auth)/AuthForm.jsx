@@ -5,66 +5,64 @@ import SocialButtons from "./SocialButtons";
 
 const AuthForm = ({ handleSubmit, onSubmit, title, subHeading, register, errors, isChecked, handleCheckbox, isSignup, isLoading }) => {
   return (
-    <div>
-      <div className='flex flex-col items-stretch justify-center gap-12 md:flex-row md:w-full'>
-        <div className='sm:shadow-outer sm:p-10 sm:rounded-xl'>
-          <form className="max-w-xs min-w-xs" onSubmit={handleSubmit(onSubmit)} noValidate
-          >
-            <h2 className='text-3xl mb-6 font-eb text-saddleBrown'>{title}</h2>
-            <p className='mb-4'>{subHeading}</p>
+    <div className='w-full flex flex-col items-center justify-center gap-12 md:flex-row sm:w-max'>
+      <div className='w-full sm:bg-white sm:shadow-outer sm:p-12 sm:pt-10 sm:rounded-xl'>
+        <form className="sm:max-w-xs sm:min-w-xs" onSubmit={handleSubmit(onSubmit)} noValidate
+        >
+          <h2 className='text-3xl mb-5 font-b text-nightSky'>{title}</h2>
+          <p className='mb-4'>{subHeading}</p>
 
-            <label className='max-w-min mb-2 text-base text-ashGray block' htmlFor="email">Email</label>
-            <input
-              className={`w-full py-3 px-4 rounded-md text-ashGray bg-softCharcoal border-[1px] ${errors.email ? 'border-red-700' : 'border-ashGray'}`}
-              id="email"
-              type="email"
-              {...register('email')}
-              placeholder='e.g., user@email.com'
-              spellCheck={false}
-            />
+          <label className='max-w-min mb-2 text-base text-ashGray block' htmlFor="email">Email</label>
+          <input
+            className={`w-full py-2 px-4 rounded-md text-nightSky border-[1px] ${errors.email ? 'border-red-600' : 'border-gray-300'}`}
+            id="email"
+            type="email"
+            {...register('email')}
+            placeholder='user@email.com'
+            spellCheck={false}
+          />
+          
+          {errors.email && (<p className="text-red-600 mt-1 text-sm"> {errors.email.message}</p>)}
 
-            {errors.email && (<p className="text-red-700 mt-2 text-sm"> {errors.email.message}</p>)}
 
-            {isSignup && (
-                <div
-                    className="mt-5 flex items-center"
-                >
-                    <input className="self-start mt-0.21 max-w-min transform scale-125" type="checkbox" value={isChecked} onChange={handleCheckbox} />
-                    <span className="text-base block text-ashGray ml-2.5 -mt-1">By signing up I agree to the{' '}<Link className="text-saddleBrown text-base" href='#'>Privacy Policy</Link>{' '}and{' '}<Link className='text-saddleBrown text-base' href='#'>Terms of Service</Link></span>
+          {isSignup && (
+              <div className="mt-5 flex items-center">
+                  <input className="self-start max-w-min transform scale-125" type="checkbox" value={isChecked} onChange={handleCheckbox} />
+                  <span className="text-base block text-ashGray ml-2.5 -mt-1">By signing up I agree to the{' '}<Link className="text-nightSky underline" href='#'>privacy policy</Link>{' '}and{' '}<Link className='text-nightSky underline' href='#'>terms of service</Link></span>
+              </div>
+          )}
+
+
+
+          <div className="mt-4 flex flex-col">
+            <button className={`btn ${isLoading ? 'opacity-65' : 'opacity-100'} w-full block`} disabled={isLoading}>
+              {isLoading ? (
+                <div className='flex items-center justify-center gap-2'>
+                  <img className="w-6 h-6 opacity-65" src="images/loading/spinner.svg" alt="Loading indicator" />
                 </div>
-            )}
+              ) : (
+                <span>Send code</span>
+              )}
+            </button>
 
-            <div className="mt-4 flex">
-              <button className={`btn bg-saddleBrown ${isLoading ? 'opacity-65' : 'opacity-100'}`} disabled={isLoading}>
-                {isLoading ? (
-                  <div className='flex items-center gap-2'>
-                    <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />
-                    <span>{title}</span>
-                  </div>
-                ) : (
-                  <span>{title}</span>
-                )}
-              </button>
-              {!isSignup && (
-                <Link className='ml-auto -mt-2' href={'/forgot-email'}>
-                  <span className='text-saddleBrown text-base'>Forgot email?</span>
+            {!isSignup && (
+                <Link className='mt-1 ml-auto' href={'/forgot-email'}>
+                    <span className='text-nightSky text-base'>Forgot email?</span>
                 </Link>
-               )}
-            </div>
-          </form>
-        </div>
-
-
-        <div className='flex flex-col items-center '>
-          <p className='mb-8'>{`or ${title} using`}</p>
-          <SocialButtons text={title} />
-          <div className="mt-7">
-            <p className='mt-8 inline pr-2'>{`${isSignup ? 'Already have an account?' : "Don't have an account?" }`}</p>
-            <Link className='text-saddleBrown text-base' href={`${isSignup ? '/login' : '/signup'}`}>{`${isSignup ? 'Login' : 'Sign up'}`}</Link>
+            )}
           </div>
-        </div>
+        </form>
       </div>
 
+
+      <div className='flex flex-col items-center '>
+        <p className='mb-8'>Or</p>
+        <SocialButtons text={title} />
+        <div className="mt-7">
+          <p className='mt-8 inline pr-2'>{`${isSignup ? 'Already have an account?' : "Don't have an account?" }`}</p>
+          <Link className='text-nightSky text-base' href={`${isSignup ? '/login' : '/signup'}`}>{`${isSignup ? 'Login' : 'Sign up'}`}</Link>
+        </div>
+      </div>
     </div>
   )
 }

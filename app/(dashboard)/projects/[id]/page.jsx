@@ -61,7 +61,7 @@ const Project = async ({ params }) => {
   
   
   return (
-    <div className='flex flex-col justify-start'>
+    <div className='flex flex-col justify-start relative top-10'>
       <h2 className='subheading font-b text-saddleBrown'>{project.title}</h2>
       <div className='mt-8 grid gap-y-6 md:grid-auto-rows md:grid-cols-2'>
 

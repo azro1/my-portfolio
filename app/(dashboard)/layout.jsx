@@ -30,14 +30,14 @@ export default async function DashboardLayout({ children }) {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col bg-nightSky">
       <Sidebar />
       <div>
         <div className="main-container">
           <main>
             <Navbar user={user} />
           </main>
-          <main className={`${user ? '' : 'pt-12 xl:pt-32'} pb-32`}>
+          <main className={`${user ? '' : 'pt-12 xl:pt-32'} pb-48`}>
             <div className="relative w-full flex items-center justify-center">
               {children}
             </div>

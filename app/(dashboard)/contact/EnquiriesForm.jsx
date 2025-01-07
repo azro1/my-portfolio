@@ -280,7 +280,7 @@ const EnquiriesForm = ({ user }) => {
                     <p className='text-red-600 text-sm'>{errors.message?.message}</p>       
                 </div>
 
-                <button className='btn block mt-2 bg-saddleBrown' disabled={isLoading}>
+                <button className='p-2.5 px-3 rounded-lg font-medium text-gray-300 block mt-2  bg-saddleBrown' disabled={isLoading}>
                     {isLoading ? (
                         <div className='flex items-center gap-2'>
                             <img className="w-5 h-5 opacity-50" src="../images/loading/spinner.svg" alt="Loading indicator" />

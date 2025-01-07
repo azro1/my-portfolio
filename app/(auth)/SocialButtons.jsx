@@ -2,6 +2,7 @@
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import Image from 'next/image';
+import { FaGithub } from 'react-icons/fa';
 
 
 const SocialButtons = ({ text }) => {
@@ -64,43 +65,39 @@ const SocialButtons = ({ text }) => {
 
   return (
     <>
-      <button className='h-[50px] max-h-[50px] rounded-lg font-medium text-ashGray bg-nightSky mb-3 shadow-outer border-ashGray w-64 flex items-center justify-center hover:text-frostWhite hover:bg-softCharcoal duration-300 relative' onClick={handleGoogleClick}>
+      <button className='h-[50px] max-h-[50px] rounded-lg font-semibold text-nightSky mb-3 border-[1px] border-gray-300 w-64 flex items-center justify-center gap-3 hover:bg-cloudGray hover:border-gray-400 transition-all duration-300 ease-in-out relative' onClick={handleGoogleClick}>
         <Image 
           src={"../images/auth/google.svg"} 
-          className='mr-3' 
           alt="a google icon"
           width={24}
           height={24}
           priority
           quality={100}
         />
-        {text} with Google
+        <span>
+          {text} with Google
+        </span>
       </button>
 
-      <button className='h-[50px] max-h-[50px] rounded-lg font-medium text-ashGray bg-nightSky mb-3 shadow-outer border-ashGray w-64 flex items-center justify-center hover:text-frostWhite hover:bg-softCharcoal duration-300 relative' onClick={handleGithubClick}>        
-        <Image 
-          src={"../images/auth/github.svg"} 
-          className='mr-3' 
-          alt="a github icon"
-          width={28}
-          height={28}
-          priority
-          quality={100}
-        />
-        {text} with GitHub
+      <button className='h-[50px] max-h-[50px] rounded-lg font-semibold text-nightSky  mb-3 border-[1px] border-gray-300 w-64 flex items-center justify-center gap-3 hover:bg-cloudGray hover:border-gray-400 transition-all duration-300 ease-in-out relative' onClick={handleGithubClick}>        
+        <FaGithub size={27} />
+        <span>
+          {text} with GitHub
+        </span>
       </button>
       
-      <button className='h-[50px] max-h-[50px] rounded-lg font-medium text-ashGray bg-nightSky shadow-outer border-ashGray w-64 flex items-center justify-center hover:text-frostWhite hover:bg-softCharcoal duration-500' onClick={handleDiscordClick}>
+      <button className='h-[50px] max-h-[50px] rounded-lg font-semibold text-nightSky border-[1px] border-gray-300 w-64 flex items-center justify-center gap-3 hover:bg-cloudGray hover:border-gray-400 transition-all duration-300 ease-in-out' onClick={handleDiscordClick}>
         <Image 
           src="../images/auth/discord.svg" 
-          className='mr-3' 
           alt="a discord icon"
           width={28}
           height={28}
           priority
           quality={100}
         />
-        {text} with Discord
+        <span>
+          {text} with Discord
+        </span>
       </button>
     </>
   )

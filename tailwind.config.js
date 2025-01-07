@@ -20,14 +20,10 @@ export default {
         onyx: '#16181C',
         stoneGray: '#757575',
         ashGray: '#6B6B6B',
-        eyeBgBase: '#D0D0D0',
-        eyeBgHover: '#C0C0C0',
         nightSky: '#1C1E24',
         frostWhite: '#f2f2f2',
         cloudGray: '#E0E0E3',
-        discordPurple: '#6A5ACD',
-        githubDark: '#323439',
-        googleRed: '#DC2626',
+        softGray: '#F5F5F5',
         midnightSlate: '#25272E',
         'modal-translucent': 'rgb(28, 30, 36, 0.80)'
       },
@@ -35,6 +31,7 @@ export default {
         'rubik': ['Rubik', 'sans-serif'],
         'barlow': ['Barlow', 'sans-serif'],
         'os': ['Open Sans', 'sans-serif'],
+        'inter': ['Inter', 'sans-serif']
       },
       fontSize: {
         '1.375': '1.375rem', //22px
@@ -62,7 +59,7 @@ export default {
       boxShadow: {
         '3xl': '0px 0px 12px 0 #757575',
         inner: 'inset -2px 0px 18px 10px #131519',
-        outer: '0px 0px 16px 4px #131519'
+        outer: '0px 0px 4px 2px rgba(150, 150, 150, 0.2)'
       }
     },
   },

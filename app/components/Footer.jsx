@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image";
 import { HiMiniEnvelopeOpen } from "react-icons/hi2";
 import { FaLinkedin, FaGithub, FaInstagramSquare, FaYoutube } from 'react-icons/fa';
 
@@ -80,11 +81,21 @@ const Footer = () => {
 
           <div className="flex flex-col-reverse items-center text-center gap-y-10 md:h-9.5 md:flex-row md:justify-between">
             
-            <div className="md:text-left flex-1">
-              <Link href="/">
-                <h2 className="mainheading font-eb text-saddleBrown pb-3">Port<span>folio</span></h2>
-              </Link>
-              <p className="">&copy; 2024 Simon Sutherland. All rights reserved.</p>
+            <div className="flex-1 flex flex-col items-center gap-1">
+              <div>
+                <Link href='/'>
+                  <Image
+                    className='cursor-pointer'
+                    src={'/images/my_logo1.svg'}
+                    alt="Navigate to home page"
+                    width={60}
+                    height={60}
+                    priority
+                    quality={100}
+                  />
+                </Link>
+              </div>
+              <p className="">&copy; 2025 Simon Sutherland</p>
             </div>
 
             <div className="flex items-center justify-center -order-1 md:order-none md:self-end flex-1">

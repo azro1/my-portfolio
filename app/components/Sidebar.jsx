@@ -92,6 +92,7 @@ const Sidebar = () => {
     if (!error) {
       setUser(null);
       setIsRegComplete(null);
+      document.cookie = "isRegComplete=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
       router.push('/login')
       router.refresh()
     }

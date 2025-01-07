@@ -1,6 +1,6 @@
 import { FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 
-const ContactInfo = ({ user }) => {
+const ContactInfo = () => {
     return (
         <div>
             <ul>

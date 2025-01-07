@@ -8,9 +8,6 @@
   @apply p-0 m-0 box-border;
 }
 
-body {
-  @apply bg-nightSky;
-}
 
 
 /* base headings */
@@ -48,7 +45,7 @@ main {
 }
 
 .btn {
-  @apply py-2.5 p-3 rounded-lg font-medium text-frostWhite;
+  @apply p-3 px-3.5 rounded-lg cursor-pointer text-white font-medium bg-nightSky;
 }
 
 .btn-small {
@@ -146,7 +143,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 /* input placeholder */
 input::placeholder, textarea::placeholder{
-  @apply opacity-30;
+  @apply opacity-80 text-ashGray;
 }
 
 
@@ -276,19 +273,16 @@ footer span {
 /* error */
 .error {
   @apply bg-red-100 text-red-950 font-b text-base p-3 leading-normal shadow-lg border-2 border-red-600 rounded-md;
-  border-left: 5px solid #dc2626;
 }
 
 /* success */
 .success {
   @apply bg-green-100 text-green-950 font-b text-base p-3 leading-normal shadow-lg border-2 border-green-600 rounded-md;
-  border-left: 5px solid #16a34a;
 }
 
 /* info */
 .info {
   @apply bg-blue-100 text-blue-950 font-b text-base p-3 leading-normal shadow-lg border-2 border-blue-600 rounded-md;
-  border-left: 5px solid #2563eb;
 }
 
 .modal-form-error {

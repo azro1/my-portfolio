@@ -15,7 +15,7 @@ const MessageBanner = () => {
     const { message } = useContext(MessageContext);
 
     return (
-      <div className='fixed top-0 w-full z-50'>
+      <div className='fixed top-0 w-full z-50 px-4'>
           <AnimatePresence>
               {message.type === 'error' && 
               <motion.div
@@ -23,7 +23,7 @@ const MessageBanner = () => {
                   animate={{ y: 20, opacity: 1 }}
                   exit={{ y: -45, opacity: 0 }}
                   transition={{ delay: 0.2, duration: 0.3, type: 'tween' }}
-                  className='error flex items-center justify-center gap-1.5 max-w-max mx-auto'
+                  className='error flex items-center justify-center gap-2 max-w-max mx-auto'
               >    
                   {iconSizes.map((obj, index) => (
                       <div className={`${obj.className} place-self-start bg-white rounded-full`} key={index}>
@@ -40,7 +40,7 @@ const MessageBanner = () => {
                       animate={{ y: 20, opacity: 1 }}
                       exit={{ y: -45, opacity: 0 }}
                       transition={{ delay: 0.2, duration: 0.3, type: 'tween' }}
-                      className='success flex items-center justify-center gap-1.5 max-w-max mx-auto'
+                      className='success flex items-center justify-center gap-2 max-w-max mx-auto'
                   >
                       {iconSizes.map((obj, index) => (
                           <div className={`${obj.className} place-self-start bg-white rounded-full`} key={index}>
@@ -57,7 +57,7 @@ const MessageBanner = () => {
                       animate={{ y: 20, opacity: 1 }}
                       exit={{ y: -45, opacity: 0 }}
                       transition={{ delay: 0.2, duration: 0.3, type: 'tween' }} 
-                      className='info flex items-center justify-center gap-1.5 max-w-max mx-auto'
+                      className='info flex items-center justify-center gap-2 max-w-max mx-auto'
                   >
                       {iconSizes.map((obj, index) => (
                           <div className={`${obj.className} place-self-start bg-white rounded-full`} key={index}>

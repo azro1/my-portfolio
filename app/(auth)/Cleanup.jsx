@@ -4,11 +4,16 @@ import { useEffect } from "react";
 import { useMessage } from "../hooks/useMessage";
 
 const Cleanup = () => {
-    const {changeMessage } = useMessage()
+    const { changeMessage } = useMessage();
 
     useEffect(() => {
-        if (localStorage.getItem("forceLogout") === "true" ||  localStorage.getItem("hasVisitedRegPage") === "true") {
+        const forceLogout = localStorage.getItem("forceLogout") === "true";
+        const hasVisitedRegPage = localStorage.getItem("hasVisitedRegPage") === "true";
+
+        if (forceLogout) {
             localStorage.removeItem("forceLogout");
+            changeMessage('error', 'You have been logged out. Please log back in to finish setting up your account.');
+        } else if (hasVisitedRegPage) {
             localStorage.removeItem("hasVisitedRegPage");
             changeMessage('error', 'You have been logged out. Please log back in to finish setting up your account.');
         }

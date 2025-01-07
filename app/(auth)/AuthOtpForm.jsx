@@ -56,7 +56,7 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
     const [isVerified, setIsVerified] = useState(false)
     const [buttonIsDisabled, setButtonIsDisabled] = useState(null)
     const [isActive, setIsActive] = useState(null)
-    const [isBack, setIsBack] = useState(false)
+    const [isUserBack, setIsUserBack] = useState(false)
     const [hasVisitedRegPage, setHasVisitedRegPage] = useState(false);
  
     const router = useRouter()
@@ -73,18 +73,18 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
 
 
 
-    // check if user has been to reg page by checking local storage item set in registration page
+    // check if user has been to reg page by checking local storage flag set in registration page
     useEffect(() => {
         const visited = localStorage.getItem("hasVisitedRegPage");
         if (visited === "true") {
             setHasVisitedRegPage(true);
-            setIsBack(true);
+            setIsUserBack(true);
         }
     }, []);
 
     // log them out if they have
     useEffect(() => {
-        if (isBack) {
+        if (isUserBack) {
             const handleLogout = async () => {
                 const supabase = createClientComponentClient();
                 await supabase.auth.signOut();
@@ -95,7 +95,7 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
 
             handleLogout();
         }
-    }, [isBack, router]);
+    }, [isUserBack, router]);
 
 
 
@@ -268,7 +268,9 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
                 }
 
                 if (data?.is_verified && !data?.is_reg_complete) {
-                    router.push('/complete-registration')
+                   // clear cookie from server if they log back in to complete their registration
+                    document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+                    router.push('/upload-avatar')
                     changeMessage('success', `Welcome back, please finish creating your profile`)
                     return;
                 } else {

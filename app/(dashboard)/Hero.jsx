@@ -25,7 +25,7 @@ const Hero = () => {
             specializing in front and back end web 
             technologies and UI design</p>
           <Link className="group" href="#">
-            <button className="btn bg-saddleBrown hover:filter hover:brightness-75 duration-300">DOWNLOAD CV</button>
+            <button className="btn shadow-outer font-medium hover:bg-midnightSlate/50 duration-300">DOWNLOAD CV</button>
           </Link>
         </div>
       </div>

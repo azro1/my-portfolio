@@ -15,7 +15,7 @@ const CustomSelectDropdown = ({ label, options, subject, setSubject }) => {
             <div className="custom-select relative">
                 {/* Dropdown header */}
                 <div
-                    className='w-full py-3 px-4 rounded-md outline-none  bg-softCharcoal border-[1px] border-ashGray cursor-pointer flex justify-between items-center relative'
+                    className='w-full py-3 px-4 rounded-md outline-none bg-softCharcoal border-[1px] border-ashGray cursor-pointer flex justify-between items-center relative'
                     onClick={() => setDropdownOpen(!dropdownOpen)}
                 >
                     {subject ? (
@@ -24,7 +24,7 @@ const CustomSelectDropdown = ({ label, options, subject, setSubject }) => {
                         <span className="text-ashGray text-opacity-50">Select a subject</span>
                     )}
 
-                    <div className='absolute top-0 right-0 w-10 bg-nightSky h-full pointer-events-none flex items-center justify-center rounded-md'>
+                    <div className='absolute top-0 right-0 w-10 bg-nightSky h-full pointer-events-none flex items-center justify-center rounded-tr-md rounded-br-md'>
                         {dropdownOpen ? (
                             <FaCaretUp className="text-stoneGray" size={18} />
                         ) : (
@@ -35,11 +35,11 @@ const CustomSelectDropdown = ({ label, options, subject, setSubject }) => {
 
                 {/* Dropdown options */}
                 {dropdownOpen && (
-                    <ul className="absolute w-full bg-nightSky border-[1px] border-ashGray  border-opacity-55 rounded-md mt-1 z-10">
+                    <ul className="absolute w-full bg-nightSky border-[1px] border-ashGray  border-opacity-55  mt-1 z-10">
                         {options.map((option, index) => (
                             <li
                                 key={index}
-                                className="py-3 px-4 text-ashGray hover:text-cloudGray hover:bg-softCharcoal cursor-pointer"
+                                className="py-3 px-4 text-ashGray bg-softCharcoal hover:text-cloudGray hover:bg-midnightSlate/40 cursor-pointer"
                                 onClick={() => handleOptionClick(option)}
                             >
                                 {option}

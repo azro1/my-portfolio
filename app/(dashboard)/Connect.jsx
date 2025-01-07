@@ -19,7 +19,7 @@ const socialPlatforms = [
 const Connect = () => {
   return (
     <section>
-        <div className="mb-16 text-center ">
+        <div className="text-center ">
           <h2 className="subheading font-bold text-saddleBrown mb-6">Connect With Me</h2>
           <p className="text-ashGray mb-8">
             Stay connected with me on LinkedIn, GitHub, YouTube, Instagram, Discord, and WhatsApp for the latest updates, projects, and collaborations.          

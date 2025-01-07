@@ -11,7 +11,7 @@ import { useMessage } from '@/app/hooks/useMessage';
 
 
 
-const AvatarUploader = ({ user, title, text, isFirstUpload, displayTitle, btnColor, show3DAvatar }) => {
+const AvatarUploader = ({ user, updateProfile, btnColor, show3DAvatar }) => {
     // custom hooks
     const { updateTable } = useUpdateTable()
     const { changeMessage } = useMessage()
@@ -87,7 +87,7 @@ const AvatarUploader = ({ user, title, text, isFirstUpload, displayTitle, btnCol
             }
 
 
-            const lastUploadTime = data.last_avatar_update_at ? new Date(data.last_avatar_update_at).getTime() : 0;
+            const lastUploadTime = data?.last_avatar_update_at ? new Date(data.last_avatar_update_at).getTime() : 0;
             const currentTime = Date.now();
             const oneWeekInMilliseconds = 7 * 24 * 60 * 60 * 1000; // 7 day limit
     
@@ -102,7 +102,7 @@ const AvatarUploader = ({ user, title, text, isFirstUpload, displayTitle, btnCol
                     setSelectedFile('')
                     formRef.current.reset()
                 }
-                throw new Error(`You can update your avatar again in ${daysLeft} days and ${hoursLeft} hours`);
+                throw new Error(`Avatar uploads are limited to once per week. You can update your avatar again in ${daysLeft} days and ${hoursLeft} hours`);
             }
             
 
@@ -132,7 +132,7 @@ const AvatarUploader = ({ user, title, text, isFirstUpload, displayTitle, btnCol
                     throw new Error("Your profile picture was uploaded successfully, but we encountered an issue updating your comments. Please try again later. If the issue persists, contact support.")
                 }
                 
-                changeMessage('success', 'Avatar uploaded!')
+                changeMessage('success', 'Your Avatar has been uploaded')
 
                 if (formRef.current) {
                     setImgSrc('')
@@ -148,46 +148,12 @@ const AvatarUploader = ({ user, title, text, isFirstUpload, displayTitle, btnCol
     }
 
 
-
-
-    // update users avatar in profiles table
-    const updateProfile = async ({ avatar_url }) => {
-        try {
-            const profileData = {
-                id: user.id,
-                avatar_url,
-                updated_at: new Date().toISOString(),
-                last_avatar_update_at: new Date().toISOString()
-            }
-
-            const { error } = await supabase.from('profiles').upsert(profileData)
-
-            if (error) {
-                throw new Error(error.message)
-            }
-            
-            return { success: true }
-        } catch (error) {
-            console.log('profile update error:', error.message)
-            return { success: false }
-        }
-    }
-    
-
-
     return (
         <div>
             <div>
-                {displayTitle &&  (
-                    <h2 className='text-2xl text-stoneGray mb-3 font-eb font-rubik'>{title}</h2>
-                )}
-                <p className='leading-normal text-ashGray'>{text}</p>
-                {isFirstUpload && (
-                    <em><p className='text-sm mt-1 leading-normal'> (Optional) Please note that after your first upload, you can only change your avatar once a week.</p></em>
-                )}
-                <div className={`${show3DAvatar ? 'mt-5 grid grid-flow-col auto-cols-auto' : '' }`}>
+                <div className={`${show3DAvatar ? 'flex' : '' }`}>
 
-                     <div>
+                     <div className='flex-1'>
                         <div className='mb-2 mt-4 h-14 w-14 relative'>
                             {imgSrc ? (
                                 <Image
@@ -212,14 +178,13 @@ const AvatarUploader = ({ user, title, text, isFirstUpload, displayTitle, btnCol
                                 disabled={uploading}
                             />
                         </form>
-                        <button className={`btn-small ${btnColor} block mt-3`}
+                        <button className={`btn-small ${btnColor} block mt-3 min-w-[80px] min-h-[40px] ${uploading ? 'opacity-65' : 'opacity-100'}`}
                             onClick={uploadAvatar}
                             disabled={uploading}
                         >
                             {uploading ? (
-                                <div className='flex items-center gap-2'>
-                                    <img className="w-5 h-5 opacity-50" src="../../images/loading/spinner.svg" alt="Loading indicator" />
-                                    <span>Upload</span>
+                                <div className='flex items-center justify-center gap-2'>
+                                    <img className="w-5 h-5 opacity-65" src="../../images/loading/spinner.svg" alt="Loading indicator" />
                                 </div>
                             ) : (
                                 'Upload'
@@ -228,7 +193,7 @@ const AvatarUploader = ({ user, title, text, isFirstUpload, displayTitle, btnCol
                     </div>
 
                     {show3DAvatar && (
-                        <div className='col-start-1 place-self-center justify-self-start md:col-start-2 md:justify-self-end relative w-[150px] h-[150px]'>
+                        <div className='flex-1 relative w-[150px] h-[150px]'>
                             <Image 
                                 src="/images/registration/avatar.svg" 
                                 alt="an image of a 3D avatar"
