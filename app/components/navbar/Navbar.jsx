@@ -18,7 +18,7 @@ const Navbar = ({ user }) => {
 
 
       {user && (
-        <div className='relative h-9.5 mt-10'>
+        <div className='relative mt-10 '>
           <nav className='flex'>
 
             {user && (

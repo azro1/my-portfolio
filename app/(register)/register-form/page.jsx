@@ -466,7 +466,7 @@ const RegisterForm = () => {
             <button className={`btn block w-full mt-1.5 transition duration-500 ${(isLoading || phoneExists) ? 'opacity-65' : 'opacity-100'}`} disabled={isLoading || phoneExists} aria-live={Object.keys(errors).length > 0 || isLoading ? 'assertive' : 'off'} onClick={handleSubmit(handleUpdateProfile)}>
                 {isLoading ? (
                     <div className='flex items-center justify-center gap-2'>
-                        <img className="w-6 h-6 opacity-65" src="../images/loading/spinner.svg" alt="Loading indicator" />
+                        <img className="w-6 h-6 opacity-65" src="../images/loading/reload.svg" alt="Loading indicator" />
                     </div>
                 ) : (
                     'Register'

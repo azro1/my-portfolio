@@ -241,7 +241,7 @@ const LastNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
                         <button className='btn-small bg-saddleBrown mt-3' onClick={handleSubmit(handleNameUpdate)}>
                             {saving ? (
                                 <div className='flex items-center gap-2'>
-                                    <img className="w-5 h-5 opacity-50" src="../../images/loading/spinner.svg" alt="Loading indicator" />
+                                    <img className="w-5 h-5 opacity-50" src="../../images/loading/reload.svg" alt="Loading indicator" />
                                     <span>Save</span>
                                 </div>
                             ) : (

@@ -10,7 +10,7 @@ import { useForm, useFieldArray } from "react-hook-form";
 
 // components
 import OtpForm from "../components/OtpForm";
-import Loading from "./loading";
+import Loading from "../components/Loading";
 
 // custom hooks
 import { useUpdateTable } from "../hooks/useUpdateTable";

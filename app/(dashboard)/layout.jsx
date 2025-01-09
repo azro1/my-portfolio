@@ -2,8 +2,8 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 
+
 // components
-import Navbar from "../components/navbar/Navbar"
 import Footer from "../components/Footer"
 import Sidebar from "../components/Sidebar"
 
@@ -34,17 +34,13 @@ export default async function DashboardLayout({ children }) {
       <Sidebar />
       <div>
         <div className="main-container">
-          <main>
-            <Navbar user={user} />
-          </main>
-          <main className={`${user ? '' : 'pt-12 xl:pt-32'} pb-48`}>
-            <div className="relative w-full flex items-center justify-center">
-              {children}
-            </div>
+          <main className='py-44'>
+            {children}
           </main>
         </div>
         <Footer />
       </div>
     </div>
+
   )
 }

@@ -6,7 +6,7 @@ import { FaLinkedin, FaGithub, FaInstagramSquare, FaYoutube } from 'react-icons/
 const Footer = () => {
   return (
     <footer className="bg-frostWhite border-t-8 border-saddleBrown p-1.625 absolute left-0 w-full z-40">
-       <main className="my-2.375 md:mt-4.1875 max-w-screen-lg mx-auto" >
+       <main className="my-2.375 md:my-4.1875 max-w-screen-lg mx-auto" >
           <div className="newsletter flex flex-col items-center text-center gap-y-6">
             <h3>Get News, Insights & Updates</h3>
             <p className="max-w-2xl">Sign up to my newsletter to recieve the latest industry insights, information on upcoming events and updates on new projects</p>
@@ -26,7 +26,7 @@ const Footer = () => {
             </form>
           </div>
 
-          <div className="pagelinks flex flex-col text-center place-items-center gap-y-10 gap-x-6 my-12 md:flex md:flex-row md:place-items-stretch md:text-left md:mt-16">
+          <div className="pagelinks flex flex-col text-center place-items-center gap-y-10 gap-x-6 my-10 md:my-0 md:flex md:flex-row md:place-items-stretch md:text-left md:mt-16">
             <div className="flex-1 md:flex-initial md:w-1/6 ">
               <h4>PAGE LINKS</h4>
               <div>
@@ -79,65 +79,67 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="flex flex-col-reverse items-center text-center gap-y-10 md:h-9.5 md:flex-row md:justify-between">
-            
-            <div className="flex-1 flex flex-col items-center gap-1">
-              <div>
-                <Link href='/'>
-                  <Image
-                    className='cursor-pointer'
-                    src={'/images/my_logo1.svg'}
-                    alt="Navigate to home page"
-                    width={60}
-                    height={60}
-                    priority
-                    quality={100}
-                  />
-                </Link>
-              </div>
-              <p className="">&copy; 2025 Simon Sutherland</p>
-            </div>
+        <div className="flex flex-col items-center text-center gap-10 md:h-9.5 md:flex-row md:justify-center">
 
-            <div className="flex items-center justify-center -order-1 md:order-none md:self-end flex-1">
-              <Link href="#">
-                <p className="text-sm pt-1 pr-2 min-w-max">Terms of Use</p>
-              </Link>
-              <span>|</span>
-              <Link href="#">
-                <p className="text-sm pt-1 pl-2 min-w-max">Privacy Policy</p>
+          <div className="flex-1 order-2 flex flex-col items-center gap-1 md:flex-row md:order-1 md:items-end">
+            <div className="shadow-sm shadow-black rounded-full">
+              <Link href='/'>
+                <Image
+                  className='cursor-pointer'
+                  src={'/images/my_logo.svg'}
+                  alt="Navigate to home page"
+                  width={50}
+                  height={50}
+                  priority
+                  quality={100}
+                />
               </Link>
             </div>
-
-            <div className="flex-1">
-              <div>
-                <h4 className="min-w-max">FOLLOW ME ON SOCIAL MEDIA</h4>
-              </div>
-              <div className="flex gap-x-5 justify-center pt-3">
-              <a href="#">
-                  <span>
-                    <FaLinkedin size={28} />
-                  </span>
-                </a>
-                <a href="#">
-                  <span>
-                    <FaYoutube size={28} />
-                  </span>
-                </a>
-                <a href="#">
-                  <span>
-                    <FaGithub size={28} />
-                  </span>
-                </a>
-                <a href="#">
-                  <span>
-                    <FaInstagramSquare size={28} />
-                  </span>
-                </a>
-              </div>
-            </div>
-
+            <p className="flex-1 text-left">&copy; 2025 Simon Sutherland</p>
           </div>
-        </main>
+
+
+          <div className="flex-1 order-1 flex flex-col md:order-3">
+            <div className="order-2 mt-2 w-max md:order-1 md:ml-auto md:mt-0">
+              <h4>FOLLOW ME ON SOCIAL MEDIA</h4>
+            </div>
+            <div className="order-1 flex gap-x-5 md:order-2 md:justify-end md:mt-3 pr-8 w-max ml-auto">
+              <a href="#">
+                <span>
+                  <FaLinkedin size={28} />
+                </span>
+              </a>
+              <a href="#">
+                <span>
+                  <FaYoutube size={28} />
+                </span>
+              </a>
+              <a href="#">
+                <span>
+                  <FaGithub size={28} />
+                </span>
+              </a>
+              <a href="#">
+                <span>
+                  <FaInstagramSquare size={28} />
+                </span>
+              </a>
+            </div>
+          </div>
+
+        
+
+        <div className="flex-1 order-3 flex items-center justify-center md:order-2 md:self-end ">
+          <Link href="#">
+            <p className="text-sm pt-1 pr-2 min-w-max">Terms of Use</p>
+          </Link>
+          <span>|</span>
+          <Link href="#">
+            <p className="text-sm pt-1 pl-2 min-w-max">Privacy Policy</p>
+          </Link>
+        </div>
+        </div>
+      </main>
     </footer>
   )
 }

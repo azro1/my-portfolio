@@ -70,21 +70,14 @@ const NavbarAvatar = ({ user }) => {
     }, [user]);
  
 
-
     return (
         <div>
-            {isProfileLoading ? (
-                <div className="flex flex-col items-center gap-1">
-                    <div className="overflow-hidden w-12 h-12">
-                        <img src="../../images/loading/loader.gif" alt="a loading gif" />
-                    </div>
-                </div>
-            ) : (
-                <div className="flex flex-col items-center">
-                    <div className="overflow-hidden rounded-full relative w-14 h-14 ">
-                        {avatar_url ? (
-                            avatar_url.startsWith("http") ? ( 
-                                /* Absolute URLs (e.g., third-party avatars or signed URLs) */
+            <div className="flex items-center">
+                <div className="overflow-hidden rounded-full relative">
+                    {avatar_url ? (
+                        avatar_url.startsWith("http") ? (
+                            /* Absolute URLs (e.g., third-party avatars or signed URLs) */
+                            <div className="w-8 h-8">
                                 <Image
                                     className="w-full h-full object-cover"
                                     src={avatar_url}
@@ -94,29 +87,25 @@ const NavbarAvatar = ({ user }) => {
                                     quality={100}
                                     priority
                                 />
-                            ) : (
-                                /* Handle signed URLs if further processing is required */
-                                <Avatar
-                                    url={avatar_url}
-                                    size="w-14 h-14"
-                                    lgSize="w-14 h-14"
-                                    phSize={50}
-                                />
-                            )
-                        ) : (
-                            /* Placeholder for when no avatar exists */
-                            <div className="w-fit rounded-full justify-self-center">
-                              <FaUserCircle size={50} color="gray" />
-
                             </div>
-                        )}
-                    </div>
-                    <h6 className="font-os text-sm font-b mt-1 text-saddleBrown">{first_name}</h6>
+                        ) : (
+                            /* Handle signed URLs if further processing is required */
+                            <Avatar
+                                url={avatar_url}
+                                size="w-8 h-8"
+                                lgSize="w-8 h-8"
+                                phSize={30}
+                            />
+                        )
+                    ) : (
+                        /* Placeholder for when no avatar exists */
+                        <div className="w-fit rounded-full justify-self-center">
+                            <FaUserCircle size={30} color="gray" />
+                        </div>
+                    )}
                 </div>
-            )}
+            </div>
         </div>
-
-
     );
 };
 

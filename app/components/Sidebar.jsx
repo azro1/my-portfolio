@@ -5,20 +5,21 @@ import Link from "next/link";
 import { usePathname, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
-import {
-  FaUserPlus,
-  FaHome,
-  FaInfoCircle,
-  FaPhoneAlt,
-  FaUser,
-  FaSignOutAlt,
-  FaQuestionCircle,
-  
-} from 'react-icons/fa';
-import { IoChatbubbleEllipses } from "react-icons/io5";
+import { 
+  FiLogIn, 
+  FiUserPlus, 
+  FiHome,
+  FiInfo, 
+  FiPhone, 
+  FiHelpCircle, 
+  FiUser, 
+  FiMessageSquare, 
+  FiLogOut,
+} from 'react-icons/fi';
 
-
-
+// components
+import NavbarAvatar from "./navbar/NavbarAvatar";
+import Chevron from "./Chevron";
 
 
 
@@ -37,7 +38,7 @@ const Sidebar = () => {
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
       if (session?.user) {
         setUser(session.user);
-
+           
         // registration status so logged in links are not shown until user has completed registering
         const getRegStatus = async() => {
           const { data, error } = await supabase
@@ -103,140 +104,103 @@ const Sidebar = () => {
   }
   
   return (
-    <div className='hidden xl:inline-block min-w-[60px] h-full items-center z-40'>
+    <div className='hidden xl:inline-block min-w-[64px] h-full items-center z-40'>
 
-        <div className="h-full top-0 fixed cursor-pointer bg-softCharcoal border-r-[1px] border-midnightSlate sidebar">
-            <div className="h-full flex flex-col ">
+      <div className="h-full top-0 fixed cursor-pointer bg-softCharcoal border-r-[1px] border-midnightSlate sidebar">
+        <div className="h-full flex flex-col ">
 
-
-
-
-
-              <div className='pt-[53px]'></div>
-              <div className='bg-midnightSlate mx-2 h-[1px]'></div>
-
-                <nav className="flex-1">
-                  <ul className='flex flex-col '>
-                    {!user && (
-                      <li className={`m-2 p-3 max-h-12 hover:bg-midnightSlate/40 transtion-bg duration-300 rounded-md ${activeLink === '/signup' ? 'bg-midnightSlate' : ''}`}>
-                        <Link href={'/signup'} onClick={() => handleActiveLink('/signup')}>
-                            <div className='flex items-center gap-3'>
-                              <div className="flex items-center">
-                                <FaUserPlus className="icon text-saddleBrown" size={24} />
-                              </div>
-
-                              <div className="flex items-center content-container">
-                                <span className="text-base font-medium text-stoneGray w-max">Register</span>
-                              </div>
-                            </div>
-                        </Link> 
-                      </li>
-                    )}
-                    <div className='bg-midnightSlate mx-2 h-[1px]'></div>
-                    <li className={`m-2 mb-0 p-3 max-h-12 hover:bg-midnightSlate/40 transtion-bg duration-300 rounded-md ${activeLink === '/' ? 'bg-midnightSlate' : ''}`}>
-                        <Link href={'/'} onClick={() => handleActiveLink('/')}>
-                            <div className='flex items-center gap-3'>
-                              <div className="flex items-center">
-                                <FaHome className="icon text-saddleBrown" size={23} />
-                              </div>
-
-                              <div className="flex items-center content-container">
-                                <span className="text-base font-medium text-stoneGray">Home</span>
-                              </div>
-                            </div>
-                        </Link> 
-                    </li>
-                    <li className={`m-2 mb-0 p-3 max-h-12 hover:bg-midnightSlate/40 transtion-bg duration-300 rounded-md ${activeLink === '/about' ? 'bg-midnightSlate' : ''}`}>
-                        <Link href={'/about'} onClick={() => handleActiveLink('/about')}>
-                            <div className='flex items-center gap-3'>
-                              <div className="flex items-center">
-                                <FaInfoCircle className="icon text-saddleBrown" size={20} />
-                              </div>
-
-                              <div className="flex items-center content-container">
-                                <span className="text-base font-medium text-stoneGray">About</span>
-                              </div>
-                            </div>
-                        </Link> 
-                    </li>
-                    <li className={`m-2 mb-0 p-3 max-h-12 hover:bg-midnightSlate/40 transtion-bg duration-300 rounded-md ${activeLink === '/contact' ? 'bg-midnightSlate' : ''}`}>
-                        <Link href={'/contact'} onClick={() => handleActiveLink('/contact')}>
-                            <div className='flex items-center gap-3'>
-                              <div className="flex items-center">
-                                <FaPhoneAlt className="icon text-saddleBrown" size={20} />
-                              </div>
-
-                              <div className="flex items-center content-container">
-                                <span className="text-base font-medium text-stoneGray">Contact</span>
-                              </div>
-                            </div>
-                        </Link> 
-                    </li>
-                    {(user && isRegComplete) && (
-                      <li className={`m-2 mb-0 p-3 max-h-12 hover:bg-midnightSlate/40 transtion-bg duration-300 rounded-md ${activeLink === '/profile' ? 'bg-midnightSlate' : ''}`}>
-                        <Link href={'/profile'} onClick={() => handleActiveLink('/profile')}>
-                            <div className='flex items-center gap-3'>
-                              <div className="flex items-center">
-                                <FaUser className="icon text-saddleBrown" size={21} />
-                              </div>
-
-                              <div className="flex items-center content-container">
-                                <span className="text-base font-medium text-stoneGray">Profile</span>
-                              </div>
-                            </div>
-                        </Link> 
-                      </li>
-                    )}
-                    {(user && isRegComplete) && (
-                      <li className={`m-2 mb-0 p-3 max-h-12 hover:bg-midnightSlate/40 transtion-bg duration-300 rounded-md ${activeLink === '/chat' ? 'bg-midnightSlate' : ''}`}>
-                        <Link href={'/chat'} onClick={() => handleActiveLink('/chat')}>
-                            <div className='flex items-center gap-3'>
-                              <div className="flex items-center">
-                                <IoChatbubbleEllipses className="icon text-saddleBrown" size={21} />
-                              </div>
-
-                              <div className="flex items-center content-container">
-                                <span className="text-base font-medium text-stoneGray">Chatroom</span>
-                              </div>
-                            </div>
-                        </Link> 
-                      </li>
-                    )}
-                    <li className={`m-2 p-3 max-h-12 hover:bg-midnightSlate/40 transtion-bg duration-300 rounded-md ${activeLink === '/help' ? 'bg-midnightSlate' : ''}`}>
-                        <Link href={'/help'} onClick={() => handleActiveLink('/help')}>
-                            <div className='flex items-center gap-3'>
-                              <div className="flex items-center">
-                                <FaQuestionCircle className="icon text-saddleBrown" size={21} />
-                              </div>
-
-                              <div className="flex items-center content-container">
-                                <span className="text-base font-medium text-stoneGray">Help</span>
-                              </div>
-                            </div>
-                        </Link> 
-                    </li>
-
-                    <div className='bg-midnightSlate mx-2 h-[1px]'></div>
-
-                    {(user && isRegComplete) && (
-                      <div className='m-2 mb-0 p-3 max-h-12 hover:bg-midnightSlate/40 transtion-bg duration-300 rounded-md' onClick={handleLogout}>
-                        <div className='flex items-center gap-3'>
-                          <div className="flex items-center">
-                            <FaSignOutAlt className="icon text-saddleBrown" size={23} />
-                          </div>
-
-                          <div className="flex items-center content-container">
-                            <span className="text-base font-medium text-stoneGray">Logout</span>
-                          </div>
-                        </div>
+          <nav className="flex-1 mt-16">
+            <ul className='flex flex-col '>
+              {!user && (
+                <li className={`m-2 mb-0 p-3 max-h-12 hover:bg-midnightSlate/40 transition-bg duration-300 rounded-md ${activeLink === '/login' ? 'bg-midnightSlate' : ''}`}>
+                  <Link href={'/login'} onClick={() => handleActiveLink('/login')}>
+                    <div className='flex items-center gap-3'>
+                      <div className="flex items-center">
+                        <FiLogIn className="icon text-saddleBrown" size={24} />
                       </div>
-                    )}
-                  </ul>
-                </nav>
 
-            </div>
+                      <div className="flex items-center content-container">
+                        <span className="text-base font-medium text-stoneGray w-max">Login</span>
+                      </div>
+                    </div>
+                  </Link>
+                </li>
+              )}
+              {!user && (
+                <li className={`m-2 p-3 max-h-12 hover:bg-midnightSlate/40 transition-bg duration-300 rounded-md ${activeLink === '/signup' ? 'bg-midnightSlate' : ''}`}>
+                  <Link href={'/signup'} onClick={() => handleActiveLink('/signup')}>
+                    <div className='flex items-center gap-3'>
+                      <div className="flex items-center">
+                        <FiUserPlus className="icon text-saddleBrown" size={24} />
+                      </div>
 
+                      <div className="flex items-center content-container">
+                        <span className="text-base font-medium text-stoneGray w-max">Sign up</span>
+                      </div>
+                    </div>
+                  </Link>
+                </li>
+              )}
+              <div className='bg-midnightSlate mx-2 h-[1px]'></div>
+              <li className={`m-2 mb-0 p-3 max-h-12 hover:bg-midnightSlate/40 transition-bg duration-300 rounded-md ${activeLink === '/' ? 'bg-midnightSlate' : ''}`}>
+                <Link href={'/'} onClick={() => handleActiveLink('/')}>
+                  <div className='flex items-center gap-3'>
+                    <div className="flex items-center">
+                      <FiHome className="icon text-saddleBrown" size={20} />
+                    </div>
+
+                    <div className="flex items-center content-container">
+                      <span className="text-base font-medium text-stoneGray">Home</span>
+                    </div>
+                  </div>
+                </Link>
+              </li>
+              <li className={`m-2 mb-0 p-3 max-h-12 hover:bg-midnightSlate/40 transition-bg duration-300 rounded-md ${activeLink === '/about' ? 'bg-midnightSlate' : ''}`}>
+                <Link href={'/about'} onClick={() => handleActiveLink('/about')}>
+                  <div className='flex items-center gap-3'>
+                    <div className="flex items-center">
+                      <FiInfo className="icon text-saddleBrown" size={20} />
+                    </div>
+
+                    <div className="flex items-center content-container">
+                      <span className="text-base font-medium text-stoneGray">About</span>
+                    </div>
+                  </div>
+                </Link>
+              </li>
+              <li className={`m-2 p-3 max-h-12 hover:bg-midnightSlate/40 transition-bg duration-300 rounded-md ${activeLink === '/contact' ? 'bg-midnightSlate' : ''}`}>
+                <Link href={'/contact'} onClick={() => handleActiveLink('/contact')}>
+                  <div className='flex items-center gap-3'>
+                    <div className="flex items-center">
+                      <FiPhone className="icon text-saddleBrown" size={20} />
+                    </div>
+
+                    <div className="flex items-center content-container">
+                      <span className="text-base font-medium text-stoneGray">Contact</span>
+                    </div>
+                  </div>
+                </Link>
+              </li>
+              <div className='bg-midnightSlate mx-2 h-[1px]'></div>
+            </ul>
+
+            {(user && isRegComplete) && (
+              <div className="flex items-center m-2 ml-1 mt-6 mb-0 p-3 max-h-12 hover:bg-midnightSlate/40 transition-bg duration-300 rounded-md">
+                <div className='flex items-center gap-3'>
+                  <div className="flex items-center">
+                    <NavbarAvatar user={user} />
+                  </div>
+
+                  <div className="flex items-center gap-2 content-container">
+                    <span className="text-base font-medium text-stoneGray">{user?.user_metadata.first_name || user?.user_metadata.full_name}</span>
+                    <Chevron user={user} />
+                  </div>
+                </div>
+              </div>)}
+          </nav>
         </div>
+
+      </div>
 
     </div>
   )

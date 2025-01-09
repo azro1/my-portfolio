@@ -115,16 +115,13 @@ const UploadAvatar = () => {
             <div className='flex flex-col items-center justify-center gap-2 max-w-[500px] sm:bg-white sm:shadow-outer sm:p-12 sm:rounded-xl relative'>
                 <div>
                     <h2 className='text-3xl mb-4 font-b text-nightSky'>Upload Your Avatar</h2>
-                    <p className=''>You can add an avatar to personalize your profile or skip this step to continue. This helps others recognize you but is entirely optional.</p>
+                    <p className=''>Choose an image to personalize your profile or skip this step to continue. This helps others recognize you but is entirely optional.</p>
                 </div>
 
                 <div>
                     <AvatarUploader
                         user={user}
                         updateProfile={updateProfile}
-                        title='Upload your avatar'
-                        isFirstUpload={true}
-                        displayTitle={true}
                         btnColor='bg-nightSky'
                         show3DAvatar={true}
                     />

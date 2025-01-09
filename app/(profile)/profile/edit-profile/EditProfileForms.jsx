@@ -1,5 +1,6 @@
 "use client"
 
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useEffect, useCallback } from "react"
 
 // custom hooks
@@ -45,6 +46,33 @@ const EditProfileForms = () => {
 
 
 
+
+    // update user avatar in profiles table
+    const updateProfile = async ({ avatar_url }) => {
+        try {
+            const profileData = {
+                id: user.id,
+                avatar_url,
+                updated_at: new Date().toISOString(),
+                last_avatar_update_at: new Date().toISOString()
+            }
+            
+            const supabase = createClientComponentClient()
+            const { error } = await supabase.from('profiles').upsert(profileData)
+
+            if (error) {
+                throw new Error(error.message)
+            }
+            return { success: true }
+
+        } catch (error) {
+            console.log('profile update error:', error.message)
+            return { success: false }
+        }
+    }
+
+
+
     
     return (
         <div className='flex flex-col gap-6'>
@@ -52,10 +80,10 @@ const EditProfileForms = () => {
             <div className='mt-4 h-[500px] bg-softCharcoal p-4'>
                 <AvatarUploader
                     user={user}
+                    updateProfile={updateProfile}
                     text='Personalize your account by uploading your own avatar'
                     btnColor='bg-saddleBrown'
                     show3DAvatar={false}
-                    isFirstUpload={false}
                 />
             </div>
 

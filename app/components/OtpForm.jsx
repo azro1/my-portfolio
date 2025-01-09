@@ -49,7 +49,7 @@ const OtpForm = ({ containerStyles, handleSubmit, onSubmit, title, subHeading, f
             <button className={`btn block mt-5 w-full mb-3 ${isLoading ? 'opacity-65' : 'opacity-100'}`} disabled={isLoading}>
                 {isLoading ? (
                     <div className='flex items-center justify-center gap-2'>
-                        <img className="w-6 h-6 opacity-65" src="../images/loading/spinner.svg" alt="Loading indicator" />
+                        <img className="w-6 h-6 opacity-65" src="../images/loading/reload.svg" alt="Loading indicator" />
                     </div>
                 ) : (
                     'Verify'

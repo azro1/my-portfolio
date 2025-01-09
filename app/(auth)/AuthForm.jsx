@@ -38,7 +38,7 @@ const AuthForm = ({ handleSubmit, onSubmit, title, subHeading, register, errors,
             <button className={`btn ${isLoading ? 'opacity-65' : 'opacity-100'} w-full block`} disabled={isLoading}>
               {isLoading ? (
                 <div className='flex items-center justify-center gap-2'>
-                  <img className="w-6 h-6 opacity-65" src="images/loading/spinner.svg" alt="Loading indicator" />
+                  <img className="w-6 h-6 opacity-65" src="images/loading/reload.svg" alt="Loading indicator" />
                 </div>
               ) : (
                 <span>Send code</span>

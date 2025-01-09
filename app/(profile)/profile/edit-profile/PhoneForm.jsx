@@ -279,7 +279,7 @@ const PhoneForm = ({ user, profile }) => {
                         <button className='btn-small bg-saddleBrown mt-3' onClick={handleSubmit(handlePhoneUpdate)}>
                             {isUpdating ? (
                                 <div className='flex items-center gap-2'>
-                                    <img className="w-5 h-5 opacity-50" src="../../images/loading/spinner.svg" alt="Loading indicator" />
+                                    <img className="w-5 h-5 opacity-50" src="../../images/loading/reload.svg" alt="Loading indicator" />
                                     <span>Save</span>
                                 </div>
                             ) : (
