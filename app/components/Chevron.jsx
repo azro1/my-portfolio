@@ -2,15 +2,14 @@
 
 import { useState, useEffect, useRef } from 'react'
 import {
-  FaChevronDown,
-  FaChevronUp
-} from 'react-icons/fa';
+  FiChevronDown
+} from 'react-icons/fi';
 
 // components
 import Dropdown from './navbar/Dropdown'
 
 
-const Chevron = ({ order, user }) => {
+const Chevron = ({ user }) => {
   const [isOpen, setIsOpen] = useState(false)
   const dropDownRef = useRef()
 
@@ -42,17 +41,10 @@ const Chevron = ({ order, user }) => {
 
   return (
      <>
-       <span className='bg-red-6000 p-1 inline-block shadow-outer rounded-md'>
-          <button onClick={handleToggleMenu} className='p-1.5 text-base text-ashGray bg-softCharcoal ' ref={dropDownRef}>
-            {isOpen ? (
-              <FaChevronUp size={22} />
-            ) : (
-              <FaChevronDown size={22} />
-            )}
-          </button> 
-       </span>
+        <button onClick={handleToggleMenu} className=' text-base text-ashGray ' ref={dropDownRef}>
+            <FiChevronDown size={22} />
+        </button> 
 
-   
        {isOpen && (
           <Dropdown user={user} handleCloseMenu={handleCloseMenu} />
        )}

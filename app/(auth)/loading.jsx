@@ -1,9 +1,16 @@
-const Loading = () => {
-  return (
-    <main> 
-        <img className="w-32 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" src="/images/loading/loading.gif" alt="a loading gif" />
-    </main>
-  )
-}
 
-export default Loading 
+const loading = () => {
+    return (
+      <div className="bg-softGray">
+          <div className="main-container">
+          <main>
+              <div className="h-screen w-full text-center flex flex-col items-center justify-center">
+                  <img className="w-16" src="/images/loading/pulse.svg" alt="" />
+              </div>
+          </main>
+          </div>
+      </div>
+    )
+  }
+  
+  export default loading

@@ -1,12 +1,11 @@
 import Link from "next/link"
-import { FaSignInAlt, FaUserPlus } from 'react-icons/fa'
+import Image from "next/image"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 
 // components
-import Chevron from "../components/Chevron"
-import Footer from "../components/Footer"
+import Cleanup from "./Cleanup"
 
 export default async function AuthLayout ({ children }) {
   const supabase = createServerComponentClient({ cookies })
@@ -17,43 +16,36 @@ export default async function AuthLayout ({ children }) {
   }
   
   return (
-    <>
+    <div className='bg-white sm:bg-softGray relative'>
+      <nav className='bg-nightSky fixed top-0 left-0 w-full min-h-[90px] flex items-center z-40'>
+        <div className='max-w-screen-xl w-full px-6 mx-auto'>
+          <main>
+            <Link href='/'>
+              <Image
+                className='cursor-pointer'
+                src={'/images/my_logo.svg'}
+                alt="Navigate to home page"
+                width={50}
+                height={50}
+                priority
+                quality={100}
+              />
+            </Link>
+          </main>
+        </div>
+      </nav>
+
       <div className='main-container'>
         <main className='min-h-screen'>
-          <div className='flex flex-col items-center min-h-[960px] sm:min-h-[1070px] md:min-h-[726px]'>
-            <nav className='flex items-center h-9.5 w-full relative'>
-              <Link href='/' className='mr-auto shadow-3xl pt-1.5 px-4 pb-0.5 rounded-xl bg-softCharcoal'>
-                <h2 className='mainheading font-eb text-saddleBrown'>
-                  Port<span className="text-stoneGray">folio</span>
-                </h2>
-              </Link>
+          <div className='h-screen flex flex-col items-center min-h-[960px] sm:min-h-[1070px] md:min-h-[768px]'>
 
-              <div className="lg:hidden ml-auto">
-                <Chevron />
-              </div>
-
-              <div className='hidden lg:flex items-center gap-12 ml-auto'>
-                <Link href='/signup'>
-                  <div className="tooltip group">
-                    <FaSignInAlt className="text-ashGray group-hover:text-saddleBrown transition duration-300 cursor-pointer" size={31} />
-                    <span className="tooltiptext -left-2.5">Sign up</span>
-                  </div>
-                </Link>
-                <Link href='/login'>
-                  <div className="tooltip group">
-                    <FaUserPlus className="text-ashGray group-hover:text-saddleBrown transition duration-300 cursor-pointer" size={33} />
-                    <span className="tooltiptext -left-2.5">Login</span>
-                  </div>
-                </Link>
-              </div>
-            </nav>
-            <div className="relative w-full flex-grow flex items-center justify-center">
+            <div className="relative w-full flex-grow flex items-center sm:justify-center">
               {children}
             </div>
           </div>
         </main>
       </div>
-    <Footer />
-    </>
+      <Cleanup />
+    </div>
   )
 }

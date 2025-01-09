@@ -26,10 +26,17 @@ import { useMessage } from '@/app/hooks/useMessage';
 // yup validation schema
 const schema = yup.object({
     firstname: yup
-    .string()
-    .required('Firstname is required')
-    .transform(value => value.trim())
-    .matches(/^[A-Z][a-z]*$/, "Your first name must start with an uppercase letter, with no digits or spaces."),
+      .string()
+      .required('Firstname is required')
+      .transform(value => {
+        if (value) {
+          // Transform to lowercase but keep the first letter uppercase
+          return value.trim().charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+        }
+        return value; // Return the value if empty
+      })
+      .matches(/^[A-Z][a-z]*$/, "Firstname should not contain any digits or spaces")
+      .min(3, 'Firstname must be at least 3 characters long'),
 
     email: yup
       .string()
@@ -123,8 +130,6 @@ const EnquiriesForm = ({ user }) => {
 
     const onSubmit = async (data) => {
             if (user) {
-                console.log('Submitted!')
-
 
                 const sanitizeInput = (input) => {
                     return input.replace(/[&<>]/g, (char) => {
@@ -224,9 +229,8 @@ const EnquiriesForm = ({ user }) => {
                         type='text'
                         {...register('firstname')}
                         spellCheck='false'
-                        placeholder='First name'
                         maxLength={30}
-                        className='w-full py-3 px-4 rounded-md text-stoneGray bg-softCharcoal border-[1px] border-ashGray'
+                        className='w-full py-2.5 px-4 rounded-md text-stoneGray bg-softCharcoal border-[1px] border-ashGray'
                     /> 
                     <p className='text-red-600 text-sm'>{errors.firstname?.message}</p>       
                 </div>
@@ -238,10 +242,9 @@ const EnquiriesForm = ({ user }) => {
                         type='text'
                         {...register('email')}
                         spellCheck='false'
-                        placeholder='Email'
                         autoComplete="email"
                         maxLength={50}
-                        className='w-full py-3 px-4 rounded-md text-stoneGray bg-softCharcoal border-[1px] border-ashGray'
+                        className='w-full py-2.5 px-4 rounded-md text-stoneGray bg-softCharcoal border-[1px] border-ashGray'
                     />
                     <p className='text-red-600 text-sm'>{errors.email?.message}</p>       
                 </div>
@@ -269,16 +272,15 @@ const EnquiriesForm = ({ user }) => {
                         cols='30'
                         rows='4'
                         {...register('message')}
-                        placeholder='Enter your message here...'
-                        className='py-2 pxy-3 px-4 outline-none rounded-md w-4/5 text-stoneGray bg-softCharcoal border-[1px] border-ashGray'
+                        className='py-2.5 px-4 outline-none rounded-md w-4/5 text-stoneGray bg-softCharcoal border-[1px] border-ashGray'
                     ></textarea>
                     <p className='text-red-600 text-sm'>{errors.message?.message}</p>       
                 </div>
 
-                <button className='btn block mt-2 bg-saddleBrown' disabled={isLoading}>
+                <button className='p-2.5 px-3 rounded-lg font-medium text-gray-300 block mt-2  bg-saddleBrown' disabled={isLoading}>
                     {isLoading ? (
                         <div className='flex items-center gap-2'>
-                            <img className="w-5 h-5 opacity-50" src="../images/loading/spinner.svg" alt="Loading indicator" />
+                            <img className="w-5 h-5 opacity-50" src="../images/loading/reload.svg" alt="Loading indicator" />
                             <span>Sending</span>
                         </div>
                     ) : (

@@ -15,6 +15,13 @@ import { useMessage } from "@/app/hooks/useMessage";
 // components
 import AuthForm from "../AuthForm";
 
+// server action
+import { deleteCookie } from "./actions";
+
+
+
+
+
 
 
 // yup validation schema
@@ -51,16 +58,22 @@ const Login = () => {
   
   // global messages function
   const { changeMessage } = useMessage()
-  
-  
+
+
+
+
+
+  // delete otp cookie using server action function
   useEffect(() => {
-    router.refresh();
-    // clear cookie from server if user navigates back to this page so they have to enter email again to get new otp
-    document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-  }, [router]);
-  
-  
-  
+    const deleteOtpCookie = async () => {
+        await deleteCookie();
+    };
+    deleteOtpCookie();
+}, []);
+
+
+
+
 
 
   // react-hook-form

@@ -144,9 +144,9 @@ const Timer = memo(({ authGroupEmailRef, profileEmailRef, profilePhoneRef, isBut
   return (
     <>
       {!isVerified && (
-        <div className="flex gap-2 justify-center text-ashGray">
+        <div className="flex gap-2 justify-center text-nightSky">
           <button
-            className={`underline text-stoneGray cursor-pointer filter ${isDisabled ? 'brightness-[0.7]' : 'brightness-[1]'}`}
+            className={`underline text-nightSky cursor-pointer ${isDisabled ? 'text-opacity-50' : 'text-opacity-100'}`}
             onClick={handleResendOtp}
             disabled={isDisabled}
           >

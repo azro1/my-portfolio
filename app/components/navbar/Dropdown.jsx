@@ -16,6 +16,7 @@ const Dropdown = ({ user, handleCloseMenu }) => {
     const {error} = await supabase.auth.signOut()
 
     if (!error) {
+      document.cookie = "isRegComplete=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
       router.push('/login')
       router.refresh()
     }
@@ -26,16 +27,10 @@ const Dropdown = ({ user, handleCloseMenu }) => {
   }
 
   return (
-    <div className='menu-links flex flex-col absolute w-60 right-0 top-28 mt-4 p-1 z-40 bg-nightSky shadow-outer rounded-md'>
+    <div className={`absolute left-4 top-[306px] flex flex-col  w-52 mt-4 p-1 z-40 bg-midnightSlate rounded-sm`}>
       {user && (
         <LoggedInMenu 
           handleLogout={handleLogout}
-          handleCloseMenu={handleCloseMenu}  
-        />
-      )}
-
-      {!user && (
-        <LoggedOutMenu
           handleCloseMenu={handleCloseMenu}  
         />
       )}

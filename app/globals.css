@@ -8,9 +8,6 @@
   @apply p-0 m-0 box-border;
 }
 
-body {
-  @apply bg-nightSky;
-}
 
 
 /* base headings */
@@ -35,12 +32,12 @@ a {
   @apply text-sm font-r no-underline;
 }
 
-p {
+p, a {
   @apply font-r text-base text-ashGray;
 }
 
 .main-container {
-  @apply p-1.625 min-h-screen max-w-screen-lg mx-auto;
+  @apply px-1.625 max-w-screen-lg mx-auto;
 }
 
 main {
@@ -48,7 +45,7 @@ main {
 }
 
 .btn {
-  @apply py-2.5 p-3 rounded-lg font-medium text-frostWhite;
+  @apply p-3 px-3.5 rounded-lg cursor-pointer text-white font-medium bg-nightSky;
 }
 
 .btn-small {
@@ -71,7 +68,6 @@ img {
 
 /* (registration form) auto show date picker when user clicks on field by making picker indicator full height and width of input */
 input[type="date"] {
-  border: none;
   box-sizing: border-box;
   outline: 0;
   position: relative;
@@ -147,7 +143,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 /* input placeholder */
 input::placeholder, textarea::placeholder{
-  @apply opacity-30;
+  @apply opacity-80 text-ashGray;
 }
 
 
@@ -191,33 +187,6 @@ input::placeholder, textarea::placeholder{
 
 
 
-
-
-
-/* traingle for loggedin and loggedout menu dropdown */
-.menu-links::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-left: 12px solid transparent; /* Adjust the size of the triangle */
-  border-right: 7.5px solid transparent;
-  border-bottom: 19px solid '#1C1E24';
-  top: -15px;
-  right: 14.3px;
-}
-
-.menu-links::before {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-left: 13px solid transparent; /* Adjust the size of the triangle */
-  border-right: 7px solid transparent;
-  border-bottom: 20.5px solid #1C1E24;
-  top: -19px;
-  right: 14px;
-}
 
 
 
@@ -277,19 +246,16 @@ footer span {
 /* error */
 .error {
   @apply bg-red-100 text-red-950 font-b text-base p-3 leading-normal shadow-lg border-2 border-red-600 rounded-md;
-  border-left: 5px solid #dc2626;
 }
 
 /* success */
 .success {
   @apply bg-green-100 text-green-950 font-b text-base p-3 leading-normal shadow-lg border-2 border-green-600 rounded-md;
-  border-left: 5px solid #16a34a;
 }
 
 /* info */
 .info {
   @apply bg-blue-100 text-blue-950 font-b text-base p-3 leading-normal shadow-lg border-2 border-blue-600 rounded-md;
-  border-left: 5px solid #2563eb;
 }
 
 .modal-form-error {
@@ -300,224 +266,3 @@ footer span {
   @apply text-green-600 text-sm mt-2;
 }
 
-
-
-
-
-
-
-
-
-
-
-/* technical skills */
-/* language statistic bars */
-.ts-inner-wrapper div:nth-child(1) .progress-bar > div  {
-  content: '';
-  width: 0%;
-  height: 10px;
-  background: #FFFFFF;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  animation-name: html;
-  animation-duration: 100s;
-  animation-iteration-count: infinite;
-  animation-direction: backwards;
-  animation-delay: 1s;
-}
-
-@keyframes html {
-  0% {width: 0%;}
-  2%, 18%, 98%, 100% {width: 64%;} 
-}
-
-.ts-inner-wrapper div:nth-child(2) .progress-bar > div  {
-  content: '';
-  width: 0%;
-  height: 10px;
-  background: #FFFFFF;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  animation-name: css;
-  animation-duration: 100s;
-  animation-iteration-count: infinite;
-  animation-direction: backwards;
-  animation-delay: 1s;
-}
-
-@keyframes css {
-  0% {width: 0%;}
-  2%, 18%, 98%, 100% {width: 78%;} 
-}
-
-.ts-inner-wrapper div:nth-child(3) .progress-bar > div  {
-  content: '';
-  width: 0%;
-  height: 10px;
-  background: #FFFFFF;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  animation-name: js;
-  animation-duration: 100s;
-  animation-iteration-count: infinite;
-  animation-direction: backwards;
-  animation-delay: 1s;
-}
-
-@keyframes js {
-  0% {width: 0%;}
-  2%, 18%, 98%, 100% {width: 50%;} 
-}
-
-.ts-inner-wrapper div:nth-child(4) .progress-bar > div  {
-  content: '';
-  width: 0%;
-  height: 10px;
-  background: #FFFFFF;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  animation-name: php;
-  animation-duration: 100s;
-  animation-iteration-count: infinite;
-  animation-direction: backwards;  
-  animation-delay: 1s;
-}
-
-@keyframes php {
-  0% {width: 0%;}
-  2%, 18%, 98%, 100% {width: 35%;} 
-}
-
-
-
-
-/* professional skills */
-/* circular progress bars */
-.progress-circle {
-  width: 100px;
-  height: 100px;
-  /* background: red; */
-  position: relative;
-}
-
-.progress-circle .outer {
-  height: 100px;
-  width: 100px;
-  border-radius: 50%;
-  padding: 10px;
-  @apply shadow-inner;
-}
-
-.progress-circle .inner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 80px;
-  width: 80px;
-  border-radius: 50%;
-  @apply shadow-inner;
-}
-
-/* organisation */
-.organisation circle {
-  fill: none;
-  stroke: #FFFFFF;
-  stroke-width: 10px;
-  stroke-dasharray: 283;
-  stroke-dashoffset: 283;
-  animation-name: animateOrganisation;
-  animation-duration: 100s;
-  animation-iteration-count: infinite;
-  animation-direction: backwards;
-  animation-delay: 1s;
-}
-
-.organisation svg {
-  position: absolute;
-  top:-30px;
-  left:-30px;
-}
-
-@keyframes animateOrganisation {
-  0% {width: 0%;}
-  2%, 18%, 98%, 100% {stroke-dashoffset: 70.75;}
-}
-
-/* teamwork */
-.teamwork circle {
-  fill: none;
-  stroke: #FFFFFF;
-  stroke-width: 10px;
-  stroke-dasharray: 283;
-  stroke-dashoffset: 283;
-  animation-name: animateTeamwork;
-  animation-duration: 100s;
-  animation-iteration-count: infinite;
-  animation-direction: backwards;
-  animation-delay: 1s;
-}
-
-.teamwork svg {
-  position: absolute;
-  top:-30px;
-  left:-30px;
-}
-
-@keyframes animateTeamwork {
-  0% {width: 0%;}
-  2%, 18%, 98%, 100% {stroke-dashoffset: 124.52;}
-}
-
-/* adaptability */
-.adaptability circle {
-  fill: none;
-  stroke: #FFFFFF;
-  stroke-width: 10px;
-  stroke-dasharray: 283;
-  stroke-dashoffset: 283;
-  animation-name: animateAdaptability;
-  animation-duration: 100s;
-  animation-iteration-count: infinite;
-  animation-direction: backwards;
-  animation-delay: 1s;
-}
-
-.adaptability svg {
-  position: absolute;
-  top:-30px;
-  left:-30px;
-}
-
-@keyframes animateAdaptability {
-  0% {width: 0%;}
-  2%, 18%, 98%, 100% {stroke-dashoffset: 155.65;}
-}
-
-/* research-skills */
-.research-skills circle {
-  fill: none;
-  stroke: #FFFFFF;
-  stroke-width: 10px;
-  stroke-dasharray: 283;
-  stroke-dashoffset: 283;
-  animation-name: animateResearchSkills;
-  animation-duration: 100s;
-  animation-iteration-count: infinite;
-  animation-direction: backwards;
-  animation-delay: 1s;
-}
-
-.research-skills svg {
-  position: absolute;
-  top:-30px;
-  left:-30px;
-}
-
-@keyframes animateResearchSkills {
-  0% {width: 0%;}
-  2%, 18%, 98%, 100% {stroke-dashoffset: 113.2;}
-}

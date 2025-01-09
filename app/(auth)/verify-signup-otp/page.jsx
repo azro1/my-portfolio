@@ -20,7 +20,7 @@ const VerifySignupOtp = () => {
     return (
         <div className='flex items-center justify-center'>
             <AuthOtpForm
-                redirectUrl='/complete-registration'
+                redirectUrl='/upload-avatar'
                 title='Sign up'
                 subHeading='Enter the verification code sent to your email to activate your account'
                 successMessage="Success! Your code has been verified and we're creating your account."

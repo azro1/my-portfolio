@@ -18,12 +18,19 @@ import Modal from './Modal'
 const schema = yup.object({
     draftPhone: yup
     .string()
-    .required('Please enter your new phone number.')
+    .required('Phone is required')
+    .transform(value => value.replace(/\s+/g, "")) // Remove spaces for length check
+
     .test('has-valid-prefix', "Please enter a valid mobile number starting with 0 or an international code (e.g., +44, +1).", value => {
         return value ? value.startsWith('0') || value.startsWith('+') : false;
     })
-    .matches(/^(0\d{10,14}|\+\d{1,3}\d{8,12})$/, "That phone number seems invalid. It should be between 10 and 15 digits with no spaces.")
+    .matches(/^(0\d{9,14}|\+\d{1,3}\d{8,12})$/, 'Phone should be between 10 and 15 digits') // Format with 10-15 digits
+    .test('valid-length', 'Phone should be between 10 and 15 digits', value => {
+        const digits = value.replace(/\D/g, ''); // Remove non-digit characters
+        return digits.length >= 10 && digits.length <= 15; // Ensure total digit count is at least 10
+    })
 });
+
 
 
 
@@ -231,9 +238,10 @@ const PhoneForm = ({ user, profile }) => {
         }
 
         const regex = /^[0-9]$/;
-        if (!regex.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete') {
-            e.preventDefault(); // Prevent non-digit characters
+        if (!regex.test(e.key) && e.key !== '+' && e.key !== ' ' && e.key !== 'Backspace' && e.key !== 'Delete') {
+            e.preventDefault();
         }
+        
     }
 
 
@@ -252,8 +260,8 @@ const PhoneForm = ({ user, profile }) => {
             {showForm && (
                 <Modal>
                     <form noValidate>
-                        <label className='block mb-2 text-xl' htmlFor='draftPhone'>Edit Phone Number</label>
-                            <p className='mb-3'>Please enter your new phone number. Ensure it's a valid 11-digit mobile number starting with 0 for local, or include the international code (e.g., +44 for UK, +1 for US). This number will be used for account verification purposes.</p>
+                        <label className='block mb-4 text-xl' htmlFor='draftPhone'>Phone Number</label>
+                            <p className='mb-3'>Please enter your new phone number. This number will be used for account verification purposes</p>
                             <input
                                 className='w-full p-2.5 rounded-md border-2'
                                 id='draftPhone'
@@ -261,7 +269,6 @@ const PhoneForm = ({ user, profile }) => {
                                 placeholder='Phone'
                                 spellCheck={false}
                                 autoFocus={true}
-                                maxLength={15}
                                 {...register('draftPhone')}
                                 onKeyDown={handleKeyDown}
                             />
@@ -272,7 +279,7 @@ const PhoneForm = ({ user, profile }) => {
                         <button className='btn-small bg-saddleBrown mt-3' onClick={handleSubmit(handlePhoneUpdate)}>
                             {isUpdating ? (
                                 <div className='flex items-center gap-2'>
-                                    <img className="w-5 h-5 opacity-50" src="../../images/loading/spinner.svg" alt="Loading indicator" />
+                                    <img className="w-5 h-5 opacity-50" src="../../images/loading/reload.svg" alt="Loading indicator" />
                                     <span>Save</span>
                                 </div>
                             ) : (

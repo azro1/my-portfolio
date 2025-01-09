@@ -10,7 +10,7 @@ import { useForm, useFieldArray } from "react-hook-form";
 
 // components
 import OtpForm from "../components/OtpForm";
-import Loading from "./loading";
+import Loading from "../components/Loading";
 
 // custom hooks
 import { useUpdateTable } from "../hooks/useUpdateTable";
@@ -56,7 +56,7 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
     const [isVerified, setIsVerified] = useState(false)
     const [buttonIsDisabled, setButtonIsDisabled] = useState(null)
     const [isActive, setIsActive] = useState(null)
-    const [isBack, setIsBack] = useState(false)
+    const [isUserBack, setIsUserBack] = useState(false)
     const [hasVisitedRegPage, setHasVisitedRegPage] = useState(false);
  
     const router = useRouter()
@@ -73,29 +73,29 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
 
 
 
-    // check if user has been to reg page by checking local storage item set in registration page
+    // check if user has been to reg page by checking local storage flag set in registration page
     useEffect(() => {
         const visited = localStorage.getItem("hasVisitedRegPage");
         if (visited === "true") {
             setHasVisitedRegPage(true);
-            setIsBack(true);
+            setIsUserBack(true);
         }
     }, []);
 
     // log them out if they have
     useEffect(() => {
-        if (isBack) {
+        if (isUserBack) {
             const handleLogout = async () => {
                 const supabase = createClientComponentClient();
                 await supabase.auth.signOut();
                 router.push('/login');
                 localStorage.removeItem("hasVisitedRegPage")
-                changeMessage('error', "You're account was created but you have been logged out because your registration was aborted. Please log back in to finish setting up your account")
+                changeMessage('error', "You have been logged out. Please log back in to finish setting up your account")
             };
 
             handleLogout();
         }
-    }, [isBack, router]);
+    }, [isUserBack, router]);
 
 
 
@@ -253,18 +253,40 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
                // after otp verification is successful it's at this point we have access to user object
                 setIsLoading(false);
 
-                // update is_verified column in profiles table
-                const is_verifiedResult = await updateTable(session.user, 'profiles', { is_verified: true }, 'id');
-                if (!is_verifiedResult.success) {
-                    console.log('auth otp page: could not update otp verification status')
+
+
+                // check if they are verified but have not completed registration before allowing them to go any further
+                const { data, error } = await supabase
+                .from('profiles')
+                .select('is_verified, is_reg_complete')
+                .eq('id', session.user.id)
+                .limit(1)
+                .single()
+                    
+                if (error) {
+                    console.log(error)
                 }
 
-                // clear cookie from server after successful verification
-                document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-                setIsVerified(true)
-                reset({ codes: fields.map(() => ({ code: '' })) });
-                changeMessage('success', successMessage);
-                setRedirect(true);
+                if (data?.is_verified && !data?.is_reg_complete) {
+                   // clear cookie from server if they log back in to complete their registration
+                    document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+                    router.push('/upload-avatar')
+                    changeMessage('success', `Welcome back, please finish creating your profile`)
+                    return;
+                } else {
+                    // update is_verified column in profiles table
+                    const is_verifiedResult = await updateTable(session.user, 'profiles', { is_verified: true }, 'id');
+                    if (!is_verifiedResult.success) {
+                        console.log('auth otp page: could not update otp verification status')
+                    }
+
+                    // clear cookie from server after successful verification
+                    document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+                    setIsVerified(true)
+                    reset({ codes: fields.map(() => ({ code: '' })) });
+                    changeMessage('success', successMessage);
+                    setRedirect(true);
+                }
             }
 
         } catch (error) {

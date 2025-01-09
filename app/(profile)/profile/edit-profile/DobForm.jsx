@@ -22,7 +22,7 @@ import Modal from "./Modal";
 const schema = yup.object({
     draftDob: yup
       .string()
-      .required('Please enter a valid date of birth.')
+      .required('Date of birth is required')
       .test('max-date', 'Date of birth cannot be in the future', value => {
         const selectedDate = new Date(value);
         const today = new Date();
@@ -211,7 +211,7 @@ const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
                 <Modal >
                     <form noValidate>
                         <label className="block mb-2 text-xl" htmlFor='draftDob'>Edit Dob</label>
-                        <p className='mb-3'>Please enter a valid date of birth to keep your account accurate and up-to-date.</p>
+                        <p className='mb-3'>Please enter a valid date of birth to keep your account accurate and up-to-date</p>
                         <input
                             className='w-full p-1.5 rounded-md border-2'
                             id='draftDob'
@@ -226,7 +226,7 @@ const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
                         <button className='btn-small bg-saddleBrown mt-3' disabled={saving} onClick={handleSubmit(handleUpdateDob)}>
                             {saving ? (
                                 <div className='flex items-center gap-2'>
-                                    <img className="w-5 h-5 opacity-50" src="../../images/loading/spinner.svg" alt="Loading indicator" />
+                                    <img className="w-5 h-5 opacity-50" src="../../images/loading/reload.svg" alt="Loading indicator" />
                                     <span>Save</span>
                                 </div>
                             ) : (

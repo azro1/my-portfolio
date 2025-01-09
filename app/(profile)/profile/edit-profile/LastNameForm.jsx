@@ -22,9 +22,16 @@ import Modal from './Modal'
 const schema = yup.object({
     draftLastName: yup
         .string()
-        .required('Please add a lastname.')
-        .transform(value => value.trim())
-        .matches(/^[A-Z][a-z]*$/, "Your lastname must start with an uppercase letter, with no digits or spaces."),
+        .required('Lastname is required')
+        .transform(value => {
+            if (value) {
+                // Transform to lowercase but keep the first letter uppercase
+                return value.trim().charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+            }
+            return value; // Return the value if empty
+        })
+        .matches(/^[A-Z][a-z]*$/, "Lastname should not contain any digits or spaces")
+        .min(3, 'Lastname must be at least 3 characters long'),
 });
 
 
@@ -215,7 +222,7 @@ const LastNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
                             <span >
                                 
                             </span>
-                            <p className='mb-3'>Please enter your first name as you'd like it to appear in your profile.</p>
+                            <p className='mb-3'>Please enter your last name as you'd like it to appear in your profile</p>
                             <input
                                 className='w-full p-2.5 rounded-md border-2'
                                 id='draftLastName'
@@ -234,7 +241,7 @@ const LastNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
                         <button className='btn-small bg-saddleBrown mt-3' onClick={handleSubmit(handleNameUpdate)}>
                             {saving ? (
                                 <div className='flex items-center gap-2'>
-                                    <img className="w-5 h-5 opacity-50" src="../../images/loading/spinner.svg" alt="Loading indicator" />
+                                    <img className="w-5 h-5 opacity-50" src="../../images/loading/reload.svg" alt="Loading indicator" />
                                     <span>Save</span>
                                 </div>
                             ) : (

@@ -7,6 +7,10 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 
+import Link from "next/link";
+import { IoMdArrowBack } from "react-icons/io";
+
+
 // custom hook to display global messages
 import { useMessage } from "@/app/hooks/useMessage";
 
@@ -16,11 +20,17 @@ const schema = yup.object({
     phone: yup
     .string()
     .required('Phone is required')
+    .transform(value => value.replace(/\s+/g, "")) // Remove spaces for length check
     .test('has-valid-prefix', "Phone must start with 0 or a country code (e.g., +44 +1)", value => {
         return value ? value.startsWith('0') || value.startsWith('+') : false;
     })
-    .matches(/^(0\d{10,14}|\+\d{1,3}\d{8,12})$/, "Phone should be between 10 and 15 digits")
+    .matches(/^(0\d{9,14}|\+\d{1,3}\d{8,12})$/, 'Phone should be between 10 and 15 digits') // Format with 10-15 digits
+    .test('valid-length', 'Phone should be between 10 and 15 digits', value => {
+        const digits = value.replace(/\D/g, ''); // Remove non-digit characters
+        return digits.length >= 10 && digits.length <= 15; // Ensure total digit count is at least 10
+    })
 });
+
 
 
 
@@ -77,7 +87,7 @@ const ForgotEmail = () => {
 
 
     const onSubmit = async (data) => {
-
+        
         setIsLoading(true)
         const phone = data.phone;
         const convertedPhoneNumber = convertToInternationalFormat(phone);
@@ -104,7 +114,7 @@ const ForgotEmail = () => {
                 throw new Error("We're having trouble processing your request. Please try again later. If the issue persists, contact support.")
             } else if (serverEmail.exists && res.status === 200) {
                 setIsLoading(false)
-                changeMessage('success', "Success! We've located your account. A verification code has been sent to your email.")
+                changeMessage('success', "We've located your account. A verification code has been sent to your email.")
 
                 // store email temporarily in local storage
                 localStorage.setItem('email', serverEmail.email)
@@ -135,8 +145,8 @@ const ForgotEmail = () => {
     // prevent enter submission
     const handleKeyDown = (e) => {
         const regex = /^[0-9]$/;
-        if (!regex.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete') {
-            e.preventDefault(); // Prevent non-digit characters
+        if (!regex.test(e.key) && e.key !== '+' && e.key !== ' ' && e.key !== 'Backspace' && e.key !== 'Delete') {
+            e.preventDefault();
         }
     }
 
@@ -144,35 +154,40 @@ const ForgotEmail = () => {
 
     
     return (
-        <div>
-            <div className='flex items-center justify-center sm:shadow-outer sm:p-10 sm:rounded-xl'>
+        <div className='relative'>
+
+            <Link className='absolute left-0 -top-12 sm:-top-16' href='/login'>
+                <button className='text-nightSky sm:p-1 rounded-md hover:bg-cloudGray transtion-bg duration-300 '>
+                    <IoMdArrowBack size={24} />
+                </button>
+            </Link>
+
+            <div className='w-full flex items-center justify-center bg-white sm:shadow-outer sm:p-12 sm:pt-10 sm:rounded-xl sm:max-w-[420px]'>
 
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
-                    <div className='max-w-[330px]'>
-                        <h2 className='text-3xl mb-4 font-eb text-saddleBrown'>Forgot Email?</h2>
-                        <p className='mb-4'>Please provide the phone number you used when you signed up</p>
+                    <div>
+                        <h2 className='text-3xl mb-4 font-b text-nightSky'>Forgot Email?</h2>
+                        <p className='mb-4 sm:max-w-xs'>Please provide the phone number you used when you signed up</p>
 
                         <label className='max-w-min mb-2 text-base text-ashGray block' htmlFor='phone'>Phone</label>
                         <input
-                            className={`w-full max-w-xs py-3 px-4 rounded-md text-stoneGray bg-softCharcoal border-[1px] border-ashGray  ${errors.phone ? 'border-red-700' : 'border-ashGray'}`}
+                            className={`w-full sm:max-w-xs py-2 px-4 rounded-md text-nightSky border-[1px] ${errors.phone ? 'border-red-500' : 'border-gray-300'}`}
                             id='phone'
                             name='phone'
                             type='tel'
-                            maxLength={15}
                             placeholder="e.g., 01234 or +44 1234"
                             {...register('phone')}
                             onKeyDown={handleKeyDown}
                         />
 
                         {errors.phone && (
-                            <p className="text-red-600 mt-2 text-sm">{errors.phone.message}</p>
+                            <p className="text-red-500 mt-1 text-sm">{errors.phone.message}</p>
                         )}
                         
-                        <button className={`btn block mt-4 bg-saddleBrown ${isLoading ? 'opacity-65' : 'opacity-100'}`} disabled={isLoading}>
+                        <button className={`btn block mt-4 ${isLoading ? 'opacity-65' : 'opacity-100'} w-full`} disabled={isLoading}>
                             {isLoading ? (
-                                <div className='flex items-center gap-2'>
-                                    <img className="w-5 h-5 opacity-50" src="images/loading/spinner.svg" alt="Loading indicator" />
-                                    <span>Submit</span>
+                                <div className='flex items-center justify-center gap-2'>
+                                    <img className="w-6 h-6 opacity-65" src="images/loading/reload.svg" alt="Loading indicator" />
                                 </div>
                             ) : (
                                 'Submit'
