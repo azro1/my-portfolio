@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { format } from "date-fns";
 import { useState, useEffect, useRef } from "react";
+import { FaUserCircle } from "react-icons/fa";
 
 // components
 import Avatar from "@/app/components/Avatar";
@@ -133,17 +134,21 @@ const Comments = ({ user, comments, loadComments }) => {
                                             phSize={50}
                                         />
                                     )
-                                ) : (
+                                ) : comment.avatar_url === null && user?.user_metadata.avatar_url ? (
                                     <div className="overflow-hidden rounded-full relative w-14 h-14">
                                         <Image
                                             className="w-full h-full object-cover"
-                                            src={user.user_metadata.avatar_url}
+                                            src={user?.user_metadata.avatar_url}
                                             alt="Fallback user avatar"
                                             fill
                                             sizes="(max-width: 480px) 40px, (max-width: 768px) 60px, (max-width: 1024px) 80px, 100px"
                                             quality={100}
                                             priority
                                         />
+                                    </div>
+                                ) : (
+                                    <div className="w-fit rounded-full justify-self-center">
+                                        <FaUserCircle size={50} color="gray" />
                                     </div>
                                 )}
                                 <div className="flex-1">

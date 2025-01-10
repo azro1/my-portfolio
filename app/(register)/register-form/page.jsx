@@ -380,11 +380,11 @@ const RegisterForm = () => {
 
 
   return (
-    <div className='relative'>
-            <p className='absolute -top-10'>Step 2/2</p>        
+    <div className='flex flex-col justify-center min-h-[640px] md:min-h-[924px]'>
+            <p className='pb-2'>Step 2/2</p>        
 
             <form className='flex flex-col gap-3 max-w-[500px] sm:bg-white sm:shadow-outer sm:p-12 sm:pt-10 sm:rounded-xl' noValidate>
-            <h2 className='text-3xl mb-4 text-center font-b text-nightSky leading-normal'>Enter your personal information</h2>
+            <h2 className='text-3xl mb-4 text-start font-b text-nightSky leading-normal sm:text-center'>Enter your personal information</h2>
 
             <div>
                 <div className='relative '>

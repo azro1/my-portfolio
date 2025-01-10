@@ -36,7 +36,7 @@ const ProjectList = () => {
   if (loading) {
     return (
       <div className='min-h-[600px] flex items-center justify-center'> 
-          <img className='w-16' src="../images/loading/pulse.svg" alt="a loading gif" />
+          <img className='w-16' src="../images/loading/pulse_darkbg.svg" alt="a loading gif" />
       </div>
     );
   }
