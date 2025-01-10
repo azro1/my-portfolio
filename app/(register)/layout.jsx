@@ -30,27 +30,29 @@ export default async function RegisterLayout ({ children }) {
   }
   
   return (
-    <div className='bg-softGray relative'>
-      <nav className='bg-nightSky absolute w-full py-2 px-6'>
-        <main>
-          <Image
-            src={'../images/my_logo1.svg'}
-            alt="The website logo"
-            width={60}
-            height={60}
-            priority
-            quality={100}
-          />
-        </main>
-      </nav>
+    <div className='min-h-screen flex flex-col items-center'>
 
-      <div className='main-container'>
-        <main className='min-h-screen'>
-          <div className='h-screen flex flex-col items-center justify-center min-h-[960px]'>
+        <div className="w-full flex-grow flex flex-col bg-white sm:bg-softGray">
+          <nav className='bg-nightSky w-full min-h-[90px] flex items-center z-40'>
+            <div className='max-w-screen-xl w-full px-6 mx-auto'>
+              <main>
+                <Image
+                  className='cursor-pointer'
+                  src={'/images/my_logo.svg'}
+                  alt="Navigate to home page"
+                  width={50}
+                  height={50}
+                  priority
+                  quality={100}
+                />
+              </main>
+            </div>
+          </nav>
+          <div className='main-container flex-grow flex items-center justify-center h-full'>
             {children}
           </div>
-        </main>
-      </div>
+        </div>
+
     </div>
   )
 }
