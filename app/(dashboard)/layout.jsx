@@ -30,14 +30,12 @@ export default async function DashboardLayout({ children }) {
   }
 
   return (
-    <div className="flex flex-col bg-nightSky">
+    <div className="flex bg-nightSky">
       <Sidebar />
-      <div>
-        <div className="main-container">
-          <main className='py-44'>
+      <div className="flex-1">
+          <div className=''>
             {children}
-          </main>
-        </div>
+          </div>
         <Footer />
       </div>
     </div>

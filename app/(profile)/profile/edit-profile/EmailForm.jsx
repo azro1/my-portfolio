@@ -211,7 +211,7 @@ const EmailForm = ({ user, profile }) => {
                 <p className="text-cloudGray frostWhitespace-normal break-words">{email}</p>
             </div>
 
-            <div className='bg-onyx h-[2px]'></div>
+            <div className='bg-ashGray h-[2px]'></div>
 
             {showForm && (
                 <Modal>

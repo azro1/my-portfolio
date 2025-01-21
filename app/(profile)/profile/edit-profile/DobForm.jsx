@@ -205,7 +205,7 @@ const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
                 <p className="text-cloudGray frostWhitespace-normal break-words">{dob}</p>
             </div>
 
-            <div className='bg-onyx h-[2px]'></div>
+            <div className='bg-ashGray h-[2px]'></div>
 
             {showForm && (
                 <Modal >

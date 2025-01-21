@@ -32,9 +32,9 @@ export default async function ProfileLayout({ children }) {
   }
 
   return (
-    <div className='flex flex-col bg-nightSky'>
+    <div className='flex bg-nightSky'>
       <Sidebar />
-      <div>
+      <div className='flex-1'>
         <div className='main-container'>
           <main>
             <Navbar user={user && user} />

@@ -62,9 +62,9 @@ const Project = async ({ params }) => {
   
   
   return (
-    <div className="flex flex-col bg-nightSky">
+    <div className="flex bg-nightSky">
       <Sidebar />
-      <div>
+      <div className="flex-1">
         <div className="main-container">
           <main>
             <div className="h-screen flex flex-col items-center min-h-[1154px]">

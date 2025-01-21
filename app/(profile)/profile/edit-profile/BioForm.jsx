@@ -207,7 +207,7 @@ const BioForm = ({ user, profile, fetchProfile, changeMessage }) => {
                 <p className={`text-cloudGray frost whitespace-normal break-words ${!bio ? 'py-2.5' : ''}`}>{bio}</p>
             </div>
 
-            <div className='bg-onyx h-[2px]'></div>
+            <div className='bg-ashGray h-[2px]'></div>
 
             {showForm && (
                 <Modal >

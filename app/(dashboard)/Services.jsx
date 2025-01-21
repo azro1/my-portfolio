@@ -1,80 +1,57 @@
-import Image from "next/image"
+import { FaCode, FaPaintBrush, FaLayerGroup, FaMobile } from "react-icons/fa";
 
 const Services = () => {
+
+  const services = [
+    { 
+      title: 'Web Development', 
+      icon: <FaCode size={70} />, 
+      text: 'Passionate web developer focused on creating unique, functional, and visually appealing websites  with expertise in both front-end and back-end technologies', 
+      layoutClasses: 'max-w-sm h-full lg:place-self-end xl:justify-self-end uw:h-max  uw:self-center uw:col-span-1 '
+    },
+    { 
+      title: 'UI Design', 
+      icon: <FaLayerGroup size={70} />, 
+      text: 'Creative UI designer specializing in intuitive interfaces and user-centered design. Focused on enhancing user experiences through impactful visuals and innovative solutions', 
+      layoutClasses: 'w-full max-w-sm lg:place-self-start xl:justify-self-start uw:row-span-1 uw:self-center uw:py-12'
+    },
+    { 
+      title: 'Mobile Development', 
+      icon: <FaMobile size={70} />, 
+      text: 'Experienced in crafting seamless user experiences for both iOS and Android platforms. Passionate about turning innovative ideas into captivating mobile applications.', 
+      layoutClasses: 'w-full max-w-sm lg:place-self-end xl:justify-self-end uw:self-center uw:py-20'
+    },
+    { 
+      title: 'Graphic Design', 
+      icon: <FaPaintBrush size={70} />, 
+      text: 'A passionate graphic designer adept at transforming ideas into visually striking concepts. Proficient in delivering impactful designs that resonate with target audiences.', 
+      layoutClasses: 'w-full max-w-sm lg:place-self-start xl:justify-self-start uw:py-28'
+    }
+  ]
+
   return (
     <section>
-      <div className='grid grid-cols-1 md:grid-cols-2 grid-auto-rows md:grid-rows-[repeat(auto-fill,_minmax(0,_375px))] gap-4 md:gap-16'>
+      <div className="grid gap-10 grid-cols-1 justify-items-center md:grid-cols-2 xl:grid-rows-2 uw:grid-rows-1 uw:grid-cols-4 uw:items-center uw:gap-12">
+            {services.map((service, index) => (
+              <div className={`flex items-center justify-center bg-gradient-to-r from-slateOnyx to-softCharcoal rounded-md p-6 md:p-8 z-50 ${service.layoutClasses}`} key={index}>
 
-          <div className="col-span-1 md:col-start-1 md:row-start-1 relative h-[375px] bg-gradient-to-b from-nightSky to-cloudGray">
-            <Image
-              className="object-cover max-w-[412px] mx-auto"
-              src="/images/homepage/services/Programming-bro.svg" 
-              alt="A visual representation of the web development process"
-              fill
-              quality={100}
-              priority
-            />
-          </div>
+                <div className="flex flex-col items-center justify-center gap-6">
+                    <div className="p-4 rounded-lg bg-slateOnyx shadow-[0_0_8px_2px_#131519] transition-all transform hover:scale-105">
+                      <span className="text-frostWhite">{service.icon}</span>
+                    </div>
+                    <div className="flex flex-col items-center text-center max-w-xl">
+                      <h2 className="subheading font-b text-saddleBrown mb-4">{service.title}</h2>
+                      <p className="leading-7">
+                        {service.text}
+                      </p>
+                    </div>
+                </div>
 
-          <div className="flex flex-col items-center text-center col-span-1 md:items-start md:text-left md:col-start-2 md:row-start-1 self-center">
-            <h2 className="subheading font-b text-saddleBrown mb-4">Web Development</h2>
-            <p className="leading-7">I'm a passionate and detail-oriented web developer dedicated to creating unique, functional, and visually appealing websites with a strong foundation in both front-end and back-end technologies</p>
-          </div>
-
-
-          <div className="mt-20 md:mt-0 col-span-1 md:col-start-2 md:row-start-2 relative h-[375px] bg-gradient-to-b from-nightSky to-cloudGray">
-            <Image 
-                className="object-contain max-w-[350px] md:max-w-[300px] lg:max-w-[360px] mx-auto "
-                src="/images/homepage/services/UI-UX design-bro.svg" 
-                alt="A visual representation of the UI design process"
-                fill
-                quality={100}
-                priority
-            />
-          </div>
-
-          <div className="flex flex-col items-center text-center col-span-1 md:items-start md:text-left md:col-start-1 md:row-start-2 self-center">
-            <h2 className="subheading font-b text-saddleBrown mb-4">UI Design</h2>
-            <p className="leading-7">I'm a creative UI designer with a passion for crafting visually stunning and intuitive user interfaces. I specialize in translating ideas into engaging designs that not only captivate users but also enhance overall user experiences</p>
-          </div>
-
-
-          <div className="mt-20 md:mt-0 col-span-1 md:col-start-1 md:row-start-3 relative h-[375px] bg-gradient-to-b from-nightSky to-cloudGray">
-            <Image
-              className=" object-contain max-w-[300px] lg:max-w-[326px] mx-auto"
-              src="/images/homepage/services/Mobile development-bro.svg" 
-              alt="A visual representation of the mobile app development process"
-              fill
-              quality={100}
-              priority
-            />
-          </div>
-
-          <div className="flex flex-col items-center text-center col-span-1 md:items-start md:pt-0 md:text-left md:col-start-2 md:row-start-3 self-center">
-            <h2 className="subheading font-b text-saddleBrown mb-4">Mobile Development</h2>
-            <p className="leading-7">Experienced in crafting seamless user experiences for both iOS and Android platforms. Passionate about turning innovative ideas into captivating mobile applications. With strong technical skills and a creative touch, I'm geared to take mobile development to the next level</p>
-          </div>
-
-
-          <div className="mt-20 md:mt-0 col-span-1 md:col-start-2 md:row-start-4 relative h-[375px] bg-gradient-to-b from-nightSky to-cloudGray">
-            <Image
-              className="object-contain max-w-[350px] md:max-w-[336px] lg:max-w-full mx-auto" 
-              src="/images/homepage/services/Design tools-bro.svg" 
-              alt="A visual representation of the graphic design process"
-              fill
-              quality={100}
-              priority
-            />
-          </div>
-
-          <div className="flex flex-col items-center text-center col-span-1 md:items-start md:pt-0 md:text-left md:col-start-1 md:row-start-4 self-center">
-            <h2 className="subheading font-b text-saddleBrown mb-4">Graphic Design</h2>
-            <p className="leading-7">A passionate graphic designer adept at transforming ideas into visually striking concepts. Proficient in delivering impactful designs that resonate with target audiences. Eager to bring a unique blend of creativity and precision to your visual projects</p>
-          </div>
-
+              </div>
+            ))}
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Services
+export default Services;

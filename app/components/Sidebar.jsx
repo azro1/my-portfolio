@@ -4,17 +4,14 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Link from "next/link";
 import { usePathname, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import Image from "next/image";
 
 import { 
   FiLogIn, 
   FiUserPlus, 
   FiHome,
   FiInfo, 
-  FiPhone, 
-  FiHelpCircle, 
-  FiUser, 
-  FiMessageSquare, 
-  FiLogOut,
+  FiPhone
 } from 'react-icons/fi';
 
 // components
@@ -104,15 +101,31 @@ const Sidebar = () => {
   }
   
   return (
-    <div className='hidden xl:inline-block min-w-[64px] h-full items-center z-40'>
+    <div className='hidden xl:inline-block w-[300px] min-w-[300px] min-h-screen relative box-border z-40'>
 
-      <div className="h-full top-0 fixed cursor-pointer bg-softCharcoal border-r-[1px] border-midnightSlate sidebar">
-        <div className="h-full flex flex-col ">
+      <div className="sidebar-content fixed h-full cursor-pointer bg-softCharcoal border-r-[1px] border-slateOnyx">
 
-          <nav className="flex-1 mt-16">
-            <ul className='flex flex-col '>
+          <nav>
+    
+            <div className="flex items-center justify-center p-10">
+              <Link href='/'>
+                <Image
+                  className='cursor-pointer'
+                  src={'/images/my_logo.svg'}
+                  alt="Navigate to home page"
+                  width={80}
+                  height={80}
+                  priority
+                  quality={100}
+                />
+              </Link>
+            </div>
+
+
+
+            <ul className='flex flex-col'>
               {!user && (
-                <li className={`m-2 mb-0 p-3 max-h-12 hover:bg-midnightSlate/40 transition-bg duration-300 rounded-md ${activeLink === '/login' ? 'bg-midnightSlate' : ''}`}>
+                <li className={`m-2 mb-0 p-3 max-h-12 hover:bg-nightSky transition-bg duration-300 rounded-md ${activeLink === '/login' ? 'bg-slateOnyx' : ''}`}>
                   <Link href={'/login'} onClick={() => handleActiveLink('/login')}>
                     <div className='flex items-center gap-3'>
                       <div className="flex items-center">
@@ -127,7 +140,7 @@ const Sidebar = () => {
                 </li>
               )}
               {!user && (
-                <li className={`m-2 p-3 max-h-12 hover:bg-midnightSlate/40 transition-bg duration-300 rounded-md ${activeLink === '/signup' ? 'bg-midnightSlate' : ''}`}>
+                <li className={`m-2 p-3 max-h-12 hover:bg-nightSky transition-bg duration-300 rounded-md ${activeLink === '/signup' ? 'bg-slateOnyx' : ''}`}>
                   <Link href={'/signup'} onClick={() => handleActiveLink('/signup')}>
                     <div className='flex items-center gap-3'>
                       <div className="flex items-center">
@@ -141,8 +154,8 @@ const Sidebar = () => {
                   </Link>
                 </li>
               )}
-              <div className='bg-midnightSlate mx-2 h-[1px]'></div>
-              <li className={`m-2 mb-0 p-3 max-h-12 hover:bg-midnightSlate/40 transition-bg duration-300 rounded-md ${activeLink === '/' ? 'bg-midnightSlate' : ''}`}>
+              <div className='bg-slateOnyx mx-2 h-[1px]'></div>
+              <li className={`m-2 mb-0 p-3 max-h-12 hover:bg-nightSky transition-bg duration-300 rounded-md ${activeLink === '/' ? 'bg-slateOnyx' : ''}`}>
                 <Link href={'/'} onClick={() => handleActiveLink('/')}>
                   <div className='flex items-center gap-3'>
                     <div className="flex items-center">
@@ -155,7 +168,7 @@ const Sidebar = () => {
                   </div>
                 </Link>
               </li>
-              <li className={`m-2 mb-0 p-3 max-h-12 hover:bg-midnightSlate/40 transition-bg duration-300 rounded-md ${activeLink === '/about' ? 'bg-midnightSlate' : ''}`}>
+              <li className={`m-2 mb-0 p-3 max-h-12 hover:bg-nightSky transition-bg duration-300 rounded-md ${activeLink === '/about' ? 'bg-slateOnyx' : ''}`}>
                 <Link href={'/about'} onClick={() => handleActiveLink('/about')}>
                   <div className='flex items-center gap-3'>
                     <div className="flex items-center">
@@ -168,7 +181,7 @@ const Sidebar = () => {
                   </div>
                 </Link>
               </li>
-              <li className={`m-2 p-3 max-h-12 hover:bg-midnightSlate/40 transition-bg duration-300 rounded-md ${activeLink === '/contact' ? 'bg-midnightSlate' : ''}`}>
+              <li className={`m-2 p-3 max-h-12 hover:bg-nightSky transition-bg duration-300 rounded-md ${activeLink === '/contact' ? 'bg-slateOnyx' : ''}`}>
                 <Link href={'/contact'} onClick={() => handleActiveLink('/contact')}>
                   <div className='flex items-center gap-3'>
                     <div className="flex items-center">
@@ -181,11 +194,11 @@ const Sidebar = () => {
                   </div>
                 </Link>
               </li>
-              <div className='bg-midnightSlate mx-2 h-[1px]'></div>
+              <div className='bg-slateOnyx mx-2 h-[1px]'></div>
             </ul>
 
             {(user && isRegComplete) && (
-              <div className="flex items-center m-2 ml-1 mt-6 mb-0 p-3 max-h-12 hover:bg-midnightSlate/40 transition-bg duration-300 rounded-md">
+              <div className="flex items-center m-2 ml-1 mt-6 mb-0 p-3 max-h-12 hover:bg-nightSky transition-bg duration-300 rounded-md">
                 <div className='flex items-center gap-3'>
                   <div className="flex items-center">
                     <NavbarAvatar user={user} />
@@ -201,8 +214,6 @@ const Sidebar = () => {
         </div>
 
       </div>
-
-    </div>
   )
 }
 

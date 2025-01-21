@@ -44,25 +44,27 @@ const ProjectList = () => {
 
   return (
     <section>
-      <h2 className="subheading font-b text-saddleBrown text-center mb-8">My Projects</h2>
-      <Carousel showStatus={false} transitionTime={500} interval={5000} swipeable={true} showThumbs={false} selectedItem={selectedIndex} autoPlay infiniteLoop>
-        {projects && projects.map((project) => (
-          <div key={project.id}>
-            <Link href={`/projects/${project.id}`}>
-              <div className='relative w-full h-[380px] lg:h-[450px]'>
-                <Image className='object-cover object-left-top md:object-contain'
-                  src={project.image_url}
-                  alt={project.list_alt_desc}
-                  fill
-                  sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 976px) 50vw, (max-width: 1440px) 33vw, 25vw"
-                  quality={100}
-                  priority
-                />
-              </div>
-            </Link>
-          </div>
-        ))}
-      </Carousel>
+      <div className="px-1.625">
+        <h2 className="subheading font-b text-saddleBrown text-center mb-8 p-2 bg-nightSky w-max mx-auto">My Projects</h2>
+        <Carousel showStatus={false} transitionTime={500} interval={5000} swipeable={true} showThumbs={false} selectedItem={selectedIndex} autoPlay infiniteLoop>
+          {projects && projects.map((project) => (
+            <div key={project.id}>
+              <Link href={`/projects/${project.id}`}>
+                <div className='relative w-full h-[380px] lg:h-[450px]'>
+                  <Image className='object-cover object-left-top md:object-contain'
+                    src={project.image_url}
+                    alt={project.list_alt_desc}
+                    fill
+                    sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 976px) 50vw, (max-width: 1440px) 33vw, 25vw"
+                    quality={100}
+                    priority
+                  />
+                </div>
+              </Link>
+            </div>
+          ))}
+        </Carousel>
+      </div>
     </section>
 
   )
