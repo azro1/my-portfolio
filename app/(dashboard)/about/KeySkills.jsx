@@ -8,22 +8,22 @@ const KeySkills = () => {
     { 
       name: 'Front End', 
       icon: <FaDesktop className="text-frostWhite" size={40} />, 
-      padbtm: 'pb-10 md:pb-0'
+      padbtm: 'pb-14 lg:pb-0'
     },
     {
-      name: 'Graphic Design',
+      name: 'Branding',
       icon: <FaPaintBrush className="text-frostWhite" size={40} />,
-      padbtm: 'pb-16 md:pb-0'
+      padbtm: 'pb-20 lg:pb-0'
     },
     {
-      name: 'Responsive Design',
+      name: 'Compatibility',
       icon: <FaColumns className="text-frostWhite" size={40} />,
-      padbtm: 'pb-16 md:pb-0'
+      padbtm: 'pb-20 lg:pb-0'
     },
     {
-      name: 'UI Design',
+      name: 'UI / UX',
       icon: <FaLayerGroup className="text-frostWhite" size={40} />,
-      padbtm: 'pb-10 md:pb-0'
+      padbtm: 'pb-14 lg:pb-0'
     },
     {
       name: 'Back End',
@@ -33,20 +33,20 @@ const KeySkills = () => {
   ];
 
   return (
-    <div className="relative">
+    <div className="flex flex-col relative" >
       <motion.div
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: "easeOut" }}
-        className="flex flex-col text-center gap-4 md:col-span-2 md:row-start-3 uw:p-10 uw:pt-8"
+        className="flex flex-col text-center gap-4 lg:col-span-2 lg:row-start-3"
       >
-        <h2 className="subheading font-b text-saddleBrown text-center">Key Skills</h2>
+        <h2 className="text-2xl md:text-3xl font-b text-stoneGray text-center mb-6 md:mb-8">Key Skills</h2>
 
-        <ul className="flex flex-col items-center w-full p-6 md:flex-row md:justify-around md:max-w-[1400px] md:mx-auto relative">
+        <ul className="flex flex-col items-center w-full lg:flex-row lg:justify-between  relative">
           {keySkills.map((skill, index) => (
             <motion.li
               key={index}
-              className={`grid grid-flow-col auto-cols-[minmax(80px,_80px)] grid-rows-[minmax(_auto,80px)_minmax(_auto,20px)] z-50 gap-2 ${skill.padbtm} md:gap-4`}
+              className={`grid grid-flow-col auto-cols-[minmax(80px,_80px)] grid-rows-[minmax(_auto,80px)_minmax(_auto,20px)] z-50 gap-2 ${skill.padbtm} lg:gap-4`}
               initial={{
                 opacity: 0,
                 transform: 'perspective(800px) rotateX(45deg) scale(0.8)',
@@ -64,9 +64,10 @@ const KeySkills = () => {
             >
               {/* Icon Background with Soft Shadow */}
               <motion.span
-                className="p-5 rounded-full shadow-xl shadow-nightSky bg-gradient-to-tl from-nightSky to-ashGray w-max"
+                className="p-5 rounded-full shadow-[0_0_8px_2px_#131519] bg-gradient-to-tl from-softCharcoal via-nightSky to-cloudGray w-max "
                 initial={{ scale: 0.8 }}
                 animate={{ scale: 1 }}
+                whileHover={{ scale: 1.1 }}
                 transition={{ duration: 0.5 }}
               >
                 {skill.icon}
@@ -78,7 +79,7 @@ const KeySkills = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.2 * index }}
               >
-                <p className="font-b text-ashGray">{skill.name}</p>
+                <p className="font-b text-stoneGray">{skill.name}</p>
               </motion.div>
             </motion.li>
           ))}

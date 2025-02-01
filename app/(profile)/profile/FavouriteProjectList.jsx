@@ -31,7 +31,7 @@ const FavouriteProjectList = ({ user }) => {
 
     return (
         <div>
-            <h3 className='text-stoneGray text-lg font-b mb-4'>Favourite Projects</h3>
+            <h3 className='text-frostWhite text-lg font-b mb-4'>Favourite Projects</h3>
             {!errorMessage ? (
                 <div className='flex items-center min-h-52 bg-softCharcoal p-4'>
                     {!isProjectsLoading && (

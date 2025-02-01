@@ -1,30 +1,68 @@
-import Link from "next/link"
+"use client"
 
-const LoggedInMenu = ({handleLogout, handleCloseMenu }) => {
+import { useState } from 'react';
+
+// components
+import NavLinks from "../dropdowns/NavLinks";
+import ProfileMenu from "../dropdowns/ProfileMenu";
+import ProfileMenuLarge from "../dropdowns/ProfileMenuLarge";
+
+
+const LoggedInMenu = ({ user, handleLogout, handleCloseMenu, isProfilePage }) => {
+
+  const [isOpen, setIsOpen] = useState(false)
+
+  const handleToggleMenu = () => {
+    setIsOpen(!isOpen)
+  }
+
   return (
-    <>
-      <Link href='/profile'>
-        <div className='flex items-center gap-3 p-2 px-3 group transition duration-300' onClick={handleCloseMenu}>
-          <span className='text-ashGray group-hover:text-cloudGray transition duration-300 text-base'>Profile</span>
-        </div>
-      </Link>
-      <Link href='/chat'>
-        <div className='flex items-center gap-3 p-2 px-3 group transition duration-300' onClick={handleCloseMenu}>
-          <span className='text-ashGray group-hover:text-cloudGray transition duration-300 text-base'>Chatroom</span>
-        </div>
-      </Link>
-      <Link href='/help'>
-          <div className='flex items-center gap-3 p-2 px-3 group transition duration-300' onClick={handleCloseMenu}>
-            <span className='text-ashGray group-hover:text-cloudGray transition duration-300 text-base'>Help</span>
-          </div>
-      </Link>
-      <div onClick={handleLogout}>
-          <div className='flex items-center gap-3 p-2 px-3 group transition duration-300' onClick={handleCloseMenu}>
-            <span className='text-ashGray group-hover:text-cloudGray transition duration-300 text-base'>Logout</span>
-          </div>
+    <div className='loggedin-nav p-2 md:p-0'>
+
+      <div>
+        {/* dropdown dashboard menu for small screens up to medium */}
+        <NavLinks
+          user={user}
+          handleCloseMenu={handleCloseMenu}
+          handleToggleMenu={handleToggleMenu}
+        />
+
+        {/* dropdown profile menu for small screens up to medium */}
+        <ProfileMenu
+          handleLogout={handleLogout}
+          handleCloseMenu={handleCloseMenu}
+          isProfilePage={isProfilePage}
+          isOpen={isOpen}
+        />
       </div>
-    </>
+
+      {/* dropdown profile menu for medium screens up to xl*/}
+      <ProfileMenuLarge
+        handleLogout={handleLogout}
+        handleCloseMenu={handleCloseMenu}
+        isProfilePage={isProfilePage}
+      />
+
+    </div>
   )
 }
 
 export default LoggedInMenu
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

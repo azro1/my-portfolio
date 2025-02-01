@@ -12,11 +12,11 @@
 
 /* base headings */
 .mainheading {
-  @apply text-4xl leading-tight;
+  @apply text-3xl md:text-4xl leading-tight;
 }
 
 .subheading {
-  @apply text-1.75 leading-tight;
+  @apply text-1.375 md:text-1.75 leading-tight;
 }
 
 
@@ -108,30 +108,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
 
-.services-bg {
-  background: #222429;
-  clip-path: polygon(0 20%, 100% 0, 100% 100%, 0% 80%);
-  height: 760px;
-  position: absolute;
-  width: 100%;
-  top: 18px;
-}
-
-@media only screen and (max-width: 1920px) {
-  .services-bg {
-    top: 0;
-    height: 100%;
-    clip-path: polygon(0 10%, 100% 0, 100% 100%, 0% 90%);
-  }
-}
-@media only screen and (max-width: 768px) {
-  .services-bg {
-    top: 0;
-    height: 100%;
-    clip-path: polygon(0 5%, 100% 0, 100% 100%, 0% 95%);
-  }
-}
-
 
 
 
@@ -174,14 +150,13 @@ input::placeholder, textarea::placeholder{
 
 
 
-/* profile layout nav */
-.profile-nav.md a.active {
-  @apply bg-softCharcoal text-cloudGray;
+/* nav menus*/
+.loggedin-nav a.active {
+  @apply text-cloudGray;
 }
 
-.profile-nav.sm a.active {
-  @apply text-frostWhite;
-}
+
+
 
 
 

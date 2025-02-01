@@ -28,17 +28,26 @@ export default async function DashboardLayout({ children }) {
       redirect('/login');
     }
   }
+  
 
   return (
-    <div className="flex bg-nightSky">
-      <Sidebar />
-      <div className="flex-1">
-          <div className=''>
-            {children}
-          </div>
+    <div className="flex flex-col min-h-screen bg-nightSky">
+      <div className="flex flex-1">
+
+        <div className="flex z-40">
+          <Sidebar />
+        </div>
+
+        <div className="flex-1 flex flex-col z-30">
+          {children}
+        </div>
+
+      </div>
+
+      <div className=" w-full z-50">
         <Footer />
       </div>
-    </div>
 
+    </div>
   )
 }

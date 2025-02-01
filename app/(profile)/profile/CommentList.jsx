@@ -94,7 +94,7 @@ const CommentList = ({ user }) => {
 
   return (
     <div>
-        <h3 className='text-lg font-b text-stoneGray mb-3'>Comments</h3>
+        <h3 className='text-lg font-b text-frostWhite mb-3'>Comments</h3>
 
             {!error ? (
                 <div className='flex flex-col  text-left min-h-96 max-h-96 overflow-y-scroll hide-scrollbar md:max-w-xs relative bg-softCharcoal'>

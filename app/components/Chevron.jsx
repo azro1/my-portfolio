@@ -2,23 +2,25 @@
 
 import { useState, useEffect, useRef } from 'react'
 import {
-  FiChevronDown
+  FiChevronDown,
+  FiMenu
 } from 'react-icons/fi';
 
 // components
 import Dropdown from './navbar/Dropdown'
 
 
-const Chevron = ({ user }) => {
+const Chevron = ({ user, isProfilePage }) => {
   const [isOpen, setIsOpen] = useState(false)
   const dropDownRef = useRef()
 
 
+
   
-  // close menus if user clicks on page
+  // close menus if user clicks outside both dropdown menus and profile submenu
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (event.target !== dropDownRef.current && isOpen) {
+      if (dropDownRef.current && !dropDownRef.current.contains(event.target) && isOpen) {
         setIsOpen(false)
       }
     }
@@ -26,7 +28,7 @@ const Chevron = ({ user }) => {
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, [isOpen, dropDownRef])
+  }, [isOpen])
 
 
   
@@ -41,12 +43,23 @@ const Chevron = ({ user }) => {
 
   return (
      <>
-        <button onClick={handleToggleMenu} className=' text-base text-ashGray ' ref={dropDownRef}>
+        {/* shows for large screens */}
+        <button onClick={handleToggleMenu} className='hidden text-base text-ashGray md:block'>
             <FiChevronDown size={22} />
+        </button> 
+        
+        {/* shows for small screens */}
+        <button onClick={handleToggleMenu} className='text-base text-cloudGray md:hidden'>
+            <FiMenu size={24} />
         </button> 
 
        {isOpen && (
-          <Dropdown user={user} handleCloseMenu={handleCloseMenu} />
+          <Dropdown 
+              user={user} 
+              handleCloseMenu={handleCloseMenu} 
+              isProfilePage={isProfilePage}
+              dropDownRef={dropDownRef} 
+          />
        )}
     </>
   )

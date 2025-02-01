@@ -154,9 +154,9 @@ const ForgotEmail = () => {
 
     
     return (
-        <div className='relative'>
+        <div className='main-container relative'>
 
-            <Link className='absolute left-0 -top-12 sm:-top-16' href='/login'>
+            <Link className='absolute left-6 -top-10 sm:-top-12' href='/login'>
                 <button className='text-nightSky sm:p-1 rounded-md hover:bg-cloudGray transtion-bg duration-300 '>
                     <IoMdArrowBack size={24} />
                 </button>

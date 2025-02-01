@@ -3,8 +3,6 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 // components
-import Navbar from '../components/navbar/Navbar';
-import ProfileNav from './profile/ProfileNav';
 import Footer from '../components/Footer';
 import Sidebar from '../components/Sidebar';
 
@@ -32,21 +30,25 @@ export default async function ProfileLayout({ children }) {
   }
 
   return (
-    <div className='flex bg-nightSky'>
-      <Sidebar />
-      <div className='flex-1'>
-        <div className='main-container'>
+    <div className="flex flex-col min-h-screen bg-ashGray">
+      <div className="flex flex-1">
+
+        <div className="flex z-40">
+          <Sidebar isProfilePage={true} />
+        </div>
+
+        <div className="flex-1 flex flex-col z-30 mt-10 max-w-screen-xl mx-auto px-1.625 uw:px-0">
           <main>
-            <Navbar user={user && user} />
-          </main>
-          <main className='mb-4.5 md:mb-0'>
-            <ProfileNav />
-            <div className='bg-ashGray h-px'></div>
             {children}
           </main>
         </div>
+
+      </div>
+
+      <div className=" w-full z-50">
         <Footer />
       </div>
+
     </div>
-  );
+  )
 }

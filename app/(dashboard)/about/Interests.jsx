@@ -54,7 +54,8 @@ const Interests = () => {
     p5.fill('#191b20');
     p5.stroke('#6B6B6B')
 
-    p5.box(150); // Draw the 3D box
+    const boxSize = Math.min(p5.width, p5.height) * 0.5; // 50% of the smaller dimension
+    p5.box(boxSize);
   };
 
   // Handle mouse press event to start animation or dragging
@@ -82,9 +83,9 @@ const Interests = () => {
 
   return (
     <section>
-      <div className="md:px-0 flex flex-col md:flex-row items-center justify-between">
+      <div className="flex flex-col gap-2 lg:gap-0 lg:flex-row items-center ">
         {/* Left Section - p5.js Canvas */}
-        <div className="flex-1 flex justify-center md:justify-start">
+        <div className="flex-1 flex justify-center max-w-[300px] lg:max-w-none uw:justify-start">
           <ReactP5Wrapper
             setup={setup}
             draw={draw}
@@ -95,8 +96,8 @@ const Interests = () => {
         </div>
 
         {/* Text Section */}
-        <div className="flex-1">
-          <h2 className="subheading font-b text-saddleBrown text-2xl mb-4">My Interests</h2>
+        <div className="flex-1 text-center md:max-w-[544px] lg:mx-w-none lg:text-left">
+          <h2 className="subheading font-b text-saddleBrown mb-4">My Interests</h2>
           <p className="leading-7 text-ashGray">
             When I'm not absorbed in pixels and code or catching up on design trends, I indulge in the joys of cooking and diving into captivating books. These creative outlets fuel my imagination and bring balance to my life, inspiring both my personal and professional pursuits.
           </p>

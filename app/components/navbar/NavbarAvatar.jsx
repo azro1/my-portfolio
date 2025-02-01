@@ -77,7 +77,7 @@ const NavbarAvatar = ({ user }) => {
                     {avatar_url ? (
                         avatar_url.startsWith("http") ? (
                             /* Absolute URLs (e.g., third-party avatars or signed URLs) */
-                            <div className="w-8 h-8">
+                            <div className="relative w-8 h-8">
                                 <Image
                                     className="w-full h-full object-cover"
                                     src={avatar_url}

@@ -35,7 +35,7 @@ const ProjectList = () => {
 
   if (loading) {
     return (
-      <div className='min-h-[600px] flex items-center justify-center'> 
+      <div className='min-h-[516px] flex items-center justify-center'> 
           <img className='w-16' src="../images/loading/pulse_darkbg.svg" alt="a loading gif" />
       </div>
     );
@@ -44,8 +44,8 @@ const ProjectList = () => {
 
   return (
     <section>
-      <div className="px-1.625">
-        <h2 className="subheading font-b text-saddleBrown text-center mb-8 p-2 bg-nightSky w-max mx-auto">My Projects</h2>
+      <div>
+        <h2 className="text-2xl md:text-3xl font-b text-stoneGray text-center mb-6 md:mb-8">My Projects</h2>
         <Carousel showStatus={false} transitionTime={500} interval={5000} swipeable={true} showThumbs={false} selectedItem={selectedIndex} autoPlay infiniteLoop>
           {projects && projects.map((project) => (
             <div key={project.id}>
