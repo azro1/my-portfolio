@@ -84,7 +84,7 @@ const Sidebar = ({ isProfilePage }) => {
         <div className="sidebar-content  fixed bg-softCharcoal border-slateOnyx border-b-[1px] min-h-[113px] md:flex md:items-center md:justify-end xl:h-full xl:overflow-y-scroll xl:hide-scrollbar xl:border-r-[1px] xl:items-start xl:justify-center ">
 
           <div className="hidden md:block  mr-20 xl:mr-0 xl:mt-56">
-            <img className="w-8 opacity-40" src="/images/loading/spinner.svg" alt="" />
+            <img className="w-8 opacity-60" src="/images/loading/spinner.svg" alt="" />
           </div>
         </div>
       </div>
@@ -162,30 +162,30 @@ const Sidebar = ({ isProfilePage }) => {
               <div className='hidden xl:block bg-slateOnyx mx-2 h-[1px]'></div>
 
               {!user && (
-                <li className={`xl:m-2 xl:mb-0 xl:p-3 xl:max-h-12 xl:hover:bg-nightSky transition-bg duration-300 xl:rounded-md ${activeLink === '/login' ? 'xl:bg-slateOnyx' : ''}`}>
-                  <Link href={'/login'} onClick={() => handleActiveLink('/login')}>
+                <li className={`xl:m-2 xl:mb-0 xl:p-3 xl:max-h-12 xl:hover:bg-nightSky transition-bg duration-300 xl:rounded-md ${activeLink === '/auth/login' ? 'xl:bg-slateOnyx' : ''}`}>
+                  <Link href={'/auth/login'} onClick={() => handleActiveLink('/auth/login')}>
                     <div className='xl:flex items-center gap-3'>
                       <div className="hidden xl:flex items-center">
                         <FiLogIn className="icon text-saddleBrown" size={24} />
                       </div>
 
                       <div className="flex items-center">
-                        <span className={`text-base font-medium w-max ${activeLink === '/login' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Login</span>
+                        <span className={`text-base font-medium w-max ${activeLink === '/auth/login' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Login</span>
                       </div>
                     </div>
                   </Link>
                 </li>
               )}
               {!user && (
-                <li className={`xl:m-2 xl:p-3 xl:max-h-12 xl:hover:bg-nightSky transition-bg duration-300 xl:rounded-md ${activeLink === '/signup' ? 'xl:bg-slateOnyx' : ''}`}>
-                  <Link href={'/signup'} onClick={() => handleActiveLink('/signup')}>
+                <li className={`xl:m-2 xl:p-3 xl:max-h-12 xl:hover:bg-nightSky transition-bg duration-300 xl:rounded-md ${activeLink === '/auth/signup' ? 'xl:bg-slateOnyx' : ''}`}>
+                  <Link href={'/auth/signup'} onClick={() => handleActiveLink('/auth/signup')}>
                     <div className='xl:flex items-center gap-3'>
                       <div className="hidden xl:flex items-center">
                         <FiUserPlus className="icon text-saddleBrown" size={24} />
                       </div>
 
                       <div className="flex items-center">
-                        <span className={`text-base font-medium w-max ${activeLink === '/signup' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Sign up</span>
+                        <span className={`text-base font-medium w-max ${activeLink === '/auth/signup' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Sign up</span>
                       </div>
                     </div>
                   </Link>

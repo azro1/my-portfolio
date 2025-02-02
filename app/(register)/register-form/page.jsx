@@ -160,7 +160,7 @@ const RegisterForm = () => {
                 try {
                     await supabase.auth.signOut();
                     localStorage.removeItem("forceLogout");
-                    router.push("/login");
+                    router.push("/auth/login");
                 } catch (error) {
                     console.error("Logout failed:", error);
                 }

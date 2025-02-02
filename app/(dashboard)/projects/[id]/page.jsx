@@ -9,8 +9,7 @@ import Image from 'next/image';
 // components
 import Card from "@/app/components/Card";
 import ProjectFavouriteButton from '../ProjectFavouriteButton';
-import Sidebar from '@/app/components/Sidebar';
-import Footer from '@/app/components/Footer';
+
 
 // dynamic metadata
 export async function generateMetadata({ params }) {

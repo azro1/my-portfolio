@@ -9,7 +9,7 @@ export default async function CommunityLayout ({ children }) {
   const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) {
-    redirect('/login')
+    redirect('/auth/login')
   }
 
   return (

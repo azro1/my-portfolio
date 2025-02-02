@@ -16,7 +16,8 @@ import Loading from "../components/Loading";
 import { useUpdateTable } from "../hooks/useUpdateTable";
 import { useMessage } from "../hooks/useMessage";
 
-
+// server action
+import { deleteCookie } from "./auth/login/actions";
 
 
 
@@ -73,6 +74,23 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
 
 
 
+
+
+    // set indicator that user has been to delete cookie if they go back
+    useEffect(() => {
+        localStorage.setItem("hasVisitedOtpPage", "true");
+    }, []);
+
+
+
+
+
+
+
+
+
+
+
     // check if user has been to reg page by checking local storage flag set in registration page
     useEffect(() => {
         const visited = localStorage.getItem("hasVisitedRegPage");
@@ -88,7 +106,7 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
             const handleLogout = async () => {
                 const supabase = createClientComponentClient();
                 await supabase.auth.signOut();
-                router.push('/login');
+                router.push('/auth/login');
                 localStorage.removeItem("hasVisitedRegPage")
                 changeMessage('error', "You have been logged out. Please log back in to finish setting up your account")
             };
@@ -112,12 +130,11 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
 
 
 
-    // clear cookie on page reload
+    // delete cookie and redirect on page reload
     useEffect(() => {
-        const handleBeforeUnload = (event) => {
-            if (event.type === "beforeunload") {
-                document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-            }
+        const handleBeforeUnload = () => {
+            // Set a flag to indicate a reload is happening
+            sessionStorage.setItem("isReloading", "true");
         };
     
         window.addEventListener("beforeunload", handleBeforeUnload);
@@ -126,6 +143,21 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
             window.removeEventListener("beforeunload", handleBeforeUnload);
         };
     }, []);
+    
+    useEffect(() => {
+        const isReloading = sessionStorage.getItem("isReloading");
+    
+        if (isReloading) {
+            // Clear cookie here
+            deleteCookie();
+    
+            // Remove the flag after reloading
+            sessionStorage.removeItem("isReloading");
+            router.push('/auth/login')
+        }
+    }, [router]);
+    
+    
     
 
 
@@ -268,8 +300,9 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
                 }
 
                 if (data?.is_verified && !data?.is_reg_complete) {
-                   // clear cookie from server if they log back in to complete their registration
-                    document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+                    // delete cookie
+                    await deleteCookie();
+                    localStorage.removeItem("hasVisitedOtpPage");
                     router.push('/upload-avatar')
                     changeMessage('success', `Welcome back, please finish creating your profile`)
                     return;
@@ -280,8 +313,9 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
                         console.log('auth otp page: could not update otp verification status')
                     }
 
-                    // clear cookie from server after successful verification
-                    document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+                    // delete cookie
+                    await deleteCookie();
+                    localStorage.removeItem("hasVisitedOtpPage");
                     setIsVerified(true)
                     reset({ codes: fields.map(() => ({ code: '' })) });
                     changeMessage('success', successMessage);

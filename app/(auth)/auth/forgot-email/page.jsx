@@ -6,13 +6,15 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
-
 import Link from "next/link";
 import { IoMdArrowBack } from "react-icons/io";
 
-
 // custom hook to display global messages
 import { useMessage } from "@/app/hooks/useMessage";
+
+// server action
+import { deleteCookie } from "../login/actions";
+
 
 
 // yup validation schema
@@ -47,11 +49,8 @@ const ForgotEmail = () => {
     // global messages function
     const { changeMessage } = useMessage()
 
-    useEffect(() => {
-        router.refresh();
-        // clear cookie from server if user refreshes or navigates back to this page so they have to enter phone again to get new otp
-        document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-    }, [router]);
+
+
 
 
     // function to convert uk mobile numbers into E.164 format
@@ -62,10 +61,6 @@ const ForgotEmail = () => {
         // return as is if already in international format
         return phoneNumber.startsWith('+') ? phoneNumber : phoneNumber;
     };
-
-
-
-
 
 
 
@@ -123,8 +118,9 @@ const ForgotEmail = () => {
 
         } catch (error) {
             setIsLoading(false);
-            // clear cookie if there's an error
-            document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+            // delete cookie
+            await deleteCookie();
+            localStorage.removeItem('email');
             changeMessage('error', error.message);
         }
 
@@ -136,7 +132,7 @@ const ForgotEmail = () => {
       // once email associated with phone number is found send otp from server to recovered email and redirect them to verify-login-otp page
       useEffect(() => {
          if (redirect) {
-            router.push('/verify-forgot-email-otp')
+            router.push('/auth/verify-forgot-email-otp')
          }
       }, [router, redirect])
 
@@ -156,7 +152,7 @@ const ForgotEmail = () => {
     return (
         <div className='main-container relative'>
 
-            <Link className='absolute left-6 -top-10 sm:-top-12' href='/login'>
+            <Link className='absolute left-6 -top-10 sm:-top-12' href='/auth/login'>
                 <button className='text-nightSky sm:p-1 rounded-md hover:bg-cloudGray transtion-bg duration-300 '>
                     <IoMdArrowBack size={24} />
                 </button>

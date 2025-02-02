@@ -11,7 +11,7 @@ export default async function ProfileLayout({ children }) {
   const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect('/login')
+    redirect('/auth/login')
   } else {
     const { data, error } = await supabase
     .from('profiles')
@@ -25,7 +25,7 @@ export default async function ProfileLayout({ children }) {
 
     if (!data?.is_reg_complete) {
       await supabase.auth.signOut();
-      redirect('/login');
+      redirect('/auth/login');
     }
   }
 

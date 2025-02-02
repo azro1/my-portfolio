@@ -4,7 +4,8 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import disposableDomains from 'disposable-email-domains';
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect, useState } from "react";
+import Link from "next/link"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
@@ -13,14 +14,10 @@ import { useForm } from "react-hook-form";
 import { useMessage } from "@/app/hooks/useMessage";
 
 // components
-import AuthForm from "../AuthForm";
+import AuthForm from "../../AuthForm";
 
 // server action
-import { deleteCookie } from "./actions";
-
-
-
-
+import { deleteCookie } from "../login/actions";
 
 
 
@@ -48,32 +45,15 @@ const schema = yup.object({
 
 
 
+const Signup = () => {
 
-
-
-const Login = () => {
   const [isLoading, setIsLoading] = useState(false)
-
+  const [isChecked, setIsChecked] = useState(false)
   const router = useRouter()
-  
+
   // global messages function
   const { changeMessage } = useMessage()
-
-
-
-
-
-  // delete otp cookie using server action function
-  useEffect(() => {
-    const deleteOtpCookie = async () => {
-        await deleteCookie();
-    };
-    deleteOtpCookie();
-}, []);
-
-
-
-
+  
 
 
   // react-hook-form
@@ -85,20 +65,33 @@ const Login = () => {
   // allows us to register a form control
   const { register, handleSubmit, formState } = form;
   const { errors } = formState;
+  
 
 
+
+
+  // checkbox input
+  const handleCheckbox = (e) => {
+    setIsChecked(e.target.checked)
+  }
 
 
 
 
   const onSubmit = async (data) => {
 
-    const email = data.email;
-    
-    // send email to server endpoint to check if email already exists within profiles table
-    try {
-      setIsLoading(true)
+    // checkbox validation
+    if (!isChecked) {
+      changeMessage('error', 'You need to agree to our privacy policy and terms of service before signing up');
+      return;
+    }
 
+    setIsLoading(true)
+    const email = data.email;
+
+
+    // sent email to server endpoint to check if email already exists within profiles table
+    try {
       const res = await fetch(`${location.origin}/api/auth/email-exists`, {
         method: 'POST',
         headers: {
@@ -106,10 +99,11 @@ const Login = () => {
         },
         body: JSON.stringify({
           email,
-          type: 'login'
+          type: 'signup'
+
         })
       })
-     
+
       // await json response from server and store in const serverEmail
       const serverEmail = await res.json()
       const { accountStatus } = serverEmail;
@@ -122,13 +116,13 @@ const Login = () => {
         changeMessage('error', serverEmail.error)
         return
 
-      } else if ((!serverEmail.exists && res.status === 404) || (serverEmail.exists && res.status === 401 && !accountStatus.is_verified)) {
+      } else if (serverEmail.exists && res.status === 409 && accountStatus.is_verified) {
         setIsLoading(false)
-        changeMessage('error', "We couldn't find an account with that email. Please sign up or check your email for typos.")
+        changeMessage('error', 'It looks like this email is already linked to an account. Please log in instead.')
         return
 
-      } else if ((serverEmail.exists && res.status === 200 && accountStatus.is_verified)) {
-        
+      } else if ((!serverEmail.exists && res.status === 200) || (serverEmail.exists && res.status === 200 && !accountStatus.is_verified)) {
+
         // store email temporarily in local storage
         localStorage.setItem('email', email);
 
@@ -138,39 +132,39 @@ const Login = () => {
         })
 
         if (error) {
-          throw new Error(error.message)
-        }
-
-        if (!error) {
+          throw new Error(error.message);
+        } else {
           setIsLoading(false);
-          router.push('/verify-login-otp')
+          router.push('/auth/verify-signup-otp')
         }
       }
-
+      
     } catch (error) {
         setIsLoading(false);
-        // clear cookie from server if there's an error
-        document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-        changeMessage('error', 'Oops! Something went wrong on our end. Please try again in a moment or contact support if the issue persists.');
-        console.log('login error:', error.message)
+        await deleteCookie();
+        localStorage.removeItem('email')
+        changeMessage('error', 'An unexpected error occurred. Please try again later or contact support if the issue persists.');
+        console.log('sign up error:', error.message)
     }
-
   }
-
 
 
 
   return (
     <AuthForm
-       handleSubmit={handleSubmit}
-       onSubmit={onSubmit}
-       title='Login'
-       subHeading='Enter your email address to recieve a security code for quick and secure login'
-       register={register}
-       errors={errors}
-       isSignup={false}
-       isLoading={isLoading}
+      handleSubmit={handleSubmit}
+      onSubmit={onSubmit}
+      title='Sign up'
+      subHeading='Enter your email address to recieve a security code to create your account'
+      register={register}
+      errors={errors}
+      isChecked={isChecked}
+      handleCheckbox={handleCheckbox}
+      isSignup={true}
+      isLoading={isLoading}
     />
-  )
-};
-export default Login;
+  );
+}
+
+
+  export default Signup

@@ -3,5 +3,5 @@
 import { cookies } from 'next/headers';
 
 export async function deleteCookie() {
-    cookies().delete('canAccessOtpPage');
+    cookies().delete('canAccessOtpPage', { path: '/', sameSite: 'Strict' });
 }

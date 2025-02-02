@@ -3,11 +3,9 @@
 import { useEffect, useRef } from "react";
 
 // components
-import AuthOtpForm from "../AuthOtpForm";
+import AuthOtpForm from "../../AuthOtpForm";
 
-
-
-const VerifyLoginOtp = () => {
+const VerifySignupOtp = () => {
 
     const authGroupEmailRef = useRef(null);
 
@@ -22,14 +20,14 @@ const VerifyLoginOtp = () => {
     return (
         <div className='flex items-center justify-center'>
             <AuthOtpForm
-                redirectUrl='/'
-                title='Login'
-                subHeading='To login, enter the code we sent to your email address'
-                successMessage='OTP verification successful. You are now Logged in.'
+                redirectUrl='/upload-avatar'
+                title='Sign up'
+                subHeading='Enter the verification code sent to your email to activate your account'
+                successMessage="Success! Your code has been verified and we're creating your account."
                 authGroupEmailRef={authGroupEmailRef}
             />
         </div>
     )
 }
 
-export default VerifyLoginOtp
+export default VerifySignupOtp

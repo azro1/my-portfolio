@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 
 // components
-import AuthOtpForm from "../AuthOtpForm";
+import AuthOtpForm from "../../AuthOtpForm";
 
 
 

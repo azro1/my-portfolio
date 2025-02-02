@@ -35,14 +35,14 @@ const LoggedOutMenu = ({ handleCloseMenu }) => {
           <span className={`text-base ${activeLink === '/contact' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Contact</span>
         </div>
       </Link>
-      <Link href={'/login'} className={`${activeLink === '/login' ? 'active' : ''}`} onClick={() => handleActiveLink('/login')}>
+      <Link href={'/auth/login'} className={`${activeLink === '/auth/login' ? 'active' : ''}`} onClick={() => handleActiveLink('/auth/login')}>
         <div className='flex items-center p-3' onClick={handleCloseMenu}>
-          <span className={`text-base ${activeLink === '/login' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Login</span>
+          <span className={`text-base ${activeLink === '/auth/login' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Login</span>
         </div>
       </Link>
-      <Link href={'/signup'} className={`${activeLink === '/signup' ? 'active' : ''}`} onClick={() => handleActiveLink('/signup')}>
+      <Link href={'/auth/signup'} className={`${activeLink === '/auth/signup' ? 'active' : ''}`} onClick={() => handleActiveLink('/auth/signup')}>
         <div className='flex items-center p-3' onClick={handleCloseMenu}>
-          <span className={`text-base ${activeLink === '/signup' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Sign up</span>
+          <span className={`text-base ${activeLink === '/auth/signup' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Sign up</span>
         </div>
       </Link>
     </div>

@@ -7,9 +7,6 @@ import { useRouter } from "next/navigation";
 import LoggedInMenu from "./LoggedInMenu";
 import LoggedOutMenu from "./LoggedOutMenu";
 
-// server action
-import { deleteCookie } from "@/app/logout/actions";
-
 
 const Dropdown = ({ user, handleCloseMenu, isProfilePage, dropDownRef }) => {
   const router = useRouter()
@@ -19,8 +16,7 @@ const Dropdown = ({ user, handleCloseMenu, isProfilePage, dropDownRef }) => {
     const {error} = await supabase.auth.signOut()
 
     if (!error) {
-      await deleteCookie();
-      router.push('/login')
+      router.push('/auth/login')
     }
 
     if (error) {
