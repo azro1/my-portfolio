@@ -34,7 +34,7 @@ export async function POST(request) {
   switch(type) {
     case 'login':
       if (exists && accountStatus.is_verified) {
-        cookies().set('canAccessOtpPage', 'true', { path: '/' }); // set cookie to grant OTP access for users with verified accounts
+        cookies().set('canAccessOtpPage', 'true', { path: '/', httpOnly: true, sameSite: 'Strict' }); // set cookie to grant OTP access for users with verified accounts
         return NextResponse.json({ exists, accountStatus }, {
           status: 200
         })
@@ -50,12 +50,12 @@ export async function POST(request) {
       break;
     case 'signup':
       if (!exists) {
-        cookies().set('canAccessOtpPage', 'true', { path: '/' }); // set cookie to grant OTP access for new users
+        cookies().set('canAccessOtpPage', 'true', { path: '/', httpOnly: true, sameSite: 'Strict' }); // set cookie to grant OTP access for new users
         return NextResponse.json({ exists }, {
           status: 200
         })
       } else if (exists && !accountStatus.is_verified) {
-        cookies().set('canAccessOtpPage', 'true', { path: '/' }); // set cookie to grant OTP access if they haven't completed the verification process
+        cookies().set('canAccessOtpPage', 'true', { path: '/', httpOnly: true, sameSite: 'Strict' }); // set cookie to grant OTP access if they haven't completed the verification process
         return NextResponse.json({ exists, accountStatus }, {
           status: 200
         })
@@ -63,7 +63,7 @@ export async function POST(request) {
         return NextResponse.json({ exists, accountStatus }, {  // do not set any cookie because a verified account already exists or its not the first time a user has tried to register
           status: 409
         })
-      }
+      } 
       break;
     default:
       return NextResponse.json({ error: 'Invalid request type.' }, {

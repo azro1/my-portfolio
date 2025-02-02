@@ -1,145 +1,73 @@
 import Link from "next/link"
 import Image from "next/image";
-import { HiMiniEnvelopeOpen } from "react-icons/hi2";
-import { FaLinkedin, FaGithub, FaInstagramSquare, FaYoutube } from 'react-icons/fa';
+import { FiLinkedin, FiGithub, FiInstagram, FiYoutube } from 'react-icons/fi';
 
 const Footer = () => {
   return (
-    <footer className="bg-frostWhite border-t-8 border-saddleBrown p-1.625 absolute left-0 w-full z-40">
-       <main className="my-2.375 md:my-4.1875 max-w-screen-lg mx-auto" >
-          <div className="newsletter flex flex-col items-center text-center gap-y-6">
-            <h3>Get News, Insights & Updates</h3>
-            <p className="max-w-2xl">Sign up to my newsletter to recieve the latest industry insights, information on upcoming events and updates on new projects</p>
-            <form className="block sm:flex ">
-              <div className="relative sm:pr-2 mb-3 sm:m-0">
-                <HiMiniEnvelopeOpen className="absolute top-2 left-4" size={28} />
-                 <input 
-                   className="p-2 w-80 pl-14 pr-5 rounded-lg text-left border-2 border-nightSky"
-                   type="text"
-                   placeholder="Enter you email address"
-                   spellCheck="false" 
-                 />
-              </div>
-              <Link className="group" href="#">
-                <button className="py-3 px-4 min-w-max text-sm rounded-lg font-b text-frostWhite bg-nightSky ">SIGN ME UP</button>
-              </Link>
-            </form>
-          </div>
-
-          <div className="pagelinks flex flex-col text-center place-items-center gap-y-10 gap-x-6 my-10 md:my-0 md:flex md:flex-row md:place-items-stretch md:text-left md:mt-16">
-            <div className="flex-1 md:flex-initial md:w-1/6 ">
-              <h4>PAGE LINKS</h4>
-              <div>
-                <Link href="/about"><p>About</p></Link>
-                <Link href="/contact"><p>Contact</p></Link>
-                <Link href="/login"><p>Login</p></Link>
-                <Link href="/signup"><p>Signup</p></Link>
-                <Link href="/help"><p>Help</p></Link>
-              </div>
-            </div>
-            <div className="flex-1 ">
-              <h4>ACCESSIBILTY</h4>
-              <div>
-                <Link href="#">
-                  <p>Accessibility Statement</p>
-                </Link>
-                <Link href="#">
-                  <p>Accessibility & Inclusivity</p>
-                </Link>
-                <Link href="#">
-                  <p>Our Accessibility Commitment</p>
-                </Link>
-              </div>
-            </div>
-            <div className="flex-1 ">
-              <h4>COMPLIANCE</h4>
-              <div>
-                <Link href="#">
-                  <p>Compliance Standards</p>
-                </Link>
-                <Link href="#">
-                  <p>Regulatory Compliance</p>
-                </Link>
-                <Link href="#">
-                  <p>Our Commitment to Standards</p>
-                </Link>
-              </div>
-            </div>
-            <div className="flex-1">
-              <h4>GET IN TOUCH</h4>
-              <div className="">
-                <p>07455132994</p>
-              </div>
-              <div>
-                <p>simon.789@hotmail.co.uk</p>
-              </div>
-              <div>
-                <p>New Southgate, London N11 2RG</p>
-              </div>
-            </div>
-          </div>
-
-        <div className="flex flex-col items-center text-center gap-10 md:h-9.5 md:flex-row md:justify-center">
-
-          <div className="flex-1 order-2 flex flex-col items-center gap-1 md:flex-row md:order-1 md:items-end">
-            <div className="shadow-sm shadow-black rounded-full">
-              <Link href='/'>
-                <Image
-                  className='cursor-pointer'
-                  src={'/images/my_logo.svg'}
-                  alt="Navigate to home page"
-                  width={50}
-                  height={50}
-                  priority
-                  quality={100}
-                />
-              </Link>
-            </div>
-            <p className="flex-1 text-left">&copy; 2025 Simon Sutherland</p>
-          </div>
+    <footer className="min-h-[300px] w-full flex items-start xl:min-h-[170px] bg-slateOnyx">
 
 
-          <div className="flex-1 order-1 flex flex-col md:order-3">
-            <div className="order-2 mt-2 w-max md:order-1 md:ml-auto md:mt-0">
-              <h4>FOLLOW ME ON SOCIAL MEDIA</h4>
-            </div>
-            <div className="order-1 flex gap-x-5 md:order-2 md:justify-end md:mt-3 pr-8 w-max ml-auto">
-              <a href="#">
-                <span>
-                  <FaLinkedin size={28} />
-                </span>
-              </a>
-              <a href="#">
-                <span>
-                  <FaYoutube size={28} />
-                </span>
-              </a>
-              <a href="#">
-                <span>
-                  <FaGithub size={28} />
-                </span>
-              </a>
-              <a href="#">
-                <span>
-                  <FaInstagramSquare size={28} />
-                </span>
-              </a>
-            </div>
-          </div>
 
-        
+        <div className="px-1.625 mx-auto max-w-screen-lg uw:p-0 flex-1">
+          <main>
+              <div className="flex flex-col items-center justify-start gap-2 mt-4 mb-20 md:py-4 md:flex-row md:items-start md:justify-between md:m-0">
 
-        <div className="flex-1 order-3 flex items-center justify-center md:order-2 md:self-end ">
-          <Link href="#">
-            <p className="text-sm pt-1 pr-2 min-w-max">Terms of Use</p>
-          </Link>
-          <span>|</span>
-          <Link href="#">
-            <p className="text-sm pt-1 pl-2 min-w-max">Privacy Policy</p>
-          </Link>
+                <div className="flex flex-col gap-2 md:gap-2">
+                  <div className="flex flex-col items-center gap-1 md:flex-row md:gap-3">
+                    <div className="shadow-sm shadow-black rounded-full relative w-[40px] max-w-[40px] h-[40px]">
+                      <Link href='/'>
+                        <Image
+                          className='cursor-pointer w-max'
+                          src={'/images/my_logo.svg'}
+                          alt="Navigate to home page"
+                          width={40}
+                          height={40}
+                          priority
+                          quality={100}
+                        />
+                      </Link>
+                    </div>
+                    <p className="text-ashGray">&copy; 2025 Simon Sutherland</p>
+                  </div>
+                  <div className="flex justify-center gap-4">
+                      <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
+                        <FiLinkedin size={24} />
+                      </a>
+                      <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+                        <FiGithub size={24} />
+                      </a>
+                      <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer">
+                        <FiYoutube size={24} />
+                      </a>
+                      <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+                        <FiInstagram size={24} />
+                      </a>
+                  </div>
+                </div>
+
+
+
+
+
+
+
+
+
+                <div className="flex flex-col items-center justify-start">
+                  <Link href="#">
+                    <p className="text-sm text-ashGray">Terms of Use</p>
+                  </Link>
+                  <Link href="#">
+                    <p className="text-sm text-ashGray">Privacy Policy</p>
+                  </Link>
+                </div>
+
+              </div>
+
+
+          </main>
+
         </div>
-        </div>
-      </main>
     </footer>
   )
 }

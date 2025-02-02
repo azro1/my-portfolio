@@ -18,8 +18,8 @@ const Profile = async () => {
 
         {user && (
           <div className="pt-16">
-            <h2 className='text-2xl text-stoneGray font-b'>Activity Feed</h2>
-            <p className='mt-3 text-base leading-normal text-ashGray'>Shows your recent activity on the website, including projects viewed, favourite projects and any comments you've made.</p>
+            <h2 className='text-2xl text-frostWhite font-b'>Activity Feed</h2>
+            <p className='mt-3 text-base leading-normal text-frostWhite'>Your recent activity on the website, including any projects you have viewed, your favourite projects and your chat history.</p>
             
             <div className='mt-10 grid grid-cols-1 gap-16 grid-flow-row auto-rows-max'>
                 <CommentList user={user} />

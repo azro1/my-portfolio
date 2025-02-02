@@ -15,13 +15,14 @@ export default {
     extend: {
       colors: {
         saddleBrown: '#A52A2A',
-        deepCharcoal: '#131519',
         softCharcoal: '#191b20',
-        onyx: '#16181C',
+        deepCharcoal: '#131519',
+        slateOnyx: '#2A2C31',
         stoneGray: '#757575',
         ashGray: '#6B6B6B',
         nightSky: '#1C1E24',
-        frostWhite: '#f2f2f2',
+        duskSlate: '#1E2026',
+        frostWhite: '#D1D1D1',
         cloudGray: '#E0E0E3',
         softGray: '#F5F5F5',
         midnightSlate: '#25272E',

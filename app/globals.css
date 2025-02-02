@@ -12,11 +12,11 @@
 
 /* base headings */
 .mainheading {
-  @apply text-4xl leading-tight;
+  @apply text-3xl md:text-4xl leading-tight;
 }
 
 .subheading {
-  @apply text-1.75 leading-tight;
+  @apply text-1.375 md:text-1.75 leading-tight;
 }
 
 
@@ -45,7 +45,7 @@ main {
 }
 
 .btn {
-  @apply p-3 px-3.5 rounded-lg cursor-pointer text-white font-medium bg-nightSky;
+  @apply p-3 px-3.5 rounded-lg cursor-pointer text-white font-medium bg-saddleBrown;
 }
 
 .btn-small {
@@ -92,39 +92,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
 
+
+
+
+
+
 /* sidebar */
-.sidebar {
-  height: 100vh;
-  width: 64px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  transition: width 0.2s ease;
-  display: flex;
-  flex-direction: column;
+.sidebar-content {
+  width: inherit;
 }
-
-.sidebar:hover {
-  width: 236px;
-}
-
-.content-container {
-  opacity: 0;
-  transition: opacity 0.2s ease 0.1s; /* Adjusted to match sidebar speed */
-}
-
-.sidebar:hover .content-container {
-  opacity: 1; /* Fade in text when sidebar expands */
-}
-
-.sidebar:not(:hover) .content-container {
-  opacity: 0; /* Fade out text when sidebar is not hovered */
-  transition: opacity 0.1s ease; /* Same timing for fade-out */
-}
-
-
-
-
 
 
 
@@ -149,7 +125,19 @@ input::placeholder, textarea::placeholder{
 
 
 
-/* react carousel prev next controls */
+
+
+
+
+
+/* react carousel */
+.carousel-root,
+.carousel .carousel-slider {
+  width: 100% !important;
+  max-width: 926px !important;
+  margin: 0 auto !important;
+}
+
 .carousel .control-prev, .control-next {
   max-height: 410px !important;
 }
@@ -157,32 +145,20 @@ input::placeholder, textarea::placeholder{
 
 
 
-/* profile layout nav */
-.profile-nav.md a.active {
-  @apply bg-softCharcoal text-cloudGray;
+
+
+
+
+
+/* nav menus*/
+.loggedin-nav a.active {
+  @apply text-cloudGray;
 }
 
-.profile-nav.sm a.active {
-  @apply text-frostWhite;
-}
 
 
 
 
-
-/* auth login and signup icons */
-.tooltip {
-  @apply relative;
-}
-
-.tooltiptext {
-  @apply invisible absolute min-w-max text-ashGray font-r -top-1.875 opacity-0 transition-opacity duration-500 ease-in-out;
-
-}
-
-.tooltip:hover .tooltiptext {
-  @apply text-base visible opacity-100;
-}
 
 
 
@@ -266,3 +242,62 @@ footer span {
   @apply text-green-600 text-sm mt-2;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* about section /
+
+
+contributing */
+@keyframes smooth-gradient {
+  0% {
+      background: radial-gradient(circle, rgba(70, 130, 180, 0.4), transparent 60%);
+  }
+  25% {
+      background: radial-gradient(circle, rgba(32, 178, 170, 0.4), transparent 60%);
+  }
+  50% {
+      background: radial-gradient(circle, rgba(0, 139, 139, 0.3), transparent 60%);
+  }
+  75% {
+      background: radial-gradient(circle, rgba(135, 206, 235, 0.3), transparent 60%);
+  }
+  100% {
+      background: radial-gradient(circle, rgba(70, 130, 180, 0.4), transparent 60%);
+  }
+}
+
+.gradient-bg {
+  animation: smooth-gradient 8s ease-in-out infinite;
+}
+
+
+/* teaching and key skills p5 canvas */
+@media (max-width: 1920px) {
+  #defaultCanvas0 {
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+
+@media (max-width: 640px) {
+  #defaultCanvas1 {
+    width: 100% !important;
+    height: 100% !important;
+
+  }
+
+}

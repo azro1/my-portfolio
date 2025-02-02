@@ -9,7 +9,7 @@ export default async function RegisterLayout ({ children }) {
   const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) {
-    redirect('/login')
+    redirect('/auth/login')
   }
 
   if (user) {

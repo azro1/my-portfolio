@@ -1,54 +1,51 @@
-import Link from "next/link"
+"use client"
 
-  import { 
-    FiHome,
-    FiInfo, 
-    FiPhone, 
-    FiLogIn,
-    FiUserPlus, 
-    FiHelpCircle, 
-  } from 'react-icons/fi';
+import Link from "next/link"
+import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 const LoggedOutMenu = ({ handleCloseMenu }) => {
+
+  const [activeLink, setActiveLink] = useState('');
+  const pathName = usePathname()
+
+  useEffect(() => {
+    setActiveLink(pathName)
+  }, [pathName])
+
+  const handleActiveLink = (href) => {
+      setActiveLink(href);
+  };
+
+
   return (
-    <>
-      <Link href='/'>
-        <div className='flex items-center gap-3 p-3 max-h-16 mb-1 bg-softCharcoal group hover:bg-midnightSlate transition duration-300 rounded-tl-md rounded-tr-md' onClick={handleCloseMenu}>
-          <FiHome className="text-saddleBrown" size={20} />
-          <span className='text-ashGray group-hover:text-stoneGray transition duration-300 text-base'>Home</span>
+    <div className='p-2 md:p-0'>
+      <Link href={'/'} className={`${activeLink === '/' ? 'active' : ''}`} onClick={() => handleActiveLink('/')}>
+        <div className='flex items-center p-3' onClick={handleCloseMenu}>
+          <span className={`text-base ${activeLink === '/' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Home</span>
         </div>
       </Link>
-      <Link href='/about'>
-        <div className='flex items-center gap-3 p-3 max-h-16 mb-1 bg-softCharcoal group hover:bg-midnightSlate transition duration-300' onClick={handleCloseMenu}>
-          <FiInfo className="text-saddleBrown" size={18} />
-          <span className='text-ashGray group-hover:text-stoneGray transition duration-300 text-base'>About</span>
+      <Link href={'/about'} className={`${activeLink === '/about' ? 'active' : ''}`} onClick={() => handleActiveLink('/about')}>
+        <div className='flex items-center p-3' onClick={handleCloseMenu}>
+          <span className={`text-base ${activeLink === '/about' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>About</span>
         </div>
       </Link>
-      <Link href='/contact'>
-        <div className='flex items-center gap-3 p-3 max-h-16 mb-1 bg-softCharcoal group hover:bg-midnightSlate transition duration-300' onClick={handleCloseMenu}>
-          <FiPhone className="text-saddleBrown" size={17} />
-          <span className='text-ashGray group-hover:text-stoneGray transition duration-300 text-base'>Contact</span>
+      <Link href={'/contact'} className={`${activeLink === '/contact' ? 'active' : ''}`} onClick={() => handleActiveLink('/contact')}>
+        <div className='flex items-center p-3' onClick={handleCloseMenu}>
+          <span className={`text-base ${activeLink === '/contact' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Contact</span>
         </div>
       </Link>
-      <Link href='/login'>
-        <div className='flex items-center gap-3 p-3 max-h-16 mb-1 bg-softCharcoal group hover:bg-midnightSlate transition duration-300' onClick={handleCloseMenu}>
-          <FiLogIn className="text-saddleBrown" size={20} />
-          <span className='text-ashGray group-hover:text-stoneGray transition duration-300 text-base'>Login</span>
+      <Link href={'/auth/login'} className={`${activeLink === '/auth/login' ? 'active' : ''}`} onClick={() => handleActiveLink('/auth/login')}>
+        <div className='flex items-center p-3' onClick={handleCloseMenu}>
+          <span className={`text-base ${activeLink === '/auth/login' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Login</span>
         </div>
       </Link>
-      <Link href='/signup'>
-        <div className='flex items-center gap-3 p-3 max-h-16 mb-1 bg-softCharcoal group hover:bg-midnightSlate transition duration-300' onClick={handleCloseMenu}>
-          <FiUserPlus className="text-saddleBrown" size={22} />
-          <span className='text-ashGray group-hover:text-stoneGray transition duration-300 text-base'>Sign up</span>
+      <Link href={'/auth/signup'} className={`${activeLink === '/auth/signup' ? 'active' : ''}`} onClick={() => handleActiveLink('/auth/signup')}>
+        <div className='flex items-center p-3' onClick={handleCloseMenu}>
+          <span className={`text-base ${activeLink === '/auth/signup' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Sign up</span>
         </div>
       </Link>
-      <Link href='/help'>
-        <div className='flex items-center gap-3 p-3 max-h-16 bg-softCharcoal group hover:bg-midnightSlate transition duration-300 rounded-bl-md rounded-br-md' onClick={handleCloseMenu}>
-          <FiHelpCircle className="text-saddleBrown" size={18} />
-          <span className='text-ashGray group-hover:text-stoneGray transition duration-300 text-base'>Help</span>
-        </div>
-      </Link>
-    </>
+    </div>
   )
 }
 

@@ -25,22 +25,29 @@ export default async function DashboardLayout({ children }) {
 
     if (!data?.is_reg_complete) {
       await supabase.auth.signOut();
-      redirect('/login');
+      redirect('/auth/login');
     }
   }
+  
 
   return (
-    <div className="flex flex-col bg-nightSky">
-      <Sidebar />
-      <div>
-        <div className="main-container">
-          <main className='py-44'>
-            {children}
-          </main>
+    <div className="flex flex-col min-h-screen bg-nightSky">
+      <div className="flex flex-1">
+
+        <div className="flex z-40">
+          <Sidebar />
         </div>
+
+        <div className="flex-1 flex flex-col z-30">
+          {children}
+        </div>
+
+      </div>
+
+      <div className=" w-full z-50">
         <Footer />
       </div>
-    </div>
 
+    </div>
   )
 }

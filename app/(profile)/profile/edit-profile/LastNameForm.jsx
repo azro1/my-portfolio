@@ -213,7 +213,7 @@ const LastNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
                 <p className="text-cloudGray frostWhitespace-normal break-words">{lastName}</p>
             </div>
 
-            <div className='bg-onyx h-[2px]'></div>
+            <div className='bg-ashGray h-[2px]'></div>
 
             {showForm && (
                 <Modal>

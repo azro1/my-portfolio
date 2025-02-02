@@ -114,7 +114,7 @@ const Comments = ({ user, comments, loadComments }) => {
                     {comments.map((comment) => (
                         <div className="mb-14 flex items-center gap-3" key={comment.id}>
                                 {comment.avatar_url ? (
-                                    comment.avatar_url.startsWith("http") ? (
+                                    comment.avatar_url.startsWith("https") ? (
                                         <div className="overflow-hidden rounded-full relative w-12 h-12">
                                             <Image
                                                 className="w-full h-full object-cover"

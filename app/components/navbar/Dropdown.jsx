@@ -8,7 +8,7 @@ import LoggedInMenu from "./LoggedInMenu";
 import LoggedOutMenu from "./LoggedOutMenu";
 
 
-const Dropdown = ({ user, handleCloseMenu }) => {
+const Dropdown = ({ user, handleCloseMenu, isProfilePage, dropDownRef }) => {
   const router = useRouter()
 
   const handleLogout = async () => {
@@ -16,9 +16,7 @@ const Dropdown = ({ user, handleCloseMenu }) => {
     const {error} = await supabase.auth.signOut()
 
     if (!error) {
-      document.cookie = "isRegComplete=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-      router.push('/login')
-      router.refresh()
+      router.push('/auth/login')
     }
 
     if (error) {
@@ -27,14 +25,26 @@ const Dropdown = ({ user, handleCloseMenu }) => {
   }
 
   return (
-    <div className={`absolute left-4 top-[306px] flex flex-col  w-52 mt-4 p-1 z-40 bg-midnightSlate rounded-sm`}>
-      {user && (
-        <LoggedInMenu 
-          handleLogout={handleLogout}
-          handleCloseMenu={handleCloseMenu}  
-        />
-      )}
-    </div>
+    <>
+      {user ? (
+        <div className='absolute w-full right-0 top-28 z-40 bg-slateOnyx md:right-6 md:top-20 md:w-56 md:p-1 md:rounded-sm xl:left-8 xl:top-[406px] xl:mt-4' ref={dropDownRef}>
+          <LoggedInMenu
+            user={user} 
+            handleLogout={handleLogout}
+            handleCloseMenu={handleCloseMenu}
+            isProfilePage={isProfilePage}
+          />
+        </div>
+      ) : (
+        <div className='absolute w-full left-0 top-28 z-40 bg-slateOnyx'>
+          <LoggedOutMenu 
+            handleCloseMenu={handleCloseMenu}
+            isProfilePage={isProfilePage}
+          />   
+        </div>
+      )}     
+    </>
+
   )
 }
 
