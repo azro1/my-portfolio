@@ -23,7 +23,7 @@ const ProfileMenu = ({ handleLogout, handleCloseMenu, isProfilePage, isOpen }) =
                 <>
                     <Link href={'/profile'} className={`${activeLink === '/profile' ? 'active' : ''}`} onClick={() => handleActiveLink('/profile')}>
                         <div className='flex items-center p-2 px-4 xl:hover:bg-ashGray xl:hover:text-cloudGray transition-bg duration-300' onClick={handleCloseMenu}>
-                            <span className='text-base'>Profile</span>
+                            <span className='text-base'>My Profile</span>
                         </div>
                     </Link>
 

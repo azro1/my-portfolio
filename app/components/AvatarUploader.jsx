@@ -154,7 +154,7 @@ const AvatarUploader = ({ user, updateProfile, btnColor, show3DAvatar }) => {
                 <div className={`${show3DAvatar ? 'flex' : '' }`}>
 
                      <div className='flex-1'>
-                        <div className='mb-2 mt-4 h-14 w-14 relative'>
+                        <div className='mb-2.5 h-14 w-14 relative'>
                             {imgSrc ? (
                                 <Image
                                     src={imgSrc}

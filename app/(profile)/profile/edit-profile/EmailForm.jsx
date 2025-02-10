@@ -204,14 +204,12 @@ const EmailForm = ({ user, profile }) => {
         <div>
 
             <div className='py-4'>
-                <div className="flex items-center justify-between pb-1">
+                <div className="flex items-center justify-between pb-2">
                     <span className="inline-block text-ashGray">Email</span>
-                    <span className="text-red-800 cursor-pointer" onClick={handleOpenForm}>Edit</span>
+                    <span className="text-red-600 cursor-pointer" onClick={handleOpenForm}>Edit</span>
                 </div>
-                <p className="text-cloudGray frostWhitespace-normal break-words">{email}</p>
+                <p className="text-frostWhite frostWhitespace-normal break-words min-h-[24px]">{email}</p>
             </div>
-
-            <div className='bg-ashGray h-[2px]'></div>
 
             {showForm && (
                 <Modal>

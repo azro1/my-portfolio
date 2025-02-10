@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useMessage } from "../hooks/useMessage";
 
 // server action
@@ -9,11 +9,37 @@ import { deleteCookie } from "./auth/login/actions";
 
 
 const Cleanup = () => {
+    const [isUserBack, setIsUserBack] = useState(false)
     const { changeMessage } = useMessage();
 
 
+  // set state to track when user is redirected back to login after reloading page in AuthOtpForm with flag in local storage
+  useEffect(() => {
+    const visited = localStorage.getItem("hasVisitedOtpPage");
+    if (visited === "true") {
+      setIsUserBack(true);
+    }
+  }, []);
 
-    // function to delete otp server cookie and ls flag if user comes back from otp form
+
+  // function to delete server cookie and local storage flag
+  useEffect(() => {
+    if (isUserBack) {
+      const handleReload = async () => {
+        await deleteCookie();
+        localStorage.removeItem("hasVisitedOtpPage")
+        changeMessage('error', "You have aborted the process. Please signup to receive a new security code.")
+      };
+      handleReload();
+    }
+  }, [isUserBack]);
+
+
+
+
+
+ 
+    // function to delete server cookie and local storage flag if user navigates back from otp form
     useEffect(() => {
         const handlePopState = () => {
           const hasVisitedOtpPage = localStorage.getItem("hasVisitedOtpPage") === "true";
@@ -35,7 +61,7 @@ const Cleanup = () => {
         return () => {
           window.removeEventListener('popstate', handlePopState);
         };
-      }, [changeMessage]);
+      }, []);
 
 
 

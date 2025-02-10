@@ -92,7 +92,7 @@ const CommentForm = ({ user, profile, updateComments }) => {
 
 
     return (
-        <div>
+        <div className="w-full">
                 {user && (
                     <div>
                         <form onSubmit={handleSubmit(handleComment)}>
@@ -104,7 +104,7 @@ const CommentForm = ({ user, profile, updateComments }) => {
                                     required: 'Comment is required'
                                 })}
                                 placeholder="Tell us what's on your mind..."
-                                className='py-3 px-4 w-full outline-none text-base rounded-md text-stoneGray bg-midnightSlate block'
+                                className='py-3 px-4 w-full outline-none text-base rounded-md text-frostWhite bg-midnightSlate block'
                             ></input>
                         </form>
                     </div>

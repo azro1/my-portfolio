@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import { FiChevronDown } from 'react-icons/fi';
 
 // components
-import NavbarAvatar from "../navbar/NavbarAvatar";
+import UserAvatar from "../navbar/UserAvatar";
 
 
 const NavLinks = ({ user, handleCloseMenu, handleToggleMenu }) => {
@@ -42,7 +42,16 @@ const NavLinks = ({ user, handleCloseMenu, handleToggleMenu }) => {
             </Link>
             <div className="flex items-center gap-1 p-2 px-4">
                 <div className='flex items-center gap-2'>
-                    <NavbarAvatar user={user} />
+                    <div className="min-w-[32px] min-h-[32px]">
+                        <UserAvatar 
+                          user={user}
+                          width={32}
+                          height={32}
+                          maxWidth={'max-w-[32px]'}
+                          maxHeight={'max-h-[32px]'}
+                          defaultAvatarSize={32}
+                        />
+                    </div>
                     <span className="text-base font-medium text-stoneGray xl:inline">{user?.user_metadata.first_name || user?.user_metadata.full_name}</span>
                 </div>
                 <button onClick={handleToggleMenu} className='text-base text-ashGray'>

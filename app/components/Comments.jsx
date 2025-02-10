@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from "react";
 import { FaUserCircle } from "react-icons/fa";
 
 // components
+
 import Avatar from "@/app/components/Avatar";
 
 const Comments = ({ user, comments, loadComments }) => {
@@ -115,39 +116,41 @@ const Comments = ({ user, comments, loadComments }) => {
                         <div className="mb-14 flex items-center gap-3" key={comment.id}>
                                 {comment.avatar_url ? (
                                     comment.avatar_url.startsWith("https") ? (
-                                        <div className="overflow-hidden rounded-full relative w-12 h-12">
+                                        <div className="overflow-hidden rounded-full max-w-[50px] max-h-[50px] min-w-[50px]">
                                             <Image
-                                                className="w-full h-full object-cover"
                                                 src={comment.avatar_url}
                                                 alt="User avatar"
-                                                fill
+                                                width={50}
+                                                height={50}
                                                 sizes="(max-width: 480px) 40px, (max-width: 768px) 60px, (max-width: 1024px) 80px, 100px"
                                                 quality={100}
                                                 priority
                                             />
                                         </div>
                                     ) : (
-                                        <Avatar
-                                            url={comment.avatar_url}
-                                            size={"h-12 w-12"}
-                                            lgSize={"w-12 h-12"}
-                                            phSize={50}
-                                        />
+                                        <div className="min-w-[50px] min-h-[50px]">
+                                            <Avatar
+                                                url={comment.avatar_url}
+                                                width={50}
+                                                height={50}
+                                            />
+                                        </div>
+
                                     )
                                 ) : comment.avatar_url === null && user?.user_metadata.avatar_url ? (
-                                    <div className="overflow-hidden rounded-full relative w-14 h-14">
+                                    <div className="overflow-hidden rounded-full max-w-[50px] max-h-[50px] min-w-[50px]">
                                         <Image
-                                            className="w-full h-full object-cover"
                                             src={user?.user_metadata.avatar_url}
                                             alt="Fallback user avatar"
-                                            fill
+                                            width={50}
+                                            height={50}
                                             sizes="(max-width: 480px) 40px, (max-width: 768px) 60px, (max-width: 1024px) 80px, 100px"
                                             quality={100}
                                             priority
                                         />
                                     </div>
                                 ) : (
-                                    <div className="w-fit rounded-full justify-self-center">
+                                    <div className="w-fit rounded-full justify-self-center min-w-[50px]">
                                         <FaUserCircle size={50} color="gray" />
                                     </div>
                                 )}
@@ -160,7 +163,7 @@ const Comments = ({ user, comments, loadComments }) => {
                                             {format(new Date(comment.created_at), 'd/M/yy, h:mm a')}
                                         </span>
                                     </div>
-                                    <p className="text-base text-ashGray whitespace-normal break-words">
+                                    <p className="text-base text-stoneGray whitespace-normal break-words">
                                         <span>{comment.text}</span>
                                     </p>
                                 </div>
@@ -168,7 +171,7 @@ const Comments = ({ user, comments, loadComments }) => {
                     ))}
                 </div>
             ) : (
-                <div className="flex items-center justify-center h-full text-ashGray">
+                <div className="flex items-center justify-center text-center h-full text-ashGray">
                         No discussions yet. Start the conversation and share your thoughts!
                 </div>
             )}

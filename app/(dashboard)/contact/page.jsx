@@ -21,7 +21,7 @@ const Contact = async () => {
     <div className="flex flex-col">
         <div className='main-container'>
           <main>
-            <div className='h-screen flex flex-col items-center min-h-[1636px] md:min-h-[1034px]'>
+            <div className='h-screen flex flex-col items-center min-h-[1636px] md:min-h-[1034px] pt-28 md:pt-0'>
               <div className='w-full flex-grow flex items-center justify-center'>
                 <div className='grid grid-flow-col auto-cols-fr gap-y-16 md:h-full md:grid-cols-2 md:grid-rows-[minmax(_auto,_auto)_minmax(500px,_auto)]'>
                   <div className='row-start-1 col-start-1 col-span-2 self-end'>

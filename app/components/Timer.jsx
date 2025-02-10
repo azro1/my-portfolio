@@ -142,7 +142,7 @@ const Timer = memo(({ authGroupEmailRef, profileEmailRef, profilePhoneRef, isBut
 
 
   return (
-    <>
+    <div className="min-h-[24px]">
       {!isVerified && (
         <div className="flex gap-2 justify-center text-nightSky">
           <button
@@ -174,7 +174,7 @@ const Timer = memo(({ authGroupEmailRef, profileEmailRef, profilePhoneRef, isBut
           )}
         </div>
       )}
-    </>
+    </div>
   );
 });
 

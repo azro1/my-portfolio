@@ -37,7 +37,7 @@ export default async function ProfileLayout({ children }) {
           <Sidebar isProfilePage={true} />
         </div>
 
-        <div className="flex-1 flex flex-col z-30 mt-10 max-w-screen-xl mx-auto px-1.625 uw:px-0">
+        <div className="flex-1 flex flex-col z-30 mt-10 max-w-screen-xl mx-auto px-[x-pad] uw:px-0">
           <main>
             {children}
           </main>

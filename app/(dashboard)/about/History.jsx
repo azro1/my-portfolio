@@ -41,40 +41,44 @@ const History = () => {
     setStars(generateStars());
   }, []);
 
-  if (!hasMounted) return null; // Render nothing until client-side
-
   const ballPosition = scrollPosition * 0.1; // Adjust speed of the ball movement
   const opacity = Math.min(scrollPosition / 300, 1); // Fade in content as the ball moves
 
   return (
     <section>
-      <div className="relative py-20 pb-0 text-frostWhite overflow-hidden lg:pb-20">
-        {/* Starry background */}
-        <div className="absolute inset-0 w-full">{stars}</div>
+      <div className="flex flex-col min-h-[556px] sm:min-h-[549px] md:min-h-[628px] lg:min-h-[510px]">
+        {hasMounted ? (
+          <div className="relative flex-grow py-20 pb-0 text-frostWhite overflow-hidden lg:pb-20 ">
+            {/* Starry background */}
+            <div className="absolute inset-0 w-full">{stars}</div>
 
-        <div className="absolute top-0 left-0 w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] rounded-full bg-gradient-to-tl from-nightSky to-[#CD853F] shadow-2xl transition-all" style={{ transform: `translateX(${ballPosition}px)` }}></div>
+            <div className="absolute top-0 left-0 w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] rounded-full bg-gradient-to-tl from-nightSky to-[#CD853F] shadow-2xl transition-all" style={{ transform: `translateX(${ballPosition}px)` }}></div>
 
-        <div className="flex flex-col items-center justify-between relative z-10 max-w-full lg:flex-row">
-          <div className="order-3 w-full flex flex-col text-center mt-10 max-w-[544px] lg:order-none lg:w-1/2 lg:mb-0 lg:text-left lg:items-start transition-opacity duration-700 lg:max-w-none" style={{ opacity: scrollPosition === 0 ? 0 : opacity }}>
-            <h2 className="subheading font-bold mb-4 text-frostWhite">
-              My History
-            </h2>
-            <p className="text-base leading-7">
-              Over the years, I’ve honed my skills through self-study and
-              hands-on experience in technology and design. I create tailored
-              digital solutions using a diverse range of tools and technologies to
-              meet user needs.
-            </p>
-          </div>
+            <div className="flex flex-col items-center justify-between relative z-10 max-w-full lg:flex-row lg:gap-16">
+              <div className="order-3 w-full flex flex-col text-center mt-10 lg:order-none  lg:mb-0 lg:text-left lg:items-start transition-opacity duration-700" style={{ opacity: scrollPosition === 0 ? 0 : opacity }}>
+                <h2 className="subheading font-bold mb-4 text-frostWhite">
+                  My History
+                </h2>
+                <p className="text-base leading-7">
+                  Over the years, I’ve honed my skills through self-study and
+                  hands-on experience in technology and design. I create tailored
+                  digital solutions using a diverse range of tools and technologies to
+                  meet user needs.
+                </p>
+              </div>
 
-          <div className="w-full flex justify-center lg:w-1/2 lg:justify-end relative mt-6 lg:mt-0">
-            <div className="w-[200px] sm:w-[250px] md:w-[350px] h-[200px] sm:h-[250px] md:h-[350px] rounded-full bg-gradient-to-tl from-nightSky to-ashGray shadow-2xl relative">
-              <div className="absolute inset-0 rounded-full" style={{
-                background: `radial-gradient(circle, rgba(107, 107, 107, 0.5), transparent 60%)`,
-              }}></div>
+              <div className="w-full flex justify-center lg:w-1/2 lg:justify-end relative mt-6 lg:mt-0">
+                <div className="w-[200px] h-[200px] sm:w-[250px] sm:h-[250px] md:w-[350px] md:h-[350px] rounded-full bg-gradient-to-tl from-nightSky to-ashGray shadow-2xl relative">
+                  <div className="absolute inset-0 rounded-full" style={{
+                    background: `radial-gradient(circle, rgba(107, 107, 107, 0.5), transparent 60%)`,
+                  }}></div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div className="flex-grow bg-nightSky"></div>
+        )}
       </div>
     </section>
   );

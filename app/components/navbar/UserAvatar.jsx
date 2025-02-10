@@ -7,35 +7,22 @@ import { FaUserCircle } from "react-icons/fa";
 import Image from "next/image";
 
 
-
-const NavbarAvatar = ({ user }) => {
-    const [first_name, setFirstName] = useState(user ? user.user_metadata.full_name : '');
-    const [avatar_url, setAvatarUrl] = useState('');
+const UserAvatar = ({ user, avatarUrl, width = 32, height = 32, maxWidth, maxHeight, defaultAvatarSize }) => {
     const [isProfileLoading, setIsProfileLoading] = useState(true);
+    const [userAvatarUrl, setUserAvatarUrl] = useState('')
 
     const supabase = createClientComponentClient();
     
-    // Subscription to realtime changes on profiles table
-    useEffect(() => {
-        const channel = supabase.channel('realtime profile').on('postgres_changes', {
-          event: '*',
-          schema: 'public',
-          table: 'profiles'
-        }, (payload) => {
-  
-             if (payload) {
-                setFirstName((prevFirstName) => {
-                    return prevFirstName ? payload.new.first_name : prevFirstName
-                })
 
-                setAvatarUrl((prevAvatar) => {
-                    return prevAvatar ? payload.new.avatar_url : prevAvatar
-                })
-             }
-        }).subscribe()
-  
-        return () => supabase.removeChannel(channel)
-      }, [])
+    // check for avatarUrl passed down from sidebar and update avatar fetched from profiles
+    useEffect(() => {
+        if (avatarUrl) {
+          setUserAvatarUrl((prevAvatarUrl) => {
+            return avatarUrl !== prevAvatarUrl ? avatarUrl : prevAvatarUrl;
+          });
+        }
+     }, [avatarUrl]);
+     
 
 
     useEffect(() => {
@@ -51,11 +38,9 @@ const NavbarAvatar = ({ user }) => {
                 if (data && data.length > 0) {
                     const profileData = data[0];
 
-                    setFirstName(profileData.first_name || user.user_metadata.full_name );
-                    setAvatarUrl(profileData.avatar_url || user.user_metadata.avatar_url);
+                    setUserAvatarUrl(profileData.avatar_url || user.user_metadata.avatar_url);
                 } else {
-                    setFirstName(user.user_metadata.full_name);
-                    setAvatarUrl(user.user_metadata.avatar_url);
+                    setUserAvatarUrl(user.user_metadata.avatar_url);
                 }
             } catch (error) {
                 console.log(error.message);
@@ -70,37 +55,43 @@ const NavbarAvatar = ({ user }) => {
     }, [user]);
  
 
+    if (isProfileLoading) {
+        return null;
+    }
+
+
     return (
         <div>
             <div className="flex items-center">
                 <div className="overflow-hidden rounded-full relative">
-                    {avatar_url ? (
-                        avatar_url.startsWith("http") ? (
+                    {userAvatarUrl ? (
+                        userAvatarUrl.startsWith("https") ? (
                             /* Absolute URLs (e.g., third-party avatars or signed URLs) */
-                            <div className="relative w-8 h-8">
+                            <div className={`${maxWidth} ${maxHeight}`}>
                                 <Image
-                                    className="w-full h-full object-cover"
-                                    src={avatar_url}
+                                    src={userAvatarUrl}
                                     alt="User avatar"
-                                    fill
-                                    sizes="(max-width: 480px) 40px, (max-width: 768px) 60px, (max-width: 1024px) 80px, 100px"
+                                    width={width}
+                                    height={height}
                                     quality={100}
+                                    sizes="(max-width: 480px) 40px, (max-width: 768px) 60px, (max-width: 1024px) 80px, 100px"
                                     priority
                                 />
                             </div>
                         ) : (
                             /* Handle signed URLs if further processing is required */
-                            <Avatar
-                                url={avatar_url}
-                                size="w-8 h-8"
-                                lgSize="w-8 h-8"
-                                phSize={30}
-                            />
+                            <div className={`${maxWidth} ${maxHeight}`}>
+                                <Avatar
+                                    url={userAvatarUrl}
+                                    width={width}
+                                    height={height}
+                                />
+                            </div>
                         )
                     ) : (
                         /* Placeholder for when no avatar exists */
                         <div className="w-fit rounded-full justify-self-center">
-                            <FaUserCircle size={30} color="gray" />
+                            <FaUserCircle size={defaultAvatarSize} color="gray" />
                         </div>
                     )}
                 </div>
@@ -109,4 +100,4 @@ const NavbarAvatar = ({ user }) => {
     );
 };
 
-export default NavbarAvatar;
+export default UserAvatar;

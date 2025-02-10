@@ -20,7 +20,7 @@ export async function GET(request) {
       is_verified: true,
       is_reg_complete: true
     })
-    .eq('id', user.id)
+    .eq('id', user?.id)
 
   if (error) {
     console.log('discord:', error.message)

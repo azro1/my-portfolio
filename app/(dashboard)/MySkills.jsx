@@ -13,10 +13,10 @@ const technicalSkills = [
   { icon: <FaGithub size={54} />, name: "GitHub" },
 ];
 
-const Skills = () => {
+const MySkills = () => {
   return (
     <section>
-      <div className="flex flex-col items-center gap-6 md:flex-row md:gap-10">
+      <div className="flex flex-col-reverse items-center gap-6 md:flex-row md:gap-10">
         {/* Icons Section */}
 
         <div className="flex-1 flex justify-end">
@@ -44,7 +44,7 @@ const Skills = () => {
         {/* Text Section */}
         <div className="flex-1 flex flex-col items-center text-center md:items-start md:text-left">
             <h2 className="subheading font-b text-saddleBrown mb-4">My Skills</h2>
-          <p className="leading-7 text-ashGray max-w-xs">
+          <p className="leading-7 lg:max-w-xs">
             I specialize in both front-end and back-end technologies to create user-friendly and efficient web applications
           </p>
         </div>
@@ -53,4 +53,4 @@ const Skills = () => {
   );
 };
 
-export default Skills;
+export default MySkills;

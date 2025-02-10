@@ -112,7 +112,7 @@ const UploadAvatar = () => {
     return (
         <div className='min-h-[640px] flex flex-col justify-center'>
             <p className='pb-2'>Step 1/2</p>
-            <div className='flex flex-col items-center justify-center gap-2 max-w-[500px] sm:bg-white sm:shadow-outer sm:p-12 sm:rounded-xl relative'>
+            <div className='flex flex-col items-center justify-center gap-4 max-w-[500px] sm:bg-white sm:shadow-outer sm:p-12 sm:rounded-xl relative'>
                 <div>
                     <h2 className='text-3xl mb-4 font-b text-nightSky'>Upload Your Avatar</h2>
                     <p className=''>Choose an image to personalize your profile or skip this step to continue. This helps others recognize you but is entirely optional.</p>

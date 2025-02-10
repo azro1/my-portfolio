@@ -75,26 +75,29 @@ const EditProfileForms = () => {
 
     
     return (
-        <div className='flex flex-col gap-6'>
+        <div className='flex flex-col'>
             
-            <div className='mt-4 h-[500px] bg-softCharcoal p-4'>
+            <div className='mt-6 p-4 bg-softCharcoal '>
                 <AvatarUploader
                     user={user}
                     updateProfile={updateProfile}
-                    text='Personalize your account by uploading your own avatar'
                     btnColor='bg-saddleBrown'
                     show3DAvatar={false}
                 />
             </div>
 
+            <div className='pt-16'>
+              <h2 className='text-cloudGray font-b text-1.375 md:text-2xl'>Basic Information</h2>
+              <p className='mt-3 leading-normal text-cloudGray'>Update your personal information.</p>
 
-            <div className='flex flex-col bg-softCharcoal p-4'>
+              <div className='mt-6 flex flex-col bg-softCharcoal p-4'>
                 <BioForm
                     user={user}
                     profile={profile}
                     changeMessage={changeMessage}
                     fetchProfile={fetchProfile}
                 />
+                <div className='bg-slateOnyx h-[1px]'></div>
 
                 <FirstNameForm
                     user={user}
@@ -102,6 +105,8 @@ const EditProfileForms = () => {
                     changeMessage={changeMessage}
                     fetchProfile={fetchProfile}
                 />
+                <div className='bg-slateOnyx h-[1px]'></div>
+
 
                 <LastNameForm
                     user={user}
@@ -109,6 +114,7 @@ const EditProfileForms = () => {
                     changeMessage={changeMessage}
                     fetchProfile={fetchProfile}
                 />
+                <div className='bg-slateOnyx h-[1px]'></div>
 
                 <DobForm
                     user={user}
@@ -116,17 +122,21 @@ const EditProfileForms = () => {
                     changeMessage={changeMessage}
                     fetchProfile={fetchProfile}
                 />
+                <div className='bg-slateOnyx h-[1px]'></div>
 
                 <EmailForm 
                     user={user}
                     profile={profile}
                 />
+                <div className='bg-slateOnyx h-[1px]'></div>
 
                 <PhoneForm
                     user={user}
                     profile={profile}
                 />
             </div>
+            </div>
+
         </div>
     )
 }

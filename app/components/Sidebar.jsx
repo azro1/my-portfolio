@@ -15,7 +15,7 @@ import {
 } from 'react-icons/fi';
 
 // components
-import NavbarAvatar from "./navbar/NavbarAvatar";
+import UserAvatar from "./navbar/UserAvatar";
 import Chevron from "./Chevron";
 
 
@@ -25,15 +25,40 @@ const Sidebar = ({ isProfilePage }) => {
   const [activeLink, setActiveLink] = useState('');
   const [isRegComplete, setIsRegComplete] = useState(null)
   const [loading, setLoading] = useState(true);
+  const [firstName, setFirstName] = useState('');
+  const [avatarUrl, setAvatarUrl] = useState('');
 
   const pathName = usePathname()
   const supabase = createClientComponentClient();
 
 
+
+
+   // realtime subscription to display sidebar data
+  useEffect(() => {
+    const channel = supabase.channel('realtime-profiles').on('postgres_changes', {
+      event: '*',
+      schema: 'public',
+      table: 'profiles'
+    }, (payload) => {
+      if (payload) {
+        // console.log(payload)
+        setFirstName((prevFirstName) => payload.new.first_name)
+        setAvatarUrl((prevAvatarUrl) => payload.new.avatar_url)
+      }
+    }).subscribe((status) => {
+      console.log('Subscription status:', status);
+    });
+    return () => supabase.removeChannel(channel)
+  }, [user, supabase])
+
+
+
+
+
   useEffect(() => {
     const fetchUserData = async () => {
-      setLoading(true);
-      
+
       const { data: { user } } = await supabase.auth.getUser();
       setUser(user);
 
@@ -97,7 +122,7 @@ const Sidebar = ({ isProfilePage }) => {
     <div className='w-full box-border xl:inline-block xl:w-[300px] xl:min-w-[300px] xl:h-screen xl:min-h-[768px]'>
       <div className="sidebar-content fixed bg-softCharcoal border-slateOnyx border-b-[1px] xl:h-full xl:overflow-y-scroll xl:hide-scrollbar xl:border-r-[1px]">
 
-          <nav className="px-1.625 flex justify-between md:gap-6 relative xl:px-0 xl:flex-col xl:justify-normal xl:gap-0 xl:min-h-[768px] ">
+          <nav className="px-[x-pad] flex justify-between md:gap-6 relative xl:px-0 xl:flex-col xl:justify-normal xl:gap-0 xl:min-h-[768px] ">
             {/* Code Dynamics Logo */}
             <div className="flex items-center justify-center py-4 xl:p-10">
               <Link href='/'>
@@ -198,10 +223,25 @@ const Sidebar = ({ isProfilePage }) => {
                 
                 <div className='flex items-center gap-2'>
                   <div className="hidden md:flex items-center gap-2">
-                    <NavbarAvatar user={user} />
-                    <span className="hidden text-base font-medium text-stoneGray xl:inline">{user?.user_metadata.first_name || user?.user_metadata.full_name}</span>
-                  </div>
 
+                    <div className="min-w-[32px] min-h-[32px]">
+                      <UserAvatar 
+                          user={user}
+                          avatarUrl={avatarUrl}
+                          width={32}
+                          height={32}
+                          maxWidth={'max-w-[32px]'}
+                          maxHeight={'max-h-[32px]'}
+                          defaultAvatarSize={32}
+                      />
+                    </div>
+                    {firstName ? (
+                      <span className="hidden text-base font-medium text-stoneGray xl:inline">{firstName}</span>
+                    ) : (
+                      <span className="hidden text-base font-medium text-stoneGray xl:inline">{user?.user_metadata.first_name || user?.user_metadata.full_name}</span>
+                    )}
+                  </div>
+                   
                   <div className="flex items-center gap-2">
                     <Chevron user={user} isProfilePage={isProfilePage} />
                   </div>

@@ -29,14 +29,14 @@ const ProjectsViewedList = ({ user }) => {
       <div>
           <h3 className='text-lg text-frostWhite font-b mb-4'>Project Views</h3>
               {!errorMessage ? (
-                <div className='min-h-52 flex items-center bg-softCharcoal p-4'>
+                <div className={`min-h-[350px] flex items-center justify-center md:justify-normal bg-softCharcoal ${retrievedProjects.length === 0 ? 'p-4' : 'p-12'}`}>
                   {!isProjectsLoading && (
-                      <div className='flex flex-wrap gap-4'>
+                      <div className='flex flex-wrap justify-center gap-8'>
                           {retrievedProjects.length > 0 && (retrievedProjects.map((project) => (
                               <div key={project.id}>
-                                  <div className='max-w-36 bg-frostWhite p-1 shadow-outer'>
+                                  <div className='w-max bg-frostWhite p-1 shadow-outer'>
                                       <Link href={`/projects/${project.id}`}>
-                                      <div className='relative w-[136px] h-[120px]'>
+                                      <div className='relative w-[236px] h-[220px]'>
                                           <Image 
                                               className='object-cover object-left-top'
                                               src={project.image_url}
@@ -49,13 +49,17 @@ const ProjectsViewedList = ({ user }) => {
 
                                       </Link>
                                   </div>
-                                  <h4 className="font-r text-ashGray text-center text-sm mt-2">{project.title}</h4>
+                                  <h4 className="font-r text-ashGray text-center text-base mt-2">{project.title}</h4>
                               </div>))
                           )}
                       </div>
                   )}
-                  {!isProjectsLoading && retrievedProjects.length === 0 && !errorMessage && <p className='text-ashGray place-self-start'>No Projects Views.</p>}
-                </div>
+                  {!isProjectsLoading && retrievedProjects.length === 0 && !errorMessage && (
+                      <div className='flex-1 place-self-start'>
+                          <p>No Projects Views.</p>
+                      </div>
+                  )}
+              </div>
               ) : (
                 <p className='place-self-start'>Currently unable to display project views. Try refreshing the page.</p>
               )}

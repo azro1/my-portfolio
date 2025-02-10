@@ -8,7 +8,7 @@ const Footer = () => {
 
 
 
-        <div className="px-1.625 mx-auto max-w-screen-lg uw:p-0 flex-1">
+        <div className="px-[x-pad] mx-auto max-w-screen-lg uw:p-0 flex-1">
           <main>
               <div className="flex flex-col items-center justify-start gap-2 mt-4 mb-20 md:py-4 md:flex-row md:items-start md:justify-between md:m-0">
 

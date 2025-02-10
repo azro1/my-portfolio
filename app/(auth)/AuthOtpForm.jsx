@@ -145,16 +145,19 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
     }, []);
     
     useEffect(() => {
-        const isReloading = sessionStorage.getItem("isReloading");
+        const handlePageReload = async () => {
+            const isReloading = sessionStorage.getItem("isReloading");
     
-        if (isReloading) {
-            // Clear cookie here
-            deleteCookie();
-    
-            // Remove the flag after reloading
-            sessionStorage.removeItem("isReloading");
-            router.push('/auth/login')
+            if (isReloading) {
+                // Delete cookie here
+                await deleteCookie();
+        
+                // Remove the flag after reloading
+                sessionStorage.removeItem("isReloading");
+                router.push('/auth/login')
+            }
         }
+        handlePageReload();
     }, [router]);
     
     

@@ -1,23 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
-import useScrollPosition from "../hooks/useScrollPosition";
-
 import { FaCode, FaPaintBrush, FaLayerGroup, FaMobile } from "react-icons/fa";
 
 const Services = () => {
-  const scrollPosition = useScrollPosition(); // Get scroll position
-  const [hasAnimated, setHasAnimated] = useState(false); // Track if animation has already triggered
-
-  const threshold = 150; // Adjust to determine when animation starts
-
-  useEffect(() => {
-    if (!hasAnimated && scrollPosition > threshold) {
-      setHasAnimated(true); // Set animation as complete on first scroll down
-    }
-  }, [scrollPosition, hasAnimated]);
-
   const services = [
     {
       title: "Web",
@@ -44,27 +30,14 @@ const Services = () => {
   return (
     <section>
       <div className="overflow-hidden">
-          <h2 className="text-2xl md:text-3xl font-b text-center text-stoneGray mb-6 md:mb-10">My Services</h2>
-        
-
+        <h2 className="text-2xl md:text-3xl font-b text-center text-stoneGray bg-nightSky w-max mx-auto p-1 px-2 mb-6 md:mb-10">My Services</h2>
 
         <div className="flex flex-wrap justify-center items-center gap-10 md:gap-12 relative">
-
-          {!hasAnimated && (
-              <div className="absolute w-full h-full flex items-center justify-center">
-                <img className="w-16" src="/images/loading/pulse_darkbg.svg" alt="" />
-              </div>
-          )}
-
           {services.map((service, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 20, transition: {ease: 'easeOut'} }} // Initial hidden state
-              animate={
-                hasAnimated
-                  ? { opacity: 1, y: 0 } // Animate only once when `hasAnimated` is true
-                  : undefined
-              }
+              initial={{ opacity: 0, y: 20, transition: { ease: 'easeOut' } }} // Initial hidden state
+              animate={{ opacity: 1, y: 0 }}
               transition={{
                 duration: 0.5,
                 delay: index * 0.4, // Slight delay for staggered effect

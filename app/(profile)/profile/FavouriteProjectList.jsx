@@ -11,8 +11,6 @@ import { useFetchProjectsById } from '@/app/hooks/useFetchProjectsById';
 import { useMessage } from '@/app/hooks/useMessage';
 
 const FavouriteProjectList = ({ user }) => {
-    const [projectsError, setProjectsError] = useState(false);
-
     // custom hook to fetch viewed projects
     const { retrievedProjects, isProjectsLoading, errorMessage, getProjectsById } = useFetchProjectsById(user, 'favourites', 'user_id');
     const { changeMessage } = useMessage();
@@ -33,15 +31,15 @@ const FavouriteProjectList = ({ user }) => {
         <div>
             <h3 className='text-frostWhite text-lg font-b mb-4'>Favourite Projects</h3>
             {!errorMessage ? (
-                <div className='flex items-center min-h-52 bg-softCharcoal p-4'>
+                <div className={`min-h-[350px] flex items-center justify-center md:justify-normal bg-softCharcoal ${retrievedProjects.length === 0 ? 'p-4' : 'p-12'}`}>
                     {!isProjectsLoading && (
-                        <div className='flex flex-wrap gap-4'>
+                        <div className='flex flex-wrap gap-8'>
                             {retrievedProjects.length > 0 && (retrievedProjects.map((project) => (
                                 <div key={project.id}>
                                     <div className='relative'>
-                                        <div className='bg-frostWhite p-1 shadow-outer' >
+                                        <div className='w-max bg-frostWhite p-1 shadow-outer' >
                                             <Link href={`/projects/${project.id}`}>
-                                                <div className='relative w-[136px] h-[120px]'>
+                                                <div className='relative w-[236px] h-[220px]'>
                                                     <Image 
                                                         className='object-cover object-left-top'
                                                         src={project.image_url}
@@ -53,14 +51,18 @@ const FavouriteProjectList = ({ user }) => {
                                                 </div>
                                             </Link>
                                         </div>
-                                        <FaHeart className='absolute bottom-1 left-1' size='18' color='red' />
+                                        <FaHeart className='absolute bottom-1 left-1' size='24' color='red' />
                                     </div>
                                     <h4 className="font-os font-r text-ashGray text-center text-sm mt-2">{project.title}</h4>
                                 </div>))
                             )}
                         </div>
                     )}
-                    {!isProjectsLoading && retrievedProjects.length === 0 && !projectsError && <p className='text-ashGray place-self-start'>No Projects Views.</p>}
+                    {!isProjectsLoading && retrievedProjects.length === 0 && !errorMessage&& (
+                        <div className='flex-1 place-self-start'>
+                            <p>No Projects Views.</p>
+                        </div>
+                    )}
                 </div>
             ) : (
                 <p className='place-self-start'>Currently unable to display project views. Try refreshing the page.</p>
