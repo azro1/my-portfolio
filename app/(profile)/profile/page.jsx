@@ -2,10 +2,10 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from 'next/headers';
 
 // components
-import ProfileHeader from "./ProfileHeader";
-import ProjectsViewedList from './ProjectsViewedList';
-import CommentList from './CommentList';
-import FavouriteProjectList from "./FavouriteProjectList";
+import ProfileHeader from "../ProfileHeader";
+import ProjectsViewedList from '../ProjectsViewedList';
+import CommentList from "../CommentList";
+import FavouriteProjectList from "../FavouriteProjectList";
 
 const Profile = async () => {
   const supabase = createServerComponentClient({ cookies })

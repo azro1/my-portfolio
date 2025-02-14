@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 
 // components
-import ProfilePhoneOtpForm from "../ProfilePhoneOtpForm"
+import ProfilePhoneOtpForm from "../../ProfilePhoneOtpForm"
 
 
 const VerifyPhoneOtp = () => {
@@ -20,12 +20,12 @@ const VerifyPhoneOtp = () => {
   }, [])
 
   return (
-    <div className='flex items-center justify-center min-h-[580px]'>
+    <div className='min-h-screen flex items-center justify-center'>
       <ProfilePhoneOtpForm
         contact='phone number'
         verificationType='phone_change'
         title='Update Phone'
-        subHeading='Enter the code sent to your new phone number to complete the update'
+        subHeading="For security enter the code we've sent to your new phone number"
         successMessage='OTP verifcation was successful. Your phone number has been updated.'
         profilePhoneRef={phoneRef}
       />

@@ -52,12 +52,6 @@ const PhoneForm = ({ user, profile }) => {
     const router = useRouter();
 
 
-    useEffect(() => {
-        router.refresh();
-        // clear cookie from server if user navigates back to this page so they have to enter phone again to get new otp
-        document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-      }, [router]);
-
 
     // populate form fields from profiles table
     useEffect(() => {
@@ -103,15 +97,6 @@ const PhoneForm = ({ user, profile }) => {
     };
 
 
-    // Phone number validation function
-    const isValidPhoneNumber = (phoneNumber) => {
-        // Check that the phone number follows E.164 format
-        const phoneRegex = /^(0\d{10}|\+\d{1,3}\d{1,14})$/;
-        return phoneRegex.test(phoneNumber);
-    }
-
-
-
 
 
 
@@ -146,12 +131,14 @@ const PhoneForm = ({ user, profile }) => {
             setFormSuccess(null);
 
         } else if (hasInteracted) {
-            // Show success message if names are different
-            if (draftPhone !== phone && draftPhone !== reformattedPhone) {
+            // Remove any spaces before validation check
+            const cleanedPhone = draftPhone.replace(/\s+/g, "");
+
+            if (cleanedPhone !== phone && cleanedPhone !== reformattedPhone) {
                 setFormSuccess('Your phone number looks good.');
                 setFormError(null);
             } else {
-                setFormSuccess(null); // Reset success message if names are the same
+                setFormSuccess(null); // Reset success message if numbers are the same
                 setFormError('Phone number cannot be the same.');
             }
         }
@@ -172,7 +159,7 @@ const PhoneForm = ({ user, profile }) => {
 
     // update phone
     const handlePhoneUpdate = async (data) => {        
-
+        
         if (data.draftPhone === phone || data.draftPhone === reformattedPhone) {
             return;
         }
@@ -208,8 +195,7 @@ const PhoneForm = ({ user, profile }) => {
         } catch (error) {
             setIsUpdating(false)
             setFormSuccess(null);
-            // clear cookie if there's an error that comes back from server
-            document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+            localStorage.removeItem("phone");
             setFormError('An unexpected error occurred while updating your email. Please try again later. If the issue persists, contact support.')
             console.log(error.message)
         }

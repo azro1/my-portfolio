@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useMessage } from "../hooks/useMessage";
 
 // server action
-import { deleteCookie } from "./auth/login/actions";
+import { deleteCanAccessOtpPageCookie } from "./auth/login/actions";
 
 
 
@@ -26,7 +26,7 @@ const Cleanup = () => {
   useEffect(() => {
     if (isUserBack) {
       const handleReload = async () => {
-        await deleteCookie();
+        await deleteCanAccessOtpPageCookie();
         localStorage.removeItem("hasVisitedOtpPage")
         changeMessage('error', "You have aborted the process. Please signup to receive a new security code.")
       };
@@ -46,12 +46,12 @@ const Cleanup = () => {
     
           if (hasVisitedOtpPage) {
             // Call function to delete the cookie
-            const deleteOtpCookie = async () => {
-              await deleteCookie();
+            const deleteCanAccessOtpPageCookie = async () => {
+              await deleteCanAccessOtpPageCookie();
               localStorage.removeItem("hasVisitedOtpPage");
               changeMessage('error', 'You have aborted the process. Please signup to receive a new security code.');
             };
-            deleteOtpCookie();
+            deleteCanAccessOtpPageCookie();
           }
         };
     
@@ -71,14 +71,14 @@ const Cleanup = () => {
     useEffect(() => {
         const isReloading = sessionStorage.getItem("isReloading");
 
-        const deleteOtpCookie = async () => {
-            await deleteCookie()
+        const deleteCanAccessOtpPageCookie = async () => {
+            await deleteCanAccessOtpPageCookie()
             sessionStorage.removeItem("isReloading");
             changeMessage('error', 'You have aborted the process. Please signup to recieve a new security code.');
         }
 
         if (isReloading) {
-            deleteOtpCookie()
+            deleteCanAccessOtpPageCookie()
         }
     }, [])
 

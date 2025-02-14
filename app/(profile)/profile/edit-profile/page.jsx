@@ -1,7 +1,7 @@
 
 // components
 import EditProfileForms from './EditProfileForms';
-import ProfileHeader from '../ProfileHeader';
+import ProfileHeader from '../../ProfileHeader';
 
 
 const EditProfile = () => {

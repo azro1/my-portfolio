@@ -13,7 +13,7 @@ import { IoMdArrowBack } from "react-icons/io";
 import { useMessage } from "@/app/hooks/useMessage";
 
 // server action
-import { deleteCookie } from "../login/actions";
+import { deleteCanAccessOtpPageCookie } from "../login/actions";
 
 
 
@@ -119,7 +119,7 @@ const ForgotEmail = () => {
         } catch (error) {
             setIsLoading(false);
             // delete cookie
-            await deleteCookie();
+            await deleteCanAccessOtpPageCookie();
             localStorage.removeItem('email');
             changeMessage('error', error.message);
         }

@@ -17,6 +17,11 @@ import { useUpdateMetadata } from "@/app/hooks/useUpdateMetadata";
 import { useMessage } from "@/app/hooks/useMessage";
 
 
+// server actions
+import { setHasVisitedOtpPageCookie } from "./profile/actions";
+import { deleteCanAccessOtpPageCookie } from "../(auth)/auth/login/actions";
+import { deleteHasVisitedOtpPageCookie } from "./profile/actions";
+
 
 
 
@@ -74,12 +79,37 @@ const ProfileEmailOtpForm = ({ profileEmailRef, contact, verificationType, title
 
 
 
-    // clear cookie on page reload
+
+
+
+    // set server cookie to indicate that user has been to delete cookie if they go back
     useEffect(() => {
-        const handleBeforeUnload = (event) => {
-            if (event.type === "beforeunload") {
-                document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-            }
+        localStorage.setItem('hasVisitedProfileOtpPage', 'true');
+        localStorage.setItem('hasShownAbortMessage', 'false');
+        const setProfilePhoneOtpCookie = async () => {
+            await setHasVisitedOtpPageCookie();
+        }
+        setProfilePhoneOtpCookie();
+    }, []);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // delete cookie on page reload
+    useEffect(() => {
+        const handleBeforeUnload = () => {
+            // Set a flag to indicate a reload is happening
+            sessionStorage.setItem("isReloading", "true");
         };
     
         window.addEventListener("beforeunload", handleBeforeUnload);
@@ -88,6 +118,26 @@ const ProfileEmailOtpForm = ({ profileEmailRef, contact, verificationType, title
             window.removeEventListener("beforeunload", handleBeforeUnload);
         };
     }, []);
+    
+    useEffect(() => {
+        const handlePageReload = async () => {
+            const isReloading = sessionStorage.getItem("isReloading");
+    
+            if (isReloading) {
+                // Delete cookie here
+                await deleteCanAccessOtpPageCookie();
+                await deleteHasVisitedOtpPageCookie();
+
+                // Remove the flags after reloading
+                sessionStorage.removeItem("isReloading");
+                localStorage.removeItem('hasVisitedProfileOtpPage');
+
+                router.push('/profile/edit-profile')
+            }
+        }
+        handlePageReload();
+    }, [router]);
+
 
 
 
@@ -237,14 +287,15 @@ const ProfileEmailOtpForm = ({ profileEmailRef, contact, verificationType, title
 
                 setIsLoading(false)
                 setIsVerified(true)
-                // clear cookie after successful verification
-                document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+                // delete cookie after successful verification
+                await deleteCanAccessOtpPageCookie();
+                localStorage.removeItem("hasVisitedOtpPage");
                 router.refresh();
                 changeMessage('success', successMessage)
 
             } catch (error) {
-                // clear cookie if profiles update fails
-                document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+                // delete cookie if profiles update fails
+                await deleteCanAccessOtpPageCookie();                
                 router.refresh();
                 changeMessage('error', error.message)
             }
@@ -259,24 +310,26 @@ const ProfileEmailOtpForm = ({ profileEmailRef, contact, verificationType, title
 
 
     return (
-        <OtpForm
-            containerStyles={''}
-            handleSubmit={handleSubmit}
-            onSubmit={onSubmit}
-            title={title}
-            subHeading={subHeading}
-            fields={fields}
-            register={register}
-            handleInputChange={handleInputChange}
-            handleKeyDown={handleKeyDown}
-            errors={errors}
-            isLoading={isLoading}
-            formState={formState}
-            trigger={trigger}
-            profileEmailRef={profileEmailRef}
-            isButtonDisabled={isButtonDisabled}
-            isVerified={isVerified}
-        />
+        <div className="flex items-center justify-center bg-white px-6 py-8 sm:p-12 sm:rounded-xl"> 
+            <OtpForm
+                containerStyles={''}
+                handleSubmit={handleSubmit}
+                onSubmit={onSubmit}
+                title={title}
+                subHeading={subHeading}
+                fields={fields}
+                register={register}
+                handleInputChange={handleInputChange}
+                handleKeyDown={handleKeyDown}
+                errors={errors}
+                isLoading={isLoading}
+                formState={formState}
+                trigger={trigger}
+                profileEmailRef={profileEmailRef}
+                isButtonDisabled={isButtonDisabled}
+                isVerified={isVerified}
+            />
+        </div>
     )
 }
 

@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 
 // components
-import ProfileEmailOtpForm from "../ProfileEmailOtpForm"
+import ProfileEmailOtpForm from "../../ProfileEmailOtpForm";
 
 
 const VerifyEmailOtp = () => {
@@ -19,7 +19,7 @@ const VerifyEmailOtp = () => {
     }, [])
 
     return (
-        <div className='flex items-center justify-center min-h-[580px]'>
+        <div className='min-h-screen flex items-center justify-center'>
             <ProfileEmailOtpForm
                 contact='email address'
                 verificationType='email_change'

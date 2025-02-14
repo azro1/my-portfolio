@@ -1,7 +1,7 @@
 "use client"
 
 import { createContext } from 'react'
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 
 const MessageContext = createContext()
 
@@ -11,10 +11,10 @@ const MessageProvider = ({ children }) => {
          type: ''
     })
 
-    const changeMessage = (messageType, newMessage) => {
+    const changeMessage = useCallback((messageType, newMessage) => {
         setMessage({ type: messageType, value: newMessage })
         setTimeout(() => setMessage({ type: '', value: '' }), 4000)
-    }
+    }, [])
 
     return (
         <MessageContext.Provider value={{ message, changeMessage }}>

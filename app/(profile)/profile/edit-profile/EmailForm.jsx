@@ -57,12 +57,7 @@ const EmailForm = ({ user, profile }) => {
 
     const router = useRouter();
 
-    
-    useEffect(() => {
-        router.refresh();
-        // clear cookie from server if user navigates back to this page so they have to enter email again to get new otp
-        document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-      }, [router]);
+
 
 
     // populate form fields from profiles table
@@ -170,8 +165,7 @@ const EmailForm = ({ user, profile }) => {
         } catch (error) {
             setIsUpdating(false)
             setFormSuccess(null);
-            // clear cookie if there's an error that comes back from server
-            document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+            localStorage.removeItem("email");
             setFormError(error.message)
             console.log(error.message)
         }

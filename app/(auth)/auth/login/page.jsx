@@ -16,7 +16,7 @@ import { useMessage } from "@/app/hooks/useMessage";
 import AuthForm from "../../AuthForm";
 
 // server action
-import { deleteCookie } from "./actions";
+import { deleteCanAccessOtpPageCookie } from "./actions";
 
 
 
@@ -138,7 +138,7 @@ const Login = () => {
 
     } catch (error) {
         setIsLoading(false);
-        await deleteCookie();
+        await deleteCanAccessOtpPageCookie();
         localStorage.removeItem('email')
         changeMessage('error', 'Oops! Something went wrong on our end. Please try again in a moment or contact support if the issue persists.');
         console.log('login error:', error.message)

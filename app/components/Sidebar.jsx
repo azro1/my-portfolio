@@ -14,6 +14,9 @@ import {
   FiPhone
 } from 'react-icons/fi';
 
+// hooks
+import { useBlockNavOnOtp } from "../hooks/useBlockNavOnOtp";
+
 // components
 import UserAvatar from "./navbar/UserAvatar";
 import Chevron from "./Chevron";
@@ -31,11 +34,14 @@ const Sidebar = ({ isProfilePage }) => {
   const pathName = usePathname()
   const supabase = createClientComponentClient();
 
+  const { handleBlockNav } = useBlockNavOnOtp();
 
 
 
    // realtime subscription to display sidebar data
   useEffect(() => {
+    if (!user) return;
+
     const channel = supabase.channel('realtime-profiles').on('postgres_changes', {
       event: '*',
       schema: 'public',
@@ -50,7 +56,7 @@ const Sidebar = ({ isProfilePage }) => {
       console.log('Subscription status:', status);
     });
     return () => supabase.removeChannel(channel)
-  }, [user, supabase])
+  }, [user])
 
 
 
@@ -103,6 +109,9 @@ const Sidebar = ({ isProfilePage }) => {
 
 
 
+
+
+
   if (loading) {
     return (
       <div className='w-full box-border xl:inline-block xl:w-[300px] xl:min-w-[300px] xl:h-screen xl:min-h-[768px]'>
@@ -125,7 +134,7 @@ const Sidebar = ({ isProfilePage }) => {
           <nav className="px-[x-pad] flex justify-between md:gap-6 relative xl:px-0 xl:flex-col xl:justify-normal xl:gap-0 xl:min-h-[768px] ">
             {/* Code Dynamics Logo */}
             <div className="flex items-center justify-center py-4 xl:p-10">
-              <Link href='/'>
+              <Link href='/' onClick={(e) => handleBlockNav(e)}>
                 <Image
                   className='cursor-pointer'
                   src={'/images/my_logo.svg'}
@@ -146,7 +155,10 @@ const Sidebar = ({ isProfilePage }) => {
             <ul className='hidden md:flex-1 md:flex md:items-center md:justify-end md:gap-8 xl:flex-none xl:flex-col xl:items-stretch xl:justify-start xl:gap-0'>
               <div className='hidden xl:block bg-slateOnyx mx-2 h-[1px]'></div>
               <li className={`xl:m-2 xl:mb-0 xl:p-3 xl:max-h-12 xl:hover:bg-nightSky transition-bg duration-300 xl:rounded-md ${activeLink === '/' ? 'xl:bg-slateOnyx' : ''}`}>
-                <Link href={'/'} onClick={() => handleActiveLink('/')}>
+                <Link href={'/'} onClick={(e) => {
+                  handleActiveLink('/');
+                  handleBlockNav(e);
+                }}>
                   <div className='xl:flex items-center gap-3'>
                     <div className="hidden xl:flex items-center">
                       <FiHome className="icon text-saddleBrown" size={20} />
@@ -159,7 +171,10 @@ const Sidebar = ({ isProfilePage }) => {
                 </Link>
               </li>
               <li className={`xl:m-2 xl:mb-0 xl:p-3 xl:max-h-12 xl:hover:bg-nightSky transition-bg duration-300 xl:rounded-md ${activeLink === '/about' ? 'xl:bg-slateOnyx' : ''}`}>
-                <Link href={'/about'} onClick={() => handleActiveLink('/about')}>
+                <Link href={'/about'} onClick={(e) => {
+                  handleActiveLink('/about');
+                  handleBlockNav(e);
+                }}>
                   <div className='xl:flex items-center gap-3'>
                     <div className="hidden xl:flex items-center">
                       <FiInfo className="icon text-saddleBrown" size={20} />
@@ -172,7 +187,10 @@ const Sidebar = ({ isProfilePage }) => {
                 </Link>
               </li>
               <li className={`xl:m-2 xl:p-3 xl:max-h-12 xl:hover:bg-nightSky transition-bg duration-300 xl:rounded-md ${activeLink === '/contact' ? 'xl:bg-slateOnyx' : ''}`}>
-                <Link href={'/contact'} onClick={() => handleActiveLink('/contact')}>
+                <Link href={'/contact'} onClick={(e) => {
+                  handleActiveLink('/contact');
+                  handleBlockNav(e);
+                }}>
                   <div className='xl:flex items-center gap-3'>
                     <div className="hidden xl:flex items-center">
                       <FiPhone className="icon text-saddleBrown" size={20} />

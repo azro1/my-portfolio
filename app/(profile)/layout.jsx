@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 // components
 import Footer from '../components/Footer';
 import Sidebar from '../components/Sidebar';
+import Cleanup from './Cleanup';
 
 export default async function ProfileLayout({ children }) {
   const supabase = createServerComponentClient({ cookies });
@@ -37,7 +38,7 @@ export default async function ProfileLayout({ children }) {
           <Sidebar isProfilePage={true} />
         </div>
 
-        <div className="flex-1 flex flex-col z-30 mt-10 max-w-screen-xl mx-auto px-[x-pad] uw:px-0">
+        <div className="flex-1 flex flex-col z-30 max-w-screen-xl mx-auto px-[x-pad] uw:px-0">
           <main>
             {children}
           </main>
@@ -48,7 +49,7 @@ export default async function ProfileLayout({ children }) {
       <div className=" w-full z-50">
         <Footer />
       </div>
-
+      <Cleanup />
     </div>
   )
 }

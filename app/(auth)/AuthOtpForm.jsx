@@ -17,7 +17,7 @@ import { useUpdateTable } from "../hooks/useUpdateTable";
 import { useMessage } from "../hooks/useMessage";
 
 // server action
-import { deleteCookie } from "./auth/login/actions";
+import { deleteCanAccessOtpPageCookie } from "./auth/login/actions";
 
 
 
@@ -150,7 +150,7 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
     
             if (isReloading) {
                 // Delete cookie here
-                await deleteCookie();
+                await deleteCanAccessOtpPageCookie();
         
                 // Remove the flag after reloading
                 sessionStorage.removeItem("isReloading");
@@ -304,7 +304,7 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
 
                 if (data?.is_verified && !data?.is_reg_complete) {
                     // delete cookie
-                    await deleteCookie();
+                    await deleteCanAccessOtpPageCookie();
                     localStorage.removeItem("hasVisitedOtpPage");
                     router.push('/upload-avatar')
                     changeMessage('success', `Welcome back, please finish creating your profile`)
@@ -317,7 +317,7 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
                     }
 
                     // delete cookie
-                    await deleteCookie();
+                    await deleteCanAccessOtpPageCookie();
                     localStorage.removeItem("hasVisitedOtpPage");
                     setIsVerified(true)
                     reset({ codes: fields.map(() => ({ code: '' })) });
@@ -329,7 +329,7 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
         } catch (error) {
             setIsLoading(false);
             console.log('auth otp error:', error.message);
-
+            
             if (isActive) {
                changeMessage('error', 'Incorrect. Please double-check the code and try again.')
             } else {

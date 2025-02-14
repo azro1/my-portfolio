@@ -3,6 +3,9 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 
+// hooks
+import { useBlockNavOnOtp } from "@/app/hooks/useBlockNavOnOtp";
+
 // components
 import LoggedInMenu from "./LoggedInMenu";
 import LoggedOutMenu from "./LoggedOutMenu";
@@ -10,8 +13,12 @@ import LoggedOutMenu from "./LoggedOutMenu";
 
 const Dropdown = ({ user, handleCloseMenu, isProfilePage, dropDownRef }) => {
   const router = useRouter()
+  const { handleBlockNav } = useBlockNavOnOtp();
 
-  const handleLogout = async () => {
+  const handleLogout = async (e) => {
+    const canProceed = handleBlockNav(e);
+    if (!canProceed) return;
+   
     const supabase = createClientComponentClient()
     const {error} = await supabase.auth.signOut()
 

@@ -20,7 +20,12 @@ export async function POST(request) {
   }
 
   if (data) {
-    cookies().set('canAccessOtpPage', 'true', { path: '/' }); // Set cookie for OTP access
+    // Set cookie for OTP page access
+    cookies().set('canAccessOtpPage', 'true', { 
+      path: '/', 
+      httpOnly: true, 
+      sameSite: 'Strict'  
+    }); 
     return NextResponse.json({ data }, { 
         status: 200 
     })

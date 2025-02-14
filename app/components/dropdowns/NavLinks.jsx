@@ -5,13 +5,18 @@ import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { FiChevronDown } from 'react-icons/fi';
 
+// hooks
+import { useBlockNavOnOtp } from "@/app/hooks/useBlockNavOnOtp";
+
 // components
 import UserAvatar from "../navbar/UserAvatar";
 
 
 const NavLinks = ({ user, handleCloseMenu, handleToggleMenu }) => {
     const [activeLink, setActiveLink] = useState('');
-    const pathName = usePathname()
+    const pathName = usePathname();
+
+    const { handleBlockNav } = useBlockNavOnOtp();
 
 
     useEffect(() => {
@@ -25,17 +30,26 @@ const NavLinks = ({ user, handleCloseMenu, handleToggleMenu }) => {
 
     return (
         <div className='md:hidden'>
-            <Link href={'/'} className={`${activeLink === '/' ? 'active' : ''}`} onClick={() => handleActiveLink('/')}>
+            <Link href={'/'} className={`${activeLink === '/' ? 'active' : ''}`} onClick={(e) => {
+                handleActiveLink('/');
+                handleBlockNav(e);
+            }}>
                 <div className='flex items-center p-2 px-4' onClick={handleCloseMenu}>
                     <span className='text-base'>Home</span>
                 </div>
             </Link>
-            <Link href={'/about'} className={`${activeLink === '/about' ? 'active' : ''}`} onClick={() => handleActiveLink('/about')}>
+            <Link href={'/about'} className={`${activeLink === '/about' ? 'active' : ''}`} onClick={(e) => {
+                handleActiveLink('/about');
+                handleBlockNav(e);
+            }}>
                 <div className='flex items-center p-2 px-4' onClick={handleCloseMenu}>
                     <span className='text-base'>About</span>
                 </div>
             </Link>
-            <Link href={'/contact'} className={`${activeLink === '/contact' ? 'active' : ''}`} onClick={() => handleActiveLink('/contact')}>
+            <Link href={'/contact'} className={`${activeLink === '/contact' ? 'active' : ''}`} onClick={(e) => {
+                handleActiveLink('/contact');
+                handleBlockNav(e);
+            }}>
                 <div className='flex items-center p-2 px-4' onClick={handleCloseMenu}>
                     <span className='text-base'>Contact</span>
                 </div>
