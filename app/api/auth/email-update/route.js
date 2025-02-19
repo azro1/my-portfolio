@@ -14,8 +14,8 @@ export async function POST(request) {
 
   if (error) {
     console.log('server email update error:', error.message)
-    return NextResponse.json({ error: error.message}, { 
-        status: 500 
+    return NextResponse.json({ error: error.message }, { 
+        status: 409 
     })
   }
 

@@ -12,8 +12,9 @@ import { IoMdArrowBack } from "react-icons/io";
 // custom hook to display global messages
 import { useMessage } from "@/app/hooks/useMessage";
 
-// server action
+// server actions
 import { deleteCanAccessAuthOtpPageCookie } from "../actions";
+import { deleteOtpAccessBlockedCookie } from "@/app/actions";
 
 
 
@@ -113,6 +114,7 @@ const ForgotEmail = () => {
 
                 // store email temporarily in local storage
                 localStorage.setItem('email', serverEmail.email)
+                await deleteOtpAccessBlockedCookie();
                 setRedirect(true)
             }
 
@@ -183,7 +185,7 @@ const ForgotEmail = () => {
                         <button className={`btn block mt-4 ${isLoading ? 'opacity-65' : 'opacity-100'} w-full`} disabled={isLoading}>
                             {isLoading ? (
                                 <div className='flex items-center justify-center gap-2'>
-                                    <img className="w-6 h-6 opacity-65" src="images/loading/reload.svg" alt="Loading indicator" />
+                                    <img className="w-6 h-6 opacity-65" src="../images/loading/reload.svg" alt="Loading indicator" />
                                 </div>
                             ) : (
                                 'Submit'

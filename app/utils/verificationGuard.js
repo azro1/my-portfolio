@@ -28,24 +28,24 @@ export async function VerificationGuard(user, request) {
     
     // for unauthenticated users who access any otp route that do not have permission
     if (!user && (isOtpRoute && !canAccessOtpPageValue)) {
-      const redirectUrl = request.nextUrl.clone();
-      redirectUrl.pathname = '/auth/login';
-      return NextResponse.redirect(redirectUrl);
+      const response = NextResponse.next();
+      response.cookies.set('otpAccessBlocked', 'true', { path: '/', httpOnly: true, sameSite: 'Strict' });
+      return response;
     }
 
 
     // for authenticated users who access any otp route that do not have permission
     if (user && (isOtpRoute && !canAccessOtpPageValue)) {
-      const redirectUrl = request.nextUrl.clone();
-      redirectUrl.pathname = '/';
-      return NextResponse.redirect(redirectUrl);
+      const response = NextResponse.next();
+      response.cookies.set('otpAccessBlocked', 'true', { path: '/', httpOnly: true, sameSite: 'Strict' });
+      return response;
     } 
 
 
     // for authenticated users who access any profile otp route that do not have permission
     if (user && isProfileOtpRoute && !canAccessOtpPageValue) {
       const response = NextResponse.next();
-      response.cookies.set('otpAccessBlocked', 'true', { path: '/', httpOnly: true });
+      response.cookies.set('otpAccessBlocked', 'true', { path: '/', httpOnly: true, sameSite: 'Strict' });
       return response;
     }
     

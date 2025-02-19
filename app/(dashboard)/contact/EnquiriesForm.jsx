@@ -19,7 +19,7 @@ import { useMessage } from '@/app/hooks/useMessage';
 
 
 
-
+import BrevoChatWidget from './BrevoChatWidget';
 
 
 
@@ -287,6 +287,7 @@ const EnquiriesForm = ({ user }) => {
                         'Send'
                     )}
                 </button>
+                <BrevoChatWidget />
             </form>
         </>
 

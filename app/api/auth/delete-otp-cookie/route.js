@@ -2,7 +2,8 @@ import { cookies } from "next/headers";
 
 export async function POST(request) {
     const { userHasLeft } = await request.json();
-
+    console.log('has user left:', userHasLeft);
+    
     if (userHasLeft) {
        await cookies().delete('canAccessOtpPage');
     }

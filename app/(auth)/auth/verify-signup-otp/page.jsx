@@ -1,21 +1,16 @@
-"use client"
-
-import { useEffect, useRef } from "react";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 // components
 import AuthOtpForm from "../../AuthOtpForm";
 
 const VerifySignupOtp = () => {
+    const otpAccessBlocked = cookies().get('otpAccessBlocked')?.value === 'true';
 
-    const authGroupEmailRef = useRef(null);
-
-    useEffect(() => {
-        const userEmail = localStorage.getItem('email');
-        if (userEmail) {
-            authGroupEmailRef.current = userEmail;            
-            localStorage.removeItem('email');
-        } 
-    }, []);
+    // redirect if otpAcessBlocked middleware cookie is present
+    if (otpAccessBlocked) {
+      redirect('/auth/login');
+    }
 
     return (
         <div className='flex items-center justify-center'>
@@ -24,7 +19,6 @@ const VerifySignupOtp = () => {
                 title='Sign up'
                 subHeading='Enter the verification code sent to your email to activate your account'
                 successMessage="Success! Your code has been verified and we're creating your account."
-                authGroupEmailRef={authGroupEmailRef}
             />
         </div>
     )

@@ -1,24 +1,60 @@
 "use client";
 
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useMessage } from "../hooks/useMessage";
 
-// server action
+// server actions
 import { deleteCanAccessAuthOtpPageCookie } from "./auth/actions";
 
 
 
 const Cleanup = () => {
+  const [hasReturned, setHasReturned] = useState(false)
   const { changeMessage } = useMessage();
 
 
-  // if user reloads an otp verification page on the first render of this component the isReloading value will be still accessible so i use it to display a message to user
+
+
+  // If user reloads clear hasVisitedAuthOtpPage flag
   useEffect(() => {
-    const isReloading = sessionStorage.getItem("isReloading");
-    if (isReloading) {
-      changeMessage('error', "Your OTP verification was aborted. Please signup to receive a new security code.")
+    const hasVisitedAuthOtpPage = localStorage.getItem('hasVisitedAuthOtpPage');
+
+    if (hasVisitedAuthOtpPage === 'true') {
+      setHasReturned(true);
     }
-  }, []);
+  }, [])
+
+  // If user reloads clear hasVisitedAuthOtpPage flag
+  useEffect(() => {
+    if (hasReturned) {
+      localStorage.removeItem('hasVisitedAuthOtpPage');
+    }
+  }, [hasReturned])
+
+
+
+
+
+
+
+
+
+
+  // If user reloads an otp verification page on the first render of this component the isReloading value will be still accessible display message if isReloading
+  useEffect(() => {
+    const isReloading = sessionStorage.getItem('isReloading');
+    const hasShownMessage = localStorage.getItem('hasShownAbortMessage');
+
+    if (isReloading && hasShownMessage !== 'true') {
+      changeMessage('error', "Your OTP verification was aborted. Please signup to receive a new security code.");
+      localStorage.setItem('hasShownAbortMessage', 'true');
+    }
+  }, [])
+
+
+
+
+
 
 
 
@@ -29,16 +65,18 @@ const Cleanup = () => {
       const hasVisitedAuthOtpPage = localStorage.getItem("hasVisitedAuthOtpPage") === "true";
 
       if (hasVisitedAuthOtpPage) {
-        // Call function to delete the cookie
+
         const deleteCookie = async () => {
           await deleteCanAccessAuthOtpPageCookie();
           localStorage.removeItem("hasVisitedAuthOtpPage");
+          localStorage.setItem('hasShownAbortMessage', 'true');
           changeMessage('error', 'Your OTP verification was aborted. Please signup to receive a new security code.');
         };
         deleteCookie();
-      }
-    };
 
+      }
+
+    };
     // Listen for back navigation
     window.addEventListener('popstate', handlePopState);
 
@@ -46,6 +84,12 @@ const Cleanup = () => {
       window.removeEventListener('popstate', handlePopState);
     };
   }, []);
+
+
+
+
+
+
 
 
 

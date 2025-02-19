@@ -7,7 +7,6 @@ import Image from 'next/image';
 
 
 // components
-import Card from "@/app/components/Card";
 import ProjectFavouriteButton from '../ProjectFavouriteButton';
 
 
@@ -58,8 +57,7 @@ const Project = async ({ params }) => {
     console.log(error)
   }
 
-
-
+  
   return (
     <div className="flex flex-col">
           <div className="main-container">
@@ -71,7 +69,7 @@ const Project = async ({ params }) => {
                     <h2 className='subheading font-b text-saddleBrown'>{project.title}</h2>
                     <div className='mt-8 grid gap-y-6 md:grid-auto-rows md:grid-cols-2'>
 
-                      <Card values={'p-3 rounded-md md:col-span-2 relative w-full h-[380px] lg:h-auto'} >
+                      <div className='rounded-md md:col-span-2 relative w-full h-[380px] lg:h-auto'>
                         <Image
                           className='w-full h-full object-cover'
                           src={project.image_url}
@@ -82,7 +80,7 @@ const Project = async ({ params }) => {
                           quality={100}
                           priority
                         />
-                      </Card>
+                      </div>
 
                       <div className='md:row-start-2 md:col-start-1 pb-3 md:col-span-2 relative'>
                         <ProjectFavouriteButton className={'absolute right-0 top-1'} projectId={project.id} user={user} />

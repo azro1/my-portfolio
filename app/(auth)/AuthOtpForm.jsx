@@ -51,7 +51,7 @@ const schema = yup.object({
 
 
 
-const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, successMessage }) => {
+const AuthOtpForm = ({ redirectUrl, title, subHeading, successMessage }) => {
     const [isLoading, setIsLoading] = useState(false)
     const [redirect, setRedirect] = useState(false)
     const [isVerified, setIsVerified] = useState(false)
@@ -73,12 +73,29 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
 
 
 
+    const emailRef = useRef(null);
+
+    useEffect(() => {
+        const userEmail = localStorage.getItem('email');
+        if (userEmail) {
+            emailRef.current = userEmail;            
+            localStorage.removeItem('email');
+        } 
+    }, []);
+
+
+
+
+
+
+
 
 
 
     // set indicator that user has been to delete cookie if they go back
     useEffect(() => {
         localStorage.setItem("hasVisitedAuthOtpPage", "true");
+        localStorage.setItem('hasShownAbortMessage', 'false');
     }, []);
 
 
@@ -135,6 +152,12 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
         const handleBeforeUnload = () => {
             // Set a flag to indicate a reload is happening
             sessionStorage.setItem("isReloading", "true");
+            // navigator.sendBeacon sends an asynchronous HTTP POST request, but unlike fetch(), it ensures the request is completed before the page unloads, designed for sending small amounts of data and doesn't return anything. I had to use this metho to delete canAccessOtpPage cookie if a user leave by using the address bar
+            try {
+                navigator.sendBeacon('/api/auth/delete-otp-cookie', JSON.stringify({ userHasLeft: true }));
+            } catch (error) {
+                console.error("sendBeacon error:", error);
+            }
         };
     
         window.addEventListener("beforeunload", handleBeforeUnload);
@@ -149,13 +172,8 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
             const isReloading = sessionStorage.getItem("isReloading");
     
             if (isReloading) {
-                // Delete canAccessOtpPage cookie
-                await deleteCanAccessAuthOtpPageCookie();
-        
                 // Remove the flags after reloading
                 sessionStorage.removeItem("isReloading");
-                localStorage.removeItem("hasVisitedAuthOtpPage")
-
                 router.push('/auth/login')
             }
         }
@@ -279,7 +297,7 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
 
             const supabase = createClientComponentClient()
             const { data: { session }, error } = await supabase.auth.verifyOtp({
-                email: authGroupEmailRef.current,
+                email: emailRef.current,
                 token: otp,
                 type: 'email'
             })
@@ -373,7 +391,7 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
                     isLoading={isLoading}
                     formState={formState}
                     trigger={trigger}
-                    authGroupEmailRef={authGroupEmailRef}
+                    authGroupEmailRef={emailRef}
                     isButtonDisabled={isButtonDisabled}
                     isVerified={isVerified}
             /> 

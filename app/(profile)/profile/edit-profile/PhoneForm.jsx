@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import Modal from './Modal'
 
 // server actions
-import { deleteOtpAccessBlockedCookie } from "../actions";
+import { deleteOtpAccessBlockedCookie } from "@/app/actions";
 
 
 

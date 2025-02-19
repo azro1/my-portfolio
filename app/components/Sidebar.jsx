@@ -115,7 +115,7 @@ const Sidebar = ({ isProfilePage }) => {
   if (loading) {
     return (
       <div className='w-full box-border xl:inline-block xl:w-[300px] xl:min-w-[300px] xl:h-screen xl:min-h-[768px]'>
-        <div className="sidebar-content  fixed bg-softCharcoal border-charcoalGray border-b-[1px] min-h-[113px] md:flex md:items-center md:justify-end xl:h-full xl:overflow-y-scroll xl:hide-scrollbar xl:border-r-[1px] xl:items-start xl:justify-center ">
+        <div className="sidebar-content  fixed bg-softCharcoal  min-h-[113px] md:flex md:items-center md:justify-end xl:h-full xl:overflow-y-scroll xl:hide-scrollbar  xl:items-start xl:justify-center ">
 
           <div className="hidden md:block  mr-20 xl:mr-0 xl:mt-56">
             <img className="w-8 opacity-60" src="/images/loading/spinner.svg" alt="" />
@@ -129,7 +129,7 @@ const Sidebar = ({ isProfilePage }) => {
   
   return (
     <div className='w-full box-border xl:inline-block xl:w-[300px] xl:min-w-[300px] xl:h-screen xl:min-h-[768px]'>
-      <div className="sidebar-content fixed bg-softCharcoal border-charcoalGray border-b-[1px] xl:h-full xl:overflow-y-scroll xl:hide-scrollbar xl:border-r-[1px]">
+      <div className="sidebar-content fixed bg-softCharcoal xl:h-full xl:overflow-y-scroll xl:hide-scrollbar ">
 
           <nav className="px-[x-pad] flex justify-between md:gap-6 relative xl:px-0 xl:flex-col xl:justify-normal xl:gap-0 xl:min-h-[768px] ">
             {/* Code Dynamics Logo */}

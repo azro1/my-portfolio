@@ -16,9 +16,9 @@ import { useMessage } from "@/app/hooks/useMessage";
 // components
 import AuthForm from "../../AuthForm";
 
-// server action
+// server actions
 import { deleteCanAccessAuthOtpPageCookie } from "../actions";
-
+import { deleteOtpAccessBlockedCookie } from "@/app/actions";
 
 
 // yup validation schema
@@ -135,6 +135,7 @@ const Signup = () => {
           throw new Error(error.message);
         } else {
           setIsLoading(false);
+          await deleteOtpAccessBlockedCookie();
           router.push('/auth/verify-signup-otp')
         }
       }

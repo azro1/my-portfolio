@@ -11,21 +11,24 @@ const AuthRegHeader = ({ storageKey, message }) => {
 
     return (
         <header className='bg-nightSky w-full min-h-[90px] flex items-center z-40'>
-            <div className='max-w-screen-xl w-full px-6 mx-auto'>
+            <div className='max-w-screen-xl w-full mx-auto'>
+            <div className=' w-max pl-4'>
                 <main>
                     <Link href='/' onClick={(e) => handleBlockNav(e)}>
                         <Image
                             className='cursor-pointer'
                             src={'/images/my_logo.svg'}
                             alt="Navigate to home page"
-                            width={50}
-                            height={50}
+                            width={60}
+                            height={60}
                             priority
                             quality={100}
                         />
                     </Link>
                 </main>
             </div>
+            </div>
+
         </header>
     )
 }

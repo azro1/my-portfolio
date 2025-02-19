@@ -15,9 +15,9 @@ import { useMessage } from "@/app/hooks/useMessage";
 // components
 import AuthForm from "../../AuthForm";
 
-// server action
+// server actions
 import { deleteCanAccessAuthOtpPageCookie } from "../actions";
-
+import { deleteOtpAccessBlockedCookie } from "@/app/actions";
 
 
 
@@ -132,6 +132,7 @@ const Login = () => {
 
         if (!error) {
           setIsLoading(false);
+          await deleteOtpAccessBlockedCookie();
           router.push('/auth/verify-login-otp')
         }
       }

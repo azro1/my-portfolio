@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react"
 import { useMessage } from "../hooks/useMessage"
+
+// server actions
 import { deleteCanAccessProfileOtpPageCookie } from "./profile/actions"
 
 
@@ -25,6 +27,11 @@ const Cleanup = () => {
         }
     }, [hasReturned])
 
+
+
+
+
+
     // If user reloads an otp verification page on the first render of this component the isReloading value will be still accessible display message if isReloading
     useEffect(() => {
         const isReloading = sessionStorage.getItem('isReloading');
@@ -36,6 +43,11 @@ const Cleanup = () => {
         }
     }, [])
 
+
+
+
+
+    
     // If user navigates backwards via browser back buton or right-click menu delete canAccessOtpPage cookie and display message 
     useEffect(() => {
         const handlePopState = async () => {
