@@ -17,7 +17,7 @@ import { useMessage } from "@/app/hooks/useMessage";
 import AuthForm from "../../AuthForm";
 
 // server action
-import { deleteCanAccessOtpPageCookie } from "../login/actions";
+import { deleteCanAccessAuthOtpPageCookie } from "../actions";
 
 
 
@@ -141,7 +141,7 @@ const Signup = () => {
       
     } catch (error) {
         setIsLoading(false);
-        await deleteCanAccessOtpPageCookie();
+        await deleteCanAccessAuthOtpPageCookie();
         localStorage.removeItem('email')
         changeMessage('error', 'An unexpected error occurred. Please try again later or contact support if the issue persists.');
         console.log('sign up error:', error.message)

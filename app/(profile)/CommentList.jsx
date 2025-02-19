@@ -94,7 +94,7 @@ const CommentList = ({ user }) => {
 
   return (
     <div>
-        <h3 className='text-lg font-b text-frostWhite mb-3'>Chat History</h3>
+        <h3 className='text-lg font-medium text-frostWhite mb-3'>Chat History</h3>
 
             {!error ? (
                 <div className={`flex flex-col text-left min-h-96 max-h-96 overflow-y-scroll hide-scrollbar md:max-w-md relative bg-softCharcoal ${comments === null ? 'p-0' : 'p-4'} gap-4`}>
@@ -110,7 +110,7 @@ const CommentList = ({ user }) => {
                         ))
                     ) : (
                             <div className="min-h-96 bg-softCharcoal">
-                                {!isCommentsLoading && <p className='text-ashGray p-4'>No Comments.</p>}
+                                {!isCommentsLoading && <p className='text-ashGray p-4'>No Chats.</p>}
                             </div>
                     )}
                 </div>

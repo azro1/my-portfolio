@@ -219,7 +219,7 @@ const EnquiriesForm = ({ user }) => {
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
-                <h3 className='mb-4 text-2xl font-b text-saddleBrown'>
+                <h3 className='mb-4 font-b text-saddleBrown text-1.375 md:text-2xl'>
                     Enquiries
                 </h3>
                 <div className='flex flex-col gap-2'>

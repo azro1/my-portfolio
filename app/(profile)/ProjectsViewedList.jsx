@@ -27,7 +27,7 @@ const ProjectsViewedList = ({ user }) => {
 
   return (
       <div>
-          <h3 className='text-lg text-frostWhite font-b mb-4'>Project Views</h3>
+          <h3 className='text-lg text-frostWhite font-medium mb-4'>Project Views</h3>
               {!errorMessage ? (
                 <div className={`min-h-[350px] flex items-center justify-center md:justify-normal bg-softCharcoal ${retrievedProjects.length === 0 ? 'p-4' : 'p-12'}`}>
                   {!isProjectsLoading && (

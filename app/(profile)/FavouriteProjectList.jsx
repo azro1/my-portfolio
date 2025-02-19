@@ -29,7 +29,7 @@ const FavouriteProjectList = ({ user }) => {
 
     return (
         <div>
-            <h3 className='text-frostWhite text-lg font-b mb-4'>Favourite Projects</h3>
+            <h3 className='text-frostWhite text-lg font-medium mb-4'>Favourite Projects</h3>
             {!errorMessage ? (
                 <div className={`min-h-[350px] flex items-center justify-center md:justify-normal bg-softCharcoal ${retrievedProjects.length === 0 ? 'p-4' : 'p-12'}`}>
                     {!isProjectsLoading && (

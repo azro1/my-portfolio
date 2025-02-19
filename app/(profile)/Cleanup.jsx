@@ -1,17 +1,32 @@
 "use client"
 
-import { useEffect } from "react"
+import { useState, useEffect } from "react"
 import { useMessage } from "../hooks/useMessage"
-import { deleteHasVisitedOtpPageCookie } from "./profile/actions"
-import { deleteCanAccessOtpPageCookie } from "../(auth)/auth/login/actions"
+import { deleteCanAccessProfileOtpPageCookie } from "./profile/actions"
 
 
 const Cleanup = () => {
+    const [hasReturned, setHasReturned] = useState(false)
     const { changeMessage } = useMessage();
-
-    console.log('cleanup mounted')
+    
+    // If user reloads clear hasVisitedProfileOtpPage flag
     useEffect(() => {
-        // on the first render of this component the isReloading value from ProfileEmailOtpForm is still available
+        const hasVisitedProfileOtpPage = localStorage.getItem('hasVisitedProfileOtpPage');
+
+        if (hasVisitedProfileOtpPage === 'true') {
+            setHasReturned(true);
+        }
+    }, [])
+
+    // If user reloads clear hasVisitedProfileOtpPage flag
+    useEffect(() => {
+        if (hasReturned) {
+            localStorage.removeItem('hasVisitedProfileOtpPage');
+        }
+    }, [hasReturned])
+
+    // If user reloads an otp verification page on the first render of this component the isReloading value will be still accessible display message if isReloading
+    useEffect(() => {
         const isReloading = sessionStorage.getItem('isReloading');
         const hasShownMessage = localStorage.getItem('hasShownAbortMessage');
 
@@ -21,24 +36,18 @@ const Cleanup = () => {
         }
     }, [])
 
-
-
-    // function to delete both cookies if user navigates back
+    // If user navigates backwards via browser back buton or right-click menu delete canAccessOtpPage cookie and display message 
     useEffect(() => {
         const handlePopState = async () => {
-        const hasVisitedProfileOtpPage = localStorage.getItem('hasVisitedProfileOtpPage');
         const hasShownMessage = localStorage.getItem('hasShownAbortMessage');
+ 
+            await deleteCanAccessProfileOtpPageCookie();
 
-            await deleteCanAccessOtpPageCookie();
-            await deleteHasVisitedOtpPageCookie();
-
-            if (hasVisitedProfileOtpPage && hasShownMessage !== 'true') {
+            if (hasShownMessage !== 'true') {
                 changeMessage('error', "Your OTP verification was aborted");
-                localStorage.removeItem('hasVisitedProfileOtpPage');
                 localStorage.setItem('hasShownAbortMessage', 'true');
             }
         }
-
         // Listen for back navigation
         window.addEventListener('popstate', handlePopState)
 
@@ -46,7 +55,6 @@ const Cleanup = () => {
             window.removeEventListener('popstate', handlePopState)
         }
     }, [])
-
 
     return null
 }

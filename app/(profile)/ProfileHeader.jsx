@@ -72,12 +72,12 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
    const loading = isLoading || isProfileLoading;
 
    return (
-      <div className='pt-16'>
-         <h2 className='subheading font-b text-cloudGray'>{title}</h2>
-         <p className='mt-4 leading-normal md:text-lg text-cloudGray'>{subheading}</p>
+      <div>
+         <h2 className='subheading font-medium text-cloudGray'>{title}</h2>
+         <p className='mt-4 leading-normal text-charcoalGrayLight md:text-lg'>{subheading}</p>
 
          {showAvatar && (
-            <div className='mt-6 min-h-[480px] bg-softCharcoal'>
+            <div className='mt-16 min-h-[480px] bg-softCharcoal'>
                <div className='flex items-center gap-1 p-4'>
 
                   {loading ? (
@@ -103,9 +103,9 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
 
                   {!loading && (
                      <div className='pl-2 min-w-0'>
-                        <p className='text-stoneGray font-b text-2xl md:text-3xl '>Welcome, {first_name}</p>
-                        <p className='whitespace-normal break-words pt-1'>
-                           {bio ? <span className='text-cloudGray leading-normal'>{bio}</span> : `"Add a brief description about yourself here. You can update this in Edit Profile."`}
+                        <p className='text-cloudGray text-2xl md:text-3xl'>Welcome, <span className='text-saddleBrown font-b'>{first_name}</span></p>
+                        <p className='whitespace-normal break-words pt-2'>
+                           {bio ? <span className='text-cloudGray leading-normal'>{bio}</span> : <span className='text-ashGray'>Add a brief description about yourself here. You can update this in Edit Profile.</span>}
                         </p>
                      </div>
                   )}

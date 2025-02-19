@@ -11,7 +11,8 @@ import disposableDomains from 'disposable-email-domains';
 // components
 import Modal from './Modal'
 
-
+// server actions
+import { deleteOtpAccessBlockedCookie } from "../actions";
 
 
 
@@ -156,6 +157,7 @@ const EmailForm = ({ user, profile }) => {
             if (!res.ok && serverEmail.error) {
                 throw new Error(serverEmail.error)
             } else if (res.status === 200 && !serverEmail.error) {
+                await deleteOtpAccessBlockedCookie();
                 setIsUpdating(false)
                 setShowForm(false)
                 router.push('/profile/verify-email-otp')

@@ -17,7 +17,7 @@ import { useUpdateTable } from "../hooks/useUpdateTable";
 import { useMessage } from "../hooks/useMessage";
 
 // server action
-import { deleteCanAccessOtpPageCookie } from "./auth/login/actions";
+import { deleteCanAccessAuthOtpPageCookie } from "./auth/actions";
 
 
 
@@ -57,7 +57,7 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
     const [isVerified, setIsVerified] = useState(false)
     const [buttonIsDisabled, setButtonIsDisabled] = useState(null)
     const [isActive, setIsActive] = useState(null)
-    const [isUserBack, setIsUserBack] = useState(false)
+    const [hasReturned, setHasReturned] = useState(false)
     const [hasVisitedRegPage, setHasVisitedRegPage] = useState(false);
  
     const router = useRouter()
@@ -78,7 +78,7 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
 
     // set indicator that user has been to delete cookie if they go back
     useEffect(() => {
-        localStorage.setItem("hasVisitedOtpPage", "true");
+        localStorage.setItem("hasVisitedAuthOtpPage", "true");
     }, []);
 
 
@@ -96,13 +96,13 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
         const visited = localStorage.getItem("hasVisitedRegPage");
         if (visited === "true") {
             setHasVisitedRegPage(true);
-            setIsUserBack(true);
+            setHasReturned(true);
         }
     }, []);
 
     // log them out if they have
     useEffect(() => {
-        if (isUserBack) {
+        if (hasReturned) {
             const handleLogout = async () => {
                 const supabase = createClientComponentClient();
                 await supabase.auth.signOut();
@@ -113,7 +113,7 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
 
             handleLogout();
         }
-    }, [isUserBack, router]);
+    }, [hasReturned, router]);
 
 
 
@@ -149,11 +149,13 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
             const isReloading = sessionStorage.getItem("isReloading");
     
             if (isReloading) {
-                // Delete cookie here
-                await deleteCanAccessOtpPageCookie();
+                // Delete canAccessOtpPage cookie
+                await deleteCanAccessAuthOtpPageCookie();
         
-                // Remove the flag after reloading
+                // Remove the flags after reloading
                 sessionStorage.removeItem("isReloading");
+                localStorage.removeItem("hasVisitedAuthOtpPage")
+
                 router.push('/auth/login')
             }
         }
@@ -304,8 +306,8 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
 
                 if (data?.is_verified && !data?.is_reg_complete) {
                     // delete cookie
-                    await deleteCanAccessOtpPageCookie();
-                    localStorage.removeItem("hasVisitedOtpPage");
+                    await deleteCanAccessAuthOtpPageCookie();
+                    localStorage.removeItem("hasVisitedAuthOtpPage");
                     router.push('/upload-avatar')
                     changeMessage('success', `Welcome back, please finish creating your profile`)
                     return;
@@ -317,8 +319,8 @@ const AuthOtpForm = ({ authGroupEmailRef, redirectUrl, title, subHeading, succes
                     }
 
                     // delete cookie
-                    await deleteCanAccessOtpPageCookie();
-                    localStorage.removeItem("hasVisitedOtpPage");
+                    await deleteCanAccessAuthOtpPageCookie();
+                    localStorage.removeItem("hasVisitedAuthOtpPage");
                     setIsVerified(true)
                     reset({ codes: fields.map(() => ({ code: '' })) });
                     changeMessage('success', successMessage);

@@ -26,6 +26,7 @@ export async function POST(request) {
       httpOnly: true, 
       sameSite: 'Strict'  
     }); 
+
     return NextResponse.json({ data }, { 
         status: 200 
     })

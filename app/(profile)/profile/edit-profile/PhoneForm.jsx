@@ -9,7 +9,8 @@ import { useForm } from "react-hook-form";
 // components
 import Modal from './Modal'
 
-
+// server actions
+import { deleteOtpAccessBlockedCookie } from "../actions";
 
 
 
@@ -187,6 +188,7 @@ const PhoneForm = ({ user, profile }) => {
             if (!res.ok && serverPhone.error) {
                 throw new Error(serverPhone.error)
             } else if (res.status === 200 && !serverPhone.error) {
+                await deleteOtpAccessBlockedCookie();
                 setIsUpdating(false)
                 setShowForm(false)
                 router.push('/profile/verify-phone-otp')
@@ -196,7 +198,7 @@ const PhoneForm = ({ user, profile }) => {
             setIsUpdating(false)
             setFormSuccess(null);
             localStorage.removeItem("phone");
-            setFormError('An unexpected error occurred while updating your email. Please try again later. If the issue persists, contact support.')
+            setFormError('An unexpected error occurred while updating your phone. Please try again later. If the issue persists, contact support.')
             console.log(error.message)
         }
 

@@ -3,8 +3,8 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState, useEffect, useCallback } from "react"
-import { useRouter } from "next/navigation";
+import { useState, useEffect, useRef } from "react"
+import { useRouter, usePathname } from "next/navigation";
 import { useForm, useFieldArray } from "react-hook-form";
 
 // components
@@ -17,9 +17,7 @@ import { useMessage } from "@/app/hooks/useMessage";
 
 
 // server actions
-import { setHasVisitedOtpPageCookie } from "./profile/actions";
-import { deleteCanAccessOtpPageCookie } from "@/app/(auth)/auth/login/actions";
-import { deleteHasVisitedOtpPageCookie } from "./profile/actions";
+import { deleteCanAccessProfileOtpPageCookie } from "./profile/actions";
 
 
 
@@ -56,12 +54,11 @@ const schema = yup.object({
 
 
 
-const ProfilePhoneOtpForm = ({ profilePhoneRef, contact, verificationType, title, subHeading, successMessage }) => {
+const ProfilePhoneOtpForm = ({ contact, verificationType, title, subHeading, successMessage }) => {
     const [isLoading, setIsLoading] = useState(false)
     const [isVerified, setIsVerified] = useState(false)
     const [buttonIsDisabled, setButtonIsDisabled] = useState(null)
     const [isActive, setIsActive] = useState(null)
-
     
     // custom hooks
     const { updateTable } = useUpdateTable()
@@ -73,7 +70,20 @@ const ProfilePhoneOtpForm = ({ profilePhoneRef, contact, verificationType, title
 
 
 
-    // console.log('ProfileOtpForm Data:', profilePhoneRef?.current);
+
+
+
+
+    const phoneRef = useRef(null);
+
+    useEffect(() => {
+      const userPhone = localStorage.getItem('phone');
+      
+      if (userPhone) {
+        phoneRef.current = userPhone;
+        localStorage.removeItem('phone')
+      }
+    }, [])
 
 
 
@@ -83,14 +93,12 @@ const ProfilePhoneOtpForm = ({ profilePhoneRef, contact, verificationType, title
 
 
 
-    // set server cookie to indicate that user has been to delete cookie if they go back
+
+
+    // set flags to prevent navigation during otp verification and to display messages in cleanup
     useEffect(() => {
         localStorage.setItem('hasVisitedProfileOtpPage', 'true');
         localStorage.setItem('hasShownAbortMessage', 'false');
-        const setProfilePhoneOtpCookie = async () => {
-            await setHasVisitedOtpPageCookie();
-        }
-        setProfilePhoneOtpCookie();
     }, []);
 
 
@@ -101,15 +109,17 @@ const ProfilePhoneOtpForm = ({ profilePhoneRef, contact, verificationType, title
 
 
 
-
-
-
-
-    // delete cookie on page reload
+    // send flag to api endpoint and redirect user on page reload
     useEffect(() => {
         const handleBeforeUnload = () => {
-            // Set a flag to indicate a reload is happening
+            // set a flag to indicate a reload is happening
             sessionStorage.setItem("isReloading", "true");
+            // navigator.sendBeacon sends an asynchronous HTTP POST request, but unlike fetch(), it ensures the request is completed before the page unloads, designed for sending small amounts of data and doesn't return anything. I had to use this metho to delete canAccessOtpPage cookie if a user leave by using the address bar
+            try {
+                navigator.sendBeacon('/api/auth/delete-otp-cookie', JSON.stringify({ userHasLeft: true }));
+            } catch (error) {
+                console.error("sendBeacon error:", error);
+            }
         };
     
         window.addEventListener("beforeunload", handleBeforeUnload);
@@ -120,22 +130,13 @@ const ProfilePhoneOtpForm = ({ profilePhoneRef, contact, verificationType, title
     }, []);
     
     useEffect(() => {
-        const handlePageReload = async () => {
-            const isReloading = sessionStorage.getItem("isReloading");
-    
-            if (isReloading) {
-                // Delete cookie here
-                await deleteCanAccessOtpPageCookie();
-                await deleteHasVisitedOtpPageCookie();
+        const isReloading = sessionStorage.getItem("isReloading");
 
-                // Remove the flags after reloading
-                sessionStorage.removeItem("isReloading");
-                localStorage.removeItem('hasVisitedProfileOtpPage');
-
-                router.push('/profile/edit-profile')
-            }
+        if (isReloading) {
+            // Remove the flags after reloading
+            sessionStorage.removeItem("isReloading");
+            router.push('/profile/edit-profile')
         }
-        handlePageReload();
     }, [router]);
 
 
@@ -144,6 +145,9 @@ const ProfilePhoneOtpForm = ({ profilePhoneRef, contact, verificationType, title
 
      
     
+
+
+
   
     // isButtonDisabled function passed down to timer that fires everytime button is disabled which then allows me to show distinct errors on form submission
     const isButtonDisabled = (bool) => {
@@ -157,6 +161,7 @@ const ProfilePhoneOtpForm = ({ profilePhoneRef, contact, verificationType, title
             setIsActive(false)
         }
      }, [buttonIsDisabled])
+
 
 
 
@@ -245,7 +250,7 @@ const ProfilePhoneOtpForm = ({ profilePhoneRef, contact, verificationType, title
         // Create Supabase client and verify OTP
         const supabase = createClientComponentClient();
         const { data: { session }, error } = await supabase.auth.verifyOtp({
-            phone: profilePhoneRef?.current,
+            phone: phoneRef?.current,
             token: otp,
             type: verificationType
         });
@@ -270,13 +275,13 @@ const ProfilePhoneOtpForm = ({ profilePhoneRef, contact, verificationType, title
             try {
                 
                 // check for successful metadata update if not log out error
-                const updateMetadataResult = await updateMetadata({ phone: profilePhoneRef?.current })
+                const updateMetadataResult = await updateMetadata({ phone: phoneRef?.current })
                 if (!updateMetadataResult.success) {
                     console.log('metadata update error:', updateMetadataResult.error)
                 }
 
                 // check for successful profiles update if not throw new error
-                const updateTableResult = await updateTable(session.user, 'profiles', { phone: profilePhoneRef?.current }, 'id')
+                const updateTableResult = await updateTable(session.user, 'profiles', { phone: phoneRef?.current }, 'id')
                 if (!updateTableResult.success) {
                     throw new Error(`An unexpected error occurred and we couldn't update your ${contact}. Please try again later. If the issue persists, contact support.`)
                 }
@@ -284,25 +289,19 @@ const ProfilePhoneOtpForm = ({ profilePhoneRef, contact, verificationType, title
                 setIsLoading(false)
                 setIsVerified(true)
                 // delete cookie after successful verification
-                await deleteCanAccessOtpPageCookie();
+                await deleteCanAccessProfileOtpPageCookie();
                 localStorage.removeItem("hasVisitedOtpPage");
                 router.refresh();
                 changeMessage('success', successMessage)
 
             } catch (error) {
                 // delete cookie if profiles update fails
-                await deleteCanAccessOtpPageCookie();
+                await deleteCanAccessProfileOtpPageCookie();
                 router.refresh();
                 changeMessage('error', error.message)
             }
         }
     }
-
-
-
-
-
-
 
 
     return (
@@ -321,7 +320,7 @@ const ProfilePhoneOtpForm = ({ profilePhoneRef, contact, verificationType, title
                 isLoading={isLoading}
                 formState={formState}
                 trigger={trigger}
-                profilePhoneRef={profilePhoneRef}
+                profilePhoneRef={phoneRef}
                 isButtonDisabled={isButtonDisabled}
                 isVerified={isVerified}
             />

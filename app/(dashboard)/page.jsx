@@ -18,7 +18,7 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="py-16 md:py-32 bg-slateOnyx">
+        <div className="py-16 md:py-32 bg-charcoalGray">
           <div className="px-[x-pad] mx-auto max-w-screen-lg xl:p-0 uw:max-w-[1700px]">
             <main>
               <Services />
@@ -42,7 +42,7 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="py-16 px-[x-pad] bg-slateOnyx md:py-32 lg:px-0">
+        <div className="py-16 px-[x-pad] bg-charcoalGray md:py-32 lg:px-0">
           <main>
             <ProjectList />
           </main>

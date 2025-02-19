@@ -8,7 +8,7 @@ import { FiLinkedin, FiGithub, FiInstagram, FiYoutube } from 'react-icons/fi';
 import { useBlockNavOnOtp } from "../hooks/useBlockNavOnOtp";
 
 const Footer = () => {
-  const { handleBlockNav } = useBlockNavOnOtp();
+  const { handleBlockNav } = useBlockNavOnOtp('hasVisitedProfileOtpPage', 'Please complete verification before you leave');
 
   return (
     <footer className="min-h-[300px] w-full flex items-start xl:min-h-[170px] bg-slateOnyx">

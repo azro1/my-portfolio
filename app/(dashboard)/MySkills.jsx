@@ -24,7 +24,7 @@ const MySkills = () => {
             {technicalSkills.map((skill, index) => (
               <motion.div
                 key={index}
-                className="p-4 rounded-lg shadow-[0_0_8px_2px_#131519] bg-gradient-to-tl from-slateOnyx via-nightSky to-stoneGray transition-shadow duration-300"
+                className="p-4 rounded-lg shadow-[0_0_8px_2px_#131519] bg-gradient-to-tl from-charcoalGray via-nightSky to-stoneGray transition-shadow duration-300"
                 whileHover={{
                   scale: 1.1
                 }}

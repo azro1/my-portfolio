@@ -1,106 +1,68 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useMessage } from "../hooks/useMessage";
 
 // server action
-import { deleteCanAccessOtpPageCookie } from "./auth/login/actions";
+import { deleteCanAccessAuthOtpPageCookie } from "./auth/actions";
 
 
 
 const Cleanup = () => {
-    const [isUserBack, setIsUserBack] = useState(false)
-    const { changeMessage } = useMessage();
+  const { changeMessage } = useMessage();
 
 
-  // set state to track when user is redirected back to login after reloading page in AuthOtpForm with flag in local storage
+  // if user reloads an otp verification page on the first render of this component the isReloading value will be still accessible so i use it to display a message to user
   useEffect(() => {
-    const visited = localStorage.getItem("hasVisitedOtpPage");
-    if (visited === "true") {
-      setIsUserBack(true);
+    const isReloading = sessionStorage.getItem("isReloading");
+    if (isReloading) {
+      changeMessage('error', "Your OTP verification was aborted. Please signup to receive a new security code.")
     }
   }, []);
 
 
-  // function to delete server cookie and local storage flag
+
+
+  // function to delete server cookie and local storage flag if user navigates back from otp forms
   useEffect(() => {
-    if (isUserBack) {
-      const handleReload = async () => {
-        await deleteCanAccessOtpPageCookie();
-        localStorage.removeItem("hasVisitedOtpPage")
-        changeMessage('error', "You have aborted the process. Please signup to receive a new security code.")
-      };
-      handleReload();
+    const handlePopState = () => {
+      const hasVisitedAuthOtpPage = localStorage.getItem("hasVisitedAuthOtpPage") === "true";
+
+      if (hasVisitedAuthOtpPage) {
+        // Call function to delete the cookie
+        const deleteCookie = async () => {
+          await deleteCanAccessAuthOtpPageCookie();
+          localStorage.removeItem("hasVisitedAuthOtpPage");
+          changeMessage('error', 'Your OTP verification was aborted. Please signup to receive a new security code.');
+        };
+        deleteCookie();
+      }
+    };
+
+    // Listen for back navigation
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, []);
+
+
+
+
+  // function to clean up registration local storage flags and display message
+  useEffect(() => {
+    const forceLogout = localStorage.getItem("forceLogout") === "true";
+    const hasVisitedRegPage = localStorage.getItem("hasVisitedRegPage") === "true";
+
+    if (forceLogout) {
+      localStorage.removeItem("forceLogout");
+      changeMessage('error', 'You have been logged out. Please log back in to finish setting up your account.');
+    } else if (hasVisitedRegPage) {
+      localStorage.removeItem("hasVisitedRegPage");
+      changeMessage('error', 'You have been logged out. Please log back in to finish setting up your account.');
     }
-  }, [isUserBack]);
-
-
-
-
-
- 
-    // function to delete server cookie and local storage flag if user navigates back from otp form
-    useEffect(() => {
-        const handlePopState = () => {
-          const hasVisitedOtpPage = localStorage.getItem("hasVisitedOtpPage") === "true";
-    
-          if (hasVisitedOtpPage) {
-            // Call function to delete the cookie
-            const deleteCanAccessOtpPageCookie = async () => {
-              await deleteCanAccessOtpPageCookie();
-              localStorage.removeItem("hasVisitedOtpPage");
-              changeMessage('error', 'You have aborted the process. Please signup to receive a new security code.');
-            };
-            deleteCanAccessOtpPageCookie();
-          }
-        };
-    
-        // Listen for back navigation
-        window.addEventListener('popstate', handlePopState);
-    
-        return () => {
-          window.removeEventListener('popstate', handlePopState);
-        };
-      }, []);
-
-
-
-       
-
-    // function to delete otp server cookie and ss flag if the user reloads the page
-    useEffect(() => {
-        const isReloading = sessionStorage.getItem("isReloading");
-
-        const deleteCanAccessOtpPageCookie = async () => {
-            await deleteCanAccessOtpPageCookie()
-            sessionStorage.removeItem("isReloading");
-            changeMessage('error', 'You have aborted the process. Please signup to recieve a new security code.');
-        }
-
-        if (isReloading) {
-            deleteCanAccessOtpPageCookie()
-        }
-    }, [])
-
-
-
-
-
-    // function to clean up registration ls flags 
-    useEffect(() => {
-        const forceLogout = localStorage.getItem("forceLogout") === "true";
-        const hasVisitedRegPage = localStorage.getItem("hasVisitedRegPage") === "true";
-
-        if (forceLogout) {
-            localStorage.removeItem("forceLogout");
-            changeMessage('error', 'You have been logged out. Please log back in to finish setting up your account.');
-        } else if (hasVisitedRegPage) {
-            localStorage.removeItem("hasVisitedRegPage");
-            changeMessage('error', 'You have been logged out. Please log back in to finish setting up your account.');
-        }
-    }, []);
-
-
+  }, []);
 
 
 };

@@ -31,7 +31,7 @@ export default async function ProfileLayout({ children }) {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-ashGray">
+    <div className="flex flex-col min-h-screen bg-[#33353a]">
       <div className="flex flex-1">
 
         <div className="flex z-40">

@@ -11,7 +11,7 @@ const ProfileMenu = ({ handleLogout, handleCloseMenu, isProfilePage, isOpen }) =
     const [activeLink, setActiveLink] = useState('');
     const pathName = usePathname()
 
-    const { handleBlockNav } = useBlockNavOnOtp();
+    const { handleBlockNav } = useBlockNavOnOtp('hasVisitedProfileOtpPage', 'Please complete verification before you leave');
 
     useEffect(() => {
         setActiveLink(pathName)

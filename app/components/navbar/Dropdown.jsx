@@ -13,7 +13,7 @@ import LoggedOutMenu from "./LoggedOutMenu";
 
 const Dropdown = ({ user, handleCloseMenu, isProfilePage, dropDownRef }) => {
   const router = useRouter()
-  const { handleBlockNav } = useBlockNavOnOtp();
+  const { handleBlockNav } = useBlockNavOnOtp('hasVisitedProfileOtpPage', 'Please complete verification before you leave');
 
   const handleLogout = async (e) => {
     const canProceed = handleBlockNav(e);

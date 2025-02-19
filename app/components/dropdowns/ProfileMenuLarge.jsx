@@ -12,7 +12,7 @@ const ProfileMenuLarge = ({ handleLogout, handleCloseMenu, isProfilePage }) => {
     const [activeLink, setActiveLink] = useState('');
     const pathName = usePathname()
 
-    const { handleBlockNav } = useBlockNavOnOtp();
+    const { handleBlockNav } = useBlockNavOnOtp('hasVisitedProfileOtpPage', 'Please complete verification before you leave');
 
 
 

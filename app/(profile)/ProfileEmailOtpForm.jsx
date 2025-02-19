@@ -3,13 +3,12 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation";
+import { useState, useEffect, useRef} from "react"
+import { usePathname, useRouter } from "next/navigation";
 import { useForm, useFieldArray } from "react-hook-form";
 
 // components
 import OtpForm from "@/app/components/OtpForm";
-import Timer from "@/app/components/Timer";
 
 // hooks
 import { useUpdateTable } from "@/app/hooks/useUpdateTable";
@@ -18,9 +17,7 @@ import { useMessage } from "@/app/hooks/useMessage";
 
 
 // server actions
-import { setHasVisitedOtpPageCookie } from "./profile/actions";
-import { deleteCanAccessOtpPageCookie } from "../(auth)/auth/login/actions";
-import { deleteHasVisitedOtpPageCookie } from "./profile/actions";
+import { deleteCanAccessProfileOtpPageCookie } from "./profile/actions";
 
 
 
@@ -57,13 +54,13 @@ const schema = yup.object({
 
 
 
-const ProfileEmailOtpForm = ({ profileEmailRef, contact, verificationType, title, subHeading, successMessage }) => {
+const ProfileEmailOtpForm = ({ contact, verificationType, title, subHeading, successMessage }) => {
     const [isLoading, setIsLoading] = useState(false)
     const [isVerified, setIsVerified] = useState(false)
     const [buttonIsDisabled, setButtonIsDisabled] = useState(null)
     const [isActive, setIsActive] = useState(null)
 
-    
+
     // custom hooks
     const { updateTable } = useUpdateTable()
     const { updateMetadata } = useUpdateMetadata()
@@ -78,23 +75,44 @@ const ProfileEmailOtpForm = ({ profileEmailRef, contact, verificationType, title
 
 
 
+    
+
+
+
+    const emailRef = useRef(null);
+
+    useEffect(() => {
+       const userEmail = localStorage.getItem('email');
+       if (userEmail) {
+          emailRef.current = userEmail;
+          localStorage.removeItem('email')
+       }
+    }, [])
 
 
 
 
-    // set server cookie to indicate that user has been to delete cookie if they go back
+
+
+
+
+
+
+
+
+
+
+
+    // set flag for clean up message
     useEffect(() => {
         localStorage.setItem('hasVisitedProfileOtpPage', 'true');
         localStorage.setItem('hasShownAbortMessage', 'false');
-        const setProfilePhoneOtpCookie = async () => {
-            await setHasVisitedOtpPageCookie();
-        }
-        setProfilePhoneOtpCookie();
     }, []);
 
 
 
 
+    
 
 
 
@@ -105,11 +123,17 @@ const ProfileEmailOtpForm = ({ profileEmailRef, contact, verificationType, title
 
 
 
-    // delete cookie on page reload
+    // send flag to api endpoint and redirect user on page reload
     useEffect(() => {
         const handleBeforeUnload = () => {
-            // Set a flag to indicate a reload is happening
+            // set a flag to indicate a reload is happening
             sessionStorage.setItem("isReloading", "true");
+            // navigator.sendBeacon sends an asynchronous HTTP POST request, but unlike fetch(), it ensures the request is completed before the page unloads, designed for sending small amounts of data and doesn't return anything. I had to use this metho to delete canAccessOtpPage cookie if a user leave by using the address bar
+            try {
+                navigator.sendBeacon('/api/auth/delete-otp-cookie', JSON.stringify({ userHasLeft: true }));
+            } catch (error) {
+                console.error("sendBeacon error:", error);
+            }
         };
     
         window.addEventListener("beforeunload", handleBeforeUnload);
@@ -120,22 +144,13 @@ const ProfileEmailOtpForm = ({ profileEmailRef, contact, verificationType, title
     }, []);
     
     useEffect(() => {
-        const handlePageReload = async () => {
-            const isReloading = sessionStorage.getItem("isReloading");
-    
-            if (isReloading) {
-                // Delete cookie here
-                await deleteCanAccessOtpPageCookie();
-                await deleteHasVisitedOtpPageCookie();
+        const isReloading = sessionStorage.getItem("isReloading");
 
-                // Remove the flags after reloading
-                sessionStorage.removeItem("isReloading");
-                localStorage.removeItem('hasVisitedProfileOtpPage');
-
-                router.push('/profile/edit-profile')
-            }
+        if (isReloading) {
+            // Remove the flags after reloading
+            sessionStorage.removeItem("isReloading");
+            router.push('/profile/edit-profile')
         }
-        handlePageReload();
     }, [router]);
 
 
@@ -248,7 +263,7 @@ const ProfileEmailOtpForm = ({ profileEmailRef, contact, verificationType, title
         // Create Supabase client and verify OTP
         const supabase = createClientComponentClient();
         const { data: { session }, error } = await supabase.auth.verifyOtp({
-            email: profileEmailRef?.current,
+            email: emailRef?.current,
             token: otp,
             type: verificationType
         });
@@ -272,7 +287,7 @@ const ProfileEmailOtpForm = ({ profileEmailRef, contact, verificationType, title
             try {
                 
                 // check for successful metadata update if not log out error
-                const updateMetadataResult = await updateMetadata({ email: profileEmailRef?.current })
+                const updateMetadataResult = await updateMetadata({ email: emailRef?.current })
                 if (!updateMetadataResult.success) {
                     console.log('metadata update error:', updateMetadataResult.error)
                 }
@@ -280,7 +295,7 @@ const ProfileEmailOtpForm = ({ profileEmailRef, contact, verificationType, title
 
 
                 // check for successful profiles update if not throw new error
-                const updateTableResult = await updateTable(session.user, 'profiles', { email: profileEmailRef?.current }, 'id')
+                const updateTableResult = await updateTable(session.user, 'profiles', { email: emailRef?.current }, 'id')
                 if (!updateTableResult.success) {
                     throw new Error(`An unexpected error occurred and we couldn't update your ${contact}. Please try again later. If the issue persists, contact support.`)
                 }
@@ -288,14 +303,14 @@ const ProfileEmailOtpForm = ({ profileEmailRef, contact, verificationType, title
                 setIsLoading(false)
                 setIsVerified(true)
                 // delete cookie after successful verification
-                await deleteCanAccessOtpPageCookie();
+                await deleteCanAccessProfileOtpPageCookie();
                 localStorage.removeItem("hasVisitedOtpPage");
                 router.refresh();
                 changeMessage('success', successMessage)
 
             } catch (error) {
                 // delete cookie if profiles update fails
-                await deleteCanAccessOtpPageCookie();                
+                await deleteCanAccessProfileOtpPageCookie();                
                 router.refresh();
                 changeMessage('error', error.message)
             }
@@ -325,7 +340,7 @@ const ProfileEmailOtpForm = ({ profileEmailRef, contact, verificationType, title
                 isLoading={isLoading}
                 formState={formState}
                 trigger={trigger}
-                profileEmailRef={profileEmailRef}
+                profileEmailRef={emailRef}
                 isButtonDisabled={isButtonDisabled}
                 isVerified={isVerified}
             />

@@ -2,13 +2,13 @@
 
 import { useMessage } from "./useMessage";
 
-const useBlockNavOnOtp = () => {
+const useBlockNavOnOtp = (storageKey, message) => {
     const { changeMessage } = useMessage();
 
     const handleBlockNav = (e) => {
-        if (localStorage.getItem('hasVisitedProfileOtpPage')) {
+        if (localStorage.getItem(storageKey)) {
             e.preventDefault();
-            changeMessage('info', 'Please complete verification before navigating away');
+            changeMessage('info', message);
             return false;
         }
         return true;

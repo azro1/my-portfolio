@@ -34,7 +34,7 @@ const Sidebar = ({ isProfilePage }) => {
   const pathName = usePathname()
   const supabase = createClientComponentClient();
 
-  const { handleBlockNav } = useBlockNavOnOtp();
+  const { handleBlockNav } = useBlockNavOnOtp('hasVisitedProfileOtpPage', 'Please complete verification before you leave');
 
 
 
@@ -115,7 +115,7 @@ const Sidebar = ({ isProfilePage }) => {
   if (loading) {
     return (
       <div className='w-full box-border xl:inline-block xl:w-[300px] xl:min-w-[300px] xl:h-screen xl:min-h-[768px]'>
-        <div className="sidebar-content  fixed bg-softCharcoal border-slateOnyx border-b-[1px] min-h-[113px] md:flex md:items-center md:justify-end xl:h-full xl:overflow-y-scroll xl:hide-scrollbar xl:border-r-[1px] xl:items-start xl:justify-center ">
+        <div className="sidebar-content  fixed bg-softCharcoal border-charcoalGray border-b-[1px] min-h-[113px] md:flex md:items-center md:justify-end xl:h-full xl:overflow-y-scroll xl:hide-scrollbar xl:border-r-[1px] xl:items-start xl:justify-center ">
 
           <div className="hidden md:block  mr-20 xl:mr-0 xl:mt-56">
             <img className="w-8 opacity-60" src="/images/loading/spinner.svg" alt="" />
@@ -129,7 +129,7 @@ const Sidebar = ({ isProfilePage }) => {
   
   return (
     <div className='w-full box-border xl:inline-block xl:w-[300px] xl:min-w-[300px] xl:h-screen xl:min-h-[768px]'>
-      <div className="sidebar-content fixed bg-softCharcoal border-slateOnyx border-b-[1px] xl:h-full xl:overflow-y-scroll xl:hide-scrollbar xl:border-r-[1px]">
+      <div className="sidebar-content fixed bg-softCharcoal border-charcoalGray border-b-[1px] xl:h-full xl:overflow-y-scroll xl:hide-scrollbar xl:border-r-[1px]">
 
           <nav className="px-[x-pad] flex justify-between md:gap-6 relative xl:px-0 xl:flex-col xl:justify-normal xl:gap-0 xl:min-h-[768px] ">
             {/* Code Dynamics Logo */}
@@ -153,7 +153,7 @@ const Sidebar = ({ isProfilePage }) => {
             </div>}
             
             <ul className='hidden md:flex-1 md:flex md:items-center md:justify-end md:gap-8 xl:flex-none xl:flex-col xl:items-stretch xl:justify-start xl:gap-0'>
-              <div className='hidden xl:block bg-slateOnyx mx-2 h-[1px]'></div>
+              <div className='hidden xl:block bg-charcoalGray mx-2 h-[1px]'></div>
               <li className={`xl:m-2 xl:mb-0 xl:p-3 xl:max-h-12 xl:hover:bg-nightSky transition-bg duration-300 xl:rounded-md ${activeLink === '/' ? 'xl:bg-slateOnyx' : ''}`}>
                 <Link href={'/'} onClick={(e) => {
                   handleActiveLink('/');
@@ -165,7 +165,7 @@ const Sidebar = ({ isProfilePage }) => {
                     </div>
 
                     <div className="flex items-center">
-                      <span className={`text-base font-medium ${activeLink === '/' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Home</span>
+                      <span className={`text-base ${activeLink === '/' ? 'text-cloudGray font-medium xl:text-stoneGray' : ''}`}>Home</span>
                     </div>
                   </div>
                 </Link>
@@ -181,7 +181,7 @@ const Sidebar = ({ isProfilePage }) => {
                     </div>
 
                     <div className="flex items-center">
-                      <span className={`text-base font-medium ${activeLink === '/about' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>About</span>
+                      <span className={`text-base ${activeLink === '/about' ? 'text-cloudGray font-medium xl:text-stoneGray' : ''}`}>About</span>
                     </div>
                   </div>
                 </Link>
@@ -197,7 +197,7 @@ const Sidebar = ({ isProfilePage }) => {
                     </div>
 
                     <div className="flex items-center">
-                      <span className={`text-base font-medium ${activeLink === '/contact' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Contact</span>
+                      <span className={`text-base ${activeLink === '/contact' ? 'text-cloudGray font-medium xl:text-stoneGray' : ''}`}>Contact</span>
                     </div>
                   </div>
                 </Link>
@@ -213,7 +213,7 @@ const Sidebar = ({ isProfilePage }) => {
                       </div>
 
                       <div className="flex items-center">
-                        <span className={`text-base font-medium w-max ${activeLink === '/auth/login' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Login</span>
+                        <span className={`text-base w-max ${activeLink === '/auth/login' ? 'text-cloudGray font-medium xl:text-stoneGray' : ''}`}>Login</span>
                       </div>
                     </div>
                   </Link>
@@ -228,7 +228,7 @@ const Sidebar = ({ isProfilePage }) => {
                       </div>
 
                       <div className="flex items-center">
-                        <span className={`text-base font-medium w-max ${activeLink === '/auth/signup' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Sign up</span>
+                        <span className={`text-base w-max ${activeLink === '/auth/signup' ? 'text-cloudGray font-medium xl:text-stoneGray' : ''}`}>Sign up</span>
                       </div>
                     </div>
                   </Link>

@@ -87,8 +87,8 @@ const EditProfileForms = () => {
             </div>
 
             <div className='pt-16'>
-              <h2 className='text-cloudGray font-b text-1.375 md:text-2xl'>Basic Information</h2>
-              <p className='mt-3 leading-normal text-cloudGray'>Update your personal information.</p>
+              <h2 className='text-cloudGray font-medium text-1.375 md:text-2xl'>Basic Information</h2>
+              <p className='mt-3 leading-normal text-charcoalGrayLight md:text-lg'>Update your personal information</p>
 
               <div className='mt-6 flex flex-col bg-softCharcoal p-4'>
                 <BioForm
@@ -97,7 +97,7 @@ const EditProfileForms = () => {
                     changeMessage={changeMessage}
                     fetchProfile={fetchProfile}
                 />
-                <div className='bg-slateOnyx h-[1px]'></div>
+                <div className='bg-charcoalGray h-[1px]'></div>
 
                 <FirstNameForm
                     user={user}
@@ -105,7 +105,7 @@ const EditProfileForms = () => {
                     changeMessage={changeMessage}
                     fetchProfile={fetchProfile}
                 />
-                <div className='bg-slateOnyx h-[1px]'></div>
+                <div className='bg-charcoalGray h-[1px]'></div>
 
 
                 <LastNameForm
@@ -114,7 +114,7 @@ const EditProfileForms = () => {
                     changeMessage={changeMessage}
                     fetchProfile={fetchProfile}
                 />
-                <div className='bg-slateOnyx h-[1px]'></div>
+                <div className='bg-charcoalGray h-[1px]'></div>
 
                 <DobForm
                     user={user}
@@ -122,13 +122,13 @@ const EditProfileForms = () => {
                     changeMessage={changeMessage}
                     fetchProfile={fetchProfile}
                 />
-                <div className='bg-slateOnyx h-[1px]'></div>
+                <div className='bg-charcoalGray h-[1px]'></div>
 
                 <EmailForm 
                     user={user}
                     profile={profile}
                 />
-                <div className='bg-slateOnyx h-[1px]'></div>
+                <div className='bg-charcoalGray h-[1px]'></div>
 
                 <PhoneForm
                     user={user}

@@ -75,7 +75,7 @@ const KeySkills = () => {
                 >
                   {/* Icon Background with Soft Shadow */}
                   <motion.span
-                    className="p-5 rounded-full shadow-[0_0_4px_0_#131519] bg-gradient-to-tl from-nightSky via-slateOnyx to-cloudGray w-max "
+                    className="p-5 rounded-full shadow-[0_0_4px_0_#131519] bg-gradient-to-tl from-nightSky via-charcoalGray to-cloudGray w-max "
                     initial={{ scale: 0.8 }}
                     animate={{ scale: 1 }}
                     whileHover={{ scale: 1.1 }}
