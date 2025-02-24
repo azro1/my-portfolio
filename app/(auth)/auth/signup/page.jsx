@@ -136,14 +136,18 @@ const Signup = () => {
         } else {
           setIsLoading(false);
           await deleteOtpAccessBlockedCookie();
-          router.push('/auth/verify-signup-otp')
+          router.push('/auth/verify-signup-otp');
+
+          // set flag to indicate user has visited auth otp page
+          localStorage.setItem("hasVisitedAuthOtpPage", "true");
         }
       }
       
     } catch (error) {
         setIsLoading(false);
         await deleteCanAccessAuthOtpPageCookie();
-        localStorage.removeItem('email')
+        localStorage.removeItem('email');
+        localStorage.removeItem("hasVisitedAuthOtpPage");
         changeMessage('error', 'An unexpected error occurred. Please try again later or contact support if the issue persists.');
         console.log('sign up error:', error.message)
     }

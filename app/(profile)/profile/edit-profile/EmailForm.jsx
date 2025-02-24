@@ -161,6 +161,9 @@ const EmailForm = ({ user, profile }) => {
                 setIsUpdating(false)
                 setShowForm(false)
                 router.push('/profile/verify-email-otp')
+
+                // set flag to indicate user has visited profile otp page
+                localStorage.setItem('hasVisitedProfileOtpPage', 'true');
             }
             
             
@@ -168,6 +171,7 @@ const EmailForm = ({ user, profile }) => {
             setIsUpdating(false)
             setFormSuccess(null);
             localStorage.removeItem("email");
+            localStorage.removeItem('hasVisitedProfileOtpPage');
             setFormError(error.message)
             console.log(error.message)
         }

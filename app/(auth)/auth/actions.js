@@ -3,5 +3,5 @@
 import { cookies } from 'next/headers';
 
 export async function deleteCanAccessAuthOtpPageCookie() {
-   await cookies().delete('canAccessOtpPage', { path: '/', sameSite: 'Strict' });
+   await cookies().delete('canAccessAuthOtpPage', { path: '/' });
 }

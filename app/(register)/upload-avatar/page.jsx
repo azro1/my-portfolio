@@ -12,7 +12,8 @@ import { useFetchUser } from "@/app/hooks/useFetchUser";
 import AvatarUploader from "@/app/components/AvatarUploader";
 
 
-
+// server actions
+import { deleteCanAccessAuthOtpPageCookie } from '@/app/(auth)/auth/actions';
 
 
 
@@ -25,16 +26,22 @@ const UploadAvatar = () => {
     // custom hooks
     const { user } = useFetchUser();
     const router = useRouter();
-
     const supabase = createClientComponentClient()
 
 
 
 
 
-    // set indicator that user has been to this page to prevent them going back
+    // set indicator that user has been to this page and delete auth otp access cookie
     useEffect(() => {
         localStorage.setItem("hasVisitedRegPage", "true");
+        localStorage.setItem('hasShownAbortMessage', 'false');
+
+        try {
+            navigator.sendBeacon('/api/auth/delete-otp-cookie', JSON.stringify({ isOnRegistrationPage: true }));
+        } catch (error) {
+            console.error("sendBeacon error:", error);
+        }
     }, []);
 
     
@@ -47,7 +54,8 @@ const UploadAvatar = () => {
     // log users out on page reload
     useEffect(() => {
         const beforeUnloadListener = () => {
-            localStorage.setItem("forceLogout", "true");
+            localStorage.setItem("regIsReloading", "true");
+
         };
 
         window.addEventListener("beforeunload", beforeUnloadListener);
@@ -59,11 +67,11 @@ const UploadAvatar = () => {
 
     useEffect(() => {
         const handleLogoutOnLoad = async () => {
-            if (localStorage.getItem("forceLogout") === "true") {
+            if (localStorage.getItem("regIsReloading") === "true") {
 
                 try {
                     await supabase.auth.signOut();
-                    localStorage.removeItem("forceLogout");
+                    localStorage.removeItem("regIsReloading");
                     router.push("/auth/login");
                 } catch (error) {
                     console.error("Logout failed:", error);

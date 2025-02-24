@@ -14,7 +14,6 @@ export default async function RegisterLayout ({ children }) {
   }
 
   if (user) {
-    const registrationCookie = await cookies().get('isRegComplete')
     const { data, error } = await supabase
       .from('profiles')
       .select('is_reg_complete')
@@ -25,7 +24,8 @@ export default async function RegisterLayout ({ children }) {
       console.error(error);
     }
 
-    if (data?.is_reg_complete || registrationCookie?.value === 'true') {
+    const isRegistered = cookies().get('isRegistered');
+    if (data?.is_reg_complete || isRegistered?.value === 'true') {
       redirect('/');
     }
   }

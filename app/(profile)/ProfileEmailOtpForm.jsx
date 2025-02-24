@@ -105,7 +105,6 @@ const ProfileEmailOtpForm = ({ contact, verificationType, title, subHeading, suc
 
     // set flag for clean up message
     useEffect(() => {
-        localStorage.setItem('hasVisitedProfileOtpPage', 'true');
         localStorage.setItem('hasShownAbortMessage', 'false');
     }, []);
 
@@ -128,9 +127,11 @@ const ProfileEmailOtpForm = ({ contact, verificationType, title, subHeading, suc
         const handleBeforeUnload = () => {
             // set a flag to indicate a reload is happening
             sessionStorage.setItem("isReloading", "true");
-            // navigator.sendBeacon sends an asynchronous HTTP POST request, but unlike fetch(), it ensures the request is completed before the page unloads, designed for sending small amounts of data and doesn't return anything. I had to use this metho to delete canAccessOtpPage cookie if a user leave by using the address bar
+            localStorage.removeItem("hasVisitedProfileOtpPage");
+            
+            // navigator.sendBeacon sends an asynchronous HTTP POST request, but unlike fetch(), it ensures the request is completed before the page unloads, designed for sending small amounts of data and doesn't return anything. I had to use this method to delete canAccessProfileOtpPageCookie if a user reloads or leaves by using the address bar
             try {
-                navigator.sendBeacon('/api/auth/delete-otp-cookie', JSON.stringify({ userHasLeft: true }));
+                navigator.sendBeacon('/api/auth/delete-otp-cookie', JSON.stringify({ hasLeftProfileOtpVerification: true }));
             } catch (error) {
                 console.error("sendBeacon error:", error);
             }
@@ -304,7 +305,7 @@ const ProfileEmailOtpForm = ({ contact, verificationType, title, subHeading, suc
                 setIsVerified(true)
                 // delete cookie after successful verification
                 await deleteCanAccessProfileOtpPageCookie();
-                localStorage.removeItem("hasVisitedOtpPage");
+                localStorage.removeItem("hasVisitedProfileOtpPage");
                 router.refresh();
                 changeMessage('success', successMessage)
 

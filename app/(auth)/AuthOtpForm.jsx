@@ -16,10 +16,8 @@ import Loading from "../components/Loading";
 import { useUpdateTable } from "../hooks/useUpdateTable";
 import { useMessage } from "../hooks/useMessage";
 
-// server action
+// server actions
 import { deleteCanAccessAuthOtpPageCookie } from "./auth/actions";
-
-
 
 
 // yup validation schema
@@ -94,7 +92,6 @@ const AuthOtpForm = ({ redirectUrl, title, subHeading, successMessage }) => {
 
     // set indicator that user has been to delete cookie if they go back
     useEffect(() => {
-        localStorage.setItem("hasVisitedAuthOtpPage", "true");
         localStorage.setItem('hasShownAbortMessage', 'false');
     }, []);
 
@@ -125,7 +122,6 @@ const AuthOtpForm = ({ redirectUrl, title, subHeading, successMessage }) => {
                 await supabase.auth.signOut();
                 router.push('/auth/login');
                 localStorage.removeItem("hasVisitedRegPage")
-                changeMessage('error', "You have been logged out. Please log back in to finish setting up your account")
             };
 
             handleLogout();
@@ -152,9 +148,11 @@ const AuthOtpForm = ({ redirectUrl, title, subHeading, successMessage }) => {
         const handleBeforeUnload = () => {
             // Set a flag to indicate a reload is happening
             sessionStorage.setItem("isReloading", "true");
-            // navigator.sendBeacon sends an asynchronous HTTP POST request, but unlike fetch(), it ensures the request is completed before the page unloads, designed for sending small amounts of data and doesn't return anything. I had to use this metho to delete canAccessOtpPage cookie if a user leave by using the address bar
+            localStorage.removeItem("hasVisitedAuthOtpPage");
+
+            // navigator.sendBeacon sends an asynchronous HTTP POST request, but unlike fetch(), it ensures the request is completed before the page unloads, designed for sending small amounts of data and doesn't return anything. I had to use this metho to delete canAccessAuthOtpPage cookie if a user leave by using the address bar
             try {
-                navigator.sendBeacon('/api/auth/delete-otp-cookie', JSON.stringify({ userHasLeft: true }));
+                navigator.sendBeacon('/api/auth/delete-otp-cookie', JSON.stringify({ hasLeftAuthVerification: true }));
             } catch (error) {
                 console.error("sendBeacon error:", error);
             }
@@ -323,8 +321,9 @@ const AuthOtpForm = ({ redirectUrl, title, subHeading, successMessage }) => {
                 }
 
                 if (data?.is_verified && !data?.is_reg_complete) {
-                    // delete cookie
-                    await deleteCanAccessAuthOtpPageCookie();
+
+
+
                     localStorage.removeItem("hasVisitedAuthOtpPage");
                     router.push('/upload-avatar')
                     changeMessage('success', `Welcome back, please finish creating your profile`)
@@ -336,8 +335,11 @@ const AuthOtpForm = ({ redirectUrl, title, subHeading, successMessage }) => {
                         console.log('auth otp page: could not update otp verification status')
                     }
 
-                    // delete cookie
+
+
+                    // delete auth access cookie after successful verification
                     await deleteCanAccessAuthOtpPageCookie();
+                    
                     localStorage.removeItem("hasVisitedAuthOtpPage");
                     setIsVerified(true)
                     reset({ codes: fields.map(() => ({ code: '' })) });

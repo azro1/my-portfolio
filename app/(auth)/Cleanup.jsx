@@ -1,114 +1,88 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useMessage } from "../hooks/useMessage";
 
 // server actions
 import { deleteCanAccessAuthOtpPageCookie } from "./auth/actions";
 
 
-
 const Cleanup = () => {
-  const [hasReturned, setHasReturned] = useState(false)
-  const { changeMessage } = useMessage();
+    const { changeMessage } = useMessage();
 
 
+    // for auth section when user leaves page using address bar or reloads page
+    useEffect(() => {
+        const isReloading = sessionStorage.getItem('isReloading');
+        const hasShownMessage = localStorage.getItem('hasShownAbortMessage');
+
+        if (isReloading && hasShownMessage !== 'true') {
+            setTimeout(() => {
+                sessionStorage.removeItem('isReloading');
+                changeMessage('error', 'Your OTP verification was interrupted. Please sign up again to receive a new security code.');
+                localStorage.setItem('hasShownAbortMessage', 'true');
+            }, 100);
+        }
+    }, [])
 
 
-  // If user reloads clear hasVisitedAuthOtpPage flag
-  useEffect(() => {
-    const hasVisitedAuthOtpPage = localStorage.getItem('hasVisitedAuthOtpPage');
+    // for auth section if user navigates back from otp forms using browser back button or right-click back in menu 
+    useEffect(() => {
+        const handlePopState = () => {
+            const hasVisitedAuthOtpPage = localStorage.getItem("hasVisitedAuthOtpPage") === "true";
+            const hasShownMessage = localStorage.getItem('hasShownAbortMessage');
 
-    if (hasVisitedAuthOtpPage === 'true') {
-      setHasReturned(true);
-    }
-  }, [])
+            if (hasVisitedAuthOtpPage) {
+                const deleteAuthCookie = async () => {
+                    await deleteCanAccessAuthOtpPageCookie();
+                    localStorage.removeItem("hasVisitedAuthOtpPage");
 
-  // If user reloads clear hasVisitedAuthOtpPage flag
-  useEffect(() => {
-    if (hasReturned) {
-      localStorage.removeItem('hasVisitedAuthOtpPage');
-    }
-  }, [hasReturned])
+                    if (hasShownMessage !== 'true') {
+                        changeMessage('error', 'Your OTP verification was aborted. Please signup to receive a new security code.');
+                        localStorage.setItem('hasShownAbortMessage', 'true');
+                    }
+                };
+                deleteAuthCookie();
+            }
 
+      };
+      window.addEventListener('popstate', handlePopState);
 
-
-
-
-
-
-
-
-
-  // If user reloads an otp verification page on the first render of this component the isReloading value will be still accessible display message if isReloading
-  useEffect(() => {
-    const isReloading = sessionStorage.getItem('isReloading');
-    const hasShownMessage = localStorage.getItem('hasShownAbortMessage');
-
-    if (isReloading && hasShownMessage !== 'true') {
-      changeMessage('error', "Your OTP verification was aborted. Please signup to receive a new security code.");
-      localStorage.setItem('hasShownAbortMessage', 'true');
-    }
-  }, [])
-
-
-
-
-
-
-
-
-
-  // function to delete server cookie and local storage flag if user navigates back from otp forms
-  useEffect(() => {
-    const handlePopState = () => {
-      const hasVisitedAuthOtpPage = localStorage.getItem("hasVisitedAuthOtpPage") === "true";
-
-      if (hasVisitedAuthOtpPage) {
-
-        const deleteCookie = async () => {
-          await deleteCanAccessAuthOtpPageCookie();
-          localStorage.removeItem("hasVisitedAuthOtpPage");
-          localStorage.setItem('hasShownAbortMessage', 'true');
-          changeMessage('error', 'Your OTP verification was aborted. Please signup to receive a new security code.');
-        };
-        deleteCookie();
-
-      }
-
-    };
-    // Listen for back navigation
-    window.addEventListener('popstate', handlePopState);
-
-    return () => {
-      window.removeEventListener('popstate', handlePopState);
-    };
-  }, []);
+      return () => {
+          window.removeEventListener('popstate', handlePopState);
+      };
+    }, []);
 
 
 
 
 
 
+    // for reg section if user leaves page using address bar
+    useEffect(() => {
+        const regIsReloading = localStorage.getItem('regIsReloading');
+        const hasShownMessage = localStorage.getItem('hasShownAbortMessage');
+
+        if (regIsReloading && hasShownMessage !== 'true') {
+            localStorage.removeItem('regIsReloading');
+            localStorage.setItem('hasShownAbortMessage', 'true');
+            changeMessage('error', 'Your session has ended. Please sign in again to complete your account creating your profile.');
+        }
+    }, [])
 
 
 
+    // for reg section if user navigates back from otp forms using browser back button or right-click back in menu 
+    useEffect(() => {
+        const hasVisitedRegPage = localStorage.getItem("hasVisitedRegPage") === "true";
+        const hasShownMessage = localStorage.getItem('hasShownAbortMessage');
 
-  // function to clean up registration local storage flags and display message
-  useEffect(() => {
-    const forceLogout = localStorage.getItem("forceLogout") === "true";
-    const hasVisitedRegPage = localStorage.getItem("hasVisitedRegPage") === "true";
-
-    if (forceLogout) {
-      localStorage.removeItem("forceLogout");
-      changeMessage('error', 'You have been logged out. Please log back in to finish setting up your account.');
-    } else if (hasVisitedRegPage) {
-      localStorage.removeItem("hasVisitedRegPage");
-      changeMessage('error', 'You have been logged out. Please log back in to finish setting up your account.');
-    }
-  }, []);
-
-
-};
+        if (hasVisitedRegPage && hasShownMessage !== 'true') {
+            localStorage.removeItem("hasVisitedRegPage");
+            changeMessage('error', 'You have been logged out. Please log back in to finish setting up your account.');
+            localStorage.setItem('hasShownAbortMessage', 'true');     
+        }
+    }, []);
+  };
 
 export default Cleanup;

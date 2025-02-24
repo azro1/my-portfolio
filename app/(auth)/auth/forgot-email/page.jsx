@@ -115,7 +115,10 @@ const ForgotEmail = () => {
                 // store email temporarily in local storage
                 localStorage.setItem('email', serverEmail.email)
                 await deleteOtpAccessBlockedCookie();
-                setRedirect(true)
+                setRedirect(true);
+                
+                // set flag to indicate user has visited auth otp page
+                localStorage.setItem("hasVisitedAuthOtpPage", "true");
             }
 
         } catch (error) {
@@ -123,6 +126,7 @@ const ForgotEmail = () => {
             // delete cookie
             await deleteCanAccessAuthOtpPageCookie();
             localStorage.removeItem('email');
+            localStorage.removeItem("hasVisitedAuthOtpPage");   
             changeMessage('error', error.message);
         }
 

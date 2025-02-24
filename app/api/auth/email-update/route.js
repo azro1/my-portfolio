@@ -21,7 +21,7 @@ export async function POST(request) {
 
   if (data) {
     // Set cookie for OTP page access
-    cookies().set('canAccessOtpPage', 'true', { 
+    cookies().set('canAccessProfileOtpPage', 'true', { 
       path: '/', 
       httpOnly: true, 
       sameSite: 'Strict'  

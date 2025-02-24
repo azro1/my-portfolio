@@ -39,7 +39,7 @@ export async function POST(request) {
         } 
         
         if (!otpError) {
-            cookies().set('canAccessOtpPage', 'true', { path: '/' }); // Set cookie for OTP access
+            cookies().set('canAccessAuthOtpPage', 'true', { path: '/' }); // Set cookie for OTP access
             return NextResponse.json({ exists, email }, {
                 status: 200
             });

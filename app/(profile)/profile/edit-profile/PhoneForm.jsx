@@ -192,12 +192,16 @@ const PhoneForm = ({ user, profile }) => {
                 setIsUpdating(false)
                 setShowForm(false)
                 router.push('/profile/verify-phone-otp')
+
+                // set flag to indicate user has visited profile otp page
+                localStorage.setItem('hasVisitedProfileOtpPage', 'true');
             }
 
         } catch (error) {
             setIsUpdating(false)
             setFormSuccess(null);
             localStorage.removeItem("phone");
+            localStorage.removeItem('hasVisitedProfileOtpPage');
             setFormError('An unexpected error occurred while updating your phone. Please try again later. If the issue persists, contact support.')
             console.log(error.message)
         }

@@ -34,7 +34,7 @@ export async function POST(request) {
   switch(type) {
     case 'login':
       if (exists && accountStatus.is_verified) {
-        await cookies().set('canAccessOtpPage', 'true', { path: '/', httpOnly: true, sameSite: 'Strict' }); // set cookie to grant OTP access for users with verified accounts
+        await cookies().set('canAccessAuthOtpPage', 'true', { path: '/', httpOnly: true, sameSite: 'Strict' }); // set cookie to grant OTP access for users with verified accounts
         return NextResponse.json({ exists, accountStatus }, {
           status: 200
         })
@@ -50,12 +50,12 @@ export async function POST(request) {
       break;
     case 'signup':
       if (!exists) {
-        await cookies().set('canAccessOtpPage', 'true', { path: '/', httpOnly: true, sameSite: 'Strict' }); // set cookie to grant OTP access for new users
+        await cookies().set('canAccessAuthOtpPage', 'true', { path: '/', httpOnly: true, sameSite: 'Strict' }); // set cookie to grant OTP access for new users
         return NextResponse.json({ exists }, {
           status: 200
         })
       } else if (exists && !accountStatus.is_verified) {
-        await cookies().set('canAccessOtpPage', 'true', { path: '/', httpOnly: true, sameSite: 'Strict' }); // set cookie to grant OTP access if they haven't completed the verification process
+        await cookies().set('canAccessAuthOtpPage', 'true', { path: '/', httpOnly: true, sameSite: 'Strict' }); // set cookie to grant OTP access if they haven't completed the verification process
         return NextResponse.json({ exists, accountStatus }, {
           status: 200
         })

@@ -133,14 +133,18 @@ const Login = () => {
         if (!error) {
           setIsLoading(false);
           await deleteOtpAccessBlockedCookie();
-          router.push('/auth/verify-login-otp')
+          router.push('/auth/verify-login-otp');
+
+          // set flag to indicate user has visited auth otp page
+          localStorage.setItem("hasVisitedAuthOtpPage", "true");
         }
       }
 
     } catch (error) {
         setIsLoading(false);
         await deleteCanAccessAuthOtpPageCookie();
-        localStorage.removeItem('email')
+        localStorage.removeItem('email');
+        localStorage.removeItem("hasVisitedAuthOtpPage");
         changeMessage('error', 'Oops! Something went wrong on our end. Please try again in a moment or contact support if the issue persists.');
         console.log('login error:', error.message)
     }

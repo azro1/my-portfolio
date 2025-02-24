@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 import { useMessage } from "../hooks/useMessage"
 
 // server actions
@@ -8,59 +8,44 @@ import { deleteCanAccessProfileOtpPageCookie } from "./profile/actions"
 
 
 const Cleanup = () => {
-    const [hasReturned, setHasReturned] = useState(false)
     const { changeMessage } = useMessage();
-    
-    // If user reloads clear hasVisitedProfileOtpPage flag
-    useEffect(() => {
-        const hasVisitedProfileOtpPage = localStorage.getItem('hasVisitedProfileOtpPage');
-
-        if (hasVisitedProfileOtpPage === 'true') {
-            setHasReturned(true);
-        }
-    }, [])
-
-    // If user reloads clear hasVisitedProfileOtpPage flag
-    useEffect(() => {
-        if (hasReturned) {
-            localStorage.removeItem('hasVisitedProfileOtpPage');
-        }
-    }, [hasReturned])
 
 
-
-
-
-
-    // If user reloads an otp verification page on the first render of this component the isReloading value will be still accessible display message if isReloading
+    // if user leaves page using address bar or reloads page
     useEffect(() => {
         const isReloading = sessionStorage.getItem('isReloading');
         const hasShownMessage = localStorage.getItem('hasShownAbortMessage');
 
         if (isReloading && hasShownMessage !== 'true') {
-            changeMessage('error', "Your OTP verification was aborted");
-            localStorage.setItem('hasShownAbortMessage', 'true');
+            setTimeout(() => {
+                sessionStorage.removeItem('isReloading')
+                changeMessage('error', 'We could not update your information because verification was interrupted');
+                localStorage.setItem('hasShownAbortMessage', 'true');
+            }, 100);
         }
     }, [])
 
 
 
-
-
-    
-    // If user navigates backwards via browser back buton or right-click menu delete canAccessOtpPage cookie and display message 
+    // if user navigates back from profile otp forms using browser back button or right-click back in menu 
     useEffect(() => {
-        const handlePopState = async () => {
-        const hasShownMessage = localStorage.getItem('hasShownAbortMessage');
- 
-            await deleteCanAccessProfileOtpPageCookie();
+        const handlePopState = () => {
+            const hasVisitiedProfileOtpPage = localStorage.getItem('hasVisitedProfileOtpPage') === 'true';
 
-            if (hasShownMessage !== 'true') {
-                changeMessage('error', "Your OTP verification was aborted");
-                localStorage.setItem('hasShownAbortMessage', 'true');
+            if (hasVisitiedProfileOtpPage) {
+                const deleteProfileCookie = async () => {
+                    await deleteCanAccessProfileOtpPageCookie();
+                    localStorage.removeItem('hasVisitedProfileOtpPage');
+
+                    const hasShownMessage = localStorage.getItem('hasShownAbortMessage');
+                    if (hasShownMessage !== 'true') {
+                        changeMessage('error', 'Your OTP verification was aborted. Please signup to receive a new security code.');
+                        localStorage.setItem('hasShownAbortMessage', 'true');
+                    }
+                };
+                deleteProfileCookie();
             }
         }
-        // Listen for back navigation
         window.addEventListener('popstate', handlePopState)
 
         return () => {

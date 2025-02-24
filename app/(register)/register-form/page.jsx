@@ -18,9 +18,8 @@ import { useUpdateTable } from "@/app/hooks/useUpdateTable";
 import { useUpdateMetadata } from "@/app/hooks/useUpdateMetadata";
 import { useMessage } from '@/app/hooks/useMessage';
 
-// server action
-import { setCookie } from './actions';
-
+// server actions
+import { setIsRegisteredCookie } from './actions';
 
 
 
@@ -142,7 +141,8 @@ const RegisterForm = () => {
     // log users out on page reload
     useEffect(() => {
         const beforeUnloadListener = () => {
-            localStorage.setItem("forceLogout", "true");
+            localStorage.setItem("regIsReloading", "true");
+
         };
 
         window.addEventListener("beforeunload", beforeUnloadListener);
@@ -154,12 +154,12 @@ const RegisterForm = () => {
 
     useEffect(() => {
         const handleLogoutOnLoad = async () => {
-            if (localStorage.getItem("forceLogout") === "true") {
+            if (localStorage.getItem("regIsReloading") === "true") {
                 const supabase = createClientComponentClient();
 
                 try {
                     await supabase.auth.signOut();
-                    localStorage.removeItem("forceLogout");
+                    localStorage.removeItem("regIsReloading");
                     router.push("/auth/login");
                 } catch (error) {
                     console.error("Logout failed:", error);
@@ -320,10 +320,14 @@ const RegisterForm = () => {
                         throw new Error("An unexpected error occurred and we couldn't save your profile information. Please try again later. If the issue persists, contact support.")
                     }
                 }
-
+                
+                // remove local stroage flag
                 localStorage.removeItem("hasVisitedRegPage")
+
+                // set presistent cookie to prevent user from accessing registration page
+                await setIsRegisteredCookie();
+
                 changeMessage('success', 'Your account has been created and you are now logged in');
-                await setCookie();
                 setRedirect(true)
 
             } catch (error) {
