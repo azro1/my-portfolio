@@ -37,16 +37,16 @@ const Footer = () => {
                     <p className="text-ashGray" >&copy; 2025 Simon Sutherland</p>
                   </div>
                   <div className="flex justify-center gap-4">
-                      <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" onClick={(e) => handleBlockNav(e)}>
+                      <a className="text-cloudGray" href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" onClick={(e) => handleBlockNav(e)}>
                         <FiLinkedin size={24} />
                       </a>
-                      <a href="https://github.com" target="_blank" rel="noopener noreferrer" onClick={(e) => handleBlockNav(e)}>
+                      <a className="text-cloudGray" href="https://github.com" target="_blank" rel="noopener noreferrer" onClick={(e) => handleBlockNav(e)}>
                         <FiGithub size={24} />
                       </a>
-                      <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" onClick={(e) => handleBlockNav(e)}>
+                      <a className="text-cloudGray" href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" onClick={(e) => handleBlockNav(e)}>
                         <FiYoutube size={24} />
                       </a>
-                      <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" onClick={(e) => handleBlockNav(e)}>
+                      <a className="text-cloudGray" href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" onClick={(e) => handleBlockNav(e)}>
                         <FiInstagram size={24} />
                       </a>
                   </div>

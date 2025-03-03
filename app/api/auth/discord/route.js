@@ -23,7 +23,17 @@ export async function GET(request) {
     .eq('id', user?.id)
 
   if (error) {
-    console.log('discord:', error.message)
+    console.log('discord:', error.message);
+    return NextResponse.json({ message: "error updating profile flags for discord user" }, { status: 500 });
+  }
+
+  if (!error) {
+    await cookies().set('isRegistered', 'true', { 
+      path: '/', 
+      maxAge: 60 * 60 * 24 * 365 * 10,
+      httpOnly: true, 
+      sameSite: 'lax' 
+    });
   }
 
   return NextResponse.redirect(url.origin)

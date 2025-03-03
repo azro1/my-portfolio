@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 // components
 import ProfileHeader from "../ProfileHeader";
 import ProjectsViewedList from '../ProjectsViewedList';
-import CommentList from "../CommentList";
+import ForumChatList from "../ForumChatList";
 import FavouriteProjectList from "../FavouriteProjectList";
 
 const Profile = async () => {
@@ -22,7 +22,7 @@ const Profile = async () => {
             <p className='mt-3 leading-normal text-charcoalGrayLight md:text-lg'>Your recent activity on the website, including any projects you have viewed, your favourite projects and your chat history.</p>
             
             <div className='pt-16 grid grid-cols-1 gap-16 grid-flow-row auto-rows-max'>
-                <CommentList user={user} />
+                <ForumChatList user={user} />
                 <ProjectsViewedList user={user}  />
                 <FavouriteProjectList user={user} />
             </div>

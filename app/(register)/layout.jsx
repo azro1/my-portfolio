@@ -11,9 +11,7 @@ export default async function RegisterLayout ({ children }) {
 
   if (!user) {
     redirect('/auth/login')
-  }
-
-  if (user) {
+  } else {
     const { data, error } = await supabase
       .from('profiles')
       .select('is_reg_complete')
@@ -24,7 +22,7 @@ export default async function RegisterLayout ({ children }) {
       console.error(error);
     }
 
-    const isRegistered = cookies().get('isRegistered');
+    const isRegistered = await cookies().get('isRegistered');
     if (data?.is_reg_complete || isRegistered?.value === 'true') {
       redirect('/');
     }

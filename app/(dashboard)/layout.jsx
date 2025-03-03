@@ -22,8 +22,10 @@ export default async function DashboardLayout({ children }) {
     if (error) {
       console.error(error);
     }
-
-    if (!data?.is_reg_complete) {
+    
+    // if there is a user then this condition must be met else they get logged out
+    const isRegistered = await cookies().get('isRegistered');
+    if (!data?.is_reg_complete || isRegistered?.value !== 'true') {
       await supabase.auth.signOut();
       redirect('/auth/login');
     }

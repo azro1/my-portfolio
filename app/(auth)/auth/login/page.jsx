@@ -99,24 +99,28 @@ const Login = () => {
         })
       })
      
-      // await json response from server and store in const serverEmail
-      const serverEmail = await res.json()
-      const { accountStatus } = serverEmail;
+      // await json response from server and store in const emailResponse
+      const emailResponse = await res.json()
+      const { accountStatus } = emailResponse;
 
-      if (serverEmail === undefined || serverEmail === null) {
+      if (emailResponse === undefined || emailResponse === null) {
          throw new Error('server email does not exist.');
          
-      } else if (serverEmail.error) {
+      } else if (emailResponse.error) {
         setIsLoading(false)
-        changeMessage('error', serverEmail.error)
+        changeMessage('error', emailResponse.error)
         return
 
-      } else if ((!serverEmail.exists && res.status === 404) || (serverEmail.exists && res.status === 401 && !accountStatus.is_verified)) {
+      } else if (res.status === 401) {
+        setIsLoading(false);
+        changeMessage('error', `To prevent spam and abusive behavior cooldown is active. You must wait ${emailResponse.minutesLeft}m ${emailResponse.secondsLeft}s before you can request a new verification code.`)
+
+      } else if ((!emailResponse.exists && res.status === 404) || (emailResponse.exists && res.status === 401 && !accountStatus.is_verified)) {
         setIsLoading(false)
         changeMessage('error', "We couldn't find an account with that email. Please sign up or check your email for typos.")
         return
 
-      } else if ((serverEmail.exists && res.status === 200 && accountStatus.is_verified)) {
+      } else if ((emailResponse.exists && res.status === 200 && accountStatus.is_verified)) {
         
         // store email temporarily in local storage
         localStorage.setItem('email', email);
@@ -133,6 +137,7 @@ const Login = () => {
         if (!error) {
           setIsLoading(false);
           await deleteOtpAccessBlockedCookie();
+          changeMessage('success', 'A verifcation code has been sent to your email address')
           router.push('/auth/verify-login-otp');
 
           // set flag to indicate user has visited auth otp page

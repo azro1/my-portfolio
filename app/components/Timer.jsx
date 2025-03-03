@@ -60,12 +60,30 @@ const Timer = memo(({ authGroupEmailRef, profileEmailRef, profilePhoneRef, isBut
 
 
   const handleOtpRequest = async (otpType, payload) => {
-    if (attempts >= 3) {
-      changeMessage("error", "Too many attempts. Please try again later.");
-      return;
+
+    // make request to cooldown endpoint before allowing user to request a new otp
+    try {
+      const res = await fetch("/api/auth/enforce-otp-limit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ 
+          email: payload.email
+        }),
+      });
+       
+      const serverRes = await res.json();
+
+      if (res.status === 401 || res.status === 500) {
+        changeMessage('error', serverRes.message);
+        return;
+      } 
+
+    } catch (error) {
+        console.error(error.message);
     }
 
-    setAttempts((prev) => prev + 1);
 
     const supabase = createClientComponentClient();
     let data, error;
@@ -95,7 +113,7 @@ const Timer = memo(({ authGroupEmailRef, profileEmailRef, profilePhoneRef, isBut
     if (error) {
       changeMessage("error", "An unexpected error occurred. Please try again later.");
     } else {
-      changeMessage("success", "Otp successfully sent!");
+      changeMessage("success", "A verification code has been sent to your email address");
     }
 
     setIsDisabled(true); // Disable the resend button while waiting for the timer

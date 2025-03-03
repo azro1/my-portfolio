@@ -49,7 +49,7 @@ main {
 }
 
 .btn-small {
-  @apply py-2 px-3 rounded-lg font-medium text-frostWhite;
+  @apply py-2 px-3 rounded-lg font-medium text-white;
 }
 
 form input {
@@ -235,11 +235,11 @@ footer span {
 }
 
 .modal-form-error {
-  @apply text-red-600 text-sm mt-2;
+  @apply text-red-600 text-sm mt-4;
 }
 
 .modal-form-success {
-  @apply text-green-600 text-sm mt-2;
+  @apply text-green-600 text-sm mt-4;
 }
 
 

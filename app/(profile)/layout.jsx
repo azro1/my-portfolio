@@ -19,17 +19,18 @@ export default async function ProfileLayout({ children }) {
     .select('is_reg_complete')
     .eq('id', user?.id)
     .single();
-
+  
     if (error) {
       console.error(error);
     }
-
-    if (!data?.is_reg_complete) {
+  
+    const isRegistered = await cookies().get('isRegistered');
+    if (!data?.is_reg_complete || isRegistered?.value !== 'true') {
       await supabase.auth.signOut();
       redirect('/auth/login');
     }
   }
-
+  
   return (
     <div className="flex flex-col min-h-screen bg-[#33353a]">
       <div className="flex flex-1">

@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import disposableDomains from 'disposable-email-domains';
 
+// hooks
+import { useMessage } from "@/app/hooks/useMessage";
 
 // components
 import Modal from './Modal'
@@ -25,11 +27,11 @@ const schema = yup.object({
       .string()
       .required('Email is required')
       .transform(value => value.trim().toLowerCase())
-      .test('has-at-symbol', "Please include an '@' symbol.", value => {
+      .test('has-at-symbol', "Please include an '@' symbol", value => {
         return value ? value.includes('@') : true;
       })
-      .email("Please use a valid domain, e.g., gmail.com.")
-      .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Please use a valid domain, e.g., gmail.com.")
+      .email("Please use a valid domain, e.g., gmail.com")
+      .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Please use a valid domain, e.g., gmail.com")
       .test('is-not-disposable', 'Disposable email addresses are not allowed. Please use a valid email.', value => {
         if (value) {
           const domain = value.split('@')[1];  // Extract domain from email
@@ -55,7 +57,7 @@ const EmailForm = ({ user, profile }) => {
     const [showForm, setShowForm] = useState(false)
     const [hasInteracted, setHasInteracted] = useState(false)
 
-
+    const { changeMessage } = useMessage();
     const router = useRouter();
 
 
@@ -63,6 +65,8 @@ const EmailForm = ({ user, profile }) => {
 
     // populate form fields from profiles table
     useEffect(() => {
+        // setIsUpdating(true)
+
         if (user && profile) {
             setEmail(profile.email || '')
         }
@@ -104,11 +108,11 @@ const EmailForm = ({ user, profile }) => {
         } else if (hasInteracted && isValid) {
             // Show success message if names are different
             if (draftEmail !== email) {
-                setFormSuccess('Your email looks good.');
+                setFormSuccess('Your email looks good');
                 setFormError(null);
             } else {
                 setFormSuccess(null); // Reset success message if names are the same
-                setFormError('Email cannot be the same.');
+                setFormError('Email cannot be the same');
             }
         }
     
@@ -152,15 +156,21 @@ const EmailForm = ({ user, profile }) => {
                     })
             })
 
-            const serverEmail = await res.json();
+            const updateResponse = await res.json();
 
-            if (!res.ok && serverEmail.error) {
-                throw new Error(serverEmail.error)
-            } else if (res.status === 200 && !serverEmail.error) {
+            if (!res.ok && updateResponse.error) {
+                throw new Error(updateResponse.error)
+
+            } else if (res.status === 401) {
+                setIsUpdating(false);
+                setFormError(<>To prevent spam and abusive behavior <strong>cooldown</strong> is active. You must wait <strong>{updateResponse.minutesLeft}</strong>m <strong>{updateResponse.secondsLeft}</strong>s before you can request a new verification code.</>);
+
+            } else if (res.status === 200 && !updateResponse.error) {
                 await deleteOtpAccessBlockedCookie();
-                setIsUpdating(false)
-                setShowForm(false)
-                router.push('/profile/verify-email-otp')
+                setIsUpdating(false);
+                setShowForm(false);
+                changeMessage('success', 'A verifcation code has been sent to your email address');
+                router.push('/profile/verify-email-otp');
 
                 // set flag to indicate user has visited profile otp page
                 localStorage.setItem('hasVisitedProfileOtpPage', 'true');
@@ -214,7 +224,7 @@ const EmailForm = ({ user, profile }) => {
             {showForm && (
                 <Modal>
                     <form noValidate>
-                        <label className='block mb-3 text-xl' htmlFor='draftEmail'>Email Address</label>
+                        <label className='block mb-3 text-xl font-medium' htmlFor='draftEmail'>Email Address</label>
                         <p className='mb-3'>Please enter your new email address. This email will be used for account verification and notifications</p>
                         <input
                             className='w-full p-2.5 rounded-md border-2'
@@ -230,19 +240,19 @@ const EmailForm = ({ user, profile }) => {
                     </form>
                     <div className='flex items-center'>
                         <button className='btn-small bg-saddleBrown mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                        <button className={`btn-small bg-saddleBrown mt-3`} onClick={handleSubmit(handleEmailUpdate)}>
+                        <button className={`btn-small bg-saddleBrown mt-3 w-[64px]`} onClick={handleSubmit(handleEmailUpdate)}>
                             {isUpdating ? (
-                                <div className='flex items-center gap-2'>
-                                    <img className="w-5 h-5 opacity-50" src="../../images/loading/reload.svg" alt="Loading indicator" />
-                                    <span>Save</span>
+                                <div className='flex items-center justify-center gap-2'>
+                                    <img className="w-6 h-6 opacity-50" src="../../images/loading/reload.svg" alt="Loading indicator" />
                                 </div>
                             ) : (
                                 'Save'
                             )}
                         </button>
                     </div>
-                    {formError && <p className='modal-form-error'>{formError}</p>}
-                    {formSuccess && <p className='modal-form-success'>{formSuccess}</p>}
+                    {(formError || formSuccess) && (
+                        <p className={`${formError ? 'modal-form-error' : 'modal-form-success'}`}>{formError || formSuccess}</p>
+                    )} 
                 </Modal>
             )}
 

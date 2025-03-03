@@ -13,6 +13,7 @@ export async function GET(request) {
   }
   
   const { data: { user } } = await supabase.auth.getUser()
+ 
   // when a user logs in via google set is_verifed flag to true now that an account has been created so users cannot sign up again
   const { error } = await supabase
     .from('profiles')
@@ -24,8 +25,17 @@ export async function GET(request) {
 
   if (error) {
     console.log('google:', error.message)
+    return NextResponse.json({ message: "error updating profile flags for google user" }, { status: 500 });
   }
 
+  if (!error) {
+    await cookies().set('isRegistered', 'true', { 
+      path: '/', 
+      maxAge: 60 * 60 * 24 * 365 * 10,
+      httpOnly: true, 
+      sameSite: 'lax' 
+    });
+  }
 
   return NextResponse.redirect(url.origin)
 }

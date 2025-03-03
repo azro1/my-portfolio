@@ -1,7 +1,25 @@
 import Timer from "./Timer"
 
-const OtpForm = ({ containerStyles, handleSubmit, onSubmit, title, subHeading, fields, register, handleInputChange, handleKeyDown, errors, isLoading, trigger, formState, authGroupEmailRef, profileEmailRef, profilePhoneRef, isButtonDisabled, isVerified }) => {
-
+const OtpForm = ({
+    containerStyles,
+    handleSubmit,
+    onSubmit,
+    title,
+    subHeading,
+    fields,
+    register,
+    handleInputChange,
+    handleKeyDown,
+    errors,
+    isLoading,
+    trigger, 
+    formState, 
+    authGroupEmailRef, 
+    profileEmailRef, 
+    profilePhoneRef, 
+    isButtonDisabled, 
+    isVerified 
+}) => {
 
   return (
     <div className={containerStyles}> 

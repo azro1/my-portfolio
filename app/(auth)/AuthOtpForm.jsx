@@ -18,6 +18,8 @@ import { useMessage } from "../hooks/useMessage";
 
 // server actions
 import { deleteCanAccessAuthOtpPageCookie } from "./auth/actions";
+import { setIsRegisteredCookie } from "../actions";
+
 
 
 // yup validation schema
@@ -307,8 +309,7 @@ const AuthOtpForm = ({ redirectUrl, title, subHeading, successMessage }) => {
                 setIsLoading(false);
 
 
-
-                // check if they are verified but have not completed registration before allowing them to go any further
+                // query db table for verification and registration flags
                 const { data, error } = await supabase
                 .from('profiles')
                 .select('is_verified, is_reg_complete')
@@ -320,32 +321,38 @@ const AuthOtpForm = ({ redirectUrl, title, subHeading, successMessage }) => {
                     console.log(error)
                 }
 
+                // when they have previously passed verification but left without completing registration
                 if (data?.is_verified && !data?.is_reg_complete) {
-
-
-
                     localStorage.removeItem("hasVisitedAuthOtpPage");
-                    router.push('/upload-avatar')
-                    changeMessage('success', `Welcome back, please finish creating your profile`)
+                    router.push('/upload-avatar');
+                    changeMessage('success', `Welcome back, please finish creating your profile`);
                     return;
+
+                // when they are loggin back in
+                } else if (data?.is_verified && data?.is_reg_complete) {
+                    await deleteCanAccessAuthOtpPageCookie();
+                    // set presistent isRegistered cookie for extra security
+                    await setIsRegisteredCookie();
+                    localStorage.removeItem("hasVisitedAuthOtpPage");
+                    setIsVerified(true)
+                    reset({ codes: fields.map(() => ({ code: '' })) });
+                    changeMessage('success', successMessage);
+                    setRedirect(true);
+
                 } else {
-                    // update is_verified column in profiles table
+                    // when they are first time users 
                     const is_verifiedResult = await updateTable(session.user, 'profiles', { is_verified: true }, 'id');
                     if (!is_verifiedResult.success) {
-                        console.log('auth otp page: could not update otp verification status')
+                        console.log('auth otp page: could not update otp verification status');
                     }
-
-
-
-                    // delete auth access cookie after successful verification
                     await deleteCanAccessAuthOtpPageCookie();
-                    
                     localStorage.removeItem("hasVisitedAuthOtpPage");
                     setIsVerified(true)
                     reset({ codes: fields.map(() => ({ code: '' })) });
                     changeMessage('success', successMessage);
                     setRedirect(true);
                 }
+
             }
 
         } catch (error) {
@@ -380,7 +387,7 @@ const AuthOtpForm = ({ redirectUrl, title, subHeading, successMessage }) => {
                 <Loading />
             ) : (
                 <OtpForm
-                    containerStyles={'sm:shadow-outer sm:p-10 sm:rounded-xl'}
+                    containerStyles={'sm:shadow-outer sm:p-10 sm:rounded-xl bg-white'}
                     handleSubmit={handleSubmit}
                     onSubmit={onSubmit}
                     title={title}

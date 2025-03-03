@@ -10,6 +10,9 @@ import { useBlockNavOnOtp } from "@/app/hooks/useBlockNavOnOtp";
 import LoggedInMenu from "./LoggedInMenu";
 import LoggedOutMenu from "./LoggedOutMenu";
 
+// server actions
+import { deleteIsRegisteredCookie } from "@/app/actions";
+
 
 const Dropdown = ({ user, handleCloseMenu, isProfilePage, dropDownRef }) => {
   const router = useRouter()
@@ -21,8 +24,9 @@ const Dropdown = ({ user, handleCloseMenu, isProfilePage, dropDownRef }) => {
    
     const supabase = createClientComponentClient()
     const {error} = await supabase.auth.signOut()
-
+    
     if (!error) {
+      await deleteIsRegisteredCookie();
       router.push('/auth/login')
     }
 

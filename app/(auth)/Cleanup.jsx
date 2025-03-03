@@ -19,7 +19,7 @@ const Cleanup = () => {
         if (isReloading && hasShownMessage !== 'true') {
             setTimeout(() => {
                 sessionStorage.removeItem('isReloading');
-                changeMessage('error', 'Your OTP verification was interrupted. Please sign up again to receive a new security code.');
+                changeMessage('error', 'Verification was interrupted. Please login or sign up to receive a new security code.');
                 localStorage.setItem('hasShownAbortMessage', 'true');
             }, 100);
         }
@@ -38,7 +38,7 @@ const Cleanup = () => {
                     localStorage.removeItem("hasVisitedAuthOtpPage");
 
                     if (hasShownMessage !== 'true') {
-                        changeMessage('error', 'Your OTP verification was aborted. Please signup to receive a new security code.');
+                        changeMessage('error', 'Verification was aborted. Please login or signup to receive a new security code.');
                         localStorage.setItem('hasShownAbortMessage', 'true');
                     }
                 };

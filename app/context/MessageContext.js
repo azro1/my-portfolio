@@ -13,7 +13,7 @@ const MessageProvider = ({ children }) => {
 
     const changeMessage = useCallback((messageType, newMessage) => {
         setMessage({ type: messageType, value: newMessage })
-        setTimeout(() => setMessage({ type: '', value: '' }), 4000)
+        setTimeout(() => setMessage({ type: '', value: '' }), 5000)
     }, [])
 
     return (

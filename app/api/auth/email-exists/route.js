@@ -9,6 +9,43 @@ export async function POST(request) {
   const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
 
 
+  
+
+  // before allowing access to otp page make endpoint request to /enforce-otp-limit which tracks otp_attempts and enforces a cooldown if attempts are maxed out
+  const baseUrl = request.nextUrl.origin; 
+  
+  try {
+    const res = await fetch(`${baseUrl}/api/auth/enforce-otp-limit`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ 
+        email 
+      }),
+    });
+    
+    const cooldownResponse = await res.json();
+    
+    if (res.status === 401) {
+      return NextResponse.json({ 
+        message: cooldownResponse.message,
+        minutesLeft: cooldownResponse.minutesLeft,
+        secondsLeft: cooldownResponse.secondsLeft
+      }, {
+        status: 401
+      })
+    } 
+
+  } catch (error) {
+    console.error(error.message);
+    return NextResponse.json({ message: "fetch failed" }, { status: 500 });
+  }
+  
+  
+  
+  
+  
   // returns an array of objects, each object containing only the email field for rows that match the specified email
   const { data: emailArr, error } = await supabase
     .from('profiles')
@@ -23,14 +60,14 @@ export async function POST(request) {
     })
   }
   
-
   // check if data array has any rows
   const exists = emailArr.length > 0;
 
   // check data array is not empty and then store its object
   const accountStatus = exists ? emailArr[0] : null;
 
-  
+
+
   switch(type) {
     case 'login':
       if (exists && accountStatus.is_verified) {

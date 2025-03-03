@@ -100,20 +100,26 @@ const ForgotEmail = () => {
                 })
             })
 
-            // await json response from server and store in const email
-            const serverEmail = await res.json()
+            // await json response from server and store in const emailResponse
+            const emailResponse = await res.json()
 
             if (res.status === 404) {
                 throw new Error("We couldn't find an account associated with that phone number. Please check the number or try a different one.")
-            } else if (serverEmail.error) {
-                console.log('forgot email error:', serverEmail.error)
+
+            } else if (emailResponse.error) {
+                console.log('forgot email error:', emailResponse.error)
                 throw new Error("We're having trouble processing your request. Please try again later. If the issue persists, contact support.")
-            } else if (serverEmail.exists && res.status === 200) {
+
+            }  else if (res.status === 401) {
+                setIsLoading(false);
+                throw new Error(`To prevent spam and abusive behavior cooldown is active. You must wait ${emailResponse.minutesLeft}m ${emailResponse.secondsLeft}s before you can request a new verification code.`)
+            
+            } else if (emailResponse.exists && res.status === 200) {
                 setIsLoading(false)
-                changeMessage('success', "We've located your account. A verification code has been sent to your email.")
+                changeMessage('success', "Good news! We've located your account. A verification code has been sent to your email.")
 
                 // store email temporarily in local storage
-                localStorage.setItem('email', serverEmail.email)
+                localStorage.setItem('email', emailResponse.email)
                 await deleteOtpAccessBlockedCookie();
                 setRedirect(true);
                 
@@ -158,7 +164,7 @@ const ForgotEmail = () => {
     return (
         <div className='main-container relative'>
 
-            <Link className='absolute left-6 -top-10 sm:-top-12' href='/auth/login'>
+            <Link className='absolute left-3 -top-10 sm:-top-12' href='/auth/login'>
                 <button className='text-nightSky sm:p-1 rounded-md hover:bg-cloudGray transtion-bg duration-300 '>
                     <IoMdArrowBack size={24} />
                 </button>

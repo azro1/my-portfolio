@@ -19,7 +19,7 @@ import { useUpdateMetadata } from "@/app/hooks/useUpdateMetadata";
 import { useMessage } from '@/app/hooks/useMessage';
 
 // server actions
-import { setIsRegisteredCookie } from './actions';
+import { setIsRegisteredCookie } from '@/app/actions';
 
 
 
@@ -324,7 +324,7 @@ const RegisterForm = () => {
                 // remove local stroage flag
                 localStorage.removeItem("hasVisitedRegPage")
 
-                // set presistent cookie to prevent user from accessing registration page
+                // set presistent isRegistered cookie for extra security
                 await setIsRegisteredCookie();
 
                 changeMessage('success', 'Your account has been created and you are now logged in');
