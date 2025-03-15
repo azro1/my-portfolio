@@ -16,9 +16,9 @@ import Loading from "../components/Loading";
 import { useUpdateTable } from "../hooks/useUpdateTable";
 import { useMessage } from "../hooks/useMessage";
 
-// server actions
-import { deleteCanAccessAuthOtpPageCookie } from "./auth/actions";
-import { setIsRegisteredCookie } from "../actions";
+
+
+
 
 
 
@@ -57,9 +57,11 @@ const AuthOtpForm = ({ redirectUrl, title, subHeading, successMessage }) => {
     const [isVerified, setIsVerified] = useState(false)
     const [buttonIsDisabled, setButtonIsDisabled] = useState(null)
     const [isActive, setIsActive] = useState(null)
-    const [hasReturned, setHasReturned] = useState(false)
     const [hasVisitedRegPage, setHasVisitedRegPage] = useState(false);
- 
+    const [user, setUser] = useState(null);
+    const [isFlagChecked, setIsFlagChecked] = useState(false);
+
+    const supabase = createClientComponentClient()
     const router = useRouter()
 
     // destructure custom hooks
@@ -92,97 +94,89 @@ const AuthOtpForm = ({ redirectUrl, title, subHeading, successMessage }) => {
 
 
 
-    // set indicator that user has been to delete cookie if they go back
+
+    // if they navigate back store user
     useEffect(() => {
-        localStorage.setItem('hasShownAbortMessage', 'false');
-    }, []);
-
-
-
-
-
-
-
-
-
-
-
-    // check if user has been to reg page by checking local storage flag set in registration page
-    useEffect(() => {
-        const visited = localStorage.getItem("hasVisitedRegPage");
-        if (visited === "true") {
-            setHasVisitedRegPage(true);
-            setHasReturned(true);
-        }
-    }, []);
-
-    // log them out if they have
-    useEffect(() => {
-        if (hasReturned) {
-            const handleLogout = async () => {
-                const supabase = createClientComponentClient();
-                await supabase.auth.signOut();
-                router.push('/auth/login');
-                localStorage.removeItem("hasVisitedRegPage")
-            };
-
-            handleLogout();
-        }
-    }, [hasReturned, router]);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // delete cookie and redirect on page reload
-    useEffect(() => {
-        const handleBeforeUnload = () => {
-            // Set a flag to indicate a reload is happening
-            sessionStorage.setItem("isReloading", "true");
-            localStorage.removeItem("hasVisitedAuthOtpPage");
-
-            // navigator.sendBeacon sends an asynchronous HTTP POST request, but unlike fetch(), it ensures the request is completed before the page unloads, designed for sending small amounts of data and doesn't return anything. I had to use this metho to delete canAccessAuthOtpPage cookie if a user leave by using the address bar
+        const fetchUser = async () => {
             try {
-                navigator.sendBeacon('/api/auth/delete-otp-cookie', JSON.stringify({ hasLeftAuthVerification: true }));
+                const { data, error } = await supabase.auth.getUser();
+                if (error) {
+                    setUser(null);
+                    return;
+                }
+                setUser(data?.user || null);
             } catch (error) {
-                console.error("sendBeacon error:", error);
+                console.error("Unexpected error fetching user:", error);
+                setUser(null);
             }
         };
-    
-        window.addEventListener("beforeunload", handleBeforeUnload);
-    
-        return () => {
-            window.removeEventListener("beforeunload", handleBeforeUnload);
-        };
-    }, []);
-    
-    useEffect(() => {
-        const handlePageReload = async () => {
-            const isReloading = sessionStorage.getItem("isReloading");
-    
-            if (isReloading) {
-                // Remove the flags after reloading
-                sessionStorage.removeItem("isReloading");
-                router.push('/auth/login')
-            }
-        }
-        handlePageReload();
-    }, [router]);
-    
-    
+        fetchUser();
+    }, [supabase]);
+
     
 
+
+
+
+
+
+
+
+
+    // if they navigate back check flag in db that we set in registration and refresh so that server detects missing otp token
+    useEffect(() => {
+        if (user && !isFlagChecked) {
+            // console.log(user)
+            const checkRegistrationFlag = async () => {
+                try {
+                    setHasVisitedRegPage(true)
+                    const { data, error } = await supabase
+                    .from('profiles')
+                    .select('has_visited_reg')
+                    .eq('id', user.id)
+                    .single();
+
+                    if (error) {
+                        setHasVisitedRegPage(false);
+                        console.error(error);
+                        return;
+                    } 
+                    
+                    if (data?.has_visited_reg) {
+                        // reset flag in the table
+                        await updateTable(user, 'profiles', { has_visited_reg: false }, 'id');
+                        await supabase.auth.signOut()
+                        router.refresh();
+                        changeMessage('error', "You're registration was interrupted. Please try again later.");
+                    } 
+
+                } catch (error) {
+                    console.log('profiles error:', error.message)
+                    // reset flag in the table
+                    const flagResult = await updateTable(user, 'profiles', { has_visited_reg: false }, 'id');
+                    console.log('flag reset:', flagResult)
+                    setIsFlagChecked(false);
+                    setHasVisitedRegPage(false);
+                } finally {
+                    setIsFlagChecked(true);
+                    setHasVisitedRegPage(false);
+                }
+            }
+            checkRegistrationFlag();
+        }
+    }, [user, isFlagChecked, supabase, router]);
+
+
+
+
+
+
+
+
+
+
+    
+  
 
 
 
@@ -295,7 +289,6 @@ const AuthOtpForm = ({ redirectUrl, title, subHeading, successMessage }) => {
         try {
             setIsLoading(true)
 
-            const supabase = createClientComponentClient()
             const { data: { session }, error } = await supabase.auth.verifyOtp({
                 email: emailRef.current,
                 token: otp,
@@ -323,17 +316,36 @@ const AuthOtpForm = ({ redirectUrl, title, subHeading, successMessage }) => {
 
                 // when they have previously passed verification but left without completing registration
                 if (data?.is_verified && !data?.is_reg_complete) {
-                    localStorage.removeItem("hasVisitedAuthOtpPage");
-                    router.push('/upload-avatar');
-                    changeMessage('success', `Welcome back, please finish creating your profile`);
-                    return;
+                    // make request to endpoint to set reg token in redis
+                    try {
+                        const res = await fetch(`${location.origin}/api/auth/set-reg-cookie`, {
+                            method: 'POST',
+                            headers: {
+                              'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ 
+                                user: session.user 
+                            })
+                        })
+    
+                        if (!res.ok) {
+                           throw new Error(res.statusText)
+                        }
+                        const registrationResponse = await res.json();
+
+                        if (res.status === 200 && registrationResponse.token) {
+                            localStorage.removeItem('hasVisitedOtpPage');
+                            router.push('/upload-avatar');
+                            changeMessage('success', `Welcome back, please finish creating your profile`);                        
+                        }
+
+                    } catch (error) {
+                        console.log(error.message)
+                    }
 
                 // when they are loggin back in
                 } else if (data?.is_verified && data?.is_reg_complete) {
-                    await deleteCanAccessAuthOtpPageCookie();
-                    // set presistent isRegistered cookie for extra security
-                    await setIsRegisteredCookie();
-                    localStorage.removeItem("hasVisitedAuthOtpPage");
+                    localStorage.removeItem("hasVisitedOtpPage");
                     setIsVerified(true)
                     reset({ codes: fields.map(() => ({ code: '' })) });
                     changeMessage('success', successMessage);
@@ -345,18 +357,43 @@ const AuthOtpForm = ({ redirectUrl, title, subHeading, successMessage }) => {
                     if (!is_verifiedResult.success) {
                         console.log('auth otp page: could not update otp verification status');
                     }
-                    await deleteCanAccessAuthOtpPageCookie();
-                    localStorage.removeItem("hasVisitedAuthOtpPage");
+                    
                     setIsVerified(true)
                     reset({ codes: fields.map(() => ({ code: '' })) });
                     changeMessage('success', successMessage);
-                    setRedirect(true);
-                }
 
+
+                    // make request to endpoint to set reg token in redis
+                    try {
+                        const res = await fetch(`${location.origin}/api/auth/set-reg-cookie`, {
+                            method: 'POST',
+                            headers: {
+                              'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ 
+                                user: session.user 
+                            })
+                        })
+    
+                        if (!res.ok) {
+                           throw new Error(res.statusText)
+                        }
+                        const registrationResponse = await res.json();
+
+                        if (res.status === 200 && registrationResponse.token) {
+                            localStorage.removeItem('hasVisitedOtpPage');
+                            setRedirect(true);
+                        }
+
+                    } catch (error) {
+                        console.log(error.message)
+                    }
+                }
             }
 
         } catch (error) {
             setIsLoading(false);
+            localStorage.setItem('hasVisitedOtpPage', 'true');
             console.log('auth otp error:', error.message);
             
             if (isActive) {

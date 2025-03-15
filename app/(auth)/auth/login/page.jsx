@@ -4,7 +4,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import disposableDomains from 'disposable-email-domains';
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
@@ -15,9 +15,7 @@ import { useMessage } from "@/app/hooks/useMessage";
 // components
 import AuthForm from "../../AuthForm";
 
-// server actions
-import { deleteCanAccessAuthOtpPageCookie } from "../actions";
-import { deleteOtpAccessBlockedCookie } from "@/app/actions";
+
 
 
 
@@ -58,6 +56,20 @@ const Login = () => {
   
   // global messages function
   const { changeMessage } = useMessage()
+
+
+
+
+
+  // refresh is user navigates back from otp form 
+  useEffect(() => {
+    const hasVisitedOtpPage = localStorage.getItem('hasVisitedOtpPage');
+    if (hasVisitedOtpPage) {
+      localStorage.removeItem('hasVisitedOtpPage');
+      router.refresh();
+      changeMessage('error', "You're verification was interrupted. You need to re-enter your email to receive a new security code.")
+    }
+  }, [])
 
 
 
@@ -136,20 +148,18 @@ const Login = () => {
 
         if (!error) {
           setIsLoading(false);
-          await deleteOtpAccessBlockedCookie();
           changeMessage('success', 'A verifcation code has been sent to your email address')
           router.push('/auth/verify-login-otp');
 
           // set flag to indicate user has visited auth otp page
-          localStorage.setItem("hasVisitedAuthOtpPage", "true");
+          localStorage.setItem('hasVisitedOtpPage', 'true');
         }
       }
 
     } catch (error) {
         setIsLoading(false);
-        await deleteCanAccessAuthOtpPageCookie();
         localStorage.removeItem('email');
-        localStorage.removeItem("hasVisitedAuthOtpPage");
+        localStorage.removeItem('hasVisitedOtpPage');
         changeMessage('error', 'Oops! Something went wrong on our end. Please try again in a moment or contact support if the issue persists.');
         console.log('login error:', error.message)
     }

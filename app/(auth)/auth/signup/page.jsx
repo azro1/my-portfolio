@@ -4,7 +4,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import disposableDomains from 'disposable-email-domains';
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
@@ -15,9 +15,7 @@ import { useMessage } from "@/app/hooks/useMessage";
 // components
 import AuthForm from "../../AuthForm";
 
-// server actions
-import { deleteCanAccessAuthOtpPageCookie } from "../actions";
-import { deleteOtpAccessBlockedCookie } from "@/app/actions";
+
 
 
 // yup validation schema
@@ -52,7 +50,21 @@ const Signup = () => {
 
   // global messages function
   const { changeMessage } = useMessage()
+
+
+
+
+  // refresh is user navigates back from otp form
+  useEffect(() => {
+    const hasVisitedOtpPage = localStorage.getItem('hasVisitedOtpPage');
+    if (hasVisitedOtpPage) {
+      localStorage.removeItem('hasVisitedOtpPage');
+      router.refresh();
+      changeMessage('error', "You're verification was interrupted. You need to re-enter your email to receive a new security code.")
+    }
+  }, [])
   
+
 
 
   // react-hook-form
@@ -138,20 +150,18 @@ const Signup = () => {
           throw new Error(error.message);
         } else {
           setIsLoading(false);
-          await deleteOtpAccessBlockedCookie();
           changeMessage('success', 'A verifcation code has been sent to your email address');
           router.push('/auth/verify-signup-otp');
 
           // set flag to indicate user has visited auth otp page
-          localStorage.setItem("hasVisitedAuthOtpPage", "true");
+          localStorage.setItem('hasVisitedOtpPage', 'true');
         }
       }
       
     } catch (error) {
         setIsLoading(false);
-        await deleteCanAccessAuthOtpPageCookie();
         localStorage.removeItem('email');
-        localStorage.removeItem("hasVisitedAuthOtpPage");
+        localStorage.removeItem('hasVisitedOtpPage');
         changeMessage('error', 'An unexpected error occurred. Please try again later or contact support if the issue persists.');
         console.log('sign up error:', error.message)
     }

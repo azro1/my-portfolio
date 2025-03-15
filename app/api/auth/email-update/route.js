@@ -1,12 +1,18 @@
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import { v4 as uuidv4 } from "uuid";
+import crypto from 'crypto';
+import { client } from "@/app/lib/db";
+
+
+
+
 
 export async function POST(request) {
   const { email } = await request.json();
 
   const supabase = createRouteHandlerClient({ cookies })
-
 
 
 
@@ -62,7 +68,22 @@ export async function POST(request) {
 
 
 
+
+
+
+  // encrypt user email to store in a cookie
+  const encryptEmail = (email, encryptionKey) => {
+    const iv = crypto.randomBytes(16);
+    const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(encryptionKey, 'base64'), iv);
+    let encrypted = cipher.update(email, 'utf8', 'hex');
+    encrypted += cipher.final('hex');
+    return `${iv.toString('hex')}:${encrypted}`;
+  };
+
+  // Encrypt the email
+  const encryptedEmail = encryptEmail(email, encryptionKey);
   
+
 
 
 
@@ -83,13 +104,10 @@ export async function POST(request) {
   }
 
   if (data) {
-    // Set cookie for OTP page access
-    await cookies().set('canAccessProfileOtpPage', 'true', { 
-      path: '/', 
-      httpOnly: true, 
-      sameSite: 'Strict'  
-    }); 
-
+    // set encrypted email in cookie so that we can access it to get key from redis in verify-signup-otp
+    await cookies().set('_otp_tkn', `${encryptedEmail}`, { path: '/', httpOnly: true, sameSite: 'Strict' });
+    const accessToken = uuidv4();
+    await client.set(`token-${encryptedEmail}`, accessToken, { EX: 120 });
     return NextResponse.json({ data }, { 
         status: 200 
     })

@@ -12,9 +12,7 @@ import { IoMdArrowBack } from "react-icons/io";
 // custom hook to display global messages
 import { useMessage } from "@/app/hooks/useMessage";
 
-// server actions
-import { deleteCanAccessAuthOtpPageCookie } from "../actions";
-import { deleteOtpAccessBlockedCookie } from "@/app/actions";
+
 
 
 
@@ -51,6 +49,16 @@ const ForgotEmail = () => {
     const { changeMessage } = useMessage()
 
 
+
+    // refresh is user navigates back from otp form
+    useEffect(() => {
+        const hasVisitedOtpPage = localStorage.getItem('hasVisitedOtpPage');
+        if (hasVisitedOtpPage) {
+            localStorage.removeItem('hasVisitedOtpPage');
+            router.refresh();
+            changeMessage('error', "You're verification was interrupted. You need to re-enter your email to receive a new security code")
+        }
+    }, [])
 
 
 
@@ -120,19 +128,16 @@ const ForgotEmail = () => {
 
                 // store email temporarily in local storage
                 localStorage.setItem('email', emailResponse.email)
-                await deleteOtpAccessBlockedCookie();
                 setRedirect(true);
                 
                 // set flag to indicate user has visited auth otp page
-                localStorage.setItem("hasVisitedAuthOtpPage", "true");
+                localStorage.setItem('hasVisitedOtpPage', 'true');
             }
 
         } catch (error) {
             setIsLoading(false);
-            // delete cookie
-            await deleteCanAccessAuthOtpPageCookie();
             localStorage.removeItem('email');
-            localStorage.removeItem("hasVisitedAuthOtpPage");   
+            localStorage.removeItem('hasVisitedOtpPage');   
             changeMessage('error', error.message);
         }
 

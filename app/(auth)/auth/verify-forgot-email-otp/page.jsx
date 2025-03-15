@@ -1,16 +1,21 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { client } from "@/app/lib/db";
 
 // components
 import AuthOtpForm from "../../AuthOtpForm";
 
 
-const VerifyForgotEmailOtp = () => {
-    const otpAccessBlocked = cookies().get('otpAccessBlocked')?.value === 'true';
+const VerifyForgotEmailOtp = async () => {
+    const encryptedEmail = cookies().get('_otp_tkn')?.value;
+    const accessToken = await client.get(`token-${encryptedEmail}`);
 
-    // redirect if otpAcessBlocked middleware cookie is present
-    if (otpAccessBlocked) {
-      redirect('/auth/login');
+    if (!encryptedEmail) {
+        return redirect('/auth/login');
+    }
+
+    if (!accessToken) {
+        return redirect('/auth/login');
     }
 
     return (

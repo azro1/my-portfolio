@@ -1,6 +1,14 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from "next/server"
+import { v4 as uuidv4 } from "uuid";
 import { cookies } from 'next/headers';
+import { client } from '@/app/lib/db';
+import crypto from 'crypto'; 
+
+
+const encryptionKey = process.env.ENCRYPTION_KEY;
+
+
 
 export async function POST(request) {
     const { phone } = await request.json()
@@ -21,41 +29,69 @@ export async function POST(request) {
         return NextResponse.json({ error: 'Unable to process request.' }, {
             status: 500
         })
-    }
+    } else if (!emailArr || emailArr.length === 0) {
+        return NextResponse.json({ error: 'Unable to process request.' }, {
+            status: 404
+        })   
+    } 
+
+    const email = emailArr[0].email;
+
+
+
+
 
 
 
     // before allowing access to otp page make endpoint request to /enforce-otp-limit which tracks otp_attempts and enforces a cooldown if attempts are maxed out
-    const baseUrl = request.nextUrl.origin;
-    const email = emailArr[0].email;
+    const checkOtpAttempts = async () => {
+        const baseUrl = request.nextUrl.origin;
 
-    try {
-        const res = await fetch(`${baseUrl}/api/auth/enforce-otp-limit`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                email
-            }),
-        });
-
-        const cooldownResponse = await res.json();
-
-        if (res.status === 401) {
-            return NextResponse.json({
-                message: cooldownResponse.message,
-                minutesLeft: cooldownResponse.minutesLeft,
-                secondsLeft: cooldownResponse.secondsLeft
-            }, {
-                status: 401
-            })
+        try {
+            const res = await fetch(`${baseUrl}/api/auth/enforce-otp-limit`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email
+                }),
+            });
+    
+            const cooldownResponse = await res.json();
+            const { message, minutesLeft, secondsLeft } = cooldownResponse;
+      
+            return {
+              status: res.status,
+              message,
+              minutesLeft,
+              secondsLeft
+            }
+      
+        } catch (error) {
+            console.error(error.message);
+            return NextResponse.json({ message: "fetch failed" }, { status: 500 });
         }
-
-    } catch (error) {
-        console.error(error.message);
-        return NextResponse.json({ message: "fetch failed" }, { status: 500 });
     }
+
+
+
+
+
+
+    // encrypt user email to store in a cookie
+    const encryptEmail = (email, encryptionKey) => {
+        const iv = crypto.randomBytes(16);
+        const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(encryptionKey, 'base64'), iv);
+        let encrypted = cipher.update(email, 'utf8', 'hex');
+        encrypted += cipher.final('hex');
+        return `${iv.toString('hex')}:${encrypted}`;
+    };
+
+    // Encrypt the email
+    const encryptedEmail = encryptEmail(email, encryptionKey);
+
+
 
 
 
@@ -66,22 +102,37 @@ export async function POST(request) {
     const exists = emailArr.length > 0;
 
     if (exists) {
+        // check otp attempts to enforce cooldown if attempts are maxed
+        const cooldownResponse = await checkOtpAttempts();
+
+        if (cooldownResponse.status === 401) {
+          return NextResponse.json({ 
+            message: cooldownResponse.message,
+            minutesLeft: cooldownResponse.minutesLeft,
+            secondsLeft: cooldownResponse.secondsLeft }, {
+            status: 401
+          })
+        }
+
         const [emailObj] = emailArr;
         const email = emailObj.email;
 
-        const { error: otpError } = await supabase.auth.signInWithOtp({
+        const { error: emailError } = await supabase.auth.signInWithOtp({
             email
         })
 
-        if (otpError) {
-            console.log('otp error:', otpError)
-            return NextResponse.json({ error: otpError.message }, {
+        if (emailError) {
+            console.log('otp error:', emailError)
+            return NextResponse.json({ error: emailError.message }, {
                 status: 500
             })
         }
 
-        if (!otpError) {
-            cookies().set('canAccessAuthOtpPage', 'true', { path: '/' }); // Set cookie for OTP access
+        if (!emailError) {
+            // set encrypted email in cookie so that we can access it to get key from redis in verify-signup-otp
+            await cookies().set('_otp_tkn', `${encryptedEmail}`, { path: '/', httpOnly: true, sameSite: 'Strict' });
+            const accessToken = uuidv4();
+            await client.set(`token-${encryptedEmail}`, accessToken, { EX: 120 });
             return NextResponse.json({ exists, email }, {
                 status: 200
             });
