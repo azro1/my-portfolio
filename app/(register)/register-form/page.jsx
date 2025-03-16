@@ -32,11 +32,9 @@ const Page = async () => {
             } 
     
             if (data?.is_reg_complete && !accessToken) {
-                console.log('data in register form server:', data)
                 console.log('redirecting to home in register form server ...')
                 redirect('/');
             } else if (!data?.is_reg_complete && !accessToken) {
-                console.log('data in register form server:', data)
                 console.log('signing out in register form server ...')
                 await supabase.auth.signOut();
             }

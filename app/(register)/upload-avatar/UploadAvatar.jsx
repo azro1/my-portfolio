@@ -15,7 +15,8 @@ import AvatarUploader from "@/app/components/AvatarUploader";
 import { useUpdateTable } from '@/app/hooks/useUpdateTable';
 
 
-
+// server action
+import { setUploadAvatarToken } from '@/app/actions';
 
 
 
@@ -102,9 +103,12 @@ const UploadAvatar = () => {
             if (error) {
                 throw new Error(error.message)
             }
-            
+
+            localStorage.setItem('hasUploadedAvatar', 'true');
+            await setUploadAvatarToken();
             router.push('/register-form')
             return { success: true }
+            
         } catch (error) {
             console.log('profile update error:', error.message)
             return { success: false }

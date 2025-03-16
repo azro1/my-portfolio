@@ -12,13 +12,22 @@ const Page = async () => {
     const encryptedId = cookies().get('_reg_tkn')?.value;
     const accessToken = await client.get(`token-${encryptedId}`);
 
+    const auf = cookies().get('_au_flg')?.value;
+    const avtrUplFlg = await client.get(`auf-${auf}`);
+
+
     if (!encryptedId) {
         return redirect('/auth/login');
+    }
+
+    if (avtrUplFlg) {
+        return redirect('/register-form');
     }
 
     if (!accessToken) {
         await supabase.auth.signOut();
     }
+
 
     return (
         <>

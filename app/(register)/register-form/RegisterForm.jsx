@@ -311,8 +311,8 @@ const RegisterForm = () => {
                 localStorage.removeItem("hasVisitedRegPage")
 
                 // reset flag in the table
-                const flagResult = await updateTable(user, 'profiles', { has_visited_reg: false }, 'id');
-                console.log(flagResult)
+                await updateTable(user, 'profiles', { has_visited_reg: false }, 'id');
+                
                 
 
                 changeMessage('success', 'Your account has been created and you are now logged in');
@@ -364,6 +364,18 @@ const RegisterForm = () => {
     }
 
 
+
+
+
+    const handleBackButton = (e) => {
+       e.preventDefault();
+       const hasUploadedAvatar = localStorage.getItem('hasUploadedAvatar') === 'true';
+       
+       if (hasUploadedAvatar) {
+        changeMessage('info', "looks like you've already uploaded an avatar. Please enter your personal information");
+       }
+        router.push('/upload-avatar');
+    }
 
 
 
@@ -464,7 +476,9 @@ const RegisterForm = () => {
                     'Register'
                 )}
             </button>
-
+            <button className='btn-small bg-nightSky w-max' onClick={(e) => handleBackButton(e)}>
+                Back
+            </button>
         </form>
     </div>
   )

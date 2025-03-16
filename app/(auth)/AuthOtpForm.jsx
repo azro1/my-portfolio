@@ -17,7 +17,8 @@ import { useUpdateTable } from "../hooks/useUpdateTable";
 import { useMessage } from "../hooks/useMessage";
 
 
-
+// server actions
+import { getUploadAvatarToken } from "../actions";
 
 
 
@@ -318,7 +319,7 @@ const AuthOtpForm = ({ redirectUrl, title, subHeading, successMessage }) => {
                 if (data?.is_verified && !data?.is_reg_complete) {
                     // make request to endpoint to set reg token in redis
                     try {
-                        const res = await fetch(`${location.origin}/api/auth/set-reg-cookie`, {
+                        const res = await fetch(`${location.origin}/api/auth/set-reg-token`, {
                             method: 'POST',
                             headers: {
                               'Content-Type': 'application/json'
@@ -334,8 +335,15 @@ const AuthOtpForm = ({ redirectUrl, title, subHeading, successMessage }) => {
                         const registrationResponse = await res.json();
 
                         if (res.status === 200 && registrationResponse.token) {
+                            const avtrUplFlg = await getUploadAvatarToken();
+
+                            if (avtrUplFlg) {
+                                router.push('/register-form')
+                            } else {
+                                router.push('/upload-avatar');
+                            }
+
                             localStorage.removeItem('hasVisitedOtpPage');
-                            router.push('/upload-avatar');
                             changeMessage('success', `Welcome back, please finish creating your profile`);                        
                         }
 
@@ -365,7 +373,7 @@ const AuthOtpForm = ({ redirectUrl, title, subHeading, successMessage }) => {
 
                     // make request to endpoint to set reg token in redis
                     try {
-                        const res = await fetch(`${location.origin}/api/auth/set-reg-cookie`, {
+                        const res = await fetch(`${location.origin}/api/auth/set-reg-token`, {
                             method: 'POST',
                             headers: {
                               'Content-Type': 'application/json'

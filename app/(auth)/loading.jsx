@@ -1,5 +1,5 @@
 
-const loading = () => {
+const Loading = () => {
     return (
         <div className="bg-white sm:bg-softGray">
             <div className="w-full text-center flex flex-col items-center justify-center">
@@ -9,4 +9,4 @@ const loading = () => {
     )
 }
 
-export default loading
+export default Loading

@@ -143,6 +143,10 @@ export async function POST(request) {
         await cookies().set('_otp_tkn', `${encryptedEmail}`, { path: '/', httpOnly: true, sameSite: 'Strict' });
         const accessToken = uuidv4();
         await client.set(`token-${encryptedEmail}`, accessToken, { EX: 5 });
+
+        // set avatar upload cookie to track upload in registration
+        await cookies().set('_au_flg', accessToken, { path: '/', httpOnly: true, sameSite: 'Strict' });
+
         return NextResponse.json({ exists }, {
           status: 200
         })

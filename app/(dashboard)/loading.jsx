@@ -1,4 +1,4 @@
-const loading = () => {
+const Loading = () => {
     return (
       <div className="bg-nightSky">
           <div className="main-container">
@@ -10,4 +10,4 @@ const loading = () => {
     )
   }
   
-  export default loading
+  export default Loading

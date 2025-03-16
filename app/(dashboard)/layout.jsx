@@ -1,7 +1,7 @@
 // components
 import Footer from "../components/Footer"
 import Sidebar from "../components/Sidebar"
-import Refresh from "./Refresh"
+import RegistrationGuard from "./RegistrationGuard"
 
 
 export default async function DashboardLayout({ children }) {
@@ -16,7 +16,7 @@ export default async function DashboardLayout({ children }) {
 
         <div className="flex-1 flex flex-col z-30">
           {children}
-          <Refresh />
+          <RegistrationGuard />
         </div>
 
       </div>

@@ -6,10 +6,8 @@ import { useRouter } from "next/navigation";
 
 
 
-const Reload = () => {
+const RegistrationGuard = () => {
     const [user, setUser] = useState(null);
-    const [isFlagChecked, setIsFlagChecked] = useState(false);
-
     const supabase = createClientComponentClient()
     const router = useRouter()
     
@@ -17,20 +15,22 @@ const Reload = () => {
 
     // get user
     useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                const { data, error } = await supabase.auth.getUser();
-                if (error) {
+        if (!localStorage.getItem('hasMadeApiCall')) {
+            const fetchUser = async () => {
+                try {
+                    const { data, error } = await supabase.auth.getUser();
+                    if (error) {
+                        setUser(null);
+                        return;
+                    }
+                    setUser(data?.user || null);
+                } catch (error) {
+                    console.error("Unexpected error fetching user:", error);
                     setUser(null);
-                    return;
                 }
-                setUser(data?.user || null);
-            } catch (error) {
-                console.error("Unexpected error fetching user:", error);
-                setUser(null);
-            }
-        };
-        fetchUser();
+            };
+            fetchUser();
+        }
     }, [supabase]);
 
 
@@ -42,7 +42,7 @@ const Reload = () => {
                 try {
                     const { data, error } = await supabase
                     .from('profiles')
-                    .select('is_reg_complete')
+                    .select('has_visited_reg, is_reg_complete')
                     .eq('id', user.id)
                     .single();
 
@@ -50,8 +50,15 @@ const Reload = () => {
                         console.error(error);
                         return;
                     } 
+
+                    if (data?.has_visited_reg && !data?.is_reg_complete) {
+                        // reset flag in the table
+                        await updateTable(user, 'profiles', { has_visited_reg: false }, 'id');
+                        await supabase.auth.signOut()
+                        return;
+                    }
                     
-                    if (data?.is_reg_complete) {
+                    if (data?.is_reg_complete && !data?.has_visited_reg) {
 
                         const res = await fetch(`${location.origin}/api/auth/delete-reg-token`, {
                             method: 'POST',
@@ -82,8 +89,8 @@ const Reload = () => {
             }
             checkRegistrationFlag();
         }
-    }, [user, isFlagChecked, supabase, router]);
+    }, [user, supabase, router]);
 
 }
 
-export default Reload
+export default RegistrationGuard
