@@ -4,7 +4,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import disposableDomains from 'disposable-email-domains';
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
@@ -13,11 +13,7 @@ import { useForm } from "react-hook-form";
 import { useMessage } from "@/app/hooks/useMessage";
 
 // components
-import AuthForm from "../../AuthForm";
-
-
-
-
+import AuthForm from "../AuthForm";
 
 
 
@@ -46,34 +42,21 @@ const schema = yup.object({
 
 
 
+const Signup = () => {
 
-
-
-const Login = () => {
   const [isLoading, setIsLoading] = useState(false)
-
+  const [isChecked, setIsChecked] = useState(false)
   const router = useRouter()
-  
+
   // global messages function
   const { changeMessage } = useMessage()
 
 
-
-
-
+  
   // refresh is user navigates back from otp form 
   useEffect(() => {
-    const hasVisitedOtpPage = localStorage.getItem('hasVisitedOtpPage');
-    if (hasVisitedOtpPage) {
-      localStorage.removeItem('hasVisitedOtpPage');
-      router.refresh();
-      changeMessage('error', "You're verification was interrupted. You need to re-enter your email to receive a new security code.")
-    }
+    router.refresh();
   }, [])
-
-
-
-
 
 
 
@@ -86,20 +69,33 @@ const Login = () => {
   // allows us to register a form control
   const { register, handleSubmit, formState } = form;
   const { errors } = formState;
+  
 
 
+
+
+  // checkbox input
+  const handleCheckbox = (e) => {
+    setIsChecked(e.target.checked)
+  }
 
 
 
 
   const onSubmit = async (data) => {
 
-    const email = data.email;
-    
-    // send email to server endpoint to check if email already exists within profiles table
-    try {
-      setIsLoading(true)
+    // checkbox validation
+    if (!isChecked) {
+      changeMessage('error', 'You need to agree to our privacy policy and terms of service before signing up');
+      return;
+    }
 
+    setIsLoading(true)
+    const email = data.email;
+
+
+    // sent email to server endpoint to check if email already exists within profiles table
+    try {
       const res = await fetch(`${location.origin}/api/auth/email-exists`, {
         method: 'POST',
         headers: {
@@ -107,10 +103,11 @@ const Login = () => {
         },
         body: JSON.stringify({
           email,
-          type: 'login'
+          type: 'signup'
+
         })
       })
-     
+
       // await json response from server and store in const emailResponse
       const emailResponse = await res.json()
       const { accountStatus } = emailResponse;
@@ -126,14 +123,14 @@ const Login = () => {
       } else if (res.status === 401) {
         setIsLoading(false);
         changeMessage('error', `To prevent spam and abusive behavior cooldown is active. You must wait ${emailResponse.minutesLeft}m ${emailResponse.secondsLeft}s before you can request a new verification code.`)
-
-      } else if ((!emailResponse.exists && res.status === 404) || (emailResponse.exists && res.status === 401 && !accountStatus.is_verified)) {
+      
+      } else if (emailResponse.exists && res.status === 409 && accountStatus.is_verified) {
         setIsLoading(false)
-        changeMessage('error', "We couldn't find an account with that email. Please sign up or check your email for typos.")
+        changeMessage('error', 'It looks like this email is already linked to an account. Please log in instead.')
         return
 
-      } else if ((emailResponse.exists && res.status === 200 && accountStatus.is_verified)) {
-        
+      } else if ((!emailResponse.exists && res.status === 200) || (emailResponse.exists && res.status === 200 && !accountStatus.is_verified)) {
+
         // store email temporarily in local storage
         localStorage.setItem('email', email);
 
@@ -143,43 +140,39 @@ const Login = () => {
         })
 
         if (error) {
-          throw new Error(error.message)
-        }
-
-        if (!error) {
+          throw new Error(error.message);
+        } else {
           setIsLoading(false);
-          changeMessage('success', 'A verifcation code has been sent to your email address')
-          router.push('/auth/verify-login-otp');
-
-          // set flag to indicate user has visited auth otp page
-          localStorage.setItem('hasVisitedOtpPage', 'true');
+          changeMessage('success', 'A verifcation code has been sent to your email address');
+          router.push('/verify-signup-otp');
         }
       }
-
+      
     } catch (error) {
         setIsLoading(false);
         localStorage.removeItem('email');
-        localStorage.removeItem('hasVisitedOtpPage');
-        changeMessage('error', 'Oops! Something went wrong on our end. Please try again in a moment or contact support if the issue persists.');
-        console.log('login error:', error.message)
+        changeMessage('error', 'An unexpected error occurred. Please try again later or contact support if the issue persists.');
+        console.log('sign up error:', error.message)
     }
-
   }
-
 
 
 
   return (
     <AuthForm
-       handleSubmit={handleSubmit}
-       onSubmit={onSubmit}
-       title='Login'
-       subHeading='Enter your email address to recieve a security code for quick and secure login'
-       register={register}
-       errors={errors}
-       isSignup={false}
-       isLoading={isLoading}
+      handleSubmit={handleSubmit}
+      onSubmit={onSubmit}
+      title='Sign up'
+      subHeading='Enter your email address to recieve a security code to create your account'
+      register={register}
+      errors={errors}
+      isChecked={isChecked}
+      handleCheckbox={handleCheckbox}
+      isSignup={true}
+      isLoading={isLoading}
     />
-  )
-};
-export default Login;
+  );
+}
+
+
+  export default Signup

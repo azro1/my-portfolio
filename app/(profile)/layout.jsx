@@ -12,7 +12,7 @@ export default async function ProfileLayout({ children }) {
   const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect('/auth/login')
+    redirect('/login')
   } else {
     const { data, error } = await supabase
     .from('profiles')
@@ -27,7 +27,7 @@ export default async function ProfileLayout({ children }) {
     const isRegistered = await cookies().get('isRegistered');
     if (!data?.is_reg_complete || isRegistered?.value !== 'true') {
       await supabase.auth.signOut();
-      redirect('/auth/login');
+      redirect('/login');
     }
   }
   

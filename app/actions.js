@@ -12,14 +12,24 @@ export async function deleteIsRegisteredCookie() {
 }
 
 // set reg avatar upload flag in redis
-export async function setUploadAvatarToken() {
+export async function setUploadAvatarFlag() {
    const auf = await cookies().get('_au_flg')?.value;
    await client.set(`auf-${auf}`, 'true');
 }
 
-export async function getUploadAvatarToken() {
+export async function getUploadAvatarFlag() {
    const auf = await cookies().get('_au_flg')?.value;
-   const avtrUplFlg = await client.get(`auf-${auf}`, 'true');
+   const avtrUplFlg = await client.get(`auf-${auf}`);
    return avtrUplFlg;
 }
 
+export async function getRegFlag() {
+   const rf = await cookies().get('_reg_flg')?.value;
+   const regFlg = await client.get(`reg-${rf}`);
+   return regFlg;
+}
+
+export async function deleteRegFlag() {
+   const rf = await cookies().get('_reg_flg')?.value;
+   await client.del(`reg-${rf}`);
+}

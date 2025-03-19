@@ -16,7 +16,7 @@ import { useUpdateTable } from '@/app/hooks/useUpdateTable';
 
 
 // server action
-import { setUploadAvatarToken } from '@/app/actions';
+import { setUploadAvatarFlag } from '@/app/actions';
 
 
 
@@ -33,7 +33,8 @@ const UploadAvatar = () => {
 
 
 
-   
+
+ 
     useEffect(() => {
         const fetchUser = async () => {
             try {
@@ -52,6 +53,29 @@ const UploadAvatar = () => {
         fetchUser();
     }, [supabase]);
 
+
+
+
+
+
+
+
+
+
+    // send beacon to logout if the leave via the address bar
+    useEffect(() => {
+        const handleBeforeUnload = () => {
+            console.log('before unload ran......')
+            navigator.sendBeacon(`${location.origin}/api/auth/logout`, JSON.stringify({ hasLeftViaAddressBar: true }));
+        };
+    
+        window.addEventListener("beforeunload", handleBeforeUnload);
+    
+        return () => {
+            window.removeEventListener("beforeunload", handleBeforeUnload);
+        };
+    }, []);
+    
 
 
 
@@ -105,7 +129,7 @@ const UploadAvatar = () => {
             }
 
             localStorage.setItem('hasUploadedAvatar', 'true');
-            await setUploadAvatarToken();
+            await setUploadAvatarFlag();
             router.push('/register-form')
             return { success: true }
             

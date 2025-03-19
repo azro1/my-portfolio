@@ -1,17 +1,34 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
+import { client } from "@/app/lib/db"
 
 // components
 import AuthRegHeader from "../components/AuthRegHeader"
+import Cleanup from "./Cleanup"
 
 export default async function AuthLayout ({ children }) {
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
-  
+
+
   if (user) {
-    redirect('/')
+    const { data, error } = await supabase
+    .from('profiles')
+    .select('is_reg_complete')
+    .eq('id', user.id)
+    .single()
+        
+    if (error) {
+        console.log(error)
+    } 
+
+    if (data?.is_reg_complete) {
+      console.log('there is a user')
+      redirect('/')
+    }
   }
+  
   
   return (
     <div className='min-h-screen '>
@@ -24,6 +41,7 @@ export default async function AuthLayout ({ children }) {
             />
             <div className='flex-grow flex items-center justify-center h-full'>
               {children}
+              <Cleanup />
             </div>
           </div>
         </div>

@@ -205,30 +205,30 @@ const Sidebar = ({ isProfilePage }) => {
               <div className='hidden xl:block bg-slateOnyx mx-2 h-[1px]'></div>
 
               {!user && (
-                <li className={`xl:m-2 xl:mb-0 xl:p-3 xl:max-h-12 xl:hover:bg-nightSky transition-bg duration-300 xl:rounded-md ${activeLink === '/auth/login' ? 'xl:bg-slateOnyx' : ''}`}>
-                  <Link href={'/auth/login'} onClick={() => handleActiveLink('/auth/login')}>
+                <li className={`xl:m-2 xl:mb-0 xl:p-3 xl:max-h-12 xl:hover:bg-nightSky transition-bg duration-300 xl:rounded-md ${activeLink === '/login' ? 'xl:bg-slateOnyx' : ''}`}>
+                  <Link href={'/login'} onClick={() => handleActiveLink('/login')}>
                     <div className='xl:flex items-center gap-3'>
                       <div className="hidden xl:flex items-center">
                         <FiLogIn className="icon text-saddleBrown" size={24} />
                       </div>
 
                       <div className="flex items-center">
-                        <span className={`text-base w-max ${activeLink === '/auth/login' ? 'text-cloudGray font-medium xl:text-stoneGray' : ''}`}>Login</span>
+                        <span className={`text-base w-max ${activeLink === '/login' ? 'text-cloudGray font-medium xl:text-stoneGray' : ''}`}>Login</span>
                       </div>
                     </div>
                   </Link>
                 </li>
               )}
               {!user && (
-                <li className={`xl:m-2 xl:p-3 xl:max-h-12 xl:hover:bg-nightSky transition-bg duration-300 xl:rounded-md ${activeLink === '/auth/signup' ? 'xl:bg-slateOnyx' : ''}`}>
-                  <Link href={'/auth/signup'} onClick={() => handleActiveLink('/auth/signup')}>
+                <li className={`xl:m-2 xl:p-3 xl:max-h-12 xl:hover:bg-nightSky transition-bg duration-300 xl:rounded-md ${activeLink === '/signup' ? 'xl:bg-slateOnyx' : ''}`}>
+                  <Link href={'/signup'} onClick={() => handleActiveLink('/signup')}>
                     <div className='xl:flex items-center gap-3'>
                       <div className="hidden xl:flex items-center">
                         <FiUserPlus className="icon text-saddleBrown" size={24} />
                       </div>
 
                       <div className="flex items-center">
-                        <span className={`text-base w-max ${activeLink === '/auth/signup' ? 'text-cloudGray font-medium xl:text-stoneGray' : ''}`}>Sign up</span>
+                        <span className={`text-base w-max ${activeLink === '/signup' ? 'text-cloudGray font-medium xl:text-stoneGray' : ''}`}>Sign up</span>
                       </div>
                     </div>
                   </Link>

@@ -50,16 +50,12 @@ const ForgotEmail = () => {
 
 
 
-    // refresh is user navigates back from otp form
+    // refresh is user navigates back from otp form 
     useEffect(() => {
-        const hasVisitedOtpPage = localStorage.getItem('hasVisitedOtpPage');
-        if (hasVisitedOtpPage) {
-            localStorage.removeItem('hasVisitedOtpPage');
-            router.refresh();
-            changeMessage('error', "You're verification was interrupted. You need to re-enter your email to receive a new security code")
-        }
+        router.refresh();
     }, [])
 
+    
 
 
     // function to convert uk mobile numbers into E.164 format
@@ -128,16 +124,12 @@ const ForgotEmail = () => {
 
                 // store email temporarily in local storage
                 localStorage.setItem('email', emailResponse.email)
-                setRedirect(true);
-                
-                // set flag to indicate user has visited auth otp page
-                localStorage.setItem('hasVisitedOtpPage', 'true');
+                setRedirect(true);    
             }
 
         } catch (error) {
             setIsLoading(false);
             localStorage.removeItem('email');
-            localStorage.removeItem('hasVisitedOtpPage');   
             changeMessage('error', error.message);
         }
 
@@ -149,7 +141,7 @@ const ForgotEmail = () => {
       // once email associated with phone number is found send otp from server to recovered email and redirect them to verify-login-otp page
       useEffect(() => {
          if (redirect) {
-            router.push('/auth/verify-forgot-email-otp')
+            router.push('/verify-forgot-email-otp')
          }
       }, [router, redirect])
 
@@ -169,7 +161,7 @@ const ForgotEmail = () => {
     return (
         <div className='main-container relative'>
 
-            <Link className='absolute left-3 -top-10 sm:-top-12' href='/auth/login'>
+            <Link className='absolute left-3 -top-10 sm:-top-12' href='/login'>
                 <button className='text-nightSky sm:p-1 rounded-md hover:bg-cloudGray transtion-bg duration-300 '>
                     <IoMdArrowBack size={24} />
                 </button>

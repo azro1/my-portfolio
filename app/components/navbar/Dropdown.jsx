@@ -27,7 +27,7 @@ const Dropdown = ({ user, handleCloseMenu, isProfilePage, dropDownRef }) => {
     
     if (!error) {
       await deleteIsRegisteredCookie();
-      router.push('/auth/login')
+      router.push('/login')
     }
 
     if (error) {

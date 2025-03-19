@@ -1,7 +1,6 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
-import { client } from "../lib/db"
 
 // components
 import AuthRegHeader from "../components/AuthRegHeader"
@@ -10,14 +9,26 @@ export default async function RegisterLayout ({ children }) {
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
 
-
-  const encryptedId = cookies().get('_reg_tkn')?.value;
-  const accessToken = await client.get(`token-${encryptedId}`);
-
-  if (!user || !accessToken) {
-    redirect('/auth/login')
+  if (!user) {
+    redirect('/login')
   } 
 
+
+  if (user) {
+    const { data, error } = await supabase
+    .from('profiles')
+    .select('is_reg_complete')
+    .eq('id', user.id)
+    .single()
+        
+    if (error) {
+        console.log(error)
+    } 
+
+    if (data?.is_reg_complete) {
+      redirect('/')
+    }
+  }
   
   return (
     <div className='min-h-screen flex flex-col items-center'>

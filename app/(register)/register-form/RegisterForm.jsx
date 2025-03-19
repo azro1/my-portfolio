@@ -13,8 +13,8 @@ import { useForm } from "react-hook-form";
 import { FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
 
 // hooks
-import { useUpdateTable } from "@/app/hooks/useUpdateTable";
-import { useUpdateMetadata } from "@/app/hooks/useUpdateMetadata";
+import { useUpdateTable } from '@/app/hooks/useUpdateTable';
+import { useUpdateMetadata } from '@/app/hooks/useUpdateMetadata';
 import { useMessage } from '@/app/hooks/useMessage';
 
 
@@ -111,6 +111,23 @@ const RegisterForm = () => {
 
 
 
+
+
+    // refresh page to allow server to detect auf
+    useEffect(() => {
+        router.refresh();
+      }, [])
+      
+          
+
+
+
+
+
+
+
+
+
     // fetch user
     useEffect(() => {
         const fetchUser = async () => {
@@ -129,6 +146,31 @@ const RegisterForm = () => {
         };
         fetchUser();
     }, [supabase]);
+
+
+
+
+
+
+
+
+
+
+
+    // send beacon to logout if the leave via the address bar
+    useEffect(() => {
+        const handleBeforeUnload = () => {
+            console.log('before unload ran......')
+            navigator.sendBeacon(`${location.origin}/api/auth/logout`, JSON.stringify({ hasLeftViaAddressBar: true }));
+        };
+    
+        window.addEventListener("beforeunload", handleBeforeUnload);
+    
+        return () => {
+            window.removeEventListener("beforeunload", handleBeforeUnload);
+        };
+    }, []);
+
 
 
 
@@ -314,6 +356,8 @@ const RegisterForm = () => {
                 await updateTable(user, 'profiles', { has_visited_reg: false }, 'id');
                 
                 
+                navigator.sendBeacon(`${location.origin}/api/auth/is-registered`, JSON.stringify({ isRegistered: true }));
+
 
                 changeMessage('success', 'Your account has been created and you are now logged in');
                 setRedirect(true)
