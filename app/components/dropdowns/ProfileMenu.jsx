@@ -4,14 +4,11 @@ import Link from "next/link"
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 
-// hooks
-import { useBlockNavOnOtp } from "@/app/hooks/useBlockNavOnOtp";
 
 const ProfileMenu = ({ handleLogout, handleCloseMenu, isProfilePage, isOpen }) => {
     const [activeLink, setActiveLink] = useState('');
     const pathName = usePathname()
 
-    const { handleBlockNav } = useBlockNavOnOtp('hasVisitedProfileOtpPage', 'Please complete verification before you leave');
 
     useEffect(() => {
         setActiveLink(pathName)
@@ -27,7 +24,6 @@ const ProfileMenu = ({ handleLogout, handleCloseMenu, isProfilePage, isOpen }) =
                 <>
                     <Link href={'/profile'} className={`${activeLink === '/profile' ? 'active' : ''}`} onClick={(e) => {
                         handleActiveLink('/profile');
-                        handleBlockNav(e);
                     }}>
                         <div className='flex items-center p-2 px-4 xl:hover:bg-ashGray xl:hover:text-cloudGray transition-bg duration-300' onClick={handleCloseMenu}>
                             <span className='text-base'>My Profile</span>
@@ -38,7 +34,7 @@ const ProfileMenu = ({ handleLogout, handleCloseMenu, isProfilePage, isOpen }) =
                         <>
                             <Link href={'/profile/edit-profile'} className={`${activeLink === '/profile/edit-profile' ? 'active' : ''}`} onClick={(e) => {
                                 handleActiveLink('/profile/edit-profile');
-                                handleBlockNav(e);
+    
                             }}>
                                 <div className='flex items-center p-2 px-4 xl:hover:bg-ashGray xl:hover:text-cloudGray transition-bg duration-300' onClick={handleCloseMenu}>
                                     <span className='text-base'>Edit Profile</span>
@@ -46,7 +42,7 @@ const ProfileMenu = ({ handleLogout, handleCloseMenu, isProfilePage, isOpen }) =
                             </Link>
                             <Link href={'/profile/data-privacy'} className={`${activeLink === '/profile/data-privacy' ? 'active' : ''}`} onClick={(e) => {
                                 handleActiveLink('/profile/data-privacy');
-                                handleBlockNav(e);
+    
                             }}>
                                 <div className='flex items-center p-2 px-4 xl:hover:bg-ashGray xl:hover:text-cloudGray transition-bg duration-300' onClick={handleCloseMenu}>
                                     <span className='text-base'>Your Data</span>
@@ -57,7 +53,6 @@ const ProfileMenu = ({ handleLogout, handleCloseMenu, isProfilePage, isOpen }) =
 
                     <Link href={'/forum'} className={`${activeLink === '/forum' ? 'active' : ''}`} onClick={(e) => {
                         handleActiveLink('/forum');
-                        handleBlockNav(e);
                     }}>
                         <div className='flex items-center p-2 px-4 xl:hover:bg-ashGray xl:hover:text-cloudGray transition-bg duration-300' onClick={handleCloseMenu}>
                             <span className='text-base'>Forum</span>
@@ -65,7 +60,6 @@ const ProfileMenu = ({ handleLogout, handleCloseMenu, isProfilePage, isOpen }) =
                     </Link>
                     <Link href={'/help'} className={`${activeLink === '/help' ? 'active' : ''}`} onClick={(e) => {
                         handleActiveLink('/help');
-                        handleBlockNav(e);
                     }}>
                         <div className='flex items-center p-2 px-4 xl:hover:bg-ashGray xl:hover:text-cloudGray transition-bg duration-300' onClick={handleCloseMenu}>
                             <span className='text-base'>Help</span>

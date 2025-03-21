@@ -141,7 +141,7 @@ const ForgotEmail = () => {
       // once email associated with phone number is found send otp from server to recovered email and redirect them to verify-login-otp page
       useEffect(() => {
          if (redirect) {
-            router.push('/verify-forgot-email-otp')
+            router.push('/verify-login-otp')
          }
       }, [router, redirect])
 

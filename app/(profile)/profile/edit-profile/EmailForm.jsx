@@ -13,8 +13,6 @@ import { useMessage } from "@/app/hooks/useMessage";
 // components
 import Modal from './Modal'
 
-// server actions
-import { deleteOtpAccessBlockedCookie } from "@/app/actions";
 
 
 
@@ -143,9 +141,6 @@ const EmailForm = ({ user, profile }) => {
         try {
            setIsUpdating(true)
 
-            // store new email temporarily in local storage
-            localStorage.setItem('email', newEmail);
-
             const res = await fetch(`${location.origin}/api/auth/email-update`, {
                 method: 'POST',
                 headers: {
@@ -166,14 +161,17 @@ const EmailForm = ({ user, profile }) => {
                 setFormError(<>To prevent spam and abusive behavior <strong>cooldown</strong> is active. You must wait <strong>{updateResponse.minutesLeft}</strong>m <strong>{updateResponse.secondsLeft}</strong>s before you can request a new verification code.</>);
 
             } else if (res.status === 200 && !updateResponse.error) {
-                await deleteOtpAccessBlockedCookie();
                 setIsUpdating(false);
                 setShowForm(false);
+
+                // store new email temporarily in local storage
+                localStorage.setItem('email', newEmail);
+
+                // send beacon flag to endpoint indicate a refresh is necessary if they abort otp verification
+                navigator.sendBeacon(`${location.origin}/api/auth/is-verifying`, JSON.stringify({ isVerifying: true }));
+
                 changeMessage('success', 'A verifcation code has been sent to your email address');
                 router.push('/profile/verify-email-otp');
-
-                // set flag to indicate user has visited profile otp page
-                localStorage.setItem('hasVisitedProfileOtpPage', 'true');
             }
             
             
@@ -181,7 +179,6 @@ const EmailForm = ({ user, profile }) => {
             setIsUpdating(false)
             setFormSuccess(null);
             localStorage.removeItem("email");
-            localStorage.removeItem('hasVisitedProfileOtpPage');
             setFormError(error.message)
             console.log(error.message)
         }

@@ -12,8 +12,7 @@ import { useMessage } from "@/app/hooks/useMessage";
 // components
 import Modal from './Modal'
 
-// server actions
-import { deleteOtpAccessBlockedCookie } from "@/app/actions";
+
 
 
 
@@ -169,9 +168,6 @@ const PhoneForm = ({ user, profile }) => {
         }
 
         const convertedPhoneNumber = convertToInternationalFormat(data.draftPhone);
-        // store phone temporarily in local storage
-        localStorage.setItem('phone', convertedPhoneNumber);
-        // console.log(convertedPhoneNumber)
         
         try {
             setIsUpdating(true)
@@ -196,21 +192,24 @@ const PhoneForm = ({ user, profile }) => {
                 setFormError(<>To prevent spam and abusive behavior <strong>cooldown</strong> is active. You must wait <strong>{updateResponse.minutesLeft}</strong>m <strong>{updateResponse.secondsLeft}</strong>s before you can request a new verification code.</>);
             
             } else if (res.status === 200 && !updateResponse.error) {
-                await deleteOtpAccessBlockedCookie();
                 setIsUpdating(false)
                 setShowForm(false)
+
+                // store phone temporarily in local storage
+                localStorage.setItem('phone', convertedPhoneNumber);
+
+                // send beacon flag to endpoint indicate a refresh is necessary if they abort otp verification
+                navigator.sendBeacon(`${location.origin}/api/auth/is-verifying`, JSON.stringify({ isVerifying: true }));
+
                 changeMessage('success', 'An verification code has been sent via SMS to your new phone number')
                 router.push('/profile/verify-phone-otp')
 
-                // set flag to indicate user has visited profile otp page
-                localStorage.setItem('hasVisitedProfileOtpPage', 'true');
             }
 
         } catch (error) {
             setIsUpdating(false)
             setFormSuccess(null);
             localStorage.removeItem("phone");
-            localStorage.removeItem('hasVisitedProfileOtpPage');
             setFormError('An unexpected error occurred while updating your phone. Please try again later. If the issue persists, contact support.')
             console.log(error.message)
         }

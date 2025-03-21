@@ -7,19 +7,14 @@ import crypto from 'crypto';
 
 
 
+const encryptionKey = process.env.ENCRYPTION_KEY;
+
 
 
 export async function POST(request) {
   const { phone } = await request.json();
 
   const supabase = createRouteHandlerClient({ cookies })
-
-
-
-
-
-
-
 
 
   // before updating users phone and granting access to otp page make endpoint request to /enforce-otp-limit which tracks otp_attempts and enforces a cooldown if attempts are maxed out but because the phone we recieve for the update is the new phone (the phone that the user wants to change to) we need to do an extra step to get the existing users email from profiles table first
@@ -112,7 +107,7 @@ export async function POST(request) {
     // set encrypted email in cookie so that we can access it to get key from redis in verify-signup-otp
     await cookies().set('_otp_tkn', `${encryptedEmail}`, { path: '/', httpOnly: true, sameSite: 'Strict' });
     const accessToken = uuidv4();
-    await client.set(`token-${encryptedEmail}`, accessToken, { EX: 120 });
+    await client.set(`token-${encryptedEmail}`, accessToken, { EX: 5 });
     return NextResponse.json({ data }, {
       status: 200
     })

@@ -1,7 +1,8 @@
 "use client"
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { useEffect, useCallback } from "react"
+import { useEffect, useCallback, useRef } from "react"
+import { useRouter } from 'next/navigation';
 
 // custom hooks
 import { useFetchUser } from '@/app/hooks/useFetchUser';
@@ -17,17 +18,44 @@ import LastNameForm from './LastNameForm';
 import PhoneForm from './PhoneForm';
 import DobForm from './DobForm';
 
+// server actions
+import { getProFlag } from '@/app/actions';
+import { deleteProFlag } from '@/app/actions';
+
 
 
 const EditProfileForms = () => {
 
-    // custom hook to fetch user
     const { user } = useFetchUser()
-    // custom hook to fetch profile
     const { profile, fetchProfile } = useFetchProfile()
-    // global messages function
     const { changeMessage } = useMessage()
+    const hasDeletedProFlag = useRef(false);
+    const router = useRouter()
+
+
+
+
+
+    // refresh if user is redirected back from otp form 
+    useEffect(() => {
+        const refreshAfterVerify = async() => {
+            const hasVerified = await getProFlag();
+
+            if (hasVerified) {
+                router.refresh();
+            }
+
+            if (!hasDeletedProFlag.current) {
+                await deleteProFlag();
+                hasDeletedProFlag.current = true;
+            }
+        }
+        refreshAfterVerify();
+    }, [router])
   
+
+
+
 
 
     // Memoize fetchProfile using useCallback
@@ -43,6 +71,8 @@ const EditProfileForms = () => {
     useEffect(() => {
         memoizedFetchProfile();
     }, [memoizedFetchProfile]);
+
+
 
 
 
@@ -73,6 +103,8 @@ const EditProfileForms = () => {
 
 
 
+
+    
     
     return (
         <div className='flex flex-col'>

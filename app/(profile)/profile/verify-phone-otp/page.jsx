@@ -1,17 +1,18 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { client } from '@/app/lib/db';
 
 // components
-import ProfilePhoneOtpForm from "../../ProfilePhoneOtpForm"
+import ProfilePhoneOtpForm from "./ProfilePhoneOtpForm"
 
-const VerifyPhoneOtp = () => {
-  const otpAccessBlocked = cookies().get('otpAccessBlocked')?.value === 'true';
+const VerifyPhoneOtp = async() => {
+  const encryptedEmail = cookies().get('_otp_tkn')?.value;
+  const otpAccessToken = await client.get(`token-${encryptedEmail}`);
 
-  // redirect if otpAcessBlocked middleware cookie is present
-  if (otpAccessBlocked) {
-    redirect('/profile/edit-profile');
+  if (!otpAccessToken) {
+      redirect('/profile/edit-profile')
   }
-
+  
   return (
     <div className='min-h-screen flex items-center justify-center'>
       <ProfilePhoneOtpForm

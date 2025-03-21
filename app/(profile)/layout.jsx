@@ -5,7 +5,6 @@ import { redirect } from 'next/navigation';
 // components
 import Footer from '../components/Footer';
 import Sidebar from '../components/Sidebar';
-import Cleanup from './Cleanup';
 
 export default async function ProfileLayout({ children }) {
   const supabase = createServerComponentClient({ cookies });
@@ -24,8 +23,7 @@ export default async function ProfileLayout({ children }) {
       console.error(error);
     }
   
-    const isRegistered = await cookies().get('isRegistered');
-    if (!data?.is_reg_complete || isRegistered?.value !== 'true') {
+    if (!data?.is_reg_complete) {
       await supabase.auth.signOut();
       redirect('/login');
     }
@@ -50,7 +48,6 @@ export default async function ProfileLayout({ children }) {
       <div className=" w-full z-50">
         <Footer />
       </div>
-      <Cleanup />
     </div>
   )
 }

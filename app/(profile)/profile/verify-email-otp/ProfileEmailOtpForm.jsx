@@ -4,7 +4,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState, useEffect, useRef} from "react"
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useForm, useFieldArray } from "react-hook-form";
 
 // components
@@ -16,8 +16,6 @@ import { useUpdateMetadata } from "@/app/hooks/useUpdateMetadata";
 import { useMessage } from "@/app/hooks/useMessage";
 
 
-// server actions
-import { deleteCanAccessProfileOtpPageCookie } from "./profile/actions";
 
 
 
@@ -59,6 +57,7 @@ const ProfileEmailOtpForm = ({ contact, verificationType, title, subHeading, suc
     const [isVerified, setIsVerified] = useState(false)
     const [buttonIsDisabled, setButtonIsDisabled] = useState(null)
     const [isActive, setIsActive] = useState(null)
+    const [redirect, setRedirect] = useState(false)
 
 
     // custom hooks
@@ -75,10 +74,6 @@ const ProfileEmailOtpForm = ({ contact, verificationType, title, subHeading, suc
 
 
 
-    
-
-
-
     const emailRef = useRef(null);
 
     useEffect(() => {
@@ -88,72 +83,6 @@ const ProfileEmailOtpForm = ({ contact, verificationType, title, subHeading, suc
           localStorage.removeItem('email')
        }
     }, [])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // set flag for clean up message
-    useEffect(() => {
-        localStorage.setItem('hasShownAbortMessage', 'false');
-    }, []);
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-    // send flag to api endpoint and redirect user on page reload
-    useEffect(() => {
-        const handleBeforeUnload = () => {
-            // set a flag to indicate a reload is happening
-            sessionStorage.setItem("isReloading", "true");
-            localStorage.removeItem("hasVisitedProfileOtpPage");
-            
-            // navigator.sendBeacon sends an asynchronous HTTP POST request, but unlike fetch(), it ensures the request is completed before the page unloads, designed for sending small amounts of data and doesn't return anything. I had to use this method to delete canAccessProfileOtpPageCookie if a user reloads or leaves by using the address bar
-            try {
-                navigator.sendBeacon('/api/auth/delete-otp-cookie', JSON.stringify({ hasLeftProfileOtpVerification: true }));
-            } catch (error) {
-                console.error("sendBeacon error:", error);
-            }
-        };
-    
-        window.addEventListener("beforeunload", handleBeforeUnload);
-    
-        return () => {
-            window.removeEventListener("beforeunload", handleBeforeUnload);
-        };
-    }, []);
-    
-    useEffect(() => {
-        const isReloading = sessionStorage.getItem("isReloading");
-
-        if (isReloading) {
-            // Remove the flags after reloading
-            sessionStorage.removeItem("isReloading");
-            router.push('/profile/edit-profile')
-        }
-    }, [router]);
-
 
 
 
@@ -293,8 +222,6 @@ const ProfileEmailOtpForm = ({ contact, verificationType, title, subHeading, suc
                     console.log('metadata update error:', updateMetadataResult.error)
                 }
 
-
-
                 // check for successful profiles update if not throw new error
                 const updateTableResult = await updateTable(session.user, 'profiles', { email: emailRef?.current }, 'id')
                 if (!updateTableResult.success) {
@@ -303,21 +230,27 @@ const ProfileEmailOtpForm = ({ contact, verificationType, title, subHeading, suc
 
                 setIsLoading(false)
                 setIsVerified(true)
-                // delete cookie after successful verification
-                await deleteCanAccessProfileOtpPageCookie();
-                localStorage.removeItem("hasVisitedProfileOtpPage");
-                router.refresh();
-                changeMessage('success', successMessage)
+                setRedirect(true)
 
-            } catch (error) {
-                // delete cookie if profiles update fails
-                await deleteCanAccessProfileOtpPageCookie();                
-                router.refresh();
+
+            } catch (error) {              
                 changeMessage('error', error.message)
             }
         }
     }
 
+
+
+
+
+
+    useEffect(() => {
+       if (redirect) {
+          router.push('/profile/edit-profile')
+          setTimeout(() => changeMessage('success', successMessage), 2000)
+          
+       }
+    }, [redirect, router])
 
 
 

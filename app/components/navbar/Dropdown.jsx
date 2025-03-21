@@ -3,30 +3,19 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 
-// hooks
-import { useBlockNavOnOtp } from "@/app/hooks/useBlockNavOnOtp";
-
 // components
 import LoggedInMenu from "./LoggedInMenu";
 import LoggedOutMenu from "./LoggedOutMenu";
 
-// server actions
-import { deleteIsRegisteredCookie } from "@/app/actions";
-
 
 const Dropdown = ({ user, handleCloseMenu, isProfilePage, dropDownRef }) => {
   const router = useRouter()
-  const { handleBlockNav } = useBlockNavOnOtp('hasVisitedProfileOtpPage', 'Please complete verification before you leave');
 
   const handleLogout = async (e) => {
-    const canProceed = handleBlockNav(e);
-    if (!canProceed) return;
-   
     const supabase = createClientComponentClient()
     const {error} = await supabase.auth.signOut()
     
     if (!error) {
-      await deleteIsRegisteredCookie();
       router.push('/login')
     }
 
@@ -50,7 +39,6 @@ const Dropdown = ({ user, handleCloseMenu, isProfilePage, dropDownRef }) => {
         <div className='absolute w-full left-0 top-28 z-40 bg-slateOnyx'>
           <LoggedOutMenu 
             handleCloseMenu={handleCloseMenu}
-            isProfilePage={isProfilePage}
           />   
         </div>
       )}     

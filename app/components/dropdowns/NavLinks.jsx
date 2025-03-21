@@ -5,8 +5,6 @@ import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { FiChevronDown } from 'react-icons/fi';
 
-// hooks
-import { useBlockNavOnOtp } from "@/app/hooks/useBlockNavOnOtp";
 
 // components
 import UserAvatar from "../navbar/UserAvatar";
@@ -16,7 +14,6 @@ const NavLinks = ({ user, handleCloseMenu, handleToggleMenu }) => {
     const [activeLink, setActiveLink] = useState('');
     const pathName = usePathname();
 
-    const { handleBlockNav } = useBlockNavOnOtp('hasVisitedProfileOtpPage', 'Please complete verification before you leave');
 
 
     useEffect(() => {
@@ -32,7 +29,6 @@ const NavLinks = ({ user, handleCloseMenu, handleToggleMenu }) => {
         <div className='md:hidden'>
             <Link href={'/'} className={`${activeLink === '/' ? 'active' : ''}`} onClick={(e) => {
                 handleActiveLink('/');
-                handleBlockNav(e);
             }}>
                 <div className='flex items-center p-2 px-4' onClick={handleCloseMenu}>
                     <span className='text-base'>Home</span>
@@ -40,7 +36,6 @@ const NavLinks = ({ user, handleCloseMenu, handleToggleMenu }) => {
             </Link>
             <Link href={'/about'} className={`${activeLink === '/about' ? 'active' : ''}`} onClick={(e) => {
                 handleActiveLink('/about');
-                handleBlockNav(e);
             }}>
                 <div className='flex items-center p-2 px-4' onClick={handleCloseMenu}>
                     <span className='text-base'>About</span>
@@ -48,7 +43,6 @@ const NavLinks = ({ user, handleCloseMenu, handleToggleMenu }) => {
             </Link>
             <Link href={'/contact'} className={`${activeLink === '/contact' ? 'active' : ''}`} onClick={(e) => {
                 handleActiveLink('/contact');
-                handleBlockNav(e);
             }}>
                 <div className='flex items-center p-2 px-4' onClick={handleCloseMenu}>
                     <span className='text-base'>Contact</span>

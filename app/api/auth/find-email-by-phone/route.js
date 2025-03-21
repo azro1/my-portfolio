@@ -132,7 +132,7 @@ export async function POST(request) {
             // set encrypted email in cookie so that we can access it to get key from redis in verify-signup-otp
             await cookies().set('_otp_tkn', `${encryptedEmail}`, { path: '/', httpOnly: true, sameSite: 'Strict' });
             const accessToken = uuidv4();
-            await client.set(`token-${encryptedEmail}`, accessToken, { EX: 120 });
+            await client.set(`token-${encryptedEmail}`, accessToken, { EX: 5 });
             return NextResponse.json({ exists, email }, {
                 status: 200
             });
