@@ -46,7 +46,7 @@ const AuthForm = ({ handleSubmit, onSubmit, title, subHeading, register, errors,
             </button>
 
             {!isSignup && (
-                <Link className='mt-1 ml-auto' href={'/auth/forgot-email'}>
+                <Link className='mt-1 ml-auto' href={'/forgot-email'}>
                     <span className='text-nightSky text-base'>Forgot email?</span>
                 </Link>
             )}
@@ -60,7 +60,7 @@ const AuthForm = ({ handleSubmit, onSubmit, title, subHeading, register, errors,
         <SocialButtons text={title} />
         <div className="mt-7">
           <p className='mt-8 inline pr-2'>{`${isSignup ? 'Already have an account?' : "Don't have an account?" }`}</p>
-          <Link className='text-nightSky text-base' href={`${isSignup ? '/auth/login' : '/auth/signup'}`}>{`${isSignup ? 'Login' : 'Sign up'}`}</Link>
+          <Link className='text-nightSky text-base' href={`${isSignup ? '/login' : '/signup'}`}>{`${isSignup ? 'Login' : 'Sign up'}`}</Link>
         </div>
       </div>
     </div>

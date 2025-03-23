@@ -1,33 +1,26 @@
-"use client"
-
-import { useEffect, useRef } from "react";
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+import { client } from '@/app/lib/db';
 
 // components
-import ProfilePhoneOtpForm from "../ProfilePhoneOtpForm"
+import ProfilePhoneOtpForm from "./ProfilePhoneOtpForm"
 
+const VerifyPhoneOtp = async() => {
+  const encryptedEmail = cookies().get('_otp_tkn')?.value;
+  const otpAccessToken = await client.get(`token-${encryptedEmail}`);
 
-const VerifyPhoneOtp = () => {
-
-  const phoneRef = useRef(null);
-
-  useEffect(() => {
-    const userPhone = localStorage.getItem('phone');
-    
-    if (userPhone) {
-      phoneRef.current = userPhone;
-      localStorage.removeItem('phone')
-    }
-  }, [])
-
+  if (!otpAccessToken) {
+      redirect('/profile/edit-profile')
+  }
+  
   return (
-    <div className='flex items-center justify-center min-h-[580px]'>
+    <div className='min-h-screen flex items-center justify-center'>
       <ProfilePhoneOtpForm
         contact='phone number'
         verificationType='phone_change'
         title='Update Phone'
-        subHeading='Enter the code sent to your new phone number to complete the update'
+        subHeading="For security enter the code we've sent to your new phone number"
         successMessage='OTP verifcation was successful. Your phone number has been updated.'
-        profilePhoneRef={phoneRef}
       />
     </div>
   )

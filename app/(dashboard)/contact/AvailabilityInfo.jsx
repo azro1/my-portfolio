@@ -1,8 +1,8 @@
 const AvailabilityInfo = () => {
     return (
         <div>
-            <h3 className='text-xl font-b text-saddleBrown mb-4'>
-                When You Can Reach Me
+            <h3 className='font-b text-rust mb-4 text-1.375 md:text-2xl'>
+                When you can reach me?
             </h3>
             <div className='flex flex-col gap-3 max-w-xs'>
                 <p>I'm available:</p>

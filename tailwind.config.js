@@ -14,14 +14,15 @@ export default {
     },
     extend: {
       colors: {
-        saddleBrown: '#A52A2A',
+        rust: '#B7410E',
         softCharcoal: '#191b20',
         deepCharcoal: '#131519',
         slateOnyx: '#2A2C31',
+        charcoalGray: '#33353A',
+        charcoalGrayLight: '#7A7E85', 
         stoneGray: '#757575',
         ashGray: '#6B6B6B',
         nightSky: '#1C1E24',
-        duskSlate: '#1E2026',
         frostWhite: '#D1D1D1',
         cloudGray: '#E0E0E3',
         softGray: '#F5F5F5',
@@ -46,7 +47,7 @@ export default {
       spacing: {
         '0.21': '0.21rem', // 3.36px
         '0.5': '0.5rem', // 8px
-        '1.625': '1.625rem', // 26px
+        '[x-pad]': '1rem', // 16px
         '1.875': '1.875rem', // 30px
         '2.375': '2.375rem', // 38px
         '4.1875': '4.1875rem', // 67px

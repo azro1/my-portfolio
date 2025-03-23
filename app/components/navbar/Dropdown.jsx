@@ -11,12 +11,12 @@ import LoggedOutMenu from "./LoggedOutMenu";
 const Dropdown = ({ user, handleCloseMenu, isProfilePage, dropDownRef }) => {
   const router = useRouter()
 
-  const handleLogout = async () => {
+  const handleLogout = async (e) => {
     const supabase = createClientComponentClient()
     const {error} = await supabase.auth.signOut()
-
+    
     if (!error) {
-      router.push('/auth/login')
+      router.push('/login')
     }
 
     if (error) {
@@ -39,7 +39,6 @@ const Dropdown = ({ user, handleCloseMenu, isProfilePage, dropDownRef }) => {
         <div className='absolute w-full left-0 top-28 z-40 bg-slateOnyx'>
           <LoggedOutMenu 
             handleCloseMenu={handleCloseMenu}
-            isProfilePage={isProfilePage}
           />   
         </div>
       )}     

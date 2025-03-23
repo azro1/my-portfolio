@@ -101,11 +101,11 @@ const LastNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
         } else if (hasInteracted) {
             // Show success message if names are different
             if (draftLastName !== lastName) {
-                setFormSuccess('Your lastname looks good.');
+                setFormSuccess('Your lastname looks good');
                 setFormError(null);
             } else {
                 setFormSuccess(null); // Reset success message if names are the same
-                setFormError('Lastname cannot be the same.');
+                setFormError('Lastname cannot be the same');
             }
         }
     
@@ -206,19 +206,17 @@ const LastNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
     return (
         <div>
             <div className='py-4'>
-                <div className="flex items-center justify-between pb-1">
+                <div className="flex items-center justify-between pb-2">
                     <span className="inline-block text-ashGray">Last Name</span>
-                    <span className='text-red-800 cursor-pointer' onClick={handleOpenForm}>Edit</span>
+                    <span className='text-ashGray cursor-pointer' onClick={handleOpenForm}>Edit</span>
                 </div>
-                <p className="text-cloudGray frostWhitespace-normal break-words">{lastName}</p>
+                <p className="text-frostWhite frostWhitespace-normal break-words min-h-[24px]">{lastName}</p>
             </div>
-
-            <div className='bg-ashGray h-[2px]'></div>
 
             {showForm && (
                 <Modal>
                     <form noValidate>
-                        <label className='block mb-2 text-xl' htmlFor='draftLastName'>Edit Last Name</label>
+                        <label className='block mb-3 text-xl' htmlFor='draftLastName'>Edit Last Name</label>
                             <span >
                                 
                             </span>
@@ -237,21 +235,20 @@ const LastNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
                         
                     </form>
                     <div className='flex items-center'>
-                        <button className='btn-small bg-saddleBrown mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                        <button className='btn-small bg-saddleBrown mt-3' onClick={handleSubmit(handleNameUpdate)}>
+                        <button className='btn-small bg-rust mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
+                        <button className='btn-small bg-rust mt-3 w-[64px]' onClick={handleSubmit(handleNameUpdate)}>
                             {saving ? (
-                                <div className='flex items-center gap-2'>
-                                    <img className="w-5 h-5 opacity-50" src="../../images/loading/reload.svg" alt="Loading indicator" />
-                                    <span>Save</span>
+                                <div className='flex items-center justify-center gap-2'>
+                                    <img className="w-6 h-6 opacity-50" src="../../images/loading/reload.svg" alt="Loading indicator" />
                                 </div>
                             ) : (
                                 'Save'
                             )}
                         </button>
                     </div>
-
-                    {formError && <p className='modal-form-error'>{formError}</p>}
-                    {formSuccess && <p className='modal-form-success'>{formSuccess}</p>}
+                    {(formError || formSuccess) && (
+                        <p className={`${formError ? 'modal-form-error' : 'modal-form-success'}`}>{formError || formSuccess}</p>
+                    )} 
                 </Modal>
             )}
         </div>

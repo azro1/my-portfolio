@@ -1,14 +1,18 @@
+"use client"
+
 import Link from "next/link"
 import Image from "next/image";
 import { FiLinkedin, FiGithub, FiInstagram, FiYoutube } from 'react-icons/fi';
 
+
 const Footer = () => {
+
   return (
     <footer className="min-h-[300px] w-full flex items-start xl:min-h-[170px] bg-slateOnyx">
 
 
 
-        <div className="px-1.625 mx-auto max-w-screen-lg uw:p-0 flex-1">
+        <div className="px-[x-pad] mx-auto max-w-screen-lg uw:p-0 flex-1">
           <main>
               <div className="flex flex-col items-center justify-start gap-2 mt-4 mb-20 md:py-4 md:flex-row md:items-start md:justify-between md:m-0">
 
@@ -27,19 +31,19 @@ const Footer = () => {
                         />
                       </Link>
                     </div>
-                    <p className="text-ashGray">&copy; 2025 Simon Sutherland</p>
+                    <p className="text-ashGray" >&copy; 2025 Simon Sutherland</p>
                   </div>
                   <div className="flex justify-center gap-4">
-                      <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
+                      <a className="text-cloudGray" href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" >
                         <FiLinkedin size={24} />
                       </a>
-                      <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+                      <a className="text-cloudGray" href="https://github.com" target="_blank" rel="noopener noreferrer" >
                         <FiGithub size={24} />
                       </a>
-                      <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer">
+                      <a className="text-cloudGray" href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" >
                         <FiYoutube size={24} />
                       </a>
-                      <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+                      <a className="text-cloudGray" href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" >
                         <FiInstagram size={24} />
                       </a>
                   </div>

@@ -1,35 +1,29 @@
-"use client"
-
-import { useEffect, useRef } from "react";
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+import { client } from '@/app/lib/db';
 
 // components
-import ProfileEmailOtpForm from "../ProfileEmailOtpForm"
+import ProfileEmailOtpForm from "./ProfileEmailOtpForm";
 
+const VerifyEmailOtp = async() => {
+  const encryptedEmail = cookies().get('_otp_tkn')?.value;
+  const otpAccessToken = await client.get(`token-${encryptedEmail}`);
 
-const VerifyEmailOtp = () => {
+  if (!otpAccessToken) {
+      redirect('/profile/edit-profile')
+  }
 
-    const emailRef = useRef(null);
-
-    useEffect(() => {
-       const userEmail = localStorage.getItem('email');
-       if (userEmail) {
-          emailRef.current = userEmail;
-          localStorage.removeItem('email')
-       }
-    }, [])
-
-    return (
-        <div className='flex items-center justify-center min-h-[580px]'>
-            <ProfileEmailOtpForm
-                contact='email address'
-                verificationType='email_change'
-                title='Update Email'
-                subHeading='Enter the code we sent to your new email address to complete the update'
-                successMessage='OTP verifcation was successful. Your email address has been updated.'
-                profileEmailRef={emailRef}
-            />
-        </div>
-    )
+  return (
+    <div className='min-h-screen flex items-center justify-center'>
+      <ProfileEmailOtpForm
+        contact='email address'
+        verificationType='email_change'
+        title='Update Email'
+        subHeading='Enter the code we sent to your new email address to complete the update'
+        successMessage='OTP verifcation was successful. Your email address has been updated.'
+      />
+    </div>
+  )
 }
 
 export default VerifyEmailOtp

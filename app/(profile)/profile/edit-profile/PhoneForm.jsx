@@ -6,6 +6,9 @@ import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
+// hooks
+import { useMessage } from "@/app/hooks/useMessage";
+
 // components
 import Modal from './Modal'
 
@@ -21,7 +24,7 @@ const schema = yup.object({
     .required('Phone is required')
     .transform(value => value.replace(/\s+/g, "")) // Remove spaces for length check
 
-    .test('has-valid-prefix', "Please enter a valid mobile number starting with 0 or an international code (e.g., +44, +1).", value => {
+    .test('has-valid-prefix', "Please enter a valid mobile number starting with 0 or an international code (e.g., +44, +1)", value => {
         return value ? value.startsWith('0') || value.startsWith('+') : false;
     })
     .matches(/^(0\d{9,14}|\+\d{1,3}\d{8,12})$/, 'Phone should be between 10 and 15 digits') // Format with 10-15 digits
@@ -48,15 +51,9 @@ const PhoneForm = ({ user, profile }) => {
     const [isUpdating, setIsUpdating] = useState(false)
     const [hasInteracted, setHasInteracted] = useState(false)
 
-    
+    const { changeMessage } = useMessage();
     const router = useRouter();
 
-
-    useEffect(() => {
-        router.refresh();
-        // clear cookie from server if user navigates back to this page so they have to enter phone again to get new otp
-        document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-      }, [router]);
 
 
     // populate form fields from profiles table
@@ -103,15 +100,6 @@ const PhoneForm = ({ user, profile }) => {
     };
 
 
-    // Phone number validation function
-    const isValidPhoneNumber = (phoneNumber) => {
-        // Check that the phone number follows E.164 format
-        const phoneRegex = /^(0\d{10}|\+\d{1,3}\d{1,14})$/;
-        return phoneRegex.test(phoneNumber);
-    }
-
-
-
 
 
 
@@ -146,13 +134,15 @@ const PhoneForm = ({ user, profile }) => {
             setFormSuccess(null);
 
         } else if (hasInteracted) {
-            // Show success message if names are different
-            if (draftPhone !== phone && draftPhone !== reformattedPhone) {
-                setFormSuccess('Your phone number looks good.');
+            // Remove any spaces before validation check
+            const cleanedPhone = draftPhone.replace(/\s+/g, "");
+
+            if (cleanedPhone !== phone && cleanedPhone !== reformattedPhone) {
+                setFormSuccess('Your phone number looks good');
                 setFormError(null);
             } else {
-                setFormSuccess(null); // Reset success message if names are the same
-                setFormError('Phone number cannot be the same.');
+                setFormSuccess(null); // Reset success message if numbers are the same
+                setFormError('Phone number cannot be the same');
             }
         }
     
@@ -172,15 +162,12 @@ const PhoneForm = ({ user, profile }) => {
 
     // update phone
     const handlePhoneUpdate = async (data) => {        
-
+        
         if (data.draftPhone === phone || data.draftPhone === reformattedPhone) {
             return;
         }
 
         const convertedPhoneNumber = convertToInternationalFormat(data.draftPhone);
-        // store phone temporarily in local storage
-        localStorage.setItem('phone', convertedPhoneNumber);
-        // console.log(convertedPhoneNumber)
         
         try {
             setIsUpdating(true)
@@ -195,22 +182,35 @@ const PhoneForm = ({ user, profile }) => {
                       })
             })
 
-            const serverPhone = await res.json();
+            const updateResponse = await res.json();
 
-            if (!res.ok && serverPhone.error) {
-                throw new Error(serverPhone.error)
-            } else if (res.status === 200 && !serverPhone.error) {
+            if (!res.ok && updateResponse.error) {
+                throw new Error(updateResponse.error)
+
+            } else if (res.status === 401) {
+                setIsUpdating(false);
+                setFormError(<>To prevent spam and abusive behavior <strong>cooldown</strong> is active. You must wait <strong>{updateResponse.minutesLeft}</strong>m <strong>{updateResponse.secondsLeft}</strong>s before you can request a new verification code.</>);
+            
+            } else if (res.status === 200 && !updateResponse.error) {
                 setIsUpdating(false)
                 setShowForm(false)
+
+                // store phone temporarily in local storage
+                localStorage.setItem('phone', convertedPhoneNumber);
+
+                // send beacon flag to endpoint indicate a refresh is necessary if they abort otp verification
+                navigator.sendBeacon(`${location.origin}/api/auth/is-verifying`, JSON.stringify({ isVerifying: true }));
+
+                changeMessage('success', 'An verification code has been sent via SMS to your new phone number')
                 router.push('/profile/verify-phone-otp')
+
             }
 
         } catch (error) {
             setIsUpdating(false)
             setFormSuccess(null);
-            // clear cookie if there's an error that comes back from server
-            document.cookie = "canAccessOtpPage=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-            setFormError('An unexpected error occurred while updating your email. Please try again later. If the issue persists, contact support.')
+            localStorage.removeItem("phone");
+            setFormError('An unexpected error occurred while updating your phone. Please try again later. If the issue persists, contact support.')
             console.log(error.message)
         }
 
@@ -220,6 +220,7 @@ const PhoneForm = ({ user, profile }) => {
     // handleOpenForm function
     const handleOpenForm = () => {
         setFormSuccess(null);
+        setFormError(null)
         setShowForm(true)
     }
 
@@ -247,20 +248,20 @@ const PhoneForm = ({ user, profile }) => {
 
     return (
         <div>
-            <div className='py-4'>
-                <div className="flex items-center justify-between pb-1">
+            <div className='pt-4'>
+                <div className="flex items-center justify-between pb-2">
                     <span className="inline-block text-ashGray">Phone Number</span>
-                    <span className='text-red-800 cursor-pointer' onClick={handleOpenForm}>
+                    <span className='text-ashGray cursor-pointer' onClick={handleOpenForm}>
                         Edit
                     </span>
                 </div>
-                <p className="text-cloudGray frostWhitespace-normal break-words">{reformattedPhone}</p>
+                <p className="text-cloudGray frostWhitespace-normal break-words min-h-[24px]">{reformattedPhone}</p>
             </div>
   
             {showForm && (
                 <Modal>
                     <form noValidate>
-                        <label className='block mb-4 text-xl' htmlFor='draftPhone'>Phone Number</label>
+                        <label className='block mb-3 text-xl font-medium' htmlFor='draftPhone'>Phone Number</label>
                             <p className='mb-3'>Please enter your new phone number. This number will be used for account verification purposes</p>
                             <input
                                 className='w-full p-2.5 rounded-md border-2'
@@ -275,20 +276,20 @@ const PhoneForm = ({ user, profile }) => {
                         
                     </form>
                     <div className='flex items-center'>
-                        <button className='btn-small bg-saddleBrown mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                        <button className='btn-small bg-saddleBrown mt-3' onClick={handleSubmit(handlePhoneUpdate)}>
+                        <button className='btn-small bg-rust mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
+                        <button className='btn-small bg-rust mt-3 w-[64px]' onClick={handleSubmit(handlePhoneUpdate)}>
                             {isUpdating ? (
-                                <div className='flex items-center gap-2'>
-                                    <img className="w-5 h-5 opacity-50" src="../../images/loading/reload.svg" alt="Loading indicator" />
-                                    <span>Save</span>
+                                <div className='flex items-center justify-center gap-2'>
+                                    <img className="w-6 h-6 opacity-50" src="../../images/loading/reload.svg" alt="Loading indicator" />
                                 </div>
                             ) : (
                                 'Save'
                             )}
                         </button>
                     </div>
-                    {formError && <p className='modal-form-error'>{formError}</p>}
-                    {formSuccess && <p className='modal-form-success'>{formSuccess}</p>}
+                    {(formError || formSuccess) && (
+                        <p className={`${formError ? 'modal-form-error' : 'modal-form-success'}`}>{formError || formSuccess}</p>
+                    )} 
                 </Modal>
             )}
         </div>

@@ -3,10 +3,10 @@ import Image from "next/image";
 const AboutMe = () => {
     return (
         <section>
-            <div className="flex flex-col items-center justify-center lg:gap-10 lg:flex-row uw:gap-0">
+            <div className="flex flex-col items-center  lg:gap-16 lg:flex-row">
 
                 {/* Image Section */}
-                <div className="flex-1 lg:flex-none lg:w-1/2">
+                <div className="flex max-w-[544px] max-h-[586px]">
                     <Image
                         src="/images/homepage/hero/placeholder.png"
                         alt="Simon Sutherland, Web Developer and Designer"
@@ -18,11 +18,10 @@ const AboutMe = () => {
                 </div>
 
                 {/* Text Section */}
-                <div className="pt-6 flex flex-col justify-center text-center max-w-[544px] lg:bg-nightSky lg:h-max lg:text-left lg:self-center lg:max-w-lg lg:p-8">
-                    <h2 className="subheading font-b text-saddleBrown mb-4">About Me</h2>
-                    <p className="leading-7 text-ashGray">
-                        I'm Simon, a Full Stack Developer and UI Designer with over six years of experience creating immersive digital experiences.
-                        My passion for technology drives me to turn ideas into interactive realities through code and design.
+                <div className="pt-6 flex-1 flex flex-col justify-center text-center lg:h-max lg:text-left ">
+                    <h2 className="subheading font-b text-cloudGray mb-2 lg:mx-0">About Me</h2>
+                    <p className="leading-7 text-charcoalGrayLight">
+                    With 7+ years of experience in creating immersive digital experiences, I’m passionate about turning ideas into interactive, user-centered solutions. My work combines technology and design to build impactful and engaging projects that deliver real value
                     </p>
                 </div>
 

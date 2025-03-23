@@ -37,7 +37,7 @@ p, a {
 }
 
 .main-container {
-  @apply px-1.625 max-w-screen-lg mx-auto;
+  @apply px-[x-pad] max-w-screen-lg mx-auto;
 }
 
 main {
@@ -45,11 +45,11 @@ main {
 }
 
 .btn {
-  @apply p-3 px-3.5 rounded-lg cursor-pointer text-white font-medium bg-saddleBrown;
+  @apply p-3 px-3.5 rounded-lg cursor-pointer text-white font-medium bg-charcoalGray;
 }
 
 .btn-small {
-  @apply py-2 px-3 rounded-lg font-medium text-frostWhite;
+  @apply py-2 px-3 rounded-lg font-medium text-white;
 }
 
 form input {
@@ -172,11 +172,11 @@ input::placeholder, textarea::placeholder{
 
 /* Footer styles */
 footer .newsletter h3 {
-  @apply subheading font-b text-saddleBrown;
+  @apply subheading font-b text-rust;
 }
 
 footer h4 {
-  @apply font-b text-saddleBrown;
+  @apply font-b text-rust;
 }
 
 footer p {
@@ -235,11 +235,11 @@ footer span {
 }
 
 .modal-form-error {
-  @apply text-red-600 text-sm mt-2;
+  @apply text-red-600 text-sm mt-4;
 }
 
 .modal-form-success {
-  @apply text-green-600 text-sm mt-2;
+  @apply text-green-600 text-sm mt-4;
 }
 
 
@@ -250,54 +250,3 @@ footer span {
 
 
 
-
-
-
-
-
-
-
-
-/* about section /
-
-
-contributing */
-@keyframes smooth-gradient {
-  0% {
-      background: radial-gradient(circle, rgba(70, 130, 180, 0.4), transparent 60%);
-  }
-  25% {
-      background: radial-gradient(circle, rgba(32, 178, 170, 0.4), transparent 60%);
-  }
-  50% {
-      background: radial-gradient(circle, rgba(0, 139, 139, 0.3), transparent 60%);
-  }
-  75% {
-      background: radial-gradient(circle, rgba(135, 206, 235, 0.3), transparent 60%);
-  }
-  100% {
-      background: radial-gradient(circle, rgba(70, 130, 180, 0.4), transparent 60%);
-  }
-}
-
-.gradient-bg {
-  animation: smooth-gradient 8s ease-in-out infinite;
-}
-
-
-/* teaching and key skills p5 canvas */
-@media (max-width: 1920px) {
-  #defaultCanvas0 {
-    width: 100% !important;
-    height: 100% !important;
-  }
-}
-
-@media (max-width: 640px) {
-  #defaultCanvas1 {
-    width: 100% !important;
-    height: 100% !important;
-
-  }
-
-}

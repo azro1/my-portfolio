@@ -19,10 +19,10 @@ const socialPlatforms = [
 const Connect = () => {
   return (
     <section>
-        <div className="text-center max-w-max mx-auto">
+        <div className="text-center max-w-max mx-auto lg:p-10">
           <div className='flex flex-col items-center justify-center '>
-            <h2 className="text-1.375 md:text-2xl font-bold text-frostWhite mb-4">Connect With Me</h2>
-            <p className="text-ashGray max-auto">
+            <h2 className="subheading font-b text-rust mb-4">Connect With Me</h2>
+            <p className="leading-7">
               Stay connected with me on LinkedIn, GitHub, YouTube, Instagram, Discord, and WhatsApp for the latest updates, projects, and collaborations         
             </p>
           </div>
@@ -32,7 +32,7 @@ const Connect = () => {
           <div className="w-max mx-auto  flex flex-col items-center justify-center gap-8 md:flex-row p-6">
 
             {socialPlatforms.map((platform, index) => (
-              <a href={platform.url} target="_blank" rel="noopener noreferrer" className="p-4 rounded-full shadow-[0_0_8px_2px_#131519] bg-gradient-to-tl from-slateOnyx via-nightSky to-cloudGray text-white text-3xl hover:scale-110 transform transition-all duration-200 ease-in-out" key={index}>
+              <a href={platform.url} target="_blank" rel="noopener noreferrer" className="p-4 rounded-full shadow-[0_0_4px_0_#131519] bg-gradient-to-tl from-charcoalGray via-nightSky to-cloudGray text-white text-3xl hover:scale-110 transform transition-all duration-200 ease-in-out" key={index}>
                 {platform.icon}
               </a>
             ))}

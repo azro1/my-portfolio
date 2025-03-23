@@ -7,7 +7,6 @@ import Image from 'next/image';
 
 
 // components
-import Card from "@/app/components/Card";
 import ProjectFavouriteButton from '../ProjectFavouriteButton';
 
 
@@ -58,8 +57,7 @@ const Project = async ({ params }) => {
     console.log(error)
   }
 
-
-
+  
   return (
     <div className="flex flex-col">
           <div className="main-container">
@@ -68,10 +66,10 @@ const Project = async ({ params }) => {
                 <div className="w-full flex-grow flex items-center justify-center">
 
                   <div className='flex flex-col justify-center md:h-full'>
-                    <h2 className='subheading font-b text-saddleBrown'>{project.title}</h2>
+                    <h2 className='subheading font-b text-rust'>{project.title}</h2>
                     <div className='mt-8 grid gap-y-6 md:grid-auto-rows md:grid-cols-2'>
 
-                      <Card values={'p-3 rounded-md md:col-span-2 relative w-full h-[380px] lg:h-auto'} >
+                      <div className='rounded-md md:col-span-2 relative w-full h-[380px] lg:h-auto'>
                         <Image
                           className='w-full h-full object-cover'
                           src={project.image_url}
@@ -82,11 +80,11 @@ const Project = async ({ params }) => {
                           quality={100}
                           priority
                         />
-                      </Card>
+                      </div>
 
                       <div className='md:row-start-2 md:col-start-1 pb-3 md:col-span-2 relative'>
                         <ProjectFavouriteButton className={'absolute right-0 top-1'} projectId={project.id} user={user} />
-                        <h3 className='text-1.375 font-b text-saddleBrown'>Project Description</h3>
+                        <h3 className='text-1.375 font-b text-rust'>Project Description</h3>
                         <p className='pt-3 leading-7' >{project.description}</p>
                       </div>
 
@@ -127,7 +125,7 @@ const Project = async ({ params }) => {
                           <div className='text-ashGray text-base leading-7'>
                             Project Url:{' '}
                             <a href={project.url} target='_blank' rel="noopener noreferrer">
-                              <span className='text-saddleBrown text-base'>
+                              <span className='text-rust text-base'>
                                 {project.url}
                               </span>
                             </a>

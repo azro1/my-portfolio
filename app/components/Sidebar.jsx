@@ -14,8 +14,10 @@ import {
   FiPhone
 } from 'react-icons/fi';
 
+
+
 // components
-import NavbarAvatar from "./navbar/NavbarAvatar";
+import UserAvatar from "./navbar/UserAvatar";
 import Chevron from "./Chevron";
 
 
@@ -25,15 +27,42 @@ const Sidebar = ({ isProfilePage }) => {
   const [activeLink, setActiveLink] = useState('');
   const [isRegComplete, setIsRegComplete] = useState(null)
   const [loading, setLoading] = useState(true);
+  const [firstName, setFirstName] = useState('');
+  const [avatarUrl, setAvatarUrl] = useState('');
 
   const pathName = usePathname()
   const supabase = createClientComponentClient();
 
 
+
+
+   // realtime subscription to display sidebar data
+  useEffect(() => {
+    if (!user) return;
+
+    const channel = supabase.channel('realtime-profiles').on('postgres_changes', {
+      event: '*',
+      schema: 'public',
+      table: 'profiles'
+    }, (payload) => {
+      if (payload) {
+        // console.log(payload)
+        setFirstName((prevFirstName) => payload.new.first_name)
+        setAvatarUrl((prevAvatarUrl) => payload.new.avatar_url)
+      }
+    }).subscribe((status) => {
+      console.log('Subscription status:', status);
+    });
+    return () => supabase.removeChannel(channel)
+  }, [user])
+
+
+
+
+
   useEffect(() => {
     const fetchUserData = async () => {
-      setLoading(true);
-      
+
       const { data: { user } } = await supabase.auth.getUser();
       setUser(user);
 
@@ -78,10 +107,13 @@ const Sidebar = ({ isProfilePage }) => {
 
 
 
+
+
+
   if (loading) {
     return (
       <div className='w-full box-border xl:inline-block xl:w-[300px] xl:min-w-[300px] xl:h-screen xl:min-h-[768px]'>
-        <div className="sidebar-content  fixed bg-softCharcoal border-slateOnyx border-b-[1px] min-h-[113px] md:flex md:items-center md:justify-end xl:h-full xl:overflow-y-scroll xl:hide-scrollbar xl:border-r-[1px] xl:items-start xl:justify-center ">
+        <div className="sidebar-content  fixed bg-softCharcoal  min-h-[113px] md:flex md:items-center md:justify-end xl:h-full xl:overflow-y-scroll xl:hide-scrollbar  xl:items-start xl:justify-center ">
 
           <div className="hidden md:block  mr-20 xl:mr-0 xl:mt-56">
             <img className="w-8 opacity-60" src="/images/loading/spinner.svg" alt="" />
@@ -95,9 +127,9 @@ const Sidebar = ({ isProfilePage }) => {
   
   return (
     <div className='w-full box-border xl:inline-block xl:w-[300px] xl:min-w-[300px] xl:h-screen xl:min-h-[768px]'>
-      <div className="sidebar-content fixed bg-softCharcoal border-slateOnyx border-b-[1px] xl:h-full xl:overflow-y-scroll xl:hide-scrollbar xl:border-r-[1px]">
+      <div className="sidebar-content fixed bg-softCharcoal xl:h-full xl:overflow-y-scroll xl:hide-scrollbar ">
 
-          <nav className="px-1.625 flex justify-between md:gap-6 relative xl:px-0 xl:flex-col xl:justify-normal xl:gap-0 xl:min-h-[768px] ">
+          <nav className="px-[x-pad] flex justify-between md:gap-6 relative xl:px-0 xl:flex-col xl:justify-normal xl:gap-0 xl:min-h-[768px] ">
             {/* Code Dynamics Logo */}
             <div className="flex items-center justify-center py-4 xl:p-10">
               <Link href='/'>
@@ -119,42 +151,48 @@ const Sidebar = ({ isProfilePage }) => {
             </div>}
             
             <ul className='hidden md:flex-1 md:flex md:items-center md:justify-end md:gap-8 xl:flex-none xl:flex-col xl:items-stretch xl:justify-start xl:gap-0'>
-              <div className='hidden xl:block bg-slateOnyx mx-2 h-[1px]'></div>
+              <div className='hidden xl:block bg-charcoalGray mx-2 h-[1px]'></div>
               <li className={`xl:m-2 xl:mb-0 xl:p-3 xl:max-h-12 xl:hover:bg-nightSky transition-bg duration-300 xl:rounded-md ${activeLink === '/' ? 'xl:bg-slateOnyx' : ''}`}>
-                <Link href={'/'} onClick={() => handleActiveLink('/')}>
+                <Link href={'/'} onClick={(e) => {
+                  handleActiveLink('/');
+                }}>
                   <div className='xl:flex items-center gap-3'>
                     <div className="hidden xl:flex items-center">
-                      <FiHome className="icon text-saddleBrown" size={20} />
+                      <FiHome className="icon text-rust" size={20} />
                     </div>
 
                     <div className="flex items-center">
-                      <span className={`text-base font-medium ${activeLink === '/' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Home</span>
+                      <span className={`text-base ${activeLink === '/' ? 'text-cloudGray font-medium xl:text-stoneGray' : ''}`}>Home</span>
                     </div>
                   </div>
                 </Link>
               </li>
               <li className={`xl:m-2 xl:mb-0 xl:p-3 xl:max-h-12 xl:hover:bg-nightSky transition-bg duration-300 xl:rounded-md ${activeLink === '/about' ? 'xl:bg-slateOnyx' : ''}`}>
-                <Link href={'/about'} onClick={() => handleActiveLink('/about')}>
+                <Link href={'/about'} onClick={(e) => {
+                  handleActiveLink('/about');
+                }}>
                   <div className='xl:flex items-center gap-3'>
                     <div className="hidden xl:flex items-center">
-                      <FiInfo className="icon text-saddleBrown" size={20} />
+                      <FiInfo className="icon text-rust" size={20} />
                     </div>
 
                     <div className="flex items-center">
-                      <span className={`text-base font-medium ${activeLink === '/about' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>About</span>
+                      <span className={`text-base ${activeLink === '/about' ? 'text-cloudGray font-medium xl:text-stoneGray' : ''}`}>About</span>
                     </div>
                   </div>
                 </Link>
               </li>
               <li className={`xl:m-2 xl:p-3 xl:max-h-12 xl:hover:bg-nightSky transition-bg duration-300 xl:rounded-md ${activeLink === '/contact' ? 'xl:bg-slateOnyx' : ''}`}>
-                <Link href={'/contact'} onClick={() => handleActiveLink('/contact')}>
+                <Link href={'/contact'} onClick={(e) => {
+                  handleActiveLink('/contact');
+                }}>
                   <div className='xl:flex items-center gap-3'>
                     <div className="hidden xl:flex items-center">
-                      <FiPhone className="icon text-saddleBrown" size={20} />
+                      <FiPhone className="icon text-rust" size={20} />
                     </div>
 
                     <div className="flex items-center">
-                      <span className={`text-base font-medium ${activeLink === '/contact' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Contact</span>
+                      <span className={`text-base ${activeLink === '/contact' ? 'text-cloudGray font-medium xl:text-stoneGray' : ''}`}>Contact</span>
                     </div>
                   </div>
                 </Link>
@@ -162,30 +200,30 @@ const Sidebar = ({ isProfilePage }) => {
               <div className='hidden xl:block bg-slateOnyx mx-2 h-[1px]'></div>
 
               {!user && (
-                <li className={`xl:m-2 xl:mb-0 xl:p-3 xl:max-h-12 xl:hover:bg-nightSky transition-bg duration-300 xl:rounded-md ${activeLink === '/auth/login' ? 'xl:bg-slateOnyx' : ''}`}>
-                  <Link href={'/auth/login'} onClick={() => handleActiveLink('/auth/login')}>
+                <li className={`xl:m-2 xl:mb-0 xl:p-3 xl:max-h-12 xl:hover:bg-nightSky transition-bg duration-300 xl:rounded-md ${activeLink === '/login' ? 'xl:bg-slateOnyx' : ''}`}>
+                  <Link href={'/login'} onClick={() => handleActiveLink('/login')}>
                     <div className='xl:flex items-center gap-3'>
                       <div className="hidden xl:flex items-center">
-                        <FiLogIn className="icon text-saddleBrown" size={24} />
+                        <FiLogIn className="icon text-rust" size={24} />
                       </div>
 
                       <div className="flex items-center">
-                        <span className={`text-base font-medium w-max ${activeLink === '/auth/login' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Login</span>
+                        <span className={`text-base w-max ${activeLink === '/login' ? 'text-cloudGray font-medium xl:text-stoneGray' : ''}`}>Login</span>
                       </div>
                     </div>
                   </Link>
                 </li>
               )}
               {!user && (
-                <li className={`xl:m-2 xl:p-3 xl:max-h-12 xl:hover:bg-nightSky transition-bg duration-300 xl:rounded-md ${activeLink === '/auth/signup' ? 'xl:bg-slateOnyx' : ''}`}>
-                  <Link href={'/auth/signup'} onClick={() => handleActiveLink('/auth/signup')}>
+                <li className={`xl:m-2 xl:p-3 xl:max-h-12 xl:hover:bg-nightSky transition-bg duration-300 xl:rounded-md ${activeLink === '/signup' ? 'xl:bg-slateOnyx' : ''}`}>
+                  <Link href={'/signup'} onClick={() => handleActiveLink('/signup')}>
                     <div className='xl:flex items-center gap-3'>
                       <div className="hidden xl:flex items-center">
-                        <FiUserPlus className="icon text-saddleBrown" size={24} />
+                        <FiUserPlus className="icon text-rust" size={24} />
                       </div>
 
                       <div className="flex items-center">
-                        <span className={`text-base font-medium w-max ${activeLink === '/auth/signup' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Sign up</span>
+                        <span className={`text-base w-max ${activeLink === '/signup' ? 'text-cloudGray font-medium xl:text-stoneGray' : ''}`}>Sign up</span>
                       </div>
                     </div>
                   </Link>
@@ -198,10 +236,25 @@ const Sidebar = ({ isProfilePage }) => {
                 
                 <div className='flex items-center gap-2'>
                   <div className="hidden md:flex items-center gap-2">
-                    <NavbarAvatar user={user} />
-                    <span className="hidden text-base font-medium text-stoneGray xl:inline">{user?.user_metadata.first_name || user?.user_metadata.full_name}</span>
-                  </div>
 
+                    <div className="min-w-[32px] min-h-[32px]">
+                      <UserAvatar 
+                          user={user}
+                          avatarUrl={avatarUrl}
+                          width={32}
+                          height={32}
+                          maxWidth={'max-w-[32px]'}
+                          maxHeight={'max-h-[32px]'}
+                          defaultAvatarSize={32}
+                      />
+                    </div>
+                    {firstName ? (
+                      <span className="hidden text-base font-medium text-stoneGray xl:inline">{firstName}</span>
+                    ) : (
+                      <span className="hidden text-base font-medium text-stoneGray xl:inline">{user?.user_metadata.first_name || user?.user_metadata.full_name}</span>
+                    )}
+                  </div>
+                   
                   <div className="flex items-center gap-2">
                     <Chevron user={user} isProfilePage={isProfilePage} />
                   </div>

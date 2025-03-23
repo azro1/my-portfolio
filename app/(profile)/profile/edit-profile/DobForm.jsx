@@ -111,11 +111,11 @@ const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
         } else if (hasInteracted) {
             // Show success message if names are different
             if (draftDob !== reformattedDob) {
-                setFormSuccess('Your date of birth looks good.');
+                setFormSuccess('Your date of birth looks good');
                 setFormError(null);
             } else {
                 setFormSuccess(null); // Reset success message if names are the same
-                setFormError('Date of birth cannot be the same.');
+                setFormError('Date of birth cannot be the same');
             }
         }
     
@@ -196,21 +196,19 @@ const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
     return (
         <div>
             <div className='py-4'>
-                <div className="flex items-center justify-between pb-1">
+                <div className="flex items-center justify-between pb-2">
                     <span className="inline-block text-ashGray">Dob</span>
-                    <span className='text-red-800 cursor-pointer' onClick={handleOpenForm}>
+                    <span className='text-ashGray cursor-pointer' onClick={handleOpenForm}>
                         Edit
                     </span> 
                 </div>
-                <p className="text-cloudGray frostWhitespace-normal break-words">{dob}</p>
+                <p className="text-frostWhite frostWhitespace-normal break-words min-h-[24px]">{dob}</p>
             </div>
-
-            <div className='bg-ashGray h-[2px]'></div>
 
             {showForm && (
                 <Modal >
                     <form noValidate>
-                        <label className="block mb-2 text-xl" htmlFor='draftDob'>Edit Dob</label>
+                        <label className="block mb-3 text-xl font-medium" htmlFor='draftDob'>Edit Dob</label>
                         <p className='mb-3'>Please enter a valid date of birth to keep your account accurate and up-to-date</p>
                         <input
                             className='w-full p-1.5 rounded-md border-2'
@@ -222,20 +220,20 @@ const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
                         />
                     </form>
                     <div className='flex items-center'>
-                        <button className='btn-small bg-saddleBrown mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                        <button className='btn-small bg-saddleBrown mt-3' disabled={saving} onClick={handleSubmit(handleUpdateDob)}>
+                        <button className='btn-small bg-rust mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
+                        <button className='btn-small bg-rust mt-3 w-[64px]' disabled={saving} onClick={handleSubmit(handleUpdateDob)}>
                             {saving ? (
-                                <div className='flex items-center gap-2'>
-                                    <img className="w-5 h-5 opacity-50" src="../../images/loading/reload.svg" alt="Loading indicator" />
-                                    <span>Save</span>
+                                <div className='flex items-center justify-center gap-2'>
+                                    <img className="w-6 h-6 opacity-50" src="../../images/loading/reload.svg" alt="Loading indicator" />
                                 </div>
                             ) : (
                                 'Save'
                             )}
                         </button>
                     </div>
-                    {formError && <p className='modal-form-error'>{formError}</p>}
-                    {formSuccess && <p className='modal-form-success'>{formSuccess}</p>}
+                    {(formError || formSuccess) && (
+                        <p className={`${formError ? 'modal-form-error' : 'modal-form-success'}`}>{formError || formSuccess}</p>
+                    )} 
                 </Modal>
             )}
         </div>

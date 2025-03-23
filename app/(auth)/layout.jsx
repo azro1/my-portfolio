@@ -1,49 +1,51 @@
-import Link from "next/link"
-import Image from "next/image"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
+import { client } from "@/app/lib/db"
 
 // components
+import AuthRegHeader from "../components/AuthRegHeader"
 import Cleanup from "./Cleanup"
 
 export default async function AuthLayout ({ children }) {
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
-  
+
+
   if (user) {
-    redirect('/')
+    const { data, error } = await supabase
+    .from('profiles')
+    .select('is_reg_complete')
+    .eq('id', user.id)
+    .single()
+        
+    if (error) {
+        console.log(error)
+    } 
+
+    if (data?.is_reg_complete) {
+      console.log('there is a user')
+      redirect('/')
+    }
   }
+  
   
   return (
     <div className='min-h-screen '>
-          <div className='h-screen flex flex-col items-center'>
-            <div className="w-full flex-grow flex sm:justify-center">
-              <div className="w-full h-full flex flex-col  bg-white sm:bg-softGray min-h-[840px] sm:min-h-[1024px] md:min-h-0">
-                <nav className='bg-nightSky w-full min-h-[90px] flex items-center z-40'>
-                  <div className='max-w-screen-xl w-full px-6 mx-auto'>
-                    <main>
-                      <Link href='/'>
-                        <Image
-                          className='cursor-pointer'
-                          src={'/images/my_logo.svg'}
-                          alt="Navigate to home page"
-                          width={50}
-                          height={50}
-                          priority
-                          quality={100}
-                        />
-                      </Link>
-                    </main>
-                  </div>
-                </nav>
-                <div className='flex-grow flex items-center justify-center h-full'>
-                  {children}
-                </div>
-              </div>
+      <div className='h-screen flex flex-col items-center'>
+        <div className="w-full flex-grow flex sm:justify-center">
+          <div className="w-full h-full flex flex-col  bg-white sm:bg-softGray min-h-[840px] sm:min-h-[1024px] md:min-h-0">
+            <AuthRegHeader
+              storageKey={'hasVisitedAuthOtpPage'}
+              message={'Please complete verification before you leave'}
+            />
+            <div className='flex-grow flex items-center justify-center h-full'>
+              {children}
+              <Cleanup />
             </div>
           </div>
-      <Cleanup />
+        </div>
+      </div>
     </div>
   )
 }

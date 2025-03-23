@@ -1,38 +1,32 @@
 "use client"
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Image from 'next/image';
-import { FaUserCircle } from "react-icons/fa";
 
 
-const Avatar = ({ url, size, lgSize, phSize }) => {
+const Avatar = ({ url, width = 32, height = 32 }) => {
     const [signedUrl, setSignedUrl] = useState(null);
     const [error, setError] = useState(null);
     const supabase = createClientComponentClient();
-    const [isLoading, setIsLoading] = useState(false);
 
     // The url that we take in as a prop is used to create a signed URL using Supabase's createSignedUrls function. This signedURL is then used in JSX to display the image.
     useEffect(() => {
         const fetchSignedUrl = async () => {
-            setIsLoading(true)
             try {
                 const { data, error } = await supabase
                     .storage
                     .from('avatars')
                     .createSignedUrls([url], 60, { download: true }); // Expires in 60 seconds
-    
+
                 if (error) {
                     setError(error.message);
-                    setIsLoading(false)
                 } else {
                     setSignedUrl(data && data.length > 0 ? data[0].signedUrl : null);
                 }
             } catch (error) {
                 console.error(error.message);
                 setError('Error generating signed URL');
-            } finally {
-                setIsLoading(false)
             }
         };
 
@@ -46,28 +40,21 @@ const Avatar = ({ url, size, lgSize, phSize }) => {
     }
 
     return (
-        <div>
-            {isLoading ? (
-                <div className={`overflow-hidden ${lgSize} bg-nightSky rounded-full`}></div>
-            ) : (
-                <>
-                    {signedUrl ? (
-                        <div className={`overflow-hidden rounded-full ${size} relative`}>
-                            <Image
-                                src={signedUrl}
-                                alt="a user avatar"
-                                fill
-                                sizes="(max-width: 480px) 40px, (max-width: 768px) 60px, (max-width: 1024px) 80px, 100px"
-                                quality={100}
-                                priority
-                            />
-                        </div>
-                    ) : (
-                        <FaUserCircle size={phSize} color="gray" />
-                    )}
-                </>
+        <>
+            {signedUrl && (
+                <div className='overflow-hidden rounded-full'>
+                    <Image
+                        src={signedUrl}
+                        alt="a user avatar"
+                        width={width}
+                        height={height}
+                        sizes="(max-width: 480px) 40px, (max-width: 768px) 60px, (max-width: 1024px) 80px, 100px"
+                        quality={100}
+                        priority
+                    />
+                </div>
             )}
-        </div>
+        </>
     );
 };
 

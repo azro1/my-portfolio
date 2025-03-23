@@ -199,15 +199,14 @@ const BioForm = ({ user, profile, fetchProfile, changeMessage }) => {
 
     return (
         <div>
-            <div className='mb-4'>
-                <div className="flex items-center justify-between pb-1">
+            <div className='pb-4'>
+                <div className="flex items-center justify-between pb-2">
                     <span className="inline-block text-base text-ashGray">Bio</span>
-                    <span className='text-red-800 text-base cursor-pointer' onClick={handleOpenForm}>Edit</span> 
+                    <span className='text-ashGray text-base cursor-pointer' onClick={handleOpenForm}>Edit</span> 
                 </div>
-                <p className={`text-cloudGray frost whitespace-normal break-words ${!bio ? 'py-2.5' : ''}`}>{bio}</p>
+                <p className='text-frostWhite frost whitespace-normal break-words min-h-[24px]' >{bio}</p>
             </div>
 
-            <div className='bg-ashGray h-[2px]'></div>
 
             {showForm && (
                 <Modal >
@@ -215,7 +214,7 @@ const BioForm = ({ user, profile, fetchProfile, changeMessage }) => {
                         <label className="block mb-2 text-xl" htmlFor="draftBio">Edit Bio</label>
                         <p className='mb-3'>Please enter your updated bio. Keep it brief and relevant, as this will be displayed on your profile dashboard.</p>
                         <input
-                            className='w-full p-1.5 rounded-md border-2'
+                            className='w-full p-2.5 rounded-md border-2'
                             id='draftBio'
                             type='text'
                             placeholder='Bio'
@@ -227,8 +226,8 @@ const BioForm = ({ user, profile, fetchProfile, changeMessage }) => {
                         />
                     </form>
                     <div className='flex items-center'>
-                        <button className='btn-small bg-saddleBrown mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                        <button className='btn-small bg-saddleBrown mt-3' onClick={handleSubmit(handleUpdateBio)}>
+                        <button className='btn-small bg-rust mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
+                        <button className='btn-small bg-rust mt-3' onClick={handleSubmit(handleUpdateBio)}>
                             {saving ? (
                                 <div className='flex items-center gap-2'>
                                     <img className="w-5 h-5 opacity-50" src="../../images/loading/reload.svg" alt="Loading indicator" />

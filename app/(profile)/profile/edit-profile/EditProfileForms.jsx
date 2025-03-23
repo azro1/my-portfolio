@@ -1,7 +1,8 @@
 "use client"
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { useEffect, useCallback } from "react"
+import { useEffect, useCallback, useRef } from "react"
+import { useRouter } from 'next/navigation';
 
 // custom hooks
 import { useFetchUser } from '@/app/hooks/useFetchUser';
@@ -17,17 +18,44 @@ import LastNameForm from './LastNameForm';
 import PhoneForm from './PhoneForm';
 import DobForm from './DobForm';
 
+// server actions
+import { getProFlag } from '@/app/actions';
+import { deleteProFlag } from '@/app/actions';
+
 
 
 const EditProfileForms = () => {
 
-    // custom hook to fetch user
     const { user } = useFetchUser()
-    // custom hook to fetch profile
     const { profile, fetchProfile } = useFetchProfile()
-    // global messages function
     const { changeMessage } = useMessage()
+    const hasDeletedProFlag = useRef(false);
+    const router = useRouter()
+
+
+
+
+
+    // refresh if user is redirected back from otp form 
+    useEffect(() => {
+        const refreshAfterVerify = async() => {
+            const hasVerified = await getProFlag();
+
+            if (hasVerified) {
+                router.refresh();
+            }
+
+            if (!hasDeletedProFlag.current) {
+                await deleteProFlag();
+                hasDeletedProFlag.current = true;
+            }
+        }
+        refreshAfterVerify();
+    }, [router])
   
+
+
+
 
 
     // Memoize fetchProfile using useCallback
@@ -43,6 +71,8 @@ const EditProfileForms = () => {
     useEffect(() => {
         memoizedFetchProfile();
     }, [memoizedFetchProfile]);
+
+
 
 
 
@@ -73,28 +103,33 @@ const EditProfileForms = () => {
 
 
 
+
+    
     
     return (
-        <div className='flex flex-col gap-6'>
+        <div className='flex flex-col'>
             
-            <div className='mt-4 h-[500px] bg-softCharcoal p-4'>
+            <div className='mt-6 p-4 bg-softCharcoal '>
                 <AvatarUploader
                     user={user}
                     updateProfile={updateProfile}
-                    text='Personalize your account by uploading your own avatar'
-                    btnColor='bg-saddleBrown'
+                    btnColor='bg-rust'
                     show3DAvatar={false}
                 />
             </div>
 
+            <div className='pt-16'>
+              <h2 className='text-cloudGray font-medium text-1.375 md:text-2xl'>Basic Information</h2>
+              <p className='mt-3 leading-normal text-charcoalGrayLight md:text-lg'>Update your personal information</p>
 
-            <div className='flex flex-col bg-softCharcoal p-4'>
+              <div className='mt-6 flex flex-col bg-softCharcoal p-4'>
                 <BioForm
                     user={user}
                     profile={profile}
                     changeMessage={changeMessage}
                     fetchProfile={fetchProfile}
                 />
+                <div className='bg-charcoalGray h-[1px]'></div>
 
                 <FirstNameForm
                     user={user}
@@ -102,6 +137,8 @@ const EditProfileForms = () => {
                     changeMessage={changeMessage}
                     fetchProfile={fetchProfile}
                 />
+                <div className='bg-charcoalGray h-[1px]'></div>
+
 
                 <LastNameForm
                     user={user}
@@ -109,6 +146,7 @@ const EditProfileForms = () => {
                     changeMessage={changeMessage}
                     fetchProfile={fetchProfile}
                 />
+                <div className='bg-charcoalGray h-[1px]'></div>
 
                 <DobForm
                     user={user}
@@ -116,17 +154,21 @@ const EditProfileForms = () => {
                     changeMessage={changeMessage}
                     fetchProfile={fetchProfile}
                 />
+                <div className='bg-charcoalGray h-[1px]'></div>
 
                 <EmailForm 
                     user={user}
                     profile={profile}
                 />
+                <div className='bg-charcoalGray h-[1px]'></div>
 
                 <PhoneForm
                     user={user}
                     profile={profile}
                 />
             </div>
+            </div>
+
         </div>
     )
 }
