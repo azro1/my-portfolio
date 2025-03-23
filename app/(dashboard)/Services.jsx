@@ -30,7 +30,7 @@ const Services = () => {
   return (
     <section>
       <div className="overflow-hidden">
-        <h2 className="text-2xl md:text-3xl font-b text-center text-stoneGray bg-nightSky w-max mx-auto p-1 px-2 mb-6 md:mb-10">My Services</h2>
+        <h2 className="text-2xl md:text-3xl font-b text-center text-cloudGray mb-6 md:mb-10">My Services</h2>
 
         <div className="flex flex-wrap justify-center items-center gap-10 md:gap-12 relative">
           {services.map((service, index) => (
@@ -48,7 +48,7 @@ const Services = () => {
                 <span className="text-frostWhite">{service.icon}</span>
               </div>
               <div className="flex flex-col items-center text-center max-w-xl mt-6">
-                <h2 className="subheading font-medium text-saddleBrown mb-3">
+                <h2 className="subheading font-medium text-rust mb-3">
                   {service.title}
                 </h2>
                 <p className="leading-7">{service.text}</p>

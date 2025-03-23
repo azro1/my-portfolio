@@ -14,27 +14,27 @@ const KeySkills = () => {
   const keySkills = [
     { 
       name: 'Front End', 
-      icon: <FaDesktop className="text-frostWhite" size={40} />, 
+      icon: <FaDesktop className="text-cloudGray" size={40} />, 
       padbtm: 'pb-14 lg:pb-0'
     },
     {
       name: 'Branding',
-      icon: <FaPaintBrush className="text-frostWhite" size={40} />,
+      icon: <FaPaintBrush className="text-cloudGray" size={40} />,
       padbtm: 'pb-14 lg:pb-0'
     },
     {
       name: 'Compatibility',
-      icon: <FaColumns className="text-frostWhite" size={40} />,
+      icon: <FaColumns className="text-cloudGray" size={40} />,
       padbtm: 'pb-14 lg:pb-0'
     },
     {
       name: 'UI / UX',
-      icon: <FaLayerGroup className="text-frostWhite" size={40} />,
+      icon: <FaLayerGroup className="text-cloudGray" size={40} />,
       padbtm: 'pb-14 lg:pb-0'
     },
     {
       name: 'Back End',
-      icon: <FaServer className="text-frostWhite" size={40} />,
+      icon: <FaServer className="text-cloudGray" size={40} />,
       padbtm: ''
     }
   ];
@@ -51,7 +51,7 @@ const KeySkills = () => {
             transition={{ duration: 1, ease: "easeOut" }}
             className="flex flex-col text-center gap-4 lg:col-span-2 lg:row-start-3"
           >
-            <h2 className="text-2xl md:text-3xl font-b text-stoneGray text-center bg-nightSky w-max mx-auto p-1 px-2 mb-2">Key Skills</h2>
+            <h2 className="text-2xl md:text-3xl font-b text-cloudGray text-center mb-4">Key Skills</h2>
 
             <ul className="flex flex-col items-center w-full lg:flex-row lg:justify-between  relative">
               {keySkills.map((skill, index) => (
@@ -90,7 +90,7 @@ const KeySkills = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, delay: 0.2 * index }}
                   >
-                    <span className="font-b text-stoneGray whitespace-nowrap">{skill.name}</span>
+                    <span className="text-cloudGray whitespace-nowrap">{skill.name}</span>
                   </motion.div>
                 </motion.li>
               ))}

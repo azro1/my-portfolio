@@ -217,7 +217,7 @@ const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
             <div className='py-4'>
                 <div className="flex items-center justify-between pb-2">
                     <span className="inline-block text-ashGray">First Name</span>
-                    <span className="text-red-600 cursor-pointer" onClick={handleOpenForm}>Edit</span>
+                    <span className="text-ashGray cursor-pointer" onClick={handleOpenForm}>Edit</span>
                 </div>
                 <p className="text-frostWhite frostWhitespace-normal break-words min-h-[24px]">{firstName}</p>
             </div>
@@ -241,8 +241,8 @@ const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
                         
                     </form>
                     <div className='flex items-center'>
-                        <button className='btn-small bg-saddleBrown mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                        <button className='btn-small bg-saddleBrown mt-3 w-[64px]' onClick={handleSubmit(handleNameUpdate)}>
+                        <button className='btn-small bg-rust mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
+                        <button className='btn-small bg-rust mt-3 w-[64px]' onClick={handleSubmit(handleNameUpdate)}>
                             {saving ? (
                                 <div className='flex items-center justify-center gap-2'>
                                     <img className="w-6 h-6 opacity-50" src="../../images/loading/reload.svg" alt="Loading indicator" />

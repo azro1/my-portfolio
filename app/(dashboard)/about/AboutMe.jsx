@@ -19,8 +19,8 @@ const AboutMe = () => {
 
                 {/* Text Section */}
                 <div className="pt-6 flex-1 flex flex-col justify-center text-center lg:h-max lg:text-left ">
-                    <h2 className="subheading font-b text-saddleBrown bg-nightSky w-max mx-auto p-1 px-2 mb-2 lg:mx-0">About Me</h2>
-                    <p className="leading-7 text-ashGray">
+                    <h2 className="subheading font-b text-cloudGray mb-2 lg:mx-0">About Me</h2>
+                    <p className="leading-7 text-charcoalGrayLight">
                     With 7+ years of experience in creating immersive digital experiences, I’m passionate about turning ideas into interactive, user-centered solutions. My work combines technology and design to build impactful and engaging projects that deliver real value
                     </p>
                 </div>

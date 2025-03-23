@@ -45,7 +45,7 @@ const ProjectList = () => {
   return (
     <section>
       <div>
-        <h2 className="text-2xl md:text-3xl font-b text-stoneGray text-center mb-6 bg-nightSky w-max mx-auto p-1 px-2 md:mb-8">My Projects</h2>
+        <h2 className="text-2xl md:text-3xl font-b text-cloudGray text-center mb-6 md:mb-8">My Projects</h2>
         <Carousel showStatus={false} transitionTime={500} interval={5000} swipeable={true} showThumbs={false} selectedItem={selectedIndex} autoPlay infiniteLoop>
           {projects && projects.map((project) => (
             <div key={project.id}>

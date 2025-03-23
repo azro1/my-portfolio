@@ -45,7 +45,7 @@ main {
 }
 
 .btn {
-  @apply p-3 px-3.5 rounded-lg cursor-pointer text-white font-medium bg-saddleBrown;
+  @apply p-3 px-3.5 rounded-lg cursor-pointer text-white font-medium bg-charcoalGray;
 }
 
 .btn-small {
@@ -172,11 +172,11 @@ input::placeholder, textarea::placeholder{
 
 /* Footer styles */
 footer .newsletter h3 {
-  @apply subheading font-b text-saddleBrown;
+  @apply subheading font-b text-rust;
 }
 
 footer h4 {
-  @apply font-b text-saddleBrown;
+  @apply font-b text-rust;
 }
 
 footer p {

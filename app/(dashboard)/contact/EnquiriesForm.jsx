@@ -219,7 +219,7 @@ const EnquiriesForm = ({ user }) => {
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
-                <h3 className='mb-4 font-b text-saddleBrown text-1.375 md:text-2xl'>
+                <h3 className='mb-4 font-b text-rust text-1.375 md:text-2xl'>
                     Enquiries
                 </h3>
                 <div className='flex flex-col gap-2'>
@@ -277,16 +277,18 @@ const EnquiriesForm = ({ user }) => {
                     <p className='text-red-600 text-sm'>{errors.message?.message}</p>       
                 </div>
 
-                <button className='p-2.5 px-3 rounded-lg font-medium text-gray-300 block mt-2  bg-saddleBrown' disabled={isLoading}>
-                    {isLoading ? (
-                        <div className='flex items-center gap-2'>
-                            <img className="w-5 h-5 opacity-50" src="../images/loading/reload.svg" alt="Loading indicator" />
-                            <span>Sending</span>
-                        </div>
-                    ) : (
-                        'Send'
-                    )}
-                </button>
+                <div className="flex flex-col mt-3">
+                    <button className='p-2.5 px-3 rounded-lg font-medium text-gray-300 block bg-rust w-max' disabled={isLoading}>
+                        {isLoading ? (
+                            <div className='flex items-center justify-center gap-2'>
+                                <img className="w-9 h-6 opacity-50" src="../images/loading/reload.svg" alt="Loading indicator" />
+                            </div>
+                        ) : (
+                            <span>Send</span>
+                        )}
+                    </button>
+                </div>
+
                 <BrevoChatWidget />
             </form>
         </>

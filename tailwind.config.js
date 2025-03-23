@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       colors: {
-        saddleBrown: '#A52A2A',
+        rust: '#B7410E',
         softCharcoal: '#191b20',
         deepCharcoal: '#131519',
         slateOnyx: '#2A2C31',

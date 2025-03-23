@@ -7,10 +7,10 @@ const Contributing = () => {
 
             {/* Text Section */}
             <div className="flex-1 flex flex-col justify-center text-center pt-6 lg:text-left relative z-10">
-                <h2 className="subheading font-b text-stoneGray bg-nightSky w-max mx-auto p-1 px-2 mb-2 lg:mx-0">Contributing</h2>
-                <p className="leading-7">
+                <h2 className="subheading font-b text-cloudGray mb-2 lg:mx-0">Contributing</h2>
+                <p className="leading-7 text-charcoalGrayLight">
                     Beginning my open-source journey with HTML projects, I’m eager to expand my web development skills. Through active contributions and collaboration on various projects, I continue to learn and grow within the community.
-                    Check out my <a className="text-base text-cloudGray hover:underline" href="https://github.com/azro1" target="_blank" rel="noopener noreferrer">GitHub</a> repository.
+                    Check out my <a className="text-base text-cloudGray hover:underline" href="https://github.com/azro1" target="_blank" rel="noopener noreferrer">github</a> repository.
                 </p>
             </div>
 

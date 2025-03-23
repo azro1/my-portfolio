@@ -202,7 +202,7 @@ const BioForm = ({ user, profile, fetchProfile, changeMessage }) => {
             <div className='pb-4'>
                 <div className="flex items-center justify-between pb-2">
                     <span className="inline-block text-base text-ashGray">Bio</span>
-                    <span className='text-red-600 text-base cursor-pointer' onClick={handleOpenForm}>Edit</span> 
+                    <span className='text-ashGray text-base cursor-pointer' onClick={handleOpenForm}>Edit</span> 
                 </div>
                 <p className='text-frostWhite frost whitespace-normal break-words min-h-[24px]' >{bio}</p>
             </div>
@@ -226,8 +226,8 @@ const BioForm = ({ user, profile, fetchProfile, changeMessage }) => {
                         />
                     </form>
                     <div className='flex items-center'>
-                        <button className='btn-small bg-saddleBrown mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                        <button className='btn-small bg-saddleBrown mt-3' onClick={handleSubmit(handleUpdateBio)}>
+                        <button className='btn-small bg-rust mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
+                        <button className='btn-small bg-rust mt-3' onClick={handleSubmit(handleUpdateBio)}>
                             {saving ? (
                                 <div className='flex items-center gap-2'>
                                     <img className="w-5 h-5 opacity-50" src="../../images/loading/reload.svg" alt="Loading indicator" />

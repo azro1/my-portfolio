@@ -15,7 +15,7 @@ const BrevoChatWidget = () => {
         chatHeight: 550,
         colors: {
           buttonText: '#f0f0f0',
-          buttonBg: '#A52A2A'
+          buttonBg: '#B7410E'
       }
       };
       // Add the Brevo widget script when the component mounts

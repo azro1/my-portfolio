@@ -3,7 +3,7 @@ const Statement = () => {
         <div className="flex flex-col items-center justify-center ">
 
             <div className="w-max mx-auto mb-6">
-                <h2 className="text-2xl md:text-4xl font-b text-frostWhite">My Mission</h2>
+                <h2 className="text-2xl md:text-4xl font-b text-ashGray">My Mission</h2>
             </div>
 
             <div className="flex items-center justify-center text-center bg-charcoalGray p-6 rounded-md">
