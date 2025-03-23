@@ -94,7 +94,7 @@ const RegisterForm = () => {
     const [isFormSubmitted, setFormIsSubmitted] = useState(false)
     const [redirect, setRedirect] = useState(false);
     const [user, setUser] = useState(null);
-
+    const [phoneNumbers, setPhoneNumbers] = useState([]);
 
     const { updateTable } = useUpdateTable();
     const { updateMetadata } = useUpdateMetadata();
@@ -224,36 +224,50 @@ const RegisterForm = () => {
 
 
 
+   
+
+        // fetch phone numbers
+        useEffect(() => {
+            const fetchPhoneNumbers = async () => {
+                try {
+                    const res = await fetch(`${location.origin}/api/auth/phone-exists`);
+                    const data = await res.json();
+
+                    if (!res.ok) {
+                        throw new Error(res.statusText); 
+                    }
+                    
+                    const { phoneNumbers } = data;
+                    setPhoneNumbers(phoneNumbers)
+
+                } catch (error) {
+                    console.log(error.message)
+                }
+            }
+            fetchPhoneNumbers();
+        }, []);
+
+
+
+
+
+
+
+
 
 
 
 
         // function to check if phone number already exists
-        const isPhoneNumberUnique = async (phoneNumber) => {
+        const isPhoneNumberUnique = (phoneNumber) => {
             const convertedPhoneNumber = convertToInternationalFormat(phoneNumber);
-    
-            try {
-                const res = await fetch(`${location.origin}/api/auth/phone-exists`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ 
-                        phone: convertedPhoneNumber
-                    })
-                })
-                
-                // returns exists object bool value if theres a problem with the json on the server this will reject promise which we catch
-                const serverPhoneNumber = await res.json();
-    
-                if (res.status === 409 && serverPhoneNumber.exists) {
-                    return serverPhoneNumber.exists
-                }    
-                return serverPhoneNumber.exists
-    
-            } catch (error) {
-                console.log(error.message)
-            }
+
+            // Check if the phone number exists in the phoneNumbers state array
+            const phoneExists = phoneNumbers.some(
+                (phoneObj) => phoneObj.phone === convertedPhoneNumber
+            );
+
+            return phoneExists;
         }
 
 
@@ -347,9 +361,6 @@ const RegisterForm = () => {
                         throw new Error("An unexpected error occurred and we couldn't save your profile information. Please try again later. If the issue persists, contact support.")
                     }
                 }
-                
-                // remove local stroage flag
-                localStorage.removeItem("hasVisitedRegPage")
 
                 // reset flag in the table
                 await updateTable(user, 'profiles', { has_visited_reg: false }, 'id');
