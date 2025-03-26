@@ -216,11 +216,11 @@ footer span {
 }
 
 .modal-form-error {
-  @apply text-red-600 text-sm mt-4;
+  @apply text-red-600 text-sm mt-4 leading-normal;
 }
 
 .modal-form-success {
-  @apply text-green-600 text-sm mt-4;
+  @apply text-green-600 text-sm mt-4 leading-normal;
 }
 
 

@@ -164,11 +164,8 @@ const EmailForm = ({ user, profile }) => {
                 setIsUpdating(false);
                 setShowForm(false);
 
-                // store new email temporarily in local storage
-                localStorage.setItem('email', newEmail);
-
-                // send beacon flag to endpoint indicate a refresh is necessary if they abort otp verification
-                navigator.sendBeacon(`${location.origin}/api/auth/is-verifying`, JSON.stringify({ isVerifying: true }));
+                // send new email to endpoint and set cookie and flag to indicate a refresh is necessary if they abort otp verification
+                navigator.sendBeacon(`${location.origin}/api/auth/is-verifying`, JSON.stringify({ email: newEmail, isVerifying: true }));
 
                 changeMessage('success', 'A verifcation code has been sent to your email address');
                 router.push('/profile/verify-email-otp');
@@ -178,7 +175,6 @@ const EmailForm = ({ user, profile }) => {
         } catch (error) {
             setIsUpdating(false)
             setFormSuccess(null);
-            localStorage.removeItem("email");
             setFormError(error.message)
             console.log(error.message)
         }

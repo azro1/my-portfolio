@@ -64,7 +64,7 @@ const schema = yup.object({
 
 
 
-const VerifySignupOtp = () => {
+const VerifySignupOtp = ({ email }) => {
     const [isLoading, setIsLoading] = useState(false)
     const [redirect, setRedirect] = useState(false)
     const [isVerified, setIsVerified] = useState(false)
@@ -87,18 +87,8 @@ const VerifySignupOtp = () => {
 
 
 
-    const emailRef = useRef(null);
-
-    useEffect(() => {
-        const userEmail = localStorage.getItem('email');
-        if (userEmail) {
-            emailRef.current = userEmail;            
-            localStorage.removeItem('email');
-        } 
-    }, []);
-
-
-
+    // store email in a ref 
+    const emailRef = useRef(email);
 
 
 
@@ -106,12 +96,8 @@ const VerifySignupOtp = () => {
 
 
           
-
     
   
-
-
-
 
 
     // isButtonDisabled function passed down to timer that fires everytime button is disabled which then allows me to show distinct errors on form submission

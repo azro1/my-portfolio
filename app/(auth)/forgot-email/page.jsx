@@ -15,6 +15,9 @@ import Button from "@/app/components/Button";
 // custom hook to display global messages
 import { useMessage } from "@/app/hooks/useMessage";
 
+// server actions
+import { setEmail } from "@/app/actions";
+
 
 
 
@@ -125,14 +128,13 @@ const ForgotEmail = () => {
                 setIsLoading(false)
                 changeMessage('success', "Good news! We've located your account. A verification code has been sent to your email.")
 
-                // store email temporarily in local storage
-                localStorage.setItem('email', emailResponse.email)
+                // store email in redis
+                await setEmail(emailResponse.email);
                 setRedirect(true);    
             }
 
         } catch (error) {
             setIsLoading(false);
-            localStorage.removeItem('email');
             changeMessage('error', error.message);
         }
 

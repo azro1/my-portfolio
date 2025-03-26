@@ -50,48 +50,33 @@ const schema = yup.object({
 
 
 
-const VerifyLoginOtp = () => {
+const VerifyLoginOtp = ({ email }) => {
         const [isLoading, setIsLoading] = useState(false)
         const [redirect, setRedirect] = useState(false)
         const [isVerified, setIsVerified] = useState(false)
         const [buttonIsDisabled, setButtonIsDisabled] = useState(null)
         const [isActive, setIsActive] = useState(null)
-        const [hasVisitedRegPage, setHasVisitedRegPage] = useState(false);
     
     
         const supabase = createClientComponentClient()
+        const { changeMessage } = useMessage()
         const router = useRouter()
     
-        // destructure custom hooks
-        const { changeMessage } = useMessage()
     
     
     
     
     
     
-    
-    
-        const emailRef = useRef(null);
-    
-        useEffect(() => {
-            const userEmail = localStorage.getItem('email');
-            if (userEmail) {
-                emailRef.current = userEmail;            
-                localStorage.removeItem('email');
-            } 
-        }, []);
-    
-    
-    
-    
-    
-    
-    
-    
-      
-    
-    
+
+
+
+        // store email in a ref 
+        const emailRef = useRef(email);
+
+
+
+        
     
     
     
@@ -282,28 +267,24 @@ const VerifyLoginOtp = () => {
     
         return (
             <div className='flex items-center justify-center'>
-                {hasVisitedRegPage ? (
-                    <Loading />
-                ) : (
-                    <OtpForm
-                        containerStyles={'sm:shadow-outer sm:p-10 sm:rounded-xl bg-white'}
-                        handleSubmit={handleSubmit}
-                        onSubmit={onSubmit}
-                        title={'Login'}
-                        subHeading={'To login, enter the code we sent to your email address'}
-                        fields={fields}
-                        register={register}
-                        handleInputChange={handleInputChange}
-                        handleKeyDown={handleKeyDown}
-                        errors={errors}
-                        isLoading={isLoading}
-                        formState={formState}
-                        trigger={trigger}
-                        authGroupEmailRef={emailRef}
-                        isButtonDisabled={isButtonDisabled}
-                        isVerified={isVerified}
+                <OtpForm
+                    containerStyles={'sm:shadow-outer sm:p-10 sm:rounded-xl bg-white'}
+                    handleSubmit={handleSubmit}
+                    onSubmit={onSubmit}
+                    title={'Login'}
+                    subHeading={'To login, enter the code we sent to your email address'}
+                    fields={fields}
+                    register={register}
+                    handleInputChange={handleInputChange}
+                    handleKeyDown={handleKeyDown}
+                    errors={errors}
+                    isLoading={isLoading}
+                    formState={formState}
+                    trigger={trigger}
+                    authGroupEmailRef={emailRef}
+                    isButtonDisabled={isButtonDisabled}
+                    isVerified={isVerified}
                 /> 
-            )}
             </div>
     
         )

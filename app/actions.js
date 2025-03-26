@@ -3,6 +3,10 @@
 import { client } from './lib/db';
 import { cookies } from 'next/headers';
 
+// set user email 
+export async function setEmail(email) {
+   await client.set('email', email);
+}
 
 // flag to track registration avatar upload
 export async function setUploadAvatarFlag() {

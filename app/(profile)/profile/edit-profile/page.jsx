@@ -7,7 +7,7 @@ import ProfileHeader from '../../ProfileHeader';
 const EditProfile = () => {
 
   return (
-    <div className='flex-1 flex flex-col overflow-y-scroll hide-scrollbar h-[90vh] relative pb-24 pt-48 xl:pb-0 xl:pt-32'>
+    <div className='flex-1 flex flex-col overflow-y-scroll hide-scrollbar h-[90vh] relative pb-24 pt-48 xl:pb-0 xl:pt-36'>
 
       <div>
          <ProfileHeader title={'Edit Profile'} subheading={'Update your profile details, including your bio, avatar, email address, and phone number'} showAvatar={false} />

@@ -9,6 +9,9 @@ const VerifyEmailOtp = async() => {
   const encryptedEmail = cookies().get('_otp_tkn')?.value;
   const otpAccessToken = await client.get(`token-${encryptedEmail}`);
 
+  const email = await client.get('email');
+  await client.del('email');
+
   if (!otpAccessToken) {
       redirect('/profile/edit-profile')
   }
@@ -16,6 +19,7 @@ const VerifyEmailOtp = async() => {
   return (
     <div className='min-h-screen flex items-center justify-center'>
       <ProfileEmailOtpForm
+        email={email}
         contact='email address'
         verificationType='email_change'
         title='Update Email'

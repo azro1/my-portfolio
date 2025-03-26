@@ -15,6 +15,8 @@ import { useMessage } from "@/app/hooks/useMessage";
 // components
 import AuthForm from "../AuthForm";
 
+// server actions
+import { setEmail } from "@/app/actions";
 
 
 
@@ -131,8 +133,8 @@ const Signup = () => {
 
       } else if ((!emailResponse.exists && res.status === 200) || (emailResponse.exists && res.status === 200 && !accountStatus.is_verified)) {
 
-        // store email temporarily in local storage
-        localStorage.setItem('email', email);
+        // store email in redis
+        await setEmail(email);
 
         const supabase = createClientComponentClient()
         const { error } = await supabase.auth.signInWithOtp({
@@ -150,7 +152,6 @@ const Signup = () => {
       
     } catch (error) {
         setIsLoading(false);
-        localStorage.removeItem('email');
         changeMessage('error', 'An unexpected error occurred. Please try again later or contact support if the issue persists.');
         console.log('sign up error:', error.message)
     }

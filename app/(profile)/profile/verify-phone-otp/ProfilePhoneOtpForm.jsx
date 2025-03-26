@@ -52,7 +52,7 @@ const schema = yup.object({
 
 
 
-const ProfilePhoneOtpForm = ({ contact, verificationType, title, subHeading, successMessage }) => {
+const ProfilePhoneOtpForm = ({ phone, contact, verificationType, title, subHeading, successMessage }) => {
     const [isLoading, setIsLoading] = useState(false)
     const [isVerified, setIsVerified] = useState(false)
     const [buttonIsDisabled, setButtonIsDisabled] = useState(null)
@@ -74,17 +74,8 @@ const ProfilePhoneOtpForm = ({ contact, verificationType, title, subHeading, suc
 
 
 
-    const phoneRef = useRef(null);
-
-    useEffect(() => {
-      const userPhone = localStorage.getItem('phone');
-      
-      if (userPhone) {
-        phoneRef.current = userPhone;
-        localStorage.removeItem('phone')
-      }
-    }, [])
-
+    // store phone in a ref 
+    const phoneRef = useRef(phone);
 
 
 
@@ -237,6 +228,7 @@ const ProfilePhoneOtpForm = ({ contact, verificationType, title, subHeading, suc
                 setIsLoading(false)
                 setIsVerified(true)
                 setRedirect(true)
+                changeMessage('success', successMessage)
                 
 
             } catch (error) {
@@ -251,9 +243,7 @@ const ProfilePhoneOtpForm = ({ contact, verificationType, title, subHeading, suc
 
     useEffect(() => {
         if (redirect) {
-           router.push('/profile/edit-profile')
-           setTimeout(() => changeMessage('success', successMessage), 2000)
-           
+           router.push('/profile/edit-profile')           
         }
      }, [redirect, router])
  

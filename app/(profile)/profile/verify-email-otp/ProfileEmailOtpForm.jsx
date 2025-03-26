@@ -52,7 +52,7 @@ const schema = yup.object({
 
 
 
-const ProfileEmailOtpForm = ({ contact, verificationType, title, subHeading, successMessage }) => {
+const ProfileEmailOtpForm = ({ email, contact, verificationType, title, subHeading, successMessage }) => {
     const [isLoading, setIsLoading] = useState(false)
     const [isVerified, setIsVerified] = useState(false)
     const [buttonIsDisabled, setButtonIsDisabled] = useState(null)
@@ -73,17 +73,8 @@ const ProfileEmailOtpForm = ({ contact, verificationType, title, subHeading, suc
 
 
 
-
-    const emailRef = useRef(null);
-
-    useEffect(() => {
-       const userEmail = localStorage.getItem('email');
-       if (userEmail) {
-          emailRef.current = userEmail;
-          localStorage.removeItem('email')
-       }
-    }, [])
-
+    // store email in a ref 
+    const emailRef = useRef(email);
 
 
 
@@ -231,6 +222,7 @@ const ProfileEmailOtpForm = ({ contact, verificationType, title, subHeading, suc
                 setIsLoading(false)
                 setIsVerified(true)
                 setRedirect(true)
+                changeMessage('success', successMessage)
 
 
             } catch (error) {              
@@ -247,8 +239,6 @@ const ProfileEmailOtpForm = ({ contact, verificationType, title, subHeading, suc
     useEffect(() => {
        if (redirect) {
           router.push('/profile/edit-profile')
-          setTimeout(() => changeMessage('success', successMessage), 2000)
-          
        }
     }, [redirect, router])
 

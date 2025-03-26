@@ -15,7 +15,8 @@ import { useMessage } from "@/app/hooks/useMessage";
 // components
 import AuthForm from "../AuthForm";
 
-
+// server actions
+import { setEmail } from "@/app/actions";
 
 
 
@@ -129,8 +130,8 @@ const Login = () => {
 
       } else if ((emailResponse.exists && res.status === 200 && accountStatus.is_verified)) {
         
-        // store email temporarily in local storage
-        localStorage.setItem('email', email);
+        // store email in redis
+        await setEmail(email);
 
         const supabase = createClientComponentClient()
         const { error } = await supabase.auth.signInWithOtp({
@@ -150,7 +151,6 @@ const Login = () => {
 
     } catch (error) {
         setIsLoading(false);
-        localStorage.removeItem('email');
         changeMessage('error', 'Oops! Something went wrong on our end. Please try again in a moment or contact support if the issue persists.');
         console.log('login error:', error.message)
     }

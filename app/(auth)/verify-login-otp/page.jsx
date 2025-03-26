@@ -8,13 +8,18 @@ const Page = async () => {
     const encryptedEmail = cookies().get('_otp_tkn')?.value;
     const otpAccessToken = await client.get(`token-${encryptedEmail}`);
 
+    const email = await client.get('email');
+    await client.del('email');
+
     if (!otpAccessToken) {
         redirect('/login')
     }
 
     return (
         <div>
-           <VerifyLoginOtp />
+            <VerifyLoginOtp
+                email={email}
+            />
         </div>
     )
 }

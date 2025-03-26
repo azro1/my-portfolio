@@ -189,17 +189,14 @@ const PhoneForm = ({ user, profile }) => {
 
             } else if (res.status === 401) {
                 setIsUpdating(false);
-                setFormError(<>To prevent spam and abusive behavior <strong>cooldown</strong> is active. You must wait <strong>{updateResponse.minutesLeft}</strong>m <strong>{updateResponse.secondsLeft}</strong>s before you can request a new verification code.</>);
+                setFormError(<>To prevent spam and abusive behavior <strong>cooldown</strong> is active. You must wait <strong>{updateResponse.minutesLeft}</strong>m <strong>{updateResponse.secondsLeft}</strong>s before you can request a new verification code</>);
             
             } else if (res.status === 200 && !updateResponse.error) {
                 setIsUpdating(false)
                 setShowForm(false)
 
-                // store phone temporarily in local storage
-                localStorage.setItem('phone', convertedPhoneNumber);
-
-                // send beacon flag to endpoint indicate a refresh is necessary if they abort otp verification
-                navigator.sendBeacon(`${location.origin}/api/auth/is-verifying`, JSON.stringify({ isVerifying: true }));
+                // send new phone to endpoint and set cookie and flag to indicate a refresh is necessary if they abort otp verification
+                navigator.sendBeacon(`${location.origin}/api/auth/is-verifying`, JSON.stringify({ phone: convertedPhoneNumber, isVerifying: true }));
 
                 changeMessage('success', 'An verification code has been sent via SMS to your new phone number')
                 router.push('/profile/verify-phone-otp')
@@ -209,7 +206,6 @@ const PhoneForm = ({ user, profile }) => {
         } catch (error) {
             setIsUpdating(false)
             setFormSuccess(null);
-            localStorage.removeItem("phone");
             setFormError('An unexpected error occurred while updating your phone. Please try again later. If the issue persists, contact support.')
             console.log(error.message)
         }

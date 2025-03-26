@@ -23,7 +23,7 @@ const KeySkills = () => {
       padbtm: 'pb-14 lg:pb-0'
     },
     {
-      name: 'Compatibility',
+      name: 'Design',
       icon: <FaColumns className="text-cloudGray" size={40} />,
       padbtm: 'pb-14 lg:pb-0'
     },
