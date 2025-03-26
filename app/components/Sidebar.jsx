@@ -158,7 +158,7 @@ const Sidebar = ({ isProfilePage }) => {
                 }}>
                   <div className='xl:flex items-center gap-3'>
                     <div className="hidden xl:flex items-center">
-                      <FiHome className="icon text-rust" size={20} />
+                      <FiHome className="icon text-goldenRod" size={20} />
                     </div>
 
                     <div className="flex items-center">
@@ -173,7 +173,7 @@ const Sidebar = ({ isProfilePage }) => {
                 }}>
                   <div className='xl:flex items-center gap-3'>
                     <div className="hidden xl:flex items-center">
-                      <FiInfo className="icon text-rust" size={20} />
+                      <FiInfo className="icon text-goldenRod" size={20} />
                     </div>
 
                     <div className="flex items-center">
@@ -188,7 +188,7 @@ const Sidebar = ({ isProfilePage }) => {
                 }}>
                   <div className='xl:flex items-center gap-3'>
                     <div className="hidden xl:flex items-center">
-                      <FiPhone className="icon text-rust" size={20} />
+                      <FiPhone className="icon text-goldenRod" size={20} />
                     </div>
 
                     <div className="flex items-center">
@@ -204,7 +204,7 @@ const Sidebar = ({ isProfilePage }) => {
                   <Link href={'/login'} onClick={() => handleActiveLink('/login')}>
                     <div className='xl:flex items-center gap-3'>
                       <div className="hidden xl:flex items-center">
-                        <FiLogIn className="icon text-rust" size={24} />
+                        <FiLogIn className="icon text-goldenRod" size={24} />
                       </div>
 
                       <div className="flex items-center">
@@ -219,7 +219,7 @@ const Sidebar = ({ isProfilePage }) => {
                   <Link href={'/signup'} onClick={() => handleActiveLink('/signup')}>
                     <div className='xl:flex items-center gap-3'>
                       <div className="hidden xl:flex items-center">
-                        <FiUserPlus className="icon text-rust" size={24} />
+                        <FiUserPlus className="icon text-goldenRod" size={24} />
                       </div>
 
                       <div className="flex items-center">
@@ -249,9 +249,9 @@ const Sidebar = ({ isProfilePage }) => {
                       />
                     </div>
                     {firstName ? (
-                      <span className="hidden text-base font-medium text-stoneGray xl:inline">{firstName}</span>
+                      <span className="hidden text-base text-stoneGray xl:inline">{firstName}</span>
                     ) : (
-                      <span className="hidden text-base font-medium text-stoneGray xl:inline">{user?.user_metadata.first_name || user?.user_metadata.full_name}</span>
+                      <span className="hidden text-base text-stoneGray xl:inline">{user?.user_metadata.first_name || user?.user_metadata.full_name}</span>
                     )}
                   </div>
                    

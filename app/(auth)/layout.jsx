@@ -35,10 +35,7 @@ export default async function AuthLayout ({ children }) {
       <div className='h-screen flex flex-col items-center'>
         <div className="w-full flex-grow flex sm:justify-center">
           <div className="w-full h-full flex flex-col  bg-white sm:bg-softGray min-h-[840px] sm:min-h-[1024px] md:min-h-0">
-            <AuthRegHeader
-              storageKey={'hasVisitedAuthOtpPage'}
-              message={'Please complete verification before you leave'}
-            />
+            <AuthRegHeader />
             <div className='flex-grow flex items-center justify-center h-full'>
               {children}
               <Cleanup />

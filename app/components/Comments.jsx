@@ -156,7 +156,7 @@ const Comments = ({ user, comments, loadComments }) => {
                                 )}
                                 <div className="flex-1">
                                     <div className="flex gap-2 items-center">
-                                        <h6 className="text-lg text-rust font-medium">
+                                        <h6 className="text-lg text-goldenRod font-medium">
                                             {comment.first_name || comment.full_name}
                                         </h6>
                                         <span className="text-sm text-ashGray">

@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 
 // components
 import AvatarUploader from "@/app/components/AvatarUploader";
-
+import Button from '@/app/components/Button';
 
 // hooks
 import { useUpdateTable } from '@/app/hooks/useUpdateTable';
@@ -158,17 +158,21 @@ const UploadAvatar = () => {
                     <AvatarUploader
                         user={user}
                         updateProfile={updateProfile}
-                        btnColor='bg-nightSky'
+                        btnColor='bg-green-700'
                         show3DAvatar={true}
                     />
                 </div>
 
-    
                 <Link className='w-full' href='/register-form'>
                     <div className='flex'>
-                        <button className='btn-small bg-nightSky ml-auto'>
-                            Skip
-                        </button>
+                        <Button
+                            isLoading={false}
+                            padding='py-2 px-3.5'
+                            width='w-auto'
+                            backgroundColor='bg-nightSky'
+                            margin='ml-auto'
+                            text='Skip'
+                        />
                     </div>
                 </Link>
             </div>

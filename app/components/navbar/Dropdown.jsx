@@ -16,6 +16,7 @@ const Dropdown = ({ user, handleCloseMenu, isProfilePage, dropDownRef }) => {
     const {error} = await supabase.auth.signOut()
     
     if (!error) {
+      navigator.sendBeacon(`${location.origin}/api/auth/is-registered`, JSON.stringify({ isRegistered: false }));
       router.push('/login')
     }
 

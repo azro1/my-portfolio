@@ -105,7 +105,7 @@ const CommentList = ({ user }) => {
                                     <span className="text-stoneGray text-base leading-normal block">{comment.text}</span>
                                     <span className='text-sm text-frostWhite filter brightness-80'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
                                 </div>
-                                <MdDeleteForever className="min-w-max cursor-pointer text-red-600" size={26} onClick={() => handleDelete(comment.id)}/>
+                                <MdDeleteForever className="min-w-max cursor-pointer text-goldenRod" size={26} onClick={() => handleDelete(comment.id)}/>
                             </div>
                         ))
                     ) : (

@@ -226,8 +226,8 @@ const BioForm = ({ user, profile, fetchProfile, changeMessage }) => {
                         />
                     </form>
                     <div className='flex items-center'>
-                        <button className='btn-small bg-rust mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                        <button className='btn-small bg-rust mt-3' onClick={handleSubmit(handleUpdateBio)}>
+                        <button className='btn-small bg-goldenRod mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
+                        <button className='btn-small bg-goldenRod mt-3' onClick={handleSubmit(handleUpdateBio)}>
                             {saving ? (
                                 <div className='flex items-center gap-2'>
                                     <img className="w-5 h-5 opacity-50" src="../../images/loading/reload.svg" alt="Loading indicator" />

@@ -31,19 +31,19 @@ const Footer = () => {
                         />
                       </Link>
                     </div>
-                    <p className="text-ashGray" >&copy; 2025 Simon Sutherland</p>
+                    <p className="text-charcoalGrayLight" >&copy; 2025 Simon Sutherland</p>
                   </div>
                   <div className="flex justify-center gap-4">
-                      <a className="text-cloudGray" href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" >
+                      <a className="text-charcoalGrayLight" href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" >
                         <FiLinkedin size={24} />
                       </a>
-                      <a className="text-cloudGray" href="https://github.com" target="_blank" rel="noopener noreferrer" >
+                      <a className="text-charcoalGrayLight" href="https://github.com" target="_blank" rel="noopener noreferrer" >
                         <FiGithub size={24} />
                       </a>
-                      <a className="text-cloudGray" href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" >
+                      <a className="text-charcoalGrayLight" href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" >
                         <FiYoutube size={24} />
                       </a>
-                      <a className="text-cloudGray" href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" >
+                      <a className="text-charcoalGrayLight" href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" >
                         <FiInstagram size={24} />
                       </a>
                   </div>
@@ -59,10 +59,10 @@ const Footer = () => {
 
                 <div className="flex flex-col items-center justify-start">
                   <Link href="#">
-                    <p className="text-sm text-ashGray">Terms of Use</p>
+                    <p className="text-sm text-charcoalGrayLight">Terms of Use</p>
                   </Link>
                   <Link href="#">
-                    <p className="text-sm text-ashGray">Privacy Policy</p>
+                    <p className="text-sm text-charcoalGrayLight">Privacy Policy</p>
                   </Link>
                 </div>
 

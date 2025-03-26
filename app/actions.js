@@ -17,18 +17,6 @@ export async function getUploadAvatarFlag() {
    return avtrUplFlg;
 }
 
-// flag to indicate whether page should be refreshed after registration
-export async function getRegFlag() {
-   const rf = await cookies().get('_reg_flg')?.value;
-   const regFlg = await client.get(`reg-${rf}`);
-   return regFlg;
-}
-
-// flag to indicate whether page should be refreshed after registration
-export async function deleteRegFlag() {
-   const rf = await cookies().get('_reg_flg')?.value;
-   await client.del(`reg-${rf}`);
-}
 
 // flag to indicate whether page should be refreshed after profile verification
 export async function getProFlag() {

@@ -17,7 +17,7 @@ const LoggedInMenu = ({ user, handleLogout, handleCloseMenu, isProfilePage }) =>
   }
 
   return (
-    <div className='loggedin-nav p-2 md:p-0'>
+    <div>
 
       <div>
         {/* dropdown dashboard menu for small screens up to medium */}

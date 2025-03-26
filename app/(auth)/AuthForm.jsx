@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 // components
+import Button from "../components/Button";
 import SocialButtons from "./SocialButtons";
 
 const AuthForm = ({ handleSubmit, onSubmit, title, subHeading, register, errors, isChecked, handleCheckbox, isSignup, isLoading }) => {
@@ -32,28 +33,24 @@ const AuthForm = ({ handleSubmit, onSubmit, title, subHeading, register, errors,
               </div>
           )}
 
-
-
           <div className="mt-4 flex flex-col">
-            <button className={`btn ${isLoading ? 'opacity-65' : 'opacity-100'} w-full block`} disabled={isLoading}>
-              {isLoading ? (
-                <div className='flex items-center justify-center gap-2'>
-                  <img className="w-6 h-6 opacity-65" src="../images/loading/reload.svg" alt="Loading indicator" />
-                </div>
-              ) : (
-                <span>Send code</span>
-              )}
-            </button>
+            <Button
+              isLoading={isLoading}
+              padding='p-3'
+              width='w-full'
+              backgroundColor='bg-nightSky'
+              text='Send code'
+            />
 
             {!isSignup && (
-                <Link className='mt-1 ml-auto' href={'/forgot-email'}>
-                    <span className='text-nightSky text-base'>Forgot email?</span>
-                </Link>
+              <Link className='mt-1 ml-auto' href={'/forgot-email'}>
+                <span className='text-nightSky text-base'>Forgot email?</span>
+              </Link>
             )}
           </div>
+
         </form>
       </div>
-
 
       <div className='flex flex-col items-center '>
         <p className='mb-8'>Or</p>

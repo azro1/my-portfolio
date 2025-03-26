@@ -34,10 +34,7 @@ export default async function RegisterLayout ({ children }) {
     <div className='min-h-screen flex flex-col items-center'>
 
         <div className="w-full flex-grow flex flex-col bg-white sm:bg-softGray">
-          <AuthRegHeader 
-             storageKey={'hasVisitedRegPage'}
-             message={'Please complete registration before you leave'}
-          />
+          <AuthRegHeader />
           <div className='main-container flex-grow flex items-center justify-center h-full'>
             {children}
           </div>

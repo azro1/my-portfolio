@@ -9,6 +9,9 @@ import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { IoMdArrowBack } from "react-icons/io";
 
+// components
+import Button from "@/app/components/Button";
+
 // custom hook to display global messages
 import { useMessage } from "@/app/hooks/useMessage";
 
@@ -189,15 +192,16 @@ const ForgotEmail = () => {
                             <p className="text-red-500 mt-1 text-sm">{errors.phone.message}</p>
                         )}
                         
-                        <button className={`btn block mt-4 ${isLoading ? 'opacity-65' : 'opacity-100'} w-full`} disabled={isLoading}>
-                            {isLoading ? (
-                                <div className='flex items-center justify-center gap-2'>
-                                    <img className="w-6 h-6 opacity-65" src="../images/loading/reload.svg" alt="Loading indicator" />
-                                </div>
-                            ) : (
-                                'Submit'
-                            )}
-                        </button>
+                        <div className='mt-4'>
+                            <Button
+                                isLoading={isLoading}
+                                padding='p-3'
+                                width='w-full'
+                                backgroundColor='bg-nightSky'
+                                text='Submit'
+                            />
+                        </div>
+
                     </div>
                 </form>
 

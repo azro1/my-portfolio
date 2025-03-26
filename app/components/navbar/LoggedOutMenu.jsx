@@ -19,29 +19,29 @@ const LoggedOutMenu = ({ handleCloseMenu }) => {
 
 
   return (
-    <div className='p-2 md:p-0'>
-      <Link href={'/'} className={`${activeLink === '/' ? 'active' : ''}`} onClick={() => handleActiveLink('/')}>
-        <div className='flex items-center p-3' onClick={handleCloseMenu}>
+    <div>
+      <Link href={'/'} className={`${activeLink === '/' ? 'text-cloudGray' : 'text-charcoalGrayLight'}`} onClick={() => handleActiveLink('/')}>
+        <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray' onClick={handleCloseMenu}>
           <span className={`text-base ${activeLink === '/' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Home</span>
         </div>
       </Link>
-      <Link href={'/about'} className={`${activeLink === '/about' ? 'active' : ''}`} onClick={() => handleActiveLink('/about')}>
-        <div className='flex items-center p-3' onClick={handleCloseMenu}>
+      <Link href={'/about'} className={`${activeLink === '/about' ? 'text-cloudGray' : 'text-charcoalGrayLight'}`} onClick={() => handleActiveLink('/about')}>
+        <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray' onClick={handleCloseMenu}>
           <span className={`text-base ${activeLink === '/about' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>About</span>
         </div>
       </Link>
-      <Link href={'/contact'} className={`${activeLink === '/contact' ? 'active' : ''}`} onClick={() => handleActiveLink('/contact')}>
-        <div className='flex items-center p-3' onClick={handleCloseMenu}>
+      <Link href={'/contact'} className={`${activeLink === '/contact' ? 'text-cloudGray' : 'text-charcoalGrayLight'}`} onClick={() => handleActiveLink('/contact')}>
+        <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray' onClick={handleCloseMenu}>
           <span className={`text-base ${activeLink === '/contact' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Contact</span>
         </div>
       </Link>
-      <Link href={'/login'} className={`${activeLink === '/login' ? 'active' : ''}`} onClick={() => handleActiveLink('/login')}>
-        <div className='flex items-center p-3' onClick={handleCloseMenu}>
+      <Link href={'/login'} className={`${activeLink === '/login' ? 'text-cloudGray' : 'text-charcoalGrayLight'}`} onClick={() => handleActiveLink('/login')}>
+        <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray' onClick={handleCloseMenu}>
           <span className={`text-base ${activeLink === '/login' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Login</span>
         </div>
       </Link>
-      <Link href={'/signup'} className={`${activeLink === '/signup' ? 'active' : ''}`} onClick={() => handleActiveLink('/signup')}>
-        <div className='flex items-center p-3' onClick={handleCloseMenu}>
+      <Link href={'/signup'} className={`${activeLink === '/signup' ? 'text-cloudGray' : 'text-charcoalGrayLight'}`} onClick={() => handleActiveLink('/signup')}>
+        <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray' onClick={handleCloseMenu}>
           <span className={`text-base ${activeLink === '/signup' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Sign up</span>
         </div>
       </Link>

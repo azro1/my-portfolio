@@ -44,10 +44,6 @@ main {
   @apply container mx-auto;
 }
 
-.btn {
-  @apply p-3 px-3.5 rounded-lg cursor-pointer text-white font-medium bg-charcoalGray;
-}
-
 .btn-small {
   @apply py-2 px-3 rounded-lg font-medium text-white;
 }
@@ -150,21 +146,6 @@ input::placeholder, textarea::placeholder{
 
 
 
-/* nav menus*/
-.loggedin-nav a.active {
-  @apply text-cloudGray;
-}
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -172,11 +153,11 @@ input::placeholder, textarea::placeholder{
 
 /* Footer styles */
 footer .newsletter h3 {
-  @apply subheading font-b text-rust;
+  @apply subheading font-b text-goldenRod;
 }
 
 footer h4 {
-  @apply font-b text-rust;
+  @apply font-b text-goldenRod;
 }
 
 footer p {

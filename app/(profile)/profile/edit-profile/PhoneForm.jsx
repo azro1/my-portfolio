@@ -276,8 +276,8 @@ const PhoneForm = ({ user, profile }) => {
                         
                     </form>
                     <div className='flex items-center'>
-                        <button className='btn-small bg-rust mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                        <button className='btn-small bg-rust mt-3 w-[64px]' onClick={handleSubmit(handlePhoneUpdate)}>
+                        <button className='btn-small bg-goldenRod mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
+                        <button className='btn-small bg-goldenRod mt-3 w-[64px]' onClick={handleSubmit(handlePhoneUpdate)}>
                             {isUpdating ? (
                                 <div className='flex items-center justify-center gap-2'>
                                     <img className="w-6 h-6 opacity-50" src="../../images/loading/reload.svg" alt="Loading indicator" />

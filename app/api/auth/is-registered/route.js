@@ -1,14 +1,16 @@
 import { cookies } from "next/headers";
-import { client } from "@/app/lib/db";
-import { v4 as uuidv4 } from "uuid";
 
 export async function POST(request) {
     const { isRegistered } = await request.json();
 
     if (isRegistered) {
-        const id = uuidv4();
-        await cookies().set('_reg_flg', id, { path: '/', httpOnly: true, sameSite: 'Strict' });
-        client.set(`reg-${id}`, 'true');
+        // set cookie to indicate user has completed registration
+        await cookies().set('_is_registered', 'true', { path: '/', httpOnly: true, sameSite: 'Strict' });
+    }
+
+    if (!isRegistered) {
+        // delete cookie affter checking registration status
+        await cookies().delete('_is_registered');
     }
     
     return new Response(null, { status: 200 });

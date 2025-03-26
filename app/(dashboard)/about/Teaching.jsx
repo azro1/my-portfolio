@@ -22,18 +22,18 @@ const Teaching = () => {
         </div>
 
         <div className="flex-grow flex flex-col text-center lg:text-left lg:w-1/2">
-          <h2 className="subheading font-b mb-4 text-rust">
+          <h2 className="subheading font-b mb-4 text-goldenRod">
             Teaching
           </h2>
           <p className="text-base leading-7">
             I'm passionate about sharing knowledge through my{" "}
             <a
-              className="text-rust hover:underline transition-all duration-300"
+              className="text-goldenRod hover:underline transition-all duration-300"
               href="https://www.youtube.com/channel/UCSK7zfwlgMq3r88lkchHsSw"
               target="_blank"
               rel="noopener noreferrer"
             >
-              YouTube channel
+              youtube channel
             </a>
             , offering tutorials on web development, graphic design, and more.
             Teaching via video content broadens my reach, empowering others to

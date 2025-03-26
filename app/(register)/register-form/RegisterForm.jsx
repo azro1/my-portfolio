@@ -7,10 +7,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { format, parseISO } from "date-fns";
 
 
+import Link from 'next/link';
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
+import { IoMdArrowBack } from 'react-icons/io';
+
 
 // hooks
 import { useUpdateTable } from '@/app/hooks/useUpdateTable';
@@ -439,10 +442,23 @@ const RegisterForm = () => {
 
   return (
     <div className='flex flex-col justify-center min-h-[640px] md:min-h-[924px]'>
-            <p className='pb-2'>Step 2/2</p>        
+
+
+        <div className='flex items-center justify-between pb-2'>
+           <Link href='/upload-avatar' onClick={(e) => handleBackButton(e)}>
+                <button className='text-nightSky p-1 rounded-md hover:bg-cloudGray transtion-bg duration-300 '>
+                    <IoMdArrowBack size={24} />
+                </button>
+            </Link>
+
+
+            <p className=''>Step 2/2</p>
+
+        </div>
+        
 
             <form className='flex flex-col gap-3 max-w-[500px] sm:bg-white sm:shadow-outer sm:p-12 sm:pt-10 sm:rounded-xl' noValidate>
-            <h2 className='text-3xl mb-4 text-start font-b text-nightSky leading-normal sm:text-center'>Enter your personal information</h2>
+            <h2 className='text-3xl mb-4 text-center font-b text-nightSky leading-normal'>Enter your personal information</h2>
 
             <div>
                 <div className='relative '>
@@ -521,7 +537,7 @@ const RegisterForm = () => {
                 {errors.phone ? <p className="text-sm text-red-600 mt-1">{errors.phone.message}</p> : phoneExists ? <p className="text-sm text-red-600 mt-1">Phone already exists</p> : null}
             </div>
 
-            <button className={`btn block w-full mt-1.5 transition duration-500 ${(isLoading || phoneExists) ? 'opacity-65' : 'opacity-100'}`} disabled={isLoading || phoneExists} aria-live={Object.keys(errors).length > 0 || isLoading ? 'assertive' : 'off'} onClick={handleSubmit(handleUpdateProfile)}>
+            <button className={`p-3 px-3.5 rounded-lg cursor-pointer text-white font-medium block w-full mt-1.5 transition duration-500 bg-green-700 ${(isLoading || phoneExists) ? 'opacity-65' : 'opacity-100'}`} disabled={isLoading || phoneExists} aria-live={Object.keys(errors).length > 0 || isLoading ? 'assertive' : 'off'} onClick={handleSubmit(handleUpdateProfile)}>
                 {isLoading ? (
                     <div className='flex items-center justify-center gap-2'>
                         <img className="w-6 h-6 opacity-65" src="../images/loading/reload.svg" alt="Loading indicator" />
@@ -530,9 +546,7 @@ const RegisterForm = () => {
                     'Register'
                 )}
             </button>
-            <button className='btn-small bg-nightSky w-max' onClick={(e) => handleBackButton(e)}>
-                Back
-            </button>
+
         </form>
     </div>
   )

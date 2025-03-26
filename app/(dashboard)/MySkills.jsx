@@ -43,7 +43,7 @@ const MySkills = () => {
 
         {/* Text Section */}
         <div className="flex-1 flex flex-col items-center text-center md:items-start md:text-left">
-            <h2 className="subheading font-b text-rust mb-4">My Skills</h2>
+            <h2 className="subheading font-b text-goldenRod mb-4">My Skills</h2>
           <p className="leading-7 lg:max-w-xs">
             I specialize in both front-end and back-end technologies to create user-friendly and efficient web applications
           </p>

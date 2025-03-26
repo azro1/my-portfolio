@@ -1,3 +1,6 @@
+
+// components
+import Button from "./Button"
 import Timer from "./Timer"
 
 const OtpForm = ({
@@ -63,16 +66,15 @@ const OtpForm = ({
             ) : null}
 
 
-
-            <button className={`btn block mt-5 w-full mb-3 ${isLoading ? 'opacity-65' : 'opacity-100'}`} disabled={isLoading}>
-                {isLoading ? (
-                    <div className='flex items-center justify-center gap-2'>
-                        <img className="w-6 h-6 opacity-65" src="../images/loading/reload.svg" alt="Loading indicator" />
-                    </div>
-                ) : (
-                    'Verify'
-                )}
-            </button>
+            <div className='mt-5 mb-3'>
+               <Button
+                    isLoading={isLoading}
+                    padding='p-3'
+                    width='w-full'
+                    backgroundColor='bg-nightSky'
+                    text='Verify'
+               />
+            </div>
         </form>
 
         <Timer 
