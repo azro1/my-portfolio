@@ -26,7 +26,7 @@ const Teaching = () => {
             Teaching
           </h2>
           <p className="text-base leading-7">
-            I'm passionate about sharing knowledge through my{" "}
+            I&apos;m passionate about sharing knowledge through my{" "}
             <a
               className="text-goldenRod hover:underline transition-all duration-300"
               href="https://www.youtube.com/channel/UCSK7zfwlgMq3r88lkchHsSw"

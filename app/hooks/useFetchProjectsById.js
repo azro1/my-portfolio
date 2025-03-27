@@ -1,7 +1,7 @@
 "use client"
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { useState, useEffect } from "react"
+import { useState, useCallback } from "react"
 
 const useFetchProjectsById = (user, table, column) => {
     const [retrievedProjects, setRetrievedProjects] = useState([])
@@ -10,7 +10,7 @@ const useFetchProjectsById = (user, table, column) => {
 
     const supabase = createClientComponentClient()
     
-    const getProjectsById = async () => {
+    const getProjectsById = useCallback(async () => {
         try {
             if (user) {
                 // get table entries
@@ -58,7 +58,7 @@ const useFetchProjectsById = (user, table, column) => {
         } finally {
             setIsProjectsloading(false)
         }
-    }
+    }, [supabase, user, table, column])
 
     return { retrievedProjects, isProjectsLoading, errorMessage, getProjectsById }
 }

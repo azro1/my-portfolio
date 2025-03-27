@@ -103,7 +103,7 @@ const UploadAvatar = () => {
             }
             setRegistrationFlag();
         }
-    }, [user]);
+    }, [user, updateTable]);
 
     
     

@@ -1,14 +1,14 @@
 'use client';
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 const useUpdateTable = () => {
     const [error, setError] = useState(null)
     const supabase = createClientComponentClient()
 
     // update a component table
-    const updateTable = async (user, table, obj, column) => {
+    const updateTable = useCallback(async (user, table, obj, column) => {
         setError(null);
 
         try {
@@ -27,7 +27,7 @@ const useUpdateTable = () => {
             setError(error.message)
             return { success: false }
         }
-    }
+    }, [])
 
     return { error, updateTable }
 }

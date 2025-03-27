@@ -17,13 +17,13 @@ const ProjectsViewedList = ({ user }) => {
   // function to handle failure and display global message to user
   useEffect(() => {
     getProjectsById()
-  }, [])
+  }, [getProjectsById])
 
   useEffect(() => {
     if (errorMessage) {
       changeMessage('error', errorMessage)
     }
-  }, [errorMessage])
+  }, [errorMessage, changeMessage])
 
   return (
       <div>

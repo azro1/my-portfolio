@@ -36,7 +36,7 @@ const BrevoChatWidget = () => {
       document.head.removeChild(script);
     };
   }
-  }, []);
+  }, [pathname]);
 
   return null; // No need to render anything
 };

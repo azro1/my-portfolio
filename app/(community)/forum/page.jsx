@@ -6,7 +6,6 @@ import { useState, useEffect, useRef } from 'react';
 // components
 import Comments from "@/app/components/Comments"
 import CommentForm from "@/app/components/CommentForm"
-import Chevron from '@/app/components/Chevron';
 
 // hooks
 import { useFetchUser } from "@/app/hooks/useFetchUser"
@@ -32,10 +31,8 @@ const { changeMessage } = useMessage()
 useEffect(() => {
   if (user) {
     fetchProfile(user)
-  } else {
-    
-  }
-}, [user])
+  } 
+}, [user, fetchProfile])
 
 
 
@@ -43,40 +40,39 @@ useEffect(() => {
 
 
 
-// update comments after new comment is added
-const updateComments = (newComment) => {
+  // update comments after new comment is added
+  const updateComments = (newComment) => {
     setComments(prevComments => [...prevComments, newComment]);
-}
+  }
 
-// as soon as component mounts fetch the last 20 comments
-const fetchComments = async () => {
-    try {
+  // as soon as component mounts fetch the last 20 comments
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
         const supabase = createClientComponentClient();
         const { data, error } = await supabase
-            .from('comments')
-            .select()
-            .order('created_at', { ascending: false }) // Most recent first
-            .range(0, 9); // Fetch the first 10 comments
+          .from('comments')
+          .select()
+          .order('created_at', { ascending: false }) // Most recent first
+          .range(0, 9); // Fetch the first 10 comments
 
         if (error) {
-            setComments([]);
-            console.log(error.message);
+          setComments([]);
+          console.log(error.message);
         }
 
         if (data) {
-            setComments(data.reverse()); // Reverse to display oldest at the top
+          setComments(data.reverse()); // Reverse to display oldest at the top
         }
-    } catch (error) {
+      } catch (error) {
         changeMessage('error', 'Failed to fetch comments. Please try again later.');
         console.error(error.message);
-    } finally {
+      } finally {
         setIsCommentsLoading(false);
-    }
-};
-
-useEffect(() => {
+      }
+    };
     fetchComments();
-}, []);
+  }, []);
 
 
 

@@ -52,7 +52,7 @@ const UserAvatar = ({ user, avatarUrl, width = 32, height = 32, maxWidth, maxHei
         if (user && user.id) {
             getProfile();
         }
-    }, [user]);
+    }, [supabase, user]);
  
 
     if (isProfileLoading) {

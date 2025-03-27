@@ -1,13 +1,13 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useCallback } from "react"
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 const useFetchProfile = () => {
     const [error, setError] = useState('')
     const [profile, setProfile] = useState(null)
 
-    const fetchProfile = async (user) => {
+    const fetchProfile = useCallback(async (user) => {
         const supabase = createClientComponentClient();
   
         try {
@@ -32,7 +32,7 @@ const useFetchProfile = () => {
             console.log(error.message)
             return false
         }
-    }
+    }, [])
 
     return { error, profile, fetchProfile }
 }

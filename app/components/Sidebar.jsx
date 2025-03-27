@@ -54,7 +54,7 @@ const Sidebar = ({ isProfilePage }) => {
       console.log('Subscription status:', status);
     });
     return () => supabase.removeChannel(channel)
-  }, [user])
+  }, [user, supabase])
 
 
 

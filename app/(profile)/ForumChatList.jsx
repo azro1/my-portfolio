@@ -21,36 +21,35 @@ const CommentList = ({ user }) => {
   
 
   // get user comments
-  async function getComments() {
-    try {
-      if (user) {
-        const { data, error } = await supabase
-        .from('comments')
-        .select()
-        .order('created_at', {
-          ascending: false
-        })
-        .eq('comment_id', user.id)
-
-        if (error) {
-          throw new Error(error.message);
-        }
-
-        if (data && data.length > 0) {
-          setComments(data)
-        }
-      }
-    } catch (error) {
-      setError(true)
-      changeMessage('error', 'We encountered an issue while fetching your comments. Try refreshing the page. Please reach out to support if the issue persists.')
-      console.log(error.message);
-    } finally {
-      setIsCommentsLoading(false)
-    }
-  }
-  
-
   useEffect(() => {
+
+    async function getComments() {
+      try {
+        if (user) {
+          const { data, error } = await supabase
+            .from('comments')
+            .select()
+            .order('created_at', {
+              ascending: false
+            })
+            .eq('comment_id', user.id)
+
+          if (error) {
+            throw new Error(error.message);
+          }
+
+          if (data && data.length > 0) {
+            setComments(data)
+          }
+        }
+      } catch (error) {
+        setError(true)
+        changeMessage('error', 'We encountered an issue while fetching your comments. Try refreshing the page. Please reach out to support if the issue persists.')
+        console.log(error.message);
+      } finally {
+        setIsCommentsLoading(false)
+      }
+    }
     getComments();
   }, [])
 
@@ -70,7 +69,7 @@ const CommentList = ({ user }) => {
     }).subscribe()
 
     return () => supabase.removeChannel(channel)
-  }, [user, supabase])
+  }, [user, supabase, changeMessage])
 
 
 

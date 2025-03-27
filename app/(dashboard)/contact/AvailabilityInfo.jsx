@@ -5,12 +5,12 @@ const AvailabilityInfo = () => {
                 When you can reach me?
             </h3>
             <div className='flex flex-col gap-3 max-w-xs'>
-                <p>I'm available:</p>
+                <p>I&apos;m available:</p>
                 <ul className=' text-ashGray leading-7'>
                     <li>Monday to Friday:</li>
                     <li>9:00 AM - 5:00 PM (local time)</li>
                 </ul>
-                <p className="text-ashGray leading-7">Feel free to drop me a line, and I'll get back to you as soon as possible!</p>
+                <p className="text-ashGray leading-7">Feel free to drop me a line, and I&apos;ll get back to you as soon as possible!</p>
             </div>
         </div>
     )

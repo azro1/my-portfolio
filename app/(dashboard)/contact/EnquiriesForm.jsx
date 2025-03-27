@@ -74,15 +74,15 @@ const schema = yup.object({
 
 
 const EnquiriesForm = ({ user }) => {
-    // const [subject, setSubject] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 
-    // custom hook to fetch a users profile
     const { profile, fetchProfile } = useFetchProfile()
-    // global messages function
     const { changeMessage } = useMessage()
-
     const supabase = createClientComponentClient()
+
+
+
+    
 
     const options = [
         "General Inquiry",
@@ -95,12 +95,15 @@ const EnquiriesForm = ({ user }) => {
     ];
 
 
+
+
+
     // watch user prop value to get users profile and show profile error if there is one
     useEffect(() => {
       if (user) {
         fetchProfile(user)
       }
-    }, [user])
+    }, [user, fetchProfile])
 
 
 

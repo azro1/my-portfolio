@@ -59,7 +59,7 @@ const ForgotEmail = () => {
     // refresh is user navigates back from otp form 
     useEffect(() => {
         router.refresh();
-    }, [])
+    }, [router])
 
     
 

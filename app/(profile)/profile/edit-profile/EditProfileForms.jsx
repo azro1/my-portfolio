@@ -66,7 +66,7 @@ const EditProfileForms = () => {
                 changeMessage('error', "Sorry, we couldn't load some of your profile information at this time. Please check your internet connection or refresh the page. If the issuse persist, contact support.");
             }
         }
-    }, [user, fetchProfile, changeMessage]);
+    }, [user, profile, fetchProfile, changeMessage]);
 
     useEffect(() => {
         memoizedFetchProfile();

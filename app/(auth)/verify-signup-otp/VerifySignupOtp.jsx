@@ -5,7 +5,7 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import { useRouter } from "next/navigation";
 import { useForm, useFieldArray } from "react-hook-form";
 
@@ -101,9 +101,9 @@ const VerifySignupOtp = ({ email }) => {
 
 
     // isButtonDisabled function passed down to timer that fires everytime button is disabled which then allows me to show distinct errors on form submission
-    const isButtonDisabled = (bool) => {
+    const isButtonDisabled = useCallback((bool) => {
         setButtonIsDisabled(bool)
-     }
+    }, []);
 
   
 

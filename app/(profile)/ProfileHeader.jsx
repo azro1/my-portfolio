@@ -36,7 +36,7 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
          }
       }
       fetchProfileResult()
-   }, [user])
+   }, [user, changeMessage, fetchProfile])
 
 
    useEffect(() => {
@@ -45,7 +45,7 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
          setFirstName(profile.first_name || user.user_metadata.name || '')
          setBio(profile.bio)
       }
-   }, [profile])
+   }, [profile, user])
 
 
 

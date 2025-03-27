@@ -220,7 +220,7 @@ const LastNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
                             <span >
                                 
                             </span>
-                            <p className='mb-3'>Please enter your last name as you'd like it to appear in your profile</p>
+                            <p className='mb-3'>Please enter your last name as you&apos;d like it to appear in your profile</p>
                             <input
                                 className='w-full p-2.5 rounded-md border-2'
                                 id='draftLastName'

@@ -13,6 +13,7 @@ const RefreshOnLoad = ({ registrationCookie }) => {
     useEffect(() => {
         const fetchUser = async () => {
 
+            // on initial component mount server wont pick up the cookie allowing table check and page refresh thereafter it will and will exiting early preventing any further tabkle checks
             if (registrationCookie) return;
 
             try {
@@ -41,7 +42,7 @@ const RefreshOnLoad = ({ registrationCookie }) => {
             }
         };
         fetchUser();
-    }, [router, supabase]);
+    }, [registrationCookie, supabase, router]);
 
 
 

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { FaHeart } from 'react-icons/fa';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import Image from 'next/image';
 
 
@@ -15,17 +15,18 @@ const FavouriteProjectList = ({ user }) => {
     const { retrievedProjects, isProjectsLoading, errorMessage, getProjectsById } = useFetchProjectsById(user, 'favourites', 'user_id');
     const { changeMessage } = useMessage();
 
-    // function to handle failure and display global message to user
+    
     useEffect(() => {
         getProjectsById()
-    }, [])
+    }, [getProjectsById])
 
 
     useEffect(() => {
         if (errorMessage) {
           changeMessage('error', errorMessage)
         }
-      }, [errorMessage])
+    }, [errorMessage, changeMessage])
+
 
     return (
         <div>

@@ -226,7 +226,7 @@ const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
                 <Modal>
                     <form noValidate>
                         <label className='block mb-3 text-xl font-medium' htmlFor='draftFirstName'>Edit First Name</label>
-                        <p className='mb-3'>Please enter your first name as you'd like it to appear in your profile</p>
+                        <p className='mb-3'>Please enter your first name as you&apos;d like it to appear in your profile</p>
                         <input
                             className='w-full p-2.5 rounded-md border-2'
                             id='draftFirstName'

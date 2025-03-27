@@ -8,7 +8,7 @@ import { format, parseISO } from "date-fns";
 
 
 import Link from 'next/link';
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
@@ -119,7 +119,7 @@ const RegisterForm = () => {
     // refresh page to allow server to detect auf
     useEffect(() => {
         router.refresh();
-      }, [])
+    }, [router])
       
           
 
@@ -262,7 +262,7 @@ const RegisterForm = () => {
 
 
         // function to check if phone number already exists
-        const isPhoneNumberUnique = (phoneNumber) => {
+        const isPhoneNumberUnique = useCallback((phoneNumber) => {
             const convertedPhoneNumber = convertToInternationalFormat(phoneNumber);
 
             // Check if the phone number exists in the phoneNumbers state array
@@ -271,7 +271,7 @@ const RegisterForm = () => {
             );
 
             return phoneExists;
-        }
+        }, [phoneNumbers]);
 
 
 
@@ -307,7 +307,7 @@ const RegisterForm = () => {
             return () => {
               isMounted = false;
             };
-          }, [phone, errors]);
+          }, [phone, isPhoneNumberUnique]);
 
 
 

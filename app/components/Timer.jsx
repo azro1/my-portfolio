@@ -9,11 +9,12 @@ import { useMessage } from "../hooks/useMessage";
 // Memoize the Timer component to prevent unnecessary re-renders
 const Timer = memo(({ authGroupEmailRef, profileEmailRef, profilePhoneRef, isButtonDisabled, isVerified }) => {
   const [isDisabled, setIsDisabled] = useState(true);
-  const [attempts, setAttempts] = useState(0);
   const { changeMessage } = useMessage();
   const [otpTime, setOtpTime] = useState(null); // Track the OTP email request time
   const [phoneOtpTime, setPhoneOtpTime] = useState(null) // Track the OTP phone request time
 
+  const [isEmailRefsSet, setIsEmailRefsSet] = useState(false); // Track when email refs are set
+  const [isPhoneRefsSet, setIsPhoneRefsSet] = useState(false); // Track when phone ref is set
 
 
 
@@ -22,19 +23,42 @@ const Timer = memo(({ authGroupEmailRef, profileEmailRef, profilePhoneRef, isBut
 
   // Set OTP time for auth emails and profile email update immediately after the component loads
   useEffect(() => {
-    if (!otpTime && (authGroupEmailRef?.current || profileEmailRef?.current)) {
+    if (!otpTime && isEmailRefsSet) {
       setOtpTime(Date.now() + 120 * 1000); // Set OTP time to 2 minutes from now
     }
-  }, [otpTime, authGroupEmailRef?.current, profileEmailRef?.current]);
+  }, [otpTime, isEmailRefsSet]);
 
 
   // Set OTP time profile phone update immediately after the component loads
   useEffect(() => {
-    if (!phoneOtpTime && profilePhoneRef?.current) {
+    if (!phoneOtpTime && isPhoneRefsSet) {
       setPhoneOtpTime(Date.now() + 10 * 60 * 1000); // Set OTP time to 10 minutes from now
       // console.log('Phone OTP time set:', Date.now() + 10 * 60 * 1000);  // Log to verify
     }
-  }, [phoneOtpTime, profilePhoneRef?.current]);
+  }, [phoneOtpTime, isPhoneRefsSet]);
+
+
+
+
+
+
+
+
+  // Set isEmailRefsSet to true once the refs are passed in for email refs, which will trigger the useEffects
+  useEffect(() => {
+    if (authGroupEmailRef?.current || profileEmailRef?.current) {
+      setIsEmailRefsSet(true);
+    }
+  }, [authGroupEmailRef, profileEmailRef]);
+
+
+  // Set iisPhoneRefsSet to true once the ref is passed in, which will trigger the useEffects
+  useEffect(() => {
+    if (profilePhoneRef?.current) {
+      setIsPhoneRefsSet(true);
+    }
+  }, [profilePhoneRef]);
+
 
 
 
@@ -152,7 +176,7 @@ const Timer = memo(({ authGroupEmailRef, profileEmailRef, profilePhoneRef, isBut
   // pass isDisabled in as an argument
   useEffect(() => {
     isButtonDisabled(isDisabled);
-  }, [isDisabled]);
+  }, [isButtonDisabled, isDisabled]);
 
 
 
@@ -196,4 +220,5 @@ const Timer = memo(({ authGroupEmailRef, profileEmailRef, profilePhoneRef, isBut
   );
 });
 
+Timer.displayName = "Timer";
 export default Timer;
