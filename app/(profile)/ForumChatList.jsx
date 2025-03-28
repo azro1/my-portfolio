@@ -51,7 +51,7 @@ const CommentList = ({ user }) => {
       }
     }
     getComments();
-  }, [])
+  }, [changeMessage, user, supabase])
 
 
 

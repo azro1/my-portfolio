@@ -36,7 +36,12 @@ const ProjectList = () => {
   if (loading) {
     return (
       <div className='min-h-[516px] flex items-center justify-center'> 
-          <img className='w-16' src="../images/loading/pulse_darkbg.svg" alt="a loading gif" />
+          <Image
+            width={64}
+            height={64}
+            src="/images/loading/pulse_darkbg.svg"  
+            alt="A pulsating loading animation on a dark background" 
+          />
       </div>
     );
   }

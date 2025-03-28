@@ -72,7 +72,7 @@ useEffect(() => {
       }
     };
     fetchComments();
-  }, []);
+  }, [changeMessage]);
 
 
 

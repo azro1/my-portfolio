@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaDesktop, FaPaintBrush, FaLayerGroup, FaColumns, FaServer } from "react-icons/fa";
+import Image from "next/image";
 
 const KeySkills = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -99,7 +100,12 @@ const KeySkills = () => {
         </div>
         ) : (
         <div className="flex-grow flex items-center justify-center">
-          <img className="w-16" src="/images/loading/pulse_darkbg.svg" alt="a loading gif" />
+          <Image
+            width={64}
+            height={64}
+            src="/images/loading/pulse_darkbg.svg"  
+            alt="A pulsating loading animation on a dark background" 
+          />
         </div>
         )}
       </div>

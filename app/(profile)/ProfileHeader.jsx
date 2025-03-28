@@ -2,6 +2,7 @@
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useState, useEffect } from "react";
+import Image from 'next/image';
 
 // components
 import UserAvatar from '@/app/components/navbar/UserAvatar';
@@ -80,10 +81,11 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
 
                   {loading ? (
                      <div className='w-20 h-20 bg-softCharcoal rounded-full overflow-hidden flex items-center justify-center'>
-                        <img
-                           src="../images/loading/loader.gif"
-                           className='w-16 h-16'
-                           alt="Loading avatar"
+                        <Image
+                           width={64}
+                           height={64}
+                           src="/images/loading/loader.gif"
+                           alt="A rotating loading animation on a transparent background"
                         />
                      </div>
                   ) : (

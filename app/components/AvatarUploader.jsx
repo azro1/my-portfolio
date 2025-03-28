@@ -183,8 +183,14 @@ const AvatarUploader = ({ user, updateProfile, btnColor, show3DAvatar }) => {
                             disabled={uploading}
                         >
                             {uploading ? (
-                                <div className='flex items-center justify-center gap-2'>
-                                    <img className="w-5 h-5 opacity-65" src="../../images/loading/reload.svg" alt="Loading indicator" />
+                                <div className='flex items-center justify-center'>
+                                    <Image
+                                        className='opacity-65'
+                                        width={20}
+                                        height={20}
+                                        src="/images/loading/reload.svg"
+                                        alt="A spinning loading animation on a transparent background"
+                                    />
                                 </div>
                             ) : (
                                 'Upload'

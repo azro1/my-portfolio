@@ -34,7 +34,22 @@ const UploadAvatar = () => {
 
 
 
+
+    
+
+    useEffect(() => {
+       localStorage.setItem('hasVisitedRegPage', 'true');
+    }, []);
+
+
+
+
  
+
+
+
+
+
     useEffect(() => {
         const fetchUser = async () => {
             try {

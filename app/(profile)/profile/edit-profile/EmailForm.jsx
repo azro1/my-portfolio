@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import disposableDomains from 'disposable-email-domains';
+import Image from "next/image";
 
 // hooks
 import { useMessage } from "@/app/hooks/useMessage";
@@ -235,8 +236,14 @@ const EmailForm = ({ user, profile }) => {
                         <button className='btn-small bg-goldenRod mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
                         <button className={`btn-small bg-goldenRod mt-3 w-[64px]`} onClick={handleSubmit(handleEmailUpdate)}>
                             {isUpdating ? (
-                                <div className='flex items-center justify-center gap-2'>
-                                    <img className="w-6 h-6 opacity-50" src="../../images/loading/reload.svg" alt="Loading indicator" />
+                                <div className='flex items-center justify-center gap-2 w-[34px] h-[24px]'>
+                                    <Image
+                                        className='opacity-65'
+                                        width={20}
+                                        height={20}
+                                        src="/images/loading/reload.svg"
+                                        alt="A spinning loading animation on a transparent background"
+                                    />
                                 </div>
                             ) : (
                                 'Save'

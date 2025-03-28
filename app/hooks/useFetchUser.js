@@ -32,7 +32,7 @@ const useFetchUser = (bool) => {
             }
         }
         getUser();
-    }, []);
+    }, [supabase.auth]);
 
     return { user, error, isLoading }
 }

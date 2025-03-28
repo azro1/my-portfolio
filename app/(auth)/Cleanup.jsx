@@ -1,12 +1,20 @@
 "use client"
 
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 
 const Cleanup = () => {
     const router = useRouter();
+    
+    // remove reg flag after 2 seconds to givew enough time to display loading gif
+    useEffect(() => {
+        const hasVisitedRegPage = localStorage.getItem('hasVisitedRegPage') === 'true';
+        if (hasVisitedRegPage) {
+            setTimeout(() => localStorage.removeItem('hasVisitedRegPage'), 2000)
+        }
+    }, [])
 
     // get user
     useEffect(() => {

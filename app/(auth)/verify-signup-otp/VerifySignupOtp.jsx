@@ -8,11 +8,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useState, useEffect, useRef, useCallback } from "react"
 import { useRouter } from "next/navigation";
 import { useForm, useFieldArray } from "react-hook-form";
-
+import Image from "next/image";
 
 // components
 import OtpForm from "@/app/components/OtpForm";
-import Loading from "@/app/components/loading";
 
 // custom hooks
 import { useUpdateTable } from "@/app/hooks/useUpdateTable";
@@ -92,6 +91,13 @@ const VerifySignupOtp = ({ email }) => {
 
 
 
+
+
+
+
+    useEffect(() => {
+        setHasVisitedRegPage(localStorage.getItem('hasVisitedRegPage') === 'true');
+    }, []);
 
 
 
@@ -262,8 +268,13 @@ const VerifySignupOtp = ({ email }) => {
 
     return (
         <div className='flex items-center justify-center'>
-            {hasVisitedRegPage ? (
-                <Loading />
+            {hasVisitedRegPage === null ? null : hasVisitedRegPage ? (
+                <Image
+                    width={64}
+                    height={64}
+                    src="/images/loading/pulse_lightbg.svg"  
+                    alt="A pulsating loading animation on a light background" 
+                />
             ) : (
                 <OtpForm
                     containerStyles={'sm:shadow-outer sm:p-10 sm:rounded-xl bg-white'}

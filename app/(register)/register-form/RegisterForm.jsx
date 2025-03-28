@@ -8,6 +8,7 @@ import { format, parseISO } from "date-fns";
 
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -363,15 +364,15 @@ const RegisterForm = () => {
                     if (!updateTableResult.success) {
                         throw new Error("An unexpected error occurred and we couldn't save your profile information. Please try again later. If the issue persists, contact support.")
                     }
+
+                    // reset flag in the table
+                    await updateTable(user, 'profiles', { has_visited_reg: false }, 'id');
                 }
 
-                // reset flag in the table
-                await updateTable(user, 'profiles', { has_visited_reg: false }, 'id');
-                
-                
                 navigator.sendBeacon(`${location.origin}/api/auth/is-registered`, JSON.stringify({ isRegistered: true }));
 
-
+                localStorage.removeItem('hasVisitedRegPage');
+                localStorage.removeItem('hasUploadedAvatar');
                 changeMessage('success', 'Your account has been created and you are now logged in');
                 setRedirect(true)
 
@@ -539,8 +540,14 @@ const RegisterForm = () => {
 
             <button className={`p-3 px-3.5 rounded-lg cursor-pointer text-white font-medium block w-full mt-1.5 transition duration-500 bg-green-700 ${(isLoading || phoneExists) ? 'opacity-65' : 'opacity-100'}`} disabled={isLoading || phoneExists} aria-live={Object.keys(errors).length > 0 || isLoading ? 'assertive' : 'off'} onClick={handleSubmit(handleUpdateProfile)}>
                 {isLoading ? (
-                    <div className='flex items-center justify-center gap-2'>
-                        <img className="w-6 h-6 opacity-65" src="../images/loading/reload.svg" alt="Loading indicator" />
+                    <div className='flex items-center justify-center'>
+                        <Image
+                            className='opacity-65'
+                            width={24}
+                            height={24}
+                            src="/images/loading/reload.svg"
+                            alt="A spinning loading animation on a transparent background"
+                        />
                     </div>
                 ) : (
                     'Register'

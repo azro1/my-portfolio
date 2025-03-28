@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useState, useEffect, useRef, useCallback } from "react"
 import { useRouter } from "next/navigation";
 import { useForm, useFieldArray } from "react-hook-form";
-
+import Image from "next/image";
 
 // components
 import OtpForm from "@/app/components/OtpForm";
@@ -55,7 +55,8 @@ const VerifyLoginOtp = ({ email }) => {
         const [isVerified, setIsVerified] = useState(false)
         const [buttonIsDisabled, setButtonIsDisabled] = useState(null)
         const [isActive, setIsActive] = useState(null)
-    
+        const [hasVisitedRegPage, setHasVisitedRegPage] = useState(false);
+
     
         const supabase = createClientComponentClient()
         const { changeMessage } = useMessage()
@@ -76,6 +77,19 @@ const VerifyLoginOtp = ({ email }) => {
 
 
         
+
+
+
+
+
+
+
+        useEffect(() => {
+            setHasVisitedRegPage(localStorage.getItem('hasVisitedRegPage') === 'true');
+        }, []);
+
+
+
     
     
     
@@ -266,26 +280,34 @@ const VerifyLoginOtp = ({ email }) => {
     
         return (
             <div className='flex items-center justify-center'>
-                <OtpForm
-                    containerStyles={'sm:shadow-outer sm:p-10 sm:rounded-xl bg-white'}
-                    handleSubmit={handleSubmit}
-                    onSubmit={onSubmit}
-                    title={'Login'}
-                    subHeading={'To login, enter the code we sent to your email address'}
-                    fields={fields}
-                    register={register}
-                    handleInputChange={handleInputChange}
-                    handleKeyDown={handleKeyDown}
-                    errors={errors}
-                    isLoading={isLoading}
-                    formState={formState}
-                    trigger={trigger}
-                    authGroupEmailRef={emailRef}
-                    isButtonDisabled={isButtonDisabled}
-                    isVerified={isVerified}
-                /> 
+                {hasVisitedRegPage === null ? null : hasVisitedRegPage ? (
+                    <Image
+                        width={64}
+                        height={64}
+                        src="/images/loading/pulse_lightbg.svg"  
+                        alt="A pulsating loading animation on a light background" 
+                    />
+                ) : ( 
+                    <OtpForm
+                        containerStyles={'sm:shadow-outer sm:p-10 sm:rounded-xl bg-white'}
+                        handleSubmit={handleSubmit}
+                        onSubmit={onSubmit}
+                        title={'Login'}
+                        subHeading={'To login, enter the code we sent to your email address'}
+                        fields={fields}
+                        register={register}
+                        handleInputChange={handleInputChange}
+                        handleKeyDown={handleKeyDown}
+                        errors={errors}
+                        isLoading={isLoading}
+                        formState={formState}
+                        trigger={trigger}
+                        authGroupEmailRef={emailRef}
+                        isButtonDisabled={isButtonDisabled}
+                        isVerified={isVerified}
+                    />
+                )} 
             </div>
-    
         )
     
 }

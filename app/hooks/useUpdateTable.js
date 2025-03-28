@@ -27,7 +27,7 @@ const useUpdateTable = () => {
             setError(error.message)
             return { success: false }
         }
-    }, [])
+    }, [supabase])
 
     return { error, updateTable }
 }

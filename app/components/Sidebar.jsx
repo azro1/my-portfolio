@@ -116,7 +116,13 @@ const Sidebar = ({ isProfilePage }) => {
         <div className="sidebar-content  fixed bg-softCharcoal  min-h-[113px] md:flex md:items-center md:justify-end xl:h-full xl:overflow-y-scroll xl:hide-scrollbar  xl:items-start xl:justify-center ">
 
           <div className="hidden md:block  mr-20 xl:mr-0 xl:mt-56">
-            <img className="w-8 opacity-60" src="/images/loading/spinner.svg" alt="" />
+                <Image
+                    className="opacity-60"
+                    width={32}
+                    height={32}
+                    src="/images/loading/spinner.svg"
+                    alt="A rotating loading animation on a transparent background"
+                />
           </div>
         </div>
       </div>

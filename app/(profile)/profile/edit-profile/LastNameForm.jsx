@@ -4,7 +4,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState, useEffect } from 'react';
 import { useForm } from "react-hook-form";
-
+import Image from "next/image";
 
 // custom hooks
 import { useUpdateTable } from '@/app/hooks/useUpdateTable'
@@ -238,8 +238,14 @@ const LastNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
                         <button className='btn-small bg-goldenRod mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
                         <button className='btn-small bg-goldenRod mt-3 w-[64px]' onClick={handleSubmit(handleNameUpdate)}>
                             {saving ? (
-                                <div className='flex items-center justify-center gap-2'>
-                                    <img className="w-6 h-6 opacity-50" src="../../images/loading/reload.svg" alt="Loading indicator" />
+                                <div className='flex items-center justify-center gap-2 w-[34px] h-[24px]'>
+                                    <Image
+                                        className='opacity-65'
+                                        width={20}
+                                        height={20}
+                                        src="/images/loading/reload.svg"
+                                        alt="A spinning loading animation on a transparent background"
+                                    />
                                 </div>
                             ) : (
                                 'Save'
