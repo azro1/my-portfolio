@@ -113,7 +113,7 @@ const EditProfileForms = () => {
                 <AvatarUploader
                     user={user}
                     updateProfile={updateProfile}
-                    btnColor='bg-goldenRod'
+                    btnColor='bg-chocolate'
                     show3DAvatar={false}
                 />
             </div>

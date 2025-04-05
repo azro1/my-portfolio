@@ -241,8 +241,8 @@ const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
                         
                     </form>
                     <div className='flex items-center'>
-                        <button className='btn-small bg-goldenRod mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                        <button className='btn-small bg-goldenRod mt-3 w-[64px]' onClick={handleSubmit(handleNameUpdate)}>
+                        <button className='btn-small bg-chocolate mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
+                        <button className='btn-small bg-chocolate mt-3 w-[64px]' onClick={handleSubmit(handleNameUpdate)}>
                             {saving ? (
                                 <div className='flex items-center justify-center gap-2 w-[34px] h-[24px]'>
                                     <Image

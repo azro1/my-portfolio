@@ -23,7 +23,7 @@ const Interests = () => {
 
         {/* Text Section */}
         <div className="flex-grow text-center lg:w-1/2 lg:text-left">
-          <h2 className="subheading font-b text-goldenRod mb-4">My Interests</h2>
+          <h2 className="subheading font-b text-chocolate mb-4">My Interests</h2>
           <p className="leading-7">
             When I&apos;m not absorbed in pixels and code or catching up on design trends, I indulge in the joys of cooking and diving into captivating books. These creative outlets fuel my imagination and bring balance to my life, inspiring both my personal and professional pursuits.
           </p>

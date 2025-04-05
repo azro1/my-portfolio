@@ -96,7 +96,7 @@ const CommentForm = ({ user, profile, updateComments }) => {
                 {user && (
                     <div>
                         <form onSubmit={handleSubmit(handleComment)}>
-                            <label className='text-xl font-b text-goldenRod sr-only' htmlFor='comment'>Leave a Comment</label>
+                            <label className='text-xl font-b text-chocolate sr-only' htmlFor='comment'>Leave a Comment</label>
                             <input
                                 id='comment'
                                 spellCheck='false'
@@ -104,7 +104,7 @@ const CommentForm = ({ user, profile, updateComments }) => {
                                     required: 'Comment is required'
                                 })}
                                 placeholder="Tell us what's on your mind..."
-                                className='py-3 px-4 w-full outline-none text-base rounded-md text-frostWhite bg-midnightSlate block'
+                                className='py-3 px-4 w-full outline-none text-base rounded-md text-cloudGray bg-charcoalGray block'
                             ></input>
                         </form>
                     </div>

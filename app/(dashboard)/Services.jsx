@@ -48,7 +48,7 @@ const Services = () => {
                 <span className="text-frostWhite">{service.icon}</span>
               </div>
               <div className="flex flex-col items-center text-center max-w-xl mt-6">
-                <h2 className="subheading font-medium text-goldenRod mb-3">
+                <h2 className="subheading font-medium text-chocolate mb-3">
                   {service.title}
                 </h2>
                 <p className="leading-7">{service.text}</p>

@@ -224,7 +224,7 @@ const VerifyLoginOtp = ({ email }) => {
                         console.log(error)
                     }
 
-                // when they have previously passed verification but left without completing registration
+                // when they have previously passed verification but left without completing registration redirect to a reg page based on avatar upload flag check
                 if (data?.is_verified && !data?.is_reg_complete) {
 
                     try {

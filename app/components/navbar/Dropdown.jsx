@@ -7,11 +7,17 @@ import { useRouter } from "next/navigation";
 import LoggedInMenu from "./LoggedInMenu";
 import LoggedOutMenu from "./LoggedOutMenu";
 
+// hooks
+import { useUpdateTable } from "@/app/hooks/useUpdateTable";
+
 
 const Dropdown = ({ user, handleCloseMenu, isProfilePage, dropDownRef }) => {
   const router = useRouter()
+  const { updateTable } = useUpdateTable();
 
   const handleLogout = async (e) => {
+    await updateTable(user, 'profiles', { is_online: false }, 'id');
+
     const supabase = createClientComponentClient()
     const {error} = await supabase.auth.signOut()
     

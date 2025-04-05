@@ -27,7 +27,7 @@ const ProfileMenuLarge = ({ handleLogout, handleCloseMenu, isProfilePage }) => {
             <Link href={'/profile'} className={`${activeLink === '/profile' ? 'text-cloudGray' : 'text-charcoalGrayLight'}`} onClick={(e) => {
                 handleActiveLink('/profile');
             }}>
-                <div className='flex items-center p-2 px-4 xl:hover:bg-ashGray xl:hover:text-cloudGray transition-bg duration-300' onClick={handleCloseMenu}>
+                <div className='flex items-center p-2 px-4 xl:hover:bg-ashGray xl:hover:text-cloudGray transition-colors duration-300' onClick={handleCloseMenu}>
                     <span className='text-base'>My Profile</span>
                 </div>
             </Link>
@@ -38,7 +38,7 @@ const ProfileMenuLarge = ({ handleLogout, handleCloseMenu, isProfilePage }) => {
                         handleActiveLink('/profile/edit-profile');
     
                     }}>
-                        <div className='flex items-center p-2 px-4 xl:hover:bg-ashGray xl:hover:text-cloudGray transition-bg duration-300' onClick={handleCloseMenu}>
+                        <div className='flex items-center p-2 px-4 xl:hover:bg-ashGray xl:hover:text-cloudGray transition-colors duration-300' onClick={handleCloseMenu}>
                             <span className='text-base'>Edit Profile</span>
                         </div>
                     </Link>
@@ -46,7 +46,7 @@ const ProfileMenuLarge = ({ handleLogout, handleCloseMenu, isProfilePage }) => {
                         handleActiveLink('/profile/data-privacy');
     
                     }}>
-                        <div className='flex items-center p-2 px-4 xl:hover:bg-ashGray xl:hover:text-cloudGray transition-bg duration-300' onClick={handleCloseMenu}>
+                        <div className='flex items-center p-2 px-4 xl:hover:bg-ashGray xl:hover:text-cloudGray transition-colors duration-300' onClick={handleCloseMenu}>
                             <span className='text-base'>Your Data</span>
                         </div>
                     </Link>
@@ -56,19 +56,19 @@ const ProfileMenuLarge = ({ handleLogout, handleCloseMenu, isProfilePage }) => {
             <Link href={'/forum'} className={`${activeLink === '/forum' ? 'text-cloudGray' : 'text-charcoalGrayLight'}`} onClick={(e) => {
                 handleActiveLink('/forum');
             }}>
-                <div className='flex items-center p-2 px-4 xl:hover:bg-ashGray xl:hover:text-cloudGray transition-bg duration-300' onClick={handleCloseMenu}>
+                <div className='flex items-center p-2 px-4 xl:hover:bg-ashGray xl:hover:text-cloudGray transition-colors duration-300' onClick={handleCloseMenu}>
                     <span className='text-base'>Forum</span>
                 </div>
             </Link>
-            <Link href={'/help'} className={`${activeLink === '/help' ? 'text-cloudGray' : 'text-charcoalGrayLight'}`} onClick={(e) => {
-                handleActiveLink('/help');
+            <Link href={'/profile/help'} className={`${activeLink === '/help' ? 'text-cloudGray' : 'text-charcoalGrayLight'}`} onClick={(e) => {
+                handleActiveLink('/profile/help');
             }}>
-                <div className='flex items-center p-2 px-4 xl:hover:bg-ashGray xl:hover:text-cloudGray transition-bg duration-300' onClick={handleCloseMenu}>
+                <div className='flex items-center p-2 px-4 xl:hover:bg-ashGray xl:hover:text-cloudGray transition-colors duration-300' onClick={handleCloseMenu}>
                     <span className='text-base'>Help</span>
                 </div>
             </Link>
             <div onClick={(e) => handleLogout(e)}>
-                <div className='flex items-center p-2 px-4 text-charcoalGrayLight xl:hover:bg-ashGray xl:hover:text-cloudGray transition-bg duration-300 cursor-pointer' onClick={handleCloseMenu}>
+                <div className='flex items-center p-2 px-4 text-charcoalGrayLight xl:hover:bg-ashGray xl:hover:text-cloudGray transition-colors duration-300 cursor-pointer' onClick={handleCloseMenu}>
                     <span className='text-base'>Logout</span>
                 </div>
             </div>

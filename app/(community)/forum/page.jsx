@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from 'react';
 // components
 import Comments from "@/app/components/Comments"
 import CommentForm from "@/app/components/CommentForm"
+import OnlineUsers from './OnlineUsers';
 
 // hooks
 import { useFetchUser } from "@/app/hooks/useFetchUser"
@@ -117,26 +118,30 @@ const loadMoreComments = async () => {
 return (
     <div className="flex flex-col min-h-screen overflow-hidden pt-28 xl:pt-0">
       {/* Header */}
-      <div className="p-[x-pad] text-center">
-        <h2 className="subheading text-stoneGray font-b">Welcome to the Community Forum</h2>
-        <p className='mt-1.5 text-stoneGray'>Before engaging, please take a moment to read and understand the community rules. We encourage respectful discussions and a positive atmosphere. Enjoy your stay!</p>
+      <div className="p-6 text-center bg-ashGray">
+        <h2 className="subheading text-white font-b">Welcome to the Community Forum</h2>
+        <p className='pt-1 text-lg text-cloudGray'>Before engaging, please take a moment to read and understand the community rules. We encourage respectful discussions and a positive atmosphere. Enjoy your stay!</p>
       </div>
       
-      <div className='bg-midnightSlate mx-2 h-[1px]'></div>
-
       {/* Content Area */}
       <div className="flex-grow flex flex-col w-full">
         {/* Comments Section */}
-        <div className="flex-grow sm:flex-grow-0 overflow-y-auto h-full">
+        <div className="flex-grow overflow-y-auto h-full sm:flex-grow-0 md:flex md:flex-row-reverse">
+          <div className='p-4 bg-nightSky'>
+            <OnlineUsers
+              user={user}
+            />
+          </div>
           <Comments 
             user={user}
             comments={comments}
             loadComments={loadMoreComments}
           />
+
         </div>
   
         {/* Input Section */}
-        <div className="flex-grow flex items-end p-4">
+        <div className="flex-grow flex items-end pt-2 px-4 p-6">
           <CommentForm 
             user={user}
             profile={profile}

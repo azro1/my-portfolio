@@ -58,8 +58,8 @@ const ProfileMenu = ({ handleLogout, handleCloseMenu, isProfilePage, isOpen }) =
                             <span className='text-base'>Forum</span>
                         </div>
                     </Link>
-                    <Link href={'/help'} className={`${activeLink === '/help' ? 'text-cloudGray' : 'text-charcoalGrayLight'}`} onClick={(e) => {
-                        handleActiveLink('/help');
+                    <Link href={'/profile/help'} className={`${activeLink === '/help' ? 'text-cloudGray' : 'text-charcoalGrayLight'}`} onClick={(e) => {
+                        handleActiveLink('/profile/help');
                     }}>
                         <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray' onClick={handleCloseMenu}>
                             <span className='text-base'>Help</span>

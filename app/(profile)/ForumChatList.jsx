@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
-import { MdDeleteForever } from "react-icons/md";
+import { FiTrash2 } from "react-icons/fi";
 
 // hooks
 import { useMessage } from "@/app/hooks/useMessage";
@@ -104,7 +104,7 @@ const CommentList = ({ user }) => {
                                     <span className="text-stoneGray text-base leading-normal block">{comment.text}</span>
                                     <span className='text-sm text-frostWhite filter brightness-80'>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}</span>
                                 </div>
-                                <MdDeleteForever className="min-w-max cursor-pointer text-goldenRod" size={26} onClick={() => handleDelete(comment.id)}/>
+                                <FiTrash2 className="min-w-max cursor-pointer text-chocolate" size={22} onClick={() => handleDelete(comment.id)}/>
                             </div>
                         ))
                     ) : (

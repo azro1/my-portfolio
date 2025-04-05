@@ -1,7 +1,7 @@
 const AvailabilityInfo = () => {
     return (
         <div>
-            <h3 className='font-b text-goldenRod mb-4 text-1.375 md:text-2xl'>
+            <h3 className='font-b text-chocolate mb-4 text-1.375 md:text-2xl'>
                 When you can reach me?
             </h3>
             <div className='flex flex-col gap-3 max-w-xs'>

@@ -20,12 +20,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={ubuntu.className}>
-          <div>
-            <MessageProvider>
-              <MessageBanner />
-              {children}
-            </MessageProvider>
-          </div>
+        <div>
+          <MessageProvider>
+            <MessageBanner />
+            {children}
+          </MessageProvider>
+        </div>
       </body>
     </html>
   )

@@ -55,7 +55,7 @@ const Sidebar = ({ isProfilePage }) => {
         setAvatarUrl((prevAvatarUrl) => payload.new.avatar_url)
       }
     }).subscribe((status) => {
-      console.log('Subscription status:', status);
+      console.log('Sidebar Subscription status:', status);
     });
     return () => supabase.removeChannel(channel)
   }, [user, supabase])
@@ -120,6 +120,31 @@ const Sidebar = ({ isProfilePage }) => {
 
 
 
+
+
+
+  if (loading) {
+    return (
+      <div className={`w-full box-border xl:inline-block ${isOpen ? 'xl:w-[300px]' : 'xl:w-[64px]'} xl:h-screen xl:min-h-[768px]`}>
+        <div className="sidebar-content  fixed bg-softCharcoal  min-h-[113px] md:flex md:items-center md:justify-end xl:h-full xl:overflow-y-scroll xl:hide-scrollbar  xl:items-start xl:justify-center ">
+
+          <div className="hidden md:block  mr-20 xl:mr-0 xl:mt-56">
+                <Image
+                    className="opacity-60"
+                    width={32}
+                    height={32}
+                    src="/images/loading/spinner.svg"
+                    alt="A rotating loading animation on a transparent background"
+                />
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+
+
+
   
   return (
     <div className={`w-full box-border xl:inline-block transition-width duration-200 ease-in delay-100 ${isOpen ? 'xl:w-[300px]' : 'xl:w-[64px]'} xl:h-screen xl:min-h-[768px]`}>
@@ -165,11 +190,11 @@ const Sidebar = ({ isProfilePage }) => {
                 }}>
                   <div className='xl:flex items-center gap-3'>
                     <div className="hidden xl:flex items-center">
-                      <FiHome className={`icon ${isOpen ? 'text-goldenRod' : 'text-cloudGray'}`} size={20} />
+                      <FiHome className={`icon ${isOpen ? 'text-chocolate' : activeLink === '/' ? 'text-cloudGray' : 'text-ashGray'}`} size={20} />
                     </div>
 
                     <div className={`flex items-center transition-opacity duration-200 ease-in delay-100 ${isOpen ? 'xl:opacity-100' : 'xl:opacity-0'}`}>
-                      <span className={`text-base transition-text duration-300 group-hover:text-cloudGray ${activeLink === '/' ? 'text-cloudGray' : ''}`}>Home</span>
+                      <span className={`text-base transition-text duration-300 group-hover:text-cloudGray ${activeLink === '/' ? 'text-cloudGray' : 'text-ashGray'}`}>Home</span>
                     </div>
                   </div>
                 </Link>
@@ -180,7 +205,7 @@ const Sidebar = ({ isProfilePage }) => {
                 }}>
                   <div className='xl:flex items-center gap-3'>
                     <div className="hidden xl:flex items-center">
-                      <FiInfo className={`icon ${isOpen ? 'text-goldenRod' : 'text-cloudGray'}`} size={20} />
+                      <FiInfo className={`icon ${isOpen ? 'text-chocolate' : activeLink === '/about' ? 'text-cloudGray' : 'text-ashGray'}`} size={20} />
                     </div>
 
                     <div className={`flex items-center transition-opacity duration-200 ease-in delay-100 ${isOpen ? 'xl:opacity-100' : 'xl:opacity-0'}`}>
@@ -195,7 +220,7 @@ const Sidebar = ({ isProfilePage }) => {
                 }}>
                   <div className='xl:flex items-center gap-3'>
                     <div className="hidden xl:flex items-center">
-                      <FiPhone className={`icon ${isOpen ? 'text-goldenRod' : 'text-cloudGray'}`} size={20} />
+                      <FiPhone className={`icon ${isOpen ? 'text-chocolate' : activeLink === '/contact' ? 'text-cloudGray' : 'text-ashGray'}`} size={20} />
                     </div>
 
                     <div className={`flex items-center transition-opacity duration-200 ease-in delay-100 ${isOpen ? 'xl:opacity-100' : 'xl:opacity-0'}`}>
@@ -211,7 +236,7 @@ const Sidebar = ({ isProfilePage }) => {
                   <Link href={'/login'} onClick={() => handleActiveLink('/login')}>
                     <div className='xl:flex items-center gap-3'>
                       <div className="hidden xl:flex items-center">
-                        <FiLogIn className={`icon ${isOpen ? 'text-goldenRod' : 'text-cloudGray'}`} size={24} />
+                        <FiLogIn className={`icon ${isOpen ? 'text-chocolate' : activeLink === '/login' ? 'text-cloudGray' : 'text-ashGray'}`} size={24} />
                       </div>
 
                       <div className={`flex items-center transition-opacity duration-200 ease-in delay-100 ${isOpen ? 'xl:opacity-100' : 'xl:opacity-0'}`}>
@@ -226,7 +251,7 @@ const Sidebar = ({ isProfilePage }) => {
                   <Link href={'/signup'} onClick={() => handleActiveLink('/signup')}>
                     <div className='xl:flex items-center gap-3'>
                       <div className="hidden xl:flex items-center ">
-                        <FiUserPlus className={`icon ${isOpen ? 'text-goldenRod' : 'text-cloudGray'}`} size={24} />
+                        <FiUserPlus className={`icon ${isOpen ? 'text-chocolate' : activeLink === '/signup' ? 'text-cloudGray' : 'text-ashGray'}`} size={24} />
                       </div>
 
                       <div className={`flex items-center transition-opacity duration-200 ease-in delay-100 ${isOpen ? 'xl:opacity-100' : 'xl:opacity-0'}`}>

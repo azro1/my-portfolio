@@ -1,0 +1,64 @@
+{
+  "faqs": [
+      {
+          "question": "How do I create an account?",
+          "answer": "To create an account, click on 'Sign Up', enter your details, and verify your email.",
+          "id": 1
+      },
+      {
+          "question": "How do I delete my account?",
+          "answer": "Go to 'Account Settings', scroll down, and click the 'Delete Account' button. Please be aware that this action is irreversible.",
+          "id": 2
+      },
+      {
+          "question": "What happens if I forget my email?",
+          "answer": "Go to the 'Forgot Email' page and submit your phone number to receive an OTP to recover your account.",
+          "id": 3
+      },
+      {
+          "question": "How do I update my profile information?",
+          "answer": "To update your profile information in the Profile section navigate to 'Edit Profile' to edit your details.",
+          "id": 4
+      },
+      {
+          "question": "Can I save my favorite projects?",
+          "answer": "Yes! Click the 'Save' button on any project to add it to your favorites.",
+          "id": 5
+      },
+      {
+          "question": "How can I contact you?",
+          "answer": "You can use the Enquiries form on the 'Contact' page. Alternatively, you can send a message through the online chat at the bottom of the page.",
+          "id": 6
+      },
+      {
+          "question": "Is my data secure?",
+          "answer": "Yes, your data is encrypted and stored securely. Visit the 'Your Data' section in the Profile section to learn more about how we use and protect your information.",
+          "id": 7
+      },
+      {
+          "question": "How do I participate in the community chat?",
+          "answer": "You need to log in and navigate to the 'Community Forum' from within the Profile section to join discussions with other users.",
+          "id": 8
+      },
+      {
+          "question": "Is the site accessible?",
+          "answer": "Yes, the site is designed with accessibility in mind, including keyboard navigation and screen reader support.",
+          "id": 9
+      },
+      {
+          "question": "What happens if I am banned?",
+          "answer": "If your account is banned, you will lose access to all site features. If you believe this was a mistake, contact support for review.",
+          "id": 10
+      },
+      {
+          "question": "What if I can't access my account or the site is down?",
+          "answer": "First, check your internet connection and try clearing your browser cache. If the issue persists, check our status page or contact support.",
+          "id": 11
+      },
+      {
+          "question": "What happens if there is abuse in the forum?",
+          "answer": "Report any abusive behavior using the 'Report' button. Moderators will review the report and take appropriate action, including warnings or bans.",
+          "id": 12
+      }
+  ]
+}

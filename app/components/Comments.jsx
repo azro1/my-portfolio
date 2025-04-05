@@ -6,10 +6,9 @@ import { useState, useEffect, useRef } from "react";
 import { FaUserCircle } from "react-icons/fa";
 
 // components
-
 import Avatar from "@/app/components/Avatar";
 
-const Comments = ({ user, comments, loadComments }) => {
+const Comments = ({ comments, loadComments }) => {
     const [isAtBottom, setIsAtBottom] = useState(true); 
     const commentsContainerRef = useRef(null);
 
@@ -93,8 +92,8 @@ const Comments = ({ user, comments, loadComments }) => {
 
 
 
-       // Scroll to bottom if user is already at the bottom
-       useEffect(() => {
+    // Scroll to bottom if user is already at the bottom
+    useEffect(() => {
         if (isAtBottom && commentsContainerRef.current) {
             commentsContainerRef.current.scrollTop = commentsContainerRef.current.scrollHeight;
         }
@@ -106,77 +105,66 @@ const Comments = ({ user, comments, loadComments }) => {
 
 
     return (
-        <div className="h-[calc(100vh-200px)] overflow-y-scroll hide-scrollbar p-4">
+        <div className="h-[calc(100vh-200px)] overflow-y-scroll hide-scrollbar flex-1">
             {comments && comments.length > 0 ? (
                 <div
-                    className="overflow-y-auto hide-scrollbar h-full flex flex-col"
+                    className="overflow-y-auto hide-scrollbar h-full flex flex-col gap-8 p-6"
                     ref={commentsContainerRef}
                 >
                     {comments.map((comment) => (
-                        <div className="mb-14 flex items-center gap-3" key={comment.id}>
-                                {comment.avatar_url ? (
-                                    comment.avatar_url.startsWith("https") ? (
-                                        <div className="overflow-hidden rounded-full max-w-[50px] max-h-[50px] min-w-[50px]">
-                                            <Image
-                                                src={comment.avatar_url}
-                                                alt="User avatar"
-                                                width={50}
-                                                height={50}
-                                                sizes="(max-width: 480px) 40px, (max-width: 768px) 60px, (max-width: 1024px) 80px, 100px"
-                                                quality={100}
-                                                priority
-                                            />
-                                        </div>
-                                    ) : (
-                                        <div className="min-w-[50px] min-h-[50px]">
-                                            <Avatar
-                                                url={comment.avatar_url}
-                                                width={50}
-                                                height={50}
-                                            />
-                                        </div>
-
-                                    )
-                                ) : comment.avatar_url === null && user?.user_metadata.avatar_url ? (
-                                    <div className="overflow-hidden rounded-full max-w-[50px] max-h-[50px] min-w-[50px]">
+                        <div className="flex items-start gap-3 max-w-max my-2" key={comment.id}>
+    
+    
+                            {/* Render avatar */}
+                            {comment.avatar_url ? (
+                                comment.avatar_url.startsWith("https") ? (
+                                    <div className="overflow-hidden rounded-full max-w-[42px] max-h-[42px] min-w-[42px]">
                                         <Image
-                                            src={user?.user_metadata.avatar_url}
-                                            alt="Fallback user avatar"
-                                            width={50}
-                                            height={50}
+                                            src={comment.avatar_url}
+                                            alt="User avatar"
+                                            width={42}
+                                            height={42}
                                             sizes="(max-width: 480px) 40px, (max-width: 768px) 60px, (max-width: 1024px) 80px, 100px"
                                             quality={100}
                                             priority
                                         />
                                     </div>
                                 ) : (
-                                    <div className="w-fit rounded-full justify-self-center min-w-[50px]">
-                                        <FaUserCircle size={50} color="gray" />
+                                    <div className="min-w-[42px] min-h-[42px]">
+                                        <Avatar url={comment.avatar_url} width={42} height={42} />
                                     </div>
-                                )}
-                                <div className="flex-1">
-                                    <div className="flex gap-2 items-center">
-                                        <h6 className="text-lg text-goldenRod font-medium">
-                                            {comment.first_name || comment.full_name}
-                                        </h6>
-                                        <span className="text-sm text-ashGray">
-                                            {format(new Date(comment.created_at), 'd/M/yy, h:mm a')}
-                                        </span>
-                                    </div>
-                                    <p className="text-base text-stoneGray whitespace-normal break-words">
-                                        <span>{comment.text}</span>
-                                    </p>
+                                )
+                            ) : (
+                                <div className="w-fit rounded-full justify-self-center min-w-[42px]">
+                                    <FaUserCircle size={42} color="gray" />
                                 </div>
+                            )}
+    
+                            <div className="flex-1 flex flex-col gap-2">
+                                <div className="flex items-center gap-2">
+                                    <h6 className="text-chocolate">
+                                        {comment.first_name || comment.full_name}
+                                    </h6>
+                                    <span className="text-xs text-ashGray">
+                                        {format(new Date(comment.created_at), 'd/M/yy, h:mm a')}
+                                    </span>
+                                </div>
+    
+                                <p className="bg-slateOnyx p-2 px-3 rounded-md text-base text-frostWhite whitespace-normal break-words max-w-max">
+                                    <span>{comment.text}</span>
+                                </p>
                             </div>
+                        </div>
                     ))}
                 </div>
             ) : (
                 <div className="flex items-center justify-center text-center h-full text-ashGray">
-                        No discussions yet. Start the conversation and share your thoughts!
+                    No discussions yet. Start the conversation and share your thoughts!
                 </div>
             )}
         </div>
     );
+    
 };
 
 export default Comments;
