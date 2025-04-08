@@ -267,7 +267,7 @@ const VerifySignupOtp = ({ email }) => {
 
 
     return (
-        <div className='flex items-center justify-center'>
+        <div className='main-container flex items-center justify-center'>
             {hasVisitedRegPage === null ? null : hasVisitedRegPage ? (
                 <Image
                     width={64}
@@ -277,12 +277,12 @@ const VerifySignupOtp = ({ email }) => {
                 />
             ) : (
                 <OtpForm
-                    containerStyles={'sm:shadow-outer sm:p-10 sm:rounded-xl bg-white'}
+                    containerStyles={'flex-1 w-full max-w-sm bg-white text-center sm:max-w-md sm:shadow-outer sm:p-10 sm:rounded-xl'}
                     handleSubmit={form.handleSubmit}
                     onSubmit={onSubmit}
                     title={'Sign up'}
-                    subHeading={'Enter the verification code sent to your email to activate your account'}
                     fields={fields}
+                    email={emailRef.current}
                     register={register}
                     handleInputChange={handleInputChange}
                     handleKeyDown={handleKeyDown}

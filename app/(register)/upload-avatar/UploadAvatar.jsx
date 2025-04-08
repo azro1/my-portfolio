@@ -9,7 +9,6 @@ import { useRouter } from "next/navigation";
 
 // components
 import AvatarUploader from "@/app/components/AvatarUploader";
-import Button from '@/app/components/Button';
 
 // hooks
 import { useUpdateTable } from '@/app/hooks/useUpdateTable';
@@ -161,12 +160,13 @@ const UploadAvatar = () => {
 
 
     return (
-        <div className='min-h-[640px] flex flex-col justify-center'>
-            <p className='pb-2'>Step 1/2</p>
-            <div className='flex flex-col items-center justify-center gap-4 max-w-[500px] sm:bg-white sm:shadow-outer sm:p-12 sm:rounded-xl relative'>
+        <div className='flex-1 flex flex-col justify-center w-full max-w-xs sm:max-w-md min-h-[640px]'>
+            <div className='flex flex-col items-center justify-center gap-4 sm:bg-white sm:shadow-outer sm:p-10 sm:rounded-xl relative'>
+                <p className='w-full pb-1'>Step 1/2</p>
+             
                 <div>
                     <h2 className='text-3xl mb-4 font-b text-nightSky'>Upload Your Avatar</h2>
-                    <p className=''>Choose an image to personalize your profile or skip this step to continue. This helps others recognize you but is entirely optional.</p>
+                    <p>Choose an image to personalize your profile or skip this step to continue. This helps others recognize you but is entirely optional.</p>
                 </div>
 
                 <div>
@@ -180,21 +180,13 @@ const UploadAvatar = () => {
 
                 <Link className='w-full' href='/register-form'>
                     <div className='flex'>
-                        <Button
-                            isLoading={false}
-                            padding='py-2 px-3.5'
-                            width='w-auto'
-                            backgroundColor='bg-nightSky'
-                            margin='ml-auto'
-                            text='Skip'
-                        />
+                        <button className='text-nightSky ml-auto hover:underline'>
+                            Skip
+                        </button>
                     </div>
                 </Link>
             </div>
         </div>
-
-
-
     );
 };
 

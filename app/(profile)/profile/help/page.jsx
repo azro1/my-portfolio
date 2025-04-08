@@ -27,7 +27,7 @@ const Help = () => {
   }, [userQuery])
 
   return (
-    <div className='flex'>
+    <div className='flex px-[x-pad]'>
       <main>
         <div className='h-screen flex pt-48 pb-24 min-h-[1636px] md:min-h-[1034px] xl:pt-36 xl:pb-28'>
 

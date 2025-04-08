@@ -34,7 +34,7 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="py-16 md:py-32 bg-nightSky">
+        <div className="py-16 md:pb-32 bg-nightSky">
           <div className="main-container">
             <main>
               <MySkills />

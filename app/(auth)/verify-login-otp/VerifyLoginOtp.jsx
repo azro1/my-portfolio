@@ -279,7 +279,7 @@ const VerifyLoginOtp = ({ email }) => {
     
     
         return (
-            <div className='flex items-center justify-center'>
+            <div className='main-container flex items-center justify-center'>
                 {hasVisitedRegPage === null ? null : hasVisitedRegPage ? (
                     <Image
                         width={64}
@@ -289,12 +289,12 @@ const VerifyLoginOtp = ({ email }) => {
                     />
                 ) : ( 
                     <OtpForm
-                        containerStyles={'sm:shadow-outer sm:p-10 sm:rounded-xl bg-white'}
+                        containerStyles={'flex-1 w-full max-w-sm sm:max-w-md bg-white text-center sm:shadow-outer sm:p-10 sm:rounded-xl'}
                         handleSubmit={handleSubmit}
                         onSubmit={onSubmit}
                         title={'Login'}
-                        subHeading={'To login, enter the code we sent to your email address'}
                         fields={fields}
+                        email={emailRef.current}
                         register={register}
                         handleInputChange={handleInputChange}
                         handleKeyDown={handleKeyDown}

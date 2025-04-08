@@ -442,121 +442,123 @@ const RegisterForm = () => {
 
 
   return (
-    <div className='flex flex-col justify-center min-h-[640px] md:min-h-[924px]'>
+        <div className='flex flex-col justify-center min-h-[640px] md:min-h-[924px]'>
 
 
-        <div className='flex items-center justify-between pb-2'>
-           <Link href='/upload-avatar' onClick={(e) => handleBackButton(e)}>
-                <button className='text-nightSky p-1 rounded-md hover:bg-cloudGray transtion-bg duration-300 '>
-                    <IoMdArrowBack size={24} />
-                </button>
-            </Link>
+            <div className='flex flex-col gap-4 w-full max-w-xs sm:max-w-md sm:bg-white sm:shadow-outer sm:p-12 sm:pt-10 sm:rounded-xl'>
+                <p className=''>Step 2/2</p>
+
+                <form className='flex flex-col gap-3' noValidate>
+                    <h2 className='text-3xl text-center mb-2 font-b text-nightSky leading-normal'>Enter your personal information</h2>
+
+                    <div>
+                        <div className='relative '>
+                            <label className='mb-1 text-base text-ashGray block' htmlFor='firstname'>First Name</label>
+                            <input
+                                id='firstname'
+                                type='text'
+                                spellCheck='false'
+                                autoFocus
+                                maxLength='15'
+                                placeholder='John'
+                                minLength='3'
+                                {...register('firstname')}
+                                className={`w-full  py-2 px-4 text-nightSky rounded-md border-[1px]  ${errors.firstname ? 'border-red-600' : 'border-gray-300'}`}
+
+                            />
+
+                            {errors?.firstname ? <FaExclamationCircle className={'absolute bottom-2.5 right-3 text-red-600'} size={21} /> : ((!errors?.firstname && isFormSubmitted) ? <FaCheckCircle className={'absolute bottom-2.5 right-3 text-green-600'} size={21} /> : '')}
+
+                        </div>
+                        {errors?.firstname && <p className='text-sm text-red-600 mt-1'>{errors.firstname.message}</p>}
+                    </div>
 
 
-            <p className=''>Step 2/2</p>
+                    <div>
+                        <div className='relative '>
+                            <label className='mb-1 text-base text-ashGray block' htmlFor='lastname'>Last Name</label>
+                            <input
+                                id='lastname'
+                                type='text'
+                                maxLength='25'
+                                placeholder='Smith'
+                                minLength='2'
+                                {...register('lastname')}
+                                className={`w-full py-2 px-4 text-nightSky rounded-md border-[1px] ${errors.lastname ? 'border-red-600' : 'border-gray-300'}`}
+                            />
+
+                            {errors?.lastname ? <FaExclamationCircle className={'absolute bottom-2.5 right-3 text-red-600'} size={21} /> : ((!errors?.lastname && isFormSubmitted) ? <FaCheckCircle className={'absolute bottom-2.5 right-3 text-green-600'} size={21} /> : '')}
+                        </div>
+                        {errors?.lastname && <p className='text-sm text-red-600 mt-1'>{errors.lastname.message}</p>}
+                    </div>
+
+
+
+                    <div>
+                        <div className='relative'>
+                            <label className='mb-1 text-base text-ashGray block' htmlFor='dob'>Date of Birth</label>
+                            <input
+                                id='dob'
+                                type='date'
+                                {...register('dob')}
+                                className={`w-full py-2 px-4 text-nightSky ${!dob ? 'text-opacity-55' : 'text-opacity-100'}  rounded-md border-[1px] ${errors.dob ? 'border-red-600' : 'border-gray-300'}`}
+                            />
+
+                            {errors?.dob ? <FaExclamationCircle className={'absolute bottom-3.5 right-2.5 text-red-600'} size={21} /> : ((!errors?.dob && isFormSubmitted) ? <FaCheckCircle className={'absolute bottom-2.5 right-3 text-green-600'} size={21} /> : '')}
+                        </div>
+                        {errors?.dob && <p className='text-sm text-red-600 pt-1'>{errors.dob.message}</p>}
+                    </div>
+
+
+                    <div>
+                        <div className='relative'>
+                            <label className='max-w-min mb-1 text-base text-ashGray block' htmlFor='phone'>Phone</label>
+                            <input
+                                id='phone'
+                                type='tel'
+                                spellCheck={false}
+                                placeholder="01234 or +44 1234"
+                                {...register('phone')}
+                                className={`w-full py-2 px-4 text-nightSky rounded-md border-[1px] ${(errors.phone || phoneExists) ? 'border-red-600' : 'border-gray-300'}`}
+                                onKeyDown={handleKeyDown}
+                            />
+
+                            {(errors?.phone || phoneExists) ? <FaExclamationCircle className={'absolute bottom-2.5 right-3 text-red-600'} size={21} /> : ((!errors?.phone && !phoneExists && isFormSubmitted) ? <FaCheckCircle className={'absolute bottom-2.5 right-3 text-green-600'} size={21} /> : '')}
+                        </div>
+                        {errors.phone ? <p className="text-sm text-red-600 mt-1">{errors.phone.message}</p> : phoneExists ? <p className="text-sm text-red-600 mt-1">Phone already exists</p> : null}
+                    </div>
+
+                    <button className={`p-3 px-3.5 rounded-lg cursor-pointer text-white font-medium block w-full mt-1.5 transition duration-500 bg-green-700 ${(isLoading || phoneExists) ? 'opacity-65' : 'opacity-100'}`} disabled={isLoading || phoneExists} aria-live={Object.keys(errors).length > 0 || isLoading ? 'assertive' : 'off'} onClick={handleSubmit(handleUpdateProfile)}>
+                        {isLoading ? (
+                            <div className='flex items-center justify-center'>
+                                <Image
+                                    className='opacity-65'
+                                    width={24}
+                                    height={24}
+                                    src="/images/loading/reload.svg"
+                                    alt="A spinning loading animation on a transparent background"
+                                />
+                            </div>
+                        ) : (
+                            'Register'
+                        )}
+                    </button>
+
+                </form>
+
+
+                <div>
+                    <Link href='/upload-avatar' onClick={(e) => handleBackButton(e)}>
+                        <button className='text-nightSky hover:underline'>
+                            Back
+                        </button>
+                    </Link>
+                </div>
+            </div>
+
 
         </div>
-        
-
-            <form className='flex flex-col gap-3 max-w-[500px] sm:bg-white sm:shadow-outer sm:p-12 sm:pt-10 sm:rounded-xl' noValidate>
-            <h2 className='text-3xl mb-4 text-center font-b text-nightSky leading-normal'>Enter your personal information</h2>
-
-            <div>
-                <div className='relative '>
-                    <label className='mb-1 text-base text-ashGray block' htmlFor='firstname'>First Name</label>
-                        <input
-                            id='firstname'
-                            type='text'
-                            spellCheck='false'
-                            autoFocus
-                            maxLength='15'
-                            placeholder='John'
-                            minLength='3'
-                            {...register('firstname')}
-                            className={`w-full  py-2 px-4 text-nightSky rounded-md border-[1px]  ${errors.firstname ? 'border-red-600' : 'border-gray-300'}`}
-
-                        />
-
-                    {errors?.firstname ? <FaExclamationCircle className={'absolute bottom-2.5 right-3 text-red-600'} size={21} /> : ((!errors?.firstname && isFormSubmitted) ? <FaCheckCircle className={'absolute bottom-2.5 right-3 text-green-600'} size={21} /> : '')}
-
-                </div>
-                {errors?.firstname && <p className='text-sm text-red-600 mt-1'>{errors.firstname.message}</p>}
-            </div>
-
-
-            <div>
-                <div className='relative '>
-                    <label className='mb-1 text-base text-ashGray block' htmlFor='lastname'>Last Name</label>
-                        <input
-                            id='lastname'
-                            type='text'
-                            maxLength='25'
-                            placeholder='Smith'
-                            minLength='2'
-                            {...register('lastname')}
-                            className={`w-full py-2 px-4 text-nightSky rounded-md border-[1px] ${errors.lastname ? 'border-red-600' : 'border-gray-300'}`}
-                        />
-                        
-                    {errors?.lastname ? <FaExclamationCircle className={'absolute bottom-2.5 right-3 text-red-600'} size={21} /> : ((!errors?.lastname && isFormSubmitted) ? <FaCheckCircle className={'absolute bottom-2.5 right-3 text-green-600'} size={21} /> : '')}
-                </div>
-                {errors?.lastname && <p className='text-sm text-red-600 mt-1'>{errors.lastname.message}</p>}
-            </div>
-
-
-
-            <div>
-                <div className='relative'>
-                    <label className='mb-1 text-base text-ashGray block' htmlFor='dob'>Date of Birth</label>
-                    <input
-                        id='dob'
-                        type='date'
-                        {...register('dob')}
-                        className={`w-full py-2 px-4 text-nightSky ${!dob ? 'text-opacity-55' : 'text-opacity-100'}  rounded-md border-[1px] ${errors.dob ? 'border-red-600' : 'border-gray-300'}`}
-                    />
-
-                    {errors?.dob ? <FaExclamationCircle className={'absolute bottom-3.5 right-2.5 text-red-600'} size={21} /> : ((!errors?.dob && isFormSubmitted) ? <FaCheckCircle className={'absolute bottom-2.5 right-3 text-green-600'} size={21} />  : '')}
-                </div>
-                {errors?.dob && <p className='text-sm text-red-600 pt-1'>{errors.dob.message}</p>}
-            </div>
-
-
-            <div>
-                <div className='relative'>
-                    <label className='max-w-min mb-1 text-base text-ashGray block' htmlFor='phone'>Phone</label>
-                        <input 
-                            id='phone'
-                            type='tel'
-                            spellCheck={false}
-                            placeholder="01234 or +44 1234"
-                            {...register('phone')}
-                            className={`w-full py-2 px-4 text-nightSky rounded-md border-[1px] ${(errors.phone || phoneExists) ? 'border-red-600' : 'border-gray-300'}`}
-                            onKeyDown={handleKeyDown}
-                        />
-                    
-                    {(errors?.phone || phoneExists) ? <FaExclamationCircle className={'absolute bottom-2.5 right-3 text-red-600'} size={21} /> : ((!errors?.phone && !phoneExists && isFormSubmitted) ? <FaCheckCircle className={'absolute bottom-2.5 right-3 text-green-600'} size={21} /> : '')}
-                </div>
-                {errors.phone ? <p className="text-sm text-red-600 mt-1">{errors.phone.message}</p> : phoneExists ? <p className="text-sm text-red-600 mt-1">Phone already exists</p> : null}
-            </div>
-
-            <button className={`p-3 px-3.5 rounded-lg cursor-pointer text-white font-medium block w-full mt-1.5 transition duration-500 bg-green-700 ${(isLoading || phoneExists) ? 'opacity-65' : 'opacity-100'}`} disabled={isLoading || phoneExists} aria-live={Object.keys(errors).length > 0 || isLoading ? 'assertive' : 'off'} onClick={handleSubmit(handleUpdateProfile)}>
-                {isLoading ? (
-                    <div className='flex items-center justify-center'>
-                        <Image
-                            className='opacity-65'
-                            width={24}
-                            height={24}
-                            src="/images/loading/reload.svg"
-                            alt="A spinning loading animation on a transparent background"
-                        />
-                    </div>
-                ) : (
-                    'Register'
-                )}
-            </button>
-
-        </form>
-    </div>
-  )
+    )
 }
 
 export default RegisterForm

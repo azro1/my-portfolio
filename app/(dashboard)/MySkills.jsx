@@ -5,12 +5,12 @@ import { motion } from "framer-motion";
 import { FaHtml5, FaCss3Alt, FaJsSquare, FaReact, FaNodeJs, FaGithub } from "react-icons/fa";
 
 const technicalSkills = [
-  { icon: <FaHtml5 size={54} />, name: "HTML" },
-  { icon: <FaCss3Alt size={54} />, name: "CSS" },
-  { icon: <FaJsSquare size={54} />, name: "JavaScript" },
-  { icon: <FaReact size={54} />, name: "React" },
-  { icon: <FaNodeJs size={54} />, name: "Node.js" },
-  { icon: <FaGithub size={54} />, name: "GitHub" },
+  { icon: <FaHtml5 size={34} />, name: "HTML" },
+  { icon: <FaCss3Alt size={34} />, name: "CSS" },
+  { icon: <FaJsSquare size={34} />, name: "JavaScript" },
+  { icon: <FaReact size={34} />, name: "React" },
+  { icon: <FaNodeJs size={34} />, name: "Node.js" },
+  { icon: <FaGithub size={34} />, name: "GitHub" },
 ];
 
 const MySkills = () => {
@@ -20,7 +20,7 @@ const MySkills = () => {
         {/* Icons Section */}
 
         <div className="flex-1 flex justify-end">
-          <div className="grid grid-cols-[minmax(80px,_auto)] md:grid-cols-[minmax(80px,_auto)_minmax(80px,_auto)_minmax(80px,_auto)] gap-2">
+          <div className="grid grid-cols-[minmax(30px,_auto)] md:grid-cols-[minmax(30px,_auto)_minmax(30px,_auto)_minmax(30px,_auto)] gap-2">
             {technicalSkills.map((skill, index) => (
               <motion.div
                 key={index}

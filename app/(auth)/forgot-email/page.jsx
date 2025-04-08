@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 import Link from "next/link";
-import { IoMdArrowBack } from "react-icons/io";
 
 // components
 import Button from "@/app/components/Button";
@@ -162,22 +161,14 @@ const ForgotEmail = () => {
 
 
 
-    
+
     return (
-        <div className='main-container relative'>
+        <div className='main-container flex flex-col items-center justify-center gap-4 w-full bg-white sm:max-w-sm sm:shadow-outer sm:p-10 sm:pb-6 sm:rounded-xl'>
 
-            <Link className='absolute left-3 -top-10 sm:-top-12' href='/login'>
-                <button className='text-nightSky sm:p-1 rounded-md hover:bg-cloudGray transtion-bg duration-300 '>
-                    <IoMdArrowBack size={24} />
-                </button>
-            </Link>
-
-            <div className='w-full flex items-center justify-center bg-white sm:shadow-outer sm:p-12 sm:pt-10 sm:rounded-xl sm:max-w-[420px]'>
-
+            <div className='flex-1 w-full max-w-xs'>
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
                     <div>
-                        <h2 className='text-3xl mb-4 font-b text-nightSky'>Forgot Email?</h2>
-                        <p className='mb-4 sm:max-w-xs'>Please provide the phone number you used when you signed up</p>
+                        <h2 className='text-3xl text-center mb-4 font-b text-nightSky'>Recover Email</h2>
 
                         <label className='max-w-min mb-2 text-base text-ashGray block' htmlFor='phone'>Phone</label>
                         <input
@@ -193,7 +184,7 @@ const ForgotEmail = () => {
                         {errors.phone && (
                             <p className="text-red-500 mt-1 text-sm">{errors.phone.message}</p>
                         )}
-                        
+
                         <div className='mt-4'>
                             <Button
                                 isLoading={isLoading}
@@ -206,8 +197,16 @@ const ForgotEmail = () => {
 
                     </div>
                 </form>
-
             </div>
+
+            <div>
+                <Link href='/login'>
+                    <button className='text-nightSky'>
+                        Back to Login
+                    </button>
+                </Link>
+            </div>
+
         </div>
     )
 }

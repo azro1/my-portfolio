@@ -164,7 +164,6 @@ const Signup = () => {
       handleSubmit={handleSubmit}
       onSubmit={onSubmit}
       title='Sign up'
-      subHeading='Enter your email address to recieve a security code to create your account'
       register={register}
       errors={errors}
       isChecked={isChecked}

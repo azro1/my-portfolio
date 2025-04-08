@@ -1,5 +1,6 @@
 
 // components
+import { useEffect } from "react"
 import Button from "./Button"
 import Timer from "./Timer"
 
@@ -8,7 +9,8 @@ const OtpForm = ({
     handleSubmit,
     onSubmit,
     title,
-    subHeading,
+    email,
+    phone,
     fields,
     register,
     handleInputChange,
@@ -24,12 +26,27 @@ const OtpForm = ({
     isVerified 
 }) => {
 
+
+useEffect(() => {
+    if (email) {
+        console.log(email);
+    }
+},[email])
+
+const maskedPhone = phone ? `********${phone.slice(-4)}` : '';
+
   return (
     <div className={containerStyles}> 
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <h2 className='text-3xl leading-tight mb-4 font-b text-nightSky'>{title}</h2>
-            <p className='max-w-xs mb-4'>{subHeading}</p>
 
+            {email && (
+                <p className='max-w-xs mb-4'>A verification code has been sent to <span className='text-black'>{email}</span>. Please enter the code into the fields below</p>
+            )}
+
+            {phone && (
+                <p className='max-w-xs mb-4'>A verification code has been sent to the number ending in <span className='text-black'>{maskedPhone}</span>. Please enter the code into the fields below</p> 
+            )}
 
             <div className='flex flex-wrap gap-2'>
                 {fields.map((field, index) => (

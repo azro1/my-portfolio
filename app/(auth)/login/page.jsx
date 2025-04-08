@@ -165,7 +165,6 @@ const Login = () => {
        handleSubmit={handleSubmit}
        onSubmit={onSubmit}
        title='Login'
-       subHeading='Enter your email address to recieve a security code for quick and secure login'
        register={register}
        errors={errors}
        isSignup={false}

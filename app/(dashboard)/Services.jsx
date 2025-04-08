@@ -1,28 +1,33 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FaCode, FaPaintBrush, FaLayerGroup, FaMobile } from "react-icons/fa";
+import { 
+  FiLayout, 
+  FiFigma, 
+  FiFramer, 
+  FiSmartphone 
+} from "react-icons/fi";
 
 const Services = () => {
   const services = [
     {
       title: "Web",
-      icon: <FaCode size={50} />,
+      icon: <FiLayout size={34} />,
       text: "Passionate web developer focused on creating unique, functional, and visually appealing websites",
     },
     {
       title: "UX / UI",
-      icon: <FaLayerGroup size={50} />,
+      icon: <FiFramer size={34} />,
       text: "Creative UI designer crafting intuitive interfaces that enhance user experiences with innovation",
     },
     {
       title: "Mobile",
-      icon: <FaMobile size={50} />,
+      icon: <FiSmartphone size={34} />,
       text: "Experienced in crafting seamless user experiences for both iOS and Android platforms",
     },
     {
       title: "Design",
-      icon: <FaPaintBrush size={50} />,
+      icon: <FiFigma size={34} />,
       text: "A passionate graphic designer adept at transforming ideas into visually striking concepts",
     },
   ];
@@ -44,10 +49,10 @@ const Services = () => {
               }}
               className="flex flex-col items-center justify-center max-w-sm min-h-[310px] p-6 bg-nightSky rounded-md md:p-8"
             >
-              <div className="p-5 rounded-lg shadow-[0_0_8px_2px_#131519] bg-gradient-to-tl from-charcoalGray via-nightSky to-cloudGray transition-all transform hover:scale-105">
+              <div className="p-4 rounded-lg shadow-[0_0_8px_2px_#131519] bg-gradient-to-tl from-charcoalGray via-nightSky to-cloudGray transition-all transform hover:scale-105">
                 <span className="text-frostWhite">{service.icon}</span>
               </div>
-              <div className="flex flex-col items-center text-center max-w-xl mt-6">
+              <div className="flex flex-col items-center text-center max-w-xl mt-4">
                 <h2 className="subheading font-medium text-chocolate mb-3">
                   {service.title}
                 </h2>

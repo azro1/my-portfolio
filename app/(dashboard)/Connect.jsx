@@ -8,12 +8,12 @@ import {
 } from 'react-icons/fa';
 
 const socialPlatforms = [
-  {icon: <FaGithub />, url: 'https://github.com/azro1'},
-  {icon: <FaLinkedin />, url: 'https://www.linkedin.com/in/yourprofile'},
-  {icon: <FaYoutubeSquare />, url: 'https://www.youtube.com/channel/UCSK7zfwlgMq3r88lkchHsSw'},
-  {icon: <FaInstagram />, url: 'https://www.instagram.com/yourprofile'},
-  {icon: <FaDiscord />, url: 'https://discord.com/users/yourprofile'},
-  {icon: <FaWhatsapp />, url: 'https://wa.me/yourphonenumber'}
+  {icon: <FaGithub size={28} />, url: 'https://github.com/azro1'},
+  {icon: <FaLinkedin size={28} />, url: 'https://www.linkedin.com/in/yourprofile'},
+  {icon: <FaYoutubeSquare size={28} />, url: 'https://www.youtube.com/channel/UCSK7zfwlgMq3r88lkchHsSw'},
+  {icon: <FaInstagram size={28} />, url: 'https://www.instagram.com/yourprofile'},
+  {icon: <FaDiscord size={28} />, url: 'https://discord.com/users/yourprofile'},
+  {icon: <FaWhatsapp size={28} />, url: 'https://wa.me/yourphonenumber'}
 ]
 
 const Connect = () => {
@@ -29,10 +29,10 @@ const Connect = () => {
 
          
           
-          <div className="w-max mx-auto  flex flex-col items-center justify-center gap-8 md:flex-row p-6">
+          <div className="w-max mx-auto  flex flex-col items-center justify-center gap-4 md:flex-row p-6">
 
             {socialPlatforms.map((platform, index) => (
-              <a href={platform.url} target="_blank" rel="noopener noreferrer" className="p-4 rounded-full shadow-[0_0_4px_0_#131519] bg-gradient-to-tl from-charcoalGray via-nightSky to-cloudGray text-white text-3xl hover:scale-110 transform transition-all duration-200 ease-in-out" key={index}>
+              <a href={platform.url} target="_blank" rel="noopener noreferrer" className="p-4 text-white rounded-full shadow-[0_0_8px_2px_#131519] bg-gradient-to-tl from-charcoalGray via-nightSky to-stoneGray transition-shadow duration-300" key={index}>
                 {platform.icon}
               </a>
             ))}

@@ -17,13 +17,12 @@ const VerifyEmailOtp = async() => {
   }
 
   return (
-    <div className='min-h-screen flex items-center justify-center'>
+    <div className='h-screen flex-1 flex items-center justify-center w-full'>
       <ProfileEmailOtpForm
         email={email}
         contact='email address'
         verificationType='email_change'
         title='Update Email'
-        subHeading='Enter the code we sent to your new email address to complete the update'
         successMessage='OTP verifcation was successful. Your email address has been updated.'
       />
     </div>

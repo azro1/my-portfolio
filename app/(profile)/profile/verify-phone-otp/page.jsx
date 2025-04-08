@@ -17,13 +17,12 @@ const VerifyPhoneOtp = async() => {
   }
   
   return (
-    <div className='min-h-screen flex items-center justify-center'>
+    <div className='h-screen flex-1 flex items-center justify-center w-full'>
       <ProfilePhoneOtpForm
         phone={phone}
         contact='phone number'
         verificationType='phone_change'
         title='Update Phone'
-        subHeading="For security enter the code we've sent to your new phone number"
         successMessage='OTP verifcation was successful. Your phone number has been updated.'
       />
     </div>
