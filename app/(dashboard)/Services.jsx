@@ -56,7 +56,7 @@ const Services = () => {
                 <h2 className="subheading font-medium text-chocolate mb-3">
                   {service.title}
                 </h2>
-                <p className="leading-7">{service.text}</p>
+                <p className="md:leading-7">{service.text}</p>
               </div>
             </motion.div>
           ))}

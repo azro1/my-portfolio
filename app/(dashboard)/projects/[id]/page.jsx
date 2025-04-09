@@ -25,6 +25,7 @@ export async function generateMetadata({ params }) {
 }
 
 async function getProject(id) {
+  // await new Promise((resolve) => setTimeout(resolve, 3000)); // Simulate a delay
   const supabase = createServerComponentClient({ cookies })
   const { data } = await supabase.from('projects')
     .select()
@@ -62,12 +63,12 @@ const Project = async ({ params }) => {
     <div className="flex flex-col">
           <div className="main-container">
             <main>
-              <div className="h-screen flex flex-col items-center min-h-[1154px]">
+              <div className="h-screen flex flex-col items-center min-h-[1154px] xl:min-h-[1154px]">
                 <div className="w-full flex-grow flex items-center justify-center">
 
-                  <div className='flex flex-col justify-center md:h-full'>
-                    <h2 className='subheading font-b text-chocolate'>{project.title}</h2>
-                    <div className='mt-8 grid gap-y-6 md:grid-auto-rows md:grid-cols-2'>
+                  <div className='flex flex-col justify-center h-full pt-[92px] xl:pt-0'>
+                    <h2 className='subheading font-b text-nightSky'>{project.title}</h2>
+                    <div className='mt-6 grid gap-y-6 md:grid-auto-rows md:grid-cols-2'>
 
                       <div className='rounded-md md:col-span-2 relative w-full h-[380px] lg:h-auto'>
                         <Image
@@ -84,8 +85,8 @@ const Project = async ({ params }) => {
 
                       <div className='md:row-start-2 md:col-start-1 pb-3 md:col-span-2 relative'>
                         <ProjectFavouriteButton className={'absolute right-0 top-1'} projectId={project.id} user={user} />
-                        <h3 className='text-1.375 font-b text-chocolate'>Project Description</h3>
-                        <p className='pt-3 leading-7' >{project.description}</p>
+                        <h3 className='text-xl md:text-1.375 font-b text-nightSky'>Project description</h3>
+                        <p className='pt-2.5 leading-7' >{project.description}</p>
                       </div>
 
                       <div className='row-start-3 col-start-1 md:col-start-1 md:row-start-3'>
@@ -125,7 +126,7 @@ const Project = async ({ params }) => {
                           <div className='text-ashGray text-base leading-7'>
                             Project Url:{' '}
                             <a href={project.url} target='_blank' rel="noopener noreferrer">
-                              <span className='text-chocolate text-base'>
+                              <span className='text-black text-base'>
                                 {project.url}
                               </span>
                             </a>

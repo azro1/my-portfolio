@@ -249,7 +249,7 @@ const ProfileEmailOtpForm = ({ email, contact, verificationType, title, subHeadi
 
 
     return (
-        <div className='flex-1 flex items-center justify-center bg-softGray w-full absolute left-0 right-0 min-h-screen pt-[100px] xl:static xl:max-w-md xl:min-h-[394px] xl:rounded-xl xl:p-0'> 
+        <div className='flex-1 flex items-center justify-center bg-softGray w-full absolute left-0 right-0 min-h-screen xl:static xl:max-w-[402px] xl:min-h-[404px] xl:rounded-xl'> 
             <OtpForm
                 containerStyles={'flex flex-col items-center justify-center w-full max-w-sm sm:max-w-md text-center px-[x-pad]'}
                 handleSubmit={handleSubmit}

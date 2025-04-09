@@ -26,19 +26,12 @@ const OtpForm = ({
     isVerified 
 }) => {
 
-
-useEffect(() => {
-    if (email) {
-        console.log(email);
-    }
-},[email])
-
 const maskedPhone = phone ? `********${phone.slice(-4)}` : '';
 
   return (
     <div className={containerStyles}> 
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
-            <h2 className='text-3xl leading-tight mb-4 font-b text-nightSky'>{title}</h2>
+            <h2 className='text-3xl leading-tight mb-3 font-b text-nightSky'>{title}</h2>
 
             {email && (
                 <p className='max-w-xs mb-4'>A verification code has been sent to <span className='text-black'>{email}</span>. Please enter the code into the fields below</p>
@@ -48,7 +41,7 @@ const maskedPhone = phone ? `********${phone.slice(-4)}` : '';
                 <p className='max-w-xs mb-4'>A verification code has been sent to the number ending in <span className='text-black'>{maskedPhone}</span>. Please enter the code into the fields below</p> 
             )}
 
-            <div className='flex flex-wrap gap-2'>
+            <div className='flex gap-2'>
                 {fields.map((field, index) => (
                     <div key={field.id}>
                         <label htmlFor={`codes[${index}].code`} className="max-w-min mb-2 text-base text-ashGray"></label>
@@ -56,7 +49,7 @@ const maskedPhone = phone ? `********${phone.slice(-4)}` : '';
                             transition={{ type: 'spring', stiffness: 150, damping: 25 }}
                             {...register(`codes[${index}].code`)}
                             id={`codes[${index}].code`}
-                            type='text'
+                            type='tel'
                             maxLength={1}
                             className={`text-center w-[48px] h-[48px] rounded-md border-[1px] border-gray-300 text-lg text-nightSky ${(formState.isSubmitted && typeof errors.codes === 'object' && !Array.isArray(errors.codes)) || (formState.isSubmitted && Array.isArray(errors.codes) && errors.codes.find((error) => error?.code?.message)) ? 'border-red-600' : 'border-gray-300'}`}
                             onChange={(e) => {

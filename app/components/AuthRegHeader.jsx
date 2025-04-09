@@ -18,7 +18,7 @@ const AuthRegHeader = () => {
     const protectedRoutes = routes.some(route => pathname.includes(route));
     
     return (
-        <header className='bg-nightSky w-full min-h-[90px] flex items-center z-40'>
+        <header className='bg-nightSky w-full min-h-[92px] flex items-center z-40'>
             <div className='max-w-screen-xl w-full mx-auto'>
             <div className=' w-max pl-4'>
                 <main>
@@ -36,7 +36,6 @@ const AuthRegHeader = () => {
                 </main>
             </div>
             </div>
-
         </header>
     )
 }

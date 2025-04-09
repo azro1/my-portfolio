@@ -20,7 +20,7 @@ const MySkills = () => {
         {/* Icons Section */}
 
         <div className="flex-1 flex justify-end">
-          <div className="grid grid-cols-[minmax(30px,_auto)] md:grid-cols-[minmax(30px,_auto)_minmax(30px,_auto)_minmax(30px,_auto)] gap-2">
+          <div className="grid grid-cols-[minmax(30px,_auto)] md:grid-cols-[minmax(30px,_auto)_minmax(30px,_auto)_minmax(30px,_auto)] gap-4 md:gap-2">
             {technicalSkills.map((skill, index) => (
               <motion.div
                 key={index}
@@ -43,8 +43,8 @@ const MySkills = () => {
 
         {/* Text Section */}
         <div className="flex-1 flex flex-col items-center text-center md:items-start md:text-left">
-            <h2 className="subheading font-b text-chocolate mb-4">My Skills</h2>
-          <p className="leading-7 lg:max-w-xs">
+            <h2 className="subheading font-b text-chocolate mb-3.5">My Skills</h2>
+          <p className="md:leading-7 lg:max-w-xs">
             I specialize in both front-end and back-end technologies to create user-friendly and efficient web applications
           </p>
         </div>

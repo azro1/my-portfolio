@@ -151,7 +151,7 @@ const Sidebar = ({ isProfilePage }) => {
 
 
       
-      <div className="sidebar-content fixed bg-softCharcoal xl:h-full xl:overflow-y-scroll xl:overflow-x-hidden xl:hide-scrollbar ">
+      <div className="sidebar-content fixed bg-softCharcoal xl:h-full xl:overflow-y-scroll xl:overflow-x-hidden xl:hide-scrollbar">
 
           <div className={`hidden xl:block absolute top-3 cursor-pointer z-10 p-3 rounded-md ${!isOpen ? 'right-2.5 hover:bg-charcoalGray' : 'right-2'}`} onClick={handleToggleSidebar}>
             {isOpen ? (
@@ -162,8 +162,9 @@ const Sidebar = ({ isProfilePage }) => {
           </div>
 
           <nav className="px-[x-pad] flex justify-between md:gap-6 relative xl:px-0 xl:flex-col xl:justify-normal xl:gap-0 xl:min-h-[768px] ">
-            {/* Code Dynamics Logo */}
-            <div className="flex items-center justify-center py-4 xl:p-10 xl:min-h-[160px]">
+            
+            {/* Large Logo */}
+            <div className="hidden xl:flex items-center justify-center py-4 xl:p-10 xl:min-h-[160px]">
               <Link href='/'>
                 <Image
                   className='cursor-pointer'
@@ -177,12 +178,29 @@ const Sidebar = ({ isProfilePage }) => {
               </Link>
             </div>
 
+            {/* Small Logo */}
+            <div className="flex items-center py-4 min-h-[92px] xl:hidden">
+              <Link href='/'>
+                <Image
+                  className='cursor-pointer'
+                  src={'/images/my_logo.svg'}
+                  alt="Navigate to home page"
+                  width={60}
+                  height={60}
+                  priority
+                  quality={100}
+                />
+              </Link>
+            </div>
+
             {/* hamburger menu for logged out users on mobiles*/}
-            {!user && <div className="flex items-center md:hidden">
-              <Chevron />
-            </div>}
+            {!user && (
+              <div className="flex items-center min-h-[92px] md:hidden">
+                <Chevron />
+              </div>
+            )}
             
-            <ul className='hidden md:flex-1 md:flex md:items-center md:justify-end md:gap-8 xl:flex-none xl:flex-col xl:items-stretch xl:justify-start xl:gap-0'>
+            <ul className='hidden md:min-h-[92px] md:flex-1 md:flex md:items-center md:justify-end md:gap-8 xl:flex-none xl:flex-col xl:items-stretch xl:justify-start xl:gap-0'>
               <div className='hidden xl:block bg-charcoalGray mx-2 h-[1px]'></div>
               <li className={`group xl:m-2 xl:mb-0 xl:p-3 xl:max-h-12 xl:hover:text-cloudGray ${!isOpen ? 'xl:transition-bg duration-300 xl:hover:bg-deepCharcoal xl:rounded-md' : ''} ${activeLink === '/' && !isOpen ? 'xl:bg-charcoalGray' : ''}`} >
                 <Link href={'/'} onClick={(e) => {

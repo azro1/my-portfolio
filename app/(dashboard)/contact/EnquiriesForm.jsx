@@ -220,26 +220,26 @@ const EnquiriesForm = ({ user }) => {
 
 
     return (
-        <>
+        <div>
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
-                <h3 className='mb-4 font-b text-chocolate text-1.375 md:text-2xl'>
+                {/* <h3 className='mb-4 font-b text-nightSky text-1.375 md:text-2xl'>
                     Enquiries
-                </h3>
-                <div className='flex flex-col gap-2'>
-                    <label className='max-w-max text-base text-ashGray block' htmlFor='firstname'>First name</label>
+                </h3> */}
+                <div className='flex flex-col'>
+                    <label className='max-w-max text-base text-ashGray block mb-2' htmlFor='firstname'>First name</label>
                     <input
                         id='firstname'
                         type='text'
                         {...register('firstname')}
                         spellCheck='false'
                         maxLength={30}
-                        className='w-full py-2.5 px-4 rounded-md text-stoneGray bg-softCharcoal border-[1px] border-ashGray'
+                        className='w-full py-2 px-4 rounded-md border-[1px] border-gray-300'
                     /> 
-                    <p className='text-red-600 text-sm'>{errors.firstname?.message}</p>       
+                    {errors.firstname && <p className='text-red-600 text-sm mt-1'>{errors.firstname?.message}</p>}       
                 </div>
 
-                <div className='flex flex-col gap-2 mt-2'>
-                    <label className='max-w-min text-base text-ashGray block' htmlFor='email'>Email</label>
+                <div className='flex flex-col mt-2'>
+                    <label className='max-w-min text-base text-ashGray block mb-2' htmlFor='email'>Email</label>
                     <input
                         id='email'
                         type='text'
@@ -247,12 +247,12 @@ const EnquiriesForm = ({ user }) => {
                         spellCheck='false'
                         autoComplete="email"
                         maxLength={50}
-                        className='w-full py-2.5 px-4 rounded-md text-stoneGray bg-softCharcoal border-[1px] border-ashGray'
+                        className='w-full py-2 px-4 rounded-md border-[1px] border-gray-300'
                     />
-                    <p className='text-red-600 text-sm'>{errors.email?.message}</p>       
+                    {errors.email && <p className='text-red-600 text-sm mt-1'>{errors.email?.message}</p>}       
                 </div>
 
-                <div>
+                <div className='mt-2'>
                     <Controller 
                         name='subject'
                         control={control}
@@ -265,19 +265,19 @@ const EnquiriesForm = ({ user }) => {
                             />
                         )}
                     />
-                    <p className='text-red-600 text-sm mt-2'>{errors.subject?.message}</p>       
+                    {errors.subject && <p className='text-red-600 text-sm mt-1'>{errors.subject?.message}</p>}       
                 </div>
 
-                <div className='flex flex-col gap-2 mt-4'>
-                    <label className="className='max-w-min text-base text-ashGray block" htmlFor='message'>Your Message</label>
+                <div className='flex flex-col mt-2'>
+                    <label className="className='max-w-min text-base text-ashGray block mb-2" htmlFor='message'>Your Message</label>
                     <textarea
                         id='message'
                         cols='30'
                         rows='4'
                         {...register('message')}
-                        className='py-2.5 px-4 outline-none rounded-md w-4/5 text-stoneGray bg-softCharcoal border-[1px] border-ashGray'
+                        className='py-2 px-4 outline-none rounded-md w-4/5 border-[1px] border-gray-300'
                     ></textarea>
-                    <p className='text-red-600 text-sm'>{errors.message?.message}</p>       
+                    {errors.message && <p className='text-red-600 text-sm mt-1'>{errors.message?.message}</p>}       
                 </div>
 
                 <div className="flex flex-col mt-3">
@@ -285,13 +285,13 @@ const EnquiriesForm = ({ user }) => {
                         isLoading={isLoading}
                         padding='py-2 px-3.5'
                         width='w-max'
-                        backgroundColor='bg-chocolate'
+                        backgroundColor='bg-nightSky'
                         text='Send'
                     />
                 </div>
 
             </form>
-        </>
+        </div>
 
     )
 }

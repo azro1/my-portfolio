@@ -21,8 +21,8 @@ const Connect = () => {
     <section>
         <div className="text-center max-w-max mx-auto lg:p-10">
           <div className='flex flex-col items-center justify-center '>
-            <h2 className="subheading font-b text-chocolate mb-4">Connect With Me</h2>
-            <p className="leading-7">
+            <h2 className="subheading font-b text-chocolate mb-3.5">Connect With Me</h2>
+            <p className="md:leading-7">
               Stay connected with me on LinkedIn, GitHub, YouTube, Instagram, Discord, and WhatsApp for the latest updates, projects, and collaborations         
             </p>
           </div>

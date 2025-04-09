@@ -50,7 +50,7 @@ const Chevron = ({ user, isProfilePage }) => {
         
         {/* shows for small screens */}
         <button onClick={handleToggleMenu} className='text-base text-cloudGray md:hidden'>
-            <FiMenu size={24} />
+            <FiMenu size={28} />
         </button> 
 
        {isOpen && (

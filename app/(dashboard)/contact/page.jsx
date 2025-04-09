@@ -18,12 +18,12 @@ const Contact = async () => {
   const { data: { user } } = await supabase.auth.getUser()
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col bg-softGray">
         <div className='main-container'>
           <main>
-            <div className='h-screen flex flex-col items-center min-h-[1636px] md:min-h-[1034px] pt-28 md:pt-0'>
+            <div className='h-screen flex flex-col items-center min-h-[1474px] md:min-h-[900px] pt-[112px] xl:pt-0'>
               <div className='w-full flex-grow flex items-center justify-center'>
-                <div className='grid grid-flow-col auto-cols-fr gap-y-16 md:h-full md:grid-cols-2 md:grid-rows-[minmax(_auto,_auto)_minmax(500px,_auto)]'>
+                <div className='grid grid-flow-col auto-cols-fr gap-y-16 gap-x-16 md:h-full md:grid-cols-2 md:grid-rows-[minmax(_auto,_auto)_minmax(500px,_auto)]'>
                   <div className='row-start-1 col-start-1 col-span-2 self-end'>
                     <ContactHeader />
                   </div>
@@ -35,7 +35,7 @@ const Contact = async () => {
                     </div>
                   </div>
 
-                  <div className='w-full h-fit row-start-2 col-start-1 col-span-2 justify-self-start relative sm:max-w-sm md:col-start-2 md:col-span-1 md:max-w-xs md:justify-self-end lg:max-w-sm'>
+                  <div className='w-full h-fit row-start-2 col-start-1 col-span-2 justify-self-start relative sm:max-w-sm md:col-start-2 md:col-span-1 md:max-w-xs lg:max-w-sm'>
                     <EnquiriesForm user={user} />
                   </div>
                 </div>

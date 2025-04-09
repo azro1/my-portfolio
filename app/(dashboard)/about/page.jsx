@@ -34,7 +34,7 @@ const About = () => {
             </div>
           </div>
 
-          <div className="py-16 md:py-32">
+          <div className="py-8 md:py-32">
             <div className="px-[x-pad] mx-auto max-w-screen-lg xl:p-0 uw:max-w-[1600px]">
               <main>
                 <KeySkills />
