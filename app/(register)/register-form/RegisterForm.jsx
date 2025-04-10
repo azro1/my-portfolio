@@ -165,7 +165,6 @@ const RegisterForm = () => {
         const handleBeforeUnload = () => {
             console.log('before unload ran......')
             navigator.sendBeacon(`${location.origin}/api/auth/logout`, JSON.stringify({ hasLeftViaAddressBar: true }));
-            router.push('/login');
         };
     
         window.addEventListener("beforeunload", handleBeforeUnload);
@@ -447,7 +446,6 @@ const RegisterForm = () => {
 
 
             <div className='flex flex-col gap-4 w-full max-w-xs sm:max-w-md sm:bg-white sm:shadow-outer sm:p-12 sm:pt-10 sm:rounded-xl'>
-                <p>Step 2/2</p>
 
                 <form className='flex flex-col gap-3' noValidate>
                     <h2 className='text-center mb-2 font-b text-nightSky leading-normal text-2xl md:text-1.75 md:mb-3'>Enter your personal information</h2>

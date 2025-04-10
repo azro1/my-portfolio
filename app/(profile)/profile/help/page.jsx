@@ -24,7 +24,7 @@ const Help = () => {
     } else {
       setQueryResults([]);
     }
-  }, [userQuery])
+  }, [questions, userQuery])
 
   return (
     <div className='flex px-[x-pad]'>

@@ -8,6 +8,7 @@ export async function POST(request) {
 
     if (hasLeftViaAddressBar) {
        await supabase.auth.signOut();
+       return NextResponse.redirect(new URL('/login', request.url));
     }
 
     return NextResponse.json(null, { status: 200 });
