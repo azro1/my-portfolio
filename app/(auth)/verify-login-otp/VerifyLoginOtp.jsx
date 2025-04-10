@@ -289,10 +289,10 @@ const VerifyLoginOtp = ({ email }) => {
                     />
                 ) : ( 
                     <OtpForm
-                        containerStyles={'flex-1 w-full max-w-sm sm:max-w-md bg-white text-center sm:shadow-outer sm:p-10 sm:rounded-xl'}
+                        containerStyles={'relative -top-4 flex-1 w-full max-w-sm sm:max-w-md bg-white text-center sm:shadow-outer sm:p-10 sm:rounded-xl'}
                         handleSubmit={handleSubmit}
                         onSubmit={onSubmit}
-                        title={'Login'}
+                        title={'Log In'}
                         fields={fields}
                         email={emailRef.current}
                         register={register}

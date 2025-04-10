@@ -164,7 +164,7 @@ const Login = () => {
     <AuthForm
        handleSubmit={handleSubmit}
        onSubmit={onSubmit}
-       title='Login'
+       title='Log In'
        register={register}
        errors={errors}
        isSignup={false}

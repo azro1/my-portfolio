@@ -55,8 +55,11 @@ const ProjectList = () => {
           {projects && projects.map((project) => (
             <div key={project.id}>
               <Link href={`/projects/${project.id}`}>
+
+
                 <div className='relative w-full h-[380px] lg:h-[450px]'>
-                  <Image className='object-cover object-left-top md:object-contain'
+                  
+                  <Image className='hidden md:object-left-top md:object-contain'
                     src={project.image_url}
                     alt={project.list_alt_desc}
                     fill
@@ -64,7 +67,34 @@ const ProjectList = () => {
                     quality={100}
                     priority
                   />
+
+                  <div className='md:hidden'>
+                    <Image className=' object-cover object-left-top md:object-contain'
+                      src={project.mobile_placeholder}
+                      alt="mobile placeholder dark background"
+                      fill
+                      sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 976px) 50vw, (max-width: 1440px) 33vw, 25vw"
+                      quality={100}
+                      priority
+                    />
+                  </div>
+
+                  <div className='absolute top-1/2 -translate-y-1/2 left-1/2 transform -translate-x-1/2 bg-softGray md:hidden '>
+                    <Image className='max-w-[150px] max-h-[150px]'
+                      src={'/images/wrench.svg'}
+                      alt="rocket icon"
+                      width={200}
+                      height={200}
+                      quality={100}
+                      priority
+                    />
+                  </div>
+                  <p className='text-stoneGray absolute bottom-[72px] left-1/2 transform -translate-x-1/2 md:hidden'>click to view project</p>
+                  <p className='text-stoneGray text-2xl font-b absolute top-16 left-1/2 transform -translate-x-1/2 md:hidden'>{project.title}</p>
+
+
                 </div>
+
               </Link>
             </div>
           ))}

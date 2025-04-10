@@ -277,10 +277,10 @@ const VerifySignupOtp = ({ email }) => {
                 />
             ) : (
                 <OtpForm
-                    containerStyles={'flex-1 w-full max-w-sm bg-white text-center sm:max-w-md sm:shadow-outer sm:p-10 sm:rounded-xl'}
+                    containerStyles={'relative -top-4 flex-1 w-full max-w-sm bg-white text-center sm:max-w-md sm:shadow-outer sm:p-10 sm:rounded-xl'}
                     handleSubmit={form.handleSubmit}
                     onSubmit={onSubmit}
-                    title={'Sign up'}
+                    title={'Sign Up'}
                     fields={fields}
                     email={emailRef.current}
                     register={register}

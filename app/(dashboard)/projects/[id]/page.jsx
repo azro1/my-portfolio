@@ -63,10 +63,10 @@ const Project = async ({ params }) => {
     <div className="flex flex-col">
           <div className="main-container">
             <main>
-              <div className="h-screen flex flex-col items-center min-h-[1154px] xl:min-h-[1154px]">
+              <div className="h-screen flex flex-col items-center min-h-[1232px] xl:min-h-[1154px]">
                 <div className="w-full flex-grow flex items-center justify-center">
 
-                  <div className='flex flex-col justify-center h-full pt-[92px] xl:pt-0'>
+                  <div className='flex flex-col justify-center h-full xl:pt-0'>
                     <h2 className='subheading font-b text-nightSky'>{project.title}</h2>
                     <div className='mt-6 grid gap-y-6 md:grid-auto-rows md:grid-cols-2'>
 

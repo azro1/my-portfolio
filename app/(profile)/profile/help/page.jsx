@@ -29,7 +29,7 @@ const Help = () => {
   return (
     <div className='flex px-[x-pad]'>
       <main>
-        <div className='h-screen flex pt-48 pb-24 min-h-[1136px] md:min-h-[1034px] xl:pt-36 xl:pb-28'>
+        <div className='h-screen flex pt-40 pb-20 min-h-[1136px] md:min-h-[1034px] xl:pt-36 xl:pb-28'>
 
           <div className='w-full h-full flex flex-col'>
             <h2 className='subheading font-medium text-cloudGray'>How Can We Help?</h2>

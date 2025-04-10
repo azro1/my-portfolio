@@ -163,7 +163,7 @@ const Signup = () => {
     <AuthForm
       handleSubmit={handleSubmit}
       onSubmit={onSubmit}
-      title='Sign up'
+      title='Sign Up'
       register={register}
       errors={errors}
       isChecked={isChecked}

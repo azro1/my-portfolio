@@ -81,6 +81,7 @@ const UploadAvatar = () => {
         const handleBeforeUnload = () => {
             console.log('before unload ran......')
             navigator.sendBeacon(`${location.origin}/api/auth/logout`, JSON.stringify({ hasLeftViaAddressBar: true }));
+            router.push('/login');
         };
     
         window.addEventListener("beforeunload", handleBeforeUnload);
@@ -162,10 +163,10 @@ const UploadAvatar = () => {
     return (
         <div className='flex-1 flex flex-col justify-center w-full max-w-xs sm:max-w-md min-h-[640px]'>
             <div className='flex flex-col items-center justify-center gap-4 sm:bg-white sm:shadow-outer sm:p-10 sm:rounded-xl relative'>
-                <p className='w-full pb-1'>Step 1/2</p>
+                <p className='w-full'>Step 1/2</p>
              
                 <div>
-                    <h2 className='text-3xl mb-4 font-b text-nightSky'>Upload Your Avatar</h2>
+                    <h2 className='font-b text-nightSky text-2xl mb-2 md:text-1.75 md:mb-3'>Upload Your Avatar</h2>
                     <p>Choose an image to personalize your profile or skip this step to continue. This helps others recognize you but is entirely optional.</p>
                 </div>
 

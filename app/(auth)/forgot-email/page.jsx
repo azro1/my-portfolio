@@ -163,12 +163,12 @@ const ForgotEmail = () => {
 
 
     return (
-        <div className='main-container flex flex-col items-center justify-center gap-4 w-full bg-white sm:max-w-sm sm:shadow-outer sm:p-10 sm:pb-6 sm:rounded-xl'>
+        <div className='relative -top-4 main-container flex flex-col items-center justify-center gap-4 w-full bg-white sm:max-w-sm sm:shadow-outer sm:p-10 sm:pb-6 sm:rounded-xl'>
 
             <div className='flex-1 w-full max-w-xs'>
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
                     <div>
-                        <h2 className='text-3xl text-center mb-4 font-b text-nightSky'>Recover Email</h2>
+                        <h2 className='text-3xl text-center mb-3 font-b text-nightSky'>Recover Email</h2>
 
                         <label className='max-w-min mb-2 text-base text-ashGray block' htmlFor='phone'>Phone</label>
                         <input
@@ -201,7 +201,7 @@ const ForgotEmail = () => {
 
             <div>
                 <Link href='/login'>
-                    <button className='text-nightSky'>
+                    <button className='text-nightSky '>
                         Back to Login
                     </button>
                 </Link>
