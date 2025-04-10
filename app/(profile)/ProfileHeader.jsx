@@ -77,7 +77,7 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
 
          {showAvatar && (
             <div className='mt-6 min-h-[480px] bg-softCharcoal'>
-               <div className='flex items-center gap-1 p-4'>
+               <div className='flex items-start gap-1 p-4 md:items-center'>
 
                   {loading ? (
                      <div className='w-20 h-20 bg-softCharcoal rounded-full overflow-hidden flex items-center justify-center'>
@@ -89,16 +89,29 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
                         />
                      </div>
                   ) : (
-                     <div className='min-w-[84px] min-h-[84px]'>
-                        <UserAvatar
-                           user={user}
-                           width={80}
-                           height={80}
-                           maxWidth={'max-w-[80px]'}
-                           maxHeight={'max-h-[80px]'}
-                           defaultAvatarSize={80}
-                        />
-                     </div>
+                        <div className='md:min-w-[84px] md:min-h-[84px]'>
+                           <div className='hidden md:block'>
+                              <UserAvatar
+                                 user={user}
+                                 width={80}
+                                 height={80}
+                                 maxWidth={'max-w-[80px]'}
+                                 maxHeight={'max-h-[80px]'}
+                                 defaultAvatarSize={80}
+                              />
+                           </div>
+
+                           <div className='md:hidden'>
+                              <UserAvatar
+                                 user={user}
+                                 width={64}
+                                 height={64}
+                                 maxWidth={'max-w-[64px]'}
+                                 maxHeight={'max-h-[64px]'}
+                                 defaultAvatarSize={64}
+                              />
+                           </div>
+                        </div>
                   )}
 
                   {!loading && (

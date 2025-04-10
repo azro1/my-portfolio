@@ -275,7 +275,7 @@ const EnquiriesForm = ({ user }) => {
                         cols='30'
                         rows='4'
                         {...register('message')}
-                        className='py-2 px-4 outline-none rounded-md w-4/5 border-[1px] border-gray-300'
+                        className='py-2 px-4 outline-none rounded-md w-4/5 border-[1px] border-gray-300 resize-none'
                     ></textarea>
                     {errors.message && <p className='text-red-600 text-sm mt-1'>{errors.message?.message}</p>}       
                 </div>
