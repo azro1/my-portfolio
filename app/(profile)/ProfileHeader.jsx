@@ -77,19 +77,30 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
 
          {showAvatar && (
             <div className='mt-6 min-h-[480px] bg-softCharcoal'>
-               <div className='flex items-start gap-1 p-4 md:items-center'>
+               <div className='flex items-start gap-1 p-4 xl:items-center'>
 
                   {loading ? (
-                     <div className='w-20 h-20 bg-softCharcoal rounded-full overflow-hidden flex items-center justify-center'>
-                        <Image
-                           width={64}
-                           height={64}
-                           src="/images/loading/loader.gif"
-                           alt="A rotating loading animation on a transparent background"
-                        />
-                     </div>
+                     <>
+                        <div className='w-16 h-16 rounded-full overflow-hidden flex items-center justify-center md:hidden'>
+                           <Image
+                              width={64}
+                              height={64}
+                              src="/images/loading/loader.gif"
+                              alt="A rotating loading animation on a transparent background"
+                           />
+                        </div>
+
+                        <div className='hidden w-20 h-20 md:flex items-center justify-center bg-softCharcoal rounded-full overflow-hidden'>
+                           <Image
+                              width={80}
+                              height={80}
+                              src="/images/loading/loader.gif"
+                              alt="A rotating loading animation on a transparent background"
+                           />
+                        </div>   
+                     </>
                   ) : (
-                        <div className='md:min-w-[84px] md:min-h-[84px]'>
+                        <div className='min-w-[64px] md:min-w-[80px]'>
                            <div className='hidden md:block'>
                               <UserAvatar
                                  user={user}
