@@ -35,7 +35,7 @@ const ProjectList = () => {
 
   if (loading) {
     return (
-      <div className='min-h-[516px] flex items-center justify-center'> 
+      <div className='min-h-[436px] flex items-center justify-center'> 
           <Image
             width={64}
             height={64}
@@ -81,7 +81,7 @@ const ProjectList = () => {
 
                   <div className='absolute top-1/2 -translate-y-1/2 left-1/2 transform -translate-x-1/2 bg-softGray md:hidden '>
                     <Image className='max-w-[150px] max-h-[150px]'
-                      src={'/images/wrench.svg'}
+                      src={project.mobile_image_url}
                       alt="rocket icon"
                       width={200}
                       height={200}

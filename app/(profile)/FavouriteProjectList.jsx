@@ -38,23 +38,23 @@ const FavouriteProjectList = ({ user }) => {
                             {retrievedProjects.length > 0 && (retrievedProjects.map((project) => (
                                 <div key={project.id}>
                                     <div className='relative'>
-                                        <div className='w-max bg-frostWhite p-1 shadow-outer' >
+                                        <div className='w-max bg-softGray' >
                                             <Link href={`/projects/${project.id}`}>
-                                                <div className='relative w-[236px] h-[220px]'>
-                                                    <Image 
-                                                        className='object-cover object-left-top'
-                                                        src={project.image_url}
-                                                        alt={project.list_alt_desc}
-                                                        fill
+                                                <div className='flex items-center justify-center w-[196px] h-[180px]'>
+                                                    <Image className='max-w-[150px] max-h-[150px]'
+                                                        src={project.mobile_image_url}
+                                                        alt="rocket icon"
+                                                        width={200}
+                                                        height={200}
                                                         quality={100}
                                                         priority
                                                     />
                                                 </div>
                                             </Link>
                                         </div>
-                                        <FaHeart className='absolute bottom-1 left-1' size='24' color='red' />
+                                        <FaHeart className='absolute bottom-2 left-2' size='24' color='red' />
                                     </div>
-                                    <h4 className="font-os font-r text-ashGray text-center text-sm mt-2">{project.title}</h4>
+                                    <h4 className="font-b text-ashGray text-center mt-2">{project.title}</h4>
                                 </div>))
                             )}
                         </div>
