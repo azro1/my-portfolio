@@ -236,7 +236,7 @@ const VerifySignupOtp = ({ email }) => {
             
             setIsVerified(true)
             reset({ codes: fields.map(() => ({ code: '' })) });
-            changeMessage('success', "Success! Your code has been verified and we're creating your account.");
+            changeMessage('success', "Success! Your code has been verified and we're creating your account");
             setRedirect(true);
             
 

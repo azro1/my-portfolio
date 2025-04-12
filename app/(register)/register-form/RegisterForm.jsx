@@ -9,12 +9,10 @@ import { format, parseISO } from "date-fns";
 
 import Link from 'next/link';
 import Image from 'next/image';
+import Select from 'react-select'
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import { FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
-import { IoMdArrowBack } from 'react-icons/io';
-
+import { Controller, useForm } from "react-hook-form";
 
 // hooks
 import { useUpdateTable } from '@/app/hooks/useUpdateTable';
@@ -56,15 +54,39 @@ const schema = yup.object({
       .matches(/^[A-Z][a-z]*$/, "Lastname should not contain any digits or spaces")
       .min(3, 'Lastname must be at least 3 characters long'),
 
-    dob: yup
-      .string()
-      .required('Date of birth is required')
-      .test('max-date', 'Date of birth cannot be in the future', value => {
-        const selectedDate = new Date(value);
-        const today = new Date();
-        return selectedDate <= today;  // Ensure the selected date is not in the future
+      dob: yup.object({
+        day: yup
+          .number()
+          .required('Day is required')
+          .min(1, 'Day must be between 1 and 31')
+          .max(31, 'Day must be between 1 and 31')
+          .typeError('Day must be a valid number'),
+      
+        month: yup.object({
+          value: yup
+            .string()
+            .required('Month is required')
+            .oneOf(
+              [
+                'January', 'February', 'March', 'April', 'May', 'June', 'July', 
+                'August', 'September', 'October', 'November', 'December'
+              ],
+              'Month must be a valid month'
+            ),
+          label: yup.string().notRequired()
+        }),
+      
+        year: yup
+          .number()
+          .required('Year is required')
+          .min(1900, 'Year must be after 1900')
+          .max(new Date().getFullYear(), 'Year cannot be in the future')
+          .typeError('Year must be a valid number')
+      })
+      .test('dob-required', 'Date of Birth is required', (value) => {
+        return value?.day && value?.month?.value && value?.year;
       }),
-
+      
     phone: yup
       .string()
       .required('Phone is required')
@@ -88,6 +110,60 @@ const schema = yup.object({
 
 
 
+const dobFields = [
+    { name: 'day', placeholder: 'Day', maxlength: 2, min: 1, max: 31 },
+    { name: 'month', placeholder: 'Month', maxlength: 0, min: 1, max: 12 },
+    { name: 'year', placeholder: 'Year', maxlength: 4, min: 1900, max: new Date().getFullYear() },
+];
+
+// react select options
+const months = [
+    { value: 'January', label: 'Jan' },
+    { value: 'February', label: 'Feb' },
+    { value: 'March', label: 'Mar' },
+    { value: 'April', label: 'Apr' },
+    { value: 'May', label: 'May' },
+    { value: 'June', label: 'Jun' },
+    { value: 'July', label: 'Jul' },
+    { value: 'August', label: 'Aug' },
+    { value: 'September', label: 'Sep' },
+    { value: 'October', label: 'Oct' },
+    { value: 'November', label: 'Nov' },
+    { value: 'December', label: 'Dec' }
+];
+
+
+
+
+
+
+
+
+// react select custom styles
+const customStyles = {
+    control: (base) => ({
+        ...base,
+        border: 'none',
+        boxShadow: 'none'
+    }),
+    menu: (base) => ({
+        ...base,
+        border: 'none',
+        padding: '4px',
+    }),
+    option: (base) => ({
+        ...base,
+    }),
+    placeholder: (base) => ({
+        ...base,
+        color: '#6B6B6B',
+        opacity: '80%',
+    }),
+};
+
+
+
+
 
 
 
@@ -95,7 +171,6 @@ const schema = yup.object({
 const RegisterForm = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [phoneExists, setPhoneExists] = useState(null);
-    const [isFormSubmitted, setFormIsSubmitted] = useState(false)
     const [redirect, setRedirect] = useState(false);
     const [user, setUser] = useState(null);
     const [phoneNumbers, setPhoneNumbers] = useState([]);
@@ -109,9 +184,11 @@ const RegisterForm = () => {
 
     const supabase = createClientComponentClient();
 
+    const [isClient, setIsClient] = useState(false);
+    const [hasInteracted, setHasInteracted] = useState(false);
 
 
-
+    
 
 
 
@@ -124,6 +201,15 @@ const RegisterForm = () => {
       
           
 
+
+
+
+
+
+    // prevent select SSR error
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
 
 
 
@@ -189,16 +275,41 @@ const RegisterForm = () => {
     // react-hook-form
     const form = useForm({
         resolver: yupResolver(schema),
-        mode: 'onSubmit'
+        mode: 'onSubmit',
     })
 
     // allows us to register a form control
-    const { register, handleSubmit, formState, watch } = form;
+    const { register, handleSubmit, formState, watch, control } = form;
     const { errors } = formState;
 
-    const dob = watch('dob', '');
+    const dob = watch('dob', { day: '', month: '', year: '' });
     const phone = watch('phone', '');
    
+
+
+
+
+
+
+
+
+
+
+
+    // Track interaction when any of the dob fields change
+    useEffect(() => {
+        if (dob.day || dob.month?.value || dob.year) {
+            setHasInteracted(true);
+        } else {
+            setHasInteracted(false);
+        }
+    
+    }, [dob.day, dob.month?.value, dob.year]);
+    
+    
+
+
+
 
 
 
@@ -325,9 +436,14 @@ const RegisterForm = () => {
     // update raw_user_metadata and profiles table
     const handleUpdateProfile = async (data) => {
         isSubmittingRef.current = true;
-        setFormIsSubmitted(true)
 
-        const formattedDate = format(parseISO(data.dob), 'dd/MM/yyyy');
+        const monthNumber = new Date(`${dob.month.value} 1, 2000`).getMonth() + 1;
+        const dayStr = String(dob.day).padStart(2, '0');
+        const monthStr = String(monthNumber).padStart(2, '0');
+        const yearStr = String(dob.year); 
+        const isoDateString = `${yearStr}-${monthStr}-${dayStr}`;
+
+        const formattedDate = format(parseISO(isoDateString), 'dd/MM/yyyy');
         const newPhoneNumber = convertToInternationalFormat(data.phone);
 
         if (phoneExists) {
@@ -378,7 +494,6 @@ const RegisterForm = () => {
 
             } catch (error) {
                 setRedirect(false)
-                setFormIsSubmitted(false)
                 changeMessage('error', error.message);
 
             } finally {
@@ -430,7 +545,7 @@ const RegisterForm = () => {
        const hasUploadedAvatar = localStorage.getItem('hasUploadedAvatar') === 'true';
        
        if (hasUploadedAvatar) {
-        changeMessage('info', "looks like you've already uploaded an avatar. Please enter your personal information");
+        changeMessage('info', "looks like you've already uploaded an avatar. Please enter your personal details");
        }
         router.push('/upload-avatar');
     }
@@ -441,33 +556,30 @@ const RegisterForm = () => {
 
 
 
-  return (
-        <div className='flex flex-col justify-center min-h-[640px] md:min-h-[924px]'>
 
+
+  return (
+        <div className='flex flex-col justify-center items-center gap-7 min-h-[640px] md:min-h-[824px]'>
+                <h2 className='text-3xl font-b text-nightSky'>Create your Profile</h2>
 
             <div className='flex flex-col gap-4 w-full max-w-xs sm:max-w-md sm:bg-white sm:shadow-outer sm:p-12 sm:pt-10 sm:rounded-xl'>
 
-                <form className='flex flex-col gap-3' noValidate>
-                    <h2 className='text-center mb-2 font-b text-nightSky leading-normal text-2xl md:text-1.75 md:mb-3'>Enter your personal information</h2>
+                <form className='flex flex-col gap-4' noValidate>
+                    <h3 className='text-lg font-medium text-nightSky md:text-xl md:mb-4 '>Enter your Personal Details</h3>
 
                     <div>
                         <div className='relative '>
-                            <label className='mb-1 text-base text-ashGray block' htmlFor='firstname'>First Name</label>
                             <input
                                 id='firstname'
                                 type='text'
                                 spellCheck='false'
                                 autoFocus
                                 maxLength='15'
-                                placeholder='John'
+                                placeholder='First Name'
                                 minLength='3'
                                 {...register('firstname')}
                                 className={`w-full  py-2 px-4 text-nightSky rounded-md border-[1px]  ${errors.firstname ? 'border-red-600' : 'border-gray-300'}`}
-
                             />
-
-                            {errors?.firstname ? <FaExclamationCircle className={'absolute bottom-2.5 right-3 text-red-600'} size={21} /> : ((!errors?.firstname && isFormSubmitted) ? <FaCheckCircle className={'absolute bottom-2.5 right-3 text-green-600'} size={21} /> : '')}
-
                         </div>
                         {errors?.firstname && <p className='text-sm text-red-600 mt-1'>{errors.firstname.message}</p>}
                     </div>
@@ -475,54 +587,82 @@ const RegisterForm = () => {
 
                     <div>
                         <div className='relative '>
-                            <label className='mb-1 text-base text-ashGray block' htmlFor='lastname'>Last Name</label>
                             <input
                                 id='lastname'
                                 type='text'
                                 maxLength='25'
-                                placeholder='Smith'
+                                placeholder='Last Name'
                                 minLength='2'
                                 {...register('lastname')}
                                 className={`w-full py-2 px-4 text-nightSky rounded-md border-[1px] ${errors.lastname ? 'border-red-600' : 'border-gray-300'}`}
                             />
-
-                            {errors?.lastname ? <FaExclamationCircle className={'absolute bottom-2.5 right-3 text-red-600'} size={21} /> : ((!errors?.lastname && isFormSubmitted) ? <FaCheckCircle className={'absolute bottom-2.5 right-3 text-green-600'} size={21} /> : '')}
                         </div>
                         {errors?.lastname && <p className='text-sm text-red-600 mt-1'>{errors.lastname.message}</p>}
                     </div>
 
-
-
                     <div>
-                        <div className='relative'>
-                            <label className='mb-1 text-base text-ashGray block' htmlFor='dob'>Date of Birth</label>
-                            <input
-                                id='dob'
-                                type='date'
-                                {...register('dob')}
-                                className={`w-full py-2 px-4 text-nightSky ${!dob ? 'text-opacity-55' : 'text-opacity-100'}  rounded-md border-[1px] ${errors.dob ? 'border-red-600' : 'border-gray-300'}`}
-                            />
+                        <div className="flex gap-3">
+                            {dobFields.map((field) => (
+                                <div key={field.name} className="flex flex-col">
+                                {field.name !== 'month' ? (
+                                    <input
+                                    id={`dob-${field.name}`}
+                                    type="text"
+                                    inputMode="numeric"
+                                    max={field.max}
+                                    min={field.min}
+                                    maxLength={field.maxlength}
+                                    placeholder={field.placeholder}
+                                    className={`w-full h-[42px] text-center rounded-md border-[1px] border-gray-300 ${!hasInteracted && formState.isSubmitted && (!dob.day && !dob.month?.value && !dob.year) ? 'border-red-600' : 'border-gray-300'}`}
+                                    {...register(`dob.${field.name}`)}
+                                    />
+                                ) : (
+                                    <div className={`w-max min-w-[110px] h-[42px] text-center rounded-md border-[1px] ${!hasInteracted && formState.isSubmitted && (!dob.day && !dob.month?.value && !dob.year) ? 'border-red-600' : 'border-gray-300'} flex-1 flex items-center justify-center`}>
+                                    {isClient && (
+                                        <Controller
+                                        name="dob.month"
+                                        control={control}
+                                        render={({ field }) => (
+                                            <div className='w-full'>
+                                                <Select
+                                                    {...field}
+                                                    options={months}
+                                                    placeholder="Month"
+                                                    styles={customStyles}
+                                                    isSearchable={false}
+                                                />
+                                            </div>
+                                        )}
+                                        />
+                                    )}
+                                    </div>
+                                )}
 
-                            {errors?.dob ? <FaExclamationCircle className={'absolute bottom-3.5 right-2.5 text-red-600'} size={21} /> : ((!errors?.dob && isFormSubmitted) ? <FaCheckCircle className={'absolute bottom-2.5 right-3 text-green-600'} size={21} /> : '')}
+                                </div>
+                            ))}
                         </div>
-                        {errors?.dob && <p className='text-sm text-red-600 pt-1'>{errors.dob.message}</p>}
+                        {!hasInteracted && formState.isSubmitted && (!dob.day && !dob.month?.value && !dob.year) ? (
+                            <p className="text-sm text-red-600 mt-1">Date of birth is required</p>
+                        ) : (
+                            (errors.dob?.day || errors.dob?.month?.value || errors.dob?.year) && (
+                                <p className="text-sm text-red-600 mt-1">
+                                    {errors.dob?.day?.message || errors.dob?.month?.value?.message || errors.dob?.year?.message}
+                                </p>
+                            )
+                        )}
                     </div>
-
-
+                  
                     <div>
                         <div className='relative'>
-                            <label className='max-w-min mb-1 text-base text-ashGray block' htmlFor='phone'>Phone</label>
                             <input
                                 id='phone'
                                 type='tel'
                                 spellCheck={false}
-                                placeholder="01234 or +44 1234"
+                                placeholder="Phone Number"
                                 {...register('phone')}
                                 className={`w-full py-2 px-4 text-nightSky rounded-md border-[1px] ${(errors.phone || phoneExists) ? 'border-red-600' : 'border-gray-300'}`}
                                 onKeyDown={handleKeyDown}
                             />
-
-                            {(errors?.phone || phoneExists) ? <FaExclamationCircle className={'absolute bottom-2.5 right-3 text-red-600'} size={21} /> : ((!errors?.phone && !phoneExists && isFormSubmitted) ? <FaCheckCircle className={'absolute bottom-2.5 right-3 text-green-600'} size={21} /> : '')}
                         </div>
                         {errors.phone ? <p className="text-sm text-red-600 mt-1">{errors.phone.message}</p> : phoneExists ? <p className="text-sm text-red-600 mt-1">Phone already exists</p> : null}
                     </div>

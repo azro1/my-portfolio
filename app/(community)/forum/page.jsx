@@ -120,7 +120,6 @@ return (
       {/* Header */}
       <div className="p-6 text-center bg-ashGray">
         <h2 className="subheading text-white font-b">Welcome to the Community Forum</h2>
-        <p className='pt-1 text-lg text-cloudGray'>Before engaging, please take a moment to read and understand the community rules. We encourage respectful discussions and a positive atmosphere. Enjoy your stay!</p>
       </div>
       
       {/* Content Area */}
