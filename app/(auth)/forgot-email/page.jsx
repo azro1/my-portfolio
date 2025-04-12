@@ -163,7 +163,7 @@ const ForgotEmail = () => {
 
 
     return (
-        <div className='relative -top-6 main-container flex flex-col items-center justify-center gap-4 w-full bg-white sm:static sm:max-w-sm sm:shadow-outer sm:p-10 sm:pb-6 sm:rounded-xl'>
+        <div className='relative -top-8 main-container flex flex-col items-center justify-center gap-4 w-full bg-white sm:static sm:max-w-sm sm:shadow-outer sm:p-10 sm:pb-6 sm:rounded-xl'>
 
             <div className='flex-1 w-full max-w-xs'>
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -172,7 +172,7 @@ const ForgotEmail = () => {
 
                         <label className='max-w-min mb-2 text-base text-ashGray block' htmlFor='phone'>Phone</label>
                         <input
-                            className={`w-full sm:max-w-xs py-2 px-4 rounded-md text-nightSky border-[1px] ${errors.phone ? 'border-red-500' : 'border-gray-300'}`}
+                            className={`w-full sm:max-w-xs py-2.5 px-4 rounded-md text-nightSky border-[1px] ${errors.phone ? 'border-red-500' : 'border-gray-300'}`}
                             id='phone'
                             name='phone'
                             type='tel'

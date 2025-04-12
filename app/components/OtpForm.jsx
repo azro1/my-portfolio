@@ -34,11 +34,11 @@ const maskedPhone = phone ? `********${phone.slice(-4)}` : '';
             <h2 className='text-3xl leading-tight mb-3 font-b text-nightSky'>{title}</h2>
 
             {email && (
-                <p className='max-w-xs mb-4'>A verification code has been sent to <span className='text-black'>{email}</span>. Please enter the code into the fields below</p>
+                <p className='max-w-xs mb-4'>We’ve sent a code to <span className='text-black'>{email}</span> please enter it below to verify your account</p>
             )}
 
             {phone && (
-                <p className='max-w-xs mb-4'>A verification code has been sent to the number ending in <span className='text-black'>{maskedPhone}</span>. Please enter the code into the fields below</p> 
+                <p className='max-w-xs mb-4'>Check your phone! A code was sent to the number ending in <span className='text-black'>{maskedPhone}</span> please enter it below</p> 
             )}
 
             <div className='flex gap-2'>

@@ -160,11 +160,13 @@ const UploadAvatar = () => {
 
 
     return (
-        <div className='flex-1 flex flex-col justify-center w-full max-w-xs sm:max-w-md min-h-[640px]'>
+        <div className='flex-1 flex flex-col sm:items-center justify-center gap-7 w-full max-w-xs sm:max-w-md min-h-[640px]'>
+                <h2 className='text-3xl font-b text-nightSky'>Create your Profile</h2>
+
             <div className='flex flex-col items-center justify-center gap-4 sm:bg-white sm:shadow-outer sm:p-10 sm:rounded-xl relative'>
              
                 <div>
-                    <h2 className='font-b text-nightSky text-2xl mb-2 md:text-1.75 md:mb-3'>Upload Your Avatar</h2>
+                    <h3 className='text-xl mb-2 font-medium text-nightSky md:text-xl md:mb-3'>Upload an Avatar</h3>
                     <p>Choose an image to personalize your profile or skip this step to continue. This helps others recognize you but is entirely optional.</p>
                 </div>
 
@@ -172,7 +174,7 @@ const UploadAvatar = () => {
                     <AvatarUploader
                         user={user}
                         updateProfile={updateProfile}
-                        btnColor='bg-nightSky'
+                        btnColor='bg-green-700'
                         show3DAvatar={true}
                     />
                 </div>

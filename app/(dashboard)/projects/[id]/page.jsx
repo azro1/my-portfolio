@@ -70,9 +70,9 @@ const Project = async ({ params }) => {
                     <h2 className='subheading font-b text-nightSky'>{project.title}</h2>
                     <div className='mt-6 grid gap-y-6 md:grid-auto-rows md:grid-cols-2'>
 
-                      <div className='rounded-md md:col-span-2 relative w-full h-[380px] lg:h-auto'>
+                      <div className='hidden md:block rounded-md md:col-span-2 relative w-full'>
                         <Image
-                          className='w-full h-full object-cover'
+                          className='w-full h-full'
                           src={project.image_url}
                           alt={project.alt_desc}
                           width={1348}
@@ -82,6 +82,29 @@ const Project = async ({ params }) => {
                           priority
                         />
                       </div>
+
+                      <div className='relative min-h-[380px] md:hidden'>
+                        <Image className='w-full h-full object-cover'
+                          src={project.mobile_placeholder}
+                          alt="mobile placeholder dark background"
+                          width={380}
+                          height={380}
+                          quality={100}
+                          priority
+                        />
+
+                        <div className='absolute top-1/2 -translate-y-1/2 left-1/2 transform -translate-x-1/2 bg-softGray md:hidden '>
+                          <Image className='max-w-[150px] max-h-[150px]'
+                            src={project.mobile_image_url}
+                            alt="rocket icon"
+                            width={200}
+                            height={200}
+                            quality={100}
+                            priority
+                          />
+                        </div>
+                      </div>
+
 
                       <div className='md:row-start-2 md:col-start-1 pb-3 md:col-span-2 relative'>
                         <ProjectFavouriteButton className={'absolute right-0 top-1'} projectId={project.id} user={user} />
