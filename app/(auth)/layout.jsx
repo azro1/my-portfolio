@@ -32,7 +32,7 @@ export default async function AuthLayout ({ children }) {
   return (
     <div className='min-h-[100dvh] flex flex-col'>
       <AuthRegHeader />
-      <div className='flex-grow flex items-center justify-center bg-white sm:bg-softGray'>
+      <div className='flex-grow flex items-center justify-center bg-white sm:bg-softGray auth-layout-wrapper'>
         {children}
         <Cleanup />
       </div>

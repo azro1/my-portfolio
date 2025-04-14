@@ -232,15 +232,15 @@ footer span {
 
 
 
-/* 
+
 @media (max-width: 375px) and (max-height: 667px) {
   .auth-layout-wrapper, .register-layout-wrapper {
-     @apply pb-12;
+     @apply min-h-[667px] overflow-y-scroll py-20;
   }
 }
 
 @media (max-width: 360px) and (max-height: 740px) {
-  .auth-layout-wrapper {
-    @apply pb-12;
+  .auth-layout-wrapper, .register-layout-wrapper {
+    @apply min-h-[740px] overflow-y-scroll py-20;
   }
-} */
+}
