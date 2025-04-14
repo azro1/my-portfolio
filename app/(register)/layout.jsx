@@ -35,7 +35,7 @@ export default async function RegisterLayout ({ children }) {
 
         <div className="w-full flex-grow flex flex-col bg-white sm:bg-softGray">
           <AuthRegHeader />
-          <div className='main-container flex-grow flex items-center justify-center h-full'>
+          <div className='main-container flex-grow flex items-center justify-center pt-8 md:pt-0 register-layout-wrapper'>
             {children}
           </div>
         </div>
