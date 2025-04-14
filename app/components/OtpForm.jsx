@@ -31,7 +31,7 @@ const maskedPhone = phone ? `********${phone.slice(-4)}` : '';
   return (
     <div className={containerStyles}> 
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
-            <h2 className='text-3xl leading-tight mb-3 font-b text-nightSky'>{title}</h2>
+            <h2 className='text-3xl leading-tight mb-4 font-b text-nightSky'>{title}</h2>
 
             {email && (
                 <p className='max-w-xs mb-4'>We’ve sent a code to <span className='text-black'>{email}</span> please enter it below to verify your account</p>

@@ -11,7 +11,7 @@ const Hero = () => {
         {/* Text Section */}
         <div className="flex-1 w-full flex flex-col justify-center text-center p-6 md:max-w-[544px] lg:max-w-full lg:h-max lg:p-0">
           <div className="lg:max-w-md lg:mx-auto">
-            <h1 className="mainheading font-b tracking-wider text-chocolate mb-3 md:mb-4">Hi, I&apos;m Simon</h1>
+            <h1 className="mainheading font-b text-chocolate mb-3 md:mb-4">Hi, I&apos;m Simon</h1>
             <p className="mb-6 md:text-lg md:leading-7">A full stack developer
               specializing in front and back end web
               technologies and UI design</p>

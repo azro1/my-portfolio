@@ -559,13 +559,13 @@ const RegisterForm = () => {
 
 
   return (
-        <div className='flex flex-col justify-center items-center gap-7 min-h-[640px] md:min-h-[824px]'>
-                <h2 className='text-3xl font-b text-nightSky'>Create your Profile</h2>
+        <div className='flex flex-col justify-center gap-7 pt-20 sm:items-center md:pt-0 md:min-h-[824px]'>
+                <h2 className='text-3xl font-b text-nightSky mb-4'>Create your Profile</h2>
 
             <div className='flex flex-col gap-4 w-full max-w-xs sm:max-w-md sm:bg-white sm:shadow-outer sm:p-12 sm:pt-10 sm:rounded-xl'>
 
                 <form className='flex flex-col gap-4' noValidate>
-                    <h3 className='text-lg font-medium text-nightSky md:text-xl md:mb-4 '>Enter your Personal Details</h3>
+                    <h3 className='text-lg mb-3 font-b text-nightSky md:text-xl'>Enter your Personal Details</h3>
 
                     <div>
                         <div className='relative '>

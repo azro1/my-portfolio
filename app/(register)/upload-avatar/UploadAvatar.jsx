@@ -160,35 +160,39 @@ const UploadAvatar = () => {
 
 
     return (
-        <div className='flex-1 flex flex-col sm:items-center justify-center gap-7 w-full max-w-xs sm:max-w-md min-h-[640px]'>
-                <h2 className='text-3xl font-b text-nightSky'>Create your Profile</h2>
-
-            <div className='flex flex-col items-center justify-center gap-4 sm:bg-white sm:shadow-outer sm:p-10 sm:rounded-xl relative'>
-             
-                <div>
-                    <h3 className='text-xl mb-2 font-medium text-nightSky md:text-xl md:mb-3'>Upload an Avatar</h3>
-                    <p>Choose an image to personalize your profile or skip this step to continue. This helps others recognize you but is entirely optional.</p>
-                </div>
-
-                <div>
-                    <AvatarUploader
-                        user={user}
-                        updateProfile={updateProfile}
-                        btnColor='bg-green-700'
-                        show3DAvatar={true}
-                    />
-                </div>
-
-                <Link className='w-full' href='/register-form'>
-                    <div className='flex'>
-                        <button className='text-nightSky ml-auto hover:underline'>
-                            Skip
-                        </button>
-                    </div>
-                </Link>
+        <div className='flex-1 flex flex-col sm:items-center justify-center gap-7 w-full max-w-xs sm:max-w-md'>
+          <h2 className='text-3xl font-b text-nightSky mb-4'>Create your Profile</h2>
+      
+          <div className='flex flex-col items-center justify-center gap-4 sm:bg-white sm:shadow-outer sm:p-10 sm:rounded-xl relative'>
+            <div>
+              <h3 className='text-lg mb-3 font-b text-nightSky md:text-xl'>
+                Upload an Avatar
+              </h3>
+              <p className='text-sm md:text-base text-gray-600'>
+                Choose an image to personalize your profile or skip this step to continue. This helps others recognize you but is entirely optional.
+              </p>
             </div>
+      
+            <div>
+              <AvatarUploader
+                user={user}
+                updateProfile={updateProfile}
+                btnColor='bg-green-700'
+                show3DAvatar={true}
+              />
+            </div>
+      
+            <Link className='w-full' href='/register-form'>
+              <div className='flex'>
+                <button className='text-nightSky ml-auto hover:underline'>
+                  Skip
+                </button>
+              </div>
+            </Link>
+          </div>
         </div>
-    );
+      );
+      
 };
 
 export default UploadAvatar;

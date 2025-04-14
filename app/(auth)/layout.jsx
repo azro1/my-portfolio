@@ -1,7 +1,6 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
-import { client } from "@/app/lib/db"
 
 // components
 import AuthRegHeader from "../components/AuthRegHeader"
@@ -31,18 +30,12 @@ export default async function AuthLayout ({ children }) {
   
   
   return (
-    <div className='min-h-screen '>
-      <div className='h-screen flex flex-col items-center'>
-        <div className="w-full flex-grow flex sm:justify-center">
-          <div className="w-full h-full flex flex-col  bg-white sm:bg-softGray min-h-[840px] sm:min-h-[1024px] md:min-h-0">
-            <AuthRegHeader />
-            <div className='flex-grow flex items-center justify-center h-full'>
-              {children}
-              <Cleanup />
-            </div>
-          </div>
-        </div>
+    <div className='min-h-screen flex flex-col'>
+      <AuthRegHeader />
+      <div className='flex-grow flex items-center justify-center bg-white sm:bg-softGray pt-36 auth-layout-wrapper md:pt-0'>
+        {children}
+        <Cleanup />
       </div>
     </div>
   )
-}
+}  

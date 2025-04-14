@@ -1,5 +1,5 @@
 import './globals.css'
-import { Ubuntu } from 'next/font/google'
+import { Quicksand } from 'next/font/google'
 
 // tell next to render dynamic and not static pages at build time
 export const dynamic = 'force-dynamic'
@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic'
 import { MessageProvider } from './context/MessageContext'
 import MessageBanner from './components/MessageBanner'
 
-const ubuntu = Ubuntu({ subsets: ['latin'], weight: ['400', '500', '700'] });
+const quicksand = Quicksand({ subsets: ['latin'], weight: ['300', '400', '500', '700' ] });
 
 // metadata
 export const metadata = {
@@ -19,7 +19,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={ubuntu.className}>
+      <body className={quicksand.className}>
         <div>
           <MessageProvider>
             <MessageBanner />
