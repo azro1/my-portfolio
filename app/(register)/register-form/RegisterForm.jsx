@@ -559,7 +559,7 @@ const RegisterForm = () => {
 
 
   return (
-        <div className='flex flex-col justify-center gap-7 pt-36 pb-12 sm:items-center md:p-0 md:min-h-[824px]'>
+        <div className='flex flex-col justify-center gap-7 sm:items-center md:min-h-[824px]'>
                 <h2 className='text-3xl font-b text-nightSky'>Create your Profile</h2>
 
             <div className='flex flex-col gap-4 w-full max-w-xs sm:max-w-md sm:bg-white sm:shadow-outer sm:p-12 sm:pt-10 sm:rounded-xl'>

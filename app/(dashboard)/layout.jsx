@@ -9,7 +9,7 @@ export default async function DashboardLayout({ children }) {
   const registrationCookie = cookies().get('_is_registered')?.value;
 
   return (
-    <div className="flex flex-col min-h-screen bg-softGray">
+    <div className="flex flex-col min-h-[100dvh] bg-softGray">
       <div className="flex flex-1">
 
         <div className="flex z-40">

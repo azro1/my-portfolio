@@ -163,7 +163,7 @@ const ForgotEmail = () => {
 
 
     return (
-        <div className='relative -top-8 main-container flex flex-col items-center justify-center gap-4 w-full bg-white sm:static sm:max-w-sm sm:shadow-outer sm:p-10 sm:pb-6 sm:rounded-xl'>
+        <div className='main-container flex flex-col items-center justify-center gap-4 w-full bg-white sm:static sm:max-w-sm sm:shadow-outer sm:p-10 sm:pb-6 sm:rounded-xl'>
 
             <div className='flex-1 w-full max-w-xs'>
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
