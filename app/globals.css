@@ -232,7 +232,7 @@ footer span {
 
 
 
-
+/* 
 @media (max-width: 375px) and (max-height: 667px) {
   .auth-layout-wrapper, .register-layout-wrapper {
      @apply pb-12;
@@ -243,4 +243,4 @@ footer span {
   .auth-layout-wrapper {
     @apply pb-12;
   }
-}
+} */
