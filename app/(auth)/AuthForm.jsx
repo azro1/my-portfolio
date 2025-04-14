@@ -6,7 +6,7 @@ import SocialButtons from "./SocialButtons";
 
 const AuthForm = ({ handleSubmit, onSubmit, title, register, errors, isChecked, handleCheckbox, isSignup, isLoading }) => {
   return (
-    <div className='main-container flex flex-col justify-center items-center gap-5 mt-12 md:gap-10 w-full text-center md:mt-0 md:flex-row '>
+    <div className='main-container flex flex-col justify-center items-center gap-5 pt-12 md:gap-10 w-full text-center md:mt-0 md:flex-row '>
 
       <div className='flex-1 w-full max-w-xs sm:max-w-sm sm:bg-white sm:shadow-outer sm:p-10 sm:rounded-xl '>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
