@@ -559,13 +559,13 @@ const RegisterForm = () => {
 
 
   return (
-        <div className='flex flex-col justify-center gap-7 pt-20 sm:items-center md:pt-0 md:min-h-[824px]'>
-                <h2 className='text-3xl font-b text-nightSky mb-4'>Create your Profile</h2>
+        <div className='flex flex-col justify-center gap-7 pt-36 pb-12 sm:items-center md:p-0 md:min-h-[824px]'>
+                <h2 className='text-3xl font-b text-nightSky'>Create your Profile</h2>
 
             <div className='flex flex-col gap-4 w-full max-w-xs sm:max-w-md sm:bg-white sm:shadow-outer sm:p-12 sm:pt-10 sm:rounded-xl'>
 
-                <form className='flex flex-col gap-4' noValidate>
-                    <h3 className='text-lg mb-3 font-b text-nightSky md:text-xl'>Enter your Personal Details</h3>
+                <form className='flex flex-col gap-7' noValidate>
+                    <h3 className='text-lg font-b text-nightSky md:text-xl'>Enter your Personal Details</h3>
 
                     <div>
                         <div className='relative '>
@@ -667,7 +667,7 @@ const RegisterForm = () => {
                         {errors.phone ? <p className="text-sm text-red-600 mt-1">{errors.phone.message}</p> : phoneExists ? <p className="text-sm text-red-600 mt-1">Phone already exists</p> : null}
                     </div>
 
-                    <button className={`p-3 px-3.5 rounded-lg cursor-pointer text-white font-medium block w-full mt-1.5 transition duration-500 bg-green-700 ${(isLoading || phoneExists) ? 'opacity-65' : 'opacity-100'}`} disabled={isLoading || phoneExists} aria-live={Object.keys(errors).length > 0 || isLoading ? 'assertive' : 'off'} onClick={handleSubmit(handleUpdateProfile)}>
+                    <button className={`p-3 px-3.5 rounded-lg cursor-pointer text-white font-medium block w-full transition duration-500 bg-green-700 ${(isLoading || phoneExists) ? 'opacity-65' : 'opacity-100'}`} disabled={isLoading || phoneExists} aria-live={Object.keys(errors).length > 0 || isLoading ? 'assertive' : 'off'} onClick={handleSubmit(handleUpdateProfile)}>
                         {isLoading ? (
                             <div className='flex items-center justify-center'>
                                 <Image
