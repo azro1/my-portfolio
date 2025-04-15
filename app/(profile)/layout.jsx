@@ -45,7 +45,7 @@ export default async function ProfileLayout({ children }) {
 
       </div>
 
-      <div className=" w-full z-20">
+      <div className="w-full z-0 xl:z-20">
         <Footer />
       </div>
     </div>

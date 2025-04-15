@@ -6,6 +6,7 @@ import ProfileHeader from "../ProfileHeader";
 import ProjectsViewedList from '../ProjectsViewedList';
 import ForumChatList from "../ForumChatList";
 import FavouriteProjectList from "../FavouriteProjectList";
+import Heading from "@/app/components/Heading";
 
 const Profile = async () => {
   const supabase = createServerComponentClient({ cookies })
@@ -18,7 +19,9 @@ const Profile = async () => {
 
         {user && (
           <div className="pt-16">
-            <h2 className='text-cloudGray font-medium text-1.375 md:text-2xl'>Activity Feed</h2>
+            <Heading className='text-cloudGray font-medium text-1.375 md:text-2xl'>
+              Activity Feed
+            </Heading>
             <p className='mt-3 leading-normal text-charcoalGrayLight'>Your recent activity on the website, including any projects you have viewed, your favourite projects and your chat history.</p>
             
             <div className='pt-8 grid grid-cols-1 gap-12 grid-flow-row auto-rows-max'>

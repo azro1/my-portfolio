@@ -126,9 +126,9 @@ const Sidebar = ({ isProfilePage }) => {
   if (loading) {
     return (
       <div className={`w-full box-border xl:inline-block ${isOpen ? 'xl:w-[300px]' : 'xl:w-[64px]'} xl:h-screen xl:min-h-[768px]`}>
-        <div className="sidebar-content  fixed bg-softCharcoal  min-h-[92px] md:flex md:items-center md:justify-end xl:h-full xl:overflow-y-scroll xl:hide-scrollbar  xl:items-start xl:justify-center ">
+        <div className="sidebar-content fixed bg-softCharcoal  min-h-[92px] flex items-center md:justify-end xl:h-full xl:overflow-y-scroll xl:hide-scrollbar  xl:items-start xl:justify-center ">
 
-          <div className="hidden md:block  mr-20 xl:mr-0 xl:mt-56">
+          <div className="ml-8 md:mr-20 xl:ml-0 xl:mr-0 xl:mt-56">
                 <Image
                     className="opacity-60"
                     width={32}

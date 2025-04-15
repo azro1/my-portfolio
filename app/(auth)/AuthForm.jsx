@@ -3,6 +3,7 @@ import Link from "next/link";
 // components
 import Button from "../components/Button";
 import SocialButtons from "./SocialButtons";
+import Heading from "../components/Heading";
 
 const AuthForm = ({ handleSubmit, onSubmit, title, register, errors, isChecked, handleCheckbox, isSignup, isLoading }) => {
   return (
@@ -10,7 +11,10 @@ const AuthForm = ({ handleSubmit, onSubmit, title, register, errors, isChecked, 
 
       <div className='flex-1 w-full max-w-xs sm:max-w-sm sm:bg-white sm:shadow-outer sm:p-10 sm:rounded-xl '>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          <h2 className='text-3xl mb-3 font-b text-nightSky'>{title}</h2>
+
+          <Heading className='text-3xl mb-3 font-b text-nightSky'>
+              {title}
+          </Heading>
 
           <label className='max-w-min mb-2 text-base text-ashGray block' htmlFor="email">Email</label>
           <input

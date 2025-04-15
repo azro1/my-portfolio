@@ -8,7 +8,7 @@ import Image from 'next/image';
 
 // components
 import ProjectFavouriteButton from '../ProjectFavouriteButton';
-
+import Heading from '@/app/components/Heading';
 
 // dynamic metadata
 export async function generateMetadata({ params }) {
@@ -63,11 +63,13 @@ const Project = async ({ params }) => {
     <div className="flex flex-col">
           <div className="main-container">
             <main>
-              <div className="h-screen flex flex-col items-center min-h-[1232px] xl:min-h-[1154px]">
+              <div className="h-screen flex flex-col items-center py-40 overflow-y-scroll hide-scrollbar xl:py-0 xl:min-h-[1154px]">
                 <div className="w-full flex-grow flex items-center justify-center">
 
-                  <div className='flex flex-col justify-center h-full xl:pt-0'>
-                    <h2 className='subheading font-b text-nightSky'>{project.title}</h2>
+                  <div className='flex flex-col justify-center h-full'>
+                    <Heading className='subheading font-b text-nightSky'>
+                       {project.title}
+                    </Heading>
                     <div className='mt-6 grid gap-y-6 md:grid-auto-rows md:grid-cols-2'>
 
                       <div className='hidden md:block rounded-md md:col-span-2 relative w-full'>
@@ -108,7 +110,9 @@ const Project = async ({ params }) => {
 
                       <div className='md:row-start-2 md:col-start-1 pb-3 md:col-span-2 relative'>
                         <ProjectFavouriteButton className={'absolute right-0 top-1'} projectId={project.id} user={user} />
-                        <h3 className='text-xl md:text-1.375 font-b text-nightSky'>Project description</h3>
+                        <Heading className='text-xl md:text-1.375 font-b text-nightSky'>
+                          Project description
+                        </Heading>
                         <p className='pt-2.5 leading-7' >{project.description}</p>
                       </div>
 

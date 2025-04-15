@@ -13,6 +13,9 @@ const technicalSkills = [
   { icon: <FaGithub size={34} />, name: "GitHub" },
 ];
 
+// components
+import Heading from "../components/Heading";
+
 const MySkills = () => {
   return (
     <section>
@@ -40,10 +43,11 @@ const MySkills = () => {
           </div>
         </div>
 
-
         {/* Text Section */}
         <div className="flex-1 flex flex-col items-center text-center md:items-start md:text-left">
-            <h2 className="subheading font-b text-chocolate mb-3.5">My Skills</h2>
+          <Heading className="subheading font-b text-chocolate mb-3.5">
+            My Skills
+          </Heading>
           <p className="md:leading-7 lg:max-w-xs">
             I specialize in both front-end and back-end technologies to create user-friendly and efficient web applications
           </p>

@@ -6,6 +6,7 @@ import Image from 'next/image';
 
 // components
 import UserAvatar from '@/app/components/navbar/UserAvatar';
+import Heading from '../components/Heading';
 
 // custom hooks
 import { useFetchUser } from '@/app/hooks/useFetchUser';
@@ -72,7 +73,9 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
 
    return (
       <div>
-         <h2 className='subheading font-medium text-cloudGray'>{title}</h2>
+         <Heading className='text-1.375 md:text-2xl font-medium text-cloudGray'>
+            {title}
+         </Heading>
          <p className='mt-4 leading-normal text-charcoalGrayLight'>{subheading}</p>
 
          {showAvatar && (
@@ -127,9 +130,11 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
 
                   {!loading && (
                      <div className='pl-2 min-w-0'>
-                        <p className='text-cloudGray text-2xl md:text-3xl font-b'>Welcome, <span className='text-chocolate'>{first_name}</span></p>
+                        <Heading className='font-medium text-cloudGray text-2xl md:text-3xl '>
+                            Welcome, <span className='font-b text-chocolate'>{first_name}</span>
+                        </Heading>
                         <p className='whitespace-normal break-words pt-2'>
-                           {bio ? <span className='text-stoneGray leading-normal'>{bio}</span> : <span className='text-ashGray md:text-lg'>Add a brief description about yourself here. You can update this in Edit Profile.</span>}
+                           {bio ? <span className='text-stoneGray leading-normal'>{bio}</span> : <span className='text-ashGray '>Add a brief description about yourself here. You can update this in Edit Profile.</span>}
                         </p>
                      </div>
                   )}

@@ -8,8 +8,10 @@ import { useForm } from "react-hook-form";
 
 import Link from "next/link";
 
+
 // components
 import Button from "@/app/components/Button";
+import Heading from "@/app/components/Heading";
 
 // custom hook to display global messages
 import { useMessage } from "@/app/hooks/useMessage";
@@ -168,7 +170,9 @@ const ForgotEmail = () => {
             <div className='flex-1 w-full max-w-xs'>
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
                     <div>
-                        <h2 className='text-3xl text-center mb-3 font-b text-nightSky'>Recover Email</h2>
+                        <Heading className='text-3xl text-center mb-3 font-b text-nightSky'>
+                            Recover Email
+                        </Heading>
 
                         <label className='max-w-min mb-2 text-base text-ashGray block' htmlFor='phone'>Phone</label>
                         <input

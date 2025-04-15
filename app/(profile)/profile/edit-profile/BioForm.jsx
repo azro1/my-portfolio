@@ -200,7 +200,7 @@ const BioForm = ({ user, profile, fetchProfile, changeMessage }) => {
 
     return (
         <div>
-            <div className='pb-4'>
+            <div className='pb-6 pt-2'>
                 <div className="flex items-center justify-between pb-2">
                     <span className="inline-block text-base text-ashGray">Bio</span>
                     <span className='text-ashGray text-base cursor-pointer' onClick={handleOpenForm}>Edit</span> 

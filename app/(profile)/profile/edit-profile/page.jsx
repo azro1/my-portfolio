@@ -2,7 +2,7 @@
 // components
 import EditProfileForms from './EditProfileForms';
 import ProfileHeader from '../../ProfileHeader';
-
+import Heading from '@/app/components/Heading';
 
 const EditProfile = () => {
 
@@ -14,7 +14,9 @@ const EditProfile = () => {
       </div>
 
       <div className="pt-16">
-          <h2 className='text-cloudGray font-medium text-1.375 md:text-2xl'>Profile Picture</h2>
+          <Heading className='text-cloudGray font-medium text-1.375 md:text-2xl'>
+            Profile Picture
+          </Heading>
           <p className='mt-3 leading-normal text-charcoalGrayLight'>Upload or change your profile avatar</p>
 
           <EditProfileForms />

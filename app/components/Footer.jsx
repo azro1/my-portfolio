@@ -12,7 +12,7 @@ const Footer = () => {
 
 
 
-        <div className="px-[x-pad] mx-auto max-w-screen-lg uw:p-0 flex-1">
+        <div className="p-10 mx-auto max-w-screen-lg md:p-0 flex-1">
           <main>
               <div className="flex flex-col items-center justify-start gap-2 mt-4 mb-20 md:py-4 md:flex-row md:items-start md:justify-between md:m-0">
 
@@ -31,19 +31,19 @@ const Footer = () => {
                         />
                       </Link>
                     </div>
-                    <p className="text-charcoalGrayLight" >&copy; 2025 Simon Sutherland</p>
+                    <p className="text-stoneGray" >&copy; 2025 Simon Sutherland</p>
                   </div>
                   <div className="flex justify-center gap-4">
-                      <a className="text-charcoalGrayLight" href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" >
+                      <a className="text-stoneGray" href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" >
                         <FiLinkedin size={24} />
                       </a>
-                      <a className="text-charcoalGrayLight" href="https://github.com" target="_blank" rel="noopener noreferrer" >
+                      <a className="text-stoneGray" href="https://github.com" target="_blank" rel="noopener noreferrer" >
                         <FiGithub size={24} />
                       </a>
-                      <a className="text-charcoalGrayLight" href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" >
+                      <a className="text-stoneGray" href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" >
                         <FiYoutube size={24} />
                       </a>
-                      <a className="text-charcoalGrayLight" href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" >
+                      <a className="text-stoneGray" href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" >
                         <FiInstagram size={24} />
                       </a>
                   </div>
@@ -59,10 +59,10 @@ const Footer = () => {
 
                 <div className="flex flex-col items-center justify-start">
                   <Link href="#">
-                    <p className="text-sm text-charcoalGrayLight">Terms of Use</p>
+                    <p className="text-sm text-stoneGray">Terms of Use</p>
                   </Link>
                   <Link href="#">
-                    <p className="text-sm text-charcoalGrayLight">Privacy Policy</p>
+                    <p className="text-sm text-stoneGray">Privacy Policy</p>
                   </Link>
                 </div>
 
