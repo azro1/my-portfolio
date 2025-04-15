@@ -43,7 +43,7 @@ const Dropdown = ({ user, handleCloseMenu, isProfilePage, dropDownRef }) => {
           />
         </div>
       ) : (
-        <div className='absolute w-full left-0 top-[92px] z-40 bg-slateOnyx'>
+        <div className='absolute w-full left-0 top-[92px] z-40 bg-slateOnyx' ref={dropDownRef}>
           <LoggedOutMenu 
             handleCloseMenu={handleCloseMenu}
           />   

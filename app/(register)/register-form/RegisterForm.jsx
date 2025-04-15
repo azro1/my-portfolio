@@ -14,6 +14,11 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 
+
+// components
+import Heading from '@/app/components/Heading';
+
+
 // hooks
 import { useUpdateTable } from '@/app/hooks/useUpdateTable';
 import { useUpdateMetadata } from '@/app/hooks/useUpdateMetadata';
@@ -559,13 +564,14 @@ const RegisterForm = () => {
 
 
   return (
-        <div className='flex flex-col justify-center gap-7 sm:items-center md:min-h-[824px]'>
-                <h2 className='text-3xl font-b text-nightSky'>Create your Profile</h2>
-
+        <div className='flex flex-col justify-center gap-6 sm:items-center md:min-h-[824px]'>
+                <Heading className='text-3xl font-b text-nightSky'>
+                    Create your Profile
+                </Heading>
             <div className='flex flex-col gap-4 w-full max-w-xs sm:max-w-md sm:bg-white sm:shadow-outer sm:p-12 sm:pt-10 sm:rounded-xl'>
 
                 <form className='flex flex-col gap-7' noValidate>
-                    <h3 className='text-lg font-b text-nightSky md:text-xl'>Enter your Personal Details</h3>
+                    <h3 className='text-lg font-b text-nightSky md:text-center md:text-xl'>Enter your personal details</h3>
 
                     <div>
                         <div className='relative '>

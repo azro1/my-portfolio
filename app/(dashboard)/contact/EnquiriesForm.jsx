@@ -233,7 +233,7 @@ const EnquiriesForm = ({ user }) => {
                         {...register('firstname')}
                         spellCheck='false'
                         maxLength={30}
-                        className='w-full py-2 px-4 rounded-md border-[1px] border-gray-300'
+                        className='w-full py-2.5 px-4 rounded-md border-[1px] border-gray-300'
                     /> 
                     {errors.firstname && <p className='text-red-600 text-sm mt-1'>{errors.firstname?.message}</p>}       
                 </div>
@@ -247,7 +247,7 @@ const EnquiriesForm = ({ user }) => {
                         spellCheck='false'
                         autoComplete="email"
                         maxLength={50}
-                        className='w-full py-2 px-4 rounded-md border-[1px] border-gray-300'
+                        className='w-full py-2.5 px-4 rounded-md border-[1px] border-gray-300'
                     />
                     {errors.email && <p className='text-red-600 text-sm mt-1'>{errors.email?.message}</p>}       
                 </div>
@@ -275,7 +275,7 @@ const EnquiriesForm = ({ user }) => {
                         cols='30'
                         rows='4'
                         {...register('message')}
-                        className='py-2 px-4 outline-none rounded-md w-4/5 border-[1px] border-gray-300 resize-none'
+                        className='py-2.5 px-4 outline-none rounded-md w-4/5 border-[1px] border-gray-300 resize-none'
                     ></textarea>
                     {errors.message && <p className='text-red-600 text-sm mt-1'>{errors.message?.message}</p>}       
                 </div>

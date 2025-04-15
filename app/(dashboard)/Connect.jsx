@@ -16,12 +16,17 @@ const socialPlatforms = [
   {icon: <FaWhatsapp size={28} />, url: 'https://wa.me/yourphonenumber'}
 ]
 
+// components
+import Heading from '../components/Heading';
+
 const Connect = () => {
   return (
     <section>
         <div className="text-center max-w-max mx-auto lg:p-10">
           <div className='flex flex-col items-center justify-center '>
-            <h2 className="subheading font-b text-chocolate mb-3.5">Connect With Me</h2>
+            <Heading className="subheading font-b text-chocolate mb-3.5">
+              Connect With Me
+            </Heading>
             <p className="md:leading-7">
               Stay connected with me on LinkedIn, GitHub, YouTube, Instagram, Discord, and WhatsApp for the latest updates, projects, and collaborations         
             </p>

@@ -5,6 +5,8 @@ import { FaHeart } from 'react-icons/fa';
 import { useEffect } from 'react';
 import Image from 'next/image';
 
+// components
+import Heading from "../components/Heading";
 
 // custom hooks
 import { useFetchProjectsById } from '@/app/hooks/useFetchProjectsById';
@@ -30,7 +32,9 @@ const FavouriteProjectList = ({ user }) => {
 
     return (
         <div>
-            <h3 className='text-frostWhite text-lg font-medium mb-4'>Favourite Projects</h3>
+            <Heading className='text-lg font-medium text-cloudGray mb-4'>
+                Favourite Projects
+            </Heading>
             {!errorMessage ? (
                 <div className={`min-h-[350px] flex items-center justify-center md:justify-normal bg-softCharcoal ${retrievedProjects.length === 0 ? 'p-4' : 'p-12'}`}>
                     {!isProjectsLoading && (

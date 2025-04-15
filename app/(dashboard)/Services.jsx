@@ -8,6 +8,9 @@ import {
   FiSmartphone 
 } from "react-icons/fi";
 
+// components
+import Heading from "../components/Heading";
+
 const Services = () => {
   const services = [
     {
@@ -35,7 +38,10 @@ const Services = () => {
   return (
     <section>
       <div className="overflow-hidden">
-        <h2 className="text-2xl md:text-3xl font-b text-center text-cloudGray mb-6 md:mb-10">My Services</h2>
+
+        <Heading className="text-2xl md:text-3xl font-b text-center text-cloudGray mb-6 md:mb-10">
+          My Services
+        </Heading>
 
         <div className="flex flex-wrap justify-center items-center gap-10 md:gap-12 relative">
           {services.map((service, index) => (
@@ -53,9 +59,12 @@ const Services = () => {
                 <span className="text-frostWhite">{service.icon}</span>
               </div>
               <div className="flex flex-col items-center text-center max-w-xl mt-4">
-                <h2 className="subheading font-medium text-chocolate mb-3">
-                  {service.title}
+                <h2 >
+                  
                 </h2>
+                <Heading className="subheading font-medium text-chocolate mb-3">
+                  {service.title}
+                </Heading>
                 <p className="md:leading-7">{service.text}</p>
               </div>
             </motion.div>

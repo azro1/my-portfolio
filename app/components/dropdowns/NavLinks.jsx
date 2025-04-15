@@ -27,21 +27,21 @@ const NavLinks = ({ user, handleCloseMenu, handleToggleMenu }) => {
 
     return (
         <div className='md:hidden'>
-            <Link href={'/'} className={`${activeLink === '/' ? 'text-cloudGray' : 'text-charcoalGrayLight'}`} onClick={(e) => {
+            <Link href={'/'} className={`${activeLink === '/' ? 'text-cloudGray' : 'text-stoneGray'}`} onClick={(e) => {
                 handleActiveLink('/');
             }}>
                 <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray' onClick={handleCloseMenu}>
                     <span className='text-base'>Home</span>
                 </div>
             </Link>
-            <Link href={'/about'} className={`${activeLink === '/about' ? 'text-cloudGray' : 'text-charcoalGrayLight'}`} onClick={(e) => {
+            <Link href={'/about'} className={`${activeLink === '/about' ? 'text-cloudGray' : 'text-stoneGray'}`} onClick={(e) => {
                 handleActiveLink('/about');
             }}>
                 <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray' onClick={handleCloseMenu}>
                     <span className='text-base'>About</span>
                 </div>
             </Link>
-            <Link href={'/contact'} className={`${activeLink === '/contact' ? 'text-cloudGray' : 'text-charcoalGrayLight'}`} onClick={(e) => {
+            <Link href={'/contact'} className={`${activeLink === '/contact' ? 'text-cloudGray' : 'text-stoneGray'}`} onClick={(e) => {
                 handleActiveLink('/contact');
             }}>
                 <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray' onClick={handleCloseMenu}>
@@ -60,9 +60,9 @@ const NavLinks = ({ user, handleCloseMenu, handleToggleMenu }) => {
                           defaultAvatarSize={32}
                         />
                     </div>
-                    <span className="text-base  text-charcoalGrayLight xl:inline">{user?.user_metadata.first_name || user?.user_metadata.full_name}</span>
+                    <span className="text-base  text-stoneGray xl:inline">{user?.user_metadata.first_name || user?.user_metadata.full_name}</span>
                 </div>
-                <button onClick={handleToggleMenu} className='text-base text-charcoalGrayLight'>
+                <button onClick={handleToggleMenu} className='text-base text-stoneGray'>
                     <FiChevronDown size={22} />
                 </button>
             </div>

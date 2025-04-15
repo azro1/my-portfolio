@@ -65,7 +65,7 @@ const SocialButtons = ({ text }) => {
 
   return (
     <div className='flex flex-col gap-3'>
-      <button className='h-[56px] max-h-[56px] rounded-lg font-semibold text-nightSky border-[1px] border-gray-300  flex items-center justify-center gap-3 bg-white hover:bg-cloudGray hover:border-gray-400 transition-all duration-300 ease-in-out relative' onClick={handleGoogleClick}>
+      <button className='h-[56px] max-h-[56px] rounded-lg font-medium text-nightSky border-[1px] border-gray-300  flex items-center justify-center gap-3 bg-white hover:bg-cloudGray hover:border-gray-400 transition-all duration-300 ease-in-out relative' onClick={handleGoogleClick}>
         <Image 
           src={"../images/auth/google.svg"} 
           alt="a google icon"
@@ -79,14 +79,14 @@ const SocialButtons = ({ text }) => {
         </span>
       </button>
 
-      <button className='h-[56px] max-h-[56px] rounded-lg font-semibold text-nightSky border-[1px] border-gray-300  flex items-center justify-center gap-3 bg-white hover:bg-cloudGray hover:border-gray-400 transition-all duration-300 ease-in-out relative' onClick={handleGithubClick}>        
+      <button className='h-[56px] max-h-[56px] rounded-lg font-medium text-nightSky border-[1px] border-gray-300  flex items-center justify-center gap-3 bg-white hover:bg-cloudGray hover:border-gray-400 transition-all duration-300 ease-in-out relative' onClick={handleGithubClick}>        
         <FaGithub size={27} />
         <span>
           {text} with GitHub
         </span>
       </button>
       
-      <button className='h-[56px] max-h-[56px] rounded-lg font-semibold text-nightSky border-[1px] border-gray-300  flex items-center justify-center gap-3 bg-white hover:bg-cloudGray hover:border-gray-400 transition-all duration-300 ease-in-out' onClick={handleDiscordClick}>
+      <button className='h-[56px] max-h-[56px] rounded-lg font-medium text-nightSky border-[1px] border-gray-300  flex items-center justify-center gap-3 bg-white hover:bg-cloudGray hover:border-gray-400 transition-all duration-300 ease-in-out' onClick={handleDiscordClick}>
         <Image 
           src="../images/auth/discord.svg" 
           alt="a discord icon"

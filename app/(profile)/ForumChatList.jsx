@@ -5,6 +5,9 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
 import { FiTrash2 } from "react-icons/fi";
 
+// components
+import Heading from "../components/Heading";
+
 // hooks
 import { useMessage } from "@/app/hooks/useMessage";
 
@@ -93,8 +96,9 @@ const CommentList = ({ user }) => {
 
   return (
     <div>
-        <h3 className='text-lg font-medium text-frostWhite mb-3'>Chat History</h3>
-
+        <Heading className='text-lg font-medium text-cloudGray mb-3'>
+            Chat History
+        </Heading>
             {!error ? (
                 <div className={`flex flex-col text-left min-h-96 max-h-96 overflow-y-scroll hide-scrollbar md:max-w-md relative bg-softCharcoal ${comments === null ? 'p-0' : 'p-4'} gap-4`}>
                     {comments && comments.length > 0 ? (

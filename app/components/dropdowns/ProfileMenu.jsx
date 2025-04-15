@@ -22,7 +22,7 @@ const ProfileMenu = ({ handleLogout, handleCloseMenu, isProfilePage, isOpen }) =
         <>
             {isOpen && (
                 <>
-                    <Link href={'/profile'} className={`${activeLink === '/profile' ? 'text-cloudGray ' : 'text-charcoalGrayLight'}`} onClick={(e) => {
+                    <Link href={'/profile'} className={`${activeLink === '/profile' ? 'text-cloudGray ' : 'text-stoneGray'}`} onClick={(e) => {
                         handleActiveLink('/profile');
                     }}>
                         <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray' onClick={handleCloseMenu}>
@@ -32,7 +32,7 @@ const ProfileMenu = ({ handleLogout, handleCloseMenu, isProfilePage, isOpen }) =
 
                     {isProfilePage && (
                         <>
-                            <Link href={'/profile/edit-profile'} className={`${activeLink === '/profile/edit-profile' ? 'text-cloudGray' : 'text-charcoalGrayLight'}`} onClick={(e) => {
+                            <Link href={'/profile/edit-profile'} className={`${activeLink === '/profile/edit-profile' ? 'text-cloudGray' : 'text-stoneGray'}`} onClick={(e) => {
                                 handleActiveLink('/profile/edit-profile');
     
                             }}>
@@ -40,7 +40,7 @@ const ProfileMenu = ({ handleLogout, handleCloseMenu, isProfilePage, isOpen }) =
                                     <span className='text-base'>Edit Profile</span>
                                 </div>
                             </Link>
-                            <Link href={'/profile/data-privacy'} className={`${activeLink === '/profile/data-privacy' ? 'text-cloudGray' : 'text-charcoalGrayLight'}`} onClick={(e) => {
+                            <Link href={'/profile/data-privacy'} className={`${activeLink === '/profile/data-privacy' ? 'text-cloudGray' : 'text-stoneGray'}`} onClick={(e) => {
                                 handleActiveLink('/profile/data-privacy');
     
                             }}>
@@ -51,14 +51,14 @@ const ProfileMenu = ({ handleLogout, handleCloseMenu, isProfilePage, isOpen }) =
                         </>
                     )}
 
-                    <Link href={'/forum'} className={`${activeLink === '/forum' ? 'text-cloudGray' : 'text-charcoalGrayLight'}`} onClick={(e) => {
+                    <Link href={'/forum'} className={`${activeLink === '/forum' ? 'text-cloudGray' : 'text-stoneGray'}`} onClick={(e) => {
                         handleActiveLink('/forum');
                     }}>
                         <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray' onClick={handleCloseMenu}>
                             <span className='text-base'>Forum</span>
                         </div>
                     </Link>
-                    <Link href={'/profile/help'} className={`${activeLink === '/help' ? 'text-cloudGray' : 'text-charcoalGrayLight'}`} onClick={(e) => {
+                    <Link href={'/profile/help'} className={`${activeLink === '/help' ? 'text-cloudGray' : 'text-stoneGray'}`} onClick={(e) => {
                         handleActiveLink('/profile/help');
                     }}>
                         <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray' onClick={handleCloseMenu}>
@@ -67,7 +67,7 @@ const ProfileMenu = ({ handleLogout, handleCloseMenu, isProfilePage, isOpen }) =
                     </Link>
                     <div onClick={(e) => handleLogout(e)}>
                         <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray' onClick={handleCloseMenu}>
-                            <span className='text-base text-charcoalGrayLight'>Logout</span>
+                            <span className='text-base text-stoneGray'>Logout</span>
                         </div>
                     </div>
                 </>

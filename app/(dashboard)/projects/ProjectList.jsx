@@ -2,10 +2,14 @@
 
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { useState, useEffect } from "react"
+import { Carousel } from "react-responsive-carousel"
+
 import Link from "next/link"
 import Image from 'next/image';
-import { Carousel } from "react-responsive-carousel"
-import 'react-responsive-carousel/lib/styles/carousel.min.css'; // Import the CSS for the carousel
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+
+// components
+import Heading from "@/app/components/Heading"
 
 
 const ProjectList = () => {
@@ -50,7 +54,9 @@ const ProjectList = () => {
   return (
     <section>
       <div>
-        <h2 className="text-2xl md:text-3xl font-b text-cloudGray text-center mb-6 md:mb-8">My Projects</h2>
+        <Heading className="text-2xl md:text-3xl font-b text-cloudGray text-center mb-6 md:mb-8">
+          My Projects
+        </Heading>
         <Carousel showStatus={false} transitionTime={500} interval={5000} swipeable={true} showThumbs={false} selectedItem={selectedIndex} autoPlay infiniteLoop>
           {projects && projects.map((project) => (
             <div key={project.id}>
@@ -90,7 +96,7 @@ const ProjectList = () => {
                     />
                   </div>
                   <p className='text-stoneGray absolute bottom-[72px] left-1/2 transform -translate-x-1/2 md:hidden'>click to view project</p>
-                  <p className='text-stoneGray text-2xl font-b absolute top-16 left-1/2 transform -translate-x-1/2 md:hidden'>{project.title}</p>
+                  <p className='text-stoneGray text-xl font-b absolute top-[70px] left-1/2 transform -translate-x-1/2 md:hidden'>{project.title}</p>
 
 
                 </div>

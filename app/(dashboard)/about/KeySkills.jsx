@@ -6,6 +6,9 @@ import { FiLayout, FiLayers, FiFigma, FiFramer, FiServer } from "react-icons/fi"
 
 import Image from "next/image";
 
+// components
+import Heading from "@/app/components/Heading";
+
 const KeySkills = () => {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -53,8 +56,10 @@ const KeySkills = () => {
             transition={{ duration: 1, ease: "easeOut" }}
             className="flex flex-col text-center gap-4 lg:col-span-2 lg:row-start-3"
           >
-            <h2 className="text-2xl md:text-3xl font-b text-cloudGray text-center mb-6">Key Skills</h2>
-
+            <Heading className="text-2xl md:text-3xl font-b text-cloudGray text-center mb-6">
+              Key Skills
+            </Heading>
+            
             <ul className="flex flex-col items-center w-full lg:flex-row lg:justify-between  relative">
               {keySkills.map((skill, index) => (
                 <motion.li
@@ -88,11 +93,11 @@ const KeySkills = () => {
                   {/* Skill Name */}
                   <motion.div
                     className="flex justify-center"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    initial={{ y: 20 }}
+                    animate={{ y: 0 }}
                     transition={{ duration: 0.4, delay: 0.2 * index }}
                   >
-                    <span className="text-cloudGray whitespace-nowrap">{skill.name}</span>
+                    <span className="text-charcoalGrayLight whitespace-nowrap">{skill.name}</span>
                   </motion.div>
                 </motion.li>
               ))}

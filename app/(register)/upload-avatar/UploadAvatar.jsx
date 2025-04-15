@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 
 // components
 import AvatarUploader from "@/app/components/AvatarUploader";
+import Heading from '@/app/components/Heading';
 
 // hooks
 import { useUpdateTable } from '@/app/hooks/useUpdateTable';
@@ -160,13 +161,16 @@ const UploadAvatar = () => {
 
 
     return (
-        <div className='flex-1 flex flex-col sm:items-center justify-center gap-7 w-full max-w-xs sm:max-w-md'>
-          <h2 className='text-3xl font-b text-nightSky'>Create your Profile</h2>
+        <div className='flex-1 flex flex-col sm:items-center justify-center gap-6 w-full max-w-xs sm:max-w-md'>
+
+          <Heading className='text-3xl font-b text-nightSky'>
+            Create your Profile
+          </Heading>
       
           <div className='flex flex-col items-center justify-center gap-4 sm:bg-white sm:shadow-outer sm:p-10 sm:rounded-xl relative'>
             <div>
               <h3 className='text-lg mb-3 font-b text-nightSky md:text-xl'>
-                Upload an Avatar
+                Upload your avatar
               </h3>
               <p>
                 Choose an image to personalize your profile or skip this step to continue. This helps others recognize you but is entirely optional.

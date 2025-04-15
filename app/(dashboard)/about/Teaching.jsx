@@ -7,6 +7,10 @@ const Player = dynamic(() => import('@lottiefiles/react-lottie-player').then(mod
   ssr: false, // Disable server-side rendering for this component
 });
 
+
+// components
+import Heading from '@/app/components/Heading';
+
 const Teaching = () => {
 
   return (
@@ -22,9 +26,9 @@ const Teaching = () => {
         </div>
 
         <div className="flex-grow flex flex-col text-center lg:text-left lg:w-1/2">
-          <h2 className="subheading font-b mb-4 text-chocolate">
+          <Heading className="subheading font-b mb-4 text-chocolate">
             Teaching
-          </h2>
+          </Heading>
           <p className="text-base leading-7">
             I&apos;m passionate about sharing knowledge through my{" "}
             <a

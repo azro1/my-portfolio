@@ -17,6 +17,7 @@ import EmailForm from './EmailForm';
 import LastNameForm from './LastNameForm';
 import PhoneForm from './PhoneForm';
 import DobForm from './DobForm';
+import Heading from '@/app/components/Heading';
 
 // server actions
 import { getProFlag } from '@/app/actions';
@@ -119,7 +120,9 @@ const EditProfileForms = () => {
             </div>
 
             <div className='pt-16'>
-              <h2 className='text-cloudGray font-medium text-1.375 md:text-2xl'>Basic Information</h2>
+              <Heading className='text-cloudGray font-medium text-1.375 md:text-2xl'>
+                  Basic Information
+              </Heading>
               <p className='mt-3 leading-normal text-charcoalGrayLight'>Update your personal information</p>
 
               <div className='mt-6 flex flex-col bg-softCharcoal p-4'>

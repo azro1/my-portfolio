@@ -7,6 +7,9 @@ const Player = dynamic(() => import('@lottiefiles/react-lottie-player').then(mod
   ssr: false, // Disable server-side rendering for this component
 });
 
+// components
+import Heading from '@/app/components/Heading';
+
 const Interests = () => {
 
   return (
@@ -23,7 +26,9 @@ const Interests = () => {
 
         {/* Text Section */}
         <div className="flex-grow text-center lg:w-1/2 lg:text-left">
-          <h2 className="subheading font-b text-chocolate mb-4">My Interests</h2>
+          <Heading className="subheading font-b text-chocolate mb-4">
+            My Interests
+          </Heading>
           <p className="leading-7">
             When I&apos;m not absorbed in pixels and code or catching up on design trends, I indulge in the joys of cooking and diving into captivating books. These creative outlets fuel my imagination and bring balance to my life, inspiring both my personal and professional pursuits.
           </p>

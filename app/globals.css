@@ -93,23 +93,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
 
-/* sidebar */
-.sidebar-content {
-  width: inherit;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -255,5 +238,22 @@ footer span {
 @media (max-width: 360px) and (max-height: 740px) {
   .register-layout-wrapper {
     @apply pt-36 pb-12;
+  }
+}
+
+
+
+
+
+
+
+/* sidebar */
+.sidebar-content {
+  width: inherit;
+}
+/* sidebar padding to keep dropdown visible */
+@media (min-width: 1440px) and (max-height: 854px) {
+  .sidebar-content {
+     @apply pb-28;
   }
 }

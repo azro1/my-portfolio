@@ -195,7 +195,7 @@ const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
 
     return (
         <div>
-            <div className='py-4'>
+            <div className='py-6'>
                 <div className="flex items-center justify-between pb-2">
                     <span className="inline-block text-ashGray">Dob</span>
                     <span className='text-ashGray cursor-pointer' onClick={handleOpenForm}>

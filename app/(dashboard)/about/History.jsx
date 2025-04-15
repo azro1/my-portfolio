@@ -1,5 +1,8 @@
 "use client";
 
+// components
+import Heading from "@/app/components/Heading";
+
 // hooks
 import useScrollPosition from "../../hooks/useScrollPosition";
 import { useState, useEffect } from "react";
@@ -56,9 +59,9 @@ const History = () => {
 
             <div className="flex flex-col items-center justify-between relative z-10 max-w-full lg:flex-row lg:gap-16">
               <div className="order-3 w-full flex flex-col text-center mt-10 lg:order-none  lg:mb-0 lg:text-left lg:items-start transition-opacity duration-700" style={{ opacity: scrollPosition === 0 ? 0 : opacity }}>
-                <h2 className="subheading font-bold mb-4 text-chocolate">
+                <Heading className="subheading font-bold mb-4 text-chocolate">
                   My History
-                </h2>
+                </Heading>
                 <p className="text-base leading-7">
                   Over the years, I’ve honed my skills through self-study and
                   hands-on experience in technology and design. I create tailored
