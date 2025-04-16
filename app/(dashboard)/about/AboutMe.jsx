@@ -6,12 +6,12 @@ import Heading from "@/app/components/Heading";
 const AboutMe = () => {
     return (
         <section>
-            <div className="flex flex-col items-center  lg:gap-16 lg:flex-row">
+            <div className="flex flex-col items-center lg:gap-16 lg:flex-row">
 
                 {/* Image Section */}
                 <div className="flex max-w-[544px] max-h-[586px]">
                     <Image
-                        src="/images/homepage/hero/placeholder.png"
+                        src="/images/placeholders/placeholder_L.png"
                         alt="Simon Sutherland, Web Developer and Designer"
                         width={544}
                         height={586}
@@ -32,7 +32,6 @@ const AboutMe = () => {
 
             </div>
         </section>
-
     );
 };
 

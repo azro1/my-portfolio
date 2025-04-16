@@ -142,7 +142,7 @@ const Comments = ({ comments, loadComments }) => {
     
                             <div className="flex-1 flex flex-col gap-2">
                                 <div className="flex items-center gap-2">
-                                    <h6 className="text-chocolate">
+                                    <h6 className="text-goldenOchre">
                                         {comment.first_name || comment.full_name}
                                     </h6>
                                     <span className="text-xs text-ashGray">

@@ -19,7 +19,7 @@ const OnlineUsers = () => {
             setRealtimeProfiles([]); // Clear profiles when no users online
             return;
         }
-        console.log('Online users:', onlineUsers);
+        // console.log('Online users:', onlineUsers);
         setRealtimeProfiles([...onlineUsers]); // Ensure a new reference to trigger re-render
     }, [onlineUsers]);
 

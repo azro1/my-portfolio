@@ -12,7 +12,7 @@ const Hero = () => {
         {/* Text Section */}
         <div className="flex-1 w-full flex flex-col justify-center text-center p-6 md:max-w-[544px] lg:max-w-full lg:h-max lg:p-0">
           <div className="lg:max-w-md lg:mx-auto">
-            <Heading className='mainheading font-b text-chocolate mb-3 md:mb-4'>
+            <Heading className='mainheading font-b text-goldenOchre mb-3 md:mb-4'>
               Hi, I&apos;m Simon
             </Heading>
             <p className="mb-6 md:text-lg md:leading-7">A full stack developer
@@ -32,7 +32,7 @@ const Hero = () => {
         {/* Image Section */}
         <div className="flex max-w-[544px] max-h-[586px] ">
           <Image
-            src="/images/homepage/hero/placeholder.png"
+            src="/images/placeholders/placeholder_L.png"
             alt="Simon Sutherland, Web Developer and Designer"
             width={544}
             height={586}

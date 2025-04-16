@@ -1,19 +1,21 @@
+"use client"
+
+import { motion } from "framer-motion";
+
 import {
   FaGithub,
   FaLinkedin,
   FaYoutubeSquare,
   FaInstagram,
-  FaDiscord,
-  FaWhatsapp
+  FaDiscord
 } from 'react-icons/fa';
 
 const socialPlatforms = [
-  {icon: <FaGithub size={28} />, url: 'https://github.com/azro1'},
-  {icon: <FaLinkedin size={28} />, url: 'https://www.linkedin.com/in/yourprofile'},
-  {icon: <FaYoutubeSquare size={28} />, url: 'https://www.youtube.com/channel/UCSK7zfwlgMq3r88lkchHsSw'},
-  {icon: <FaInstagram size={28} />, url: 'https://www.instagram.com/yourprofile'},
-  {icon: <FaDiscord size={28} />, url: 'https://discord.com/users/yourprofile'},
-  {icon: <FaWhatsapp size={28} />, url: 'https://wa.me/yourphonenumber'}
+  {icon: <FaGithub size={30} />, url: 'https://github.com/azro1'},
+  {icon: <FaLinkedin size={30} />, url: 'https://www.linkedin.com/in/yourprofile'},
+  {icon: <FaYoutubeSquare size={30} />, url: 'https://www.youtube.com/channel/UCSK7zfwlgMq3r88lkchHsSw'},
+  {icon: <FaInstagram size={30} />, url: 'https://www.instagram.com/yourprofile'},
+  {icon: <FaDiscord size={30} />, url: 'https://discord.com/users/yourprofile'},
 ]
 
 // components
@@ -23,27 +25,33 @@ const Connect = () => {
   return (
     <section>
         <div className="text-center max-w-max mx-auto lg:p-10">
+          
           <div className='flex flex-col items-center justify-center '>
-            <Heading className="subheading font-b text-chocolate mb-3.5">
-              Connect With Me
+            <Heading className="subheading font-b text-goldenOchre mb-3.5">
+               Let&apos;s Connect
             </Heading>
             <p className="md:leading-7">
-              Stay connected with me on LinkedIn, GitHub, YouTube, Instagram, Discord, and WhatsApp for the latest updates, projects, and collaborations         
+              Follow me on LinkedIn, GitHub, YouTube, Instagram, and Discord for updates on my latest projects, new videos, code repositories, and more!        
             </p>
           </div>
 
-         
-          
-          <div className="w-max mx-auto  flex flex-col items-center justify-center gap-4 md:flex-row p-6">
-
+          <div className="w-max mx-auto flex flex-col items-center justify-center gap-4 p-6 md:flex-row md:gap-2">
             {socialPlatforms.map((platform, index) => (
-              <a href={platform.url} target="_blank" rel="noopener noreferrer" className="p-4 text-white rounded-full shadow-[0_0_8px_2px_#131519] bg-gradient-to-tl from-charcoalGray via-nightSky to-stoneGray transition-shadow duration-300" key={index}>
+              <motion.a 
+                href={platform.url} target="_blank" rel="noopener noreferrer"
+                key={index}
+                className="p-4 bg-charcoalGray shadow-lg shadow-deepCharcoal rounded-md w-max text-cloudGray" 
+                whileHover={{
+                  scale: 1.1
+                }}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
                 {platform.icon}
-              </a>
+              </motion.a>
             ))}
-
-
           </div>
+
         </div>
     </section>
   );

@@ -1,38 +1,35 @@
-"use client"; // Ensure the code runs on the client-side only
-
-import dynamic from 'next/dynamic';
-
-// Dynamically import the Player component with proper resolution
-const Player = dynamic(() => import('@lottiefiles/react-lottie-player').then(mod => mod.Player), {
-  ssr: false, // Disable server-side rendering for this component
-});
-
+import Image from 'next/image';
 
 // components
 import Heading from '@/app/components/Heading';
 
 const Teaching = () => {
-
   return (
     <section>
-      <div className="flex flex-col items-center w-full relative lg:flex-row lg:gap-0 uw:justify-between min-h-[525px] md:min-h-[607px] lg:min-h-[444px]">
+      <div className="relative flex flex-col gap-6 items-center w-full lg:flex-row lg:gap-10">
 
-        <div className="flex-grow flex flex-col items-center min-h-[254px] relative right-2 sm:min-h-[370px] md:max-w-lg lg:w-1/2 md:min-h-[458px] lg:min-h-0 lg:right-4">
-          <Player
-            src="/lottie-animations/teach.json"
-            loop
-            autoplay
-          />
+        {/* Image Section */}
+        <div className="flex-grow flex justify-center w-full max-w-[478px] max-h-[440px] relative z-10">
+            <Image
+                className="object-cover w-full max-w-[478px] h-auto"
+                src={'/images/placeholders/placeholder_M.png'}
+                alt={'Contributing to the open-source community'}
+                width={478}
+                height={440}
+                priority
+                quality={100}
+            />
         </div>
 
         <div className="flex-grow flex flex-col text-center lg:text-left lg:w-1/2">
-          <Heading className="subheading font-b mb-4 text-chocolate">
+          <Heading className="subheading font-b mb-4 text-goldenOchre">
             Teaching
           </Heading>
+
           <p className="text-base leading-7">
             I&apos;m passionate about sharing knowledge through my{" "}
             <a
-              className="text-chocolate hover:underline transition-all duration-300"
+              className="text-cloudGray hover:underline transition-all duration-300"
               href="https://www.youtube.com/channel/UCSK7zfwlgMq3r88lkchHsSw"
               target="_blank"
               rel="noopener noreferrer"
@@ -44,7 +41,7 @@ const Teaching = () => {
             explore these creative realms.
           </p>
         </div>
-
+        
       </div>
     </section>
   );
