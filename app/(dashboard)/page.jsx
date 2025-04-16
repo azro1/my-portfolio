@@ -48,7 +48,7 @@ const Home = () => {
           </main>
         </div>
 
-        <div className="py-16 md:py-32 bg-nightSky">
+        <div className="py-16 bg-nightSky md:pt-32 md:pb-44">
           <div className="px-[x-pad] lg:px-0">
             <main>
               <Connect />

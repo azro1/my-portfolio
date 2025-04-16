@@ -55,14 +55,11 @@ const Services = () => {
               }}
               className="flex flex-col items-center justify-center max-w-sm min-h-[310px] p-6 bg-nightSky rounded-md md:p-8"
             >
-              <div className="p-4 rounded-lg shadow-[0_0_8px_2px_#131519] bg-gradient-to-tl from-charcoalGray via-nightSky to-cloudGray transition-all transform hover:scale-105">
-                <span className="text-frostWhite">{service.icon}</span>
+              <div className="p-4 bg-charcoalGray shadow-lg shadow-deepCharcoal w-max rounded-md transition-all transform hover:scale-105">
+                <span className="text-cloudGray">{service.icon}</span>
               </div>
               <div className="flex flex-col items-center text-center max-w-xl mt-4">
-                <h2 >
-                  
-                </h2>
-                <Heading className="subheading font-medium text-chocolate mb-3">
+                <Heading className="text-1.375 font-b text-goldenOchre mb-2 md:text-2xl">
                   {service.title}
                 </Heading>
                 <p className="md:leading-7">{service.text}</p>

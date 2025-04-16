@@ -96,7 +96,7 @@ const CommentForm = ({ user, profile, updateComments }) => {
                 {user && (
                     <div>
                         <form onSubmit={handleSubmit(handleComment)}>
-                            <label className='text-xl font-b text-chocolate sr-only' htmlFor='comment'>Leave a Comment</label>
+                            <label className='text-xl font-b text-goldenOchre sr-only' htmlFor='comment'>Leave a Comment</label>
                             <input
                                 id='comment'
                                 spellCheck='false'

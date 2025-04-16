@@ -62,7 +62,7 @@ img {
 
 
 
-/* (registration form) auto show date picker when user clicks on field by making picker indicator full height and width of input */
+/* (profile Dob form) auto show date picker when user clicks on field by making picker indicator full height and width of input */
 input[type="date"] {
   box-sizing: border-box;
   outline: 0;
@@ -138,11 +138,11 @@ input::placeholder, textarea::placeholder{
 
 /* Footer styles */
 footer .newsletter h3 {
-  @apply subheading font-b text-chocolate;
+  @apply subheading font-b text-goldenOchre;
 }
 
 footer h4 {
-  @apply font-b text-chocolate;
+  @apply font-b text-goldenOchre;
 }
 
 footer p {

@@ -214,7 +214,7 @@ const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
 
     return (
         <div>
-            <div className='py-6'>
+            <div className='py-4'>
                 <div className="flex items-center justify-between pb-2">
                     <span className="inline-block text-ashGray">First Name</span>
                     <span className="text-ashGray cursor-pointer" onClick={handleOpenForm}>Edit</span>
@@ -241,8 +241,8 @@ const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
                         
                     </form>
                     <div className='flex items-center'>
-                        <button className='btn-small bg-chocolate mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                        <button className='btn-small bg-chocolate mt-3 w-[64px]' onClick={handleSubmit(handleNameUpdate)}>
+                        <button className='btn-small bg-goldenOchre mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
+                        <button className='btn-small bg-goldenOchre mt-3 w-[64px]' onClick={handleSubmit(handleNameUpdate)}>
                             {saving ? (
                                 <div className='flex items-center justify-center gap-2 w-[34px] h-[24px]'>
                                     <Image

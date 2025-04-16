@@ -1,6 +1,5 @@
-"use client";
+"use client"
 
-import React from "react";
 import { motion } from "framer-motion";
 import { FaHtml5, FaCss3Alt, FaJsSquare, FaReact, FaNodeJs, FaGithub } from "react-icons/fa";
 
@@ -27,15 +26,14 @@ const MySkills = () => {
             {technicalSkills.map((skill, index) => (
               <motion.div
                 key={index}
-                className="p-4 rounded-lg shadow-[0_0_8px_2px_#131519] bg-gradient-to-tl from-charcoalGray via-nightSky to-stoneGray transition-shadow duration-300"
+                className="p-4 bg-charcoalGray shadow-lg shadow-deepCharcoal rounded-md w-max"
                 whileHover={{
                   scale: 1.1
                 }}
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
               >
-                <div className="text-frostWhite">
+                <div className="text-cloudGray">
                   {skill.icon}
                 </div>
               </motion.div>
@@ -45,7 +43,7 @@ const MySkills = () => {
 
         {/* Text Section */}
         <div className="flex-1 flex flex-col items-center text-center md:items-start md:text-left">
-          <Heading className="subheading font-b text-chocolate mb-3.5">
+          <Heading className="subheading font-b text-goldenOchre mb-3.5">
             My Skills
           </Heading>
           <p className="md:leading-7 lg:max-w-xs">

@@ -20,7 +20,7 @@ const RealtimeProvider = ({ children }) => {
         channelRef.current = channel;
 
         const handleJoin = async (payload) => {
-            console.log("User joined:", payload);
+            // console.log("User joined:", payload);
 
             const { data: user } = await supabase
                 .from('profiles')
@@ -28,7 +28,7 @@ const RealtimeProvider = ({ children }) => {
                 .eq('id', payload.newPresences[0].user_id)
                 .single();
 
-            console.log("User data fetched:", user);
+            // console.log("User data fetched:", user);
 
             setOnlineUsers((prevUsers) => {
                 const existingUser = prevUsers.find(existingUser => existingUser.id === user.id);
@@ -44,7 +44,7 @@ const RealtimeProvider = ({ children }) => {
         };
 
         const handleLeave = (payload) => {
-            console.log("User left:", payload);
+            // console.log("User left:", payload);
 
             const userId = payload.leftPresences[0].user_id;
 
@@ -63,12 +63,12 @@ const RealtimeProvider = ({ children }) => {
         };
 
         // Subscribe to presence events
-        channel.on('presence', { event: 'join' }, handleJoin);
-        channel.on('presence', { event: 'leave' }, handleLeave);
+        // channel.on('presence', { event: 'join' }, handleJoin);
+        // channel.on('presence', { event: 'leave' }, handleLeave);
 
         // Subscribe to the channel
         channel.subscribe((status) => {
-            console.log("Realtime Channel status:", status);
+            // console.log("Realtime Channel status:", status);
             if (status === 'CLOSED' || status === 'CHANNEL_ERROR') {
                 setTimeout(() => {
                     if (!isSubscribed.current) {
@@ -108,7 +108,7 @@ const RealtimeProvider = ({ children }) => {
     }, [supabase, pathname]);
 
     useEffect(() => {
-        console.log("Updated onlineUsers:", onlineUsers);
+        // console.log("Updated onlineUsers:", onlineUsers);
     }, [onlineUsers]);
 
     return (

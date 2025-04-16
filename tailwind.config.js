@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       colors: {
-        chocolate: '#D2691E',
+        goldenOchre: '#D7A31A',
         softCharcoal: '#191b20',
         deepCharcoal: '#131519',
         slateOnyx: '#2A2C31',
