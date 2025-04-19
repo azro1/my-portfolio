@@ -1,11 +1,11 @@
 "use client"
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 // components
-import Comments from "@/app/components/Comments"
-import CommentForm from "@/app/components/CommentForm"
+import Messages from "@/app/components/Messages"
+import MessageForm from "@/app/components/MessageForm"
 import OnlineUsers from './OnlineUsers';
 
 // hooks
@@ -16,9 +16,8 @@ import { useMessage } from '@/app/hooks/useMessage';
 
 const Forum = () => {
 const { user } = useFetchUser()
-const [comments, setComments] = useState([])
+const [messages, setMessages] = useState([])
 const [hasMore, setHasMore] = useState(true);
-const [isCommentsLoading, setIsCommentsLoading] = useState(true);
 
 // custom hooks
 const { profile, fetchProfile } = useFetchProfile()
@@ -28,7 +27,7 @@ const { changeMessage } = useMessage()
 
 
 
-// watch user value to get users profile and show profile error is there is one
+// only try to fetch profile if theres a user
 useEffect(() => {
   if (user) {
     fetchProfile(user)
@@ -41,38 +40,42 @@ useEffect(() => {
 
 
 
-  // update comments after new comment is added
-  const updateComments = (newComment) => {
-    setComments(prevComments => [...prevComments, newComment]);
+  // update messages after new message is added
+  const updateMessages = (newMessage) => {
+    setMessages(prevMessages => [...prevMessages, newMessage]);
   }
 
-  // as soon as component mounts fetch the last 20 comments
+
+
+
+
+
+
+  // as soon as component mounts fetch the last 20 messages
   useEffect(() => {
-    const fetchComments = async () => {
+    const fetchMessages = async () => {
       try {
         const supabase = createClientComponentClient();
         const { data, error } = await supabase
-          .from('comments')
+          .from('messages')
           .select()
           .order('created_at', { ascending: false }) // Most recent first
-          .range(0, 9); // Fetch the first 10 comments
+          .range(0, 9); // Fetch the first 10 messages
 
         if (error) {
-          setComments([]);
+          setMessages([]);
           console.log(error.message);
         }
 
         if (data) {
-          setComments(data.reverse()); // Reverse to display oldest at the top
+          setMessages(data.reverse()); // Reverse to display oldest at the top
         }
       } catch (error) {
-        changeMessage('error', 'Failed to fetch comments. Please try again later.');
+        changeMessage('error', 'Failed to fetch messages. Please try again later.');
         console.error(error.message);
-      } finally {
-        setIsCommentsLoading(false);
-      }
-    };
-    fetchComments();
+      } 
+    }
+    fetchMessages();
   }, [changeMessage]);
 
 
@@ -81,30 +84,30 @@ useEffect(() => {
 
 
 
-// Load more comments when the user scrolls up
-const loadMoreComments = async () => {
-    if (!hasMore) return; // Don't load more if there are no more comments
+// Load more messages when the user scrolls up
+const loadMoreMessages = async () => {
+    if (!hasMore) return; // Don't load more if there are no more messages
 
     try {
         const supabase = createClientComponentClient();
         const { data, error } = await supabase
-            .from('comments')
+            .from('messages')
             .select()
             .order('created_at', { ascending: false }) // Newest first
-            .range(comments.length, comments.length + 4);  // Load the next 5 comments
+            .range(messages.length, messages.length + 4);  // Load the next 5 messages
 
         if (error) {
-            changeMessage('error', 'Failed to load more comments.');
+            changeMessage('error', 'Failed to load more messages.');
             console.error(error.message);
             return;
         }
 
         if (data) {
-            setComments(prevComments => [...data.reverse(), ...prevComments]); // Prepend new comments (older comments)
-            setHasMore(data.length === 5);  // If exactly 5 comments, there might be more
+            setMessages(prevMessages => [...data.reverse(), ...prevMessages]); // Prepend new messages (older messages)
+            setHasMore(data.length === 5);  // If exactly 5 messages, there might be more
         }
     } catch (error) {
-        changeMessage('error', 'Error loading comments.');
+        changeMessage('error', 'Error loading messages.');
         console.error(error.message);
     }
 };
@@ -124,29 +127,30 @@ return (
       
       {/* Content Area */}
       <div className="flex-grow flex flex-col w-full">
-        {/* Comments Section */}
+
+        {/* Messages Section */}
         <div className="flex-grow overflow-y-auto h-full sm:flex-grow-0 md:flex md:flex-row-reverse">
           <div className='p-4 bg-nightSky'>
             <OnlineUsers
               user={user}
             />
           </div>
-          <Comments 
+          <Messages 
             user={user}
-            comments={comments}
-            loadComments={loadMoreComments}
+            messages={messages}
+            loadMessages={loadMoreMessages}
           />
-
         </div>
   
         {/* Input Section */}
         <div className="flex-grow flex items-end pt-2 px-4 p-6">
-          <CommentForm 
+          <MessageForm 
             user={user}
             profile={profile}
-            updateComments={updateComments}
+            updateMessages={updateMessages}
           />
         </div>
+
       </div>
     </div>
   );

@@ -102,7 +102,7 @@ input::placeholder, textarea::placeholder{
 }
 
 
-#comment::placeholder {
+#chatinput::placeholder {
   @apply text-charcoalGrayLight
 }
 

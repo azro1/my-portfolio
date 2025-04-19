@@ -122,14 +122,14 @@ const AvatarUploader = ({ user, updateProfile, btnColor, show3DAvatar }) => {
                     throw new Error("An unexpected error occurred and we couldn't upload your avatar. Please try again later. If the issue persists, contact support.")
                 }
 
-                // update comments avatar
-                const avatarUpdateCommentsResult = await updateTable(user, 'comments', { 
+                // update messages avatar
+                const avatarUpdateMessagesResult = await updateTable(user, 'messages', { 
                     avatar_url: filePath,
                     updated_at: new Date().toISOString()
-                }, 'comment_id');
+                }, 'message_id');
 
-                if (!avatarUpdateCommentsResult.success) {
-                    throw new Error("Your profile picture was uploaded successfully, but we encountered an issue updating your comments. Please try again later. If the issue persists, contact support.")
+                if (!avatarUpdateMessagesResult.success) {
+                    throw new Error("Your profile picture was uploaded successfully, but we encountered an issue updating your messages. Please try again later. If the issue persists, contact support.")
                 }
                 
                 changeMessage('success', 'Your Avatar has been uploaded')

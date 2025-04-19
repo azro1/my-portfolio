@@ -4,9 +4,8 @@ import { useMessage } from "../hooks/useMessage";
 
 
 
-const CommentForm = ({ user, profile, updateComments }) => {
+const MessageForm = ({ user, profile, updateMessages }) => {
     const [isLoading, setIsLoading] = useState(false);
-
     const { changeMessage } = useMessage()
  
 
@@ -25,8 +24,8 @@ const CommentForm = ({ user, profile, updateComments }) => {
 
 
     
-    // send comment to sever api endpoint
-    const handleComment = async (data) => {
+    // send message to sever api endpoint
+    const handleMessage = async (data) => {
 
         const sanitizeInput = (input) => {
             return input.replace(/[&<>]/g, (char) => {
@@ -39,8 +38,8 @@ const CommentForm = ({ user, profile, updateComments }) => {
             });
         };
           
-        const comment = sanitizeInput(data.comment)
-        // console.log(comment)
+        const message = sanitizeInput(data.message)
+        // console.log(message)
   
 
         if (!profile) {
@@ -53,28 +52,28 @@ const CommentForm = ({ user, profile, updateComments }) => {
         try {
           setIsLoading(true);
 
-          const res = await fetch(`${location.origin}/api/comments`, {
+          const res = await fetch(`${location.origin}/api/messages`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({
               profile,
-              comment
+              message
             })
           })  
     
           // handle response
-          const serverComment = await res.json()
+          const serverResponse = await res.json()
     
-          if (serverComment.error) {
-            throw new Error("We're having trouble saving your comment right now. Please try again in a bit. If the issue persists, contact support.");
+          if (serverResponse.error) {
+            throw new Error("We're having trouble saving your message right now. Please try again in a bit. If the issue persists, contact support.");
           }
     
-          if (serverComment.data) {
+          if (serverResponse.data) {
             setIsLoading(false)
-            updateComments(serverComment.data);
-            reset({ comment: '' })
+            updateMessages(serverResponse.data);
+            reset({ message: '' })
           }
       
         } catch (error) {
@@ -95,13 +94,12 @@ const CommentForm = ({ user, profile, updateComments }) => {
         <div className="w-full">
                 {user && (
                     <div>
-                        <form onSubmit={handleSubmit(handleComment)}>
-                            <label className='text-xl font-b text-goldenOchre sr-only' htmlFor='comment'>Leave a Comment</label>
+                        <form onSubmit={handleSubmit(handleMessage)}>
                             <input
-                                id='comment'
+                                id='chatinput'
                                 spellCheck='false'
-                                {...register('comment', {
-                                    required: 'Comment is required'
+                                {...register('message', {
+                                    required: 'Message is required'
                                 })}
                                 placeholder="Tell us what's on your mind..."
                                 className='py-3 px-4 w-full outline-none text-base rounded-md text-cloudGray bg-charcoalGray block'
@@ -113,4 +111,4 @@ const CommentForm = ({ user, profile, updateComments }) => {
     )
 }
 
-export default CommentForm
+export default MessageForm
