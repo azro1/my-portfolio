@@ -8,9 +8,9 @@ import { FaUserCircle } from "react-icons/fa";
 // components
 import Avatar from "@/app/components/Avatar";
 
-const Comments = ({ comments, loadComments }) => {
+const Messages = ({ messages, loadMessages }) => {
     const [isAtBottom, setIsAtBottom] = useState(true); 
-    const commentsContainerRef = useRef(null);
+    const messagesContainerRef = useRef(null);
 
 
 
@@ -26,78 +26,60 @@ const Comments = ({ comments, loadComments }) => {
 
 
     useEffect(() => {
-        if (commentsContainerRef.current) {
-            // Scroll to the bottom whenever comments change
-            commentsContainerRef.current.scrollTop = commentsContainerRef.current.scrollHeight;
+        if (messagesContainerRef.current) {
+            // Scroll to the bottom whenever messages change
+            messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
         }
-    }, [comments])
+    }, [messages])
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-    // track when the user scrolls and checks if they are at the bottom load more comments
+    // track when the user scrolls and checks if they are at the bottom load more messages
     useEffect(() => {
        
-            const commentsContainer = commentsContainerRef.current;
+            const messagesContainer = messagesContainerRef.current;
 
-            // Only add event listener when commentsContainer is available
-            if (commentsContainer) {
+            // Only add event listener when messagesContainer is available
+            if (messagesContainer) {
                 const handleScroll = () => {
 
                     // Check if the user is at the bottom
-                    const isAtBottom = commentsContainer.scrollHeight - commentsContainer.scrollTop === commentsContainer.clientHeight;
+                    const isAtBottom = messagesContainer.scrollHeight - messagesContainer.scrollTop === messagesContainer.clientHeight;
                     setIsAtBottom(isAtBottom);
 
                     // Check if the user is at the top
-                    if (commentsContainer.scrollTop === 0) {
-                        loadComments();
+                    if (messagesContainer.scrollTop === 0) {
+                        loadMessages();
                     }
                 };
             
                 // Add scroll event listener
-                commentsContainer.addEventListener('scroll', handleScroll, { passive: true });
+                messagesContainer.addEventListener('scroll', handleScroll, { passive: true });
 
                 // Clean up the event listener when component unmounts
                 return () => {
-                    commentsContainer.removeEventListener('scroll', handleScroll);
+                    messagesContainer.removeEventListener('scroll', handleScroll);
                 };
            }
-    }, [loadComments])
-
-
-
-
-
-
-        // Scroll to bottom if user is already at the bottom
-        useEffect(() => {
-            if (isAtBottom && commentsContainerRef.current) {
-                commentsContainerRef.current.scrollTop = commentsContainerRef.current.scrollHeight;
-            }
-        }, [comments, isAtBottom]);
-
-
-
+    }, [loadMessages])
 
 
 
     // Scroll to bottom if user is already at the bottom
     useEffect(() => {
-        if (isAtBottom && commentsContainerRef.current) {
-            commentsContainerRef.current.scrollTop = commentsContainerRef.current.scrollHeight;
+        if (isAtBottom && messagesContainerRef.current) {
+            messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
         }
-    }, [comments, isAtBottom]); // Only scroll if new comments and the user is at the bottom
+    }, [messages, isAtBottom]);
+
+
+
+    // Scroll to bottom if user is already at the bottom
+    useEffect(() => {
+        if (isAtBottom && messagesContainerRef.current) {
+            messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+        }
+    }, [messages, isAtBottom]); // Only scroll if new messages and the user is at the bottom
 
 
 
@@ -106,21 +88,21 @@ const Comments = ({ comments, loadComments }) => {
 
     return (
         <div className="h-[calc(100vh-200px)] overflow-y-scroll hide-scrollbar flex-1">
-            {comments && comments.length > 0 ? (
+            {messages && messages.length > 0 ? (
                 <div
                     className="overflow-y-auto hide-scrollbar h-full flex flex-col gap-8 p-6"
-                    ref={commentsContainerRef}
+                    ref={messagesContainerRef}
                 >
-                    {comments.map((comment) => (
-                        <div className="flex items-start gap-3 max-w-max my-2" key={comment.id}>
+                    {messages.map((message) => (
+                        <div className="flex items-start gap-3 max-w-max my-2" key={message.id}>
     
     
                             {/* Render avatar */}
-                            {comment.avatar_url ? (
-                                comment.avatar_url.startsWith("https") ? (
+                            {message.avatar_url ? (
+                                message.avatar_url.startsWith("https") ? (
                                     <div className="overflow-hidden rounded-full max-w-[42px] max-h-[42px] min-w-[42px]">
                                         <Image
-                                            src={comment.avatar_url}
+                                            src={message.avatar_url}
                                             alt="User avatar"
                                             width={42}
                                             height={42}
@@ -131,7 +113,7 @@ const Comments = ({ comments, loadComments }) => {
                                     </div>
                                 ) : (
                                     <div className="min-w-[42px] min-h-[42px]">
-                                        <Avatar url={comment.avatar_url} width={42} height={42} />
+                                        <Avatar url={message.avatar_url} width={42} height={42} />
                                     </div>
                                 )
                             ) : (
@@ -143,15 +125,15 @@ const Comments = ({ comments, loadComments }) => {
                             <div className="flex-1 flex flex-col gap-2">
                                 <div className="flex items-center gap-2">
                                     <h6 className="text-goldenOchre">
-                                        {comment.first_name || comment.full_name}
+                                        {message.first_name || message.full_name}
                                     </h6>
                                     <span className="text-xs text-ashGray">
-                                        {format(new Date(comment.created_at), 'd/M/yy, h:mm a')}
+                                        {format(new Date(message.created_at), 'd/M/yy, h:mm a')}
                                     </span>
                                 </div>
     
                                 <p className="bg-slateOnyx p-2 px-3 rounded-md text-base text-frostWhite whitespace-normal break-words max-w-max">
-                                    <span>{comment.text}</span>
+                                    <span>{message.text}</span>
                                 </p>
                             </div>
                         </div>
@@ -167,4 +149,4 @@ const Comments = ({ comments, loadComments }) => {
     
 };
 
-export default Comments;
+export default Messages;

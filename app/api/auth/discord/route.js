@@ -25,14 +25,14 @@ export async function GET(request) {
         throw new Error('Profile avatar update failed');
       }
 
-      // Call rpc function to update the avatar URL for comments table
-      const { error: commentAvatarError } = await supabase.rpc('update_comment_avatars', {
+      // Call rpc function to update the avatar URL for messages table
+      const { error: messageAvatarError } = await supabase.rpc('update_message_avatars', {
         user_id: user.id
       });
 
-      if (commentAvatarError) {
-        console.error('Error updating comment avatars:', commentAvatarError.message);
-        throw new Error('Comment avatar update failed');
+      if (messageAvatarError) {
+        console.error('Error updating message avatars:', messageAvatarError.message);
+        throw new Error('Message avatar update failed');
       }
 
       // update profile flags

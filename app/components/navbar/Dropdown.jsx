@@ -11,7 +11,7 @@ import LoggedOutMenu from "./LoggedOutMenu";
 import { useUpdateTable } from "@/app/hooks/useUpdateTable";
 
 
-const Dropdown = ({ user, handleCloseMenu, isProfilePage, dropDownRef }) => {
+const Dropdown = ({ user, handleCloseMenu, isProfilePage, isForumPage, dropDownRef }) => {
   const router = useRouter()
   const { updateTable } = useUpdateTable();
 
@@ -40,6 +40,7 @@ const Dropdown = ({ user, handleCloseMenu, isProfilePage, dropDownRef }) => {
             handleLogout={handleLogout}
             handleCloseMenu={handleCloseMenu}
             isProfilePage={isProfilePage}
+            isForumPage={isForumPage}
           />
         </div>
       ) : (

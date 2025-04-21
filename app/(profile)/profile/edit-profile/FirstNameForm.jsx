@@ -156,20 +156,20 @@ const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
             }
 
 
-            // check for successful comments update if not throw new error
-            const updateCommentsResult = await updateTable(user, 'comments', { 
+            // check for successful messages update if not throw new error
+            const updateMessagesResult = await updateTable(user, 'messages', { 
                 first_name: sanitizedFirstName,
                 updated_at: new Date().toISOString(), 
-            }, 'comment_id');
+            }, 'message_id');
 
-            if (!updateCommentsResult.success) {
+            if (!updateMessagesResult.success) {
                 setSaving(false)
                 fetchProfile(user)
-                throw new Error("An unexpected error occurred. Your firstname was updated but we couldn't update your comments. Please try again later. If the issue persists, contact support.")
+                throw new Error("An unexpected error occurred. Your firstname was updated but we couldn't update your messages. Please try again later. If the issue persists, contact support.")
             }
 
 
-            if (updateProfilesResult.success && updateCommentsResult.success) {
+            if (updateProfilesResult.success && updateMessagesResult.success) {
                 setSaving(false)
                 setShowForm(false)
                 reset({ draftFirstName: '' });

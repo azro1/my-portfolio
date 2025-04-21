@@ -5,27 +5,28 @@ import { v4 as uuidv4 } from "uuid"
 
 
 export async function POST(request) {
-  const { profile, comment } = await request.json()
+  // Extract roomId along with profile and message
+  const { profile, message, roomId } = await request.json() 
 
   // get supabase instance
   const supabase = createRouteHandlerClient({ cookies })
 
-  // insert comment
-  const { data, error } = await supabase.from('comments')
+  // insert message
+  const { data, error } = await supabase.from('messages')
     .insert({
       id: uuidv4(),
-      text: comment,
-      first_name: profile.first_name,
-      full_name: profile.full_name,
+      text: message,
+      first_name: profile.first_name || profile.full_name,
       avatar_url: profile.avatar_url,
-      comment_id: profile.id,
+      message_id: profile.id, // This is the user's ID
+      chatroom_id: roomId, // Add the chatroom_id here
       created_at: new Date().toISOString()
     })
     .select()
     .single()
 
     if (error) {
-        console.log('comments error:', error.message)
+        console.log('messages error:', error.message)
         return NextResponse.json({ error: error.message }, { 
           status: 500 
         })

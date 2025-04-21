@@ -10,7 +10,7 @@ import {
 import Dropdown from './navbar/Dropdown'
 
 
-const Chevron = ({ user, isProfilePage }) => {
+const Chevron = ({ user, isProfilePage, isForumPage }) => {
   const [isOpen, setIsOpen] = useState(false)
   const dropDownRef = useRef()
 
@@ -44,12 +44,12 @@ const Chevron = ({ user, isProfilePage }) => {
   return (
      <>
         {/* shows for large screens */}
-        <button onClick={handleToggleMenu} className='hidden text-base text-ashGray md:block'>
+        {!isForumPage && <button onClick={handleToggleMenu} className={'hidden text-base text-ashGray md:block'}>
             <FiChevronDown size={22} />
-        </button> 
+        </button>}
         
         {/* shows for small screens */}
-        <button onClick={handleToggleMenu} className='text-base text-cloudGray md:hidden'>
+        <button onClick={handleToggleMenu} className={`text-base text-cloudGray ${isForumPage ? 'md:block' : 'md:hidden'} `}>
             <FiMenu size={28} />
         </button> 
 
@@ -58,6 +58,7 @@ const Chevron = ({ user, isProfilePage }) => {
               user={user} 
               handleCloseMenu={handleCloseMenu} 
               isProfilePage={isProfilePage}
+              isForumPage={isForumPage}
               dropDownRef={dropDownRef} 
           />
        )}

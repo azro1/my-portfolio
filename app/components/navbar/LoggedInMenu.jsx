@@ -8,7 +8,7 @@ import ProfileMenu from "../dropdowns/ProfileMenu";
 import ProfileMenuLarge from "../dropdowns/ProfileMenuLarge";
 
 
-const LoggedInMenu = ({ user, handleLogout, handleCloseMenu, isProfilePage }) => {
+const LoggedInMenu = ({ user, handleLogout, handleCloseMenu, isProfilePage, isForumPage }) => {
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -25,6 +25,8 @@ const LoggedInMenu = ({ user, handleLogout, handleCloseMenu, isProfilePage }) =>
           user={user}
           handleCloseMenu={handleCloseMenu}
           handleToggleMenu={handleToggleMenu}
+          isForumPage={isForumPage}
+          
         />
 
         {/* dropdown profile menu for small screens up to medium */}
@@ -41,6 +43,7 @@ const LoggedInMenu = ({ user, handleLogout, handleCloseMenu, isProfilePage }) =>
         handleLogout={handleLogout}
         handleCloseMenu={handleCloseMenu}
         isProfilePage={isProfilePage}
+        isForumPage={isForumPage}
       />
 
     </div>
