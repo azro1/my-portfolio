@@ -584,7 +584,7 @@ const RegisterForm = () => {
                                 placeholder='First Name'
                                 minLength='3'
                                 {...register('firstname')}
-                                className={`w-full  py-2 px-4 text-nightSky rounded-md border-[1px]  ${errors.firstname ? 'border-red-600' : 'border-gray-300'}`}
+                                className={`w-full  py-2.5 px-4 text-nightSky rounded-md border-[1px]  ${errors.firstname ? 'border-red-600' : 'border-gray-300'}`}
                             />
                         </div>
                         {errors?.firstname && <p className='text-sm text-red-600 mt-1'>{errors.firstname.message}</p>}
@@ -600,7 +600,7 @@ const RegisterForm = () => {
                                 placeholder='Last Name'
                                 minLength='2'
                                 {...register('lastname')}
-                                className={`w-full py-2 px-4 text-nightSky rounded-md border-[1px] ${errors.lastname ? 'border-red-600' : 'border-gray-300'}`}
+                                className={`w-full py-2.5 px-4 text-nightSky rounded-md border-[1px] ${errors.lastname ? 'border-red-600' : 'border-gray-300'}`}
                             />
                         </div>
                         {errors?.lastname && <p className='text-sm text-red-600 mt-1'>{errors.lastname.message}</p>}
@@ -619,7 +619,7 @@ const RegisterForm = () => {
                                     min={field.min}
                                     maxLength={field.maxlength}
                                     placeholder={field.placeholder}
-                                    className={`w-full h-[42px] text-center rounded-md border-[1px] border-gray-300 ${!hasInteracted && formState.isSubmitted && (!dob.day && !dob.month?.value && !dob.year) ? 'border-red-600' : 'border-gray-300'}`}
+                                    className={`w-full h-[43px] text-center rounded-md border-[1px] border-gray-300 ${!hasInteracted && formState.isSubmitted && (!dob.day && !dob.month?.value && !dob.year) ? 'border-red-600' : 'border-gray-300'}`}
                                     {...register(`dob.${field.name}`)}
                                     />
                                 ) : (
@@ -666,7 +666,7 @@ const RegisterForm = () => {
                                 spellCheck={false}
                                 placeholder="Phone Number"
                                 {...register('phone')}
-                                className={`w-full py-2 px-4 text-nightSky rounded-md border-[1px] ${(errors.phone || phoneExists) ? 'border-red-600' : 'border-gray-300'}`}
+                                className={`w-full py-2.5 px-4 text-nightSky rounded-md border-[1px] ${(errors.phone || phoneExists) ? 'border-red-600' : 'border-gray-300'}`}
                                 onKeyDown={handleKeyDown}
                             />
                         </div>

@@ -10,7 +10,7 @@ import { FiChevronDown } from 'react-icons/fi';
 import UserAvatar from "../navbar/UserAvatar";
 
 
-const NavLinks = ({ user, handleCloseMenu, handleToggleMenu }) => {
+const NavLinks = ({ user, handleCloseMenu, handleToggleMenu, isForumPage }) => {
     const [activeLink, setActiveLink] = useState('');
     const pathName = usePathname();
 
@@ -26,7 +26,7 @@ const NavLinks = ({ user, handleCloseMenu, handleToggleMenu }) => {
 
 
     return (
-        <div className='md:hidden'>
+        <div className={`${isForumPage ? 'block' : 'md:hidden'} `}>
             <Link href={'/'} className={`${activeLink === '/' ? 'text-cloudGray' : 'text-stoneGray'}`} onClick={(e) => {
                 handleActiveLink('/');
             }}>

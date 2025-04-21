@@ -5,7 +5,8 @@ import { v4 as uuidv4 } from "uuid"
 
 
 export async function POST(request) {
-  const { profile, message } = await request.json()
+  // Extract roomId along with profile and message
+  const { profile, message, roomId } = await request.json() 
 
   // get supabase instance
   const supabase = createRouteHandlerClient({ cookies })
@@ -15,10 +16,10 @@ export async function POST(request) {
     .insert({
       id: uuidv4(),
       text: message,
-      first_name: profile.first_name,
-      full_name: profile.full_name,
+      first_name: profile.first_name || profile.full_name,
       avatar_url: profile.avatar_url,
-      message_id: profile.id,
+      message_id: profile.id, // This is the user's ID
+      chatroom_id: roomId, // Add the chatroom_id here
       created_at: new Date().toISOString()
     })
     .select()

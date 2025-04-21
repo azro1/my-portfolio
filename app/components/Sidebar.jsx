@@ -32,7 +32,6 @@ const Sidebar = ({ isProfilePage }) => {
   const [firstName, setFirstName] = useState('');
   const [avatarUrl, setAvatarUrl] = useState('');
   const [isOpen, setIsOpen] = useState(false);
-  const [textWrapperStyles, setTextWrapperStyles] = useState({})
 
   const pathName = usePathname()
   const supabase = createClientComponentClient();

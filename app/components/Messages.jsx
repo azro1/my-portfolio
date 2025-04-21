@@ -34,18 +34,6 @@ const Messages = ({ messages, loadMessages }) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     // track when the user scrolls and checks if they are at the bottom load more messages
     useEffect(() => {
        
@@ -77,18 +65,12 @@ const Messages = ({ messages, loadMessages }) => {
 
 
 
-
-
-
-        // Scroll to bottom if user is already at the bottom
-        useEffect(() => {
-            if (isAtBottom && messagesContainerRef.current) {
-                messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
-            }
-        }, [messages, isAtBottom]);
-
-
-
+    // Scroll to bottom if user is already at the bottom
+    useEffect(() => {
+        if (isAtBottom && messagesContainerRef.current) {
+            messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+        }
+    }, [messages, isAtBottom]);
 
 
 

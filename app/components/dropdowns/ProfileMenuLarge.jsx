@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 
 
 
-const ProfileMenuLarge = ({ handleLogout, handleCloseMenu, isProfilePage }) => {
+const ProfileMenuLarge = ({ handleLogout, handleCloseMenu, isProfilePage, isForumPage }) => {
     const [activeLink, setActiveLink] = useState('');
     const pathName = usePathname()
 
@@ -23,56 +23,61 @@ const ProfileMenuLarge = ({ handleLogout, handleCloseMenu, isProfilePage }) => {
 
     // sidebar dropdown profile menu
     return (
-        <div className="hidden md:block">
-            <Link href={'/profile'} className={`${activeLink === '/profile' ? 'text-cloudGray' : 'text-stoneGray'}`} onClick={(e) => {
-                handleActiveLink('/profile');
-            }}>
-                <div className='flex items-center p-2 px-4 xl:hover:bg-ashGray xl:hover:text-cloudGray transition-colors duration-300' onClick={handleCloseMenu}>
-                    <span className='text-base'>My Profile</span>
-                </div>
-            </Link>
+        <div>
+            {!isForumPage && (
+                <div className="hidden md:block">
+                    <Link href={'/profile'} className={`${activeLink === '/profile' ? 'text-cloudGray' : 'text-stoneGray'}`} onClick={(e) => {
+                        handleActiveLink('/profile');
+                    }}>
+                        <div className='flex items-center p-2 px-4 xl:hover:bg-ashGray xl:hover:text-cloudGray transition-colors duration-300' onClick={handleCloseMenu}>
+                            <span className='text-base'>My Profile</span>
+                        </div>
+                    </Link>
 
-            {isProfilePage && (
-                <>
-                    <Link href={'/profile/edit-profile'} className={`${activeLink === '/profile/edit-profile' ? 'text-cloudGray' : 'text-stoneGray'}`} onClick={(e) => {
-                        handleActiveLink('/profile/edit-profile');
-    
+                    {isProfilePage && (
+                        <>
+                            <Link href={'/profile/edit-profile'} className={`${activeLink === '/profile/edit-profile' ? 'text-cloudGray' : 'text-stoneGray'}`} onClick={(e) => {
+                                handleActiveLink('/profile/edit-profile');
+            
+                            }}>
+                                <div className='flex items-center p-2 px-4 xl:hover:bg-ashGray xl:hover:text-cloudGray transition-colors duration-300' onClick={handleCloseMenu}>
+                                    <span className='text-base'>Edit Profile</span>
+                                </div>
+                            </Link>
+                            <Link href={'/profile/data-privacy'} className={`${activeLink === '/profile/data-privacy' ? 'text-cloudGray' : 'text-stoneGray'}`} onClick={(e) => {
+                                handleActiveLink('/profile/data-privacy');
+            
+                            }}>
+                                <div className='flex items-center p-2 px-4 xl:hover:bg-ashGray xl:hover:text-cloudGray transition-colors duration-300' onClick={handleCloseMenu}>
+                                    <span className='text-base'>Your Data</span>
+                                </div>
+                            </Link>
+                        </>
+                    )}
+
+                    <Link href={'/chat'} className={`${activeLink === '/chat' ? 'text-cloudGray' : 'text-stoneGray'}`} onClick={(e) => {
+                        handleActiveLink('/chat');
                     }}>
                         <div className='flex items-center p-2 px-4 xl:hover:bg-ashGray xl:hover:text-cloudGray transition-colors duration-300' onClick={handleCloseMenu}>
-                            <span className='text-base'>Edit Profile</span>
+                            <span className='text-base'>Forum</span>
                         </div>
                     </Link>
-                    <Link href={'/profile/data-privacy'} className={`${activeLink === '/profile/data-privacy' ? 'text-cloudGray' : 'text-stoneGray'}`} onClick={(e) => {
-                        handleActiveLink('/profile/data-privacy');
-    
+                    <Link href={'/profile/help'} className={`${activeLink === '/help' ? 'text-cloudGray' : 'text-stoneGray'}`} onClick={(e) => {
+                        handleActiveLink('/profile/help');
                     }}>
                         <div className='flex items-center p-2 px-4 xl:hover:bg-ashGray xl:hover:text-cloudGray transition-colors duration-300' onClick={handleCloseMenu}>
-                            <span className='text-base'>Your Data</span>
+                            <span className='text-base'>Help</span>
                         </div>
                     </Link>
-                </>
+                    <div onClick={(e) => handleLogout(e)}>
+                        <div className='flex items-center p-2 px-4 text-stoneGray xl:hover:bg-ashGray xl:hover:text-cloudGray transition-colors duration-300 cursor-pointer' onClick={handleCloseMenu}>
+                            <span className='text-base'>Logout</span>
+                        </div>
+                    </div>
+                </div>
             )}
-
-            <Link href={'/forum'} className={`${activeLink === '/forum' ? 'text-cloudGray' : 'text-stoneGray'}`} onClick={(e) => {
-                handleActiveLink('/forum');
-            }}>
-                <div className='flex items-center p-2 px-4 xl:hover:bg-ashGray xl:hover:text-cloudGray transition-colors duration-300' onClick={handleCloseMenu}>
-                    <span className='text-base'>Forum</span>
-                </div>
-            </Link>
-            <Link href={'/profile/help'} className={`${activeLink === '/help' ? 'text-cloudGray' : 'text-stoneGray'}`} onClick={(e) => {
-                handleActiveLink('/profile/help');
-            }}>
-                <div className='flex items-center p-2 px-4 xl:hover:bg-ashGray xl:hover:text-cloudGray transition-colors duration-300' onClick={handleCloseMenu}>
-                    <span className='text-base'>Help</span>
-                </div>
-            </Link>
-            <div onClick={(e) => handleLogout(e)}>
-                <div className='flex items-center p-2 px-4 text-stoneGray xl:hover:bg-ashGray xl:hover:text-cloudGray transition-colors duration-300 cursor-pointer' onClick={handleCloseMenu}>
-                    <span className='text-base'>Logout</span>
-                </div>
-            </div>
         </div>
+ 
     )
 }
 
