@@ -16,11 +16,14 @@ import Avatar from '@/app/components/Avatar'; // Assuming you might use your cus
 const UserListWithStatus = ({ users }) => {
     const [isOpen, setIsOpen] = useState(false);
 
-
+    
     // Convert the users object into an array and sort if needed (e.g., alphabetically)
     const userList = Object.values(users).sort((a, b) =>
         (a.first_name || '').localeCompare(b.first_name || '')
     );
+
+    // Store online users to display count in h3
+    const onlineUsers = userList.filter(user => user.status === 'online');
 
     // function to toggle sidebar
     const handleToggleSidebar = () => {
@@ -50,7 +53,7 @@ const UserListWithStatus = ({ users }) => {
 
                         {isOpen && (
                             <h3 className="ml-10 mt-1 text-lg font-semibold whitespace-nowrap">
-                                Online Users ({userList.length})
+                                Online Users ({onlineUsers.length})
                             </h3>
                         )}
                     </div>

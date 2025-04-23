@@ -29,7 +29,7 @@ const CreateRoomForm = () => {
 
       const { data, error } = await supabase
         .from('chat_rooms')
-        .insert([{ id: roomId, name: roomName, created_by: user.id }]) // Add id: roomId
+        .insert([{ id: roomId, name: roomName, created_by: user.id, created_at: new Date().toISOString() }]) // Add id: roomId
         .select()
         .single();
 

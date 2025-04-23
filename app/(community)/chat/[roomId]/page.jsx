@@ -23,7 +23,7 @@ const ChatRoomPage = () => {
   const [roomName, setRoomName] = useState('');
   const [roomId, setRoomId] = useState(null);
   const [user, setUser] = useState(null);
-  const [onlineUsers, setOnlineUsers] = useState({}); // State for presence
+  const [roomUsersState, setRoomUsersState] = useState({}); // State for all users in the room (online, away, offline)
   const supabase = createClientComponentClient();
   const params = useParams();
   const { fetchProfile, profile } = useFetchProfile();
@@ -73,18 +73,6 @@ const ChatRoomPage = () => {
 
 
 
-
-
-
-  // Helper to update user status (online/away)
-  const updateUserStatus = useCallback((userId, newStatus) => {
-    setOnlineUsers(prev => {
-      if (prev[userId] && prev[userId].status !== newStatus) {
-        return { ...prev, [userId]: { ...prev[userId], status: newStatus } };
-      }
-      return prev;
-    });
-  }, []);
 
 
 
@@ -159,14 +147,20 @@ const ChatRoomPage = () => {
     // Handle new messages
     channel.on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages', filter: `chatroom_id=eq.${roomId}` }, (payload) => {
       setMessages((oldMessages) => [...oldMessages, payload.new]);
-      // Update sender's last_active time when they send a message
-      const senderId = payload.new.message_id;
+      // When a message is received, ensure the sender's status is 'online'.
+      // We rely on presence updates (triggered by channel.track in handleSendMessage)
+      // to propagate the 'last_active' time consistently via the 'online_at' field.
+      const senderId = payload.new.message_id; // Confirmed this is the user ID field
       if (senderId) {
-         setOnlineUsers(prev => {
-            if (prev[senderId]) {
-                return { ...prev, [senderId]: { ...prev[senderId], last_active: Date.now(), status: 'online' } };
+         setRoomUsersState(prev => {
+            // Check if the sender exists in our state
+            if (prev[senderId] && prev[senderId].status !== 'online') {
+                // Only update status if they weren't already online
+                // Do NOT update last_active here; rely on presence sync/join.
+                return { ...prev, [senderId]: { ...prev[senderId], status: 'online' } };
             }
-            return prev; // Should ideally already be present from 'join'/'sync'
+            // If user doesn't exist or is already online, return previous state
+            return prev;
          });
       }
     });
@@ -176,24 +170,42 @@ const ChatRoomPage = () => {
 
 
 
-    // Handle Presence sync (get initial list of users)
+    // Handle Presence sync (merge with existing state)
     channel.on('presence', { event: 'sync' }, () => {
       const presenceState = channel.presenceState();
-      const users = {};
-      for (const id in presenceState) {
-        const pres = presenceState[id][0]; // Assuming one presence entry per user
+      setRoomUsersState(prev => {
+        const newState = { ...prev }; // Start with the current state
 
-        if (pres) {
-            users[id] = {
-                id: pres.user_id,
-                first_name: pres.first_name,
-                avatar_url: pres.avatar_url,
-                last_active: pres.online_at ? new Date(pres.online_at).getTime() : Date.now(), // Use online_at or current time
-                status: 'online' // Initial status
+        // Mark all users currently in presenceState as 'online' and update their info
+        for (const id in presenceState) {
+          const pres = presenceState[id][0]; // Assuming one presence entry per user
+          if (pres) {
+            const existingUser = newState[id];
+            newState[id] = {
+              // Keep existing data, especially last_active, if user already exists
+              ...(existingUser || {}),
+              id: pres.user_id,
+              first_name: pres.first_name,
+              avatar_url: pres.avatar_url,
+              // Only set last_active if the user is new or didn't have one previously
+              last_active: existingUser?.last_active || (pres.online_at ? new Date(pres.online_at).getTime() : Date.now()),
+              status: 'online' // Mark as online
             };
+          }
         }
-      }
-      setOnlineUsers(users);
+
+        // Optional: Mark users in prev state but NOT in presenceState as 'offline'
+        // This handles cases where a user might have dropped unexpectedly without a 'leave' event
+        // for (const id in prev) {
+        //   if (!presenceState[id] && prev[id].status !== 'offline') {
+        //      newState[id] = { ...prev[id], status: 'offline' };
+        //   }
+        // }
+        // Decided against the above optional block for now to keep it simpler,
+        // relying on the 'leave' event primarily.
+
+        return newState;
+      });
     });
 
 
@@ -204,14 +216,17 @@ const ChatRoomPage = () => {
 
     // Handle users joining
     channel.on('presence', { event: 'join' }, ({ key, newPresences }) => {
-      setOnlineUsers(prev => {
+      setRoomUsersState(prev => {
         const updatedUsers = { ...prev };
         newPresences.forEach(pres => {
-
+          const existingUser = updatedUsers[key];
           updatedUsers[key] = {
+            // Keep existing data if user somehow already exists (though 'join' implies new)
+             ...(existingUser || {}),
             id: pres.user_id,
             first_name: pres.first_name,
             avatar_url: pres.avatar_url,
+            // Set last_active based on presence 'online_at' or current time for new joins
             last_active: pres.online_at ? new Date(pres.online_at).getTime() : Date.now(),
             status: 'online'
           };
@@ -227,12 +242,15 @@ const ChatRoomPage = () => {
 
     // Handle users leaving
     channel.on('presence', { event: 'leave' }, ({ key, leftPresences }) => {
-      setOnlineUsers(prev => {
+      // Mark user as offline instead of removing
+      setRoomUsersState(prev => {
         const updatedUsers = { ...prev };
-        leftPresences.forEach(pres => {
-          // Optionally mark as offline instead of removing, depends on desired UX
-          delete updatedUsers[key];
-        });
+        // The 'key' directly identifies the user who left.
+        // We check if the user exists in our state before updating.
+        if (updatedUsers[key]) {
+          updatedUsers[key] = { ...updatedUsers[key], status: 'offline', last_active: Date.now() }; // Update status and last_active
+        }
+        // No need to iterate leftPresences, the key is sufficient.
         return updatedUsers;
       });
     });
@@ -302,7 +320,7 @@ const ChatRoomPage = () => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       const now = Date.now();
-      setOnlineUsers(prev => {
+      setRoomUsersState(prev => {
         let changed = false;
         const updatedUsers = { ...prev };
         for (const userId in updatedUsers) {
@@ -311,21 +329,23 @@ const ChatRoomPage = () => {
 
           const userState = updatedUsers[userId];
           const currentStatus = userState.status;
-          let newStatus = currentStatus;
 
-          if (now - userState.last_active > AWAY_TIMEOUT) {
-            newStatus = 'away';
-          } else {
-            // If they were away, but last_active is now recent, mark online
-            // (This handles cases where 'sync' or 'join' brought them back)
-            if (currentStatus === 'away') {
-               newStatus = 'online';
+          // Only perform checks if the user is not already 'offline'
+          if (currentStatus !== 'offline') {
+            const lastActiveTime = userState.last_active || 0; // Ensure last_active exists
+            const inactiveDuration = now - lastActiveTime;
+            const isInactive = inactiveDuration > AWAY_TIMEOUT;
+
+            if (currentStatus === 'online' && isInactive) {
+              // Mark online user as away if inactive
+              updatedUsers[userId] = { ...userState, status: 'away' };
+              changed = true;
+            } else if (currentStatus === 'away' && !isInactive) {
+              // Mark away user as online if active again
+              updatedUsers[userId] = { ...userState, status: 'online' };
+              changed = true;
             }
-          }
-
-          if (newStatus !== currentStatus) {
-            updatedUsers[userId] = { ...userState, status: newStatus };
-            changed = true;
+            // No change needed if user is 'online' and active, or 'away' and inactive.
           }
         }
         return changed ? updatedUsers : prev;
@@ -349,7 +369,7 @@ const ChatRoomPage = () => {
 
     // 1. Update local state for current user's activity
     const now = Date.now();
-    setOnlineUsers(prev => ({
+    setRoomUsersState(prev => ({
         ...prev,
         [user.id]: {
             ...prev[user.id], // Keep existing info
@@ -363,7 +383,8 @@ const ChatRoomPage = () => {
     await channelRef.current.track({
         online_at: new Date(now).toISOString(),
         user_id: user.id,
-        first_name: profile.first_name,
+        // Use fallback for name, similar to initial track
+        first_name: profile.first_name || profile.full_name,
         avatar_url: profile.avatar_url,
     });
 
@@ -407,7 +428,8 @@ const ChatRoomPage = () => {
       <div className="flex-1 w-full flex flex-col chat-container bg-nightSky">
         <div className="flex-shrink-0 min-h-[92px] flex items-center text-xl sm:text-2xl text-cloudGray font-bold p-4 border-b border-charcoalGray text-center sticky top-0 bg-softCharcoal z-10">
           <Heading className='text-center w-full'>
-            {roomName || 'Loading Room...'} ({Object.keys(onlineUsers).length} online)
+            {/* TODO: Update this count later if needed to reflect only 'online'/'away' users */}
+            {roomName || 'Loading Room...'} ({Object.keys(roomUsersState).filter(k => roomUsersState[k].status !== 'offline').length} online)
           </Heading>
   
           <div className="ml-auto xl:hidden">
@@ -512,7 +534,7 @@ const ChatRoomPage = () => {
   
       {/* User List - takes remaining height */}
       <div className="min-h-screen overflow-hidden">
-        <UserListWithStatus users={onlineUsers} />
+        <UserListWithStatus users={roomUsersState} />
       </div>
     </div>
   );
