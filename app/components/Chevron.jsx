@@ -3,65 +3,129 @@
 import { useState, useEffect, useRef } from 'react'
 import {
   FiChevronDown,
-  FiMenu
+  FiMenu,
+  FiUsers
 } from 'react-icons/fi';
 
 // components
-import Dropdown from './navbar/Dropdown'
+import Heading from './Heading';
+import OnlineUserDropdown from './navbar/OnlineUserDropdown';
+import MainMenuDropdown from './navbar/MainMenuDropdown';
 
-
-const Chevron = ({ user, isProfilePage, isForumPage }) => {
-  const [isOpen, setIsOpen] = useState(false)
-  const dropDownRef = useRef()
-
+const Chevron = ({ user, roomName, roomUsersState, isProfilePage, isForumPage }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isOnlineMenuOpen, setIsOnlineMenuOpen] = useState(false)
+  const dropDownMenuRef = useRef()
+  const dropDownOnlineMenuRef = useRef()
 
 
   
   // close menus if user clicks outside both dropdown menus and profile submenu
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (dropDownRef.current && !dropDownRef.current.contains(event.target) && isOpen) {
-        setIsOpen(false)
+      const clickedOutsideMenu = dropDownMenuRef.current && !dropDownMenuRef.current.contains(event.target)
+      const clickedOutsideOnlineMenu = dropDownOnlineMenuRef.current && !dropDownOnlineMenuRef.current.contains(event.target)
+  
+      if (clickedOutsideMenu && isMenuOpen) {
+        setIsMenuOpen(false)
+      }
+  
+      if (clickedOutsideOnlineMenu && isOnlineMenuOpen) {
+        setIsOnlineMenuOpen(false)
       }
     }
     document.addEventListener("click", handleClickOutside);
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, [isOpen])
+  }, [isMenuOpen, isOnlineMenuOpen]);
 
 
-  
+
+
+
+  // toggle default menu
   const handleToggleMenu = () => {
-    setIsOpen(!isOpen)
+    setIsMenuOpen(!isMenuOpen)
   }
 
+  // close default menu
   const handleCloseMenu = () => {
-    setIsOpen(false)
+    setIsMenuOpen(false)
   }
+
+  // toggle online menu
+  const handleToggleUserMenu = () => {
+    setIsOnlineMenuOpen(!isOnlineMenuOpen)
+  }
+
+
+
+
+
+
 
 
   return (
-     <>
-        {/* shows for large screens */}
-        {!isForumPage && <button onClick={handleToggleMenu} className={'hidden text-base text-ashGray md:block'}>
+    <>
+      {!isForumPage && (
+        <>  {/* menu shows for large screens */}
+          <button onClick={handleToggleMenu} className={'hidden text-base text-ashGray md:block'}>
             <FiChevronDown size={22} />
-        </button>}
-        
-        {/* shows for small screens */}
-        <button onClick={handleToggleMenu} className={`text-base text-cloudGray ${isForumPage ? 'md:block' : 'md:hidden'} `}>
-            <FiMenu size={28} />
-        </button> 
+          </button>
 
-       {isOpen && (
-          <Dropdown 
-              user={user} 
-              handleCloseMenu={handleCloseMenu} 
-              isProfilePage={isProfilePage}
-              isForumPage={isForumPage}
-              dropDownRef={dropDownRef} 
-          />
-       )}
+          {/* menu shows for small screens */}
+          <button onClick={handleToggleMenu} className={`text-base text-cloudGray md:hidden`}>
+            <FiMenu size={28} />
+          </button>
+        </>
+      )}
+
+
+
+      {isForumPage && (
+        <div className='flex justify-between'>
+
+          {/* online users menu shows for small screens */}
+          <button onClick={handleToggleUserMenu} className='xl:hidden text-base text-cloudGray'>
+            <FiUsers fill='#E0E0E3' size={26} />
+          </button>
+
+          <Heading className='subheading'>
+            {/* TODO: Update this count later if needed to reflect only 'online'/'away' users */}
+            {roomName || 'Loading Room...'} (<span className='text-green-600'>{Object.keys(roomUsersState).filter(k => roomUsersState[k].status !== 'offline').length} online</span>)
+          </Heading>
+
+          {/* menu shows for small screens */}
+          <button onClick={handleToggleMenu} className={`text-base text-cloudGray :hidden`}>
+            <FiMenu size={28} />
+          </button>
+
+        </div>
+      )}
+
+
+
+      { /* passing the users state (roomUsersState) through to dropdown to display online users menu */}
+      {isOnlineMenuOpen && (
+        <OnlineUserDropdown
+          users={roomUsersState}
+          dropDownOnlineMenuRef={dropDownOnlineMenuRef}
+        />
+      )}
+
+
+      {isMenuOpen && (
+        <MainMenuDropdown
+          user={user}
+          handleCloseMenu={handleCloseMenu}
+          isProfilePage={isProfilePage}
+          isForumPage={isForumPage}
+          dropDownMenuRef={dropDownMenuRef}
+        />
+      )}
+
+
     </>
   )
 }

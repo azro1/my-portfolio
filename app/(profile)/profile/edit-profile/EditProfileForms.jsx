@@ -125,7 +125,7 @@ const EditProfileForms = () => {
               </Heading>
               <p className='mt-3 leading-normal text-charcoalGrayLight'>Update your personal information</p>
 
-              <div className='mt-6 flex flex-col bg-softCharcoal p-4'>
+              <div className='mt-6 bg-softCharcoal p-4'>
                 <BioForm
                     user={user}
                     profile={profile}

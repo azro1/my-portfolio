@@ -132,7 +132,7 @@ const Messages = ({ messages, loadMessages }) => {
                                     </span>
                                 </div>
     
-                                <p className="bg-slateOnyx p-2 px-3 rounded-md text-base text-frostWhite whitespace-normal break-words max-w-max">
+                                <p className="bg-slateOnyx p-2 px-3 rounded-md text-base text-cloudGray whitespace-normal break-words max-w-max">
                                     <span>{message.text}</span>
                                 </p>
                             </div>

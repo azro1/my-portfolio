@@ -7,62 +7,50 @@ import ChatList from './ChatList';
 import Heading from '@/app/components/Heading';
 import RulesMessage from './RulesMessage'; // Import RulesMessage
 import Sidebar from '@/app/components/Sidebar';
-import Footer from '@/app/components/Footer';
 
 const ChatPage = () => {
   return (
-    <div className='flex flex-col min-h-screen'>
-
-      <div className='flex'>
+      <div className='min-h-screen flex'>
+        
         <div className="flex z-10">
           <Sidebar />
         </div>
 
-        <div className="flex-1">
-          <div className="min-h-screen flex items-center justify-center w-full h-full bg-nightSky text-softCharcoal rounded-lg">
-
-            {/* Hero Section */}
-            <div className='main-container w-full'>
-              <main>
-                <div className='bg-softGray rounded-xl p-8'>
-                  <div className="text-center pb-4">
-                    <Heading className="mainheading font-bold text-deepCharcoal mb-4">
-                      Welcome to Our Chat Forum
-                    </Heading>
-                    <p className="text-lg mb-8">Connect with people, share ideas, and build communities.</p>
-                    {/* You can add an image or illustration here */}
-                  </div>
-
-                  <RulesMessage /> {/* Render RulesMessage */}
-
-                  {/* Forms and Chat List */}
-                  <div className="flex flex-col md:flex-row gap-8 w-full">
-                    <div className="flex-1">
-                      <CreateRoomForm />
-                    </div>
-                    <div className="flex-1">
-                      <JoinRoomForm />
-                    </div>
-                  </div>
-                  <div className="w-full mt-8">
-                    <ChatList />
-                  </div>
+        <div className="flex-1 flex items-center justify-center w-full bg-nightSky text-softCharcoal py-40 md:py-0 md:h-screen md:min-h-[900px] ">
+          {/* Hero Section */}
+          <div className='main-container w-full'>
+            <main>
+              <div className='bg-softGray rounded-xl p-5 sm:p-8'>
+                <div className="text-center pb-4">
+                  <Heading className="mainheading font-bold text-deepCharcoal mb-4">
+                    Welcome to Our Chat Forum
+                  </Heading>
+                  <p className="text-lg mb-8">Connect with people, share ideas, and build communities.</p>
+                  {/* You can add an image or illustration here */}
                 </div>
 
-              </main>
+                <RulesMessage /> {/* Render RulesMessage */}
 
-            </div>
+                {/* Forms and Chat List */}
+                <div className="flex flex-col md:flex-row gap-8 w-full">
+                  <div className="flex-1">
+                    <CreateRoomForm />
+                  </div>
+                  <div className="flex-1">
+                    <JoinRoomForm />
+                  </div>
+                </div>
+                <div className="w-full mt-8">
+                  <ChatList />
+                </div>
+              </div>
+
+            </main>
 
           </div>
         </div>
+
       </div>
-
-      <div className="w-full z-0 xl:z-20">
-        <Footer />
-      </div>
-    </div>
-
-
   );
 }
 

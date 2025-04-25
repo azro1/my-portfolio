@@ -67,7 +67,7 @@ const ProfileMenu = ({ handleLogout, handleCloseMenu, isProfilePage, isOpen }) =
                     </Link>
                     <div onClick={(e) => handleLogout(e)}>
                         <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray' onClick={handleCloseMenu}>
-                            <span className='text-base text-stoneGray'>Logout</span>
+                            <span className='text-base font-r text-stoneGray'>Logout</span>
                         </div>
                     </div>
                 </>

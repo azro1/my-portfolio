@@ -16,7 +16,7 @@ const ChatList = () => {
       </Heading>
       <ul>
         {chatRooms.map((room) => (
-          <li key={room.id} className="flex items-center py-2 border-b border-cloudGray text-frostWhite">
+          <li key={room.id} className="flex items-center py-2 border-b border-cloudGray text-cloudGray">
             <a href={`/community/chat/${room.id}`} className="text-ashGray hover:text-deepCharcoal">{room.name}</a>
           </li>
         ))}
