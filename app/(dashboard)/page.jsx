@@ -8,7 +8,7 @@ import Connect from "./Connect"
 
 const Home = () => {
   return (
-      <div className="flex flex-col pt-44 bg-nightSky">
+      <div className="flex flex-col pt-44 min-h-screen bg-nightSky">
 
         <div className="pb-16 md:pb-32">
           <div className="px-[x-pad] mx-auto max-w-screen-lg xl:p-0 uw:max-w-[1300px]">

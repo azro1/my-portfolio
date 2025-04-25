@@ -48,6 +48,9 @@ export async function GET(request) {
           console.log('github:', error.message);
           throw new Error('Error updating profile flags')
         }
+
+        // Set is_registered cookie to true to prevent repeated table checks in RefreshOnLoad
+        await cookies().set('_is_registered', 'true', { path: '/', httpOnly: true, sameSite: 'Strict' });
     }
 
   } catch (error) {

@@ -54,9 +54,9 @@ const CreateRoomForm = () => {
         value={roomName}
         onChange={(e) => setRoomName(e.target.value)}
         required
-        className="border border-cloudGray rounded px-4 py-2.5"
+        className=" rounded px-4 py-2.5"
       />
-      <button type="submit" className="bg-gradient-to-r from-goldenOchre to-goldenOchre/70 hover:from-goldenOchre/70 hover:to-goldenOchre text-white font-bold py-2.5 px-4 rounded">
+      <button type="submit" className="bg-goldenOchre/90 hover:bg-goldenOchre text-white font-bold py-2.5 px-4 rounded">
         Create Room
       </button>
     </form>

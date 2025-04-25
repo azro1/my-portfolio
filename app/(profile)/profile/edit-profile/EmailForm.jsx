@@ -212,7 +212,7 @@ const EmailForm = ({ user, profile }) => {
                     <span className="inline-block text-ashGray">Email</span>
                     <span className="text-ashGray cursor-pointer" onClick={handleOpenForm}>Edit</span>
                 </div>
-                <p className="text-frostWhite frostWhitespace-normal break-words min-h-[24px]">{email}</p>
+                <p className="text-cloudGray frostWhitespace-normal break-words min-h-[24px]">{email}</p>
             </div>
 
             {showForm && (

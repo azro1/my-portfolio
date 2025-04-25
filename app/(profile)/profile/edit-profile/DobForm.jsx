@@ -202,7 +202,7 @@ const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
                         Edit
                     </span> 
                 </div>
-                <p className="text-frostWhite frostWhitespace-normal break-words min-h-[24px]">{dob}</p>
+                <p className="text-cloudGray frostWhitespace-normal break-words min-h-[24px]">{dob}</p>
             </div>
 
             {showForm && (

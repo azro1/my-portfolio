@@ -219,7 +219,7 @@ const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
                     <span className="inline-block text-ashGray">First Name</span>
                     <span className="text-ashGray cursor-pointer" onClick={handleOpenForm}>Edit</span>
                 </div>
-                <p className="text-frostWhite frostWhitespace-normal break-words min-h-[24px]">{firstName}</p>
+                <p className="text-cloudGray frostWhitespace-normal break-words min-h-[24px]">{firstName}</p>
             </div>
                           
             {showForm && (

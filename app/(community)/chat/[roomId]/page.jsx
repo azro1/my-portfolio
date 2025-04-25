@@ -426,15 +426,21 @@ const ChatRoomPage = () => {
   
       {/* Main Chat Area */}
       <div className="flex-1 w-full flex flex-col chat-container bg-nightSky">
-        <div className="flex-shrink-0 min-h-[92px] flex items-center text-xl sm:text-2xl text-cloudGray font-bold p-4 border-b border-charcoalGray text-center sticky top-0 bg-softCharcoal z-10">
-          <Heading className='text-center w-full'>
+        <div className="min-h-[92px] flex items-center justify-center text-xl text-cloudGray font-bold p-4 border-b border-charcoalGray text-center sticky top-0 bg-softCharcoal z-10 sm:text-2xl sm:p-6">
+          
+          <Heading className='hidden xl:block subheading'>
             {/* TODO: Update this count later if needed to reflect only 'online'/'away' users */}
-            {roomName || 'Loading Room...'} ({Object.keys(roomUsersState).filter(k => roomUsersState[k].status !== 'offline').length} online)
+            {roomName || 'Loading Room...'} (<span className='text-green-600'>{Object.keys(roomUsersState).filter(k => roomUsersState[k].status !== 'offline').length} online</span>)
           </Heading>
   
-          <div className="ml-auto xl:hidden">
-            <Chevron user={user} isForumPage={true} />
+          <div className="flex-1 xl:hidden">
+            <Chevron
+              user={user} 
+              roomName={roomName} 
+              roomUsersState={roomUsersState} 
+              isForumPage={true} />
           </div>
+
         </div>
   
         {/* Message Display Area */}
@@ -475,20 +481,16 @@ const ChatRoomPage = () => {
   
                   {/* Message Content */}
                   <div className={`flex flex-col ${isCurrentUser ? 'items-end' : 'items-start'}`}>
-                    <span className="text-xs text-stoneGray mb-1">
+                    <span className='text-xs mb-1 p-1.5 rounded-lg text-stoneGray bg-softCharcoal'>
                       {message.first_name || message.full_name || 'User'}
                     </span>
   
-                    <div
-                      className={`p-2 px-3 rounded-lg max-w-xs sm:max-w-md md:max-w-lg break-words ${
-                        isCurrentUser
-                          ? 'bg-ashGray' // Current user's message style
-                          : 'bg-slateOnyx' // Other users' message style
-                      }`}
+                    <div className='p-2 px-3 rounded-lg max-w-xs sm:max-w-md md:max-w-lg break-words bg-softCharcoal'
                     >
-                      <p className="text-sm sm:text-base text-cloudGray">{message.text}</p>
+                      <p className="text-cloudGray">{message.text}</p>
                     </div>
-                    <span className='text-xs mt-1 text-stoneGray'>
+
+                    <span className='text-xs mt-1 p-1.5 rounded-lg text-stoneGray bg-softCharcoal'>
                       {format(new Date(message.created_at), 'p')}
                     </span>
                   </div>
@@ -527,13 +529,13 @@ const ChatRoomPage = () => {
         </div>
   
         {/* Message Input Form */}
-        <div className="flex-shrink-0 p-4 border-t border-charcoalGray sticky bottom-0 bg-nightSky">
+        <div className="flex-shrink-0 p-4 border-t border-charcoalGray sticky bottom-0 bg-softCharcoal">
           <MessageForm onSendMessage={handleSendMessage} />
         </div>
       </div>
   
       {/* User List - takes remaining height */}
-      <div className="min-h-screen overflow-hidden">
+      <div className="hidden xl:block min-h-screen overflow-hidden">
         <UserListWithStatus users={roomUsersState} />
       </div>
     </div>

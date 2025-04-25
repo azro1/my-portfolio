@@ -41,7 +41,7 @@ const UserListWithStatus = ({ users }) => {
                     <div className='relative p-2'>
                         {/* Toggle + Title Row */}
                         <div
-                            className={`absolute top-3 cursor-pointer z-10 rounded-md`}
+                            className={`absolute top-3 left-1 cursor-pointer z-10 rounded-md`}
                             onClick={handleToggleSidebar}
                         >
                             {isOpen ? (

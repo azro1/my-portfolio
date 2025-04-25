@@ -11,7 +11,7 @@ import Heading from "../components/Heading";
 // hooks
 import { useMessage } from "@/app/hooks/useMessage";
 
-const ChatList = ({ user }) => {
+const ForumChatList = ({ user }) => {
   const [error, setError] = useState(false)
   const [messages, setMessages] = useState(null)
   const [isMessagesLoading, setIsMessagesLoading] = useState(true)
@@ -99,30 +99,32 @@ const ChatList = ({ user }) => {
         <Heading className='text-lg font-medium text-cloudGray mb-3'>
             Chat History
         </Heading>
-            {!error ? (
-                <div className={`flex flex-col text-left min-h-96 max-h-96 overflow-y-scroll hide-scrollbar md:max-w-md relative bg-softCharcoal ${messages === null ? 'p-0' : 'p-4'} gap-4`}>
-                    {messages && messages.length > 0 ? (
-                        messages.map(message => (
-                            <div className='flex items-start justify-between' key={message.id}>
-                                <div className='flex-1 flex flex-col'>
-                                    <span className="text-stoneGray text-base leading-normal block">{message.text}</span>
-                                    <span className='text-sm text-frostWhite filter brightness-80'>{formatDistanceToNow(new Date(message.created_at), { addSuffix: true })}</span>
-                                </div>
-                                <FiTrash2 className="min-w-max cursor-pointer text-goldenOchre" size={22} onClick={() => handleDelete(message.id)}/>
+        {!error ? (
+            <div className={`flex flex-col text-left min-h-96 max-h-96 overflow-y-scroll hide-scrollbar md:max-w-md relative bg-softCharcoal ${messages === null ? 'p-0' : 'p-4'} gap-6`}>
+                {messages && messages.length > 0 ? (
+                    messages.map(message => (
+                        <div className='flex items-start justify-between' key={message.id}>
+                            <div className='flex-1 flex flex-col w-full break-words min-w-0 gap-1'>
+                                <span className="text-cloudGray text-base leading-normal block">{message.text}</span>
+                                <span className='text-xs text-stoneGray'>{formatDistanceToNow(new Date(message.created_at), { addSuffix: true })}</span>
                             </div>
-                        ))
-                    ) : (
-                            <div className="min-h-96 bg-softCharcoal">
-                                {!isMessagesLoading && <p className='text-ashGray p-4'>No Chats.</p>}
+                            <div className='flex-shrink-0'>
+                                <FiTrash2 className="cursor-pointer text-goldenOchre" size={22} onClick={() => handleDelete(message.id)}/>
                             </div>
-                    )}
-                </div>
-            ) : (
-              <p className='p-4'>Currently unable to display messages. Try refreshing the page.</p>
-            )}
+                        </div>
+                    ))
+                ) : (
+                        <div className="min-h-96 bg-softCharcoal">
+                            {!isMessagesLoading && <p className='text-ashGray p-4'>No Chats.</p>}
+                        </div>
+                )}
+            </div>
+        ) : (
+          <p className='p-4'>Currently unable to display messages. Try refreshing the page.</p>
+        )}
     </div>
 
   )
 }
 
-export default ChatList
+export default ForumChatList

@@ -11,7 +11,7 @@ export default async function CommunityLayout ({ children }) {
   }
 
   return (
-    <div className='xl:flex bg-charcoalGray'>
+    <div className='xl:flex'>
 
         <div className='flex-1 min-h-screen'>
           <div className="flex">

@@ -60,7 +60,7 @@ const NavLinks = ({ user, handleCloseMenu, handleToggleMenu, isForumPage }) => {
                           defaultAvatarSize={32}
                         />
                     </div>
-                    <span className="text-base  text-stoneGray xl:inline">{user?.user_metadata.first_name || user?.user_metadata.full_name}</span>
+                    <span className="text-base font-r text-stoneGray xl:inline">{user?.user_metadata.first_name || user?.user_metadata.full_name}</span>
                 </div>
                 <button onClick={handleToggleMenu} className='text-base text-stoneGray'>
                     <FiChevronDown size={22} />
