@@ -9,11 +9,11 @@ const OnlineUserDropdown = ({ users, dropDownOnlineMenuRef }) => {
     );
 
     return (
-        <div className='absolute w-full right-0 top-[91px] z-40 bg-nightSky' ref={dropDownOnlineMenuRef}>
+        <div className='online-user-dropdown absolute w-full right-0 top-[91px] z-40 bg-softCharcoal' ref={dropDownOnlineMenuRef}>
             <ul className="flex flex-col">
                 {userList.map((user) => (
-                    <li key={user.id} className="flex items-center gap-3 p-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray">
-                        <p className="">
+                    <li key={user.id} className="flex items-center gap-3 p-3 border-b-[1px] border-opacity-30 border-dashed border-ashGray">
+                        <p>
                             {user.first_name || 'User'}
                         </p>
                         <OnlineStatus status={user.status} />

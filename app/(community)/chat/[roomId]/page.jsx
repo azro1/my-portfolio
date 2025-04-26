@@ -425,7 +425,7 @@ const ChatRoomPage = () => {
       </div>
   
       {/* Main Chat Area */}
-      <div className="flex-1 w-full flex flex-col chat-container bg-nightSky">
+      <div className="flex-1 w-full flex flex-col bg-nightSky" >
         <div className="min-h-[92px] flex items-center justify-center text-xl text-cloudGray font-bold p-4 border-b border-charcoalGray text-center sticky top-0 bg-softCharcoal z-10 sm:text-2xl sm:p-6">
           
           <Heading className='hidden xl:block subheading'>
@@ -453,11 +453,11 @@ const ChatRoomPage = () => {
               return (
                 <div
                   key={message.id} // Use message.id which should be unique
-                  className={`flex items-start gap-3 ${isCurrentUser ? 'justify-end' : ''}`}
+                  className={`flex items-start ${isCurrentUser ? 'justify-end gap-1' : 'gap-3'}`}
                 >
                   {/* Avatar (show only for other users or based on preference) */}
                   {!isCurrentUser && (
-                    <div className="flex-shrink-0 mt-1"> {/* Added mt-1 for alignment */}
+                    <div className="hidden xl:block flex-shrink-0 mt-1"> {/* Added mt-1 for alignment */}
                       {message.avatar_url ? (
                         message.avatar_url.startsWith("https") ? (
                           <div className="overflow-hidden rounded-full w-[36px] h-[36px]">
@@ -481,23 +481,19 @@ const ChatRoomPage = () => {
   
                   {/* Message Content */}
                   <div className={`flex flex-col ${isCurrentUser ? 'items-end' : 'items-start'}`}>
-                    <span className='text-xs mb-1 p-1.5 rounded-lg text-stoneGray bg-softCharcoal'>
-                      {message.first_name || message.full_name || 'User'}
-                    </span>
   
-                    <div className='p-2 px-3 rounded-lg max-w-xs sm:max-w-md md:max-w-lg break-words bg-softCharcoal'
-                    >
+                    <div className={`p-2 px-3 rounded-lg max-w-xs sm:max-w-md md:max-w-lg break-words ${isCurrentUser ? 'bg-blue-900' : 'bg-slateOnyx'}`}>
                       <p className="text-cloudGray">{message.text}</p>
                     </div>
 
-                    <span className='text-xs mt-1 p-1.5 rounded-lg text-stoneGray bg-softCharcoal'>
+                    <span className='text-xs mt-1 p-1.5 rounded-lg text-stoneGray'>
                       {format(new Date(message.created_at), 'p')}
                     </span>
                   </div>
   
                   {/* Avatar for current user (optional, shown on the right) */}
                   {isCurrentUser && (
-                    <div className="flex-shrink-0 mt-1 ml-2"> {/* Added ml-2 */}
+                    <div className="hidden xl:block flex-shrink-0 mt-1 ml-2"> {/* Added ml-2 */}
                       {message.avatar_url ? (
                         message.avatar_url.startsWith("https") ? (
                           <div className="overflow-hidden rounded-full w-[36px] h-[36px]">
