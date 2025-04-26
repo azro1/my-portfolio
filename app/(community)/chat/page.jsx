@@ -20,7 +20,7 @@ const ChatPage = () => {
           {/* Hero Section */}
           <div className='main-container w-full'>
             <main>
-              <div className='bg-softGray rounded-xl p-5 sm:p-8'>
+              <div className='bg-softGray lg:rounded-xl p-3 sm:p-8'>
                 <div className="text-center pb-4">
                   <Heading className="mainheading font-bold text-deepCharcoal mb-4">
                     Welcome to Our Chat Forum

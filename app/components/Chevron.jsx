@@ -90,10 +90,9 @@ const Chevron = ({ user, roomName, roomUsersState, isProfilePage, isForumPage })
           <button onClick={handleToggleUserMenu} className='xl:hidden text-base text-cloudGray'>
             <FiUsers fill='#E0E0E3' size={26} />
           </button>
-
+          
           <Heading className='subheading'>
-            {/* TODO: Update this count later if needed to reflect only 'online'/'away' users */}
-            {roomName || 'Loading Room...'} (<span className='text-green-600'>{Object.keys(roomUsersState).filter(k => roomUsersState[k].status !== 'offline').length} online</span>)
+            {roomName || 'Loading Room...'}
           </Heading>
 
           {/* menu shows for small screens */}
