@@ -21,7 +21,7 @@ const LoggedOutMenu = ({ handleCloseMenu }) => {
   return (
     <div>
       <Link href={'/'} className={`${activeLink === '/' ? 'text-cloudGray' : 'text-stoneGray'}`} onClick={() => handleActiveLink('/')}>
-        <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray' onClick={handleCloseMenu}>
+        <div className='flex items-center p-3 pl-4 border-t-[1px] border-b-[1px] border-opacity-30 border-dashed border-ashGray' onClick={handleCloseMenu}>
           <span className={`text-base ${activeLink === '/' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Home</span>
         </div>
       </Link>

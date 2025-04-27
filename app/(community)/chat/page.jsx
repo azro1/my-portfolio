@@ -1,4 +1,3 @@
-// app/(community)/chat/page.jsx
 "use client";
 
 import CreateRoomForm from './CreateRoomForm';
@@ -20,9 +19,9 @@ const ChatPage = () => {
           {/* Hero Section */}
           <div className='main-container w-full'>
             <main>
-              <div className='bg-softGray lg:rounded-xl p-3 sm:p-8'>
+              <div className='bg-softGray lg:rounded-xl p-3 py-12 sm:p-8'>
                 <div className="text-center pb-4">
-                  <Heading className="mainheading font-bold text-deepCharcoal mb-4">
+                  <Heading className="font-b text-deepCharcoal mb-4 mainheading">
                     Welcome to Our Chat Forum
                   </Heading>
                   <p className="text-lg mb-8">Connect with people, share ideas, and build communities.</p>
