@@ -426,7 +426,7 @@ const ChatRoomPage = () => {
   
       {/* Main Chat Area */}
       <div className="flex-1 w-full flex flex-col bg-nightSky" >
-        <div className="min-h-[92px] flex items-center justify-center text-xl text-cloudGray font-bold p-4 border-b border-charcoalGray text-center sticky top-0 bg-softCharcoal z-10 sm:text-2xl sm:p-6">
+        <div className="min-h-[92px] flex items-center justify-center text-xl text-cloudGray font-bold p-4 text-center sticky top-0 bg-softCharcoal z-10 sm:text-2xl sm:p-6">
           
           <Heading className='hidden xl:block subheading'>
             {/* TODO: Update this count later if needed to reflect only 'online'/'away' users */}

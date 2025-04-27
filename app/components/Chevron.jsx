@@ -91,7 +91,7 @@ const Chevron = ({ user, roomName, roomUsersState, isProfilePage, isForumPage })
             <FiUsers fill='#E0E0E3' size={26} />
           </button>
           
-          <Heading className='subheading'>
+          <Heading className='mainheading'>
             {roomName || 'Loading Room...'}
           </Heading>
 

@@ -132,11 +132,13 @@ input::placeholder, textarea::placeholder{
 
 
 
-.online-user-dropdown ul li:first-child {
-  @apply border-t-[1px] border-opacity-30 border-dashed border-ashGray;
+.online-user-dropdown ul li:last-child {
+  @apply border-b-[1px] border-solid border-opacity-30 border-ashGray;
 }
 
-
+.nav-links:last-child, .profile-menu:last-child {
+  @apply border-b-[1px] border-solid border-opacity-30 border-ashGray md:border-none;
+}
 
 
 

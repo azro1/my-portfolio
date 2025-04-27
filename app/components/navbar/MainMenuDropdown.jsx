@@ -47,7 +47,7 @@ const MainMenuDropdown = ({ user, handleCloseMenu, isProfilePage, isForumPage, d
                 </div>
 
             ) : (
-                <div className='absolute w-full left-0 top-[92px] z-40 bg-slateOnyx' ref={dropDownMenuRef}>
+                <div className='absolute w-full left-0 top-[92px] z-40 bg-softCharcoal' ref={dropDownMenuRef}>
                     <LoggedOutMenu
                         handleCloseMenu={handleCloseMenu}
                     />
