@@ -84,21 +84,25 @@ const Chevron = ({ user, roomName, roomUsersState, isProfilePage, isForumPage })
 
 
       {isForumPage && (
-        <div className='flex justify-between'>
+        <div className='relative flex items-center'>
 
-          {/* online users menu shows for small screens */}
-          <button onClick={handleToggleUserMenu} className='xl:hidden text-base text-cloudGray'>
-            <FiUsers fill='#E0E0E3' size={26} />
-          </button>
-          
-          <Heading className='mainheading'>
-            {roomName || 'Loading Room...'}
+          {/* Limit width to available space minus icon width, truncates overflow with ellipsis */}
+          <Heading className='subheading absolute left-1/2 transform -translate-x-1/2 max-w-[calc(100%-210px)] overflow-hidden text-ellipsis whitespace-nowrap'>
+            {roomName }
           </Heading>
 
-          {/* menu shows for small screens */}
-          <button onClick={handleToggleMenu} className={`text-base text-cloudGray :hidden`}>
-            <FiMenu size={28} />
-          </button>
+          <div className='flex gap-4 ml-auto'>
+            {/* online users menu shows for small screens */}
+            <button onClick={handleToggleUserMenu} className='xl:hidden text-base text-cloudGray'>
+              <FiUsers fill='#E0E0E3' size={26} />
+            </button>
+            
+
+            {/* menu shows for small screens */}
+            <button onClick={handleToggleMenu} className={`text-base text-cloudGray :hidden`}>
+              <FiMenu size={28} />
+            </button>
+          </div>
 
         </div>
       )}
