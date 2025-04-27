@@ -52,6 +52,7 @@ const CreateRoomForm = () => {
         type="text"
         id="roomName"
         value={roomName}
+        maxLength={80}
         onChange={(e) => setRoomName(e.target.value)}
         required
         className="border-[1px] border-cloudGray rounded px-4 py-2.5"

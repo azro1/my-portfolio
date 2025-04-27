@@ -21,9 +21,9 @@ const MessageForm = ({ onSendMessage }) => {
         placeholder="Enter your message"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        className="border border-gray-300 rounded px-4 py-2 w-full" // Add Tailwind classes
+        className="border border-gray-300 rounded px-4 py-2.5 w-full" // Add Tailwind classes
       />
-      <button type="submit" className="bg-green-700/90 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"> {/* Add Tailwind classes */}
+      <button type="submit" className="bg-green-700/90 hover:bg-green-700 text-white font-bold py-2.5 px-4 rounded"> {/* Add Tailwind classes */}
         Send
       </button>
     </form>

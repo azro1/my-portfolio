@@ -9,7 +9,7 @@ import Sidebar from '@/app/components/Sidebar';
 
 const ChatPage = () => {
   return (
-      <div className='min-h-screen flex'>
+      <div className='min-h-[100dvh] flex'>
         
         <div className="flex z-10">
           <Sidebar />
@@ -24,7 +24,7 @@ const ChatPage = () => {
                   <Heading className="font-b text-deepCharcoal mb-4 mainheading">
                     Welcome to Our Chat Forum
                   </Heading>
-                  <p className="text-lg mb-8">Connect with people, share ideas, and build communities.</p>
+                  <p className="mb-8 md:text-lg">Connect with people, share ideas, and build communities</p>
                   {/* You can add an image or illustration here */}
                 </div>
 
