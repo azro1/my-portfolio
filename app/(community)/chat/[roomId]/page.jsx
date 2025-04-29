@@ -1,22 +1,23 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from 'react'; // Added useCallback
+import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'next/navigation';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useFetchProfile } from '../../../hooks/useFetchProfile';
-import Image from "next/image"; // Added Image
-import { format } from "date-fns"; // Added date-fns
-import { FaUserCircle } from "react-icons/fa"; // Added FaUserCircle
+import Link from 'next/link';
+import Image from "next/image";
+import { format } from "date-fns";
+import { FaUserCircle } from "react-icons/fa";
 
 // components
 import MessageForm from '../MessageForm';
-import Avatar from "@/app/components/Avatar"; // Added Avatar
+import Avatar from "@/app/components/Avatar";
 import Chevron from '@/app/components/Chevron';
 import Heading from '@/app/components/Heading';
-import Sidebar from '@/app/components/Sidebar';
-import UserListWithStatus from '../UserListWithStatus'; // Import the new component - Corrected path
+import MessageImage from '@/app/components/MessageImage';
+import UserListWithStatus from '../UserListWithStatus';
 
-const AWAY_TIMEOUT = 5 * 60 * 1000; // 5 minutes in milliseconds
+const AWAY_TIMEOUT = 5 * 60 * 1000;
 
 const ChatRoomPage = () => {
   const [messages, setMessages] = useState([]);
@@ -417,19 +418,26 @@ const ChatRoomPage = () => {
 
 
 
+
+
+
+
+
+
   return (
     <div className='flex  min-h-[100dvh]'> 
       
-      <div className='hidden xl:block'>
-        <Sidebar />
-      </div>
-  
       {/* Main Chat Area */}
       <div className="flex-1 w-full flex flex-col bg-nightSky" >
-        <div className="min-h-[92px] flex items-center justify-center text-xl bg-softCharcoal text-cloudGray font-bold p-4 text-center sticky top-0 z-10 sm:text-2xl sm:p-6">
-          
-          <Heading className='hidden xl:block subheading xl:max-w-[800px] uw:max-w-[1270px] break-words'>
-            {/* TODO: Update this count later if needed to reflect only 'online'/'away' users */}
+
+        <div className="min-h-[92px] flex items-center bg-slateOnyx text-cloudGray p-4 text-center sticky top-0 z-10">
+          <Link className='hidden xl:block' href='/'>
+            <button className="bg-goldenOchre transition-colors duration-200 text-cloudGray font-b py-2 px-4 rounded-lg">
+              Leave
+            </button>
+          </Link>
+
+          <Heading className='hidden xl:block subheading break-words font-b w-[65vw] mx-auto'>
             {roomName || 'Loading Room...'} (<span className='text-green-600'>{Object.keys(roomUsersState).filter(k => roomUsersState[k].status !== 'offline').length} online</span>)
           </Heading>
   
@@ -440,7 +448,6 @@ const ChatRoomPage = () => {
               roomUsersState={roomUsersState} 
               isForumPage={true} />
           </div>
-
         </div>
   
         {/* Message Display Area */}
@@ -483,7 +490,11 @@ const ChatRoomPage = () => {
                   <div className={`flex flex-col ${isCurrentUser ? 'items-end' : 'items-start'}`}>
   
                     <div className={`p-2 px-3 rounded-lg max-w-xs sm:max-w-md md:max-w-lg break-words ${isCurrentUser ? 'bg-blue-900' : 'bg-slateOnyx'}`}>
-                      <p className="text-cloudGray">{message.text}</p>
+                      {message.file_path ? (
+                        <MessageImage filePath={message.file_path} />
+                      ) : (
+                        <p className="text-cloudGray">{message.text}</p>
+                      )}
                     </div>
 
                     <span className='text-xs mt-1 p-1.5 rounded-lg text-stoneGray'>
@@ -526,7 +537,11 @@ const ChatRoomPage = () => {
   
         {/* Message Input Form */}
         <div className="flex-shrink-0 p-4 border-t border-charcoalGray sticky bottom-0 bg-softCharcoal">
-          <MessageForm onSendMessage={handleSendMessage} />
+          <MessageForm 
+            user={user}
+            profile={profile}
+            roomId={roomId}
+            onSendMessage={handleSendMessage} />
         </div>
       </div>
   

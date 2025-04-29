@@ -13,7 +13,14 @@ const nextConfig = {
       hostname: 'sjvdjiblyhtpmryrmrlr.supabase.co',
       port: '',
       pathname: '/storage/v1/object/sign/avatars/**'
-    }]     
+    },
+    {
+      protocol: 'https',
+      hostname: 'sjvdjiblyhtpmryrmrlr.supabase.co',
+      port: '',
+      pathname: '/storage/v1/object/sign/messages/**'
+    }
+  ]     
   },
 }
 
