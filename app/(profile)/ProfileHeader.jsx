@@ -79,7 +79,7 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
          <p className='mt-4 leading-normal text-charcoalGrayLight'>{subheading}</p>
 
          {showAvatar && (
-            <div className='mt-6 min-h-[480px] bg-softCharcoal'>
+            <div className='mt-6 min-h-[480px] bg-nightSky'>
                <div className='flex items-start gap-1 p-4 xl:items-center'>
 
                   {loading ? (

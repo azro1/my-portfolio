@@ -42,11 +42,11 @@ const Help = () => {
               type='text'
               spellCheck='false'
               placeholder='Search...'
-              className='w-full h-max mt-6 py-2.5 md:py-4 px-4 outline-none text-stoneGray bg-softCharcoal'
+              className='w-full h-max mt-6 py-2.5 md:py-4 px-4 outline-none text-stoneGray bg-nightSky'
               onChange={(e) => setUserQuery(e.target.value)}
             />
 
-            <div className='flex-1 flex flex-col gap-12 w-full p-4 mt-4 overflow-y-scroll hide-scrollbar bg-softCharcoal'>
+            <div className='flex-1 flex flex-col gap-12 w-full p-4 mt-4 overflow-y-scroll hide-scrollbar bg-nightSky'>
               {queryResults.length > 0 ? (
                 queryResults.map(result => (
                   <div key={result.id}>

@@ -100,7 +100,7 @@ const ForumChatList = ({ user }) => {
             Chat History
         </Heading>
         {!error ? (
-            <div className={`flex flex-col text-left min-h-96 max-h-96 overflow-y-scroll hide-scrollbar md:max-w-md relative bg-softCharcoal ${messages === null ? 'p-0' : 'p-4'} gap-6`}>
+            <div className={`flex flex-col text-left min-h-96 max-h-96 overflow-y-scroll hide-scrollbar md:max-w-md relative bg-nightSky ${messages === null ? 'p-0' : 'p-4'} gap-6`}>
                 {messages && messages.length > 0 ? (
                     messages.map(message => (
                         <div className='flex items-start justify-between' key={message.id}>

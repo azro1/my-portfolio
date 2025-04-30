@@ -36,7 +36,7 @@ const MainMenuDropdown = ({ user, handleCloseMenu, isProfilePage, isForumPage, d
     return (
         <>
             {user ? (
-                <div className='absolute w-full right-0 top-[92px] z-40 bg-softCharcoal md:p-1 md:bg-slateOnyx md:right-6 md:top-20 md:w-56 md:rounded-sm xl:left-8 xl:top-[406px] xl:mt-4' ref={dropDownMenuRef}>
+                <div className='absolute w-full right-0 top-[92px] z-40 bg-nightSky md:p-1 md:bg-slateOnyx md:right-6 md:top-20 md:w-56 md:rounded-sm xl:left-8 xl:top-[406px] xl:mt-4' ref={dropDownMenuRef}>
                     <LoggedInMenu
                         user={user}
                         handleLogout={handleLogout}
@@ -47,7 +47,7 @@ const MainMenuDropdown = ({ user, handleCloseMenu, isProfilePage, isForumPage, d
                 </div>
 
             ) : (
-                <div className='absolute w-full left-0 top-[92px] z-40 bg-softCharcoal' ref={dropDownMenuRef}>
+                <div className='absolute w-full left-0 top-[92px] z-40 bg-nightSky' ref={dropDownMenuRef}>
                     <LoggedOutMenu
                         handleCloseMenu={handleCloseMenu}
                     />
