@@ -34,7 +34,7 @@ const ProjectsViewedList = ({ user }) => {
         Project Views
       </Heading>
       {!errorMessage ? (
-        <div className={`min-h-[350px] flex items-center justify-center md:justify-normal bg-softCharcoal ${retrievedProjects.length === 0 ? 'p-4' : 'p-12'}`}>
+        <div className={`min-h-[350px] flex items-center justify-center md:justify-normal bg-nightSky ${retrievedProjects.length === 0 ? 'p-4' : 'p-12'}`}>
           {!isProjectsLoading && (
             <div className='flex flex-wrap justify-center gap-8  '>
               {retrievedProjects.length > 0 && (retrievedProjects.map((project) => (

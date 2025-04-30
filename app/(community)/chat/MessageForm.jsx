@@ -123,7 +123,7 @@ const MessageForm = ({ user, profile, roomId, onSendMessage }) => {
 
       <div className='absolute right-24 flex items-center gap-3'>
         <FiSmile className='hidden lg:block text-slateOnyx opacity-60 cursor-pointer' fill='#E0E0E3' size={24} onClick={handleTogglePicker} />
-        <FiPaperclip className=' text-cloudGray opacity-60 cursor-pointer' size={22} onClick={handleFileInput} />
+        <FiPaperclip className=' text-cloudGray opacity-60 cursor-pointer' size={20} onClick={handleFileInput} />
       </div>
 
       {showEmojiPicker && (

@@ -19,12 +19,12 @@ const ChatPage = () => {
           {/* Hero Section */}
           <div className='main-container w-full'>
             <main>
-              <div className='bg-softGray lg:rounded-xl p-3 py-10 sm:p-8'>
+              <div className=''>
                 <div className="text-center pb-4">
-                  <Heading className="font-b text-deepCharcoal mb-4 mainheading">
+                  <Heading className="font-b text-cloudGray mb-4 mainheading">
                     Welcome to Our Chat Forum
                   </Heading>
-                  <p className="text-lg mb-8">Connect with people, share ideas, and build communities.</p>
+                  <p className="mb-8 text-base md:text-lg">Connect with people, share ideas, build communities</p>
                   {/* You can add an image or illustration here */}
                 </div>
 

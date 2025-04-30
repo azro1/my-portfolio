@@ -11,13 +11,13 @@ const ChatList = () => {
 
   return (
     <div className="mt-4">
-      <Heading className="font-b mb-2 text-deepCharcoal text-xl md:text-2xl ">
+      <Heading className="font-b mb-2 text-cloudGray text-xl md:text-2xl ">
         Other Chat Rooms
       </Heading>
       <ul>
         {chatRooms.map((room) => (
-          <li key={room.id} className="flex items-center py-2 border-b border-cloudGray text-cloudGray">
-            <a href={`/community/chat/${room.id}`} className="text-ashGray hover:text-deepCharcoal">{room.name}</a>
+          <li key={room.id} className="flex items-center py-2 border-b border-charcoalGray text-cloudGray">
+            <a href={`/community/chat/${room.id}`} className="text-ashGray hover:text-cloudGray">{room.name}</a>
           </li>
         ))}
       </ul>

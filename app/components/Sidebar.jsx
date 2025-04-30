@@ -125,7 +125,7 @@ const Sidebar = ({ isProfilePage }) => {
   if (loading) {
     return (
       <div className={`w-full box-border xl:inline-block ${isOpen ? 'xl:w-[300px]' : 'xl:w-[64px]'} xl:h-screen xl:min-h-[768px]`}>
-        <div className="sidebar-content fixed bg-softCharcoal  min-h-[92px] flex items-center md:justify-end xl:h-full xl:overflow-y-scroll xl:hide-scrollbar  xl:items-start xl:justify-center ">
+        <div className={`sidebar-content fixed ${pathName === '/' || pathName === '/chat' ? 'bg-slateOnyx xl:bg-nightSky' : 'bg-nightSky'} min-h-[92px] flex items-center md:justify-end xl:h-full xl:overflow-y-scroll xl:hide-scrollbar  xl:items-start xl:justify-center `}>
 
           <div className="ml-8 md:mr-20 xl:ml-0 xl:mr-0 xl:mt-56">
                 <Image
@@ -150,7 +150,7 @@ const Sidebar = ({ isProfilePage }) => {
 
 
       
-      <div className="sidebar-content fixed bg-softCharcoal xl:h-full xl:overflow-y-scroll xl:overflow-x-hidden xl:hide-scrollbar">
+      <div className={`sidebar-content fixed ${pathName === '/' || pathName === '/chat' ? 'bg-slateOnyx xl:bg-nightSky' : 'bg-nightSky'} xl:h-full xl:overflow-y-scroll xl:overflow-x-hidden xl:hide-scrollbar`}>
 
           <div className={`hidden xl:block absolute top-3 cursor-pointer z-10 p-3 rounded-md ${!isOpen ? 'right-2.5 hover:bg-charcoalGray' : 'right-2'}`} onClick={handleToggleSidebar}>
             {isOpen ? (

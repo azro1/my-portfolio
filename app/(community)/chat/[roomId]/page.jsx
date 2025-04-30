@@ -426,7 +426,7 @@ const ChatRoomPage = () => {
 
 
   return (
-    <div className='flex  min-h-[100dvh]'> 
+    <div className='flex min-h-[100dvh]'> 
       
       {/* Main Chat Area */}
       <div className="flex-1 w-full flex flex-col bg-nightSky" >
@@ -488,7 +488,7 @@ const ChatRoomPage = () => {
                   {/* Message Content */}
                   <div className={`flex flex-col ${isCurrentUser ? 'items-end' : 'items-start'}`}>
   
-                    <div className={`p-2 px-3 rounded-lg max-w-xs sm:max-w-md md:max-w-lg break-words ${isCurrentUser ? 'bg-blue-900' : 'bg-slateOnyx'}`}>
+                    <div className={`p-2 px-3 rounded-lg max-w-xs sm:max-w-md md:max-w-lg break-words ${isCurrentUser ? 'bg-[#C71585]' : 'bg-slateOnyx'}`}>
                       {message.file_path ? (
                         <MessageImage filePath={message.file_path} />
                       ) : (
@@ -535,7 +535,7 @@ const ChatRoomPage = () => {
         </div>
   
         {/* Message Input Form */}
-        <div className="flex-shrink-0 p-4 border-t border-charcoalGray sticky bottom-0 bg-softCharcoal">
+        <div className="flex-shrink-0 p-4 border-t border-charcoalGray sticky bottom-0 bg-nightSky">
           <MessageForm 
             user={user}
             profile={profile}
