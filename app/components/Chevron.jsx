@@ -100,7 +100,7 @@ const Chevron = ({ user, roomName, roomUsersState, isProfilePage, isForumPage })
 
             {/* online users menu shows for small screens */}
             <button onClick={handleToggleUserMenu} className='xl:hidden text-base text-cloudGray'>
-              <FiUsers color='#E0E0E3' size={23} />
+              <FiUsers color='#E0E0E3' size={24} />
             </button>
 
         </div>
