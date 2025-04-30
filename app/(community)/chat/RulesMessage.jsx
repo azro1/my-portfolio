@@ -2,11 +2,11 @@ import Heading from "@/app/components/Heading";
 
 const RulesMessage = () => {
     return (
-      <div className="bg-charcoalGray p-4 rounded-lg mb-8">
-        <Heading className="mb-2 underline decoration-[1px] underline-cloudGray underline-offset-4 text-cloudGray text-xl md:font-b md:no-underline">
+      <div className="bg-white p-4 rounded-md mb-8 md:rounded-lg md:bg-charcoalGray">
+        <Heading className="mb-2 text-nightSky font-b text-xl md:text-cloudGray">
           Chat Room Rules
         </Heading>
-        <ol className="list-decimal list-inside text-frostWhite leading-relaxed">
+        <ol className="list-decimal list-inside text-nightSky md:text-cloudGray md:leading-relaxed">
           <li>🤝 Be respectful to other users.</li>
           <li>🚫 Do not spam or flood the chat.</li>
           <li>⚠️ Do not post any offensive or inappropriate content.</li>
