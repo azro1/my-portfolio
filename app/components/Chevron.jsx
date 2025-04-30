@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react'
 import {
+  FiArrowLeft,
   FiChevronDown,
   FiMenu,
   FiUsers
@@ -87,21 +88,19 @@ const Chevron = ({ user, roomName, roomUsersState, isProfilePage, isForumPage })
       {isForumPage && (
         <div className='flex items-center justify-between'>
 
-            {/* menu shows for small screens */}
-            <Link className='xl:hidden' href='/'>
-              <button className="bg-goldenOchre text-white font-b py-2 px-3 rounded-lg">
-                Leave
-              </button>
+            {/* back arrow for small screens */}
+            <Link className='xl:hidden' href='/chat'>
+              <FiArrowLeft color='#E0E0E3' size={22} />
             </Link>
 
             {/* Limit width to available space minus icon width, truncates overflow with ellipsis */}
-            <Heading className='font-b subheading w-[50vw] overflow-hidden text-ellipsis whitespace-nowrap'>
+            <Heading className='text-xl w-[50vw] overflow-hidden text-ellipsis whitespace-nowrap'>
               {roomName }
             </Heading>
 
             {/* online users menu shows for small screens */}
             <button onClick={handleToggleUserMenu} className='xl:hidden text-base text-cloudGray'>
-              <FiUsers fill='#E0E0E3' size={34} />
+              <FiUsers color='#E0E0E3' size={23} />
             </button>
 
         </div>
