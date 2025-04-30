@@ -108,7 +108,7 @@ const MessageForm = ({ user, profile, roomId, onSendMessage }) => {
         placeholder="Message"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        className="bg-slateOnyx text-cloudGray rounded px-4 py-2 w-full"
+        className="bg-slateOnyx text-cloudGray rounded px-4 py-2.5 w-full"
         autoFocus={true}
       />
       
@@ -122,8 +122,8 @@ const MessageForm = ({ user, profile, roomId, onSendMessage }) => {
           
 
       <div className='absolute right-24 flex items-center gap-3'>
-        <FiSmile className='hidden lg:block text-slateOnyx opacity-60 cursor-pointer' fill='#E0E0E3' size={22} onClick={handleTogglePicker} />
-        <FiPaperclip className=' text-cloudGray opacity-60 cursor-pointer' size={18} onClick={handleFileInput} />
+        <FiSmile className='hidden lg:block text-slateOnyx opacity-60 cursor-pointer' fill='#E0E0E3' size={24} onClick={handleTogglePicker} />
+        <FiPaperclip className=' text-cloudGray opacity-60 cursor-pointer' size={22} onClick={handleFileInput} />
       </div>
 
       {showEmojiPicker && (
@@ -137,7 +137,7 @@ const MessageForm = ({ user, profile, roomId, onSendMessage }) => {
         </div>
       )}
 
-      <button type="submit" className="bg-green-700/90 hover:bg-green-700 text-white font-b py-2 px-4 rounded"> {/* Add Tailwind classes */}
+      <button type="submit" className="bg-green-700/90 hover:bg-green-700 text-white font-b py-2.5 px-4 rounded"> {/* Add Tailwind classes */}
         Send
       </button>
     </form>
