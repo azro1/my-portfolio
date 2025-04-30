@@ -8,6 +8,7 @@ import Link from 'next/link';
 import Image from "next/image";
 import { format } from "date-fns";
 import { FaUserCircle } from "react-icons/fa";
+import { FiArrowLeft } from 'react-icons/fi';
 
 // components
 import MessageForm from '../MessageForm';
@@ -430,14 +431,12 @@ const ChatRoomPage = () => {
       {/* Main Chat Area */}
       <div className="flex-1 w-full flex flex-col bg-nightSky" >
 
-        <div className="min-h-[92px] flex items-center bg-slateOnyx text-cloudGray p-4 text-center sticky top-0 z-10">
-          <Link className='hidden xl:block' href='/'>
-            <button className="bg-goldenOchre transition-colors duration-200 text-cloudGray font-b py-2 px-4 rounded-lg">
-              Leave
-            </button>
+        <div className=" flex items-center bg-slateOnyx text-cloudGray p-4 text-center sticky top-0 z-10">
+          <Link className='hidden xl:block' href='/chat'>
+              <FiArrowLeft color='#E0E0E3' size={28} />
           </Link>
 
-          <Heading className='hidden xl:block subheading break-words font-b w-[65vw] mx-auto'>
+          <Heading className='hidden xl:block subheading break-words w-[65vw] mx-auto'>
             {roomName || 'Loading Room...'} (<span className='text-green-600'>{Object.keys(roomUsersState).filter(k => roomUsersState[k].status !== 'offline').length} online</span>)
           </Heading>
   
