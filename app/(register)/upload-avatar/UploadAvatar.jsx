@@ -78,18 +78,18 @@ const UploadAvatar = () => {
 
 
     // send beacon to logout if the leave via the address bar
-    // useEffect(() => {
-    //     const handleBeforeUnload = () => {
-    //         console.log('before unload ran......')
-    //         navigator.sendBeacon(`${location.origin}/api/auth/logout`, JSON.stringify({ hasLeftViaAddressBar: true }));
-    //     };
+    useEffect(() => {
+        const handleBeforeUnload = () => {
+            console.log('before unload ran......')
+            navigator.sendBeacon(`${location.origin}/api/auth/logout`, JSON.stringify({ hasLeftViaAddressBar: true }));
+        };
     
-    //     window.addEventListener("beforeunload", handleBeforeUnload);
+        window.addEventListener("beforeunload", handleBeforeUnload);
     
-    //     return () => {
-    //         window.removeEventListener("beforeunload", handleBeforeUnload);
-    //     };
-    // }, []);
+        return () => {
+            window.removeEventListener("beforeunload", handleBeforeUnload);
+        };
+    }, []);
     
 
 
@@ -163,15 +163,13 @@ const UploadAvatar = () => {
     return (
         <div className='flex-1 flex flex-col justify-center w-full max-w-xs sm:max-w-sm md:max-w-md'>
 
+          <div className='flex flex-col justify-center md:gap-2 md:bg-white md:shadow-outer md:p-10 md:rounded-xl relative'>
 
-      
-          <div className='flex flex-col justify-center gap-2 md:bg-white md:shadow-outer md:p-10 md:rounded-xl relative'>
-
-            <Heading className='text-2xl font-b text-nightSky mb-2'>
+            <Heading className='text-2xl font-b text-nightSky mb-3 md:mb-2'>
               Create your Profile
             </Heading>
 
-            <div className='flex flex-col gap-1 mb-2'>
+            <div className='flex flex-col gap-2 mb-2'>
               <h3 className='text-ashGray font-light text-lg'>
                 Upload your avatar
               </h3>
