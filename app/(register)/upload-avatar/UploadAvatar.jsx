@@ -186,15 +186,16 @@ const UploadAvatar = () => {
                 show3DAvatar={true}
               />
             </div>
-      
-            <Link className='w-full' href='/register-form'>
-              <div className='flex'>
-                <button className='font-light ml-auto hover:underline'>
-                  Skip
-                </button>
-              </div>
-            </Link>
+
           </div>
+
+          <Link className='w-full mt-2' href='/register-form'>
+            <div className='flex'>
+              <button className='font-light ml-auto hover:underline'>
+                Skip
+              </button>
+            </div>
+          </Link>
 
         </div>
       );
