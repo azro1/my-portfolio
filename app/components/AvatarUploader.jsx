@@ -170,7 +170,7 @@ const AvatarUploader = ({ user, updateProfile, btnColor, show3DAvatar }) => {
                         </div>
                         <form ref={formRef} className='w-full'>
                             <input
-                                className='text-ashGray file:cursor-pointer file:mr-3 w-full max-w-xs'
+                                className='text-ashGray font-light file:cursor-pointer file:mr-3 w-full max-w-xs'
                                 type='file'
                                 id='single'
                                 accept='image/*'

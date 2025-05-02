@@ -252,18 +252,18 @@ const RegisterForm = () => {
 
 
     // send beacon to logout if the leave via the address bar
-    useEffect(() => {
-        const handleBeforeUnload = () => {
-            console.log('before unload ran......')
-            navigator.sendBeacon(`${location.origin}/api/auth/logout`, JSON.stringify({ hasLeftViaAddressBar: true }));
-        };
+    // useEffect(() => {
+    //     const handleBeforeUnload = () => {
+    //         console.log('before unload ran......')
+    //         navigator.sendBeacon(`${location.origin}/api/auth/logout`, JSON.stringify({ hasLeftViaAddressBar: true }));
+    //     };
     
-        window.addEventListener("beforeunload", handleBeforeUnload);
+    //     window.addEventListener("beforeunload", handleBeforeUnload);
     
-        return () => {
-            window.removeEventListener("beforeunload", handleBeforeUnload);
-        };
-    }, []);
+    //     return () => {
+    //         window.removeEventListener("beforeunload", handleBeforeUnload);
+    //     };
+    // }, []);
 
 
 
@@ -564,137 +564,143 @@ const RegisterForm = () => {
 
 
   return (
-        <div className='flex flex-col justify-center gap-6 sm:items-center md:min-h-[824px]'>
-                <Heading className='text-3xl font-b text-nightSky'>
-                    Create your Profile
-                </Heading>
-            <div className='flex flex-col gap-4 w-full max-w-xs sm:max-w-md sm:bg-white sm:shadow-outer sm:p-12 sm:pt-10 sm:rounded-xl'>
+        <div className='flex flex-col justify-center min-h-[768px] md:min-h-[824px]'>
 
-                <form className='flex flex-col gap-7' noValidate>
-                    <h3 className='text-lg font-b text-nightSky md:text-center md:text-xl'>Enter your personal details</h3>
+            <div className='flex flex-col w-full max-w-xs sm:max-w-sm md:bg-white md:shadow-outer md:p-12 md:rounded-xl md:max-w-md'>
 
-                    <div>
-                        <div className='relative '>
-                            <input
-                                id='firstname'
-                                type='text'
-                                spellCheck='false'
-                                autoFocus
-                                maxLength='15'
-                                placeholder='First Name'
-                                minLength='3'
-                                {...register('firstname')}
-                                className={`w-full  py-2.5 px-4 text-nightSky rounded-md border-[1px]  ${errors.firstname ? 'border-red-600' : 'border-gray-300'}`}
-                            />
-                        </div>
-                        {errors?.firstname && <p className='text-sm text-red-600 mt-1'>{errors.firstname.message}</p>}
-                    </div>
-
-
-                    <div>
-                        <div className='relative '>
-                            <input
-                                id='lastname'
-                                type='text'
-                                maxLength='25'
-                                placeholder='Last Name'
-                                minLength='2'
-                                {...register('lastname')}
-                                className={`w-full py-2.5 px-4 text-nightSky rounded-md border-[1px] ${errors.lastname ? 'border-red-600' : 'border-gray-300'}`}
-                            />
-                        </div>
-                        {errors?.lastname && <p className='text-sm text-red-600 mt-1'>{errors.lastname.message}</p>}
-                    </div>
-
-                    <div>
-                        <div className="flex gap-3">
-                            {dobFields.map((field) => (
-                                <div key={field.name} className="flex flex-col">
-                                {field.name !== 'month' ? (
-                                    <input
-                                    id={`dob-${field.name}`}
-                                    type="text"
-                                    inputMode="numeric"
-                                    max={field.max}
-                                    min={field.min}
-                                    maxLength={field.maxlength}
-                                    placeholder={field.placeholder}
-                                    className={`w-full h-[43px] text-center rounded-md border-[1px] border-gray-300 ${!hasInteracted && formState.isSubmitted && (!dob.day && !dob.month?.value && !dob.year) ? 'border-red-600' : 'border-gray-300'}`}
-                                    {...register(`dob.${field.name}`)}
-                                    />
-                                ) : (
-                                    <div className={`w-max min-w-[110px] h-[42px] text-center rounded-md border-[1px] ${!hasInteracted && formState.isSubmitted && (!dob.day && !dob.month?.value && !dob.year) ? 'border-red-600' : 'border-gray-300'} flex-1 flex items-center justify-center`}>
-                                    {isClient && (
-                                        <Controller
-                                        name="dob.month"
-                                        control={control}
-                                        render={({ field }) => (
-                                            <div className='w-full'>
-                                                <Select
-                                                    {...field}
-                                                    options={months}
-                                                    placeholder="Month"
-                                                    styles={customStyles}
-                                                    isSearchable={false}
-                                                />
-                                            </div>
-                                        )}
-                                        />
-                                    )}
-                                    </div>
-                                )}
-
-                                </div>
-                            ))}
-                        </div>
-                        {!hasInteracted && formState.isSubmitted && (!dob.day && !dob.month?.value && !dob.year) ? (
-                            <p className="text-sm text-red-600 mt-1">Date of birth is required</p>
-                        ) : (
-                            (errors.dob?.day || errors.dob?.month?.value || errors.dob?.year) && (
-                                <p className="text-sm text-red-600 mt-1">
-                                    {errors.dob?.day?.message || errors.dob?.month?.value?.message || errors.dob?.year?.message}
-                                </p>
-                            )
-                        )}
-                    </div>
-                  
-                    <div>
-                        <div className='relative'>
-                            <input
-                                id='phone'
-                                type='tel'
-                                spellCheck={false}
-                                placeholder="Phone Number"
-                                {...register('phone')}
-                                className={`w-full py-2.5 px-4 text-nightSky rounded-md border-[1px] ${(errors.phone || phoneExists) ? 'border-red-600' : 'border-gray-300'}`}
-                                onKeyDown={handleKeyDown}
-                            />
-                        </div>
-                        {errors.phone ? <p className="text-sm text-red-600 mt-1">{errors.phone.message}</p> : phoneExists ? <p className="text-sm text-red-600 mt-1">Phone already exists</p> : null}
-                    </div>
-
-                    <button className={`p-3 px-3.5 rounded-lg cursor-pointer text-white font-medium block w-full transition duration-500 bg-green-700 ${(isLoading || phoneExists) ? 'opacity-65' : 'opacity-100'}`} disabled={isLoading || phoneExists} aria-live={Object.keys(errors).length > 0 || isLoading ? 'assertive' : 'off'} onClick={handleSubmit(handleUpdateProfile)}>
-                        {isLoading ? (
-                            <div className='flex items-center justify-center'>
-                                <Image
-                                    className='opacity-65'
-                                    width={24}
-                                    height={24}
-                                    src="/images/loading/reload.svg"
-                                    alt="A spinning loading animation on a transparent background"
-                                />
-                            </div>
-                        ) : (
-                            'Register'
-                        )}
-                    </button>
-
-                </form>
-
+                <div className='mb-4 md:text-center'>
+                    <Heading className='text-2xl font-b text-nightSky'>
+                        Create your Profile
+                    </Heading>
+                </div>
 
                 <div>
+                    <h3 className=' text-ashGray font-light text-lg mb-2'>Enter your personal details</h3>
+                    <form className='flex flex-col gap-5' noValidate>
+                        <div>
+                            <div className='relative '>
+                                <input
+                                    id='firstname'
+                                    type='text'
+                                    spellCheck='false'
+                                    autoFocus
+                                    maxLength='15'
+                                    placeholder='First Name'
+                                    minLength='3'
+                                    {...register('firstname')}
+                                    className={`w-full font-light py-2.5 px-4 text-nightSky rounded-md border-[1px]  ${errors.firstname ? 'border-red-600' : 'border-gray-300'}`}
+                                />
+                            </div>
+                            {errors?.firstname && <p className='text-sm text-red-600 mt-1'>{errors.firstname.message}</p>}
+                        </div>
+
+
+                        <div>
+                            <div className='relative '>
+                                <input
+                                    id='lastname'
+                                    type='text'
+                                    maxLength='25'
+                                    placeholder='Last Name'
+                                    minLength='2'
+                                    {...register('lastname')}
+                                    className={`w-full py-2.5 px-4 font-light text-nightSky rounded-md border-[1px] ${errors.lastname ? 'border-red-600' : 'border-gray-300'}`}
+                                />
+                            </div>
+                            {errors?.lastname && <p className='text-sm text-red-600 mt-1'>{errors.lastname.message}</p>}
+                        </div>
+
+                        <div>
+                            <div className="flex gap-3">
+                                {dobFields.map((field) => (
+                                    <div key={field.name} className="flex flex-col">
+                                    {field.name !== 'month' ? (
+                                        <input
+                                        id={`dob-${field.name}`}
+                                        type="text"
+                                        inputMode="numeric"
+                                        max={field.max}
+                                        min={field.min}
+                                        maxLength={field.maxlength}
+                                        placeholder={field.placeholder}
+                                        className={`w-full h-[43px] text-center font-light rounded-md border-[1px] border-gray-300 ${!hasInteracted && formState.isSubmitted && (!dob.day && !dob.month?.value && !dob.year) ? 'border-red-600' : 'border-gray-300'}`}
+                                        {...register(`dob.${field.name}`)}
+                                        />
+                                    ) : (
+                                        <div className={`w-max min-w-[110px] h-[42px] text-center font-light rounded-md border-[1px] ${!hasInteracted && formState.isSubmitted && (!dob.day && !dob.month?.value && !dob.year) ? 'border-red-600' : 'border-gray-300'} flex-1 flex items-center justify-center`}>
+                                        {isClient && (
+                                            <Controller
+                                            name="dob.month"
+                                            control={control}
+                                            render={({ field }) => (
+                                                <div className='w-full'>
+                                                    <Select
+                                                        {...field}
+                                                        options={months}
+                                                        placeholder="Month"
+                                                        styles={customStyles}
+                                                        isSearchable={false}
+                                                    />
+                                                </div>
+                                            )}
+                                            />
+                                        )}
+                                        </div>
+                                    )}
+
+                                    </div>
+                                ))}
+                            </div>
+                            {!hasInteracted && formState.isSubmitted && (!dob.day && !dob.month?.value && !dob.year) ? (
+                                <p className="text-sm text-red-600 mt-1">Date of birth is required</p>
+                            ) : (
+                                (errors.dob?.day || errors.dob?.month?.value || errors.dob?.year) && (
+                                    <p className="text-sm text-red-600 mt-1">
+                                        {errors.dob?.day?.message || errors.dob?.month?.value?.message || errors.dob?.year?.message}
+                                    </p>
+                                )
+                            )}
+                        </div>
+                    
+                        <div>
+                            <div className='relative'>
+                                <input
+                                    id='phone'
+                                    type='tel'
+                                    spellCheck={false}
+                                    placeholder="Phone Number"
+                                    {...register('phone')}
+                                    className={`w-full py-2.5 px-4 font-light text-nightSky rounded-md border-[1px] ${(errors.phone || phoneExists) ? 'border-red-600' : 'border-gray-300'}`}
+                                    onKeyDown={handleKeyDown}
+                                />
+                            </div>
+                            {errors.phone ? <p className="text-sm text-red-600 mt-1">{errors.phone.message}</p> : phoneExists ? <p className="text-sm text-red-600 mt-1">Phone already exists</p> : null}
+                        </div>
+
+                        <button className={`p-3 px-3.5 rounded-lg cursor-pointer text-white font-medium block w-full transition duration-500 bg-green-700 ${(isLoading || phoneExists) ? 'opacity-65' : 'opacity-100'}`} disabled={isLoading || phoneExists} aria-live={Object.keys(errors).length > 0 || isLoading ? 'assertive' : 'off'} onClick={handleSubmit(handleUpdateProfile)}>
+                            {isLoading ? (
+                                <div className='flex items-center justify-center'>
+                                    <Image
+                                        className='opacity-65'
+                                        width={24}
+                                        height={24}
+                                        src="/images/loading/reload.svg"
+                                        alt="A spinning loading animation on a transparent background"
+                                    />
+                                </div>
+                            ) : (
+                                'Register'
+                            )}
+                        </button>
+
+                    </form>
+                </div>
+
+
+
+                <div className='mt-2'>
                     <Link href='/upload-avatar' onClick={(e) => handleBackButton(e)}>
-                        <button className='text-nightSky hover:underline'>
+                        <button className='font-light hover:underline'>
                             Back
                         </button>
                     </Link>

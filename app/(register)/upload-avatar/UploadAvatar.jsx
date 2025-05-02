@@ -78,18 +78,18 @@ const UploadAvatar = () => {
 
 
     // send beacon to logout if the leave via the address bar
-    useEffect(() => {
-        const handleBeforeUnload = () => {
-            console.log('before unload ran......')
-            navigator.sendBeacon(`${location.origin}/api/auth/logout`, JSON.stringify({ hasLeftViaAddressBar: true }));
-        };
+    // useEffect(() => {
+    //     const handleBeforeUnload = () => {
+    //         console.log('before unload ran......')
+    //         navigator.sendBeacon(`${location.origin}/api/auth/logout`, JSON.stringify({ hasLeftViaAddressBar: true }));
+    //     };
     
-        window.addEventListener("beforeunload", handleBeforeUnload);
+    //     window.addEventListener("beforeunload", handleBeforeUnload);
     
-        return () => {
-            window.removeEventListener("beforeunload", handleBeforeUnload);
-        };
-    }, []);
+    //     return () => {
+    //         window.removeEventListener("beforeunload", handleBeforeUnload);
+    //     };
+    // }, []);
     
 
 
@@ -161,18 +161,21 @@ const UploadAvatar = () => {
 
 
     return (
-        <div className='flex-1 flex flex-col sm:items-center justify-center gap-6 w-full max-w-xs sm:max-w-md'>
+        <div className='flex-1 flex flex-col justify-center w-full max-w-xs sm:max-w-sm md:max-w-md'>
 
-          <Heading className='text-3xl font-b text-nightSky'>
-            Create your Profile
-          </Heading>
+
       
-          <div className='flex flex-col items-center justify-center gap-4 sm:bg-white sm:shadow-outer sm:p-10 sm:rounded-xl relative'>
-            <div>
-              <h3 className='text-lg mb-3 font-b text-nightSky md:text-xl'>
+          <div className='flex flex-col justify-center gap-2 md:bg-white md:shadow-outer md:p-10 md:rounded-xl relative'>
+
+            <Heading className='text-2xl font-b text-nightSky mb-2'>
+              Create your Profile
+            </Heading>
+
+            <div className='flex flex-col gap-1 mb-2'>
+              <h3 className='text-ashGray font-light text-lg'>
                 Upload your avatar
               </h3>
-              <p>
+              <p className='font-light'>
                 Choose an image to personalize your profile or skip this step to continue. This helps others recognize you but is entirely optional.
               </p>
             </div>
@@ -188,12 +191,13 @@ const UploadAvatar = () => {
       
             <Link className='w-full' href='/register-form'>
               <div className='flex'>
-                <button className='text-nightSky ml-auto hover:underline'>
+                <button className='font-light ml-auto hover:underline'>
                   Skip
                 </button>
               </div>
             </Link>
           </div>
+
         </div>
       );
       
