@@ -33,7 +33,7 @@ export default async function RegisterLayout ({ children }) {
   return (
     <div className='min-h-[100dvh] flex flex-col items-center'>
 
-        <div className="w-full flex-grow flex flex-col bg-white sm:bg-softGray">
+        <div className="w-full flex-grow flex flex-col bg-softGray">
           <AuthRegHeader />
           <div className='main-container flex-grow flex items-center justify-center register-layout-wrapper'>
             {children}

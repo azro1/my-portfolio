@@ -7,9 +7,9 @@ import Heading from "../components/Heading";
 
 const AuthForm = ({ handleSubmit, onSubmit, title, register, errors, isChecked, handleCheckbox, isSignup, isLoading }) => {
   return (
-    <div className='main-container flex flex-col justify-center items-center gap-5 pt-12 md:gap-10 w-full text-center md:mt-0 md:flex-row '>
+    <div className='main-container min-h-[768px] flex flex-col justify-center items-center gap-5 pt-20 md:gap-10 w-full text-center md:pt-0 md:flex-row'>
 
-      <div className='flex-1 w-full max-w-xs sm:max-w-sm sm:bg-white sm:shadow-outer sm:p-10 sm:rounded-xl '>
+      <div className='w-full max-w-xs md:max-w-sm md:bg-white md:shadow-outer md:p-10 md:rounded-xl'>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
 
           <Heading className='text-3xl mb-3 font-b text-nightSky'>
@@ -54,7 +54,7 @@ const AuthForm = ({ handleSubmit, onSubmit, title, register, errors, isChecked, 
         </form>
       </div>
 
-      <div className='flex-1 flex flex-col w-full max-w-xs'>
+      <div className='flex flex-col w-full max-w-xs'>
         <p className='mb-6'>Or</p>
         <SocialButtons text={title} />
         <div className="mt-7">
