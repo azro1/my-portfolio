@@ -18,28 +18,23 @@ const KeySkills = () => {
   const keySkills = [
     {
       name: 'Front End',
-      icon: <FiLayout className="text-cloudGray" size={34} />,
-      padbtm: 'pb-14 lg:pb-0'
+      icon: <FiLayout className="text-cloudGray" size={34} />
     },
     {
       name: 'Branding',
-      icon: <FiLayers className="text-cloudGray" size={34} />,
-      padbtm: 'pb-14 lg:pb-0'
+      icon: <FiLayers className="text-cloudGray" size={34} />
     },
     {
       name: 'Design',
-      icon: <FiFigma className="text-cloudGray" size={34} />,
-      padbtm: 'pb-14 lg:pb-0'
+      icon: <FiFigma className="text-cloudGray" size={34} />
     },
     {
       name: 'UI / UX',
-      icon: <FiFramer className="text-cloudGray" size={34} />,
-      padbtm: 'pb-14 lg:pb-0'
+      icon: <FiFramer className="text-cloudGray" size={34} />
     },
     {
       name: 'Back End',
-      icon: <FiServer className="text-cloudGray" size={34} />,
-      padbtm: ''
+      icon: <FiServer className="text-cloudGray" size={34} />
     }
   ];
 
@@ -54,15 +49,17 @@ const KeySkills = () => {
               transition={{ duration: 1, ease: "easeOut" }}
               className="flex flex-col text-center gap-4 lg:col-span-2 lg:row-start-3"
             >
-              <Heading className="text-2xl md:text-3xl font-b text-cloudGray text-center mb-6">
+              <Heading className="subheading font-b text-cloudGray text-center mb-6">
                 Key Skills
               </Heading>
 
-              <ul className="flex flex-col items-center w-full lg:flex-row lg:justify-between  relative">
+              {/* Mobile: flex wrap center. Large: flex row, full width, relative */}
+              <ul className="flex flex-wrap justify-center gap-6 mb-6 lg:flex-nowrap lg:flex-row lg:justify-between lg:w-full lg:relative lg:mb-0">
                 {keySkills.map((skill, index) => (
                   <motion.li
                     key={index}
-                    className={`grid grid-flow-col auto-cols-[minmax(66px,_66px)] grid-rows-[minmax(_auto,66px)_minmax(_auto,20px)] z-50 gap-2 ${skill.padbtm}`}
+                    // Subtle hover scale and lift effect
+                    className={`flex flex-col items-center gap-2 z-50 transition-transform duration-300 ease-in-out hover:scale-105 hover:-translate-y-1`}
                     initial={{
                       opacity: 0,
                       transform: 'perspective(800px) rotateX(45deg) scale(0.8)',
@@ -78,12 +75,12 @@ const KeySkills = () => {
                       stiffness: 300,
                     }}
                   >
-                    {/* Icon with shadow for emphasis */}
+                    {/* Icon with subtle glow effect */}
                     <motion.span
-                      className="p-4 bg-transparent shadow-[0_0_10px_0_#000] hover:shadow-[0_0_15px_0_#fff] w-max"
+                      className="p-4 w-max shadow-[0_0_15px_rgba(200,200,200,0.2)] hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-shadow duration-300" // Restored padding, added subtle shadow/glow
                       initial={{ scale: 0.8 }}
                       animate={{ scale: 1 }}
-                      whileHover={{ scale: 1.1 }}
+                      whileHover={{ scale: 1.1 }} // Kept icon scale hover
                       transition={{ duration: 0.5 }}
                     >
                       {skill.icon}

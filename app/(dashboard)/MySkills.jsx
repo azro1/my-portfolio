@@ -18,24 +18,31 @@ import Heading from "../components/Heading";
 const MySkills = () => {
   return (
     <section>
-      <div className="flex flex-col-reverse items-center gap-6 md:flex-row md:gap-10">
+      <div className="flex flex-col items-center gap-6 md:flex-row md:gap-10">
+        
         {/* Icons Section */}
-
-        <div className="flex-1 flex justify-end">
-          <div className="grid grid-cols-[minmax(30px,_auto)] md:grid-cols-[minmax(30px,_auto)_minmax(30px,_auto)_minmax(30px,_auto)] gap-4 md:gap-2">
+        <div className="flex-1 flex justify-center md:justify-end"> {/* Centered icons on mobile */}
+          {/* Reverted gap, removed perspective */}
+          <div className="grid grid-cols-3 gap-2"> 
             {technicalSkills.map((skill, index) => (
               <motion.div
                 key={index}
-                className="p-4 bg-charcoalGray shadow-lg shadow-deepCharcoal rounded-md w-max"
+                className="p-4 bg-charcoalGray shadow-lg shadow-deepCharcoal rounded-md w-max overflow-hidden" // Added overflow-hidden
                 whileHover={{
-                  scale: 1.1
+                  scale: 1.1 // Keep scale on container
                 }}
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }} // Staggered transition
               >
-                <div className="text-cloudGray">
+                {/* Inner motion div for icon animation */}
+                <motion.div 
+                  className="text-cloudGray"
+                  whileHover={{ y: -5 }} // Icon lifts on container hover
+                  transition={{ type: "spring", stiffness: 300 }} // Springy transition for icon
+                >
                   {skill.icon}
-                </div>
+                </motion.div>
               </motion.div>
             ))}
           </div>

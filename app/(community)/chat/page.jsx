@@ -15,13 +15,13 @@ const ChatPage = () => {
           <Sidebar />
         </div>
 
-        <div className="flex-1 flex items-center justify-center w-full bg-nightSky text-softCharcoal py-40 md:py-0 md:h-screen md:min-h-[900px] ">
+        <div className="flex-1 flex items-center justify-center w-full bg-softGray text-softCharcoal py-40 md:py-0 md:h-screen md:min-h-[900px] ">
           {/* Hero Section */}
           <div className='main-container w-full'>
             <main>
               <div className=''>
                 <div className="text-center pb-4">
-                  <Heading className="font-b text-cloudGray mb-4 mainheading">
+                  <Heading className="font-b text-nightSky mb-2 text-[26px] leading-tight md:text-4xl md:mb-2">
                     Welcome to Our Chat Forum
                   </Heading>
                   <p className="mb-8 text-base md:text-lg">Connect with people, share ideas, build communities</p>
