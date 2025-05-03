@@ -57,7 +57,7 @@ const ProjectList = () => {
         <Heading className="text-2xl md:text-3xl font-b text-cloudGray text-center mb-6 md:mb-8">
           My Projects
         </Heading>
-        <Carousel showStatus={false} transitionTime={500} interval={5000} swipeable={true} showThumbs={false} selectedItem={selectedIndex} autoPlay infiniteLoop>
+        <Carousel showStatus={false} transitionTime={500} interval={5000} swipeable={false} showThumbs={false} selectedItem={selectedIndex} showArrows={false} autoPlay infiniteLoop>
           {projects && projects.map((project) => (
             <div key={project.id}>
               <Link href={`/projects/${project.id}`}>

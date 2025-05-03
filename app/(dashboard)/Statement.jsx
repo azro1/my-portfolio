@@ -11,8 +11,8 @@ const Statement = () => {
                 </Heading>
             </div>
 
-            <div className="flex items-center justify-center text-center bg-charcoalGray p-6 rounded-md">
-                <p className="text-cloudGray md:text-lg leading-7">
+            <div className="flex items-center justify-center text-center bg-charcoalGray p-4 rounded-md md:p-6">
+                <p className="text-cloudGray leading-7 md:text-lg">
                     My mission is to craft intuitive, efficient, and user-focused digital solutions. Through a blend of innovative thinking
                     and technical expertise, I strive to create software that solves real-world problems, empowers users, and brings ideas
                     to life with precision and creativity.

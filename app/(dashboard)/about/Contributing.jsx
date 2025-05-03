@@ -14,7 +14,7 @@ const Contributing = () => {
                     </Heading>
                     <p className="leading-7 text-charcoalGrayLight">
                         Beginning my open-source journey with HTML projects, I’m eager to expand my web development skills. Through active contributions and collaboration on various projects, I continue to learn and grow within the community.
-                        Check out my <a className="text-base text-cloudGray hover:underline" href="https://github.com/azro1" target="_blank" rel="noopener noreferrer">github</a> repository.
+                        Check out my <a className="text-base text-cloudGray hover:underline font-light" href="https://github.com/azro1" target="_blank" rel="noopener noreferrer">github</a> repository.
                     </p>
                 </div>
 

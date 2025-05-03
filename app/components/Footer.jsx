@@ -14,7 +14,7 @@ const Footer = () => {
 
         <div className="p-10 mx-auto max-w-screen-lg md:p-0 flex-1">
           <main>
-              <div className="flex flex-col items-center justify-start gap-2 mt-4 mb-20 md:py-4 md:flex-row md:items-start md:justify-between md:m-0">
+              <div className="flex flex-col items-center justify-start gap-2 mt-4 mb-20 md:p-4 md:flex-row md:items-start md:justify-between md:m-0 lg:px-0">
 
                 <div className="flex flex-col gap-2 md:gap-2">
                   <div className="flex flex-col items-center gap-1 md:flex-row md:gap-3">
