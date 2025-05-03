@@ -174,7 +174,7 @@ const ForgotEmail = () => {
                             Recover Email
                         </Heading>
 
-                        <label className='max-w-min mb-2 text-base text-ashGray block' htmlFor='phone'>Phone</label>
+                        <label className='max-w-min mb-2 text-base font-light text-ashGray block' htmlFor='phone'>Phone</label>
                         <input
                             className={`w-full sm:max-w-xs py-2.5 px-4 rounded-md text-nightSky border-[1px] ${errors.phone ? 'border-red-500' : 'border-gray-300'}`}
                             id='phone'
@@ -205,9 +205,7 @@ const ForgotEmail = () => {
 
             <div>
                 <Link href='/login'>
-                    <button className='text-nightSky '>
-                        Back to Login
-                    </button>
+                    <span className='font-r text-nightSky'>Login</span> 
                 </Link>
             </div>
 

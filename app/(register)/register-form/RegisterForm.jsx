@@ -164,6 +164,7 @@ const customStyles = {
         color: '#6B6B6B',
         opacity: '80%',
         fontSize: '15px',
+        fontWeight: '300'
     }),
 };
 
@@ -589,7 +590,7 @@ const RegisterForm = () => {
                                     placeholder='First Name'
                                     minLength='3'
                                     {...register('firstname')}
-                                    className={`w-full py-2.5 px-4 text-nightSky rounded-md border-[1px] font-light placeholder:text-[15px] ${errors.firstname ? 'border-red-600' : 'border-gray-300 md:border-gray-200'}`}
+                                    className={`w-full py-2.5 px-4 text-nightSky rounded-md border-[1px] ${errors.firstname ? 'border-red-600' : 'border-gray-300 md:border-gray-200'}`}
                                 />
                             </div>
                             {errors?.firstname && <p className='text-sm text-red-600 mt-1'>{errors.firstname.message}</p>}
@@ -605,7 +606,7 @@ const RegisterForm = () => {
                                     placeholder='Last Name'
                                     minLength='2'
                                     {...register('lastname')}
-                                    className={`w-full py-2.5 px-4 text-nightSky rounded-md border-[1px] font-light placeholder:text-[15px] ${errors.lastname ? 'border-red-600' : 'border-gray-300 md:border-gray-200'}`}
+                                    className={`w-full py-2.5 px-4 text-nightSky rounded-md border-[1px] ${errors.lastname ? 'border-red-600' : 'border-gray-300 md:border-gray-200'}`}
                                 />
                             </div>
                             {errors?.lastname && <p className='text-sm text-red-600 mt-1'>{errors.lastname.message}</p>}
@@ -624,11 +625,11 @@ const RegisterForm = () => {
                                         min={field.min}
                                         maxLength={field.maxlength}
                                         placeholder={field.placeholder}
-                                        className={`w-full h-[43px] text-center  rounded-md border-[1px] font-light placeholder:text-[15px] ${!hasInteracted && formState.isSubmitted && (!dob.day && !dob.month?.value && !dob.year) ? 'border-red-600' : 'border-gray-300 md:border-gray-200'}`}
+                                        className={`w-full h-[43px] text-center rounded-md border-[1px] ${!hasInteracted && formState.isSubmitted && (!dob.day && !dob.month?.value && !dob.year) ? 'border-red-600' : 'border-gray-300 md:border-gray-200'}`}
                                         {...register(`dob.${field.name}`)}
                                         />
                                     ) : (
-                                        <div className={`w-max min-w-[110px] h-[42px] text-center rounded-md border-[1px] font-light ${!hasInteracted && formState.isSubmitted && (!dob.day && !dob.month?.value && !dob.year) ? 'border-red-600' : 'border-gray-300 md:border-gray-200'} flex-1 flex items-center justify-center`}>
+                                        <div className={`w-max min-w-[110px] h-[42px] text-center rounded-md border-[1px]  ${!hasInteracted && formState.isSubmitted && (!dob.day && !dob.month?.value && !dob.year) ? 'border-red-600' : 'border-gray-300 md:border-gray-200'} flex-1 flex items-center justify-center`}>
                                         {isClient && (
                                             <Controller
                                             name="dob.month"
@@ -671,7 +672,7 @@ const RegisterForm = () => {
                                     spellCheck={false}
                                     placeholder="Phone Number"
                                     {...register('phone')}
-                                    className={`w-full py-2.5 px-4 text-nightSky rounded-md border-[1px] font-light placeholder:text-[15px] ${(errors.phone || phoneExists) ? 'border-red-600' : 'border-gray-300 md:border-gray-200'}`}
+                                    className={`w-full py-2.5 px-4 text-nightSky rounded-md border-[1px] ${(errors.phone || phoneExists) ? 'border-red-600' : 'border-gray-300 md:border-gray-200'}`}
                                     onKeyDown={handleKeyDown}
                                 />
                             </div>
@@ -701,7 +702,7 @@ const RegisterForm = () => {
 
                 <div className='mt-2'>
                     <Link href='/upload-avatar' onClick={(e) => handleBackButton(e)}>
-                        <button className='font-light hover:underline'>
+                        <button className='text-nightSky'>
                             Back
                         </button>
                     </Link>
