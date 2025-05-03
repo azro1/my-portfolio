@@ -187,15 +187,15 @@ const UploadAvatar = () => {
               />
             </div>
 
-          </div>
 
-          <Link className='w-full mt-2' href='/register-form'>
-            <div className='flex'>
-              <button className='font-light ml-auto hover:underline'>
-                Skip
-              </button>
-            </div>
-          </Link>
+            <Link className='w-full mt-2 md:mt-0' href='/register-form'>
+              <div className='flex'>
+                <button className='text-nightSky ml-auto'>
+                  Skip
+                </button>
+              </div>
+            </Link>
+          </div>
 
         </div>
       );

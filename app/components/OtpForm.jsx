@@ -28,16 +28,22 @@ const OtpForm = ({
 
 const maskedPhone = phone ? `********${phone.slice(-4)}` : '';
 
+function maskEmail(email) {
+    const [local, domain] = email.split('@');
+    if (local.length <= 2) return `${local[0]}***@${domain}`;
+    return `${local[0]}***${local[local.length - 1]}@${domain}`;
+}
+
   return (
     <div className={containerStyles}> 
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
 
-            <Heading className='text-3xl leading-tight mb-4 font-b text-nightSky'>
+            <Heading className='leading-tight mb-4 font-b text-nightSky text-[26px] md:text-[28px]'>
                 {title}
             </Heading>
 
             {email && (
-                <p className='max-w-xs mb-4'>We’ve sent a code to <span className='text-black'>{email}</span> please enter it below to verify your account</p>
+                <p className='max-w-xs mb-4 font-light'>We’ve sent a code to <span className='font-r text-nightSky'>{maskEmail(email)}</span> please enter it below to verify your account</p>
             )}
 
             {phone && (

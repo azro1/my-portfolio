@@ -98,7 +98,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 /* input placeholder */
 input::placeholder, textarea::placeholder{
-  @apply opacity-80 text-ashGray;
+  @apply opacity-80 text-ashGray text-[15px] font-light;
 }
 
 
