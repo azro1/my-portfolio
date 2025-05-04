@@ -22,7 +22,7 @@ import Modal from './Modal'
 const schema = yup.object({
     draftLastName: yup
         .string()
-        .required('Lastname is required')
+        .required('Last name is required')
         .transform(value => {
             if (value) {
                 // Transform to lowercase but keep the first letter uppercase
@@ -30,8 +30,8 @@ const schema = yup.object({
             }
             return value; // Return the value if empty
         })
-        .matches(/^[A-Z][a-z]*$/, "Lastname should not contain any digits or spaces")
-        .min(3, 'Lastname must be at least 3 characters long'),
+        .matches(/^[A-Z][a-z]*$/, "Last name should not contain any digits or spaces")
+        .min(3, 'Last name must be at least 3 characters long'),
 });
 
 
@@ -101,11 +101,11 @@ const LastNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
         } else if (hasInteracted) {
             // Show success message if names are different
             if (draftLastName !== lastName) {
-                setFormSuccess('Your lastname looks good');
+                setFormSuccess('Your last name looks good!');
                 setFormError(null);
             } else {
                 setFormSuccess(null); // Reset success message if names are the same
-                setFormError('Lastname cannot be the same');
+                setFormError('Last name cannot be the same');
             }
         }
     
@@ -165,7 +165,7 @@ const LastNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
             setSaving(false)
             setShowForm(false)
             reset({ draftLastName: '' });
-            changeMessage('success', 'Lastname updated!')
+            changeMessage('success', 'Last name updated!')
 
             // Refresh profile data after update
             fetchProfile(user);
@@ -182,6 +182,7 @@ const LastNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
     // handleOpenForm function
     const handleOpenForm = () => {
         setFormSuccess(null)
+        setFormError(null)
         setShowForm(true)
     }
 
@@ -206,7 +207,7 @@ const LastNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
     return (
         <div>
             <div className='py-4'>
-                <div className="flex items-center justify-between pb-2">
+                <div className="flex items-center justify-between text-[15px] pb-1">
                     <span className="inline-block text-ashGray">Last Name</span>
                     <span className='text-ashGray cursor-pointer' onClick={handleOpenForm}>Edit</span>
                 </div>
@@ -220,9 +221,9 @@ const LastNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
                             <span >
                                 
                             </span>
-                            <p className='mb-3'>Please enter your last name as you&apos;d like it to appear in your profile</p>
+                            <p className='mb-3 font-light'>Please enter your last name as you&apos;d like it to appear in your profile</p>
                             <input
-                                className='w-full p-2.5 rounded-md border-2'
+                                className='w-full p-2.5 rounded-md border-[1px] border-cloudGray'
                                 id='draftLastName'
                                 type='text'
                                 placeholder='Last Name'

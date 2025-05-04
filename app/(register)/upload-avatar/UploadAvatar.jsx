@@ -163,20 +163,15 @@ const UploadAvatar = () => {
     return (
         <div className='flex-1 flex flex-col justify-center w-full max-w-xs sm:max-w-sm md:max-w-md'>
 
-          <div className='flex flex-col justify-center md:gap-2 md:bg-white md:shadow-outer md:p-10 md:rounded-xl relative'>
+          <div className='flex flex-col justify-center gap-2 md:bg-white md:shadow-outer md:p-10 md:rounded-xl relative'>
 
-            <Heading className='text-2xl font-b text-nightSky mb-3 md:mb-2'>
-              Create your Profile
+            <Heading className='text-2xl font-b text-nightSky'>
+              Upload your avatar
             </Heading>
 
-            <div className='flex flex-col gap-2 mb-2'>
-              <h3 className='text-ashGray font-light text-lg'>
-                Upload your avatar
-              </h3>
-              <p className='font-light'>
-                Choose an image to personalize your profile or skip this step to continue. This helps others recognize you but is entirely optional.
-              </p>
-            </div>
+            <p className='font-light'>
+              Choose an image to personalize your profile or skip this step to continue. This helps others recognize you but is entirely optional.
+            </p>
       
             <div>
               <AvatarUploader
@@ -186,7 +181,6 @@ const UploadAvatar = () => {
                 show3DAvatar={true}
               />
             </div>
-
 
             <Link className='w-full mt-2 md:mt-0' href='/register-form'>
               <div className='flex'>

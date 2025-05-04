@@ -186,7 +186,7 @@ const ForgotEmail = () => {
                         />
 
                         {errors.phone && (
-                            <p className="text-red-500 mt-1 text-sm">{errors.phone.message}</p>
+                            <p className="form-error mt-1">{errors.phone.message}</p>
                         )}
 
                         <div className='mt-4'>

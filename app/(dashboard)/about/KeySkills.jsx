@@ -54,7 +54,7 @@ const KeySkills = () => {
               </Heading>
 
               {/* Mobile: flex wrap center. Large: flex row, full width, relative */}
-              <ul className="flex flex-wrap justify-center gap-6 mb-6 lg:flex-nowrap lg:flex-row lg:justify-between lg:w-full lg:relative lg:mb-0">
+              <ul className="flex flex-wrap justify-center gap-6 max-w-xs mx-auto mb-6 lg:max-w-none lg:flex-nowrap lg:flex-row lg:justify-between lg:w-full lg:relative lg:mb-0">
                 {keySkills.map((skill, index) => (
                   <motion.li
                     key={index}

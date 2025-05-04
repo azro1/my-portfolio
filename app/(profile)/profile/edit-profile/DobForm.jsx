@@ -111,7 +111,7 @@ const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
         } else if (hasInteracted) {
             // Show success message if names are different
             if (draftDob !== reformattedDob) {
-                setFormSuccess('Your date of birth looks good');
+                setFormSuccess('Your date of birth looks good!');
                 setFormError(null);
             } else {
                 setFormSuccess(null); // Reset success message if names are the same
@@ -173,6 +173,7 @@ const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
     // handleOpenForm function
     const handleOpenForm = () => {
         setFormSuccess(null)
+        setFormError(null)
         setShowForm(true)
     }
 
@@ -196,7 +197,7 @@ const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
     return (
         <div>
             <div className='py-4'>
-                <div className="flex items-center justify-between pb-2">
+                <div className="flex items-center justify-between text-[15px] pb-1">
                     <span className="inline-block text-ashGray">Dob</span>
                     <span className='text-ashGray cursor-pointer' onClick={handleOpenForm}>
                         Edit
@@ -209,9 +210,9 @@ const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
                 <Modal >
                     <form noValidate>
                         <label className="block mb-3 text-xl font-medium" htmlFor='draftDob'>Edit Dob</label>
-                        <p className='mb-3'>Please enter a valid date of birth to keep your account accurate and up-to-date</p>
+                        <p className='mb-3 font-light'>Please enter a valid date of birth to keep your account accurate and up-to-date</p>
                         <input
-                            className='w-full p-1.5 rounded-md border-2'
+                            className='w-full p-1.5 rounded-md border-[1px] border-cloudGray'
                             id='draftDob'
                             type='date'
                             spellCheck={false}

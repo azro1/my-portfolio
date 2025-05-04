@@ -22,9 +22,9 @@ import Modal from "./Modal";
 const schema = yup.object({
     draftBio: yup
       .string()
-      .required('Please add your new bio.')
+      .required('Please add your new bio')
       .transform(value => value.trim())
-      .test('has-no-digits', "Your bio should not include any digits.", value => {
+      .test('has-no-digits', "Your bio should not include any digits", value => {
         return !value || !/\d/.test(value); // Block digits
       })
   });
@@ -97,11 +97,11 @@ const BioForm = ({ user, profile, fetchProfile, changeMessage }) => {
         } else if (hasInteracted) {
             // Show success message if names are different
             if (draftBio !== bio) {
-                setFormSuccess('Your bio looks good.');
+                setFormSuccess('Your bio looks good!');
                 setFormError(null);
             } else {
                 setFormSuccess(null); // Reset success message if names are the same
-                setFormError('Bio cannot be the same.');
+                setFormError('Bio cannot be the same');
             }
         }
 
@@ -175,6 +175,7 @@ const BioForm = ({ user, profile, fetchProfile, changeMessage }) => {
     // handleOpenForm function
     const handleOpenForm = () => {
         setFormSuccess(null)
+        setFormError(null)
         setShowForm(true)
     }
 
@@ -201,9 +202,9 @@ const BioForm = ({ user, profile, fetchProfile, changeMessage }) => {
     return (
         <div >
          <div className='pb-4 w-full'>
-            <div className="flex items-center justify-between pb-2">
-                <span className="inline-block text-base text-ashGray">Bio</span>
-                <span className='text-ashGray text-base cursor-pointer' onClick={handleOpenForm}>Edit</span> 
+            <div className="flex items-center justify-between text-[15px] pb-1">
+                <span className="inline-block text-ashGray">Bio</span>
+                <span className='text-ashGray cursor-pointer' onClick={handleOpenForm}>Edit</span> 
             </div>
             <div className="w-full break-words">
                 <p className='text-cloudGray frost min-h-[24px]'>{bio}</p>
@@ -215,9 +216,9 @@ const BioForm = ({ user, profile, fetchProfile, changeMessage }) => {
                 <Modal >
                     <form noValidate>
                         <label className="block mb-2 text-xl" htmlFor="draftBio">Edit Bio</label>
-                        <p className='mb-3'>Please enter your updated bio. Keep it brief and relevant, as this will be displayed on your profile dashboard.</p>
+                        <p className='mb-3 font-light'>Please enter your updated bio. Keep it brief and relevant, as this will be displayed on your profile dashboard.</p>
                         <input
-                            className='w-full p-2.5 rounded-md border-2'
+                            className='w-full p-2.5 rounded-md border-[1px] border-cloudGray'
                             id='draftBio'
                             type='text'
                             placeholder='Bio'

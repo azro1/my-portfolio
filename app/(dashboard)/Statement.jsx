@@ -5,11 +5,9 @@ const Statement = () => {
     return (
         <div className="flex flex-col items-center justify-center ">
 
-            <div className="w-max mx-auto mb-6">
-                <Heading className="text-2xl md:text-4xl font-b text-ashGray">
-                    My Mission
-                </Heading>
-            </div>
+            <Heading className="text-2xl md:text-4xl font-b text-ashGray mb-4 md:mb-6">
+                My Mission
+            </Heading>
 
             <div className="flex items-center justify-center text-center bg-charcoalGray p-4 rounded-md md:p-6">
                 <p className="hidden lg:block text-lg text-cloudGray leading-7">
