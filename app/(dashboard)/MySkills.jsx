@@ -18,7 +18,7 @@ import Heading from "../components/Heading";
 const MySkills = () => {
   return (
     <section>
-      <div className="flex flex-col items-center gap-6 md:flex-row md:gap-10">
+      <div className="flex flex-col-reverse items-center gap-6 md:flex-row md:gap-10">
         
         {/* Icons Section */}
         <div className="flex-1 flex justify-center md:justify-end"> {/* Centered icons on mobile */}

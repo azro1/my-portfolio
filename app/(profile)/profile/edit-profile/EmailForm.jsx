@@ -107,7 +107,7 @@ const EmailForm = ({ user, profile }) => {
         } else if (hasInteracted && isValid) {
             // Show success message if names are different
             if (draftEmail !== email) {
-                setFormSuccess('Your email looks good');
+                setFormSuccess('Your email looks good!');
                 setFormError(null);
             } else {
                 setFormSuccess(null); // Reset success message if names are the same
@@ -186,6 +186,7 @@ const EmailForm = ({ user, profile }) => {
     // handleOpenForm function
     const handleOpenForm = () => {
         setFormSuccess(null);
+        setFormError(null);
         setShowForm(true)
     }
 
@@ -208,7 +209,7 @@ const EmailForm = ({ user, profile }) => {
         <div>
 
             <div className='py-4'>
-                <div className="flex items-center justify-between pb-2">
+                <div className="flex items-center justify-between text-[15px] pb-1">
                     <span className="inline-block text-ashGray">Email</span>
                     <span className="text-ashGray cursor-pointer" onClick={handleOpenForm}>Edit</span>
                 </div>
@@ -219,9 +220,9 @@ const EmailForm = ({ user, profile }) => {
                 <Modal>
                     <form noValidate>
                         <label className='block mb-3 text-xl font-medium' htmlFor='draftEmail'>Email Address</label>
-                        <p className='mb-3'>Please enter your new email address. This email will be used for account verification and notifications</p>
+                        <p className='mb-3 font-light'>Please enter your new email address. This email will be used for account verification and notifications</p>
                         <input
-                            className='w-full p-2.5 rounded-md border-2'
+                            className='w-full p-2.5 rounded-md border-[1px] border-cloudGray'
                             id='draftEmail'
                             type='email'
                             placeholder='Email'

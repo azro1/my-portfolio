@@ -120,7 +120,7 @@ const EditProfileForms = () => {
             </div>
 
             <div className='pt-16'>
-              <Heading className='text-cloudGray font-medium text-1.375 md:text-2xl'>
+              <Heading className='text-cloudGray font-semibold text-1.375 md:text-2xl'>
                   Basic Information
               </Heading>
               <p className='mt-3 leading-normal text-charcoalGrayLight'>Update your personal information</p>

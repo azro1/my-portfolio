@@ -1,21 +1,16 @@
 "use client"
 
 import { MessageContext } from "../context/MessageContext"
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import { FaExclamationCircle, FaCheckCircle, FaInfoCircle } from "react-icons/fa"
 
 import { motion, AnimatePresence } from "framer-motion"
 
 const MessageBanner = () => {
-    const [iconSizes, setIconSizes] = useState([
-        { className: 'sm:hidden', size: 30 },
-        { className: 'hidden sm:block', size: 24 }
-    ])
-
     const { message } = useContext(MessageContext);
 
     return (
-      <div className='fixed top-0 w-full z-50 px-4'>
+      <div className='fixed top-[82px] w-full z-50 px-4'>
           <AnimatePresence>
               {message.type === 'error' && 
               <motion.div
@@ -23,16 +18,13 @@ const MessageBanner = () => {
                   animate={{ y: 20, opacity: 1 }}
                   exit={{ y: -45, opacity: 0 }}
                   transition={{ delay: 0.2, duration: 0.3, type: 'tween' }}
-                  className='error flex items-center justify-center gap-2 max-w-max mx-auto'
+                  className='error flex items-start justify-center gap-2 mx-auto max-w-xs md:max-w-sm'
               >    
-                  {iconSizes.map((obj, index) => (
-                      <div className={`${obj.className} place-self-start bg-white rounded-full`} key={index}>
-                          <FaExclamationCircle className='text-red-600' size={obj.size} />
-                      </div>
-                  ))}
-                  <span className="text-left">{message.value}</span>
+                  <div className="hidden md:block bg-white rounded-full">
+                      <FaExclamationCircle className="text-red-600" size={30} />
+                  </div>
+                  <span className="text-center md:text-left">{message.value}</span>
               </motion.div>}
-
 
               {message.type === 'success' && 
                   <motion.div
@@ -40,15 +32,12 @@ const MessageBanner = () => {
                       animate={{ y: 20, opacity: 1 }}
                       exit={{ y: -45, opacity: 0 }}
                       transition={{ delay: 0.2, duration: 0.3, type: 'tween' }}
-                      className='success flex items-center justify-center gap-2 max-w-max mx-auto'
+                      className='success flex items-start justify-center gap-2 mx-auto max-w-xs md:max-w-sm'
                   >
-                      {iconSizes.map((obj, index) => (
-                          <div className={`${obj.className} place-self-start bg-white rounded-full`} key={index}>
-                              <FaCheckCircle className='text-green-600' size={obj.size} />
-                          </div>
-                      ))}
-                      <span className="text-left">{message.value}</span>
-
+                      <div className="hidden md:block bg-white rounded-full">
+                          <FaCheckCircle className='text-green-600' size={30} />
+                      </div>
+                      <span className="text-center md:text-left">{message.value}</span>
                   </motion.div>}
 
               {message.type === 'info' && 
@@ -57,14 +46,12 @@ const MessageBanner = () => {
                       animate={{ y: 20, opacity: 1 }}
                       exit={{ y: -45, opacity: 0 }}
                       transition={{ delay: 0.2, duration: 0.3, type: 'tween' }} 
-                      className='info flex items-center justify-center gap-2 max-w-max mx-auto'
+                      className='info flex items-start justify-center gap-2 mx-auto max-w-xs md:max-w-sm'
                   >
-                      {iconSizes.map((obj, index) => (
-                          <div className={`${obj.className} place-self-start bg-white rounded-full`} key={index}>
-                              <FaInfoCircle className='text-blue-600' size={obj.size} />
-                          </div>
-                      ))}
-                      <span>{message.value}</span>
+                      <div className="hidden md:block bg-white rounded-full">
+                          <FaInfoCircle className='text-blue-600' size={30} />
+                      </div>
+                      <span className="text-center md:text-left">{message.value}</span>
                   </motion.div>}
           </AnimatePresence>
       </div>

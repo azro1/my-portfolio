@@ -21,7 +21,7 @@ import Modal from './Modal'
 const schema = yup.object({
     draftFirstName: yup
         .string()
-        .required('Firstname is required')
+        .required('First name is required')
         .transform(value => {
             if (value) {
                 // Transform to lowercase but keep the first letter uppercase
@@ -29,8 +29,8 @@ const schema = yup.object({
             }
             return value; // Return the value if empty
         })
-        .matches(/^[A-Z][a-z]*$/, "Firstname should not contain any digits or spaces")
-        .min(3, 'Firstname must be at least 3 characters long'),
+        .matches(/^[A-Z][a-z]*$/, "First name should not contain any digits or spaces")
+        .min(3, 'First name must be at least 3 characters long'),
 });
 
 
@@ -98,11 +98,11 @@ const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
         } else if (hasInteracted) {
             // Show success message if names are different
             if (draftFirstName !== firstName) {
-                setFormSuccess('Your firstname looks good');
+                setFormSuccess('Your first name looks good!');
                 setFormError(null);
             } else {
                 setFormSuccess(null); // Reset success message if names are the same
-                setFormError('Firstname cannot be the same');
+                setFormError('First name cannot be the same');
             }
         }
     
@@ -173,7 +173,7 @@ const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
                 setSaving(false)
                 setShowForm(false)
                 reset({ draftFirstName: '' });
-                changeMessage('success', 'Firstname updated!')
+                changeMessage('success', 'First name updated!')
 
                 // Refresh profile data after update
                 fetchProfile(user);
@@ -215,7 +215,7 @@ const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
     return (
         <div>
             <div className='py-4'>
-                <div className="flex items-center justify-between pb-2">
+                <div className="flex items-center justify-between text-[15px] pb-1">
                     <span className="inline-block text-ashGray">First Name</span>
                     <span className="text-ashGray cursor-pointer" onClick={handleOpenForm}>Edit</span>
                 </div>
@@ -226,9 +226,9 @@ const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
                 <Modal>
                     <form noValidate>
                         <label className='block mb-3 text-xl font-medium' htmlFor='draftFirstName'>Edit First Name</label>
-                        <p className='mb-3'>Please enter your first name as you&apos;d like it to appear in your profile</p>
+                        <p className='mb-3 font-light'>Please enter your first name as you&apos;d like it to appear in your profile</p>
                         <input
-                            className='w-full p-2.5 rounded-md border-2'
+                            className='w-full p-2.5 rounded-md border-[1px] border-cloudGray'
                             id='draftFirstName'
                             type='text'
                             placeholder='First Name'

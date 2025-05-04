@@ -7,7 +7,7 @@ import Heading from "../components/Heading";
 
 const AuthForm = ({ handleSubmit, onSubmit, title, register, errors, isChecked, handleCheckbox, isSignup, isLoading }) => {
   return (
-    <div className='main-container min-h-[768px] flex flex-col justify-center items-center gap-5 pt-20 md:gap-10 w-full text-center md:pt-0 md:flex-row'>
+    <div className='main-container min-h-[768px] flex flex-col justify-center items-center gap-5 pt-20 md:min-h-0 md:gap-10 w-full text-center md:pt-0 md:flex-row'>
 
       <div className='w-full max-w-xs md:max-w-sm md:bg-white md:shadow-outer md:p-10 md:rounded-xl'>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -26,7 +26,7 @@ const AuthForm = ({ handleSubmit, onSubmit, title, register, errors, isChecked, 
             spellCheck={false}
           />
           
-          {errors.email && (<p className="text-left text-red-600 mt-1 text-sm"> {errors.email.message}</p>)}
+          {errors.email && (<p className="form-error mt-1 text-left"> {errors.email.message}</p>)}
 
 
           {isSignup && (

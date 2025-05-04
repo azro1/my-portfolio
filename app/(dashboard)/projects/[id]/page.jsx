@@ -63,7 +63,7 @@ const Project = async ({ params }) => {
     <div className="flex flex-col">
           <div className="main-container">
             <main>
-              <div className="flex flex-col items-center py-40 md:py-0 md:h-screen md:min-h-[1154px]">
+              <div className="flex flex-col items-center pt-40 pb-20 md:p-0 md:h-screen md:min-h-[1154px]">
                 <div className="w-full flex-grow flex items-center justify-center">
 
                   <div className='flex flex-col justify-center h-full'>

@@ -149,7 +149,8 @@ const customStyles = {
     control: (base) => ({
         ...base,
         border: 'none',
-        boxShadow: 'none'
+        boxShadow: 'none',
+        height: '44px'
     }),
     menu: (base) => ({
         ...base,
@@ -568,16 +569,15 @@ const RegisterForm = () => {
   return (
         <div className='flex flex-col justify-start pt-32 md:justify-center md:pt-0 min-h-[668px] md:min-h-[824px]'>
 
-            <div className='flex flex-col w-full max-w-xs sm:max-w-sm md:bg-white md:shadow-outer md:p-12 md:rounded-xl md:max-w-md'>
+            <div className='flex flex-col gap-4 w-full max-w-xs sm:max-w-sm md:bg-white md:shadow-outer md:p-12 md:rounded-xl md:max-w-md'>
 
-                <div className='mb-3 md:mb-5 md:text-center'>
+                <div className='md:text-center'>
                     <Heading className='text-2xl font-b text-nightSky'>
-                        Create your Profile
+                        Enter your personal details
                     </Heading>
                 </div>
 
                 <div>
-                    <h3 className=' text-ashGray font-light mb-2 md:text-lg'>Enter your personal details</h3>
                     <form className='flex flex-col gap-5' noValidate>
                         <div>
                             <div className='relative '>
@@ -590,10 +590,10 @@ const RegisterForm = () => {
                                     placeholder='First Name'
                                     minLength='3'
                                     {...register('firstname')}
-                                    className={`w-full py-2.5 px-4 text-nightSky rounded-md border-[1px] ${errors.firstname ? 'border-red-600' : 'border-gray-300 md:border-gray-200'}`}
+                                    className={`w-full py-2.5 px-3 text-nightSky rounded-md border-[1px] ${errors.firstname ? 'border-red-600' : 'border-cloudGray md:border-gray-300'}`}
                                 />
                             </div>
-                            {errors?.firstname && <p className='text-sm text-red-600 mt-1'>{errors.firstname.message}</p>}
+                            {errors?.firstname && <p className='form-error mt-1'>{errors.firstname.message}</p>}
                         </div>
 
 
@@ -606,10 +606,10 @@ const RegisterForm = () => {
                                     placeholder='Last Name'
                                     minLength='2'
                                     {...register('lastname')}
-                                    className={`w-full py-2.5 px-4 text-nightSky rounded-md border-[1px] ${errors.lastname ? 'border-red-600' : 'border-gray-300 md:border-gray-200'}`}
+                                    className={`w-full py-2.5 px-3 text-nightSky rounded-md border-[1px] ${errors.lastname ? 'border-red-600' : 'border-cloudGray md:border-gray-300'}`}
                                 />
                             </div>
-                            {errors?.lastname && <p className='text-sm text-red-600 mt-1'>{errors.lastname.message}</p>}
+                            {errors?.lastname && <p className='form-error mt-1'>{errors.lastname.message}</p>}
                         </div>
 
                         <div>
@@ -625,11 +625,11 @@ const RegisterForm = () => {
                                         min={field.min}
                                         maxLength={field.maxlength}
                                         placeholder={field.placeholder}
-                                        className={`w-full h-[43px] text-center rounded-md border-[1px] ${!hasInteracted && formState.isSubmitted && (!dob.day && !dob.month?.value && !dob.year) ? 'border-red-600' : 'border-gray-300 md:border-gray-200'}`}
+                                        className={`w-full py-2.5 px-3 text-center rounded-md border-[1px] ${!hasInteracted && formState.isSubmitted && (!dob.day && !dob.month?.value && !dob.year) ? 'border-red-600' : 'border-cloudGray md:border-gray-300'}`}
                                         {...register(`dob.${field.name}`)}
                                         />
                                     ) : (
-                                        <div className={`w-max min-w-[110px] h-[42px] text-center rounded-md border-[1px]  ${!hasInteracted && formState.isSubmitted && (!dob.day && !dob.month?.value && !dob.year) ? 'border-red-600' : 'border-gray-300 md:border-gray-200'} flex-1 flex items-center justify-center`}>
+                                        <div className={`w-max min-w-[110px] text-center rounded-md border-[1px]  ${!hasInteracted && formState.isSubmitted && (!dob.day && !dob.month?.value && !dob.year) ? 'border-red-600' : 'border-cloudGray md:border-gray-300'} flex-1 flex items-center justify-center`}>
                                         {isClient && (
                                             <Controller
                                             name="dob.month"
@@ -654,10 +654,10 @@ const RegisterForm = () => {
                                 ))}
                             </div>
                             {!hasInteracted && formState.isSubmitted && (!dob.day && !dob.month?.value && !dob.year) ? (
-                                <p className="text-sm text-red-600 mt-1">Date of birth is required</p>
+                                <p className="form-error mt-1">Date of birth is required</p>
                             ) : (
                                 (errors.dob?.day || errors.dob?.month?.value || errors.dob?.year) && (
-                                    <p className="text-sm text-red-600 mt-1">
+                                    <p className="form-error mt-1">
                                         {errors.dob?.day?.message || errors.dob?.month?.value?.message || errors.dob?.year?.message}
                                     </p>
                                 )
@@ -672,11 +672,11 @@ const RegisterForm = () => {
                                     spellCheck={false}
                                     placeholder="Phone Number"
                                     {...register('phone')}
-                                    className={`w-full py-2.5 px-4 text-nightSky rounded-md border-[1px] ${(errors.phone || phoneExists) ? 'border-red-600' : 'border-gray-300 md:border-gray-200'}`}
+                                    className={`w-full py-2.5 px-3 text-nightSky rounded-md border-[1px] ${(errors.phone || phoneExists) ? 'border-red-600' : 'border-cloudGray md:border-gray-300'}`}
                                     onKeyDown={handleKeyDown}
                                 />
                             </div>
-                            {errors.phone ? <p className="text-sm text-red-600 mt-1">{errors.phone.message}</p> : phoneExists ? <p className="text-sm text-red-600 mt-1">Phone already exists</p> : null}
+                            {errors.phone ? <p className="form-error mt-1">{errors.phone.message}</p> : phoneExists ? <p className="form-error mt-1">Phone already exists</p> : null}
                         </div>
 
                         <button className={`p-3 px-3.5 rounded-lg cursor-pointer text-white font-b block w-full transition duration-500 bg-green-700 ${(isLoading || phoneExists) ? 'opacity-65' : 'opacity-100'}`} disabled={isLoading || phoneExists} aria-live={Object.keys(errors).length > 0 || isLoading ? 'assertive' : 'off'} onClick={handleSubmit(handleUpdateProfile)}>
@@ -696,18 +696,20 @@ const RegisterForm = () => {
                         </button>
 
                     </form>
-                </div>
-
-
-
-                <div className='mt-2'>
-                    <Link href='/upload-avatar' onClick={(e) => handleBackButton(e)}>
-                        <button className='text-nightSky'>
-                            Back
-                        </button>
-                    </Link>
+    
+                    <div className='mt-2'>
+                        <Link href='/upload-avatar' onClick={(e) => handleBackButton(e)}>
+                            <button className='text-nightSky'>
+                                Back
+                            </button>
+                        </Link>
+                    </div>
                 </div>
             </div>
+
+
+
+
 
 
         </div>

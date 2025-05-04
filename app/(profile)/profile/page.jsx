@@ -19,7 +19,7 @@ const Profile = async () => {
 
         {user && (
           <div className="pt-16">
-            <Heading className='text-cloudGray font-medium text-1.375 md:text-2xl'>
+            <Heading className='text-cloudGray font-semibold text-1.375 md:text-2xl'>
               Activity Feed
             </Heading>
             <p className='mt-3 leading-normal text-charcoalGrayLight'>Your recent activity on the website, including any projects you have viewed, your favourite projects and your chat history.</p>

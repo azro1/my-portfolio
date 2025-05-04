@@ -73,10 +73,10 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
 
    return (
       <div>
-         <Heading className='text-1.375 md:text-2xl font-medium text-cloudGray'>
+         <Heading className='text-1.375 md:text-2xl font-semibold text-cloudGray'>
             {title}
          </Heading>
-         <p className='mt-4 leading-normal text-charcoalGrayLight'>{subheading}</p>
+         <p className='mt-3 leading-normal text-charcoalGrayLight'>{subheading}</p>
 
          {showAvatar && (
             <div className='mt-6 min-h-[480px] bg-nightSky'>
@@ -131,10 +131,10 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
                   {!loading && (
                      <div className='pl-2 min-w-0'>
                         <Heading className='text-cloudGray text-2xl md:text-3xl '>
-                            Welcome, <span className='font-b text-goldenOchre'>{first_name}</span>
+                            Welcome, <span className='text-goldenOchre'>{first_name}</span>
                         </Heading>
                         <p className='whitespace-normal break-words pt-1'>
-                           {bio ? <span className='text-cloudGray leading-normal'>{bio}</span> : <span className='text-ashGray '>Add a brief description about yourself here. You can update this in Edit Profile.</span>}
+                           {bio ? <span className='text-cloudGray leading-normal font-light'>{bio}</span> : <span className='text-ashGray '>Add a brief description about yourself here. You can update this in Edit Profile.</span>}
                         </p>
                      </div>
                   )}
