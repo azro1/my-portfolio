@@ -39,7 +39,7 @@ const ProjectList = () => {
 
   if (loading) {
     return (
-      <div className='min-h-[436px] flex items-center justify-center'> 
+      <div className='min-h-[382px] md:min-h-[450px] lg:min-h-[518px] flex items-center justify-center '> 
           <Image
             width={64}
             height={64}
@@ -54,7 +54,7 @@ const ProjectList = () => {
   return (
     <section>
       <div>
-        <Heading className="text-2xl md:text-3xl font-b text-cloudGray text-center mb-6 md:mb-8">
+        <Heading className="text-2xl md:text-3xl font-light text-cloudGray text-center mb-6 md:mb-8">
           My Projects
         </Heading>
         <Carousel showStatus={false} transitionTime={500} interval={5000} swipeable={false} showThumbs={false} selectedItem={selectedIndex} showArrows={false} autoPlay infiniteLoop>
@@ -63,41 +63,34 @@ const ProjectList = () => {
               <Link href={`/projects/${project.id}`}>
 
 
-                <div className='relative w-full h-[380px] lg:h-[450px]'>
+                <div className='relative w-full h-[326px] md:h-[380px] lg:h-[450px]'>
                   
-                  <Image className='hidden md:object-left-top md:object-contain'
-                    src={project.image_url}
-                    alt={project.list_alt_desc}
-                    fill
-                    sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 976px) 50vw, (max-width: 1440px) 33vw, 25vw"
-                    quality={100}
-                    priority
-                  />
-
-                  <div className='md:hidden'>
-                    <Image className=' object-cover object-left-top md:object-contain'
-                      src={project.mobile_placeholder}
-                      alt="mobile placeholder dark background"
+                  <div className='hidden md:block'>
+                    <Image className='object-left-top md:object-contain'
+                      src={project.image_url}
+                      alt={project.list_alt_desc}
                       fill
                       sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 976px) 50vw, (max-width: 1440px) 33vw, 25vw"
                       quality={100}
                       priority
                     />
                   </div>
+                  
+                  {/* bg placeholder for mobile image */}
+                  <div className='bg-nightSky w-[300px] h-[280px] absolute left-1/2 transform -translate-x-1/2 md:hidden'></div>
 
-                  <div className='absolute top-1/2 -translate-y-1/2 left-1/2 transform -translate-x-1/2 bg-softGray md:hidden '>
-                    <Image className='max-w-[150px] max-h-[150px]'
+                  <div className='absolute top-[92px] left-1/2 transform -translate-x-1/2 bg-softGray md:hidden '>
+                    <Image className='max-w-[100px] max-h-[100px]'
                       src={project.mobile_image_url}
                       alt="rocket icon"
-                      width={200}
-                      height={200}
+                      width={150}
+                      height={150}
                       quality={100}
                       priority
                     />
                   </div>
-                  <p className='text-stoneGray absolute bottom-[72px] left-1/2 transform -translate-x-1/2 md:hidden'>click to view project</p>
-                  <p className='text-stoneGray text-xl font-b absolute top-[70px] left-1/2 transform -translate-x-1/2 md:hidden'>{project.title}</p>
-
+                  <p className='text-stoneGray absolute bottom-[94px] left-1/2 transform -translate-x-1/2 md:hidden'>click to view project</p>
+                  <p className='text-stoneGray text-xl font-medium absolute top-[40px] left-1/2 transform -translate-x-1/2 md:hidden'>{project.title}</p>
 
                 </div>
 

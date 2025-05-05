@@ -76,7 +76,7 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
          <Heading className='text-1.375 md:text-2xl font-semibold text-cloudGray'>
             {title}
          </Heading>
-         <p className='mt-3 leading-normal text-charcoalGrayLight'>{subheading}</p>
+         <p className='leading-normal text-charcoalGrayLight mt-2 md:mt-3'>{subheading}</p>
 
          {showAvatar && (
             <div className='mt-6 min-h-[480px] bg-nightSky'>

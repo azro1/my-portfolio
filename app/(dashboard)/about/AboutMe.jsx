@@ -22,7 +22,7 @@ const AboutMe = () => {
 
                 {/* Text Section */}
                 <div className="pt-6 flex-1 flex flex-col justify-center text-center lg:h-max lg:text-left ">
-                    <Heading className="subheading font-b text-cloudGray mb-4 lg:mx-0">
+                    <Heading className="subheading font-light text-cloudGray mb-4 lg:mx-0">
                         About Me
                     </Heading>
                     <p className="leading-7 text-charcoalGrayLight">

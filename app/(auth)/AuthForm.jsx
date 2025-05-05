@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FiCheck } from "react-icons/fi";
 
 // components
 import Button from "../components/Button";
@@ -28,10 +29,15 @@ const AuthForm = ({ handleSubmit, onSubmit, title, register, errors, isChecked, 
           
           {errors.email && (<p className="form-error mt-1 text-left"> {errors.email.message}</p>)}
 
-
           {isSignup && (
-              <div className="mt-5 flex items-center text-left">
-                  <input className="self-start max-w-min transform scale-125" type="checkbox" value={isChecked} onChange={handleCheckbox} />
+              <div className="mt-5 flex items-start text-left">
+                  <label className="relative">
+                    <input className="max-w-min transform scale-125 opacity-0 peer" type="checkbox" value={isChecked} onChange={handleCheckbox} />
+                    <span className="absolute left-0 top-0 w-[15px] h-[15px] border-[1px] border-ashGray rounded cursor-pointer peer-checked:bg-blue-500">
+                       <FiCheck size={14} color="white" />
+                    </span>
+                  </label>
+
                   <span className="text-base block text-ashGray font-light ml-2.5 -mt-1.5">By signing up I agree to the{' '}<Link className="text-nightSky" href='#'>privacy policy</Link>{' '}and{' '}<Link className='text-nightSky' href='#'>terms of service</Link></span>
               </div>
           )}
