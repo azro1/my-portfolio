@@ -150,12 +150,12 @@ const customStyles = {
         ...base,
         border: 'none',
         boxShadow: 'none',
-        height: '44px'
+        height: '44px',
+        paddingLeft: '4px',
     }),
     menu: (base) => ({
         ...base,
-        border: 'none',
-        padding: '4px',
+        border: 'none'
     }),
     option: (base) => ({
         ...base,
@@ -255,18 +255,18 @@ const RegisterForm = () => {
 
 
     // send beacon to logout if the leave via the address bar
-    useEffect(() => {
-        const handleBeforeUnload = () => {
-            console.log('before unload ran......')
-            navigator.sendBeacon(`${location.origin}/api/auth/logout`, JSON.stringify({ hasLeftViaAddressBar: true }));
-        };
+    // useEffect(() => {
+    //     const handleBeforeUnload = () => {
+    //         console.log('before unload ran......')
+    //         navigator.sendBeacon(`${location.origin}/api/auth/logout`, JSON.stringify({ hasLeftViaAddressBar: true }));
+    //     };
     
-        window.addEventListener("beforeunload", handleBeforeUnload);
+    //     window.addEventListener("beforeunload", handleBeforeUnload);
     
-        return () => {
-            window.removeEventListener("beforeunload", handleBeforeUnload);
-        };
-    }, []);
+    //     return () => {
+    //         window.removeEventListener("beforeunload", handleBeforeUnload);
+    //     };
+    // }, []);
 
 
 

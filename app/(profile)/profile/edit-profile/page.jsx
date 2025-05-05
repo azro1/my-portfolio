@@ -12,7 +12,7 @@ const EditProfile = () => {
           <Heading className='text-cloudGray font-semibold text-1.375 md:text-2xl'>
             Profile Picture
           </Heading>
-          <p className='mt-3 leading-normal text-charcoalGrayLight'>Upload or change your profile avatar</p>
+          <p className='leading-normal text-charcoalGrayLight mt-2 md:mt-3'>Upload or change your profile avatar</p>
 
           <EditProfileForms />
       </div>

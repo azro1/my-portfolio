@@ -1,2 +1,2 @@
-import { Space_Grotesk } from "next/font/google";
-export const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['300', '400', '700'] });
+import { Outfit } from "next/font/google";
+export const outfit = Outfit({ subsets: ['latin'], weight: ['100', '200', '300', '400', '700', '800'] });
