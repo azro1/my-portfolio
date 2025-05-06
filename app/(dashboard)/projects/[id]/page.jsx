@@ -110,7 +110,7 @@ const Project = async ({ params }) => {
 
                       <div className='md:row-start-2 md:col-start-1 pb-3 md:col-span-2 relative'>
                         <ProjectFavouriteButton className={'absolute right-0 top-1'} projectId={project.id} user={user} />
-                        <Heading className='text-xl md:text-1.375 font-b text-nightSky'>
+                        <Heading className='text-lg font-b text-nightSky'>
                           Project description
                         </Heading>
                         <p className='pt-2.5 leading-7' >{project.description}</p>

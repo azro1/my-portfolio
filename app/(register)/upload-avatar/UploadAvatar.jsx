@@ -165,7 +165,7 @@ const UploadAvatar = () => {
 
           <div className='flex flex-col justify-center gap-2 md:bg-white md:shadow-outer md:p-10 md:rounded-xl relative'>
 
-            <Heading className='text-2xl font-b text-nightSky'>
+            <Heading className='text-2xl font-medium text-nightSky'>
               Upload your avatar
             </Heading>
 

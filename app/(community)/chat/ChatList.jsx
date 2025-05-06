@@ -11,7 +11,7 @@ const ChatList = () => {
 
   return (
     <div className="mt-4">
-      <Heading className="font-b mb-2 text-nightSky text-xl md:text-2xl ">
+      <Heading className="font-bold mb-2 text-nightSky md:text-lg">
         Other Chat Rooms
       </Heading>
       <ul>

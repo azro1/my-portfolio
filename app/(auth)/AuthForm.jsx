@@ -13,7 +13,7 @@ const AuthForm = ({ handleSubmit, onSubmit, title, register, errors, isChecked, 
       <div className='w-full max-w-xs md:max-w-sm md:bg-white md:shadow-outer md:p-10 md:rounded-xl'>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
 
-          <Heading className='text-[26px] mb-3 font-b text-nightSky md:text-[28px]'>
+          <Heading className='mb-3 font-medium text-nightSky text-[26px] md:text-[28px]'>
               {title}
           </Heading>
 

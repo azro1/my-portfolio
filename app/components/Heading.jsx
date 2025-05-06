@@ -1,9 +1,9 @@
 // components/Heading.tsx
-import { outfit } from "../styles/fonts";
+import { unbounded } from "../styles/fonts";
 
 export default function Heading({ children, className = '' }) {
   return (
-    <h2 className={`${outfit.className} ${className}`}>
+    <h2 className={`${unbounded.className} ${className}`}>
       {children}
     </h2>
   );

@@ -39,7 +39,7 @@ const Services = () => {
     <section>
       <div className="overflow-hidden">
 
-        <Heading className="text-2xl md:text-3xl font-light text-center text-cloudGray mb-6 md:mb-10">
+        <Heading className="font-light text-center text-cloudGray mb-6 subheading md:mb-10">
           My Services
         </Heading>
 
@@ -59,7 +59,7 @@ const Services = () => {
                 <span className="text-cloudGray">{service.icon}</span>
               </div>
               <div className="flex flex-col items-center text-center max-w-xl mt-4">
-                <Heading className="text-1.375 font-b text-goldenOchre mb-2 md:text-2xl">
+                <Heading className="font-semibold text-goldenOchre mb-2 subheading">
                   {service.title}
                 </Heading>
                 <p className="md:leading-7">{service.text}</p>

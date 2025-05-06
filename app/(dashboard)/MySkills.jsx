@@ -18,7 +18,7 @@ import Heading from "../components/Heading";
 const MySkills = () => {
   return (
     <section>
-      <div className="flex flex-col-reverse items-center gap-6 md:flex-row md:gap-10">
+      <div className="flex flex-col items-center gap-6 md:flex-row md:gap-10">
         
         {/* Icons Section */}
         <div className="flex-1 flex justify-center md:justify-end"> {/* Centered icons on mobile */}
@@ -50,7 +50,7 @@ const MySkills = () => {
 
         {/* Text Section */}
         <div className="flex-1 flex flex-col items-center text-center md:items-start md:text-left">
-          <Heading className="subheading font-b text-goldenOchre mb-3.5">
+          <Heading className="font-semibold text-goldenOchre mb-3 subheading">
             My Skills
           </Heading>
           <p className="md:leading-7 lg:max-w-xs">

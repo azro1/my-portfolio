@@ -19,10 +19,10 @@ const Profile = async () => {
 
         {user && (
           <div className="pt-16">
-            <Heading className='text-cloudGray font-semibold text-1.375 md:text-2xl'>
+            <Heading className='text-cloudGray font-medium text-xl'>
               Activity Feed
             </Heading>
-            <p className='leading-normal text-charcoalGrayLight mt-2 md:mt-3'>Your recent activity on the website, including any projects you have viewed, your favourite projects and your chat history.</p>
+            <p className='leading-normal text-charcoalGrayLight mt-3'>Your recent activity on the website, including any projects you have viewed, your favourite projects and your chat history.</p>
             
             <div className='pt-8 grid grid-cols-1 gap-12 grid-flow-row auto-rows-max'>
                 <ForumChatList user={user} />

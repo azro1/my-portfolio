@@ -49,7 +49,7 @@ const KeySkills = () => {
               transition={{ duration: 1, ease: "easeOut" }}
               className="flex flex-col text-center gap-4 lg:col-span-2 lg:row-start-3"
             >
-              <Heading className="subheading font-light text-cloudGray text-center mb-6">
+              <Heading className="subheading font-b text-cloudGray text-center mb-6">
                 Key Skills
               </Heading>
 
