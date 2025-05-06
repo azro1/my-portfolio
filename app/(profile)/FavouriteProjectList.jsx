@@ -32,7 +32,7 @@ const FavouriteProjectList = ({ user }) => {
 
     return (
         <div>
-            <Heading className='text-base font-light text-cloudGray mb-3'>
+            <Heading className='text-sm font-medium text-cloudGray mb-3'>
                 Favourite Projects
             </Heading>
             {!errorMessage ? (
