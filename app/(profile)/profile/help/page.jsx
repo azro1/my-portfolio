@@ -33,10 +33,10 @@ const Help = () => {
         <div className='h-screen flex pt-40 pb-20 min-h-[924px] md:min-h-[1034px] xl:pt-36 xl:pb-28'>
 
           <div className='w-full h-full flex flex-col'>
-            <Heading className='font-medium text-cloudGray subheading '>
+            <Heading className='font-medium text-cloudGray text-lg md:text-xl'>
                 How Can We Help?
             </Heading>
-            <p className='text-charcoalGrayLight mt-4'>Use the search bar to find answers to frequently asked questions or contact us via the online chat for further assistance</p>
+            <p className='text-charcoalGrayLight mt-3'>Use the search bar to find answers to frequently asked questions or contact us via the online chat for further assistance</p>
 
             <input
               type='text'

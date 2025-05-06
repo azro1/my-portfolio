@@ -54,7 +54,7 @@ const ProjectList = () => {
   return (
     <section>
       <div>
-        <Heading className="text-xl md:text-2xl font-light text-cloudGray text-center mb-6 md:mb-8">
+        <Heading className="text-xl md:text-2xl font-light text-cloudGray text-center mb-5 md:mb-7">
           My Projects
         </Heading>
         <Carousel showStatus={false} transitionTime={500} interval={5000} swipeable={false} showThumbs={false} selectedItem={selectedIndex} showArrows={false} autoPlay infiniteLoop>
@@ -77,7 +77,7 @@ const ProjectList = () => {
                   </div>
                   
                   {/* bg placeholder for mobile image */}
-                  <div className='bg-nightSky w-[300px] h-[280px] absolute left-1/2 transform -translate-x-1/2 rounded-md md:hidden'></div>
+                  <div className='bg-nightSky w-[300px] h-[280px] absolute left-1/2 transform -translate-x-1/2 md:hidden'></div>
 
                   <div className='absolute top-[92px] left-1/2 transform -translate-x-1/2 bg-softGray md:hidden '>
                     <Image className='max-w-[100px] max-h-[100px]'

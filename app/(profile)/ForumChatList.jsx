@@ -96,7 +96,7 @@ const ForumChatList = ({ user }) => {
 
   return (
     <div>
-        <Heading className='text-sm font-medium text-cloudGray mb-3'>
+        <Heading className='text-sm font-medium text-cloudGray mb-4'>
             Chat History
         </Heading>
         {!error ? (
