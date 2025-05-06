@@ -5,7 +5,7 @@ const Statement = () => {
     return (
         <div className="flex flex-col items-center justify-center ">
 
-            <Heading className="text-2xl md:text-4xl font-light mb-4 text-ashGray md:mb-6">
+            <Heading className="font-medium tracking-wider mb-4 text-ashGray text-lg md:mb-6 md:tracking-normal md:text-2xl uw:text-3xl ">
                 My Mission
             </Heading>
 

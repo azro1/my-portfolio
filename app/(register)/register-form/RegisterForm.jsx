@@ -255,18 +255,18 @@ const RegisterForm = () => {
 
 
     // send beacon to logout if the leave via the address bar
-    // useEffect(() => {
-    //     const handleBeforeUnload = () => {
-    //         console.log('before unload ran......')
-    //         navigator.sendBeacon(`${location.origin}/api/auth/logout`, JSON.stringify({ hasLeftViaAddressBar: true }));
-    //     };
+    useEffect(() => {
+        const handleBeforeUnload = () => {
+            console.log('before unload ran......')
+            navigator.sendBeacon(`${location.origin}/api/auth/logout`, JSON.stringify({ hasLeftViaAddressBar: true }));
+        };
     
-    //     window.addEventListener("beforeunload", handleBeforeUnload);
+        window.addEventListener("beforeunload", handleBeforeUnload);
     
-    //     return () => {
-    //         window.removeEventListener("beforeunload", handleBeforeUnload);
-    //     };
-    // }, []);
+        return () => {
+            window.removeEventListener("beforeunload", handleBeforeUnload);
+        };
+    }, []);
 
 
 
@@ -572,7 +572,7 @@ const RegisterForm = () => {
             <div className='flex flex-col gap-4 w-full max-w-xs sm:max-w-sm md:bg-white md:shadow-outer md:p-12 md:rounded-xl md:max-w-md'>
 
                 <div className='md:text-center'>
-                    <Heading className='text-2xl font-b text-nightSky'>
+                    <Heading className='text-2xl font-medium text-nightSky'>
                         Enter your personal details
                     </Heading>
                 </div>

@@ -16,7 +16,7 @@
 }
 
 .subheading {
-  @apply text-1.375 md:text-1.75 leading-tight;
+  @apply text-xl leading-tight md:text-2xl;
 }
 
 

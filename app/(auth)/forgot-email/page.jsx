@@ -170,7 +170,7 @@ const ForgotEmail = () => {
             <div className='flex-1 w-full max-w-xs'>
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
                     <div>
-                        <Heading className='text-[26px] text-center mb-3 font-b text-nightSky md:text-[28px]'>
+                        <Heading className='text-[26px] text-center mb-3 font-medium text-nightSky md:text-[28px]'>
                             Recover Email
                         </Heading>
 

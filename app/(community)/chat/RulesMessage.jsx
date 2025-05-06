@@ -3,7 +3,7 @@ import Heading from "@/app/components/Heading";
 const RulesMessage = () => {
     return (
       <div className="bg-white p-4 rounded-md mb-8 md:p-6 md:rounded-lg">
-        <Heading className="mb-1 text-nightSky font-b text-xl md:mb-2">
+        <Heading className="mb-1 text-nightSky font-bold md:text-lg md:mb-2">
           Chat Room Rules
         </Heading>
         <ol className="list-decimal list-inside text-ashGray md:leading-relaxed">

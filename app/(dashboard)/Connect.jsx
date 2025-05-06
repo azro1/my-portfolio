@@ -26,7 +26,7 @@ const Connect = () => {
     <section>
         <div className="flex flex-col items-center text-center max-w-max mx-auto md:flex-col lg:p-10">
           
-          <Heading className="subheading font-b text-goldenOchre">
+          <Heading className="font-semibold text-goldenOchre subheading">
               Let&apos;s Connect
           </Heading>
 

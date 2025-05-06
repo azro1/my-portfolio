@@ -26,15 +26,15 @@ const Home = () => {
           </div>
         </div>
 
-        {/* <div className="pt-16 md:py-32 bg-nightSky">
+        <div className="pt-16 md:py-32 bg-nightSky">
           <div className="px-[x-pad] mx-auto max-w-screen-lg xl:p-0 uw:max-w-[1300px]">
             <main>
               <Statement />
             </main>
           </div>
-        </div> */}
+        </div>
 
-        <div className="py-16 md:py-32 bg-nightSky">
+        <div className="py-16 md:pb-32 bg-nightSky">
           <div className="main-container">
             <main>
               <MySkills />
