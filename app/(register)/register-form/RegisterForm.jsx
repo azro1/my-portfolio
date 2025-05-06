@@ -572,7 +572,7 @@ const RegisterForm = () => {
             <div className='flex flex-col gap-4 w-full max-w-xs sm:max-w-sm md:bg-white md:shadow-outer md:p-12 md:rounded-xl md:max-w-md'>
 
                 <div className='md:text-center'>
-                    <Heading className='text-2xl font-medium text-nightSky'>
+                    <Heading className='text-2xl font-semibold text-nightSky'>
                         Enter your personal details
                     </Heading>
                 </div>

@@ -30,7 +30,7 @@ const ProjectsViewedList = ({ user }) => {
 
   return (
     <div>
-      <Heading className='text-sm font-medium text-cloudGray mb-3'>
+      <Heading className='text-sm font-medium text-cloudGray mb-4'>
         Project Views
       </Heading>
       {!errorMessage ? (

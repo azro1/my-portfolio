@@ -1,5 +1,5 @@
 import './globals.css'
-import { Quicksand } from 'next/font/google'
+import { IBM_Plex_Sans } from 'next/font/google'
 
 // tell next to render dynamic and not static pages at build time
 export const dynamic = 'force-dynamic'
@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic'
 import { MessageProvider } from './context/MessageContext'
 import MessageBanner from './components/MessageBanner'
 
-const quickSand = Quicksand({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700' ] });
+const ibmps = IBM_Plex_Sans({ subsets: ['latin'], weight: ['100', '200', '300', '400', '500', '600', '700' ] });
 
 // metadata
 export const metadata = {
@@ -19,7 +19,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={quickSand.className}>
+      <body className={ibmps.className}>
         <div>
           <MessageProvider>
             <MessageBanner />

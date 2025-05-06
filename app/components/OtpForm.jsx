@@ -38,7 +38,7 @@ function maskEmail(email) {
     <div className={containerStyles}> 
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
 
-            <Heading className='leading-tight mb-4 font-medium text-nightSky text-[26px] md:text-[28px]'>
+            <Heading className='leading-tight mb-4 font-semibold text-nightSky text-[26px] md:text-[28px]'>
                 {title}
             </Heading>
 
