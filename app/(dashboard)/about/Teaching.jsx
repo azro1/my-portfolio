@@ -22,7 +22,7 @@ const Teaching = () => {
         </div>
 
         <div className="flex-grow flex flex-col text-center lg:text-left lg:w-1/2">
-          <Heading className="subheading font-medium mb-3 text-goldenOchre">
+          <Heading className="subheading font-semibold mb-3 text-goldenOchre">
             Teaching
           </Heading>
 

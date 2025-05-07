@@ -54,7 +54,7 @@ const ProjectList = () => {
   return (
     <section>
       <div>
-        <Heading className="text-xl md:text-2xl font-light text-cloudGray text-center mb-5 md:mb-7">
+        <Heading className="text-2xl font-light text-cloudGray text-center mb-5 tracking-wide md:tracking-normal md:mb-7 xl:text-[32px]">
           My Projects
         </Heading>
         <Carousel showStatus={false} transitionTime={500} interval={5000} swipeable={false} showThumbs={false} selectedItem={selectedIndex} showArrows={false} autoPlay infiniteLoop>

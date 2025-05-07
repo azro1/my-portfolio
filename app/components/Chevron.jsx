@@ -72,7 +72,7 @@ const Chevron = ({ user, roomName, roomUsersState, isProfilePage, isForumPage })
     <>
       {!isForumPage && (
         <>  {/* menu shows for large screens */}
-          <button onClick={handleToggleMenu} className={'hidden text-base text-ashGray md:block'}>
+          <button onClick={handleToggleMenu} className={'hidden text-base text-stoneGray md:block'}>
             <FiChevronDown size={22} />
           </button>
 

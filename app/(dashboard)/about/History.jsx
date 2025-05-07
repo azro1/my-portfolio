@@ -10,7 +10,7 @@ const History = () => {
           <div className="relative flex flex-col-reverse items-center w-full lg:flex-row lg:gap-10">
               {/* Text Section */}
               <div className="flex-1 flex flex-col justify-center text-center pt-6 lg:text-left relative z-10">
-                  <Heading className="subheading font-medium mb-3 text-goldenOchre">
+                  <Heading className="subheading font-semibold mb-3 text-goldenOchre">
                     My History
                   </Heading>
                   <p className="text-base leading-7">
