@@ -114,7 +114,7 @@ const ForumChatList = ({ user }) => {
                         </div>
                     ))
                 ) : (
-                        <div className="min-h-96 bg-softCharcoal">
+                        <div className="min-h-96">
                             {!isMessagesLoading && <p className='text-ashGray p-4'>No Chats.</p>}
                         </div>
                 )}

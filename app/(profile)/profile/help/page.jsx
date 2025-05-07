@@ -50,10 +50,10 @@ const Help = () => {
               {queryResults.length > 0 ? (
                 queryResults.map(result => (
                   <div key={result.id}>
-                    <Heading className='font-medium text-cloudGray text-xl md:text-1.375'> 
+                    <Heading className='text-base font-light text-cloudGray'> 
                       {result.question}
                     </Heading>
-                    <p className='text-ashGray pt-2'>{result.answer}</p>
+                    <p className='text-ashGray'>{result.answer}</p>
                   </div>
                 ))) : (
                 <div className='flex-1 flex items-center justify-center'>

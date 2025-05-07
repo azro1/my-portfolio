@@ -14,19 +14,17 @@ export default {
     },
     extend: {
       colors: {
-        goldenOchre: '#D7A31A',
-        softCharcoal: '#191b20',
-        deepCharcoal: '#131519',
-        slateOnyx: '#2A2C31',
-        charcoalGray: '#33353A',
-        charcoalGrayLight: '#7A7E85', 
-        stoneGray: '#757575',
-        ashGray: '#6B6B6B',
-        nightSky: '#1C1E24',
-        frostWhite: '#D1D1D1',
-        cloudGray: '#E0E0E3',
-        softGray: '#F5F5F5',
-        midnightSlate: '#25272E',
+        goldenOchre: '#D7A31A', // bg hint color for buttons and primary heading color for heading/title if the page bg is nightSky
+        softCharcoal: '#24262C', // bg color for sidebars
+        deepCharcoal: '#131519', // bg color for sidebar buttons on hover
+        slateOnyx: '#2A2C31', // bg color for footer and dropdown menu on larger screens
+        charcoalGray: '#33353A', // primary bg color for page sections that alternate with nightSky
+        charcoalGrayLight: '#7A7E85', // text for pages with charcoalGray bg
+        stoneGray: '#757575', // a lighter shade of ashGray
+        ashGray: '#6B6B6B', // primary color for body text
+        nightSky: '#1C1E24', // primary bg color for page sections that alternate with charcoalGray and dropdown menu on smaller screens
+        cloudGray: '#E0E0E3', // primary color for heading/title if the page bg is charcoalGray
+        softGray: '#F5F5F5', // bg color for auth pages, forum landing page and contact page
         'modal-translucent': 'rgb(28, 30, 36, 0.80)'
       },
       fontFamily: {

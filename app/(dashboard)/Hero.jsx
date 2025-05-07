@@ -1,7 +1,6 @@
 import Image from "next/image"
 
 // components
-import Button from "../components/Button"
 import Heading from "../components/Heading"
 
 const Hero = () => {
@@ -19,11 +18,9 @@ const Hero = () => {
               specializing in front and back end web
               technologies and UI design</p>
             <a className="text-sm block w-max mx-auto md:text-base" href="/CV_doc.txt" download="CV_doc.txt">
-              <Button
-                backgroundColor="bg-charcoalGray"
-                padding="py-3 px-3.5"
-                text="DOWNLOAD CV"
-              />
+              <button className="py-3 px-3.5 rounded-lg text-white font-b cursor-pointer bg-charcoalGray tracking-wide">
+                  DOWNLOAD CV
+              </button>
             </a>
           </div>
         </div>

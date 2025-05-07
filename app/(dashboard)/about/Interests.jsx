@@ -23,7 +23,7 @@ const Interests = () => {
         </div>
 
         <div className="flex-grow flex flex-col text-center lg:text-left lg:w-1/2">
-          <Heading className="subheading font-medium text-goldenOchre mb-3">
+          <Heading className="subheading font-semibold text-goldenOchre mb-3">
             My Interests
           </Heading>
           <p className="leading-7">
