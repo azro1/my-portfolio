@@ -152,7 +152,7 @@ const Sidebar = ({ isProfilePage }) => {
       
       <div className='sidebar-content fixed bg-softCharcoal xl:h-full xl:overflow-y-scroll xl:overflow-x-hidden xl:hide-scrollbar'>
 
-          <div className={`hidden xl:block absolute top-3 cursor-pointer z-10 p-3 rounded-md bg-charcoalGray ${!isOpen ? 'right-2.5' : 'right-2'}`} onClick={handleToggleSidebar}>
+          <div className={`hidden xl:block absolute top-3 cursor-pointer z-10 p-3 ${!isOpen ? 'right-2.5' : 'right-2'}`} onClick={handleToggleSidebar}>
             {isOpen ? (
               <FiArrowLeft className='text-cloudGray' size={22}/>
             ) : (
@@ -201,7 +201,7 @@ const Sidebar = ({ isProfilePage }) => {
             
             <ul className='hidden md:min-h-[92px] md:flex-1 md:flex md:items-center md:justify-end md:gap-8 xl:flex-none xl:flex-col xl:items-stretch xl:justify-start xl:gap-0'>
               <div className='hidden xl:block bg-charcoalGray mx-2 h-[1px]'></div>
-              <li className={`group xl:m-2 xl:mb-0 xl:p-3 xl:max-h-12 xl:hover:text-cloudGray ${!isOpen ? 'xl:transition-bg duration-300 xl:hover:bg-deepCharcoal xl:rounded-md' : ''} ${activeLink === '/' && !isOpen ? 'xl:bg-charcoalGray' : ''}`} >
+              <li className={`group xl:m-2 xl:mb-0 xl:p-3 xl:max-h-12 xl:hover:text-cloudGray rounded-md ${activeLink === '/' && !isOpen ? 'xl:bg-nightSky xl:shadow-sm xl:shadow-goldenOchre' : ''}`} >
                 <Link href={'/'} onClick={(e) => {
                   handleActiveLink('/');
                 }}>
@@ -216,7 +216,7 @@ const Sidebar = ({ isProfilePage }) => {
                   </div>
                 </Link>
               </li>
-              <li className={`group xl:m-2 xl:mb-0 xl:p-3 xl:max-h-12 xl:hover:text-cloudGray ${!isOpen ? 'xl:transition-bg duration-300 xl:hover:bg-deepCharcoal xl:rounded-md' : ''} ${activeLink === '/about' && !isOpen ? 'xl:bg-charcoalGray' : ''}`}>
+              <li className={`group xl:m-2 xl:mb-0 xl:p-3 xl:max-h-12 xl:hover:text-cloudGray rounded-md ${activeLink === '/about' && !isOpen ? 'xl:bg-nightSky xl:shadow-sm xl:shadow-goldenOchre' : ''}`}>
                 <Link href={'/about'} onClick={(e) => {
                   handleActiveLink('/about');
                 }}>
@@ -231,7 +231,7 @@ const Sidebar = ({ isProfilePage }) => {
                   </div>
                 </Link>
               </li>
-              <li className={`group xl:m-2 xl:p-3 xl:max-h-12 xl:hover:text-cloudGray ${!isOpen ? 'xl:transition-bg duration-300 xl:hover:bg-deepCharcoal xl:rounded-md' : ''} ${activeLink === '/contact' && !isOpen ? 'xl:bg-charcoalGray' : ''}`}>
+              <li className={`group xl:m-2 xl:p-3 xl:max-h-12 xl:hover:text-cloudGray rounded-md ${activeLink === '/contact' && !isOpen ? 'xl:bg-nightSky xl:shadow-sm xl:shadow-goldenOchre' : ''}`}>
                 <Link href={'/contact'} onClick={(e) => {
                   handleActiveLink('/contact');
                 }}>
@@ -246,10 +246,10 @@ const Sidebar = ({ isProfilePage }) => {
                   </div>
                 </Link>
               </li>
-              <div className='hidden xl:block bg-slateOnyx mx-2 h-[1px]'></div>
+              <div className='hidden xl:block bg-charcoalGray mx-2 h-[1px]'></div>
 
               {!user && (
-                <li className={`group xl:m-2 xl:mb-0 xl:p-3 xl:max-h-12 xl:hover:text-cloudGray ${!isOpen ? 'xl:transition-bg duration-300 xl:hover:bg-deepCharcoal xl:rounded-md' : ''} ${activeLink === '/login' && !isOpen ? 'xl:bg-charcoalGray' : ''}`}>
+                <li className={`group xl:m-2 xl:mb-0 xl:p-3 xl:max-h-12 xl:hover:text-cloudGray rounded-md ${activeLink === '/login' && !isOpen ? 'xl:bg-nightSky xl:shadow-sm xl:shadow-goldenOchre' : ''}`}>
                   <Link href={'/login'} onClick={() => handleActiveLink('/login')}>
                     <div className='xl:flex items-center gap-3'>
                       <div className="hidden xl:flex items-center">
@@ -264,7 +264,7 @@ const Sidebar = ({ isProfilePage }) => {
                 </li>
               )}
               {!user && (
-                <li className={`group xl:m-2 xl:p-3 xl:max-h-12 xl:hover:text-cloudGray ${!isOpen ? 'xl:transition-bg duration-300 xl:hover:bg-deepCharcoal xl:rounded-md' : ''} ${activeLink === '/signup' && !isOpen ? 'xl:bg-charcoalGray' : ''}`}>
+                <li className={`group xl:m-2 xl:p-3 xl:max-h-12 xl:hover:text-cloudGray rounded-md ${activeLink === '/signup' && !isOpen ? 'xl:bg-nightSky xl:shadow-sm xl:shadow-goldenOchre' : ''}`}>
                   <Link href={'/signup'} onClick={() => handleActiveLink('/signup')}>
                     <div className='xl:flex items-center gap-3'>
                       <div className="hidden xl:flex items-center ">
