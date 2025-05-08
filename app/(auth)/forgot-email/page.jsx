@@ -194,7 +194,7 @@ const ForgotEmail = () => {
                                 isLoading={isLoading}
                                 padding='p-3'
                                 width='w-full'
-                                backgroundColor='bg-nightSky'
+                                backgroundColor='bg-softCharcoal'
                                 text='Submit'
                             />
                         </div>

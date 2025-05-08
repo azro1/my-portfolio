@@ -30,7 +30,7 @@ const Connect = () => {
               Let&apos;s Connect
           </Heading>
 
-          <div className="flex flex-wrap items-center justify-center gap-2 p-6 sm:max-w-max md:p-6">
+          <div className="flex flex-wrap items-center justify-center gap-2 p-5 sm:max-w-max">
             {socialPlatforms.map((platform, index) => (
               <motion.a 
                 href={platform.url} target="_blank" rel="noopener noreferrer"

@@ -1,8 +1,8 @@
 "use client";
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { useState, useRef, useEffect } from 'react';
-import { FiSmile, FiPaperclip } from 'react-icons/fi';
+import { useState, useRef } from 'react';
+import { FiSmile, FiPaperclip, FiSend } from 'react-icons/fi';
 import Picker from '@emoji-mart/react';
 import data from '@emoji-mart/data';
 
@@ -102,16 +102,22 @@ const MessageForm = ({ user, profile, roomId, onSendMessage }) => {
 
 
   return (
-    <form onSubmit={handleSubmit} className="flex items-center gap-2 relative"> {/* Add Tailwind classes */}
-      <input
-        type="text"
-        placeholder="Message"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        className="bg-slateOnyx text-cloudGray rounded px-4 py-2.5 w-full"
-        autoFocus={true}
-      />
-      
+    <form onSubmit={handleSubmit} className="flex gap-2"> {/* Add Tailwind classes */}
+
+      <div className='flex-1 relative'> 
+        <input
+          type="text"
+          placeholder="Message"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          className="bg-slateOnyx w-full text-cloudGray rounded pl-4 pr-10 py-2.5 placeholder:font-normal placeholder:opacity-100 md:pr-20"
+          autoFocus={true}
+        />
+        <div className='absolute top-1/2 transform -translate-y-1/2 right-3 flex items-center gap-3'>
+          <FiSmile className='hidden lg:block text-slateOnyx opacity-60 cursor-pointer' fill='#E0E0E3' size={24} onClick={handleTogglePicker} />
+          <FiPaperclip className=' text-cloudGray opacity-60 cursor-pointer' size={20} onClick={handleFileInput} />
+        </div>
+      </div>
 
       <input
         type="file"
@@ -119,13 +125,7 @@ const MessageForm = ({ user, profile, roomId, onSendMessage }) => {
         className='hidden'
         ref={fileInputRef}
       />
-          
-
-      <div className='absolute right-24 flex items-center gap-3'>
-        <FiSmile className='hidden lg:block text-slateOnyx opacity-60 cursor-pointer' fill='#E0E0E3' size={24} onClick={handleTogglePicker} />
-        <FiPaperclip className=' text-cloudGray opacity-60 cursor-pointer' size={20} onClick={handleFileInput} />
-      </div>
-
+        
       {showEmojiPicker && (
         <div className='hidden lg:block absolute bottom-20 right-0'>
           <Picker
@@ -137,8 +137,8 @@ const MessageForm = ({ user, profile, roomId, onSendMessage }) => {
         </div>
       )}
 
-      <button type="submit" className="bg-green-700/90 hover:bg-green-700 text-white font-b py-2.5 px-4 rounded"> {/* Add Tailwind classes */}
-        Send
+      <button type="submit" className='px-1' >
+        <FiSend className='text-cloudGray opacity-60 cursor-pointer' size={20} />
       </button>
     </form>
   );

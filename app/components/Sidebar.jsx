@@ -125,7 +125,7 @@ const Sidebar = ({ isProfilePage }) => {
   if (loading) {
     return (
       <div className={`w-full box-border xl:inline-block ${isOpen ? 'xl:w-[300px]' : 'xl:w-[64px]'} xl:h-screen xl:min-h-[768px]`}>
-        <div className='sidebar-content fixed bg-nightSky min-h-[92px] flex items-center md:justify-end xl:h-full xl:overflow-y-scroll xl:hide-scrollbar  xl:items-start xl:justify-center'>
+        <div className='sidebar-content fixed bg-softCharcoal min-h-[92px] flex items-center md:justify-end xl:h-full xl:overflow-y-scroll xl:hide-scrollbar  xl:items-start xl:justify-center'>
 
           <div className="ml-8 md:mr-20 xl:ml-0 xl:mr-0 xl:mt-56">
                 <Image
@@ -201,14 +201,18 @@ const Sidebar = ({ isProfilePage }) => {
             
             <ul className='hidden md:min-h-[92px] md:flex-1 md:flex md:items-center md:justify-end md:gap-8 xl:flex-none xl:flex-col xl:items-stretch xl:justify-start xl:gap-0'>
               <div className='hidden xl:block bg-charcoalGray mx-2 h-[1px]'></div>
-              <li className={`group xl:m-2 xl:mb-0 xl:p-3 xl:max-h-12 xl:hover:text-cloudGray rounded-md ${activeLink === '/' && !isOpen ? 'xl:bg-nightSky xl:shadow-sm xl:shadow-goldenOchre' : ''}`} >
+              <li className={`group xl:m-2 xl:mb-0 xl:p-3 xl:max-h-12 xl:hover:text-cloudGray  ${!isOpen && activeLink !== '/' ? 'xl:transition-bg duration-300 xl:hover:bg-nightSky xl:rounded-md' : ''}`}>
                 <Link href={'/'} onClick={(e) => {
                   handleActiveLink('/');
                 }}>
                   <div className='xl:flex items-center gap-3'>
-                    <div className="hidden xl:flex items-center">
-                      <FiHome className={`icon ${isOpen ? 'text-goldenOchre' : activeLink === '/' ? 'text-cloudGray' : 'text-stoneGray'}`} size={20} />
+                    <div className="hidden xl:flex items-center relative">
+                      <FiHome className={`icon ${activeLink === '/' ? 'text-cloudGray' : 'text-stoneGray'}`} size={20} />
+                      {activeLink === '/' && !isOpen && (
+                         <div className='absolute top-6 h-[2px] w-full bg-goldenOchre'></div>
+                      )}
                     </div>
+
 
                     <div className={`flex items-center transition-opacity duration-200 ease-in delay-100 ${isOpen ? 'xl:opacity-100' : 'xl:opacity-0'}`}>
                       <span className={`text-base transition-text duration-300 group-hover:text-cloudGray ${activeLink === '/' ? 'text-cloudGray' : 'text-stoneGray'}`}>Home</span>
@@ -216,13 +220,16 @@ const Sidebar = ({ isProfilePage }) => {
                   </div>
                 </Link>
               </li>
-              <li className={`group xl:m-2 xl:mb-0 xl:p-3 xl:max-h-12 xl:hover:text-cloudGray rounded-md ${activeLink === '/about' && !isOpen ? 'xl:bg-nightSky xl:shadow-sm xl:shadow-goldenOchre' : ''}`}>
+              <li className={`group xl:m-2 xl:mb-0 xl:p-3 xl:max-h-12 xl:hover:text-cloudGray rounded-md ${!isOpen && activeLink !== '/about' ? 'xl:transition-bg duration-300 xl:hover:bg-nightSky xl:rounded-md' : ''}`}>
                 <Link href={'/about'} onClick={(e) => {
                   handleActiveLink('/about');
                 }}>
                   <div className='xl:flex items-center gap-3'>
-                    <div className="hidden xl:flex items-center">
-                      <FiInfo className={`icon ${isOpen ? 'text-goldenOchre' : activeLink === '/about' ? 'text-cloudGray' : 'text-stoneGray'}`} size={20} />
+                    <div className="hidden xl:flex items-center relative">
+                      <FiInfo className={`icon ${activeLink === '/about' ? 'text-cloudGray' : 'text-stoneGray'}`} size={20} />
+                      {activeLink === '/about' && !isOpen && (
+                         <div className='absolute top-6 h-[2px] w-full bg-goldenOchre'></div>
+                      )}
                     </div>
 
                     <div className={`flex items-center transition-opacity duration-200 ease-in delay-100 ${isOpen ? 'xl:opacity-100' : 'xl:opacity-0'}`}>
@@ -231,13 +238,16 @@ const Sidebar = ({ isProfilePage }) => {
                   </div>
                 </Link>
               </li>
-              <li className={`group xl:m-2 xl:p-3 xl:max-h-12 xl:hover:text-cloudGray rounded-md ${activeLink === '/contact' && !isOpen ? 'xl:bg-nightSky xl:shadow-sm xl:shadow-goldenOchre' : ''}`}>
+              <li className={`group xl:m-2 xl:p-3 xl:max-h-12 xl:hover:text-cloudGray rounded-md ${!isOpen && activeLink !== '/contact' ? 'xl:transition-bg duration-300 xl:hover:bg-nightSky xl:rounded-md' : ''}`}>
                 <Link href={'/contact'} onClick={(e) => {
                   handleActiveLink('/contact');
                 }}>
                   <div className='xl:flex items-center gap-3'>
-                    <div className="hidden xl:flex items-center">
-                      <FiPhone className={`icon ${isOpen ? 'text-goldenOchre' : activeLink === '/contact' ? 'text-cloudGray' : 'text-stoneGray'}`} size={20} />
+                    <div className="hidden xl:flex items-center relative">
+                      <FiPhone className={`icon ${activeLink === '/contact' ? 'text-cloudGray' : 'text-stoneGray'}`} size={20} />
+                      {activeLink === '/contact' && !isOpen && (
+                         <div className='absolute top-6 h-[2px] w-full bg-goldenOchre'></div>
+                      )}
                     </div>
 
                     <div className={`flex items-center transition-opacity duration-200 ease-in delay-100 ${isOpen ? 'xl:opacity-100' : 'xl:opacity-0'}`}>
@@ -249,11 +259,11 @@ const Sidebar = ({ isProfilePage }) => {
               <div className='hidden xl:block bg-charcoalGray mx-2 h-[1px]'></div>
 
               {!user && (
-                <li className={`group xl:m-2 xl:mb-0 xl:p-3 xl:max-h-12 xl:hover:text-cloudGray rounded-md ${activeLink === '/login' && !isOpen ? 'xl:bg-nightSky xl:shadow-sm xl:shadow-goldenOchre' : ''}`}>
+                <li className={`group xl:m-2 xl:mb-0 xl:p-3 xl:max-h-12 xl:hover:text-cloudGray rounded-md ${!isOpen ? 'xl:transition-bg duration-300 xl:hover:bg-nightSky xl:rounded-md' : ''}`}>
                   <Link href={'/login'} onClick={() => handleActiveLink('/login')}>
                     <div className='xl:flex items-center gap-3'>
                       <div className="hidden xl:flex items-center">
-                        <FiLogIn className={`icon ${isOpen ? 'text-goldenOchre' : activeLink === '/login' ? 'text-cloudGray' : 'text-stoneGray'}`} size={24} />
+                        <FiLogIn className={`icon ${activeLink === '/login' ? 'text-cloudGray' : 'text-stoneGray'}`} size={24} />
                       </div>
 
                       <div className={`flex items-center transition-opacity duration-200 ease-in delay-100 ${isOpen ? 'xl:opacity-100' : 'xl:opacity-0'}`}>
@@ -264,11 +274,11 @@ const Sidebar = ({ isProfilePage }) => {
                 </li>
               )}
               {!user && (
-                <li className={`group xl:m-2 xl:p-3 xl:max-h-12 xl:hover:text-cloudGray rounded-md ${activeLink === '/signup' && !isOpen ? 'xl:bg-nightSky xl:shadow-sm xl:shadow-goldenOchre' : ''}`}>
+                <li className={`group xl:m-2 xl:p-3 xl:max-h-12 xl:hover:text-cloudGray rounded-md ${!isOpen ? 'xl:transition-bg duration-300 xl:hover:bg-nightSky xl:rounded-md' : ''}`}>
                   <Link href={'/signup'} onClick={() => handleActiveLink('/signup')}>
                     <div className='xl:flex items-center gap-3'>
                       <div className="hidden xl:flex items-center ">
-                        <FiUserPlus className={`icon ${isOpen ? 'text-goldenOchre' : activeLink === '/signup' ? 'text-cloudGray' : 'text-stoneGray'}`} size={24} />
+                        <FiUserPlus className={`icon ${activeLink === '/signup' ? 'text-cloudGray' : 'text-stoneGray'}`} size={24} />
                       </div>
 
                       <div className={`flex items-center transition-opacity duration-200 ease-in delay-100 ${isOpen ? 'xl:opacity-100' : 'xl:opacity-0'}`}>
