@@ -1,7 +1,6 @@
 // components
 import Hero from "./Hero"
 import Services from "./Services"
-import Statement from "./Statement"
 import MySkills from "./MySkills"
 import ProjectList from "./projects/ProjectList"
 import Connect from "./Connect"
@@ -22,14 +21,6 @@ const Home = () => {
           <div className="px-[x-pad] mx-auto max-w-screen-lg xl:p-0 uw:max-w-[1700px]">
             <main>
               <Services />
-            </main>
-          </div>
-        </div>
-
-        <div className="pt-16 md:py-32 bg-nightSky">
-          <div className="px-[x-pad] mx-auto max-w-screen-lg xl:p-0 uw:max-w-[1300px]">
-            <main>
-              <Statement />
             </main>
           </div>
         </div>
