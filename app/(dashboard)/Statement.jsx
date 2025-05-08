@@ -3,7 +3,7 @@ import Heading from "../components/Heading";
 
 const Statement = () => {
     return (
-        <div className="flex flex-col items-center justify-center ">
+        <div className="flex flex-col items-center justify-center max-w-xs mx-auto sm:max-w-none">
 
             <Heading className="font-b  mb-4 text-cloudGray text-2xl md:mb-6 md:text-3xl">
                 My Mission
