@@ -40,7 +40,7 @@ const ProfileMenuLarge = ({ handleLogout, handleCloseMenu, isProfilePage, isForu
                 <div className="hidden md:block">
 
                     {topLinks.map((link) => (
-                        <Link key={link.href} href={link.href} className={`${activeLink === link.href ? 'text-cloudGray' : 'text-stoneGray'}`} onClick={() => handleActiveLink(link.href)}>
+                        <Link key={link.href} href={link.href} className={`${activeLink === link.href ? 'text-cloudGray' : 'text-cloudGray'}`} onClick={() => handleActiveLink(link.href)}>
                             <div className='flex items-center p-2.5 pl-4 xl:hover:bg-softCharcoal xl:hover:text-cloudGray transition-colors duration-300' onClick={handleCloseMenu}>
                                 <span className='text-base'>{link.label}</span>
                             </div>
@@ -50,7 +50,7 @@ const ProfileMenuLarge = ({ handleLogout, handleCloseMenu, isProfilePage, isForu
                     {isProfilePage && (
                         <>
                             {profileLinks.map((link) => (
-                                <Link key={link.href} href={link.href} className={`${activeLink === link.href ? 'text-cloudGray' : 'text-stoneGray'}`} onClick={() => handleActiveLink(link.href)}>
+                                <Link key={link.href} href={link.href} className={`${activeLink === link.href ? 'text-cloudGray' : 'text-cloudGray'}`} onClick={() => handleActiveLink(link.href)}>
                                     <div className='flex items-center p-2.5 pl-4 xl:hover:bg-softCharcoal xl:hover:text-cloudGray transition-colors duration-300' onClick={handleCloseMenu}>
                                         <span className='text-base'>{link.label}</span>
                                     </div>
@@ -60,7 +60,7 @@ const ProfileMenuLarge = ({ handleLogout, handleCloseMenu, isProfilePage, isForu
                     )}
 
                     {bottomLinks.map((link) => (
-                        <Link key={link.href} href={link.href} className={`${activeLink === link.href ? 'text-cloudGray' : 'text-stoneGray'}`} onClick={() => handleActiveLink(link.href)}>
+                        <Link key={link.href} href={link.href} className={`${activeLink === link.href ? 'text-cloudGray' : 'text-cloudGray'}`} onClick={() => handleActiveLink(link.href)}>
                             <div className='flex items-center p-2.5 pl-4 xl:hover:bg-softCharcoal xl:hover:text-cloudGray transition-colors duration-300' onClick={handleCloseMenu}>
                                 <span className='text-base'>{link.label}</span>
                             </div>
@@ -68,7 +68,7 @@ const ProfileMenuLarge = ({ handleLogout, handleCloseMenu, isProfilePage, isForu
                     ))}
 
                     <div onClick={(e) => handleLogout(e)}>
-                        <div className='flex items-center p-2.5 pl-4 text-stoneGray xl:hover:bg-softCharcoal xl:hover:text-cloudGray transition-colors duration-300 cursor-pointer' onClick={handleCloseMenu}>
+                        <div className='flex items-center p-2.5 pl-4 text-cloudGray xl:hover:bg-softCharcoal xl:hover:text-cloudGray transition-colors duration-300 cursor-pointer' onClick={handleCloseMenu}>
                             <span className='text-base'>Logout</span>
                         </div>
                     </div>

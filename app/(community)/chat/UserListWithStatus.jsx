@@ -31,7 +31,7 @@ const UserListWithStatus = ({ users }) => {
     }
 
     return (
-        <div className={`flex justify-end p-4 border-l border-charcoalGray bg-softCharcoal text-cloudGray h-full min-h-screen overflow-y-auto ${isOpen ? 'w-[300px]' : 'w-[64px]'} transition-width duration-200 ease-in delay-100`}>
+        <div className={`flex justify-end p-4 border-l border-charcoalGray bg-nightSky text-cloudGray h-full min-h-screen overflow-y-auto ${isOpen ? 'w-[300px]' : 'w-[64px]'} transition-width duration-200 ease-in delay-100`}>
 
             <div className='relative flex flex-col w-full h-full'>
 

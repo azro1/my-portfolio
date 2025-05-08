@@ -50,7 +50,7 @@ const MySkills = () => {
 
         {/* Text Section */}
         <div className="flex-1 flex flex-col items-center text-center md:items-start md:text-left">
-          <Heading className="font-semibold text-goldenOchre mb-3 subheading">
+          <Heading className="font-semibold text-goldenOchre mb-3 subheading md:mb-2">
             My Skills
           </Heading>
           <p className="md:leading-7 lg:max-w-xs">

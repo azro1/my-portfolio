@@ -53,7 +53,7 @@ const Services = () => {
                 duration: 0.5,
                 delay: index * 0.4, // Slight delay for staggered effect
               }}
-              className="flex flex-col items-center justify-center max-w-sm min-h-[310px] p-6 bg-nightSky rounded-md md:p-8"
+              className="flex flex-col items-center justify-center max-w-[300px] h-[280px] p-6 bg-nightSky md:max-w-sm md:min-h-[310px] md:rounded-md md:p-8"
             >
               <div className="p-4 bg-charcoalGray shadow-lg shadow-deepCharcoal w-max rounded-md transition-all transform hover:scale-105">
                 <span className="text-cloudGray">{service.icon}</span>
