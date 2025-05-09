@@ -110,7 +110,7 @@ const EditProfileForms = () => {
     return (
         <div className='flex flex-col'>
             
-            <div className='mt-5 p-4 bg-nightSky'>
+            <div className='p-4 bg-nightSky mt-4 xl:mt-5'>
                 <AvatarUploader
                     user={user}
                     updateProfile={updateProfile}
@@ -123,9 +123,9 @@ const EditProfileForms = () => {
               <Heading className='font-medium text-cloudGray text-lg md:text-xl'>
                   Basic Information
               </Heading>
-              <p className='mt-2 leading-normal text-charcoalGrayLight'>Update your personal information</p>
+              <p className='leading-normal text-charcoalGrayLight mt-1 md:mt-2'>Update your personal information</p>
 
-              <div className='bg-nightSky p-4 mt-5'>
+              <div className='bg-nightSky p-4 mt-4 xl:mt-5'>
                 <BioForm
                     user={user}
                     profile={profile}

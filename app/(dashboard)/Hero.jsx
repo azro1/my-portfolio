@@ -18,7 +18,7 @@ const Hero = () => {
               specializing in front and back end web
               technologies and UI design</p>
             <a className="text-sm block w-max mx-auto md:text-base" href="/CV_doc.txt" download="CV_doc.txt">
-              <button className="py-3 px-3.5 rounded-lg text-cloudGray font-b cursor-pointer bg-charcoalGray">
+              <button className="py-3 px-3.5 rounded-lg text-base text-cloudGray font-b cursor-pointer bg-charcoalGray">
                   DOWNLOAD CV
               </button>
             </a>
