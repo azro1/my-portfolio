@@ -62,7 +62,7 @@ const Services = () => {
                 <Heading className="font-bold text-goldenOchre mb-1 subheading">
                   {service.title}
                 </Heading>
-                <p className="md:leading-7">{service.text}</p>
+                <p className="lg:leading-7">{service.text}</p>
               </div>
             </motion.div>
           ))}

@@ -6,7 +6,7 @@ import Heading from "@/app/components/Heading";
 const AboutMe = () => {
     return (
         <section>
-            <div className="flex flex-col items-center lg:gap-16 lg:flex-row">
+            <div className="flex flex-col items-center max-w-[544px] mx-auto lg:max-w-none lg:flex-row">
 
                 {/* Image Section */}
                 <div className="flex max-w-[544px] max-h-[586px]">
@@ -21,12 +21,12 @@ const AboutMe = () => {
                 </div>
 
                 {/* Text Section */}
-                <div className="pt-6 flex-1 flex flex-col justify-center text-center lg:h-max lg:text-left ">
-                    <Heading className="subheading font-semibold text-cloudGray mb-3 lg:mx-0">
+                <div className="flex-1 flex flex-col justify-center text-center pt-6 lg:bg-nightSky lg:p-10 lg:h-max lg:text-left">
+                    <Heading className="subheading font-semibold text-cloudGray mb-2 lg:mx-0">
                         About Me
                     </Heading>
-                    <p className="leading-7 text-charcoalGrayLight">
-                    With 7+ years of experience in creating immersive digital experiences, I’m passionate about turning ideas into interactive, user-centered solutions. My work combines technology and design to build impactful and engaging projects that deliver real value
+                    <p className="text-charcoalGrayLight lg:leading-7 lg:text-ashGray">
+                    With 8 years of experience in creating immersive digital experiences, I’m passionate about turning ideas into interactive, user-centered solutions. My work combines technology and design to build impactful and engaging projects that deliver real value.
                     </p>
                 </div>
 

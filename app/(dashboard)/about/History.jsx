@@ -7,14 +7,14 @@ const History = () => {
 
   return (
     <section>
-          <div className="relative flex flex-col-reverse items-center w-full lg:flex-row lg:gap-10">
+          <div className="relative flex flex-col-reverse items-center w-full max-w-[378px] mx-auto lg:max-w-none lg:flex-row lg:gap-10">
               {/* Text Section */}
-              <div className="flex-1 flex flex-col justify-center text-center pt-6 lg:text-left relative z-10">
-                  <Heading className="subheading font-semibold mb-3 text-goldenOchre">
+              <div className="flex-1 flex flex-col justify-center text-center relative z-10 bg-nightSky pt-6 lg:p-10 lg:text-left">
+                  <Heading className="subheading font-semibold mb-2 text-goldenOchre">
                     My History
                   </Heading>
-                  <p className="text-base leading-7">
-                    Over the years, I’ve honed my skills through self-study and
+                  <p className="text-base lg:leading-7">
+                    I’ve honed my skills through self-study and
                     hands-on experience in technology and design. I create tailored
                     digital solutions using a diverse range of tools and technologies to
                     meet user needs.
