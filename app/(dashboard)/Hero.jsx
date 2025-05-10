@@ -14,11 +14,11 @@ const Hero = () => {
             <Heading className='font-bold text-goldenOchre mb-2 leading-tight text-[22px] md:m-3 md:text-2xl xl:text-3xl'>
               Hi, I&apos;m Simon
             </Heading>
-            <p className="mb-5 md:mb-6 md:text-lg md:leading-7">A full stack developer
+            <p className="mb-5 md:mb-6 md:text-lg lg:leading-7">A full stack developer
               specializing in front and back end web
               technologies and UI design</p>
             <a className="text-sm block w-max mx-auto md:text-base" href="/CV_doc.txt" download="CV_doc.txt">
-              <button className="py-3 px-3.5 rounded-lg text-cloudGray font-b cursor-pointer bg-charcoalGray">
+              <button className="py-3 px-3.5 rounded-lg text-base text-cloudGray font-b cursor-pointer bg-charcoalGray">
                   DOWNLOAD CV
               </button>
             </a>

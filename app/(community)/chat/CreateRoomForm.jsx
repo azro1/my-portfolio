@@ -55,7 +55,7 @@ const CreateRoomForm = () => {
         maxLength={80}
         onChange={(e) => setRoomName(e.target.value)}
         required
-        className="border-[1px] border-cloudGray rounded px-4 py-2.5"
+        className="rounded px-4 py-2.5"
       />
       <button type="submit" className="bg-goldenOchre/90 hover:bg-goldenOchre text-white font-bold py-2.5 px-4 rounded">
         Create Room

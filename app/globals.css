@@ -33,7 +33,7 @@ a {
 }
 
 p, a {
-  @apply font-r text-base text-ashGray;
+  @apply font-r text-base text-ashGray ;
 }
 
 .main-container {

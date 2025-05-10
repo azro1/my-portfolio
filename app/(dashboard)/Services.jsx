@@ -39,7 +39,7 @@ const Services = () => {
     <section>
       <div className="overflow-hidden">
 
-        <Heading className="font-bold text-center text-cloudGray mb-5 text-2xl md:text-3xl md:mb-9 xl:text-4xl">
+        <Heading className="font-bold text-center text-cloudGray mb-5 text-2xl md:text-3xl md:mb-9 xl:text-[32px]">
           My Services
         </Heading>
 
@@ -62,7 +62,7 @@ const Services = () => {
                 <Heading className="font-bold text-goldenOchre mb-1 subheading">
                   {service.title}
                 </Heading>
-                <p className="md:leading-7">{service.text}</p>
+                <p className="lg:leading-7">{service.text}</p>
               </div>
             </motion.div>
           ))}

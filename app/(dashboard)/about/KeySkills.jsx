@@ -18,23 +18,23 @@ const KeySkills = () => {
   const keySkills = [
     {
       name: 'Front End',
-      icon: <FiLayout className="text-cloudGray" size={34} />
+      icon: <FiLayout className="text-goldenOchre" size={34} />
     },
     {
       name: 'Branding',
-      icon: <FiLayers className="text-cloudGray" size={34} />
+      icon: <FiLayers className="text-goldenOchre" size={34} />
     },
     {
       name: 'Design',
-      icon: <FiFigma className="text-cloudGray" size={34} />
+      icon: <FiFigma className="text-goldenOchre" size={34} />
     },
     {
       name: 'UI / UX',
-      icon: <FiFramer className="text-cloudGray" size={34} />
+      icon: <FiFramer className="text-goldenOchre" size={34} />
     },
     {
       name: 'Back End',
-      icon: <FiServer className="text-cloudGray" size={34} />
+      icon: <FiServer className="text-goldenOchre" size={34} />
     }
   ];
 
@@ -54,7 +54,7 @@ const KeySkills = () => {
               </Heading>
 
               {/* Mobile: flex wrap center. Large: flex row, full width, relative */}
-              <ul className="flex flex-wrap justify-center gap-6 max-w-xs mx-auto mb-6 lg:max-w-none lg:flex-nowrap lg:flex-row lg:justify-between lg:w-full lg:relative lg:mb-0">
+              <ul className="flex flex-wrap justify-center gap-6 max-w-xs mx-auto lg:max-w-none lg:flex-nowrap lg:w-full lg:justify-around lg:relative lg:mb-0 uw:justify-between">
                 {keySkills.map((skill, index) => (
                   <motion.li
                     key={index}
@@ -77,7 +77,7 @@ const KeySkills = () => {
                   >
                     {/* Icon with subtle glow effect */}
                     <motion.span
-                      className="p-4 w-max shadow-[0_0_15px_rgba(200,200,200,0.2)] hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-shadow duration-300" // Restored padding, added subtle shadow/glow
+                      className="bg-white p-4 w-max shadow-[0_0_20px_rgba(249,168,37,0.5)] hover:shadow-[0_0_25px_rgba(249,168,37,0.6)] transition-shadow duration-300"
                       initial={{ scale: 0.8 }}
                       animate={{ scale: 1 }}
                       whileHover={{ scale: 1.1 }} // Kept icon scale hover
@@ -85,6 +85,7 @@ const KeySkills = () => {
                     >
                       {skill.icon}
                     </motion.span>
+
                     {/* Skill Name */}
                     <motion.div
                       className="flex justify-center"
@@ -92,7 +93,7 @@ const KeySkills = () => {
                       animate={{ y: 0 }}
                       transition={{ duration: 0.4, delay: 0.2 * index }}
                     >
-                      <span className="text-charcoalGrayLight whitespace-nowrap">{skill.name}</span>
+                      <span className="text-sm font-b text-charcoalGrayLight whitespace-nowrap lg:text-stoneGray">{skill.name}</span>
                     </motion.div>
                   </motion.li>
                 ))}

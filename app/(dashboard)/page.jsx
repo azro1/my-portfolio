@@ -7,8 +7,9 @@ import Connect from "./Connect"
 
 const Home = () => {
   return (
-      <div className="flex flex-col min-h-screen bg-nightSky pt-32 sm:pt-44">
+      <div className="flex flex-col min-h-screen bg-nightSky lg:bg-[linear-gradient(to_bottom_right,_theme(colors.nightSky)_35%,_theme(colors.charcoalGray)_35%,_theme(colors.charcoalGray)_65%,_theme(colors.nightSky)_65%)]">
 
+        <div className="flex-1 flex flex-col pt-32 sm:pt-44">
         <div className="pb-16 md:pb-32">
           <div className="px-[x-pad] mx-auto max-w-screen-lg xl:p-0 uw:max-w-[1300px]">
             <main>
@@ -25,7 +26,7 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="py-16 md:pb-32 bg-nightSky">
+        <div className="py-16 md:py-32">
           <div className="main-container">
             <main>
               <MySkills />
@@ -39,14 +40,15 @@ const Home = () => {
           </main>
         </div>
 
-        <div className="py-16 bg-nightSky md:pt-32 md:pb-44">
+        <div className="py-16 md:pt-32 md:pb-44">
           <div className="px-[x-pad] lg:px-0">
             <main>
               <Connect />
             </main>
           </div>
         </div>
-        
+        </div>
+
       </div>
   )
 }

@@ -18,16 +18,16 @@ import Heading from "../components/Heading";
 const MySkills = () => {
   return (
     <section>
-      <div className="flex flex-col items-center gap-6 md:flex-row md:gap-10">
+      <div className="flex flex-col items-center gap-6 md:flex-row md:gap-10 lg:justify-end lg:w-max lg:ml-auto lg:bg-nightSky lg:p-10 uw:mx-auto">
         
         {/* Icons Section */}
-        <div className="flex-1 flex justify-center md:justify-end"> {/* Centered icons on mobile */}
+        <div className="flex-1 flex justify-center md:justify-end lg:flex-none">
           {/* Reverted gap, removed perspective */}
           <div className="grid grid-cols-3 gap-2"> 
             {technicalSkills.map((skill, index) => (
               <motion.div
                 key={index}
-                className="p-4 bg-charcoalGray shadow-lg shadow-deepCharcoal rounded-md w-max overflow-hidden" // Added overflow-hidden
+                className="p-4 bg-charcoalGray shadow-lg shadow-deepCharcoal rounded-md w-max overflow-hidden"
                 whileHover={{
                   scale: 1.1 // Keep scale on container
                 }}
@@ -49,11 +49,11 @@ const MySkills = () => {
         </div>
 
         {/* Text Section */}
-        <div className="flex-1 flex flex-col items-center text-center md:items-start md:text-left">
+        <div className="flex-1 flex flex-col items-center text-center md:items-start md:text-left lg:flex-none">
           <Heading className="font-semibold text-goldenOchre mb-3 subheading md:mb-2">
             My Skills
           </Heading>
-          <p className="md:leading-7 lg:max-w-xs">
+          <p className="lg:leading-7 lg:max-w-xs">
             I specialize in both front-end and back-end technologies to create user-friendly and efficient web applications
           </p>
         </div>

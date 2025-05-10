@@ -7,7 +7,7 @@ const Interests = () => {
 
   return (
     <section>
-      <div className="relative flex flex-col gap-6 items-center w-full lg:flex-row lg:gap-10">
+      <div className="relative flex flex-col items-center w-full max-w-[478px] mx-auto lg:max-w-none lg:flex-row lg:gap-10">
 
         {/* Image Section */}
         <div className="flex-grow flex justify-center w-full max-w-[478px] max-h-[440px] relative z-10">
@@ -22,12 +22,12 @@ const Interests = () => {
           />
         </div>
 
-        <div className="flex-grow flex flex-col text-center lg:text-left lg:w-1/2">
-          <Heading className="subheading font-semibold text-goldenOchre mb-3">
+        <div className="flex-grow flex flex-col text-center bg-nightSky pt-6 lg:p-10 lg:text-left lg:w-1/2">
+          <Heading className="subheading font-semibold text-goldenOchre mb-2">
             My Interests
           </Heading>
-          <p className="leading-7">
-            When I&apos;m not absorbed in pixels and code or catching up on design trends, I indulge in the joys of cooking and diving into captivating books. These creative outlets fuel my imagination and bring balance to my life, inspiring both my personal and professional pursuits.
+          <p className="lg:leading-7">
+            Outside of development, I enjoy discovering new music, sketching design ideas, and immersing myself in online games. These small escapes keep my creativity sharp and give me the balance I need to stay inspired and focused in my work.
           </p>
         </div>
 

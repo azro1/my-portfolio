@@ -6,7 +6,7 @@ import Heading from '@/app/components/Heading';
 const Teaching = () => {
   return (
     <section>
-      <div className="relative flex flex-col gap-6 items-center w-full lg:flex-row lg:gap-10">
+      <div className="relative flex flex-col items-center w-full max-w-[478px] mx-auto lg:max-w-none lg:flex-row lg:gap-10">
 
         {/* Image Section */}
         <div className="flex-grow flex justify-center w-full max-w-[478px] max-h-[440px] relative z-10">
@@ -21,12 +21,12 @@ const Teaching = () => {
             />
         </div>
 
-        <div className="flex-grow flex flex-col text-center lg:text-left lg:w-1/2">
-          <Heading className="subheading font-semibold mb-3 text-goldenOchre">
+        <div className="flex-grow flex flex-col text-center bg-nightSky pt-6 lg:p-10 lg:text-left lg:w-1/2">
+          <Heading className="subheading font-semibold mb-2 text-goldenOchre">
             Teaching
           </Heading>
 
-          <p className="text-base leading-7">
+          <p className=" lg:leading-7">
             I&apos;m passionate about sharing knowledge through my{" "}
             <a
               className="text-cloudGray font-light hover:underline transition-all duration-300"
@@ -37,7 +37,7 @@ const Teaching = () => {
               youtube channel
             </a>
             , offering tutorials on web development, graphic design, and more.
-            Teaching via video content broadens my reach, empowering others to
+            Teaching online broadens my reach, empowering others to
             explore these creative realms.
           </p>
         </div>
