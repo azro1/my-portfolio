@@ -9,7 +9,7 @@ const Contributing = () => {
             <div className="relative flex flex-col-reverse items-center w-full max-w-[378px] mx-auto lg:max-w-none lg:flex-row">
                 {/* Text Section */}
                 <div className="flex-1 flex flex-col justify-center text-center pt-6 lg:bg-nightSky lg:p-10 lg:text-left relative z-10">
-                    <Heading className="subheading font-semibold text-cloudGray mb-2">
+                    <Heading className="subheading font-bold text-cloudGray mb-2">
                         Contributing
                     </Heading>
                     <p className="text-charcoalGrayLight lg:text-ashGray lg:leading-7 ">
