@@ -51,7 +51,7 @@ const CustomSelectDropdown = ({ label, options, subject, setSubject, errors }) =
 
                 {/* Dropdown options */}
                 {dropdownOpen && (
-                    <ul className="absolute w-full bg-white border-[1px] border-gray-300 border-opacity-55 mt-2 z-10 p-1" ref={dropDownRef}>
+                    <ul className="absolute w-full bg-white border-[1px] border-gray-300 border-opacity-55 mt-2 z-10 p-1 select-none" ref={dropDownRef}>
                         {options.map((option, index) => (
                             <li
                                 key={index}
