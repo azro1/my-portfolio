@@ -18,23 +18,23 @@ const AuthRegHeader = () => {
     const protectedRoutes = routes.some(route => pathname.includes(route));
     
     return (
-        <header className='bg-softCharcoal w-full min-h-[82px] flex items-center z-40 fixed md:static'>
-            <div className='max-w-screen-xl w-full mx-auto'>
-            <div className=' w-max pl-4'>
-                <main>
-                    <Link href={`${protectedRoutes ? '#' : '/'}`}>
-                        <Image
-                            className='cursor-pointer'
-                            src={'/images/my_logo.svg'}
-                            alt="Navigate to home page"
-                            width={60}
-                            height={60}
-                            priority
-                            quality={100}
-                        />
-                    </Link>
-                </main>
-            </div>
+        <header className='flex items-center bg-softCharcoal w-full min-h-[82px] fixed z-40 md:static'>
+            <div className='max-w-screen-xl w-full flex-1 h-full mx-auto'>
+                <div className='w-max pl-4'>
+                    <main>
+                        <Link href={`${protectedRoutes ? '#' : '/'}`}>
+                            <Image
+                                className='cursor-pointer'
+                                src={'/images/logo.svg'}
+                                alt="Navigate to home page"
+                                width={50}
+                                height={44}
+                                priority
+                                quality={100}
+                            />
+                        </Link>
+                    </main>
+                </div>
             </div>
         </header>
     )

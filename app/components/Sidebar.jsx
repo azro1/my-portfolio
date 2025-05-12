@@ -167,10 +167,10 @@ const Sidebar = ({ isProfilePage }) => {
               <Link href='/'>
                 <Image
                   className='cursor-pointer'
-                  src={'/images/my_logo.svg'}
+                  src={'/images/logo.svg'}
                   alt="Navigate to home page"
-                  width={80}
-                  height={80}
+                  width={64}
+                  height={58}
                   priority
                   quality={100}
                 />
@@ -182,10 +182,10 @@ const Sidebar = ({ isProfilePage }) => {
               <Link href='/'>
                 <Image
                   className='cursor-pointer'
-                  src={'/images/my_logo.svg'}
+                  src={'/images/logo.svg'}
                   alt="Navigate to home page"
-                  width={60}
-                  height={60}
+                  width={54}
+                  height={48}
                   priority
                   quality={100}
                 />
@@ -207,7 +207,7 @@ const Sidebar = ({ isProfilePage }) => {
                 }}>
                   <div className='xl:flex items-center gap-3'>
                     <div className="hidden xl:flex items-center relative">
-                      <FiHome className={`icon ${activeLink === '/' ? 'text-cloudGray' : 'text-stoneGray'}`} size={20} />
+                      <FiHome className={`icon ${activeLink === '/' && !isOpen ? 'text-cloudGray' : activeLink === '/' ? 'text-goldenOchre' : 'text-stoneGray'}`} size={20} />
                       {activeLink === '/' && !isOpen && (
                          <div className='absolute top-6 h-[2px] w-full bg-goldenOchre'></div>
                       )}
@@ -226,7 +226,7 @@ const Sidebar = ({ isProfilePage }) => {
                 }}>
                   <div className='xl:flex items-center gap-3'>
                     <div className="hidden xl:flex items-center relative">
-                      <FiInfo className={`icon ${activeLink === '/about' ? 'text-cloudGray' : 'text-stoneGray'}`} size={20} />
+                      <FiInfo className={`icon ${activeLink === '/about' && !isOpen ? 'text-cloudGray' : activeLink === '/about' ? 'text-goldenOchre' : 'text-stoneGray'}`} size={20} />
                       {activeLink === '/about' && !isOpen && (
                          <div className='absolute top-6 h-[2px] w-full bg-goldenOchre'></div>
                       )}
@@ -244,7 +244,7 @@ const Sidebar = ({ isProfilePage }) => {
                 }}>
                   <div className='xl:flex items-center gap-3'>
                     <div className="hidden xl:flex items-center relative">
-                      <FiPhone className={`icon ${activeLink === '/contact' ? 'text-cloudGray' : 'text-stoneGray'}`} size={20} />
+                      <FiPhone className={`icon ${activeLink === '/contact' && !isOpen ? 'text-cloudGray' : activeLink === '/contact' ? 'text-goldenOchre' : 'text-stoneGray'}`} size={20} />
                       {activeLink === '/contact' && !isOpen && (
                          <div className='absolute top-6 h-[2px] w-full bg-goldenOchre'></div>
                       )}
@@ -263,7 +263,7 @@ const Sidebar = ({ isProfilePage }) => {
                   <Link href={'/login'} onClick={() => handleActiveLink('/login')}>
                     <div className='xl:flex items-center gap-3'>
                       <div className="hidden xl:flex items-center">
-                        <FiLogIn className={`icon ${activeLink === '/login' ? 'text-cloudGray' : 'text-stoneGray'}`} size={24} />
+                        <FiLogIn className={`icon ${activeLink === '/login' && !isOpen ? 'text-cloudGray' : activeLink === '/login' ? 'text-goldenOchre' : 'text-stoneGray'}`} size={24} />
                       </div>
 
                       <div className={`flex items-center transition-opacity duration-200 ease-in delay-100 ${isOpen ? 'xl:opacity-100' : 'xl:opacity-0'}`}>
@@ -278,7 +278,7 @@ const Sidebar = ({ isProfilePage }) => {
                   <Link href={'/signup'} onClick={() => handleActiveLink('/signup')}>
                     <div className='xl:flex items-center gap-3'>
                       <div className="hidden xl:flex items-center ">
-                        <FiUserPlus className={`icon ${activeLink === '/signup' ? 'text-cloudGray' : 'text-stoneGray'}`} size={24} />
+                        <FiUserPlus className={`icon ${activeLink === '/signup' && !isOpen ? 'text-cloudGray' : activeLink === '/signup' ? 'text-goldenOchre' : 'text-stoneGray'}`} size={24} />
                       </div>
 
                       <div className={`flex items-center transition-opacity duration-200 ease-in delay-100 ${isOpen ? 'xl:opacity-100' : 'xl:opacity-0'}`}>

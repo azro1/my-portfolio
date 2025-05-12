@@ -286,7 +286,7 @@ const EnquiriesForm = ({ user }) => {
                         isLoading={isLoading}
                         padding='py-2 px-3.5'
                         width='w-max'
-                        backgroundColor='bg-nightSky'
+                        backgroundColor='bg-softCharcoal'
                         text='Send'
                     />
                 </div>
