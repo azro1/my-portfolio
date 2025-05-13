@@ -26,7 +26,7 @@ const Interests = () => {
           <Heading className="subheading font-bold text-goldenOchre mb-2">
             My Interests
           </Heading>
-          <p className="lg:leading-7">
+          <p className="text-stoneGray">
             Outside of development, I enjoy discovering new music, sketching design ideas, and immersing myself in online games. These small escapes keep my creativity sharp and give me the balance I need to stay inspired and focused in my work.
           </p>
         </div>

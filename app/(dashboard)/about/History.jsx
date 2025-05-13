@@ -13,7 +13,7 @@ const History = () => {
                   <Heading className="subheading font-bold mb-2 text-goldenOchre">
                     My History
                   </Heading>
-                  <p className="text-base lg:leading-7">
+                  <p className="text-stoneGray">
                     I’ve honed my skills through self-study and
                     hands-on experience in technology and design. I create tailored
                     digital solutions using a diverse range of tools and technologies to

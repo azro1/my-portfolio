@@ -25,7 +25,7 @@ const AboutMe = () => {
                     <Heading className="subheading font-bold text-cloudGray mb-2 lg:mx-0">
                         About Me
                     </Heading>
-                    <p className="text-charcoalGrayLight lg:leading-7 lg:text-ashGray">
+                    <p className="text-charcoalGrayLight lg:text-stoneGray">
                     With 8 years of experience in creating immersive digital experiences, I’m passionate about turning ideas into interactive, user-centered solutions. My work combines technology and design to build impactful and engaging projects that deliver real value.
                     </p>
                 </div>

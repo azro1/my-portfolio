@@ -90,7 +90,7 @@ const ProjectList = () => {
                     />
                   </div>
                   <p className='text-stoneGray absolute bottom-[94px] left-1/2 transform -translate-x-1/2 md:hidden'>click to view project</p>
-                  <p className='text-stoneGray text-xl font-medium absolute top-[40px] left-1/2 transform -translate-x-1/2 md:hidden'>{project.title}</p>
+                  <p className='text-stoneGray text-xl font-semibold absolute top-[40px] left-1/2 transform -translate-x-1/2 md:hidden'>{project.title}</p>
 
                 </div>
 

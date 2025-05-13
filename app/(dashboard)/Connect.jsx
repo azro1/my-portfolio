@@ -52,7 +52,7 @@ const Connect = () => {
               Follow me on LinkedIn, GitHub, Instagram, and Discord for updates on latest projects, code repositories, and more!
             </p>
 
-            <p className="hidden md:block lg:leading-7">
+            <p className="hidden md:block text-stoneGray">
               Follow me on LinkedIn, GitHub, YouTube, Instagram, and Discord for updates on my latest projects, new videos, code repositories, and more!
             </p>
           </div>

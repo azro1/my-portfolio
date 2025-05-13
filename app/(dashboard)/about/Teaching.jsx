@@ -26,15 +26,15 @@ const Teaching = () => {
             Teaching
           </Heading>
 
-          <p className=" lg:leading-7">
-            I&apos;m passionate about sharing knowledge through my{" "}
+          <p className="text-stoneGray">
+            I&apos;m passionate about sharing knowledge through my youtube channel {" "}
             <a
               className="text-cloudGray font-light hover:underline transition-all duration-300"
               href="https://www.youtube.com/channel/UCSK7zfwlgMq3r88lkchHsSw"
               target="_blank"
               rel="noopener noreferrer"
             >
-              youtube channel
+              Code Dynamics
             </a>
             , offering tutorials on web development, graphic design, and more.
             Teaching online broadens my reach, empowering others to
