@@ -53,7 +53,7 @@ const MySkills = () => {
           <Heading className="font-bold text-goldenOchre mb-3 subheading md:mb-2">
             My Skills
           </Heading>
-          <p className="lg:leading-7 lg:max-w-xs">
+          <p className="text-stoneGray lg:max-w-xs">
             I specialize in both front-end and back-end technologies to create user-friendly and efficient web applications
           </p>
         </div>

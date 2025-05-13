@@ -17,7 +17,7 @@ const KeySkills = () => {
 
   const keySkills = [
     {
-      name: 'Front End',
+      name: 'Client',
       icon: <FiLayout className="text-cloudGray" size={34} />
     },
     {
@@ -33,7 +33,7 @@ const KeySkills = () => {
       icon: <FiFramer className="text-cloudGray" size={34} />
     },
     {
-      name: 'Back End',
+      name: 'Server',
       icon: <FiServer className="text-cloudGray" size={34} />
     }
   ];
@@ -61,7 +61,7 @@ const KeySkills = () => {
               <div className="p-4 shadow-lg w-max rounded-md transition-all transform hover:scale-105 bg-charcoalGray shadow-deepCharcoal ">
                 <span>{skill.icon}</span>
               </div>
-                <p className="mt-3 text-sm font-extralight text-cloudGray">{skill.name}</p>
+                <p className="mt-3 text-sm font-medium text-charcoalGrayLight lg:font-r lg:text-stoneGray tracking-wider">{skill.name}</p>
             </motion.div>
           ))}
         </div>

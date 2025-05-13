@@ -4,7 +4,7 @@ import Link from "next/link"
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 
-const LoggedOutMenu = ({ handleCloseMenu }) => {
+const LoggedOutMenu = ({ handleCloseMenu, isAuthPage }) => {
 
   const [activeLink, setActiveLink] = useState('');
   const pathName = usePathname()
@@ -35,16 +35,22 @@ const LoggedOutMenu = ({ handleCloseMenu }) => {
           <span className={`text-base ${activeLink === '/contact' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Contact</span>
         </div>
       </Link>
-      <Link href={'/login'} className={`${activeLink === '/login' ? 'text-cloudGray' : 'text-stoneGray'}`} onClick={() => handleActiveLink('/login')}>
-        <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray' onClick={handleCloseMenu}>
-          <span className={`text-base ${activeLink === '/login' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Login</span>
-        </div>
-      </Link>
-      <Link href={'/signup'} className={`${activeLink === '/signup' ? 'text-cloudGray' : 'text-stoneGray'}`} onClick={() => handleActiveLink('/signup')}>
-        <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray' onClick={handleCloseMenu}>
-          <span className={`text-base ${activeLink === '/signup' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Sign up</span>
-        </div>
-      </Link>
+
+      {!isAuthPage && (
+        <>
+          <Link href={'/login'} className={`${activeLink === '/login' ? 'text-cloudGray' : 'text-stoneGray'}`} onClick={() => handleActiveLink('/login')}>
+            <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray' onClick={handleCloseMenu}>
+              <span className={`text-base ${activeLink === '/login' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Login</span>
+            </div>
+          </Link>
+          <Link href={'/signup'} className={`${activeLink === '/signup' ? 'text-cloudGray' : 'text-stoneGray'}`} onClick={() => handleActiveLink('/signup')}>
+            <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray' onClick={handleCloseMenu}>
+              <span className={`text-base ${activeLink === '/signup' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Sign up</span>
+            </div>
+          </Link>
+        </>
+      )}
+
     </div>
   )
 }

@@ -169,8 +169,8 @@ const Sidebar = ({ isProfilePage }) => {
                   className='cursor-pointer'
                   src={'/images/logo.svg'}
                   alt="Navigate to home page"
-                  width={64}
-                  height={58}
+                  width={50}
+                  height={46}
                   priority
                   quality={100}
                 />
@@ -184,8 +184,8 @@ const Sidebar = ({ isProfilePage }) => {
                   className='cursor-pointer'
                   src={'/images/logo.svg'}
                   alt="Navigate to home page"
-                  width={54}
-                  height={48}
+                  width={48}
+                  height={44}
                   priority
                   quality={100}
                 />

@@ -12,7 +12,7 @@ const Contributing = () => {
                     <Heading className="subheading font-bold text-cloudGray mb-2">
                         Contributing
                     </Heading>
-                    <p className="text-charcoalGrayLight lg:text-ashGray lg:leading-7 ">
+                    <p className="text-charcoalGrayLight lg:text-stoneGray">
                         Beginning my open-source journey with HTML projects, I’m eager to expand my web development skills. Through active contributions and collaboration on various projects, I continue to learn and grow within the community.
                         Check out my <a className="text-base text-cloudGray hover:underline font-light" href="https://github.com/azro1" target="_blank" rel="noopener noreferrer">github</a> repository.
                     </p>
