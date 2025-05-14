@@ -167,10 +167,10 @@ const Sidebar = ({ isProfilePage }) => {
               <Link href='/'>
                 <Image
                   className='cursor-pointer'
-                  src={'/images/logo.svg'}
-                  alt="Navigate to home page"
-                  width={50}
-                  height={46}
+                  src={'/images/initials.svg'}
+                  alt="SS Logo that navigates to homepage"
+                  width={54}
+                  height={54}
                   priority
                   quality={100}
                 />
@@ -182,10 +182,10 @@ const Sidebar = ({ isProfilePage }) => {
               <Link href='/'>
                 <Image
                   className='cursor-pointer'
-                  src={'/images/logo.svg'}
-                  alt="Navigate to home page"
-                  width={48}
-                  height={44}
+                  src={'/images/initials.svg'}
+                  alt="SS Logo that navigates to homepage"
+                  width={42}
+                  height={42}
                   priority
                   quality={100}
                 />

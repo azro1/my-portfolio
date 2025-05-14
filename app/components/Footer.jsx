@@ -17,15 +17,15 @@ const Footer = () => {
               <div className="flex flex-col items-center justify-start gap-2 mt-4 mb-20 md:p-4 md:flex-row md:items-start md:justify-between md:m-0 lg:px-0">
 
                 <div className="flex flex-col gap-2 md:gap-2">
-                  <div className="flex flex-col items-center gap-1 md:flex-row md:items-end md:gap-3">
-                    <div className="shadow-sm shadow-black rounded-full relative w-[34px] max-w-[34px] h-[30px]">
+                  <div className="flex flex-col items-center gap-1 md:flex-row md:items-end">
+                    <div className="relative w-[34px] max-w-[34px] h-[34px]">
                       <Link href='/'>
                         <Image
                           className='cursor-pointer w-max'
-                          src={'/images/logo.svg'}
-                          alt="Navigate to home page"
+                          src={'/images/initials.svg'}
+                          alt="SS Logo that navigates to homepage"
                           width={34}
-                          height={30}
+                          height={34}
                           priority
                           quality={100}
                         />

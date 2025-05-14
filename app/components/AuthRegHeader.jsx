@@ -28,14 +28,23 @@ const AuthRegHeader = () => {
 
     return (
         <header className='flex items-center bg-softCharcoal w-full min-h-[92px] fixed z-40 md:static'>
-            <div className='max-w-screen-xl mx-auto flex-1 flex items-center justify-between px-4'>
+            <div className='max-w-screen-xl mx-auto flex-1 flex items-center justify-between px-[x-pad]'>
                 <Link href={`${protectedRoutes ? '#' : '/'}`}>
                     <Image
-                        className='cursor-pointer'
-                        src={'/images/logo.svg'}
-                        alt="Navigate to home page"
-                        width={48}
-                        height={44}
+                        className='cursor-pointer md:hidden'
+                        src={'/images/initials.svg'}
+                        alt="SS Logo that navigates to homepage"
+                        width={42}
+                        height={42}
+                        priority
+                        quality={100}
+                    />
+                    <Image
+                        className='hidden cursor-pointer md:block'
+                        src={'/images/initials.svg'}
+                        alt="SS Logo that navigates to homepage"
+                        width={52}
+                        height={52}
                         priority
                         quality={100}
                     />
@@ -48,11 +57,11 @@ const AuthRegHeader = () => {
                             />
                         </div>
                 
-                        <ul className='hidden md:flex items-center gap-8'>
+                        <ul className='hidden md:flex items-center gap-8 mr-2 xl:mr-0'>
                             {links.map((link) => (
                                 <li key={link.href}> 
                                     <Link href={link.href}>
-                                        <span className='text-base transition-text duration-300 text-stoneGray hover:text-cloudGray'>{link.label}</span>
+                                        <span className='text-base transition-text duration-300 text-cloudGray'>{link.label}</span>
                                     </Link>
                                 </li>
                             ))}
