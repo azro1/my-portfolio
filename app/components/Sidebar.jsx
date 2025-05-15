@@ -167,7 +167,7 @@ const Sidebar = ({ isProfilePage }) => {
               <Link href='/'>
                 <Image
                   className='cursor-pointer'
-                  src={'/images/initials.svg'}
+                  src={'/images/logo.svg'}
                   alt="SS Logo that navigates to homepage"
                   width={54}
                   height={54}
@@ -177,12 +177,25 @@ const Sidebar = ({ isProfilePage }) => {
               </Link>
             </div>
 
+            {/* medium logo */}
+            <div className="hidden md:flex items-center py-4 min-h-[92px] xl:hidden">
+              <Image
+                  className='cursor-pointer'
+                  src={'/images/logo.svg'}
+                  alt="SS Logo that navigates to homepage"
+                  width={52}
+                  height={52}
+                  priority
+                  quality={100}
+              />
+            </div>
+
             {/* Small Logo */}
-            <div className="flex items-center py-4 min-h-[92px] xl:hidden">
+            <div className="flex items-center py-4 min-h-[92px] md:hidden">
               <Link href='/'>
                 <Image
                   className='cursor-pointer'
-                  src={'/images/initials.svg'}
+                  src={'/images/logo.svg'}
                   alt="SS Logo that navigates to homepage"
                   width={42}
                   height={42}

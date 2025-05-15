@@ -123,6 +123,9 @@ input::placeholder, textarea::placeholder{
   max-height: 410px !important;
 }
 
+.carousel ul.control-dots {
+  @apply m-0 bottom-2.5;
+}
 
 
 

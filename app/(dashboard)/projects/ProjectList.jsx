@@ -63,9 +63,9 @@ const ProjectList = () => {
               <Link href={`/projects/${project.id}`}>
 
 
-                <div className='relative w-full h-[326px] md:h-[380px] lg:h-[450px]'>
+                <div className='w-full h-[326px] md:h-[380px] lg:h-[450px]'>
                   
-                  <div className='hidden md:block'>
+                  <div className='hidden md:block relative h-full'>
                     <Image className='object-left-top md:object-contain'
                       src={project.image_url}
                       alt={project.list_alt_desc}

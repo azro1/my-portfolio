@@ -32,7 +32,7 @@ const AuthRegHeader = () => {
                 <Link href={`${protectedRoutes ? '#' : '/'}`}>
                     <Image
                         className='cursor-pointer md:hidden'
-                        src={'/images/initials.svg'}
+                        src={'/images/logo.svg'}
                         alt="SS Logo that navigates to homepage"
                         width={42}
                         height={42}
@@ -41,7 +41,7 @@ const AuthRegHeader = () => {
                     />
                     <Image
                         className='hidden cursor-pointer md:block'
-                        src={'/images/initials.svg'}
+                        src={'/images/logo.svg'}
                         alt="SS Logo that navigates to homepage"
                         width={52}
                         height={52}
