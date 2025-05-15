@@ -90,7 +90,7 @@ function maskEmail(email) {
                     isLoading={isLoading}
                     padding='p-3'
                     width='w-full'
-                    backgroundColor='bg-softCharcoal'
+                    backgroundColor='bg-goldenOchre'
                     text='Verify'
                />
             </div>
