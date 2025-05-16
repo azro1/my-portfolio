@@ -21,6 +21,7 @@ import {
 // components
 import UserAvatar from "./navbar/UserAvatar";
 import Chevron from "./Chevron";
+import Logo from "./Logo";
 
 
 
@@ -163,45 +164,29 @@ const Sidebar = ({ isProfilePage }) => {
           <nav className="px-[x-pad] flex justify-between md:gap-6 relative xl:px-0 xl:flex-col xl:justify-normal xl:gap-0 xl:min-h-[768px] ">
             
             {/* Large Logo */}
-            <div className="hidden xl:flex items-center justify-center py-4 xl:p-10 xl:min-h-[160px]">
+            <div className="hidden xl:flex items-center justify-center py-4 p-10 min-h-[160px]">
               <Link href='/'>
-                <Image
-                  className='cursor-pointer'
-                  src={'/images/logo.svg'}
-                  alt="SS Logo that navigates to homepage"
-                  width={54}
-                  height={54}
-                  priority
-                  quality={100}
-                />
+                <div className={`transition duration-200 ease-in transform ${isOpen ? 'opacity-100 scale-100 delay-200' : 'opacity-0 scale-90 delay-0'}`}>
+                    <Logo 
+                      size={54} 
+                    />
+                </div>
               </Link>
             </div>
 
             {/* medium logo */}
             <div className="hidden md:flex items-center py-4 min-h-[92px] xl:hidden">
-              <Image
-                  className='cursor-pointer'
-                  src={'/images/logo.svg'}
-                  alt="SS Logo that navigates to homepage"
-                  width={52}
-                  height={52}
-                  priority
-                  quality={100}
-              />
+              <Link href='/'>
+                  <Logo 
+                    size={50} 
+                  />
+              </Link>
             </div>
 
             {/* Small Logo */}
             <div className="flex items-center py-4 min-h-[92px] md:hidden">
               <Link href='/'>
-                <Image
-                  className='cursor-pointer'
-                  src={'/images/logo.svg'}
-                  alt="SS Logo that navigates to homepage"
-                  width={42}
-                  height={42}
-                  priority
-                  quality={100}
-                />
+                  <Logo />
               </Link>
             </div>
 

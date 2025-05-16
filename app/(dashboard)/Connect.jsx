@@ -35,7 +35,7 @@ const Connect = () => {
               <motion.a 
                 href={platform.url} target="_blank" rel="noopener noreferrer"
                 key={index}
-                className={`p-4 bg-charcoalGray shadow-lg shadow-deepCharcoal rounded-md w-max text-cloudGray ${platform.visibility}`} 
+                className={`p-3 bg-charcoalGray shadow-lg shadow-deepCharcoal rounded-md w-max text-cloudGray ${platform.visibility} md:p-4`} 
                 whileHover={{
                   scale: 1.1
                 }}
