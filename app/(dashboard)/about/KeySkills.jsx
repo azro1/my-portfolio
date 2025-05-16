@@ -58,7 +58,7 @@ const KeySkills = () => {
               }}
               className="flex flex-col items-center justify-center"
             >
-              <div className="p-3 shadow-lg w-max rounded-md transition-all transform hover:scale-105 bg-charcoalGray shadow-deepCharcoal md:p-4">
+              <div className="p-3 w-max rounded-md transition-all transform hover:scale-105 bg-charcoalGray shadow-[0_6px_8px_rgba(0,0,0,0.6)] md:p-4">
                 <span>{skill.icon}</span>
               </div>
                 <p className="mt-3 text-sm font-medium text-charcoalGrayLight lg:font-r lg:text-stoneGray tracking-wider">{skill.name}</p>
