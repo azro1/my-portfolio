@@ -1,8 +1,10 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image";
 import { FiLinkedin, FiGithub, FiInstagram, FiYoutube } from 'react-icons/fi';
+
+// components
+import Logo from "./Logo";
 
 
 const Footer = () => {
@@ -12,27 +14,23 @@ const Footer = () => {
 
 
 
-        <div className="p-10 mx-auto max-w-screen-lg md:p-0 flex-1">
+        <div className="flex-1 p-10 mx-auto max-w-screen-lg md:p-0">
           <main>
+            
+
               <div className="flex flex-col items-center justify-start gap-2 mt-4 mb-20 md:p-4 md:flex-row md:items-start md:justify-between md:m-0 lg:px-0">
 
                 <div className="flex flex-col gap-2 md:gap-2">
-                  <div className="flex flex-col items-center gap-1 md:flex-row md:items-end">
-                    <div className="relative w-[35px] max-w-[35px] h-[35px]">
+
+                  <div className="flex flex-col items-center gap-2 md:flex-row">
                       <Link href='/'>
-                        <Image
-                          className='cursor-pointer w-max'
-                          src={'/images/footer_logo.svg'}
-                          alt="SS Logo that navigates to homepage"
-                          width={35}
-                          height={35}
-                          priority
-                          quality={100}
-                        />
+                         <Logo
+                           size={36}
+                          />
                       </Link>
-                    </div>
                     <p className="text-stoneGray" >&copy; 2025 Simon Sutherland</p>
                   </div>
+
                   <div className="flex justify-center gap-4">
                       <a className="text-stoneGray" href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" >
                         <FiLinkedin size={24} />
@@ -51,12 +49,6 @@ const Footer = () => {
 
 
 
-
-
-
-
-
-
                 <div className="flex flex-col items-center justify-start">
                   <Link href="#">
                     <p className="text-sm text-stoneGray">Terms of Use</p>
@@ -70,8 +62,10 @@ const Footer = () => {
 
 
           </main>
-
         </div>
+
+
+        
     </footer>
   )
 }

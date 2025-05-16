@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation"
 
 // components
 import Chevron from "./Chevron"
+import Logo from "./Logo"
 
 const AuthRegHeader = () => {
     const pathname = usePathname();
@@ -30,24 +31,12 @@ const AuthRegHeader = () => {
         <header className='flex items-center bg-softCharcoal w-full min-h-[92px] fixed z-40 md:static'>
             <div className='max-w-screen-xl mx-auto flex-1 flex items-center justify-between px-[x-pad]'>
                 <Link href={`${protectedRoutes ? '#' : '/'}`}>
-                    <Image
-                        className='cursor-pointer md:hidden'
-                        src={'/images/logo.svg'}
-                        alt="SS Logo that navigates to homepage"
-                        width={42}
-                        height={42}
-                        priority
-                        quality={100}
-                    />
-                    <Image
-                        className='hidden cursor-pointer md:block'
-                        src={'/images/logo.svg'}
-                        alt="SS Logo that navigates to homepage"
-                        width={52}
-                        height={52}
-                        priority
-                        quality={100}
-                    />
+                    <div className='cursor-pointer md:hidden'>
+                      <Logo />
+                    </div>
+                    <div className='hidden cursor-pointer md:block'>
+                      <Logo size={50} />
+                    </div>
                 </Link>
                 {!protectedRoutes && (
                     <>

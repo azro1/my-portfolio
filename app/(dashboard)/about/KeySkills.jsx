@@ -46,7 +46,7 @@ const KeySkills = () => {
           Key Skills
         </Heading>
 
-        <div className="flex flex-wrap items-center justify-center max-w-xs mx-auto gap-6 lg:max-w-none lg:gap-12 lg:justify-around lg:px-1">
+        <div className="flex flex-wrap items-center justify-center max-w-[300px] mx-auto gap-6 lg:max-w-none lg:gap-12 lg:justify-around lg:px-1">
           {keySkills.map((skill, index) => (
             <motion.div
               key={index}
@@ -58,7 +58,7 @@ const KeySkills = () => {
               }}
               className="flex flex-col items-center justify-center"
             >
-              <div className="p-4 shadow-lg w-max rounded-md transition-all transform hover:scale-105 bg-charcoalGray shadow-deepCharcoal ">
+              <div className="p-3 shadow-lg w-max rounded-md transition-all transform hover:scale-105 bg-charcoalGray shadow-deepCharcoal md:p-4">
                 <span>{skill.icon}</span>
               </div>
                 <p className="mt-3 text-sm font-medium text-charcoalGrayLight lg:font-r lg:text-stoneGray tracking-wider">{skill.name}</p>
