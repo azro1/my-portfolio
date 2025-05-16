@@ -23,7 +23,7 @@ export default {
         stoneGray: '#A9AEA2', // a lighter shade of ashGray
         ashGray: '#6F7469', // primary color for body text
         nightSky: '#1D2120', // primary bg color for page sections that alternate with charcoalGray and dropdown menu on smaller screens
-        cloudGray: '#DFE1D9', // primary color for heading/title if the page bg is charcoalGray
+        cloudGray: '#FFFFFF', // primary color for heading/title if the page bg is charcoalGray
         softGray: '#F5F6F1', // bg color for auth pages, forum landing page and contact page
         'modal-translucent': 'rgb(28, 30, 36, 0.80)'
       },

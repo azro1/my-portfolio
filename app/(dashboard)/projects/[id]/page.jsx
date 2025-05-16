@@ -86,19 +86,12 @@ const Project = async ({ params }) => {
                       </div>
 
                       <div className='relative min-h-[380px] md:hidden'>
-                        <Image className='w-full h-full object-cover'
-                          src={project.mobile_placeholder}
-                          alt="mobile placeholder dark background"
-                          width={380}
-                          height={380}
-                          quality={100}
-                          priority
-                        />
-
-                        <div className='absolute top-1/2 -translate-y-1/2 left-1/2 transform -translate-x-1/2 bg-softGray md:hidden '>
+                        {/* bg placeholder for mobile image */}
+                        <div className='bg-nightSky w-full h-full'></div>
+                        <div className='absolute top-1/2 -translate-y-1/2 left-1/2 transform -translate-x-1/2 bg-softGray'>
                           <Image className='max-w-[150px] max-h-[150px]'
                             src={project.mobile_image_url}
-                            alt="rocket icon"
+                            alt="Animated SVG image representing the project on mobile"
                             width={200}
                             height={200}
                             quality={100}
