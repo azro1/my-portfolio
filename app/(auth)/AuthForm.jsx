@@ -33,19 +33,19 @@ const AuthForm = ({ handleSubmit, onSubmit, title, register, errors, isChecked, 
               <div className="mt-5 flex items-start text-left">
                   <label className="relative">
                     <input className="max-w-min transform scale-125 opacity-0 peer" type="checkbox" value={isChecked} onChange={handleCheckbox} />
-                    <span className="absolute left-0 top-0 w-[15px] h-[15px] border-[1px] border-ashGray rounded cursor-pointer peer-checked:bg-blue-500">
-                       <FiCheck size={14} color="white" />
+                    <span className="absolute left-0 top-0 w-[17px] h-[17px] border-[1px] border-ashGray flex items-center justify-center rounded cursor-pointer peer-checked:border-none peer-checked:bg-goldenOchre">
+                       <FiCheck size={15} color="white" />
                     </span>
                   </label>
 
-                  <span className="text-base block text-ashGray font-light ml-2.5 -mt-1.5">By signing up I agree to the{' '}<Link className="text-nightSky" href='#'>privacy policy</Link>{' '}and{' '}<Link className='text-nightSky' href='#'>terms of service</Link></span>
+                  <span className="text-base block text-ashGray font-light ml-2.5 -mt-1">By signing up I agree to the{' '}<Link className="text-nightSky" href='#'>privacy policy</Link>{' '}and{' '}<Link className='text-nightSky' href='#'>terms of service</Link></span>
               </div>
           )}
 
           <div className="mt-4 flex flex-col">
             <Button
               isLoading={isLoading}
-              padding='p-3'
+              padding='p-[11px]'
               width='w-full'
               backgroundColor='bg-goldenOchre'
               text={title}

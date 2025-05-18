@@ -45,7 +45,7 @@ const JoinRoomForm = () => {
         required
         className="rounded px-4 py-2.5"
       />
-      <button type="submit" className="bg-goldenOchre/90 hover:bg-goldenOchre text-white font-bold py-2.5 px-4 rounded">
+      <button type="submit" className="bg-goldenOchre/90 hover:bg-goldenOchre text-white font-medium text-[17px] p-[9px] rounded">
         Join Room
       </button>
     </form>
