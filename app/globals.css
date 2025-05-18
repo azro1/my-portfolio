@@ -45,7 +45,7 @@ main {
 }
 
 .btn-small {
-  @apply py-2 px-3 rounded-lg font-b text-white;
+  @apply rounded-lg font-medium text-[17px] text-white;
 }
 
 form input {

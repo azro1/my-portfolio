@@ -14,10 +14,10 @@ export default {
     },
     extend: {
       colors: {
-        goldenOchre: '#C47F17', // bg hint color for buttons and primary heading color for heading/title if the page bg is nightSky
-        softCharcoal: '#3B3F37', // bg color for sidebars
+        goldenOchre: '#D97706', // bg hint color for buttons and primary heading color for heading/title if the page bg is nightSky
+        softCharcoal: '#2F3532', // bg color for sidebars
         deepCharcoal: '#272B25', // bg color for sidebar buttons on hover
-        slateOnyx: '#2E2F28', // bg color for footer and dropdown menu on larger screens
+        slateOnyx: '#3A403C', // bg color for footer and dropdown menu on larger screens
         charcoalGray: '#5A5F54', // primary bg color for page sections that alternate with nightSky
         charcoalGrayLight: '#C9C1B6', // text for profile pages with charcoalGray bg
         stoneGray: '#A9AEA2', // a lighter shade of ashGray

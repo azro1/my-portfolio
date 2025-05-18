@@ -163,7 +163,7 @@ const UploadAvatar = () => {
     return (
         <div className='flex-1 flex flex-col justify-center w-full max-w-xs sm:max-w-sm md:max-w-md'>
 
-          <div className='flex flex-col justify-center gap-2 md:bg-white md:shadow-outer md:p-10 md:rounded-xl relative'>
+          <div className='flex flex-col justify-center gap-3 md:bg-white md:shadow-outer md:p-12 md:rounded-xl relative'>
 
             <Heading className='text-2xl font-semibold text-nightSky'>
               Upload your avatar
@@ -182,7 +182,7 @@ const UploadAvatar = () => {
               />
             </div>
 
-            <Link className='w-full mt-2 md:mt-0' href='/register-form'>
+            <Link className='w-full mt-1 md:mt-0' href='/register-form'>
               <div className='flex'>
                 <button className='text-nightSky ml-auto'>
                   Skip

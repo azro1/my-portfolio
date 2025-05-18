@@ -160,10 +160,19 @@ const customStyles = {
     option: (base) => ({
         ...base,
     }),
+    dropdownIndicator: (base, state) => ({
+        ...base,
+        color: 'rgba(111, 116, 105, 0.4)',
+        opacity: 0.8,
+    }),
+    indicatorSeparator: (base) => ({
+        ...base,
+        opacity: 0.5
+    }),
     placeholder: (base) => ({
         ...base,
-        color: '#6B6B6B',
-        opacity: '80%',
+        color: '#6F7469',
+        opacity: 0.8,
         fontSize: '15px',
         fontWeight: '300'
     }),
@@ -569,16 +578,14 @@ const RegisterForm = () => {
   return (
         <div className='flex flex-col justify-start pt-32 md:justify-center md:pt-0 min-h-[668px] md:min-h-[824px]'>
 
-            <div className='flex flex-col gap-4 w-full max-w-xs sm:max-w-sm md:bg-white md:shadow-outer md:p-12 md:rounded-xl md:max-w-md'>
+            <div className='flex flex-col gap-5 w-full max-w-xs sm:max-w-sm md:bg-white md:shadow-outer md:p-14 md:rounded-xl md:max-w-md'>
 
-                <div className='md:text-center'>
-                    <Heading className='text-2xl font-semibold text-nightSky'>
-                        Enter your personal details
-                    </Heading>
-                </div>
+                <Heading className='text-2xl font-semibold text-nightSky md:mb-3'>
+                    Enter your personal details
+                </Heading>
 
                 <div>
-                    <form className='flex flex-col gap-5' noValidate>
+                    <form className='flex flex-col gap-6 md:gap-6' noValidate>
                         <div>
                             <div className='relative '>
                                 <input
@@ -590,7 +597,7 @@ const RegisterForm = () => {
                                     placeholder='First Name'
                                     minLength='3'
                                     {...register('firstname')}
-                                    className={`w-full py-2.5 px-3 text-nightSky rounded-md border-[1px] ${errors.firstname ? 'border-red-600' : 'border-cloudGray md:border-gray-300'}`}
+                                    className={`w-full py-2.5 px-3 text-nightSky rounded-md border-[1px]  ${errors.firstname ? 'border-red-600' : 'border-cloudGray md:border-gray-300'}`}
                                 />
                             </div>
                             {errors?.firstname && <p className='form-error mt-1'>{errors.firstname.message}</p>}
@@ -613,7 +620,7 @@ const RegisterForm = () => {
                         </div>
 
                         <div>
-                            <div className="flex gap-3">
+                            <div className="flex gap-5">
                                 {dobFields.map((field) => (
                                     <div key={field.name} className="flex flex-col">
                                     {field.name !== 'month' ? (
@@ -629,7 +636,7 @@ const RegisterForm = () => {
                                         {...register(`dob.${field.name}`)}
                                         />
                                     ) : (
-                                        <div className={`w-max min-w-[110px] text-center rounded-md border-[1px]  ${!hasInteracted && formState.isSubmitted && (!dob.day && !dob.month?.value && !dob.year) ? 'border-red-600' : 'border-cloudGray md:border-gray-300'} flex-1 flex items-center justify-center`}>
+                                        <div className={`w-max min-w-[110px] text-center rounded-md border-[1px] ${!hasInteracted && formState.isSubmitted && (!dob.day && !dob.month?.value && !dob.year) ? 'border-red-600' : 'border-cloudGray md:border-gray-300'} flex-1 flex items-center justify-center`}>
                                         {isClient && (
                                             <Controller
                                             name="dob.month"
@@ -672,14 +679,14 @@ const RegisterForm = () => {
                                     spellCheck={false}
                                     placeholder="Phone Number"
                                     {...register('phone')}
-                                    className={`w-full py-2.5 px-3 text-nightSky rounded-md border-[1px] ${(errors.phone || phoneExists) ? 'border-red-600' : 'border-cloudGray md:border-gray-300'}`}
+                                    className={`w-full py-2.5 px-3 text-nightSky rounded-md border-[1px]  ${(errors.phone || phoneExists) ? 'border-red-600' : 'border-cloudGray md:border-gray-300'}`}
                                     onKeyDown={handleKeyDown}
                                 />
                             </div>
                             {errors.phone ? <p className="form-error mt-1">{errors.phone.message}</p> : phoneExists ? <p className="form-error mt-1">Phone already exists</p> : null}
                         </div>
 
-                        <button className={`p-3 px-3.5 rounded-lg cursor-pointer text-white font-b block w-full transition duration-500 bg-green-700 ${(isLoading || phoneExists) ? 'opacity-65' : 'opacity-100'}`} disabled={isLoading || phoneExists} aria-live={Object.keys(errors).length > 0 || isLoading ? 'assertive' : 'off'} onClick={handleSubmit(handleUpdateProfile)}>
+                        <button className={`p-[9px] text-[17px] rounded-lg cursor-pointer text-white font-medium block w-full transition duration-500 bg-green-700 ${(isLoading || phoneExists) ? 'opacity-65' : 'opacity-100'}`} disabled={isLoading || phoneExists} aria-live={Object.keys(errors).length > 0 || isLoading ? 'assertive' : 'off'} onClick={handleSubmit(handleUpdateProfile)}>
                             {isLoading ? (
                                 <div className='flex items-center justify-center'>
                                     <Image
@@ -697,7 +704,7 @@ const RegisterForm = () => {
 
                     </form>
     
-                    <div className='mt-2'>
+                    <div className='mt-3 md:mt-4'>
                         <Link href='/upload-avatar' onClick={(e) => handleBackButton(e)}>
                             <button className='text-nightSky'>
                                 Back

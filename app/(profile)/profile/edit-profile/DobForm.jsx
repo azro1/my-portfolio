@@ -221,8 +221,8 @@ const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
                         />
                     </form>
                     <div className='flex items-center'>
-                        <button className='btn-small bg-goldenOchre mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                        <button className='btn-small bg-goldenOchre mt-3 w-[64px]' disabled={saving} onClick={handleSubmit(handleUpdateDob)}>
+                        <button className='btn-small py-2 px-3 bg-goldenOchre mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
+                        <button className='btn-small py-2 px-3 bg-goldenOchre mt-3 w-[64px]' disabled={saving} onClick={handleSubmit(handleUpdateDob)}>
                             {saving ? (
                                 <div className='flex items-center justify-center gap-2 w-[34px] h-[24px]'>
                                     <Image

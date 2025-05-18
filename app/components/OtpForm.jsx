@@ -60,7 +60,7 @@ function maskEmail(email) {
                             id={`codes[${index}].code`}
                             type='tel'
                             maxLength={1}
-                            className={`text-center w-[48px] h-[48px] rounded-md border-[1px] text-lg text-nightSky ${(formState.isSubmitted && typeof errors.codes === 'object' && !Array.isArray(errors.codes)) || (formState.isSubmitted && Array.isArray(errors.codes) && errors.codes.find((error) => error?.code?.message)) ? 'border-red-600' : 'border-cloudGray'}`}
+                            className={`text-center w-[48px] h-[48px] rounded-md border-[1px] text-lg ${(formState.isSubmitted && typeof errors.codes === 'object' && !Array.isArray(errors.codes)) || (formState.isSubmitted && Array.isArray(errors.codes) && errors.codes.find((error) => error?.code?.message)) ? 'border-red-600' : 'border-cloudGray md:border-gray-300'}`}
                             onChange={(e) => {
                                 handleInputChange(e, index)
                                 handleKeyDown(e, index)
@@ -88,7 +88,7 @@ function maskEmail(email) {
             <div className='mt-5 mb-3'>
                <Button
                     isLoading={isLoading}
-                    padding='p-3'
+                    padding='p-[11px]'
                     width='w-full'
                     backgroundColor='bg-goldenOchre'
                     text='Verify'
