@@ -33,7 +33,7 @@ const AuthForm = ({ handleSubmit, onSubmit, title, register, errors, isChecked, 
               <div className="mt-5 flex items-start text-left">
                   <label className="relative">
                     <input className="max-w-min transform scale-125 opacity-0 peer" type="checkbox" value={isChecked} onChange={handleCheckbox} />
-                    <span className="absolute left-0 top-0 w-[17px] h-[17px] border-[1px] border-ashGray flex items-center justify-center rounded cursor-pointer peer-checked:border-none peer-checked:bg-goldenOchre">
+                    <span className="absolute left-0 top-0 w-[17px] h-[17px] border-[1px] border-[rgba(180,185,190,0.9)] flex items-center justify-center rounded cursor-pointer peer-checked:border-none peer-checked:bg-goldenOchre">
                        <FiCheck size={15} color="white" />
                     </span>
                   </label>

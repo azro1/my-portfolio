@@ -48,7 +48,7 @@ const Connect = () => {
           </div>
 
           <div className='flex flex-col items-center justify-center '>
-            <p className="md:hidden">
+            <p className="text-stoneGray md:hidden">
               Follow me on LinkedIn, GitHub, Instagram, and Discord for updates on latest projects, code repositories, and more!
             </p>
 
