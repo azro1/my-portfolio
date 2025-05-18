@@ -284,7 +284,7 @@ const EnquiriesForm = ({ user }) => {
                 <div className="flex flex-col mt-3">
                     <Button
                         isLoading={isLoading}
-                        padding='py-2 px-3.5'
+                        padding='py-2.5 px-4'
                         width='w-max'
                         backgroundColor='bg-goldenOchre'
                         text='Send'

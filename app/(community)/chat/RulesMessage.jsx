@@ -2,7 +2,7 @@ import Heading from "@/app/components/Heading";
 
 const RulesMessage = () => {
     return (
-      <div className="bg-white p-4 rounded-md mb-8 md:p-6 md:rounded-lg">
+      <div className="bg-white p-4 rounded-md mb-8 border-[1px] border-[rgba(180,185,190,0.2)] md:p-6 md:rounded-lg">
         <Heading className="mb-1 text-nightSky font-bold text-lg md:text-xl md:mb-2">
           Chat Room Rules
         </Heading>
