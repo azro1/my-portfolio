@@ -14,7 +14,7 @@ const Button = ({ isLoading, padding, width, backgroundColor, text, margin }) =>
                         />
                 </div>
             ) : (
-                <span className='text-[17px]'>{text}</span>
+                <span className='text-cloudGray text-[17px]'>{text}</span>
             )}
         </button>
     )

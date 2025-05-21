@@ -91,7 +91,7 @@ const UserAvatar = ({ user, avatarUrl, width = 32, height = 32, maxWidth, maxHei
                     ) : (
                         /* Placeholder for when no avatar exists */
                         <div className="w-fit rounded-full justify-self-center">
-                            <FaUserCircle size={defaultAvatarSize} color="gray" />
+                            <FaUserCircle size={defaultAvatarSize} color="darkgray" />
                         </div>
                     )}
                 </div>

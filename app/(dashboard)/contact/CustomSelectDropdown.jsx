@@ -27,11 +27,11 @@ const CustomSelectDropdown = ({ label, options, subject, setSubject, errors }) =
 
     return (
         <>
-            <span className="max-w-min mb-2 text-base font-light text-ashGray block">{label}</span>
+            <span className="max-w-min mb-2 text-base text-ashGray block">{label}</span>
             <div className="custom-select relative">
                 {/* Dropdown header */}
                 <div
-                    className={`w-full py-2.5 px-4 rounded-md outline-none border-[1px] ${errors.subject ? 'border-red-600' : 'border-cloudGray'} bg-white cursor-pointer flex justify-between items-center relative`}
+                    className={`w-full py-2.5 px-4 rounded-md outline-none border-[1px] ${errors.subject ? 'border-red-600' : 'border-gray-300'} bg-white cursor-pointer flex justify-between items-center relative`}
                     onClick={() => setDropdownOpen(!dropdownOpen)}
                 >
                     {subject ? (
@@ -42,9 +42,9 @@ const CustomSelectDropdown = ({ label, options, subject, setSubject, errors }) =
 
                     <div className='absolute top-0 right-0 w-10 h-full pointer-events-none flex items-center justify-center rounded-tr-md rounded-br-md'>
                         {dropdownOpen ? (
-                            <FaCaretUp className="text-ashGray" size={18} />
+                            <FaCaretUp className="text-[rgba(180,185,190,0.9)]" size={18} />
                         ) : (
-                            <FaCaretDown className="text-ashGray" size={18} />
+                            <FaCaretDown className="text-[rgba(180,185,190,0.9)]" size={18} />
                         )}
                     </div>
                 </div>

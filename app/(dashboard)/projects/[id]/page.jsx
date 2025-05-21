@@ -66,13 +66,18 @@ const Project = async ({ params }) => {
               <div className="flex flex-col items-center pt-40 pb-20 md:p-0 md:h-screen md:min-h-[1154px]">
                 <div className="w-full flex-grow flex items-center justify-center">
 
-                  <div className='flex flex-col justify-center h-full'>
-                    <Heading className='subheading font-b text-nightSky'>
-                       {project.title}
-                    </Heading>
-                    <div className='mt-6 grid gap-y-6 md:grid-auto-rows md:grid-cols-2'>
+                  <div className='flex flex-col justify-center h-full relative'>
+                    <div className='flex gap-2'>
+                      <Heading className='font-bold text-nightSky subheading'>
+                        {project.title}
+                      </Heading>
+                      <ProjectFavouriteButton projectId={project.id} user={user} />
+                    </div>
 
-                      <div className='hidden md:block rounded-md md:col-span-2 relative w-full'>
+
+                    <div className='mt-4 grid gap-y-6 md:grid-auto-rows md:grid-cols-2'>
+
+                      <div className='hidden rounded-md md:col-span-2 relative w-full md:block'>
                         <Image
                           className='w-full h-full'
                           src={project.image_url}
@@ -85,28 +90,23 @@ const Project = async ({ params }) => {
                         />
                       </div>
 
-                      <div className='relative min-h-[380px] md:hidden'>
-                        {/* bg placeholder for mobile image */}
-                        <div className='bg-nightSky w-full h-full'></div>
-                        <div className='absolute top-1/2 -translate-y-1/2 left-1/2 transform -translate-x-1/2 bg-softGray'>
-                          <Image className='max-w-[150px] max-h-[150px]'
-                            src={project.mobile_image_url}
-                            alt="Animated SVG image representing the project on mobile"
-                            width={200}
-                            height={200}
-                            quality={100}
-                            priority
-                          />
-                        </div>
+                  
+                      <div className='min-h-[250px] w-full sm:max-w-xs relative bg-white md:hidden'>
+                        <Image className='max-w-[170px] max-h-[170px] mx-auto my-auto '
+                          src={project.mobile_image_url}
+                          alt="Animated SVG image representing the project on mobile"
+                          fill
+                          quality={100}
+                          priority
+                        />
                       </div>
 
 
-                      <div className='md:row-start-2 md:col-start-1 pb-3 md:col-span-2 relative'>
-                        <ProjectFavouriteButton className={'absolute right-0 top-1'} projectId={project.id} user={user} />
-                        <Heading className='text-lg font-b text-nightSky'>
+                      <div className='md:row-start-2 md:col-start-1 pb-3 md:col-span-2'>
+                        <Heading className='text-lg md:text-xl font-b text-nightSky'>
                           Project description
                         </Heading>
-                        <p className='pt-2.5 leading-7' >{project.description}</p>
+                        <p className='pt-2.5 leading-7'>{project.description}</p>
                       </div>
 
                       <div className='row-start-3 col-start-1 md:col-start-1 md:row-start-3'>
@@ -146,7 +146,7 @@ const Project = async ({ params }) => {
                           <div className='text-ashGray text-base leading-7'>
                             Project Url:{' '}
                             <a href={project.url} target='_blank' rel="noopener noreferrer">
-                              <span className='text-black text-base'>
+                              <span className='text-goldenOchre text-base'>
                                 {project.url}
                               </span>
                             </a>

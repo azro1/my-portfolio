@@ -174,7 +174,8 @@ const customStyles = {
         color: '#6F7469',
         opacity: 0.8,
         fontSize: '15px',
-        fontWeight: '300'
+        fontWeight: '300',
+        letterSpacing: '0.025em'
     }),
 };
 
@@ -580,7 +581,7 @@ const RegisterForm = () => {
 
             <div className='flex flex-col gap-5 w-full max-w-xs sm:max-w-sm md:bg-white md:shadow-outer md:p-14 md:rounded-xl md:max-w-md'>
 
-                <Heading className='text-2xl font-semibold text-nightSky md:mb-3'>
+                <Heading className='font-semibold text-nightSky md:mb-3 text-[26px] md:text-[28px]'>
                     Enter your personal details
                 </Heading>
 
@@ -704,7 +705,7 @@ const RegisterForm = () => {
 
                     </form>
     
-                    <div className='mt-3 md:mt-4'>
+                    <div className='mt-4'>
                         <Link href='/upload-avatar' onClick={(e) => handleBackButton(e)}>
                             <button className='text-nightSky'>
                                 Back
