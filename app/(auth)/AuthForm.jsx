@@ -17,9 +17,9 @@ const AuthForm = ({ handleSubmit, onSubmit, title, register, errors, isChecked, 
               {title}
           </Heading>
 
-          <label className='max-w-min mb-2 text-base font-light text-ashGray block' htmlFor="email">Email</label>
+          <label className='max-w-min mb-2 text-base text-ashGray block' htmlFor="email">Email</label>
           <input
-            className={`w-full py-2.5 px-4 rounded-md text-nightSky border-[1px] ${errors.email ? 'border-red-600' : 'border-gray-300'}`}
+            className={`w-full py-2.5 px-4 rounded-md border-[1px] ${errors.email ? 'border-red-600' : 'border-gray-300'}`}
             id="email"
             type="email"
             {...register('email')}
@@ -38,7 +38,7 @@ const AuthForm = ({ handleSubmit, onSubmit, title, register, errors, isChecked, 
                     </span>
                   </label>
 
-                  <span className="text-base block text-ashGray font-light ml-2.5 -mt-1">By signing up I agree to the{' '}<Link className="text-nightSky" href='#'>privacy policy</Link>{' '}and{' '}<Link className='text-nightSky' href='#'>terms of service</Link></span>
+                  <span className="text-base block text-ashGray ml-2.5 -mt-1">By signing up I agree to the{' '}<Link className="text-nightSky" href='#'>privacy policy</Link>{' '}and{' '}<Link className='text-nightSky' href='#'>terms of service</Link></span>
               </div>
           )}
 
@@ -64,13 +64,13 @@ const AuthForm = ({ handleSubmit, onSubmit, title, register, errors, isChecked, 
 
         <div className='flex-1 flex items-center gap-3 mb-6'>
           <span className='w-full h-[1px] bottom-10 bg-ashGray opacity-30'></span>
-          <p className='font-light'>or</p>
+          <p className=''>or</p>
           <span className='w-full h-[1px] bg-ashGray opacity-30'></span>
         </div>
 
         <SocialButtons text={title} />
         <div className="mt-7">
-          <p className='mt-8 font-light inline pr-2'>{`${isSignup ? 'Already have an account?' : "Don't have an account?" }`}</p>
+          <p className='mt-8  inline pr-2'>{`${isSignup ? 'Already have an account?' : "Don't have an account?" }`}</p>
           <Link className='text-nightSky text-base' href={`${isSignup ? '/login' : '/signup'}`}>{`${isSignup ? 'Login' : 'Sign up'}`}</Link>
         </div>
       </div>

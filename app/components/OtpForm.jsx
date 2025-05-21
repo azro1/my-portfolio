@@ -43,7 +43,7 @@ function maskEmail(email) {
             </Heading>
 
             {email && (
-                <p className='max-w-xs mb-4 font-light'>We’ve sent a code to <span className='font-r text-nightSky'>{maskEmail(email)}</span> please enter it below to verify your account</p>
+                <p className='max-w-xs mb-4'>We’ve sent a code to <span className='font-r text-nightSky'>{maskEmail(email)}</span> please enter it below to verify your account</p>
             )}
 
             {phone && (
@@ -60,7 +60,7 @@ function maskEmail(email) {
                             id={`codes[${index}].code`}
                             type='tel'
                             maxLength={1}
-                            className={`text-center w-[48px] h-[48px] rounded-md border-[1px] text-lg ${(formState.isSubmitted && typeof errors.codes === 'object' && !Array.isArray(errors.codes)) || (formState.isSubmitted && Array.isArray(errors.codes) && errors.codes.find((error) => error?.code?.message)) ? 'border-red-600' : 'border-cloudGray md:border-gray-300'}`}
+                            className={`text-center w-[48px] h-[48px] rounded-md border-[1px] text-lg ${(formState.isSubmitted && typeof errors.codes === 'object' && !Array.isArray(errors.codes)) || (formState.isSubmitted && Array.isArray(errors.codes) && errors.codes.find((error) => error?.code?.message)) ? 'border-red-600' : 'border-gray-300'}`}
                             onChange={(e) => {
                                 handleInputChange(e, index)
                                 handleKeyDown(e, index)

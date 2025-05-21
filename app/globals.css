@@ -98,7 +98,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 /* input placeholder */
 input::placeholder, textarea::placeholder{
-  @apply opacity-80 text-ashGray text-[15px] font-light;
+  @apply opacity-80 text-ashGray text-[15px] font-light tracking-wide;
 }
 
 
@@ -114,19 +114,16 @@ input::placeholder, textarea::placeholder{
 /* react carousel */
 .carousel-root,
 .carousel .carousel-slider {
-  width: 100% !important;
-  max-width: 926px !important;
   margin: 0 auto !important;
 }
 
-.carousel .control-prev, .control-next {
-  max-height: 410px !important;
-}
-
 .carousel ul.control-dots {
-  @apply m-0 bottom-2.5;
+  @apply m-0 bottom-0;
 }
 
+.carousel ul.control-dots li.dot {
+  @apply w-2.5 h-2.5;
+}
 
 
 
