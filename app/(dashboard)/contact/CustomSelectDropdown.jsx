@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { FaCaretDown, FaCaretUp } from "react-icons/fa";
 
-const CustomSelectDropdown = ({ label, options, subject, setSubject, errors }) => {
+const CustomSelectDropdown = ({ placeholderClass, options, subject, setSubject, errors }) => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dropDownRef = useRef()
 
@@ -27,7 +27,7 @@ const CustomSelectDropdown = ({ label, options, subject, setSubject, errors }) =
 
     return (
         <>
-            <span className="max-w-min mb-2 text-base text-ashGray block">{label}</span>
+            {/* <span className="max-w-min mb-2 text-base text-ashGray block">{label}</span> */}
             <div className="custom-select relative">
                 {/* Dropdown header */}
                 <div
@@ -37,7 +37,7 @@ const CustomSelectDropdown = ({ label, options, subject, setSubject, errors }) =
                     {subject ? (
                         <span className="">{subject}</span>
                     ) : (
-                        <span className="text-ashGray text-opacity-50 h-6"></span>
+                        <span className={`${placeholderClass} h-6`}>Subject</span>
                     )}
 
                     <div className='absolute top-0 right-0 w-10 h-full pointer-events-none flex items-center justify-center rounded-tr-md rounded-br-md'>

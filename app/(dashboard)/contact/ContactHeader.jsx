@@ -4,7 +4,7 @@ import Heading from "@/app/components/Heading"
 const ContactHeader = () => {
     return (
         <>
-            <Heading className='subheading font-bold mb-3 text-nightSky'>
+            <Heading className='font-bold mb-4 text-nightSky text-[22px] md:text-2xl md:mb-4'>
                 Get In Touch
             </Heading>
             <p>

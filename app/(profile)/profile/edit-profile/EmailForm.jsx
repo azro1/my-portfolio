@@ -222,7 +222,7 @@ const EmailForm = ({ user, profile }) => {
                         <label className='block mb-3 text-xl font-medium' htmlFor='draftEmail'>Email Address</label>
                         <p className='mb-3 font-light'>Please enter your new email address. This email will be used for account verification and notifications</p>
                         <input
-                            className='w-full p-2.5 px-4 rounded-md border-[1px] border-cloudGray'
+                            className='w-full p-2.5 px-4 rounded-md border-[1px] border-gray-300'
                             id='draftEmail'
                             type='email'
                             placeholder='Email'
@@ -233,9 +233,9 @@ const EmailForm = ({ user, profile }) => {
                             onKeyDown={handleKeyDown}
                         />
                     </form>
-                    <div className='flex items-center'>
-                        <button className='btn-small py-2 px-3 bg-goldenOchre mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                        <button className={`btn-small py-2 px-3 bg-goldenOchre mt-3 w-[64px]`} onClick={handleSubmit(handleEmailUpdate)}>
+                    <div className='flex items-center mt-3'>
+                        <button className='btn-small py-2 px-3 bg-goldenOchre mr-2' onClick={handleCloseForm}>Cancel</button>
+                        <button className={`btn-small py-2 px-3 bg-goldenOchre w-[64px]`} onClick={handleSubmit(handleEmailUpdate)}>
                             {isUpdating ? (
                                 <div className='flex items-center justify-center gap-2 w-[34px] h-[24px]'>
                                     <Image

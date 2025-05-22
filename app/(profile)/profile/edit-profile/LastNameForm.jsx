@@ -223,7 +223,7 @@ const LastNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
                             </span>
                             <p className='mb-3 font-light'>Please enter your last name as you&apos;d like it to appear in your profile</p>
                             <input
-                                className='w-full p-2.5 px-5 rounded-md border-[1px] border-cloudGray'
+                                className='w-full p-2.5 px-5 rounded-md border-[1px] border-gray-300'
                                 id='draftLastName'
                                 type='text'
                                 placeholder='Last Name'
@@ -235,9 +235,9 @@ const LastNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
                             />
                         
                     </form>
-                    <div className='flex items-center'>
-                        <button className='btn-small py-2 px-3 bg-goldenOchre mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                        <button className='btn-small py-2 px-3 bg-goldenOchre mt-3 w-[64px]' onClick={handleSubmit(handleNameUpdate)}>
+                    <div className='flex items-center mt-3'>
+                        <button className='btn-small py-2 px-3 bg-goldenOchre mr-2' onClick={handleCloseForm}>Cancel</button>
+                        <button className='btn-small py-2 px-3 bg-goldenOchre w-[64px]' onClick={handleSubmit(handleNameUpdate)}>
                             {saving ? (
                                 <div className='flex items-center justify-center gap-2 w-[34px] h-[24px]'>
                                     <Image

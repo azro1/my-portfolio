@@ -45,14 +45,13 @@ const AuthForm = ({ handleSubmit, onSubmit, title, register, errors, isChecked, 
           <div className="mt-4 flex flex-col">
             <Button
               isLoading={isLoading}
-              padding='p-[11px]'
-              width='w-full'
-              backgroundColor='bg-goldenOchre'
+              className='w-full p-[11px] bg-goldenOchre'
+              textStyles='text-[17px]'
               text={title}
             />
 
             {!isSignup && (
-              <Link className='mt-1.5 ml-auto' href={'/forgot-email'}>
+              <Link className='mt-2 ml-auto' href={'/forgot-email'}>
                 <span className='text-nightSky text-base'>Forgot email?</span>
               </Link>
             )}
