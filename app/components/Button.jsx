@@ -1,8 +1,8 @@
 import Image from "next/image"
 
-const Button = ({ isLoading, padding, width, backgroundColor, text, margin }) => {
+const Button = ({ isLoading, className='', textStyles='', text }) => {
     return (
-        <button className={`${isLoading ? 'opacity-65' : 'opacity-100'} ${padding} ${width} ${backgroundColor} ${margin} rounded-lg cursor-pointer text-white font-medium block`} disabled={isLoading}>
+        <button className={`${isLoading ? 'opacity-65' : 'opacity-100'} ${className} rounded-lg cursor-pointer text-white font-medium block`} disabled={isLoading}>
             {isLoading ? (
                 <div className='flex items-center justify-center'>
                         <Image
@@ -14,7 +14,7 @@ const Button = ({ isLoading, padding, width, backgroundColor, text, margin }) =>
                         />
                 </div>
             ) : (
-                <span className='text-cloudGray text-[17px]'>{text}</span>
+                <span className={`text-cloudGray ${textStyles}`}>{text}</span>
             )}
         </button>
     )

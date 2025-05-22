@@ -218,7 +218,7 @@ const BioForm = ({ user, profile, fetchProfile, changeMessage }) => {
                         <label className="block mb-2 text-xl" htmlFor="draftBio">Edit Bio</label>
                         <p className='mb-3 font-light'>Please enter your updated bio. Keep it brief and relevant, as this will be displayed on your profile dashboard.</p>
                         <input
-                            className='w-full p-2.5 px-4 rounded-md border-[1px] border-cloudGray'
+                            className='w-full p-2.5 px-4 rounded-md border-[1px] border-gray-300'
                             id='draftBio'
                             type='text'
                             placeholder='Bio'
@@ -229,9 +229,9 @@ const BioForm = ({ user, profile, fetchProfile, changeMessage }) => {
                             onKeyDown={handleKeyDown}
                         />
                     </form>
-                    <div className='flex items-center'>
-                        <button className='btn-small py-2 px-3 bg-goldenOchre mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                        <button className='btn-small  py-2 px-3 bg-goldenOchre mt-3' onClick={handleSubmit(handleUpdateBio)}>
+                    <div className='flex items-center mt-3'>
+                        <button className='btn-small py-2 px-3 bg-goldenOchre mr-2' onClick={handleCloseForm}>Cancel</button>
+                        <button className='btn-small  py-2 px-3 bg-goldenOchre' onClick={handleSubmit(handleUpdateBio)}>
                             {saving ? (
                                 <div className='flex items-center justify-center w-[34px] h-[24px]'>
                                     <Image

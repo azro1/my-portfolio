@@ -38,19 +38,19 @@ function maskEmail(email) {
     <div className={containerStyles}> 
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
 
-            <Heading className='leading-tight mb-4 font-semibold text-nightSky text-[26px] md:text-[28px]'>
+            <Heading className='text-center leading-tight mb-6 font-semibold text-nightSky text-[26px] md:text-[28px]'>
                 {title}
             </Heading>
 
             {email && (
-                <p className='max-w-xs mb-4'>We’ve sent a code to <span className='font-r text-nightSky'>{maskEmail(email)}</span> please enter it below to verify your account</p>
+                <p className='mb-4 text-lg'>Enter the code sent to <span className='font-r text-nightSky'>{maskEmail(email)}</span> to verify your email address{title === 'Log In' ? '.' : ' and create your account.'}</p>
             )}
 
             {phone && (
-                <p className='max-w-xs mb-4'>Check your phone! A code was sent to the number ending in <span className='text-black'>{maskedPhone}</span> please enter it below</p> 
+                <p className='mb-4 text-lg'>To update your existing phone number, enter the code sent to the number you provided ending in <span className='text-black'>{maskedPhone}</span></p> 
             )}
 
-            <div className='flex gap-2'>
+            <div className='flex gap-2.5'>
                 {fields.map((field, index) => (
                     <div key={field.id}>
                         <label htmlFor={`codes[${index}].code`} className="max-w-min mb-2 text-base text-ashGray"></label>
@@ -60,7 +60,7 @@ function maskEmail(email) {
                             id={`codes[${index}].code`}
                             type='tel'
                             maxLength={1}
-                            className={`text-center w-[48px] h-[48px] rounded-md border-[1px] text-lg ${(formState.isSubmitted && typeof errors.codes === 'object' && !Array.isArray(errors.codes)) || (formState.isSubmitted && Array.isArray(errors.codes) && errors.codes.find((error) => error?.code?.message)) ? 'border-red-600' : 'border-gray-300'}`}
+                            className={`text-center w-[100%] h-[56px] rounded-md border-[1px] text-lg ${(formState.isSubmitted && typeof errors.codes === 'object' && !Array.isArray(errors.codes)) || (formState.isSubmitted && Array.isArray(errors.codes) && errors.codes.find((error) => error?.code?.message)) ? 'border-red-600' : 'border-gray-300'}`}
                             onChange={(e) => {
                                 handleInputChange(e, index)
                                 handleKeyDown(e, index)
@@ -85,12 +85,11 @@ function maskEmail(email) {
             ) : null}
 
 
-            <div className='mt-5 mb-3'>
+            <div className='mt-5 mb-4'>
                <Button
                     isLoading={isLoading}
-                    padding='p-[11px]'
-                    width='w-full'
-                    backgroundColor='bg-goldenOchre'
+                    className='w-full p-[11px] bg-goldenOchre'
+                    textStyles='text-[18px]'
                     text='Verify'
                />
             </div>

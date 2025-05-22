@@ -212,7 +212,7 @@ const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
                         <label className="block mb-3 text-xl font-medium" htmlFor='draftDob'>Edit Dob</label>
                         <p className='mb-3 font-light'>Please enter a valid date of birth to keep your account accurate and up-to-date</p>
                         <input
-                            className='w-full p-2.5 px-4 rounded-md border-[1px] border-cloudGray'
+                            className='w-full p-2.5 px-4 rounded-md border-[1px] border-gray-300'
                             id='draftDob'
                             type='date'
                             spellCheck={false}
@@ -220,9 +220,9 @@ const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
                             onKeyDown={handleKeyDown}
                         />
                     </form>
-                    <div className='flex items-center'>
-                        <button className='btn-small py-2 px-3 bg-goldenOchre mt-3 mr-2' onClick={handleCloseForm}>Cancel</button>
-                        <button className='btn-small py-2 px-3 bg-goldenOchre mt-3 w-[64px]' disabled={saving} onClick={handleSubmit(handleUpdateDob)}>
+                    <div className='flex items-center mt-3'>
+                        <button className='btn-small py-2 px-3 bg-goldenOchre mr-2' onClick={handleCloseForm}>Cancel</button>
+                        <button className='btn-small py-2 px-3 bg-goldenOchre w-[64px]' disabled={saving} onClick={handleSubmit(handleUpdateDob)}>
                             {saving ? (
                                 <div className='flex items-center justify-center gap-2 w-[34px] h-[24px]'>
                                     <Image

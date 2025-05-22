@@ -68,6 +68,8 @@ const schema = yup.object({
 
 
 
+  
+
 
 
 
@@ -222,75 +224,74 @@ const EnquiriesForm = ({ user }) => {
     return (
         <div>
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
-                {/* <h3 className='mb-4 font-b text-nightSky text-1.375 md:text-2xl'>
-                    Enquiries
-                </h3> */}
-                <div className='flex flex-col'>
-                    <label className='max-w-max text-base text-ashGray block mb-2' htmlFor='firstname'>First name</label>
-                    <input
-                        id='firstname'
-                        type='text'
-                        {...register('firstname')}
-                        spellCheck='false'
-                        maxLength={30}
-                        className={`w-full py-2.5 px-4 rounded-md border-[1px] ${errors.firstname ? 'border-red-600' : 'border-gray-300'}`}
-                    /> 
-                    {errors.firstname && <p className='form-error mt-1'>{errors.firstname?.message}</p>}       
-                </div>
+  
+                <div className='flex flex-col gap-5 md:gap-6'>
+                    <div>
+                        <input
+                            id='firstname'
+                            type='text'
+                            {...register('firstname')}
+                            spellCheck='false'
+                            placeholder='First name'
+                            maxLength={30}
+                            className={`w-full py-2.5 px-4 rounded-md border-[1px] ${errors.firstname ? 'border-red-600' : 'border-gray-300'}`}
+                        /> 
+                        {errors.firstname && <p className='form-error mt-1'>{errors.firstname?.message}</p>}   
+                    </div>
+    
 
-                <div className='flex flex-col mt-2'>
-                    <label className='max-w-min text-base text-ashGray block mb-2' htmlFor='email'>Email</label>
-                    <input
-                        id='email'
-                        type='text'
-                        {...register('email')}
-                        spellCheck='false'
-                        autoComplete="email"
-                        maxLength={50}
-                        className={`w-full py-2.5 px-4 rounded-md border-[1px] ${errors.email ? 'border-red-600' : 'border-gray-300'}`}
-                    />
-                    {errors.email && <p className='form-error mt-1'>{errors.email?.message}</p>}       
-                </div>
+                    <div>
+                        <input
+                            id='email'
+                            type='text'
+                            {...register('email')}
+                            spellCheck='false'
+                            placeholder='Email'
+                            autoComplete="email"
+                            maxLength={50}
+                            className={`w-full py-2.5 px-4 rounded-md border-[1px] ${errors.email ? 'border-red-600' : 'border-gray-300'}`}
+                        />
+                        {errors.email && <p className='form-error mt-1'>{errors.email?.message}</p>}    
+                    </div>
+   
 
-                <div className='mt-2'>
-                    <Controller 
-                        name='subject'
-                        control={control}
-                        render={({ field }) => (
-                            <CustomSelectDropdown
-                                label="Subject"
-                                options={options}
-                                setSubject={field.onChange}
-                                subject={field.value}
-                                errors={errors}
-                            />
-                        )}
-                    />
-                    {errors.subject && <p className='form-error mt-1'>{errors.subject?.message}</p>}       
-                </div>
+                    <div>
+                        <Controller 
+                            name='subject'
+                            control={control}
+                            render={({ field }) => (
+                                <CustomSelectDropdown
+                                    label="Subject"
+                                    options={options}
+                                    setSubject={field.onChange}
+                                    subject={field.value}
+                                    errors={errors}
+                                    placeholderClass="text-ashGray opacity-[0.8] text-[15px] font-light tracking-wide"
+                                />
+                            )}
+                        />
+                        {errors.subject && <p className='form-error mt-1'>{errors.subject?.message}</p>}       
+                    </div>
 
-                <div className='flex flex-col mt-2'>
-                    <label className="className='max-w-min text-base text-ashGray block mb-2" htmlFor='message'>Your Message</label>
-                    <textarea
-                        id='message'
-                        cols='30'
-                        rows='4'
-                        {...register('message')}
-                        className={`py-2.5 px-4 outline-none rounded-md w-4/5 border-[1px] ${errors.message ? 'border-red-600' : 'border-gray-300'} resize-none`}
-                    ></textarea>
-                    {errors.message && <p className='form-error mt-1'>{errors.message?.message}</p>}       
-                </div>
+                    <div className='flex flex-col'>
+                        <textarea
+                            id='message'
+                            cols='30'
+                            rows='4'
+                            placeholder='Message'
+                            {...register('message')}
+                            className={`py-2.5 px-4 outline-none rounded-md w-4/5 border-[1px] ${errors.message ? 'border-red-600' : 'border-gray-300'} resize-none`}
+                        ></textarea>
+                        {errors.message && <p className='form-error mt-1'>{errors.message?.message}</p>}       
+                    </div>
 
-                <div className="flex flex-col mt-3">
                     <Button
                         isLoading={isLoading}
-                        padding='py-2.5 px-4'
-                        width='w-max'
-                        backgroundColor='bg-goldenOchre'
+                        className='max-w-[70px] p-[10px] bg-goldenOchre'
+                        textStyles='text-[17px]'
                         text='Send'
                     />
                 </div>
-
             </form>
         </div>
 
