@@ -288,7 +288,6 @@ const EnquiriesForm = ({ user }) => {
                     <Button
                         isLoading={isLoading}
                         className='max-w-[70px] p-[10px] bg-goldenOchre'
-                        textStyles='text-[17px]'
                         text='Send'
                     />
                 </div>
