@@ -1,56 +1,49 @@
 "use client"
 
 import Link from "next/link"
-import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 
-const LoggedOutMenu = ({ handleCloseMenu, isAuthPage }) => {
-
-  const [activeLink, setActiveLink] = useState('');
+const LoggedOutMenu = ({ handleCloseMenu }) => {
   const pathName = usePathname()
 
-  useEffect(() => {
-    setActiveLink(pathName)
-  }, [pathName])
-
-  const handleActiveLink = (href) => {
-      setActiveLink(href);
-  };
-
+  const isLoginPage = pathName.includes('/login') || pathName.includes('/forgot-email');
+  const isSignupPage = pathName.includes('/signup');
 
   return (
     <div>
-      <Link href={'/'} className={`${activeLink === '/' ? 'text-cloudGray' : 'text-stoneGray'}`} onClick={() => handleActiveLink('/')}>
+      <Link href={'/'}>
         <div className='flex items-center p-3 pl-4 border-t-[1px] border-b-[1px] border-opacity-30 border-dashed border-ashGray' onClick={handleCloseMenu}>
-          <span className={`text-base ${activeLink === '/' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Home</span>
-        </div>
-      </Link>
-      <Link href={'/about'} className={`${activeLink === '/about' ? 'text-cloudGray' : 'text-stoneGray'}`} onClick={() => handleActiveLink('/about')}>
-        <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray' onClick={handleCloseMenu}>
-          <span className={`text-base ${activeLink === '/about' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>About</span>
-        </div>
-      </Link>
-      <Link href={'/contact'} className={`${activeLink === '/contact' ? 'text-cloudGray' : 'text-stoneGray'}`} onClick={() => handleActiveLink('/contact')}>
-        <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray' onClick={handleCloseMenu}>
-          <span className={`text-base ${activeLink === '/contact' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Contact</span>
+          <span className={`text-base text-stoneGray`}>Home</span>
         </div>
       </Link>
 
-      {!isAuthPage && (
-        <>
-          <Link href={'/login'} className={`${activeLink === '/login' ? 'text-cloudGray' : 'text-stoneGray'}`} onClick={() => handleActiveLink('/login')}>
-            <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray' onClick={handleCloseMenu}>
-              <span className={`text-base ${activeLink === '/login' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Login</span>
-            </div>
-          </Link>
-          <Link href={'/signup'} className={`${activeLink === '/signup' ? 'text-cloudGray' : 'text-stoneGray'}`} onClick={() => handleActiveLink('/signup')}>
-            <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray' onClick={handleCloseMenu}>
-              <span className={`text-base ${activeLink === '/signup' ? 'text-cloudGray xl:text-stoneGray' : ''}`}>Sign up</span>
-            </div>
-          </Link>
-        </>
+      <Link href={'/about'}>
+        <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray' onClick={handleCloseMenu}>
+          <span className={`text-base text-stoneGray`}>About</span>
+        </div>
+      </Link>
+
+      <Link href={'/contact'}>
+        <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray' onClick={handleCloseMenu}>
+          <span className={`text-base text-stoneGray`}>Contact</span>
+        </div>
+      </Link>
+
+      {!isLoginPage && (
+        <Link href={'/login'}>
+          <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray' onClick={handleCloseMenu}>
+            <span className={`text-base text-stoneGray`}>Login</span>
+          </div>
+        </Link>
       )}
 
+      {!isSignupPage && (
+        <Link href={'/signup'}>
+          <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray' onClick={handleCloseMenu}>
+            <span className={`text-base text-stoneGray`}>Sign up</span>
+          </div>
+        </Link>
+      )}
     </div>
   )
 }

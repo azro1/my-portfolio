@@ -568,7 +568,7 @@ const RegisterForm = () => {
        const hasUploadedAvatar = localStorage.getItem('hasUploadedAvatar') === 'true';
        
        if (hasUploadedAvatar) {
-        changeMessage('info', "looks like you've already uploaded an avatar. Please enter your personal details");
+        changeMessage('info', "Looks like you've already uploaded an avatar. Please enter your personal details");
        }
         router.push('/upload-avatar');
     }

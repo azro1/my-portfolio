@@ -169,7 +169,7 @@ const UploadAvatar = () => {
               Upload your avatar
             </Heading>
 
-            <p className='text-[17px]'>
+            <p className='md:text-[17px]'>
               Choose an image to personalize your profile or skip this step to continue. This helps others recognize you but is entirely optional
             </p>
       
