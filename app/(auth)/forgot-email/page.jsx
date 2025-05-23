@@ -193,7 +193,6 @@ const ForgotEmail = () => {
                             <Button
                                 isLoading={isLoading}
                                 className='w-full p-[11px] bg-goldenOchre'
-                                textStyles='text-[17px]'
                                 text='Submit'
                             />
                         </div>

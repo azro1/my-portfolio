@@ -214,8 +214,13 @@ const RegisterForm = () => {
 
     // refresh page to allow server to detect auf
     useEffect(() => {
+    const timeout = setTimeout(() => {
         router.refresh();
-    }, [router])
+    }, 50); // small delay to allow layout/styling to settle
+
+    return () => clearTimeout(timeout);
+    }, [router]);
+
       
           
 
@@ -680,7 +685,7 @@ const RegisterForm = () => {
                                     spellCheck={false}
                                     placeholder="Phone Number"
                                     {...register('phone')}
-                                    className={`w-full py-2.5 px-3 text-nightSky rounded-md border-[1px]  ${(errors.phone || phoneExists) ? 'border-red-600' : 'border-gray-300'}`}
+                                    className={`w-full py-2.5 px-3 text-nightSky rounded-md border-[1px] ${(errors.phone || phoneExists) ? 'border-red-600' : 'border-gray-300'}`}
                                     onKeyDown={handleKeyDown}
                                 />
                             </div>

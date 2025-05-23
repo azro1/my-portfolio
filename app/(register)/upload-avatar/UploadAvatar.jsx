@@ -163,14 +163,14 @@ const UploadAvatar = () => {
     return (
         <div className='flex-1 flex flex-col justify-center w-full max-w-xs sm:max-w-sm md:max-w-md'>
 
-          <div className='flex flex-col justify-center gap-3 md:bg-white md:shadow-outer md:p-12 md:rounded-xl relative'>
+          <div className='flex flex-col justify-center gap-3.5 md:bg-white md:shadow-outer md:p-12 md:rounded-xl relative'>
 
             <Heading className='font-semibold text-nightSky text-[26px] md:text-[28px]'>
               Upload your avatar
             </Heading>
 
-            <p className='font-light'>
-              Choose an image to personalize your profile or skip this step to continue. This helps others recognize you but is entirely optional.
+            <p className='text-[17px]'>
+              Choose an image to personalize your profile or skip this step to continue. This helps others recognize you but is entirely optional
             </p>
       
             <div>
@@ -179,6 +179,7 @@ const UploadAvatar = () => {
                 updateProfile={updateProfile}
                 btnColor='bg-green-700'
                 show3DAvatar={true}
+                buttonTextStyles={'text-[17px]'}
               />
             </div>
 

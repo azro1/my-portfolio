@@ -43,14 +43,14 @@ function maskEmail(email) {
             </Heading>
 
             {email && (
-                <p className='mb-4 text-lg'>Enter the code sent to <span className='font-r text-nightSky'>{maskEmail(email)}</span> to verify your email address{title === 'Log In' ? '.' : ' and create your account.'}</p>
+                <p className='mb-4 text-[17px]'>Enter the code sent to <span className='font-r text-nightSky'>{maskEmail(email)}</span> to verify your email address{title === 'Log In' ? '' : ' and create your account'}</p>
             )}
 
             {phone && (
-                <p className='mb-4 text-lg'>To update your existing phone number, enter the code sent to the number you provided ending in <span className='text-black'>{maskedPhone}</span></p> 
+                <p className='mb-4 text-[17px]'>To update your existing phone number, enter the code sent to the number you provided ending in <span className='text-black'>{maskedPhone}</span></p> 
             )}
 
-            <div className='flex gap-2.5'>
+            <div className='flex gap-2 md:gap-2.5'>
                 {fields.map((field, index) => (
                     <div key={field.id}>
                         <label htmlFor={`codes[${index}].code`} className="max-w-min mb-2 text-base text-ashGray"></label>
@@ -89,7 +89,6 @@ function maskEmail(email) {
                <Button
                     isLoading={isLoading}
                     className='w-full p-[11px] bg-goldenOchre'
-                    textStyles='text-[18px]'
                     text='Verify'
                />
             </div>

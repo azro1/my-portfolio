@@ -1,6 +1,6 @@
 import Image from "next/image"
 
-const Button = ({ isLoading, className='', textStyles='', text }) => {
+const Button = ({ isLoading, className='', textStyles='text-[17px]', text }) => {
     return (
         <button className={`${isLoading ? 'opacity-65' : 'opacity-100'} ${className} rounded-lg cursor-pointer text-white font-medium block`} disabled={isLoading}>
             {isLoading ? (
