@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image"
 import { usePathname } from "next/navigation"
 
 // components
@@ -19,13 +18,22 @@ const AuthRegHeader = () => {
         '/register-form'
     ];
 
+    const protectedRoutes = routes.some(route => pathname.includes(route));
+
+
+    const isSignup = pathname.includes('/signup');
+    const authUrl = isSignup ? '/login' : '/signup';
+    const authLabel = isSignup ? 'Log In' : 'Sign Up';
+
     const links = [
         { href: '/', label: 'Home' },
         { href: '/about', label: 'About' },
         { href: '/contact', label: 'Contact' },
+        ...(pathname.includes('login') || pathname.includes('signup') || pathname.includes('forgot-email')
+            ? [{ href: authUrl, label: authLabel }]
+            : [])
     ];
 
-    const protectedRoutes = routes.some(route => pathname.includes(route));
 
     return (
         <header className='flex items-center bg-softCharcoal w-full min-h-[92px] fixed z-40 md:static'>
@@ -41,9 +49,7 @@ const AuthRegHeader = () => {
                 {!protectedRoutes && (
                     <>
                         <div className='flex items-center md:hidden'>
-                            <Chevron
-                                isAuthPage={true}
-                            />
+                            <Chevron />
                         </div>
                 
                         <ul className='hidden md:flex items-center gap-8 mr-2 xl:mr-0'>

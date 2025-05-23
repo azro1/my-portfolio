@@ -14,7 +14,7 @@ import Heading from './Heading';
 import OnlineUserDropdown from './navbar/OnlineUserDropdown';
 import MainMenuDropdown from './navbar/MainMenuDropdown';
 
-const Chevron = ({ user, roomName, roomUsersState, isProfilePage, isForumPage, isAuthPage }) => {
+const Chevron = ({ user, roomName, roomUsersState, isProfilePage, isForumPage }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isOnlineMenuOpen, setIsOnlineMenuOpen] = useState(false)
   const dropDownMenuRef = useRef()
@@ -123,7 +123,6 @@ const Chevron = ({ user, roomName, roomUsersState, isProfilePage, isForumPage, i
           handleCloseMenu={handleCloseMenu}
           isProfilePage={isProfilePage}
           isForumPage={isForumPage}
-          isAuthPage={isAuthPage}
           dropDownMenuRef={dropDownMenuRef}
         />
       )}
