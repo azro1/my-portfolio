@@ -19,7 +19,7 @@ export default {
         deepCharcoal: '#272B25', // bg color for sidebar buttons on hover
         slateOnyx: '#3A403C', // bg color for footer and dropdown menu on larger screens
         charcoalGray: '#5A5F54', // primary bg color for page sections that alternate with nightSky
-        charcoalGrayLight: '#C9C1B6', // text for profile pages with charcoalGray bg
+        charcoalGrayLight: '#D8D3C9', // text for profile pages with charcoalGray bg
         stoneGray: '#A9AEA2', // a lighter shade of ashGray
         ashGray: '#6F7469', // primary color for body text
         nightSky: '#1D2120', // primary bg color for page sections that alternate with charcoalGray and dropdown menu on smaller screens

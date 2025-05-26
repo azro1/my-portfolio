@@ -11,7 +11,6 @@ import UserAvatar from "../navbar/UserAvatar";
 
 
 const NavLinks = ({ user, handleCloseMenu, handleToggleMenu, isForumPage }) => {
-    const [activeLink, setActiveLink] = useState('');
     const pathName = usePathname();
 
     const links = [
@@ -20,26 +19,28 @@ const NavLinks = ({ user, handleCloseMenu, handleToggleMenu, isForumPage }) => {
         { href: '/contact', label: 'Contact' },
     ];
 
-    useEffect(() => {
-        setActiveLink(pathName)
-    }, [pathName])
-
-    const handleActiveLink = (href) => {
-        setActiveLink(href);
-    };
-
+    const isHomePage = pathName === '/';
+    const isAboutPage = pathName.includes('/about');
+    const isContactPage = pathName.includes('/contact');
 
     return (
         <div className={`nav-links ${isForumPage ? 'block' : 'md:hidden'}`}>
 
-            {links.map((link) => (
-                <Link key={link.href} href={link.href} className={`${activeLink === link.href ? 'text-cloudGray' : 'text-ashGray md:text-stoneGray'}`} onClick={() => handleActiveLink(link.href)}>
-                    <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray md:p-2.5 md:border-none' onClick={handleCloseMenu}>
-                        <span className='text-base'>{link.label}</span>
-                    </div>
-                </Link>
-            ))}
-
+            {links.map(link => {
+                if ((link.href === '/' && !isHomePage) ||
+                    (link.href === '/about' && !isAboutPage) || 
+                    (link.href === '/contact' && !isContactPage)) {
+                    return (
+                    <Link key={link.href} href={link.href}>
+                        <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray md:p-2.5 md:border-none' onClick={handleCloseMenu}>
+                            <span className='text-base text-ashGray'>{link.label}</span>
+                        </div>
+                    </Link>
+                    );
+                }
+                return null;
+            })}
+            
             <div className="flex items-center gap-1 p-3 pl-4  md:p-2.5 md:border-none">
                 <div className='flex items-center gap-2'>
                     <div className="min-w-[32px] min-h-[32px]">

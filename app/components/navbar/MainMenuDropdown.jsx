@@ -12,7 +12,7 @@ import { useUpdateTable } from "@/app/hooks/useUpdateTable";
 
 
 
-const MainMenuDropdown = ({ user, handleCloseMenu, isProfilePage, isForumPage, dropDownMenuRef }) => {
+const MainMenuDropdown = ({ user, handleCloseMenu, isForumPage, dropDownMenuRef }) => {
 
     const router = useRouter()
     const { updateTable } = useUpdateTable();
@@ -36,12 +36,11 @@ const MainMenuDropdown = ({ user, handleCloseMenu, isProfilePage, isForumPage, d
     return (
         <>
             {user ? (
-                <div className='absolute w-full right-0 top-[92px] z-40 bg-nightSky md:bg-slateOnyx md:p-1 md:right-6 md:top-20 md:w-56 md:rounded-sm xl:bg-charcoalGray xl:left-8 xl:top-[406px] xl:mt-4' ref={dropDownMenuRef}>
+                <div className='absolute w-full right-0 top-[92px] z-40 bg-nightSky md:shadow-[0_0_6px_0_rgba(0,0,0,0.4)] md:bg-softCharcoal md:p-1 md:right-6 md:top-20 md:w-56 xl:bg-charcoalGray xl:left-8 xl:top-[406px] xl:mt-4' ref={dropDownMenuRef}>
                     <LoggedInMenu
                         user={user}
                         handleLogout={handleLogout}
                         handleCloseMenu={handleCloseMenu}
-                        isProfilePage={isProfilePage}
                         isForumPage={isForumPage}
                     />
                 </div>

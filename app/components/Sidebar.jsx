@@ -25,7 +25,7 @@ import Logo from "./Logo";
 
 
 
-const Sidebar = ({ isProfilePage }) => {
+const Sidebar = () => {
   const [user, setUser] = useState(null)
   const [activeLink, setActiveLink] = useState('');
   const [isRegComplete, setIsRegComplete] = useState(null)
@@ -313,7 +313,7 @@ const Sidebar = ({ isProfilePage }) => {
                   </div>
                    
                   <div className="flex items-center gap-2">
-                    <Chevron user={user} isProfilePage={isProfilePage} />
+                    <Chevron user={user} />
                   </div>
                 </div>
 
