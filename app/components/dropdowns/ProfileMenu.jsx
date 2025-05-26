@@ -1,19 +1,17 @@
 "use client"
 
 import Link from "next/link"
-import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 
 
-const ProfileMenu = ({ handleLogout, handleCloseMenu, isProfilePage, isOpen }) => {
-    const [activeLink, setActiveLink] = useState('');
+const ProfileMenu = ({ handleLogout, handleCloseMenu, isOpen }) => {
     const pathName = usePathname()
 
     const topLinks = [
-        { href: '/profile', label: 'My Profile' },
+        { href: '/profile/my-profile', label: 'My Profile' },
     ];
 
-    const profileLinks = [
+    const middleLinks = [
         { href: '/profile/edit-profile', label: 'Edit Profile' },
         { href: '/profile/data-privacy', label: 'Your Data' },
     ];
@@ -23,45 +21,59 @@ const ProfileMenu = ({ handleLogout, handleCloseMenu, isProfilePage, isOpen }) =
         { href: '/profile/help', label: 'Help' },
     ];
 
-    useEffect(() => {
-        setActiveLink(pathName)
-    }, [pathName])
-
-    const handleActiveLink = (href) => {
-        setActiveLink(href);
-    };
+    const isMyProfilePage = pathName.includes('/my-profile');
+    const isEditProfilePage = pathName.includes('/edit-profile');
+    const isDataPrivacyPage = pathName.includes('/data-privacy');
+    const isHelpPage = pathName.includes('/help');
+    const isChatPage = pathName.includes('/chat');
 
     return (
         <>
             {isOpen && (
                 <div className='profile-menu'>
-                    {topLinks.map((link) => (
-                        <Link key={link.href} href={link.href} className={`${activeLink === link.href ? 'text-cloudGray' : 'text-ashGray md:text-stoneGray'}`} onClick={() => handleActiveLink(link.href)}>
-                            <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray md:p-2.5 md:border-none' onClick={handleCloseMenu}>
-                                <span className='text-base'>{link.label}</span>
-                            </div>
-                        </Link>
-                    ))}
 
-                    {isProfilePage && (
-                        <>
-                            {profileLinks.map((link) => (
-                                <Link key={link.href} href={link.href} className={`${activeLink === link.href ? 'text-cloudGray' : 'text-ashGray md:text-stoneGray'}`} onClick={() => handleActiveLink(link.href)}>
+                    {topLinks.map((link) => {
+                        if (link.href === '/profile/my-profile' && !isMyProfilePage) {
+                            return (
+                                <Link key={link.href} href={link.href} >
                                     <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray md:p-2.5 md:border-none' onClick={handleCloseMenu}>
-                                        <span className='text-base'>{link.label}</span>
+                                        <span className='text-base text-ashGray'>{link.label}</span>
                                     </div>
                                 </Link>
-                            ))}
-                        </>
-                    )}
+                            )
+                        }
+                        return null;
+                    })}   
 
-                    {bottomLinks.map((link) => (
-                        <Link key={link.href} href={link.href} className={`${activeLink === link.href ? 'text-cloudGray' : 'text-ashGray md:text-stoneGray'}`} onClick={() => handleActiveLink(link.href)}>
+                    
+                    {middleLinks.map(link => {
+                        if ((link.href === '/profile/edit-profile' && !isEditProfilePage) ||
+                            (link.href === '/profile/data-privacy' && !isDataPrivacyPage)) {
+                            return (
+                                <Link key={link.href} href={link.href}>
+                                    <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray md:p-2.5 md:border-none' onClick={handleCloseMenu}>
+                                        <span className='text-base text-ashGray'>{link.label}</span>
+                                    </div>
+                                </Link>
+                            );
+                        }
+                        return null;
+                    })}
+           
+
+                    {bottomLinks.map(link => {
+                    if ((link.href === '/chat' && !isChatPage) ||
+                        (link.href === '/profile/help' && !isHelpPage) ) {
+                        return (
+                        <Link key={link.href} href={link.href}>
                             <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray md:p-2.5 md:border-none' onClick={handleCloseMenu}>
-                                <span className='text-base'>{link.label}</span>
+                                <span className='text-base text-ashGray'>{link.label}</span>
                             </div>
                         </Link>
-                    ))}
+                        );
+                    }
+                    return null;
+                    })}
 
                     <div onClick={(e) => handleLogout(e)}>
                         <div className='flex items-center p-3 pl-4 md:p-2.5 md:border-none' onClick={handleCloseMenu}>

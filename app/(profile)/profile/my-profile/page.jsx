@@ -2,13 +2,13 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from 'next/headers';
 
 // components
-import ProfileHeader from "../ProfileHeader";
-import ProjectsViewedList from '../ProjectsViewedList';
-import ForumChatList from "../ForumChatList";
-import FavouriteProjectList from "../FavouriteProjectList";
+import ProfileHeader from "../../ProfileHeader";
+import ProjectsViewedList from '../../ProjectsViewedList';
+import ForumChatList from "../../ForumChatList";
+import FavouriteProjectList from "../../FavouriteProjectList";
 import Heading from "@/app/components/Heading";
 
-const Profile = async () => {
+const MyProfile = async () => {
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
 
@@ -36,4 +36,4 @@ const Profile = async () => {
   );
 };
 
-export default Profile;
+export default MyProfile;
