@@ -5,8 +5,10 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
 import { FiTrash2 } from "react-icons/fi";
 
+
 // components
 import Heading from "../components/Heading";
+import MessageImage from "../components/MessageImage";
 
 // hooks
 import { useMessage } from "@/app/hooks/useMessage";
@@ -96,18 +98,30 @@ const ForumChatList = ({ user }) => {
 
   return (
     <div>
-        <Heading className='text-sm font-medium text-cloudGray mb-4'>
+        <Heading className='font-medium text-cloudGray mb-4'>
             Chat History
         </Heading>
         {!error ? (
             <div className={`flex flex-col text-left min-h-96 max-h-96 p-4 relative bg-nightSky overflow-y-auto hide-scrollbar gap-6 md:max-w-md`}>
                 {messages && messages.length > 0 ? (
                     messages.map(message => (
+
                         <div className='flex items-start justify-between' key={message.id}>
-                            <div className='flex-1 flex flex-col w-full break-words min-w-0 gap-1'>
-                                <span className="text-cloudGray text-base leading-normal block">{message.text}</span>
-                                <span className='text-xs text-stoneGray'>{formatDistanceToNow(new Date(message.created_at), { addSuffix: true })}</span>
-                            </div>
+                            {message.file_path ? (
+                                <div className='flex flex-col gap-2'>
+                                    <MessageImage 
+                                        width={32} 
+                                        height={32}
+                                        filePath={message.file_path}
+                                    />
+                                    <span className='text-xs text-stoneGray'>{formatDistanceToNow(new Date(message.created_at), { addSuffix: true })}</span>
+                                </div>
+                            ) : (
+                                <div className='flex-1 flex flex-col w-full break-words min-w-0 gap-1'>
+                                    <span className="text-cloudGray text-base leading-normal block">{message.text}</span>
+                                    <span className='text-xs text-stoneGray'>{formatDistanceToNow(new Date(message.created_at), { addSuffix: true })}</span>
+                                </div>
+                            )}
                             <div className='flex-shrink-0'>
                                 <FiTrash2 className="cursor-pointer text-goldenOchre" size={22} onClick={() => handleDelete(message.id)}/>
                             </div>

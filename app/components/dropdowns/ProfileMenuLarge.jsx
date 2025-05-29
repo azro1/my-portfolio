@@ -40,7 +40,7 @@ const ProfileMenuLarge = ({ handleLogout, handleCloseMenu, isProfilePage, isForu
                             return (
                                 <Link key={link.href} href={link.href}>
                                     <div className='flex items-center p-2.5 pl-4 group hover:bg-charcoalGray transition-colors duration-300 xl:hover:bg-softCharcoal' onClick={handleCloseMenu}>
-                                        <span className='text-base text-charcoalGrayLight font-light xl:font-r group-hover:text-cloudGray transition-colors duration-300'>{link.label}</span>
+                                        <span className='text-base text-stoneGray font-light xl:font-r xl:text-charcoalGrayLight group-hover:text-cloudGray transition-colors duration-300'>{link.label}</span>
                                     </div>
                                 </Link>
                             )
@@ -55,7 +55,7 @@ const ProfileMenuLarge = ({ handleLogout, handleCloseMenu, isProfilePage, isForu
                         return (
                         <Link key={link.href} href={link.href}>
                             <div className='flex items-center p-2.5 pl-4 group hover:bg-charcoalGray transition-colors duration-300 xl:hover:bg-softCharcoal' onClick={handleCloseMenu}>
-                            <span className='text-base text-charcoalGrayLight font-light xl:font-r group-hover:text-cloudGray transition-colors duration-300'>{link.label}</span>
+                            <span className='text-base text-stoneGray font-light xl:font-r xl:text-charcoalGrayLight group-hover:text-cloudGray transition-colors duration-300'>{link.label}</span>
                             </div>
                         </Link>
                         );
@@ -70,7 +70,7 @@ const ProfileMenuLarge = ({ handleLogout, handleCloseMenu, isProfilePage, isForu
                         return (
                         <Link key={link.href} href={link.href}>
                             <div className='flex items-center p-2.5 pl-4 group hover:bg-charcoalGray transition-colors duration-300 xl:hover:bg-softCharcoal' onClick={handleCloseMenu}>
-                            <span className='text-base text-charcoalGrayLight font-light xl:font-r group-hover:text-cloudGray transition-colors duration-300'>{link.label}</span>
+                            <span className='text-base text-stoneGray font-light xl:font-r xl:text-charcoalGrayLight group-hover:text-cloudGray transition-colors duration-300'>{link.label}</span>
                             </div>
                         </Link>
                         );
@@ -81,7 +81,7 @@ const ProfileMenuLarge = ({ handleLogout, handleCloseMenu, isProfilePage, isForu
 
                     <div onClick={(e) => handleLogout(e)}>
                         <div className='flex items-center p-2.5 pl-4 cursor-pointer group hover:bg-charcoalGray transition-colors duration-300 xl:hover:bg-softCharcoal' onClick={handleCloseMenu}>
-                            <span className='text-base text-charcoalGrayLight font-light xl:font-r group-hover:text-cloudGray transition-colors duration-300'>Logout</span>
+                            <span className='text-base text-stoneGray font-light xl:font-r xl:text-charcoalGrayLight group-hover:text-cloudGray transition-colors duration-300'>Logout</span>
                         </div>
                     </div>
                 </div>

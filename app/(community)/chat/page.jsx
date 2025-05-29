@@ -22,7 +22,7 @@ const ChatPage = () => {
               <div className=''>
                 <div className="text-center pb-4">
                   <Heading className="font-bold text-nightSky mb-2 leading-tight text-[22px] md:text-3xl md:mb-2">
-                    Welcome to Our Chat Forum
+                    Welcome to My Chat Forum
                   </Heading>
                   <p className="mb-8 text-base md:text-lg">Connect with people, share ideas, build communities</p>
                   {/* You can add an image or illustration here */}

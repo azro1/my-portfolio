@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Image from "next/image";
 
-const MessageImage = ({ filePath, width = 200, height = 200 }) => {
+const MessageImage = ({ filePath, width = 200, height = 200, className='' }) => {
   const [signedUrl, setSignedUrl] = useState(null);
   const [error, setError] = useState(null);
   const supabase = createClientComponentClient();
@@ -37,7 +37,7 @@ const MessageImage = ({ filePath, width = 200, height = 200 }) => {
         alt="Uploaded chat image"
         width={width}
         height={height}
-        className="rounded-md object-cover"
+        className={`${className}`}
         priority
       />
     )

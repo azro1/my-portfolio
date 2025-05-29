@@ -203,7 +203,7 @@ footer span {
 
 /* forms */
 .form-error {
-  @apply text-red-600 text-sm font-light;
+  @apply text-red-600 text-sm;
 }
 
 

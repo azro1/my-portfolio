@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect } from 'react';
+import { FiEye } from 'react-icons/fi';
 
 // components
 import Heading from "../components/Heading";
@@ -30,30 +31,34 @@ const ProjectsViewedList = ({ user }) => {
 
   return (
     <div>
-      <Heading className='text-sm font-medium text-cloudGray mb-4'>
-        Project Views
-      </Heading>
+      <div className='flex items-center gap-2 mb-4'>
+          <Heading className='font-medium text-cloudGray'>
+              Project Views
+          </Heading>
+          <FiEye size='16' className='text-cloudGray' />
+      </div>
+
       {!errorMessage ? (
-        <div className={`min-h-[350px] flex items-center justify-center md:justify-normal bg-nightSky ${retrievedProjects.length === 0 ? 'p-4' : 'p-12'}`}>
+        <div className={`min-h-[350px] bg-nightSky ${retrievedProjects.length === 0 ? 'p-4' : 'p-8'}`}>
           {!isProjectsLoading && (
-            <div className='flex flex-wrap justify-center gap-8  '>
+            <div className='flex flex-wrap gap-8'>
               {retrievedProjects.length > 0 && (retrievedProjects.map((project) => (
-                <div key={project.id}>
-                  <div className=' bg-softGray'>
+                <div className='max-w-[80px]' key={project.id}>
+                  <div className='bg-softGray'>
                     <Link href={`/projects/${project.id}`}>
-                      <div className='flex items-center justify-center w-[196px] h-[180px]'>
-                        <Image className='max-w-[150px] max-h-[150px]'
+                      <div className='max-w-[80px] max-h-[80px]'>
+                        <Image className='object-contain'
                           src={project.mobile_image_url}
                           alt="rocket icon"
-                          width={200}
-                          height={200}
+                          width={80}
+                          height={80}
                           quality={100}
                           priority
                         />
                       </div>
                     </Link>
                   </div>
-                  <h4 className="font-b text-ashGray text-center mt-2">{project.title}</h4>
+                  <h4 className="font-semibold text-sm text-ashGray text-center mt-2 overflow-hidden text-ellipsis whitespace-nowrap">{project.title}</h4>
                 </div>))
               )}
             </div>
