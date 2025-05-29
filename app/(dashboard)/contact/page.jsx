@@ -22,14 +22,14 @@ const Contact = async () => {
       <main>
         <div className='flex flex-col items-center pt-40 pb-20 md:h-screen md:p-0 md:min-h-[900px]'>
           <div className='w-full flex-grow flex items-center justify-center'>
-            <div className='grid grid-flow-col auto-cols-fr gap-y-10 md:gap-y-16 md:gap-x-16 md:h-full md:grid-cols-2 md:grid-rows-[minmax(_auto,_auto)_minmax(500px,_auto)]'>
+            <div className='grid grid-flow-col auto-cols-fr gap-y-12 md:gap-y-16 md:gap-x-16 md:h-full md:grid-cols-2 md:grid-rows-[minmax(_auto,_auto)_minmax(500px,_auto)]'>
 
               <div className='row-start-1 col-start-1 col-span-2 self-end'>
                 <ContactHeader />
               </div>
 
               <div className='row-start-2 col-start-1 col-span-2 md:row-start-2 md:col-start-1 md:col-span-1'>
-                <div className='flex flex-col gap-10 md:gap-y-16 h-full justify-start'>
+                <div className='flex flex-col gap-12 md:gap-y-16 h-full justify-start'>
                   <ContactInfo />
                   <AvailabilityInfo />
                 </div>

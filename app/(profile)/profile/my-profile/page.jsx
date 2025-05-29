@@ -14,7 +14,7 @@ const MyProfile = async () => {
 
   return (
       <div className='overflow-y-scroll hide-scrollbar h-[90vh] pt-40 px-[x-pad] xl:pt-36'>
-        <ProfileHeader title={'My Profile'} subheading={'This is your profile dashboard. Here you can view and edit your most recent activity.'} showAvatar={true} />
+        <ProfileHeader title={'My Profile'} subheading={'This is your profile dashboard. Here you can view and edit your most recent activity'} showAvatar={true} />
         
 
         {user && (
@@ -22,7 +22,7 @@ const MyProfile = async () => {
             <Heading className='text-cloudGray font-medium text-lg md:text-xl'>
               Activity Feed
             </Heading>
-            <p className='leading-normal text-charcoalGrayLight mt-1 md:mt-2'>Your recent activity on the website, including any projects you have viewed, your favourite projects and your chat history.</p>
+            <p className='leading-normal text-charcoalGrayLight mt-3'>Your recent activity on the website, including any projects you have viewed, your favourite projects and your chat history</p>
             
             <div className='pt-8 grid grid-cols-1 gap-12 grid-flow-row auto-rows-max'>
                 <ForumChatList user={user} />

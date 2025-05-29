@@ -33,7 +33,7 @@ const NavLinks = ({ user, handleCloseMenu, handleToggleMenu, isForumPage }) => {
                     return (
                     <Link key={link.href} href={link.href}>
                         <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray md:p-2.5 md:border-none' onClick={handleCloseMenu}>
-                            <span className='text-base text-ashGray'>{link.label}</span>
+                            <span className='text-base font-r text-stoneGray'>{link.label}</span>
                         </div>
                     </Link>
                     );
@@ -41,7 +41,7 @@ const NavLinks = ({ user, handleCloseMenu, handleToggleMenu, isForumPage }) => {
                 return null;
             })}
             
-            <div className="flex items-center gap-1 p-3 pl-4  md:p-2.5 md:border-none">
+            <div className="flex items-center gap-1 p-3 pl-4">
                 <div className='flex items-center gap-2'>
                     <div className="min-w-[32px] min-h-[32px]">
                         <UserAvatar
@@ -53,9 +53,9 @@ const NavLinks = ({ user, handleCloseMenu, handleToggleMenu, isForumPage }) => {
                             defaultAvatarSize={32}
                         />
                     </div>
-                    <span className="text-base font-r text-ashGray md:text-stoneGray xl:inline">{user?.user_metadata.first_name || user?.user_metadata.full_name}</span>
+                    <span className="text-base font-r text-stoneGray">{user?.user_metadata.first_name || user?.user_metadata.full_name}</span>
                 </div>
-                <button onClick={handleToggleMenu} className='text-base text-ashGray md:text-stoneGray'>
+                <button onClick={handleToggleMenu} className='text-base text-stoneGray'>
                     <FiChevronDown size={22} />
                 </button>
             </div>

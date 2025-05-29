@@ -225,7 +225,7 @@ const EnquiriesForm = ({ user }) => {
         <div>
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
   
-                <div className='flex flex-col gap-5 md:gap-6'>
+                <div className='flex flex-col gap-6'>
                     <div>
                         <input
                             id='firstname'

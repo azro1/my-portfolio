@@ -56,7 +56,7 @@ const AuthRegHeader = () => {
                             {links.map((link) => (
                                 <li key={link.href}> 
                                     <Link href={link.href}>
-                                        <span className='text-base transition-text duration-300 text-cloudGray'>{link.label}</span>
+                                        <span className='text-base transition-text duration-300 text-stoneGray hover:text-cloudGray'>{link.label}</span>
                                     </Link>
                                 </li>
                             ))}

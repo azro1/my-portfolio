@@ -490,7 +490,10 @@ const ChatRoomPage = () => {
   
                     <div className={`p-2 px-3 rounded-lg max-w-xs sm:max-w-md md:max-w-lg break-words ${isCurrentUser ? 'bg-[#C71585]' : 'bg-slateOnyx'}`}>
                       {message.file_path ? (
-                        <MessageImage filePath={message.file_path} />
+                        <MessageImage 
+                          filePath={message.file_path}
+                          className='rounded-md object-cover'
+                        />
                       ) : (
                         <p className="text-cloudGray">{message.text}</p>
                       )}
