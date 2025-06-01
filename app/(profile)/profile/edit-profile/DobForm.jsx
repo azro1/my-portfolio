@@ -11,7 +11,7 @@ import Image from "next/image";
 import { useUpdateTable } from '@/app/hooks/useUpdateTable'
 
 // components
-import Modal from "./Modal";
+import Modal from "../../../components/Modal";
 
 
 
@@ -207,7 +207,10 @@ const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
             </div>
 
             {showForm && (
-                <Modal >
+                <Modal 
+                    className='bg-softGray p-6 sm:p-10 w-[420px] mx-auto rounded-md sm:rounded-xl'
+                    backdrop='bg-modal-translucent-dark'
+                >
                     <form noValidate>
                         <label className="block mb-3 text-xl font-medium" htmlFor='draftDob'>Edit Dob</label>
                         <p className='mb-3 font-light'>Please enter a valid date of birth to keep your account accurate and up-to-date</p>

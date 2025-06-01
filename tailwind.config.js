@@ -23,9 +23,11 @@ export default {
         stoneGray: '#A9AEA2', // a lighter shade of ashGray
         ashGray: '#6F7469', // primary color for body text
         nightSky: '#1D2120', // primary bg color for page sections that alternate with charcoalGray and dropdown menu on smaller screens
+        nightSkyLight: '#232726', // a lighter shade of nightSky for list items and hover states on a nightSky background
         cloudGray: '#FFFFFF', // primary color for heading/title if the page bg is charcoalGray
         softGray: '#F5F6F1', // bg color for auth pages, forum landing page and contact page
-        'modal-translucent': 'rgb(28, 30, 36, 0.80)'
+        'modal-translucent-light': 'rgba(29, 33, 32, 0.11)', // light bg color for modals
+        'modal-translucent-dark': 'rgb(28, 30, 36, 0.80)' // dark bg color for modals
       },
       fontFamily: {
         'rubik': ['Rubik', 'sans-serif'],

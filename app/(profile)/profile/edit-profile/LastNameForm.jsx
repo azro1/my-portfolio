@@ -12,7 +12,7 @@ import { useUpdateMetadata } from '@/app/hooks/useUpdateMetadata';
 
 
 // components
-import Modal from './Modal'
+import Modal from '../../../components/Modal'
 
 
 
@@ -215,7 +215,10 @@ const LastNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
             </div>
 
             {showForm && (
-                <Modal>
+                <Modal
+                    className='bg-softGray p-6 sm:p-10 w-[420px] mx-auto rounded-md sm:rounded-xl'
+                    backdrop='bg-modal-translucent-dark'
+                >
                     <form noValidate>
                         <label className='block mb-3 text-xl' htmlFor='draftLastName'>Edit Last Name</label>
                             <span >
