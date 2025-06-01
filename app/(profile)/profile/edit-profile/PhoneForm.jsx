@@ -11,7 +11,7 @@ import Image from "next/image";
 import { useMessage } from "@/app/hooks/useMessage";
 
 // components
-import Modal from './Modal'
+import Modal from '../../../components/Modal'
 
 
 
@@ -256,7 +256,10 @@ const PhoneForm = ({ user, profile }) => {
             </div>
   
             {showForm && (
-                <Modal>
+                <Modal
+                    className='bg-softGray p-6 sm:p-10 w-[420px] mx-auto rounded-md sm:rounded-xl'
+                    backdrop='bg-modal-translucent-dark'
+                >
                     <form noValidate>
                         <label className='block mb-3 text-xl font-medium' htmlFor='draftPhone'>Phone Number</label>
                             <p className='mb-3 font-light'>Please enter your new phone number. This number will be used for account verification purposes</p>

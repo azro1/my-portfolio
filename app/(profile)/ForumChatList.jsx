@@ -102,11 +102,11 @@ const ForumChatList = ({ user }) => {
             Chat History
         </Heading>
         {!error ? (
-            <div className={`flex flex-col text-left min-h-96 max-h-96 p-4 relative bg-nightSky overflow-y-auto hide-scrollbar gap-6 md:max-w-md`}>
+            <div className={`flex flex-col text-left min-h-96 max-h-96 p-2 relative bg-nightSky overflow-y-auto hide-scrollbar gap-2 md:max-w-lg`}>
                 {messages && messages.length > 0 ? (
                     messages.map(message => (
 
-                        <div className='flex items-start justify-between' key={message.id}>
+                        <div className='flex items-start justify-between p-4 gap-2 bg-nightSkyLight' key={message.id}>
                             {message.file_path ? (
                                 <div className='flex flex-col gap-2'>
                                     <MessageImage 
@@ -114,17 +114,24 @@ const ForumChatList = ({ user }) => {
                                         height={32}
                                         filePath={message.file_path}
                                     />
-                                    <span className='text-xs text-stoneGray'>{formatDistanceToNow(new Date(message.created_at), { addSuffix: true })}</span>
+                                    <span className='text-xs text-ashGray'>{formatDistanceToNow(new Date(message.created_at), { addSuffix: true })}</span>
                                 </div>
                             ) : (
                                 <div className='flex-1 flex flex-col w-full break-words min-w-0 gap-1'>
-                                    <span className="text-cloudGray text-base leading-normal block">{message.text}</span>
-                                    <span className='text-xs text-stoneGray'>{formatDistanceToNow(new Date(message.created_at), { addSuffix: true })}</span>
+                                    <span className="text-stoneGray text-base leading-normal block">{message.text}</span>
+                                    <span className='text-xs text-ashGray'>{formatDistanceToNow(new Date(message.created_at), { addSuffix: true })}</span>
                                 </div>
-                            )}
-                            <div className='flex-shrink-0'>
-                                <FiTrash2 className="cursor-pointer text-goldenOchre" size={22} onClick={() => handleDelete(message.id)}/>
+
+                            )} 
+                               
+                            <div className="flex-shrink-0">
+                              <FiTrash2
+                                className="cursor-pointer text-cloudGray hover:text-red-600 transition-colors duration-200 ease-in-out"
+                                size={21}
+                                onClick={() => handleDelete(message.id)}
+                              />
                             </div>
+
                         </div>
                     ))
                 ) : (

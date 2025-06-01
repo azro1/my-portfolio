@@ -10,7 +10,7 @@ import Image from "next/image";
 import { useUpdateTable } from '@/app/hooks/useUpdateTable'
 
 // components
-import Modal from "./Modal";
+import Modal from "../../../components/Modal";
 
 
 
@@ -213,7 +213,10 @@ const BioForm = ({ user, profile, fetchProfile, changeMessage }) => {
 
 
             {showForm && (
-                <Modal >
+                <Modal 
+                    className='bg-softGray p-6 sm:p-10 w-[420px] mx-auto rounded-md sm:rounded-xl'
+                    backdrop='bg-modal-translucent-dark'
+                >
                     <form noValidate>
                         <label className="block mb-2 text-xl" htmlFor="draftBio">Edit Bio</label>
                         <p className='mb-3 font-light'>Please enter your updated bio. Keep it brief and relevant, as this will be displayed on your profile dashboard.</p>

@@ -11,7 +11,7 @@ import { useUpdateTable } from '@/app/hooks/useUpdateTable'
 import { useUpdateMetadata } from '@/app/hooks/useUpdateMetadata'
 
 // components
-import Modal from './Modal'
+import Modal from '../../../components/Modal'
 
 
 
@@ -223,7 +223,10 @@ const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
             </div>
                           
             {showForm && (
-                <Modal>
+                <Modal
+                    className='bg-softGray p-6 sm:p-10 w-[420px] mx-auto rounded-md sm:rounded-xl'
+                    backdrop='bg-modal-translucent-dark'
+                >
                     <form noValidate>
                         <label className='block mb-3 text-xl font-medium' htmlFor='draftFirstName'>Edit First Name</label>
                         <p className='mb-3 font-light'>Please enter your first name as you&apos;d like it to appear in your profile</p>

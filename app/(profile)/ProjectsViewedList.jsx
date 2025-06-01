@@ -39,9 +39,9 @@ const ProjectsViewedList = ({ user }) => {
       </div>
 
       {!errorMessage ? (
-        <div className={`min-h-[350px] bg-nightSky ${retrievedProjects.length === 0 ? 'p-4' : 'p-8'}`}>
+        <div className='min-h-[350px] bg-nightSky p-4'>
           {!isProjectsLoading && (
-            <div className='flex flex-wrap gap-8'>
+            <div className='flex flex-wrap gap-4'>
               {retrievedProjects.length > 0 && (retrievedProjects.map((project) => (
                 <div className='max-w-[80px]' key={project.id}>
                   <div className='bg-softGray'>

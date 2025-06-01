@@ -6,7 +6,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useFetchProfile } from '../../../hooks/useFetchProfile';
 import Link from 'next/link';
 import Image from "next/image";
-import { format } from "date-fns";
+import { format, isToday, isYesterday } from "date-fns";
 import { FaUserCircle } from "react-icons/fa";
 import { FiArrowLeft } from 'react-icons/fi';
 
@@ -17,6 +17,7 @@ import Chevron from '@/app/components/Chevron';
 import Heading from '@/app/components/Heading';
 import MessageImage from '@/app/components/MessageImage';
 import UserListWithStatus from '../UserListWithStatus';
+import Modal from '@/app/components/Modal';
 
 const AWAY_TIMEOUT = 5 * 60 * 1000;
 
@@ -31,8 +32,8 @@ const ChatRoomPage = () => {
   const { fetchProfile, profile } = useFetchProfile();
   const messagesContainerRef = useRef(null);
   const channelRef = useRef(null); // Ref for the channel instance
-
-
+  const [modalImagePath, setModalImagePath] = useState(null); // State to hold the image for the modal
+  const modalRef = useRef(); // Ref for the modal component
 
 
 
@@ -73,6 +74,27 @@ const ChatRoomPage = () => {
   }, [params]);
 
 
+
+
+
+
+
+
+  // close menus if user clicks outside modal
+  useEffect(() => {
+    if (!modalImagePath) return;
+
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        setModalImagePath(null);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [modalImagePath]);
 
 
 
@@ -421,6 +443,16 @@ const ChatRoomPage = () => {
 
 
 
+  const formattedDate = (message) => {
+    const date = new Date(message.created_at);
+    if (isToday(date)) {
+      return `${format(date, 'h:mm a')}`;
+    }
+    if (isYesterday(date)) {
+      return `Yesterday at ${format(date, 'h:mm a')}`;
+    }
+    return format(date, 'dd/MM/yyyy, h:mm a', );
+  }
 
 
 
@@ -437,7 +469,7 @@ const ChatRoomPage = () => {
           </Link>
 
           <Heading className='hidden xl:block subheading break-words w-[65vw] mx-auto'>
-            {roomName || 'Loading Room...'} (<span className='text-green-600'>{Object.keys(roomUsersState).filter(k => roomUsersState[k].status !== 'offline').length} online</span>)
+            {roomName || 'Loading Room...'}
           </Heading>
   
           <div className="flex-1 xl:hidden">
@@ -484,23 +516,45 @@ const ChatRoomPage = () => {
                       )}
                     </div>
                   )}
+
+
+                  {modalImagePath && (
+                    <Modal
+                    className=''
+                      backdrop='bg-modal-translucent-light'
+                    >
+                      <div className='flex-1' ref={modalRef}>
+                        <MessageImage 
+                          filePath={modalImagePath}
+                          width={850}
+                          height={850}
+                          className='object-cover w-full'
+                        />
+                      </div>
+                    </Modal>
+                  )}
   
                   {/* Message Content */}
                   <div className={`flex flex-col ${isCurrentUser ? 'items-end' : 'items-start'}`}>
   
-                    <div className={`p-2 px-3 rounded-lg max-w-xs sm:max-w-md md:max-w-lg break-words ${isCurrentUser ? 'bg-[#C71585]' : 'bg-slateOnyx'}`}>
+                    <div className={`max-w-xs sm:max-w-md md:max-w-lg break-words`}>
+
                       {message.file_path ? (
-                        <MessageImage 
-                          filePath={message.file_path}
-                          className='rounded-md object-cover'
-                        />
+                        <div className={`${isCurrentUser ? 'bg-charcoalGray' : 'bg-slateOnyx'} p-1 rounded-lg cursor-pointer`} onClick={() => setModalImagePath(message.file_path)}>
+                          <MessageImage 
+                            filePath={message.file_path}
+                            className='rounded-lg object-cover'
+                          />
+                        </div>
                       ) : (
-                        <p className="text-cloudGray">{message.text}</p>
+                        <div className={`${isCurrentUser ? 'bg-charcoalGray' : 'bg-slateOnyx'} p-2 px-3  rounded-lg`}>
+                          <p className="text-cloudGray">{message.text}</p>
+                        </div>
                       )}
                     </div>
 
-                    <span className='text-xs mt-1 p-1.5 rounded-lg text-stoneGray'>
-                      {format(new Date(message.created_at), 'p')}
+                    <span className='text-xs mt-1 p-1.5 rounded-lg text-stoneGray/70'>
+                      {formattedDate(message)}
                     </span>
                   </div>
   

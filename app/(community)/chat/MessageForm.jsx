@@ -110,7 +110,7 @@ const MessageForm = ({ user, profile, roomId, onSendMessage }) => {
           placeholder="Message"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          className="bg-slateOnyx w-full text-cloudGray rounded pl-4 pr-10 py-2.5 filter placeholder:text-cloudGray placeholder:brightness-[0.6] placeholder:tracking-wider md:pr-20"
+          className="bg-slateOnyx w-full text-cloudGray rounded pl-4 pr-10 py-2.5 filter placeholder:text-white placeholder:brightness-[0.7]  md:pr-20"
           autoFocus={true}
         />
         <div className='absolute top-1/2 transform -translate-y-1/2 right-3 flex items-center gap-3'>
