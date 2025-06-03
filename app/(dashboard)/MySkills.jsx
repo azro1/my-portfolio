@@ -27,7 +27,7 @@ const MySkills = () => {
             {technicalSkills.map((skill, index) => (
               <motion.div
                 key={index}
-                className="p-3 bg-charcoalGray rounded-md w-max overflow-hidden md:p-4 md:shadow-[0_6px_8px_rgba(0,0,0,0.6)]"
+                className="p-3 bg-charcoalGray rounded-md w-max overflow-hidden md:p-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)]"
                 whileHover={{
                   scale: 1.1 // Keep scale on container
                 }}
