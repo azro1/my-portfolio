@@ -66,7 +66,7 @@ const Project = async ({ params }) => {
               <div className="flex flex-col items-center pt-40 pb-20 md:p-0 md:h-screen md:min-h-[1154px]">
                 <div className="w-full flex-grow flex items-center justify-center">
 
-                  <div className='flex flex-col justify-center h-full relative'>
+                  <div className='flex flex-col justify-center gap-4 h-full relative'>
                     <div className='flex gap-2'>
                       <Heading className='font-bold text-nightSky subheading'>
                         {project.title}
@@ -75,9 +75,9 @@ const Project = async ({ params }) => {
                     </div>
 
 
-                    <div className='mt-4 grid gap-y-6 md:grid-auto-rows md:grid-cols-2'>
+                    <div className='flex flex-col gap-6'>
 
-                      <div className='hidden rounded-md md:col-span-2 relative w-full md:block'>
+                      <div className='hidden w-full md:block'>
                         <Image
                           className='w-full h-full'
                           src={project.image_url}
@@ -102,57 +102,56 @@ const Project = async ({ params }) => {
                       </div>
 
 
-                      <div className='md:row-start-2 md:col-start-1 pb-3 md:col-span-2'>
-                        <Heading className='text-lg md:text-xl font-b text-nightSky'>
+                      <div className='flex flex-col gap-1'>
+                        <Heading className='text-lg md:text-xl font-bold text-nightSky'>
                           Project description
                         </Heading>
-                        <p className='pt-2.5 leading-7'>{project.description}</p>
+                        <p>{project.description}</p>
                       </div>
 
-                      <div className='row-start-3 col-start-1 md:col-start-1 md:row-start-3'>
-                        <div className='pb-6 md:pb-8'>
-                          <div className='text-ashGray text-base leading-7'>
-                            Start Date:{' '}
-                            <span className='text-ashGray text-base'>
-                              {project.start}
-                            </span>
-                          </div>
-                          <div className='text-ashGray text-base leading-7'>
-                            End Date:{' '}
-                            <span className='text-ashGray text-base'>
-                              {project.end}
-                            </span>
-                          </div>
+                      <div>
+                        <div className='text-ashGray text-base'>
+                          <span className='text-nightSky font-bold'>Start Date:{' '}</span>
+                          <span className='text-ashGray text-base'>
+                            {project.start}
+                          </span>
                         </div>
-                        <div className='pb-6 md:pb-8'>
-                          <div className='text-ashGray text-base leading-7'>
-                            Tech Stack:{' '}
-                            <span className='text-ashGray text-base'>
-                              {project.techstack.map((stack) => (
-                                <span className='techstack ' key={stack}>
-                                  {stack}
-                                </span>
-                              ))}
-                            </span>
-                          </div>
-                          <div className='text-ashGray text-base leading-7'>
-                            Key Contributors:{' '}
-                            <span className='text-ashGray text-base'>
-                              {project.contributions}
-                            </span>
-                          </div>
-                        </div>
-                        <div>
-                          <div className='text-ashGray text-base leading-7'>
-                            Project Url:{' '}
-                            <a href={project.url} target='_blank' rel="noopener noreferrer">
-                              <span className='text-goldenOchre text-base'>
-                                {project.url}
-                              </span>
-                            </a>
-                          </div>
+                        <div className='text-ashGray text-base'>
+                          <span className='text-nightSky font-bold'>End Date:{' '}</span>
+                          <span className='text-ashGray text-base'>
+                            {project.end}
+                          </span>
                         </div>
                       </div>
+
+                      <div>
+                        <div className='text-ashGray text-base'>
+                          <span className='text-nightSky font-bold'>Tech Stack:{' '}</span>
+                          <span className='text-ashGray text-base'>
+                            {project.techstack.map((stack) => (
+                              <span className='techstack ' key={stack}>
+                                {stack}
+                              </span>
+                            ))}
+                          </span>
+                        </div>
+                        <div className='text-ashGray text-base'>
+                          <span className='text-nightSky font-bold'>Key Contributors:{' '}</span>
+                          <span className='text-ashGray text-base'>
+                            {project.contributions}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className='text-ashGray text-base'>
+                        <span className='text-nightSky font-bold'>Project Url:{' '}</span>
+                        <a href={project.url} target='_blank' rel="noopener noreferrer">
+                          <span className='text-goldenOchre text-base'>
+                            {project.url}
+                          </span>
+                        </a>
+                      </div>
+
                     </div>
                   </div>
                 </div>
