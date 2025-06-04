@@ -90,17 +90,17 @@ const Chevron = ({ user, roomName, roomUsersState, isForumPage }) => {
 
             {/* back arrow for small screens */}
             <Link className='xl:hidden' href='/chat'>
-              <FiArrowLeft color='#E0E0E3' size={22} />
+              <FiArrowLeft color='#E0E0E3' size={20} />
             </Link>
 
             {/* Limit width to available space minus icon width, truncates overflow with ellipsis */}
-            <Heading className='text-xl w-[50vw] overflow-hidden text-ellipsis whitespace-nowrap'>
+            <Heading className='relative top-[2px] text-lg w-[50vw] overflow-hidden text-ellipsis whitespace-nowrap xl:text-xl'>
               {roomName }
             </Heading>
 
             {/* online users menu shows for small screens */}
             <button onClick={handleToggleUserMenu} className='xl:hidden text-base text-cloudGray'>
-              <FiUsers color='#E0E0E3' size={24} />
+              <FiUsers color='#E0E0E3' size={22} />
             </button>
 
         </div>
