@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from 'react';
+import { Howl, Howler } from 'howler';
 import { useParams } from 'next/navigation';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useFetchProfile } from '../../../hooks/useFetchProfile';
@@ -33,7 +34,22 @@ const ChatRoomPage = () => {
   const messagesContainerRef = useRef(null);
   const channelRef = useRef(null); // Ref for the channel instance
   const [modalImagePath, setModalImagePath] = useState(null); // State to hold the image for the modal
+  const [notificationSound, setNotificationSound] = useState(null);
   const modalRef = useRef(); // Ref for the modal component
+
+
+  // in app notification sound
+  useEffect(() => {
+    const sound = new Howl({
+      src: ['/sounds/in_app_notification_sound.wav'] // Replace with your sound file path
+    });
+
+    setNotificationSound(sound);
+
+    return () => {
+      sound.unload();
+    };
+  }, []);
 
 
 
@@ -80,7 +96,7 @@ const ChatRoomPage = () => {
 
 
 
-  // close menus if user clicks outside modal
+  // close image if user clicks outside modal
   useEffect(() => {
     if (!modalImagePath) return;
 
@@ -171,6 +187,17 @@ const ChatRoomPage = () => {
     // Handle new messages
     channel.on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages', filter: `chatroom_id=eq.${roomId}` }, (payload) => {
       setMessages((oldMessages) => [...oldMessages, payload.new]);
+
+      if (messagesContainerRef.current) {
+        requestAnimationFrame(() => {
+          messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+        });
+      }
+
+      // Play sound if the message is from another user AND not the current user
+      if (payload.new.message_id !== user?.id && notificationSound) {
+        notificationSound.play();
+      }
       // When a message is received, ensure the sender's status is 'online'.
       // We rely on presence updates (triggered by channel.track in handleSendMessage)
       // to propagate the 'last_active' time consistently via the 'online_at' field.
@@ -326,16 +353,6 @@ const ChatRoomPage = () => {
 
 
 
-  // Scroll to bottom when messages change
-  useEffect(() => {
-    if (messagesContainerRef.current) {
-      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
-    }
-  }, [messages]);
-
-
-
-
 
 
 
@@ -443,6 +460,8 @@ const ChatRoomPage = () => {
 
 
 
+
+
   const formattedDate = (message) => {
     const date = new Date(message.created_at);
     if (isToday(date)) {
@@ -451,24 +470,27 @@ const ChatRoomPage = () => {
     if (isYesterday(date)) {
       return `Yesterday at ${format(date, 'h:mm a')}`;
     }
-    return format(date, 'dd/MM/yyyy, h:mm a', );
+    return format(date, 'd/M/yyyy, h:mm a', );
   }
 
 
 
 
+
+
+
   return (
-    <div className='flex min-h-[100dvh]'> 
+    <div className='flex h-[100dvh]'> 
       
       {/* Main Chat Area */}
-      <div className="flex-1 w-full flex flex-col bg-nightSky" >
+      <div className="flex-1 w-full flex flex-col bg-[#141716] min-h-0 h-full" >
 
-        <div className=" flex items-center bg-slateOnyx text-cloudGray p-4 text-center sticky top-0 z-10">
+        <div className=" flex items-center bg-softCharcoal text-cloudGray p-4 text-center sticky top-0 z-10">
           <Link className='hidden xl:block' href='/chat'>
-              <FiArrowLeft color='#E0E0E3' size={28} />
+              <FiArrowLeft color='#E0E0E3' size={22} />
           </Link>
 
-          <Heading className='hidden xl:block subheading break-words w-[65vw] mx-auto'>
+          <Heading className='hidden relative top-[2.5px] text-xl font-medium tracking-wide xl:block  break-words w-[65vw] mx-auto'>
             {roomName || 'Loading Room...'}
           </Heading>
   
@@ -482,7 +504,7 @@ const ChatRoomPage = () => {
         </div>
   
         {/* Message Display Area */}
-        <div className="overflow-y-scroll h-full hide-scrollbar p-4 sm:p-6 space-y-4"
+        <div className="overflow-y-scroll flex-grow min-h-0 hide-scrollbar p-4 sm:p-6 space-y-4"
           ref={messagesContainerRef}
         >
           {messages && messages.length > 0 ? (

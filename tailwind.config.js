@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       colors: {
-        goldenOchre: '#D97706', // bg hint color for buttons and primary heading color for heading/title if the page bg is nightSky
+        goldenOchre: '#6495ED', // bg hint color for buttons and primary heading color for heading/title if the page bg is nightSky
         softCharcoal: '#2F3532', // bg color for sidebars
         deepCharcoal: '#272B25', // bg color for sidebar buttons on hover
         slateOnyx: '#3A403C', // bg color for footer and dropdown menu on larger screens
@@ -26,7 +26,7 @@ export default {
         nightSkyLight: '#232726', // a lighter shade of nightSky for list items and hover states on a nightSky background
         cloudGray: '#FFFFFF', // primary color for heading/title if the page bg is charcoalGray
         softGray: '#F5F6F1', // bg color for auth pages, forum landing page and contact page
-        'modal-translucent-light': 'rgba(29, 33, 32, 0.11)', // light bg color for modals
+        'modal-translucent-light': 'rgba(29, 33, 32, 0.02)', // light bg color for modals
         'modal-translucent-dark': 'rgb(28, 30, 36, 0.80)' // dark bg color for modals
       },
       fontFamily: {
