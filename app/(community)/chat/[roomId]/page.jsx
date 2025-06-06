@@ -562,12 +562,11 @@ const ChatRoomPage = () => {
                   <div className={`flex flex-col ${isCurrentUser ? 'items-end' : 'items-start'}`}>
   
                     <div className={`max-w-xs sm:max-w-md md:max-w-lg break-words`}>
-
                       {message.file_path ? (
                         <div className={`${isCurrentUser ? 'bg-charcoalGray' : 'bg-slateOnyx'} p-1 rounded-lg cursor-pointer`} onClick={() => setModalImagePath(message.file_path)}>
-                          <MessageImage 
+                          <MessageImage
                             filePath={message.file_path}
-                            className='rounded-lg object-cover'
+                            className='rounded-lg object-cover w-auto h-auto'
                           />
                         </div>
                       ) : (

@@ -30,7 +30,7 @@ export default {
         nightSkyLight: '#232726', // a lighter shade of nightSky for list items and hover states on a nightSky background
         cloudGray: '#FFFFFF', // primary color for heading/title if the page bg is charcoalGray
         softGray: '#F5F6F1', // bg color for auth pages, forum landing page and contact page
-        'modal-translucent-light': 'rgba(29, 33, 32, 0.02)', // light bg color for modals
+        'modal-translucent-light': 'rgba(29, 33, 32, 0.03)', // light bg color for modals
         'modal-translucent-dark': 'rgb(28, 30, 36, 0.80)' // dark bg color for modals
       },
       fontFamily: {
