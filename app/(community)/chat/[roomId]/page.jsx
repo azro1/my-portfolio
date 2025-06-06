@@ -36,6 +36,8 @@ const ChatRoomPage = () => {
   const [modalImagePath, setModalImagePath] = useState(null); // State to hold the image for the modal
   const [notificationSound, setNotificationSound] = useState(null);
   const modalRef = useRef(); // Ref for the modal component
+  const notificationSoundRef = useRef(null); // Ref to hold the notification sound instance
+
 
 
   // in app notification sound
@@ -44,7 +46,7 @@ const ChatRoomPage = () => {
       src: ['/sounds/in_app_notification_sound.wav'] // Replace with your sound file path
     });
 
-    setNotificationSound(sound);
+    notificationSoundRef.current = sound; // Store the sound instance in a ref
 
     return () => {
       sound.unload();
@@ -195,8 +197,8 @@ const ChatRoomPage = () => {
       }
 
       // Play sound if the message is from another user AND not the current user
-      if (payload.new.message_id !== user?.id && notificationSound) {
-        notificationSound.play();
+      if (payload.new.message_id !== user?.id && notificationSoundRef.current) {
+        notificationSoundRef.current.play();
       }
       // When a message is received, ensure the sender's status is 'online'.
       // We rely on presence updates (triggered by channel.track in handleSendMessage)
