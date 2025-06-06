@@ -59,11 +59,12 @@ const UserListWithStatus = ({ users }) => {
                     </div>
 
                     {/* Scrollable user list */}
-                    <div className="flex-1 overflow-y-auto px-4">
+                    <div className="flex-1 overflow-y-auto">
                         {isOpen && userList.length > 0 ? (
-                            <ul className="flex flex-col gap-4">
+                            <ul className="flex flex-col gap-4 px-2">
                                 {userList.map((user) => (
                                     <li key={user.id} className="flex items-center gap-3">
+                                       <OnlineStatus status={user.status} />
                                         <div className="flex-shrink-0">
                                             {user.avatar_url ? (
                                                 user.avatar_url.startsWith("https") ? (
@@ -87,7 +88,6 @@ const UserListWithStatus = ({ users }) => {
                                         <p className="text-sm font-medium truncate">
                                             {user.first_name || 'User'}
                                         </p>
-                                        <OnlineStatus status={user.status} />
                                     </li>
                                 ))}
                             </ul>

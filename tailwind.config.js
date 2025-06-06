@@ -4,6 +4,10 @@ export default {
     './app/**/*.{js,jsx}',
     './components/**/*.{js,jsx}'
   ],
+  safelist: [
+    'bg-modal-translucent-light',
+    'bg-modal-translucent-dark'
+  ],
   theme: {
     screens: {
       sm: '480px',
@@ -14,7 +18,7 @@ export default {
     },
     extend: {
       colors: {
-        goldenOchre: '#6495ED', // bg hint color for buttons and primary heading color for heading/title if the page bg is nightSky
+        goldenOchre: '#6B8E23', // bg hint color for buttons and primary heading color for heading/title if the page bg is nightSky
         softCharcoal: '#2F3532', // bg color for sidebars
         deepCharcoal: '#272B25', // bg color for sidebar buttons on hover
         slateOnyx: '#3A403C', // bg color for footer and dropdown menu on larger screens
