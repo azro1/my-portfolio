@@ -9,6 +9,7 @@ const MessageImage = ({ filePath, width = 200, height = 200, className='' }) => 
   const [error, setError] = useState(null);
   const supabase = createClientComponentClient();
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const getSignedUrl = async () => {
       try {
