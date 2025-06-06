@@ -11,6 +11,8 @@ const Avatar = ({ url, width = 32, height = 32 }) => {
     const supabase = createClientComponentClient();
 
     // The url that we take in as a prop is used to create a signed URL using Supabase's createSignedUrls function. This signedURL is then used in JSX to display the image.
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         const fetchSignedUrl = async () => {
             try {
