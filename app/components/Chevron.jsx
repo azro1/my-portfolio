@@ -95,7 +95,7 @@ const Chevron = ({ user, roomName, roomUsersState, isForumPage }) => {
               </Link>
 
               {/* Limit width to available space minus icon width, truncates overflow with ellipsis */}
-              <Heading className='relative top-[2px] text-lg w-[50vw] overflow-hidden text-ellipsis whitespace-nowrap xl:text-xl'>
+              <Heading className='relative top-[2px] text-lg max-w-[50vw] overflow-hidden text-ellipsis whitespace-nowrap xl:text-xl'>
                 {roomName }
               </Heading>
             </div>
