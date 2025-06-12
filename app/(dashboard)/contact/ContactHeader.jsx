@@ -8,7 +8,7 @@ const ContactHeader = () => {
                 Get In Touch
             </Heading>
             <p>
-              If you have a question, want to talk about a project, or just want to say hello, use the form below to get in touch and I'll reply as soon as I can.
+              If you have a question, want to talk about a project, or just want to say hello, use the form below to get in touch and I&apos;ll reply as soon as I can.
             </p>
         </>
     )
