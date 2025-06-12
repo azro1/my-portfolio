@@ -18,7 +18,7 @@ import Heading from "../components/Heading";
 const MySkills = () => {
   return (
     <section>
-      <div className="flex flex-col items-center gap-6 md:flex-row md:gap-10 lg:justify-end lg:w-max lg:ml-auto lg:bg-nightSky lg:p-10 uw:mx-auto">
+      <div className="flex flex-col items-center gap-6 md:flex-row md:gap-10 lg:justify-end lg:w-max lg:ml-auto lg:bg-nightSky lg:p-12 uw:mx-auto">
         
         {/* Icons Section */}
         <div className="flex-1 flex justify-center md:justify-end lg:flex-none">
@@ -27,7 +27,7 @@ const MySkills = () => {
             {technicalSkills.map((skill, index) => (
               <motion.div
                 key={index}
-                className="p-3 bg-charcoalGray rounded-md w-max overflow-hidden md:p-4 shadow-[0_4px_12px_rgba(0,0,0,0.3)]"
+                className="p-3 bg-charcoalGray rounded-md w-max overflow-hidden shadow-[0_4px_12px_rgba(0,0,0,0.3)]"
                 whileHover={{
                   scale: 1.1 // Keep scale on container
                 }}

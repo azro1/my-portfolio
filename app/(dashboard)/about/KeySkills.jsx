@@ -42,7 +42,7 @@ const KeySkills = () => {
     <section>
       <div className="overflow-hidden">
 
-        <Heading className="font-bold text-center text-cloudGray mb-5 text-2xl md:text-3xl md:mb-9 xl:text-[32px]">
+        <Heading className="font-bold text-center text-cloudGray mb-7 text-2xl md:text-3xl md:mb-9 xl:text-[32px]">
           Key Skills
         </Heading>
 
@@ -58,7 +58,7 @@ const KeySkills = () => {
               }}
               className="flex flex-col items-center justify-center"
             >
-              <div className="p-3 w-max rounded-md shadow-[0_4px_12px_rgba(0,0,0,0.3)] transition-all transform hover:scale-105 bg-charcoalGray md:shadow-[0_6px_8px_rgba(0,0,0,0.6)] md:p-4">
+              <div className="p-3 w-max rounded-md shadow-[0_0_10px_rgba(0,0,0,0.6)] transition-all transform hover:scale-105 bg-charcoalGray lg:shadow-[0_6px_8px_rgba(0,0,0,0.6)] md:p-4">
                 <span>{skill.icon}</span>
               </div>
                 <p className="mt-3 text-sm font-medium text-charcoalGrayLight lg:font-r lg:text-stoneGray tracking-wider">{skill.name}</p>
