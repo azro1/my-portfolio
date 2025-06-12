@@ -24,7 +24,7 @@ import Heading from '../components/Heading';
 const Connect = () => {
   return (
     <section>
-        <div className="flex flex-col items-center text-center max-w-max mx-auto md:flex-col lg:bg-nightSky lg:p-10">
+        <div className="flex flex-col items-center text-center xl:max-w-max uw:max-w-screen-xl mx-auto md:flex-col lg:bg-nightSky lg:p-10">
           
           <Heading className="font-bold text-goldenOchre subheading">
               Let&apos;s Connect
@@ -48,12 +48,12 @@ const Connect = () => {
           </div>
 
           <div className='flex flex-col items-center justify-center '>
-            <p className="text-stoneGray md:hidden">
-              Follow me on LinkedIn, GitHub, Instagram, and Discord for updates on latest projects, code repositories, and more!
+            <p className="text-stoneGray lg:hidden">
+              Follow me on social media for upcoming projects and code repositories
             </p>
 
-            <p className="hidden md:block text-stoneGray">
-              Follow me on LinkedIn, GitHub, YouTube, Instagram, and Discord for updates on my latest projects, new videos, code repositories, and more!
+            <p className="hidden lg:block text-stoneGray">
+              Follow me on social media to stay updated on my latest work, upcoming projects, development insights, code releases, tutorials, announcements and more!
             </p>
           </div>
 

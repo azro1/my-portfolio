@@ -64,23 +64,23 @@ const ProjectList = () => {
               
 
 
-                <div className='flex items-start pt-9 justify-center relative w-full h-[320px] md:h-[380px] md:pt-12 lg:h-[420px] lg:pt-14'>
+                <div className='flex items-start pt-12 justify-center relative w-full h-[320px] md:h-[380px] md:pt-14 lg:h-[420px] lg:pt-[62px]'>
                       
                       {/* background div */}
                       <div className='absolute top-0 w-[280px] bg-nightSky h-[280px] md:w-[380px] md:h-[330px] lg:w-[440px] lg:h-[370px]'></div>
                         
                           <Link className='absolute' href={`/projects/${project.id}`}>
                             <div className='flex flex-col items-center gap-4'>
-                              <h3 className='text-stoneGray text-xl font-semibold'>{project.title}</h3>
-                                <Image className='bg-softGray max-w-[120px] md:max-w-[150px] lg:max-w-[180px]'
+                              <h3 className='text-stoneGray text-lg font-semibold md:text-xl'>{project.title}</h3>
+                                <Image className='bg-softGray max-w-[100px] md:max-w-[130px] lg:max-w-[160px]'
                                   src={project.mobile_image_url}
                                   alt={project.list_alt_desc}
-                                  width={120}
-                                  height={120}
+                                  width={100}
+                                  height={100}
                                   quality={100}
                                   priority
                                 />
-                              <p className='text-stoneGray '>click to view project</p>
+                              <p className='text-stoneGray md:text-lg'>click to view project</p>
                             </div>
                           </Link>
 
