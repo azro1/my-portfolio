@@ -36,7 +36,7 @@ const AuthRegHeader = () => {
 
 
     return (
-        <header className='flex items-center bg-softCharcoal w-full min-h-[92px] fixed z-40 md:static'>
+        <header className='flex items-center bg-softCharcoal w-full py-4 fixed z-40 md:static'>
             <div className='max-w-screen-xl mx-auto flex-1 flex items-center justify-between px-[x-pad]'>
                 <Link href={`${protectedRoutes ? '#' : '/'}`}>
                     <div className='cursor-pointer md:hidden'>
