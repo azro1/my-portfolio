@@ -42,7 +42,7 @@ const KeySkills = () => {
     <section>
       <div className="overflow-hidden">
 
-        <Heading className="font-bold text-center text-cloudGray mb-7 text-2xl md:text-3xl md:mb-9 xl:text-[32px]">
+        <Heading className="font-bold text-center text-cloudGray mb-7 subheading md:mb-9 md:text-[32px]">
           Key Skills
         </Heading>
 

@@ -21,7 +21,7 @@ const Logo = ({ size = 48 }) => (
         transform: 'translate(-50%, -50%)',
         color: '#24262C',
         fontSize: size * 0.6,
-        fontWeight: '800',
+        fontWeight: '400',
         pointerEvents: 'none',
       }}
     >

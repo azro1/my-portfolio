@@ -6,7 +6,7 @@ import Heading from '@/app/components/Heading';
 const EditProfile = () => {
 
   return (
-    <div className='flex-1 overflow-y-scroll hide-scrollbar px-[x-pad] relative pb-24 pt-40  xl:pt-36 xl:pb-28'>
+    <div className='flex-1 overflow-y-scroll hide-scrollbar px-[x-pad] relative pb-24 pt-36  xl:pt-36 xl:pb-28'>
 
       <div>
           <Heading className='font-medium text-cloudGray text-lg md:text-xl'>

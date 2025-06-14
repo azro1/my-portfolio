@@ -18,7 +18,7 @@ const Contact = async () => {
   return (
     <div className="flex-1 main-container flex flex-col">
       <main className="flex-grow flex flex-col">
-        <div className='flex-grow flex flex-col items-center pt-40 pb-20 md:h-screen md:p-0 md:min-h-[900px]'>
+        <div className='flex-grow flex flex-col items-center pt-36 pb-20 md:h-screen md:p-0 md:min-h-[900px]'>
           <div className='w-full flex-grow flex items-center justify-center'>
             <div className='flex flex-col w-full md:max-w-2xl'>
               <ContactHeader />
