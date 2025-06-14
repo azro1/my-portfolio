@@ -126,7 +126,7 @@ const Sidebar = () => {
   if (loading) {
     return (
       <div className={`w-full box-border xl:inline-block ${isOpen ? 'xl:w-[300px]' : 'xl:w-[64px]'} xl:h-screen xl:min-h-[768px]`}>
-        <div className='sidebar-content fixed bg-softCharcoal min-h-[92px] flex items-center md:justify-end xl:h-full xl:overflow-y-scroll xl:hide-scrollbar  xl:items-start xl:justify-center'>
+        <div className='sidebar-content fixed bg-softCharcoal min-h-[80px] flex items-center md:min-h-[82px] md:justify-end xl:h-full xl:overflow-y-scroll xl:hide-scrollbar  xl:items-start xl:justify-center'>
 
           <div className="ml-8 md:mr-20 xl:ml-0 xl:mr-0 xl:mt-56">
                 <Image
@@ -175,7 +175,7 @@ const Sidebar = () => {
             </div>
 
             {/* medium logo */}
-            <div className="hidden md:flex items-center py-4 min-h-[92px] xl:hidden">
+            <div className="hidden md:flex items-center py-4 xl:hidden">
               <Link href='/'>
                   <Logo 
                     size={50} 
@@ -184,7 +184,7 @@ const Sidebar = () => {
             </div>
 
             {/* Small Logo */}
-            <div className="flex items-center py-4 min-h-[92px] md:hidden">
+            <div className="flex items-center py-4 md:hidden">
               <Link href='/'>
                   <Logo />
               </Link>
@@ -192,12 +192,12 @@ const Sidebar = () => {
 
             {/* hamburger menu for logged out users on mobiles*/}
             {!user && (
-              <div className="flex items-center min-h-[92px] md:hidden">
+              <div className="flex items-center md:hidden">
                 <Chevron />
               </div>
             )}
             
-            <ul className='hidden md:min-h-[92px] md:flex-1 md:flex md:items-center md:justify-end md:gap-8 xl:flex-none xl:flex-col xl:items-stretch xl:justify-start xl:gap-0'>
+            <ul className='hidden md md:flex-1 md:flex md:items-center md:justify-end md:gap-8 xl:flex-none xl:flex-col xl:items-stretch xl:justify-start xl:gap-0'>
               <div className='hidden xl:block bg-charcoalGray mx-2 h-[1px]'></div>
               <li className={`group xl:m-2 xl:mb-0 xl:p-3 xl:max-h-12 xl:hover:text-cloudGray  ${!isOpen && activeLink !== '/' ? 'xl:transition-bg duration-300 xl:hover:bg-nightSky xl:rounded-md' : ''}`}>
                 <Link href={'/'} onClick={(e) => {
