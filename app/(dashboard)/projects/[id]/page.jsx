@@ -91,8 +91,8 @@ const Project = async ({ params }) => {
                       </div>
 
                   
-                      <div className='min-h-[240px] w-full sm:max-w-xs relative bg-white shadow-[0_0_12px_rgba(0,0,0,0.1)] md:hidden'>
-                        <Image className='max-w-[130px] max-h-[130px] mx-auto my-auto '
+                      <div className='min-h-[180px] w-full sm:max-w-xs relative bg-white shadow-[0_0_12px_rgba(0,0,0,0.1)] md:hidden'>
+                        <Image className='max-w-[110px] max-h-[110px] mx-auto my-auto '
                           src={project.mobile_image_url}
                           alt="Animated SVG image representing the project on mobile"
                           fill
