@@ -30,7 +30,7 @@ const Help = () => {
   return (
     <div className='flex px-[x-pad]'>
       <main>
-        <div className='h-screen flex pt-40 pb-20 min-h-[924px] md:min-h-[1034px] xl:pt-36 xl:pb-28'>
+        <div className='h-screen flex pt-36 pb-20 min-h-[924px] md:min-h-[1034px] xl:pb-28'>
 
           <div className='w-full h-full flex flex-col'>
             <Heading className='font-medium text-cloudGray text-lg md:text-xl'>

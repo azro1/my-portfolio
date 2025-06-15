@@ -15,7 +15,7 @@ const ChatPage = () => {
           <Sidebar />
         </div>
 
-        <div className="flex-1 flex items-center justify-center w-full bg-softGray text-softCharcoal py-40 md:py-0 md:h-screen md:min-h-[900px] ">
+        <div className="flex-1 flex items-center justify-center w-full bg-softGray text-softCharcoal py-36 md:py-0 md:h-screen md:min-h-[900px] ">
           {/* Hero Section */}
           <div className='main-container w-full'>
             <main>
