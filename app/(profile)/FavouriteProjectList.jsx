@@ -45,18 +45,16 @@ const FavouriteProjectList = ({ user }) => {
                         <div className='flex flex-wrap gap-4'>
                             {retrievedProjects.length > 0 && (retrievedProjects.map((project) => (
                                 <div className='max-w-[80px]' key={project.id}>
-                                    <div className='bg-softGray' >
+                                    <div className='flex items-center justify-center bg-softGray min-w-[80px] min-h-[80px]' >
                                         <Link href={`/projects/${project.id}`}>
-                                            <div className='w-[80px] h-[80px]'>
-                                                <Image className='object-contain'
-                                                    src={project.mobile_image_url}
-                                                    alt="rocket icon"
-                                                    width={80}
-                                                    height={80}
-                                                    quality={100}
-                                                    priority
-                                                />
-                                            </div>
+                                            <Image className='object-contain max-w-[70px]'
+                                                src={project.mobile_image_url}
+                                                alt="A project image"
+                                                width={80}
+                                                height={80}
+                                                quality={100}
+                                                priority
+                                            />
                                         </Link>
                                     </div>
                                     <h4 className="font-semibold text-ashGray text-sm text-center mt-2 overflow-hidden text-ellipsis whitespace-nowrap">{project.title}</h4>

@@ -72,7 +72,8 @@ const ProjectList = () => {
                           <Link className='absolute' href={`/projects/${project.id}`}>
                             <div className='flex flex-col items-center gap-4'>
                               <h3 className='text-stoneGray text-lg font-semibold md:text-xl'>{project.title}</h3>
-                                <Image className='bg-softGray max-w-[100px] md:max-w-[130px] lg:max-w-[160px]'
+                              <div className='flex items-center justify-center bg-softGray min-w-[110px] min-h-[100px] md:min-w-[140px] md:min-h-[130px] lg:min-w-[170px] lg:min-h-[150px]'>
+                                <Image className='max-w-[90px] md:max-w-[110px] lg:max-w-[130px]'
                                   src={project.mobile_image_url}
                                   alt={project.list_alt_desc}
                                   width={100}
@@ -80,6 +81,7 @@ const ProjectList = () => {
                                   quality={100}
                                   priority
                                 />
+                              </div>
                               <p className='text-stoneGray md:text-lg'>click to view project</p>
                             </div>
                           </Link>
