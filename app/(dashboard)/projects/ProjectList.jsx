@@ -54,7 +54,7 @@ const ProjectList = () => {
   return (
     <section>
       <div>
-        <Heading className="text-2xl font-bold text-cloudGray text-center mb-5 md:text-3xl md:mb-7 xl:text-[32px]">
+        <Heading className="text-2xl font-bold text-cloudGray text-center mb-5 md:mb-7 md:text-[28px] lg:text-[30px] xl:text-[32px]">
           My Projects
         </Heading>
         <div className="mx-auto max-w-[300px] md:max-w-[400px] lg:max-w-[460px]">

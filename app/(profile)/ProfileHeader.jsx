@@ -80,7 +80,7 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
 
          {showAvatar && (
             <div className='min-h-[480px] bg-nightSky mt-6'>
-               <div className='flex items-start gap-1 p-4 xl:items-center'>
+               <div className='flex items-start gap-1 p-4 min-h-[112px] md:items-center'>
 
                   {loading ? (
                      <>
@@ -93,10 +93,10 @@ const ProfileHeader = ({ title, subheading, showAvatar }) => {
                            />
                         </div>
 
-                        <div className='hidden w-20 h-20 md:flex items-center justify-center bg-softCharcoal rounded-full overflow-hidden'>
+                        <div className='hidden w-20 h-20 md:flex items-center justify-center rounded-full overflow-hidden'>
                            <Image
-                              width={80}
-                              height={80}
+                              width={76}
+                              height={76}
                               src="/images/loading/loader.gif"
                               alt="A rotating loading animation on a transparent background"
                            />
