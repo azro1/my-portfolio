@@ -1,4 +1,4 @@
-import { dekko } from "../styles/fonts";
+import { nps } from "../styles/fonts";
 
 const Logo = ({ size = 48 }) => (
   <div style={{ position: 'relative', width: size, height: size }}>
@@ -13,15 +13,15 @@ const Logo = ({ size = 48 }) => (
       <circle cx="32" cy="32" r="30" fill="#FFFFFF" />
     </svg>
     <span
-      className={dekko.className}
+      className={nps.className}
       style={{
         position: 'absolute',
-        top: '57%',
-        left: '50%',
+        top: '56%',
+        left: '51%',
         transform: 'translate(-50%, -50%)',
         color: '#24262C',
         fontSize: size * 0.6,
-        fontWeight: '400',
+        fontWeight: '700',
         pointerEvents: 'none',
       }}
     >

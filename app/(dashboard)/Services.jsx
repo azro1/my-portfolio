@@ -39,7 +39,7 @@ const Services = () => {
     <section>
       <div className="overflow-hidden">
 
-        <Heading className="font-bold text-center text-cloudGray mb-5 text-2xl md:text-3xl md:mb-9 xl:text-[32px]">
+        <Heading className="font-bold text-center text-cloudGray mb-5 text-2xl md:mb-9 md:text-[28px] lg:text-[30px] xl:text-[32px]">
           My Services
         </Heading>
 
