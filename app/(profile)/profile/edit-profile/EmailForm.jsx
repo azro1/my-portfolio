@@ -106,7 +106,7 @@ const EmailForm = ({ user, profile }) => {
 
         } else if (hasInteracted && isValid) {
             // Show success message if names are different
-            if (draftEmail !== email) {
+            if (draftEmail.toLowerCase() !== email.toLowerCase()) {
                 setFormSuccess('Your email looks good!');
                 setFormError(null);
             } else {
@@ -222,7 +222,7 @@ const EmailForm = ({ user, profile }) => {
                     backdrop='bg-modal-translucent-dark'
                 >
                     <form noValidate>
-                        <label className='block mb-3 text-xl font-medium' htmlFor='draftEmail'>Email Address</label>
+                        <label className='block mb-1 text-xl font-medium' htmlFor='draftEmail'>Email Address</label>
                         <p className='mb-3 font-light'>Please enter your new email address. This email will be used for account verification and notifications</p>
                         <input
                             className='w-full p-2.5 px-4 rounded-md border-[1px] border-gray-300'

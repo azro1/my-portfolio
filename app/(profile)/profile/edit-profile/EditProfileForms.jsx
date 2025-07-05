@@ -43,6 +43,7 @@ const EditProfileForms = () => {
             const hasVerified = await getProFlag();
 
             if (hasVerified) {
+                console.log('Edit Profile Forms was refreshed!');
                 router.refresh();
             }
 

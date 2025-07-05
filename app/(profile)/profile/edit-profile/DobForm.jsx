@@ -212,7 +212,7 @@ const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
                     backdrop='bg-modal-translucent-dark'
                 >
                     <form noValidate>
-                        <label className="block mb-3 text-xl font-medium" htmlFor='draftDob'>Edit Dob</label>
+                        <label className="block mb-1 text-xl font-medium" htmlFor='draftDob'>Edit Dob</label>
                         <p className='mb-3 font-light'>Please enter a valid date of birth to keep your account accurate and up-to-date</p>
                         <input
                             className='w-full p-2.5 px-4 rounded-md border-[1px] border-gray-300'
