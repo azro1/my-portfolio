@@ -200,7 +200,7 @@ const PhoneForm = ({ user, profile }) => {
                 navigator.sendBeacon(`${location.origin}/api/auth/is-verifying`, JSON.stringify({ phone: convertedPhoneNumber, isVerifying: true }));
 
                 changeMessage('success', 'An verification code has been sent via SMS to your new phone number')
-                router.push('/profile/verify-phone-otp')
+                router.push('/verify-phone-otp')
 
             }
 
@@ -261,7 +261,7 @@ const PhoneForm = ({ user, profile }) => {
                     backdrop='bg-modal-translucent-dark'
                 >
                     <form noValidate>
-                        <label className='block mb-1 text-xl font-medium' htmlFor='draftPhone'>Phone Number</label>
+                        <label className='block mb-2 text-xl font-medium' htmlFor='draftPhone'>Phone Number</label>
                             <p className='mb-3 font-light'>Please enter your new phone number. This number will be used for account verification purposes</p>
                             <input
                                 className='w-full p-2.5 px-4 rounded-md border-[1px] border-gray-300'
@@ -279,7 +279,7 @@ const PhoneForm = ({ user, profile }) => {
                         <button className='btn-small py-2 px-3 bg-goldenOchre mr-2' onClick={handleCloseForm}>Cancel</button>
                         <button className='btn-small py-2 px-3 bg-goldenOchre w-[64px]' onClick={handleSubmit(handlePhoneUpdate)}>
                             {isUpdating ? (
-                                <div className='flex items-center justify-center gap-2 w-[34px] h-[24px]'>
+                                <div className='flex items-center justify-center h-[24px]'>
                                     <Image
                                         className='opacity-65'
                                         width={20}

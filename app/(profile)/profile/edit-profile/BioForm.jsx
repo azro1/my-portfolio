@@ -43,7 +43,7 @@ const schema = yup.object({
 
 const BioForm = ({ user, profile, fetchProfile, changeMessage }) => {
     const [bio, setBio] = useState('')
-    const [saving, setSaving] = useState(false)
+    const [isUpdating, setIsUpdating] = useState(false)
     const [formError, setFormError] = useState(null)
     const [formSuccess, setFormSuccess] = useState(null)
     const [showForm, setShowForm] = useState(false)
@@ -138,7 +138,7 @@ const BioForm = ({ user, profile, fetchProfile, changeMessage }) => {
         }
         
         try {
-            setSaving(true)
+            setIsUpdating(true)
 
             // check for successful update if not throw new error
             const updateProfilesResult = await updateTable(user, 'profiles', { 
@@ -150,7 +150,7 @@ const BioForm = ({ user, profile, fetchProfile, changeMessage }) => {
                 throw new Error("An unexpected error occurred and we couldn't update your bio. Please try again later. If the issue persists, contact support.")
             } 
 
-            setSaving(false)
+            setIsUpdating(false)
             setShowForm(false)
             reset({ draftBio: '' });
             changeMessage('success', 'Bio updated!')
@@ -160,7 +160,7 @@ const BioForm = ({ user, profile, fetchProfile, changeMessage }) => {
 
 
         } catch (error) {
-            setSaving(false)
+            setIsUpdating(false)
             setFormSuccess(null);
             fetchProfile(user)
         }
@@ -218,7 +218,7 @@ const BioForm = ({ user, profile, fetchProfile, changeMessage }) => {
                     backdrop='bg-modal-translucent-dark'
                 >
                     <form noValidate>
-                        <label className="block mb-1 text-xl font-medium" htmlFor="draftBio">Edit Bio</label>
+                        <label className="block mb-2 text-xl font-medium" htmlFor="draftBio">Edit Bio</label>
                         <p className='mb-3 font-light'>Please enter your updated bio. Keep it brief and relevant, as this will be displayed on your profile dashboard.</p>
                         <input
                             className='w-full p-2.5 px-4 rounded-md border-[1px] border-gray-300'
@@ -234,9 +234,9 @@ const BioForm = ({ user, profile, fetchProfile, changeMessage }) => {
                     </form>
                     <div className='flex items-center mt-3'>
                         <button className='btn-small py-2 px-3 bg-goldenOchre mr-2' onClick={handleCloseForm}>Cancel</button>
-                        <button className='btn-small  py-2 px-3 bg-goldenOchre' onClick={handleSubmit(handleUpdateBio)}>
-                            {saving ? (
-                                <div className='flex items-center justify-center w-[34px] h-[24px]'>
+                        <button className='btn-small  py-2 px-3 bg-goldenOchre w-[64px]' onClick={handleSubmit(handleUpdateBio)}>
+                            {isUpdating ? (
+                                <div className='flex items-center justify-center h-[24px]'>
                                     <Image
                                         className='opacity-65'
                                         width={20}

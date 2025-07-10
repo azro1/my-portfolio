@@ -44,7 +44,7 @@ const LastNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
     const [showForm, setShowForm] = useState(false)
     const [formError, setFormError] = useState(null)
     const [formSuccess, setFormSuccess] = useState(null)
-    const [saving, setSaving] = useState(false)
+    const [isUpdating, setIsUpdating] = useState(false)
     const [hasInteracted, setHasInteracted] = useState(false)
 
 
@@ -144,7 +144,7 @@ const LastNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
 
 
         try {
-            setSaving(true)
+            setIsUpdating(true)
 
             // check for successful metadata update if not log out error
             const updateMetadataResult = await updateMetadata({ last_name: sanitizedLastName })
@@ -162,7 +162,7 @@ const LastNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
                 throw new Error("An unexpected error occurred and we couldn't update your last name. Please try again later. If the issue persists, contact support.")
             }
 
-            setSaving(false)
+            setIsUpdating(false)
             setShowForm(false)
             reset({ draftLastName: '' });
             changeMessage('success', 'Last name updated!')
@@ -171,7 +171,7 @@ const LastNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
             fetchProfile(user);
 
         } catch (error) {
-            setSaving(false)
+            setIsUpdating(false)
             setFormSuccess(null);
             setFormError(error.message)
             fetchProfile(user)
@@ -220,7 +220,7 @@ const LastNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
                     backdrop='bg-modal-translucent-dark'
                 >
                     <form noValidate>
-                        <label className='block mb-1 text-xl font-medium' htmlFor='draftLastName'>Edit Last Name</label>
+                        <label className='block mb-2 text-xl font-medium' htmlFor='draftLastName'>Edit Last Name</label>
                             <span >
                                 
                             </span>
@@ -241,8 +241,8 @@ const LastNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
                     <div className='flex items-center mt-3'>
                         <button className='btn-small py-2 px-3 bg-goldenOchre mr-2' onClick={handleCloseForm}>Cancel</button>
                         <button className='btn-small py-2 px-3 bg-goldenOchre w-[64px]' onClick={handleSubmit(handleNameUpdate)}>
-                            {saving ? (
-                                <div className='flex items-center justify-center gap-2 w-[34px] h-[24px]'>
+                            {isUpdating ? (
+                                <div className='flex items-center justify-center h-[24px]'>
                                     <Image
                                         className='opacity-65'
                                         width={20}

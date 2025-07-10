@@ -41,7 +41,7 @@ const schema = yup.object({
 const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
     const [dob, setDob] = useState('')
     const [reformattedDob, setReformattedDob] = useState('');
-    const [saving, setSaving] = useState(false)
+    const [isUpdating, setIsUpdating] = useState(false)
     const [formError, setFormError] = useState(null)
     const [formSuccess, setFormSuccess] = useState(null)
     const [showForm, setShowForm] = useState(false)
@@ -142,7 +142,7 @@ const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
         }
 
         try {
-            setSaving(true)
+            setIsUpdating(true)
 
             const updateProfilesResult = await updateTable(user, 'profiles', { 
                 dob: formattedDate,
@@ -153,7 +153,7 @@ const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
                 throw new Error("An unexpected error occurred and we couldn't update your date of birth. Please try again later. If the issue persists, contact support.")
             }
 
-            setSaving(false)
+            setIsUpdating(false)
             setShowForm(false)
             reset({ draftDob: '' });
             changeMessage('success', 'Date of birth updated!')
@@ -162,7 +162,7 @@ const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
             fetchProfile(user);
 
         } catch (error) {
-            setSaving(false)
+            setIsUpdating(false)
             setFormSuccess(null);
             setFormError(error.message)
             fetchProfile(user)
@@ -212,7 +212,7 @@ const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
                     backdrop='bg-modal-translucent-dark'
                 >
                     <form noValidate>
-                        <label className="block mb-1 text-xl font-medium" htmlFor='draftDob'>Edit Dob</label>
+                        <label className="block mb-2 text-xl font-medium" htmlFor='draftDob'>Edit Dob</label>
                         <p className='mb-3 font-light'>Please enter a valid date of birth to keep your account accurate and up-to-date</p>
                         <input
                             className='w-full p-2.5 px-4 rounded-md border-[1px] border-gray-300'
@@ -225,9 +225,9 @@ const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
                     </form>
                     <div className='flex items-center mt-3'>
                         <button className='btn-small py-2 px-3 bg-goldenOchre mr-2' onClick={handleCloseForm}>Cancel</button>
-                        <button className='btn-small py-2 px-3 bg-goldenOchre w-[64px]' disabled={saving} onClick={handleSubmit(handleUpdateDob)}>
-                            {saving ? (
-                                <div className='flex items-center justify-center gap-2 w-[34px] h-[24px]'>
+                        <button className='btn-small py-2 px-3 bg-goldenOchre w-[64px]' disabled={isUpdating} onClick={handleSubmit(handleUpdateDob)}>
+                            {isUpdating ? (
+                                <div className='flex items-center justify-center h-[24px]'>
                                     <Image
                                         className='opacity-65'
                                         width={20}

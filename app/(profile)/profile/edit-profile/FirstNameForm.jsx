@@ -45,7 +45,7 @@ const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
     const [showForm, setShowForm] = useState(false)
     const [formError, setFormError] = useState(null)
     const [formSuccess, setFormSuccess] = useState(null)
-    const [saving, setSaving] = useState(false)
+    const [isUpdating, setIsUpdating] = useState(false)
     const [hasInteracted, setHasInteracted] = useState(false);
     
 
@@ -137,7 +137,7 @@ const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
 
 
         try {
-            setSaving(true)
+            setIsUpdating(true)
 
             // check for successful metadata update if not log out error
             const updateMetadataResult = await updateMetadata({ first_name: sanitizedFirstName })
@@ -163,14 +163,14 @@ const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
             }, 'message_id');
 
             if (!updateMessagesResult.success) {
-                setSaving(false)
+                setIsUpdating(false)
                 fetchProfile(user)
                 throw new Error("An unexpected error occurred. Your firstname was updated but we couldn't update your messages. Please try again later. If the issue persists, contact support.")
             }
 
 
             if (updateProfilesResult.success && updateMessagesResult.success) {
-                setSaving(false)
+                setIsUpdating(false)
                 setShowForm(false)
                 reset({ draftFirstName: '' });
                 changeMessage('success', 'First name updated!')
@@ -181,7 +181,7 @@ const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
 
    
         } catch (error) {
-            setSaving(false)
+            setIsUpdating(false)
             setFormSuccess(null);
             fetchProfile(user)
             setFormError(error.message)
@@ -228,7 +228,7 @@ const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
                     backdrop='bg-modal-translucent-dark'
                 >
                     <form noValidate>
-                        <label className='block mb-1 text-xl font-medium' htmlFor='draftFirstName'>Edit First Name</label>
+                        <label className='block mb-2 text-xl font-medium' htmlFor='draftFirstName'>Edit First Name</label>
                         <p className='mb-3 font-light'>Please enter your first name as you&apos;d like it to appear in your profile</p>
                         <input
                             className='w-full p-2.5 px-4 rounded-md border-[1px] border-gray-300'
@@ -246,8 +246,8 @@ const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
                     <div className='flex items-center mt-3'>
                         <button className='btn-small py-2 px-3 bg-goldenOchre mr-2' onClick={handleCloseForm}>Cancel</button>
                         <button className='btn-small py-2 px-3 bg-goldenOchre w-[64px]' onClick={handleSubmit(handleNameUpdate)}>
-                            {saving ? (
-                                <div className='flex items-center justify-center gap-2 w-[34px] h-[24px]'>
+                            {isUpdating ? (
+                                <div className='flex items-center justify-center h-[24px]'>
                                     <Image
                                         className='opacity-65'
                                         width={20}

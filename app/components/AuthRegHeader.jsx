@@ -15,7 +15,9 @@ const AuthRegHeader = () => {
         '/verify-login-otp',
         '/verify-forgot-email-otp',
         '/upload-avatar',
-        '/register-form'
+        '/register-form',
+        '/verify-email-otp',
+        '/verify-phone-otp',
     ];
 
     const protectedRoutes = routes.some(route => pathname.includes(route));

@@ -169,7 +169,7 @@ const UploadAvatar = () => {
               Upload your avatar
             </Heading>
 
-            <p className='md:text-[17px]'>
+            <p className='md:text-[17px] leading-normal'>
               Choose an image to personalize your profile or skip this step to continue. This helps others recognize you but is entirely optional
             </p>
       
@@ -183,7 +183,7 @@ const UploadAvatar = () => {
               />
             </div>
 
-            <Link className='w-full mt-1 md:mt-0' href='/register-form'>
+            <Link className='w-full h-0 mt-2' href='/register-form'>
               <div className='flex'>
                 <button className='text-nightSky ml-auto'>
                   Skip
