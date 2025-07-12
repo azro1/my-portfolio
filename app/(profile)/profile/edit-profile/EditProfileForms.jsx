@@ -43,6 +43,7 @@ const EditProfileForms = () => {
             const hasVerified = await getProFlag();
 
             if (hasVerified) {
+                console.log('Edit Profile Forms was refreshed!');
                 router.refresh();
             }
 
@@ -132,7 +133,7 @@ const EditProfileForms = () => {
                     changeMessage={changeMessage}
                     fetchProfile={fetchProfile}
                 />
-                <div className='bg-charcoalGray h-[1px]'></div>
+                <div className='bg-nightSkyLight h-[1px]'></div>
 
                 <FirstNameForm
                     user={user}
@@ -140,7 +141,7 @@ const EditProfileForms = () => {
                     changeMessage={changeMessage}
                     fetchProfile={fetchProfile}
                 />
-                <div className='bg-charcoalGray h-[1px]'></div>
+                <div className='bg-nightSkyLight h-[1px]'></div>
 
 
                 <LastNameForm
@@ -149,7 +150,7 @@ const EditProfileForms = () => {
                     changeMessage={changeMessage}
                     fetchProfile={fetchProfile}
                 />
-                <div className='bg-charcoalGray h-[1px]'></div>
+                <div className='bg-nightSkyLight h-[1px]'></div>
 
                 <DobForm
                     user={user}
@@ -157,13 +158,13 @@ const EditProfileForms = () => {
                     changeMessage={changeMessage}
                     fetchProfile={fetchProfile}
                 />
-                <div className='bg-charcoalGray h-[1px]'></div>
+                <div className='bg-nightSkyLight h-[1px]'></div>
 
                 <EmailForm 
                     user={user}
                     profile={profile}
                 />
-                <div className='bg-charcoalGray h-[1px]'></div>
+                <div className='bg-nightSkyLight h-[1px]'></div>
 
                 <PhoneForm
                     user={user}

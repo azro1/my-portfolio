@@ -692,7 +692,7 @@ const RegisterForm = () => {
                             {errors.phone ? <p className="form-error mt-1">{errors.phone.message}</p> : phoneExists ? <p className="form-error mt-1">Phone already exists</p> : null}
                         </div>
 
-                        <button className={`p-[9px] text-[17px] rounded-lg cursor-pointer text-white font-medium block w-full transition duration-500 bg-green-700 ${(isLoading || phoneExists) ? 'opacity-65' : 'opacity-100'}`} disabled={isLoading || phoneExists} aria-live={Object.keys(errors).length > 0 || isLoading ? 'assertive' : 'off'} onClick={handleSubmit(handleUpdateProfile)}>
+                        <button className={`p-3 text-[17px] rounded-lg cursor-pointer text-white font-medium block w-full transition duration-500 bg-green-700 ${(isLoading || phoneExists) ? 'opacity-65' : 'opacity-100'}`} disabled={isLoading || phoneExists} aria-live={Object.keys(errors).length > 0 || isLoading ? 'assertive' : 'off'} onClick={handleSubmit(handleUpdateProfile)}>
                             {isLoading ? (
                                 <div className='flex items-center justify-center'>
                                     <Image
@@ -710,8 +710,8 @@ const RegisterForm = () => {
 
                     </form>
     
-                    <div className='mt-4'>
-                        <Link href='/upload-avatar' onClick={(e) => handleBackButton(e)}>
+                    <div className='mt-6 h-1'>
+                        <Link className=' ' href='/upload-avatar' onClick={(e) => handleBackButton(e)}>
                             <button className='text-nightSky'>
                                 Back
                             </button>

@@ -52,14 +52,14 @@ const schema = yup.object({
 
 
 
-const ProfileEmailOtpForm = ({ email, contact, verificationType, title, subHeading, successMessage }) => {
+const ProfilePhoneOtpForm = ({ phone, contact, verificationType, title, subHeading, successMessage }) => {
     const [isLoading, setIsLoading] = useState(false)
     const [isVerified, setIsVerified] = useState(false)
     const [buttonIsDisabled, setButtonIsDisabled] = useState(null)
     const [isActive, setIsActive] = useState(null)
     const [redirect, setRedirect] = useState(false)
 
-
+    
     // custom hooks
     const { updateTable } = useUpdateTable()
     const { updateMetadata } = useUpdateMetadata()
@@ -73,19 +73,21 @@ const ProfileEmailOtpForm = ({ email, contact, verificationType, title, subHeadi
 
 
 
-    // store email in a ref 
-    const emailRef = useRef(email);
+
+    // store phone in a ref 
+    const phoneRef = useRef(phone);
 
 
 
 
 
-     
+
+
   
-     // isButtonDisabled function passed down to timer that fires everytime button is disabled which then allows me to show distinct errors on form submission
-     const isButtonDisabled = useCallback((bool) => {
+    // isButtonDisabled function passed down to timer that fires everytime button is disabled which then allows me to show distinct errors on form submission
+    const isButtonDisabled = useCallback((bool) => {
         setButtonIsDisabled(bool)
-     }, []);
+    }, []);
 
      useEffect(() => {
         if (buttonIsDisabled && buttonIsDisabled !== null) {
@@ -94,6 +96,7 @@ const ProfileEmailOtpForm = ({ email, contact, verificationType, title, subHeadi
             setIsActive(false)
         }
      }, [buttonIsDisabled])
+
 
 
 
@@ -123,7 +126,9 @@ const ProfileEmailOtpForm = ({ email, contact, verificationType, title, subHeadi
 
 
 
-    
+
+
+
 
 
 
@@ -179,12 +184,12 @@ const ProfileEmailOtpForm = ({ email, contact, verificationType, title, subHeadi
             setIsLoading(false);
             changeMessage('error', errorMessage);
         }
-
+    
 
         // Create Supabase client and verify OTP
         const supabase = createClientComponentClient();
         const { data: { session }, error } = await supabase.auth.verifyOtp({
-            email: emailRef?.current,
+            phone: phoneRef?.current,
             token: otp,
             type: verificationType
         });
@@ -200,21 +205,22 @@ const ProfileEmailOtpForm = ({ email, contact, verificationType, title, subHeadi
                 reset({ codes: fields.map(() => ({ code: '' })) });
                 handleError('The code has expired. Please click "Resend Code" to request a new one.')
             }
-    
+
             return
+            
 
         } else if (session) {
 
             try {
                 
                 // check for successful metadata update if not log out error
-                const updateMetadataResult = await updateMetadata({ email: emailRef?.current })
+                const updateMetadataResult = await updateMetadata({ phone: phoneRef?.current })
                 if (!updateMetadataResult.success) {
                     console.log('metadata update error:', updateMetadataResult.error)
                 }
 
                 // check for successful profiles update if not throw new error
-                const updateTableResult = await updateTable(session.user, 'profiles', { email: emailRef?.current }, 'id')
+                const updateTableResult = await updateTable(session.user, 'profiles', { phone: phoneRef?.current }, 'id')
                 if (!updateTableResult.success) {
                     throw new Error(`An unexpected error occurred and we couldn't update your ${contact}. Please try again later. If the issue persists, contact support.`)
                 }
@@ -223,9 +229,9 @@ const ProfileEmailOtpForm = ({ email, contact, verificationType, title, subHeadi
                 setIsVerified(true)
                 setRedirect(true)
                 changeMessage('success', successMessage)
+                
 
-
-            } catch (error) {              
+            } catch (error) {
                 changeMessage('error', error.message)
             }
         }
@@ -235,28 +241,26 @@ const ProfileEmailOtpForm = ({ email, contact, verificationType, title, subHeadi
 
 
 
-
     useEffect(() => {
-       if (redirect) {
-          router.push('/profile/edit-profile')
-       }
-    }, [redirect, router])
-
-
+        if (redirect) {
+           router.push('/profile/edit-profile')           
+        }
+     }, [redirect, router])
+ 
 
 
 
 
 
     return (
-        <div className='flex-1 flex items-center justify-center bg-softGray w-full absolute left-0 right-0 min-h-screen xl:static xl:max-w-md xl:min-h-[394px] xl:rounded-xl'> 
+        <div className='main-container flex-1 flex flex-col items-center justify-center w-full max-w-xs md:p-10 md:max-w-md md:rounded-xl md:bg-white md:shadow-outer'>
             <OtpForm
-                containerStyles={'flex flex-col items-center justify-center w-full max-w-sm sm:max-w-md px-[x-pad] sm:p-12'}
+                containerStyles={'flex flex-col w-full max-w-sm'}
                 handleSubmit={handleSubmit}
                 onSubmit={onSubmit}
                 title={title}
+                phone={phoneRef?.current}
                 fields={fields}
-                email={emailRef.current}
                 register={register}
                 handleInputChange={handleInputChange}
                 handleKeyDown={handleKeyDown}
@@ -264,15 +268,16 @@ const ProfileEmailOtpForm = ({ email, contact, verificationType, title, subHeadi
                 isLoading={isLoading}
                 formState={formState}
                 trigger={trigger}
-                profileEmailRef={emailRef}
+                profilePhoneRef={phoneRef}
                 isButtonDisabled={isButtonDisabled}
                 isVerified={isVerified}
             />
         </div>
+
     )
 }
 
-export default ProfileEmailOtpForm
+export default ProfilePhoneOtpForm
 
 
 

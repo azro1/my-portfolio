@@ -8,12 +8,12 @@ const ProfileMenu = ({ handleLogout, handleCloseMenu, isOpen }) => {
     const pathName = usePathname()
 
     const topLinks = [
-        { href: '/profile/my-profile', label: 'My Profile' },
+        { href: '/profile/my-profile', label: 'Profile' },
     ];
 
     const middleLinks = [
         { href: '/profile/edit-profile', label: 'Edit Profile' },
-        { href: '/profile/data-privacy', label: 'Your Data' },
+        { href: '/profile/account', label: 'Account' },
     ];
 
     const bottomLinks = [
@@ -23,7 +23,7 @@ const ProfileMenu = ({ handleLogout, handleCloseMenu, isOpen }) => {
 
     const isMyProfilePage = pathName.includes('/my-profile');
     const isEditProfilePage = pathName.includes('/edit-profile');
-    const isDataPrivacyPage = pathName.includes('/data-privacy');
+    const isAccountPage = pathName.includes('/account');
     const isHelpPage = pathName.includes('/help');
     const isChatPage = pathName.includes('/chat');
 
@@ -48,7 +48,7 @@ const ProfileMenu = ({ handleLogout, handleCloseMenu, isOpen }) => {
                     
                     {middleLinks.map(link => {
                         if ((link.href === '/profile/edit-profile' && !isEditProfilePage) ||
-                            (link.href === '/profile/data-privacy' && !isDataPrivacyPage)) {
+                            (link.href === '/profile/account' && !isAccountPage)) {
                             return (
                                 <Link key={link.href} href={link.href}>
                                     <div className='flex items-center p-3 pl-4 border-b-[1px] border-opacity-30 border-dashed border-ashGray md:p-2.5 md:border-none' onClick={handleCloseMenu}>

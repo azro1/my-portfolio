@@ -1,20 +1,12 @@
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 import { client } from '@/app/lib/db';
 
 // components
 import ProfilePhoneOtpForm from "./ProfilePhoneOtpForm"
 
 const VerifyPhoneOtp = async() => {
-  const encryptedEmail = cookies().get('_otp_tkn')?.value;
-  const otpAccessToken = await client.get(`token-${encryptedEmail}`);
 
   const phone = await client.get('phone');
   await client.del('phone');
-
-  if (!otpAccessToken) {
-      redirect('/profile/edit-profile')
-  }
   
   return (
     <div className='h-screen flex-1 flex items-center justify-center w-full'>
