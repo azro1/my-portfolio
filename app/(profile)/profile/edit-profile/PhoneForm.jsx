@@ -246,7 +246,7 @@ const PhoneForm = ({ user, profile }) => {
     return (
         <div>
             <div className='pt-4'>
-                <div className="flex items-center justify-between text-[15px] pb-1">
+                <div className="flex items-center justify-between pb-1">
                     <span className="inline-block text-ashGray">Phone Number</span>
                     <span className='text-ashGray cursor-pointer' onClick={handleOpenForm}>
                         Edit

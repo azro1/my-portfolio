@@ -3,16 +3,16 @@
 import Link from "next/link"
 import { usePathname } from 'next/navigation';
 
-const ProfileMenuLarge = ({ handleLogout, handleCloseMenu, isProfilePage, isForumPage }) => {
+const ProfileMenuLarge = ({ handleLogout, handleCloseMenu, isForumPage }) => {
     const pathName = usePathname()
 
     const topLinks = [
-        { href: '/profile/my-profile', label: 'My Profile' },
+        { href: '/profile/my-profile', label: 'Profile' },
     ];
 
     const middleLinks = [
         { href: '/profile/edit-profile', label: 'Edit Profile' },
-        { href: '/profile/data-privacy', label: 'Your Data' },
+        { href: '/profile/account', label: 'Account' },
     ];
 
     const bottomLinks = [
@@ -24,7 +24,7 @@ const ProfileMenuLarge = ({ handleLogout, handleCloseMenu, isProfilePage, isForu
 
     const isMyProfilePage = pathName.includes('/my-profile');
     const isEditProfilePage = pathName.includes('/edit-profile');
-    const isDataPrivacyPage = pathName.includes('/data-privacy');
+    const isAccountPage = pathName.includes('/account');
     const isHelpPage = pathName.includes('/help');
     const isChatPage = pathName.includes('/chat');
 
@@ -51,7 +51,7 @@ const ProfileMenuLarge = ({ handleLogout, handleCloseMenu, isProfilePage, isForu
                
                     {middleLinks.map(link => {
                     if ((link.href === '/profile/edit-profile' && !isEditProfilePage) ||
-                        (link.href === '/profile/data-privacy' && !isDataPrivacyPage) ) {
+                        (link.href === '/profile/account' && !isAccountPage) ) {
                         return (
                         <Link key={link.href} href={link.href}>
                             <div className='flex items-center p-2.5 pl-4 group hover:bg-charcoalGray transition-colors duration-300 xl:hover:bg-softCharcoal' onClick={handleCloseMenu}>

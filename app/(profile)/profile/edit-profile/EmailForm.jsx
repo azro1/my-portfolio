@@ -209,7 +209,7 @@ const EmailForm = ({ user, profile }) => {
         <div>
 
             <div className='py-4'>
-                <div className="flex items-center justify-between text-[15px] pb-1">
+                <div className="flex items-center justify-between pb-1">
                     <span className="inline-block text-ashGray">Email</span>
                     <span className="text-ashGray cursor-pointer" onClick={handleOpenForm}>Edit</span>
                 </div>
