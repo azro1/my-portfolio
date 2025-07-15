@@ -2,7 +2,7 @@
 
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import disposableDomains from 'disposable-email-domains';
@@ -55,7 +55,7 @@ const EmailForm = ({ user, profile }) => {
     const [isUpdating, setIsUpdating] = useState(false)
     const [showForm, setShowForm] = useState(false)
     const [hasInteracted, setHasInteracted] = useState(false)
-
+    const modalRef = useRef();
     const { changeMessage } = useMessage();
     const router = useRouter();
 
@@ -205,6 +205,23 @@ const EmailForm = ({ user, profile }) => {
     }
 
 
+    // close modal form if user clicks outside of it
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            const clickedOutsideMenu = modalRef.current && !modalRef.current.contains(event.target)
+
+            if (clickedOutsideMenu && showForm) {
+                setShowForm(false)
+            }
+
+        }
+        document.addEventListener("click", handleClickOutside);
+        return () => {
+            document.removeEventListener("click", handleClickOutside);
+        };
+    }, [showForm]);
+
+
     return (
         <div>
 
@@ -220,6 +237,7 @@ const EmailForm = ({ user, profile }) => {
                 <Modal
                     className='bg-softGray p-6 sm:p-10 w-[420px] mx-auto rounded-md sm:rounded-xl'
                     backdrop='bg-modal-translucent-dark'
+                    ref={modalRef}
                 >
                     <form noValidate>
                         <label className='block mb-2 text-xl font-medium' htmlFor='draftEmail'>Email Address</label>
