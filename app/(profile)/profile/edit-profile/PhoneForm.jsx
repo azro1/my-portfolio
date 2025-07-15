@@ -2,7 +2,7 @@
 
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
@@ -51,7 +51,7 @@ const PhoneForm = ({ user, profile }) => {
     const [formSuccess, setFormSuccess] = useState(null)
     const [isUpdating, setIsUpdating] = useState(false)
     const [hasInteracted, setHasInteracted] = useState(false)
-
+    const modalRef = useRef();
     const { changeMessage } = useMessage();
     const router = useRouter();
 
@@ -243,6 +243,23 @@ const PhoneForm = ({ user, profile }) => {
     }
 
 
+    // close modal form if user clicks outside of it
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            const clickedOutsideMenu = modalRef.current && !modalRef.current.contains(event.target)
+
+            if (clickedOutsideMenu && showForm) {
+                setShowForm(false)
+            }
+
+        }
+        document.addEventListener("click", handleClickOutside);
+        return () => {
+            document.removeEventListener("click", handleClickOutside);
+        };
+    }, [showForm]);
+
+
     return (
         <div>
             <div className='pt-4'>
@@ -259,6 +276,7 @@ const PhoneForm = ({ user, profile }) => {
                 <Modal
                     className='bg-softGray p-6 sm:p-10 w-[420px] mx-auto rounded-md sm:rounded-xl'
                     backdrop='bg-modal-translucent-dark'
+                    ref={modalRef}
                 >
                     <form noValidate>
                         <label className='block mb-2 text-xl font-medium' htmlFor='draftPhone'>Phone Number</label>

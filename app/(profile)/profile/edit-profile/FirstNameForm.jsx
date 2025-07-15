@@ -2,7 +2,7 @@
 
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useForm } from "react-hook-form";
 import Image from 'next/image'
 
@@ -47,8 +47,8 @@ const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
     const [formSuccess, setFormSuccess] = useState(null)
     const [isUpdating, setIsUpdating] = useState(false)
     const [hasInteracted, setHasInteracted] = useState(false);
-    
-
+    const modalRef = useRef();
+ 
 
     // custom hook to update profiles table
     const { updateTable } = useUpdateTable()
@@ -212,6 +212,24 @@ const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
 
 
 
+    // close modal form if user clicks outside of it
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            const clickedOutsideMenu = modalRef.current && !modalRef.current.contains(event.target)
+
+            if (clickedOutsideMenu && showForm) {
+                setShowForm(false)
+            }
+
+        }
+        document.addEventListener("click", handleClickOutside);
+        return () => {
+            document.removeEventListener("click", handleClickOutside);
+        };
+    }, [showForm]);
+
+
+
     return (
         <div>
             <div className='py-4'>
@@ -226,6 +244,7 @@ const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
                 <Modal
                     className='bg-softGray p-6 sm:p-10 w-[420px] mx-auto rounded-md sm:rounded-xl'
                     backdrop='bg-modal-translucent-dark'
+                    ref={modalRef}
                 >
                     <form noValidate>
                         <label className='block mb-2 text-xl font-medium' htmlFor='draftFirstName'>Edit First Name</label>

@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react"
 
 // components
-import BrevoChatWidget from "./BrevoChatWidget";
 import Heading from "@/app/components/Heading";
 
 const Help = () => {
@@ -61,8 +60,6 @@ const Help = () => {
                 </div>
               )}
             </div>
-            <BrevoChatWidget />
-
           </div>
 
         </div>
