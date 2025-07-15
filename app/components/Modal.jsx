@@ -10,4 +10,6 @@ const Modal = forwardRef(({ className='', backdrop, children }, ref) => {
   )
 });
 
+Modal.displayName = "Modal"
+
 export default Modal
