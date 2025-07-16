@@ -69,7 +69,6 @@ const ForumChatList = ({ user }) => {
     }, (payload) => {
       if (payload) {
         setMessages(prevMessages => prevMessages.filter(message => message.id !== payload.old.id));
-        changeMessage('success', 'Message deleted!')
       }
     }).subscribe()
 
@@ -90,6 +89,8 @@ const ForumChatList = ({ user }) => {
     if (error) {
       changeMessage('error', "An unexpected error occurred your message couldn't be deleted. Please try again later or contact support if the issue persists.");
       console.log(error.message)
+    } else {
+      changeMessage('success', 'Message deleted!')
     }
   }
 
