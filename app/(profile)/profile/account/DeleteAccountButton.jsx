@@ -68,7 +68,7 @@ const DeleteAccountButton = ({ id }) => {
 
         // Call rpc function to permanently delete users account
         const { error } = await supabase.rpc('delete_user_account', {
-            user_id: id
+            uid: id
         })
 
         if (!error) {

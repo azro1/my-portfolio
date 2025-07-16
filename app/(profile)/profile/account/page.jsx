@@ -68,6 +68,7 @@ const MyAccount = async () => {
                 year: 'numeric',
                 hour: '2-digit',
                 minute: '2-digit',
+                timeZone: 'Europe/London'
               })}
             </p>
           </div>
