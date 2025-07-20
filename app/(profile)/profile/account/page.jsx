@@ -7,6 +7,7 @@ import Image from 'next/image';
 // components
 import Heading from '@/app/components/Heading';
 import DeleteAccountButton from './DeleteAccountButton';
+import ProfileHeader from '../../ProfileHeader';
 
 const providers = [
   {
@@ -32,22 +33,16 @@ const MyAccount = async () => {
 
   const supabase = createServerComponentClient({ cookies });
   const { data: { user } } = await supabase.auth.getUser()
-  // console.log(user)
 
 
   return (
     <div className='flex-1 overflow-y-scroll hide-scrollbar px-[x-pad] relative pb-24 pt-36 xl:pb-28'>
 
-      <div>
-        <Heading className='font-medium text-cloudGray text-lg md:text-xl'>
-          My Account
-        </Heading>
-        <p className='leading-normal text-charcoalGrayLight mt-3'>This is the account page. Here you can manage your account information.</p>
-      </div>
+      <ProfileHeader title={'My Account'} subheading={'This is the account page. Here you can view and manage your account information'} showAvatar={false} />
 
       <div className='min-h-[480px] flex flex-col gap-8 mt-6 p-4 bg-nightSky'>
 
-        <div className='flex flex-col'>
+        <div className='flex flex-col gap-1'>
           <div className='flex gap-2'>
             <p>Account Created On:</p>
             <p className='text-cloudGray'>
@@ -75,7 +70,7 @@ const MyAccount = async () => {
         </div>
 
 
-        <div className='flex flex-col'>
+        <div className='flex flex-col gap-1'>
           <p>Connected accounts:</p>
           <div className='flex gap-2'>
             {user?.app_metadata.providers
@@ -108,9 +103,9 @@ const MyAccount = async () => {
           </div>
         </div>
         
-        <div className='flex flex-col'>
+        <div className='flex flex-col gap-1'>
           {user?.email && (
-            <div className='flex items-center gap-2'>
+            <div className='flex flex-wrap items-center gap-2'>
               <p>Email:</p>
               <p className='text-cloudGray'>{user.email}</p>
               {user.user_metadata.email_verified && (
