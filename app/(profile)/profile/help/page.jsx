@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 
 // components
 import Heading from "@/app/components/Heading";
+import ProfileHeader from "../../ProfileHeader";
 
 const Help = () => {
   const [userQuery, setUserQuery] = useState('');
@@ -32,10 +33,8 @@ const Help = () => {
         <div className='h-screen flex pt-36 pb-20 min-h-[924px] md:min-h-[1034px] xl:pb-28'>
 
           <div className='w-full h-full flex flex-col'>
-            <Heading className='font-medium text-cloudGray text-lg md:text-xl'>
-                How Can We Help?
-            </Heading>
-            <p className='text-charcoalGrayLight mt-3'>Use the search bar to find answers to frequently asked questions or contact us via the online chat for further assistance</p>
+
+            <ProfileHeader title={'How Can We Help?'} subheading={'Use the search bar to find answers to frequently asked questions or contact us via the online chat for further assistance'} showAvatar={false} />
 
             <input
               type='text'

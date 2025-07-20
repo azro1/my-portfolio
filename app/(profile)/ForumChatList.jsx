@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
-import { FiTrash2 } from "react-icons/fi";
+import { FiTrash2, FiMessageSquare } from "react-icons/fi";
 
 
 // components
@@ -99,11 +99,17 @@ const ForumChatList = ({ user }) => {
 
   return (
     <div>
-        <Heading className='font-medium text-cloudGray mb-4'>
-            Chat History
+      <div className='flex items-center gap-2 mb-4'>
+        <Heading className='font-medium text-cloudGray'>
+          Chat History
         </Heading>
+        <FiMessageSquare
+          size="16"
+          className='text-cloudGray'
+        />
+      </div>
         {!error ? (
-            <div className={`flex flex-col text-left min-h-96 max-h-96 p-2 relative bg-nightSky overflow-y-auto hide-scrollbar gap-2 md:max-w-lg`}>
+            <div className={`flex flex-col text-left min-h-96 max-h-96 ${messages && messages.length > 0 ? 'p-2' : 'p-4'} relative bg-nightSky overflow-y-auto hide-scrollbar gap-2 md:max-w-lg`}>
                 {messages && messages.length > 0 ? (
                     messages.map(message => (
 

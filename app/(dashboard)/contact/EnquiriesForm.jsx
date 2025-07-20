@@ -287,7 +287,7 @@ const EnquiriesForm = ({ user }) => {
 
                     <Button
                         isLoading={isLoading}
-                        className='w-max py-2 px-4 bg-goldenOchre'
+                        className='w-[72px] py-2 px-4 bg-goldenOchre'
                         text='Send'
                     />
                 </div>

@@ -112,6 +112,7 @@ const EditProfileForms = () => {
         <div className='flex flex-col'>
             
             <div className='p-4 bg-nightSky mt-6'>
+                <p className='pb-2'>Upload Avatar</p>
                 <AvatarUploader
                     user={user}
                     updateProfile={updateProfile}
