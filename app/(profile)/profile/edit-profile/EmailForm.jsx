@@ -256,7 +256,7 @@ const EmailForm = ({ user, profile }) => {
                     </form>
                     <div className='flex items-center mt-3'>
                         <button className='btn-small py-2 px-3 bg-goldenOchre mr-2' onClick={handleCloseForm}>Cancel</button>
-                        <button className={`btn-small py-2 px-3 bg-goldenOchre w-[64px]`} onClick={handleSubmit(handleEmailUpdate)}>
+                        <button className={`btn-small py-2 px-3 bg-goldenOchre w-[64px] ${isUpdating ? 'opacity-65' : 'opacity-100'}`} disabled={isUpdating} onClick={handleSubmit(handleEmailUpdate)}>
                             {isUpdating ? (
                                 <div className='flex items-center justify-center h-[24px]'>
                                     <Image

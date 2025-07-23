@@ -144,7 +144,6 @@ const Signup = () => {
         if (error) {
           throw new Error(error.message);
         } else {
-          setIsLoading(false);
           changeMessage('success', 'A verifcation code has been sent to your email address');
           router.push('/verify-signup-otp');
         }

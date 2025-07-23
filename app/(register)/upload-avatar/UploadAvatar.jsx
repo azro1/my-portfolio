@@ -177,7 +177,7 @@ const UploadAvatar = () => {
               <AvatarUploader
                 user={user}
                 updateProfile={updateProfile}
-                btnColor='bg-green-700'
+                btnColor='bg-goldenOchre'
                 show3DAvatar={true}
                 buttonTextStyles={'text-[17px]'}
               />

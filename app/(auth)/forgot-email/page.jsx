@@ -126,7 +126,6 @@ const ForgotEmail = () => {
                 throw new Error(`To prevent spam and abusive behavior cooldown is active. You must wait ${emailResponse.minutesLeft}m ${emailResponse.secondsLeft}s before you can request a new verification code.`)
             
             } else if (emailResponse.exists && res.status === 200) {
-                setIsLoading(false)
                 changeMessage('success', "Good news! We've located your account. A verification code has been sent to your email.")
 
                 // store email in redis

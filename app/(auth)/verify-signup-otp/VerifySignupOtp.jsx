@@ -223,12 +223,7 @@ const VerifySignupOtp = ({ email }) => {
                 throw new Error("OTP verification failed. Please try again.");
             }
             
-            
-            // after otp verification is successful it's at this point we have access to user object
-            setIsLoading(false);
-
-            
-            // when they are first time users 
+            // after otp verification is successful it's at this point we have access to user object - when they are first time users 
             const is_verifiedResult = await updateTable(session.user, 'profiles', { is_verified: true }, 'id');
             if (!is_verifiedResult.success) {
                 console.log('auth otp page: could not update otp verification status');
