@@ -207,7 +207,7 @@ const PhoneForm = ({ user, profile }) => {
         } catch (error) {
             setIsUpdating(false)
             setFormSuccess(null);
-            setFormError('An unexpected error occurred while updating your phone. Please try again later. If the issue persists, contact support.')
+            setFormError(error.message)
             console.log(error.message)
         }
 
@@ -295,7 +295,7 @@ const PhoneForm = ({ user, profile }) => {
                     </form>
                     <div className='flex items-center mt-3'>
                         <button className='btn-small py-2 px-3 bg-goldenOchre mr-2' onClick={handleCloseForm}>Cancel</button>
-                        <button className='btn-small py-2 px-3 bg-goldenOchre w-[64px]' onClick={handleSubmit(handlePhoneUpdate)}>
+                        <button className={`btn-small py-2 px-3 bg-goldenOchre w-[64px] ${isUpdating ? 'opacity-65' : 'opacity-100'}`} disabled={isUpdating} onClick={handleSubmit(handlePhoneUpdate)}>
                             {isUpdating ? (
                                 <div className='flex items-center justify-center h-[24px]'>
                                     <Image

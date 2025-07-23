@@ -209,10 +209,7 @@ const VerifyLoginOtp = ({ email }) => {
                 if (error) {
                     throw new Error(error.message);
                 } else if (session) {
-                   // after otp verification is successful it's at this point we have access to user object
-                    setIsLoading(false);
-    
-                    // query db table for verification and registration flags
+                   // after otp verification is successful it's at this point we have access to user object then query db table for verification and registration flags
                     const { data, error } = await supabase
                     .from('profiles')
                     .select('is_verified, is_reg_complete')

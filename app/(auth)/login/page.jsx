@@ -143,7 +143,6 @@ const Login = () => {
         }
 
         if (!error) {
-          setIsLoading(false);
           changeMessage('success', 'A verifcation code has been sent to your email address')
           router.push('/verify-login-otp');
         }

@@ -521,7 +521,6 @@ const RegisterForm = () => {
 
             } finally {
                 isSubmittingRef.current = false;
-                setIsLoading(false);
             }
         }
     };
@@ -584,7 +583,7 @@ const RegisterForm = () => {
   return (
         <div className='flex flex-col justify-start pt-32 md:justify-center md:pt-0 min-h-[668px] md:min-h-[824px]'>
 
-            <div className='flex flex-col gap-5 w-full max-w-xs sm:max-w-sm md:bg-white md:shadow-outer md:p-14 md:rounded-xl md:max-w-md'>
+            <div className='flex flex-col gap-5 w-full max-w-xs sm:max-w-sm md:gap-4 md:bg-white md:shadow-outer md:p-14 md:rounded-xl md:max-w-md'>
 
                 <Heading className='font-semibold text-nightSky md:mb-3 text-[26px] md:text-[28px]'>
                     Enter your personal details
@@ -626,42 +625,42 @@ const RegisterForm = () => {
                         </div>
 
                         <div>
-                            <div className="flex gap-5">
+                            <div className="flex gap-4">
                                 {dobFields.map((field) => (
                                     <div key={field.name} className="flex flex-col">
-                                    {field.name !== 'month' ? (
-                                        <input
-                                        id={`dob-${field.name}`}
-                                        type="text"
-                                        inputMode="numeric"
-                                        max={field.max}
-                                        min={field.min}
-                                        maxLength={field.maxlength}
-                                        placeholder={field.placeholder}
-                                        className={`w-full py-2.5 px-3 text-center rounded-md border-[1px] ${!hasInteracted && formState.isSubmitted && (!dob.day && !dob.month?.value && !dob.year) ? 'border-red-600' : 'border-gray-300'}`}
-                                        {...register(`dob.${field.name}`)}
-                                        />
-                                    ) : (
-                                        <div className={`w-max min-w-[110px] text-center rounded-md border-[1px] ${!hasInteracted && formState.isSubmitted && (!dob.day && !dob.month?.value && !dob.year) ? 'border-red-600' : 'border-gray-300'} flex-1 flex items-center justify-center`}>
-                                        {isClient && (
-                                            <Controller
-                                            name="dob.month"
-                                            control={control}
-                                            render={({ field }) => (
-                                                <div className='w-full'>
-                                                    <Select
-                                                        {...field}
-                                                        options={months}
-                                                        placeholder="Month"
-                                                        styles={customStyles}
-                                                        isSearchable={false}
-                                                    />
-                                                </div>
-                                            )}
+                                        {field.name !== 'month' ? (
+                                            <input
+                                                id={`dob-${field.name}`}
+                                                type="text"
+                                                inputMode="numeric"
+                                                max={field.max}
+                                                min={field.min}
+                                                maxLength={field.maxlength}
+                                                placeholder={field.placeholder}
+                                                className={`w-full py-2.5 px-3 rounded-md border-[1px] ${!hasInteracted && formState.isSubmitted && (!dob.day && !dob.month?.value && !dob.year) ? 'border-red-600' : 'border-gray-300'} ${field.name === 'day' ? 'w-[80px]' : ''}`}
+                                                {...register(`dob.${field.name}`)}
                                             />
+                                        ) : (
+                                            <div className={`w-max min-w-[110px] text-center rounded-md border-[1px] ${!hasInteracted && formState.isSubmitted && (!dob.day && !dob.month?.value && !dob.year) ? 'border-red-600' : 'border-gray-300'} flex-1 flex items-center justify-center`}>
+                                            {isClient && (
+                                                <Controller
+                                                name="dob.month"
+                                                control={control}
+                                                render={({ field }) => (
+                                                    <div className='w-full'>
+                                                        <Select
+                                                            {...field}
+                                                            options={months}
+                                                            placeholder="Month"
+                                                            styles={customStyles}
+                                                            isSearchable={false}
+                                                        />
+                                                    </div>
+                                                )}
+                                                />
+                                            )}
+                                            </div>
                                         )}
-                                        </div>
-                                    )}
 
                                     </div>
                                 ))}
@@ -692,7 +691,7 @@ const RegisterForm = () => {
                             {errors.phone ? <p className="form-error mt-1">{errors.phone.message}</p> : phoneExists ? <p className="form-error mt-1">Phone already exists</p> : null}
                         </div>
 
-                        <button className={`p-3 text-[17px] rounded-lg cursor-pointer text-white font-medium block w-full transition duration-500 bg-green-700 ${(isLoading || phoneExists) ? 'opacity-65' : 'opacity-100'}`} disabled={isLoading || phoneExists} aria-live={Object.keys(errors).length > 0 || isLoading ? 'assertive' : 'off'} onClick={handleSubmit(handleUpdateProfile)}>
+                        <button className={`p-3 text-[17px] rounded-lg text-white font-medium block w-full transition duration-500 bg-goldenOchre ${(isLoading || phoneExists) ? 'opacity-65' : 'opacity-100'}`} disabled={isLoading || phoneExists} aria-live={Object.keys(errors).length > 0 || isLoading ? 'assertive' : 'off'} onClick={handleSubmit(handleUpdateProfile)}>
                             {isLoading ? (
                                 <div className='flex items-center justify-center'>
                                     <Image
