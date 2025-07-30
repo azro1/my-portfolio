@@ -113,7 +113,7 @@ export async function POST(request) {
         // set encrypted email in cookie so that we can access it to get key from redis in verify-signup-otp
         await cookies().set('_otp_tkn', `${encryptedEmail}`, { path: '/', httpOnly: true, sameSite: 'Strict' });
         const accessToken = uuidv4();
-        await client.set(`token-${encryptedEmail}`, accessToken, { EX: 5 });
+        await client.set(`token-${encryptedEmail}`, accessToken);
         return NextResponse.json({ exists, accountStatus }, {
           status: 200
         })
@@ -142,7 +142,7 @@ export async function POST(request) {
         // set encrypted email in cookie so that we can access it to get key from redis in verify-signup-otp
         await cookies().set('_otp_tkn', `${encryptedEmail}`, { path: '/', httpOnly: true, sameSite: 'Strict' });
         const accessToken = uuidv4();
-        await client.set(`token-${encryptedEmail}`, accessToken, { EX: 5 });
+        await client.set(`token-${encryptedEmail}`, accessToken);
 
         // set avatar upload cookie to track upload in registration
         await cookies().set('_au_flg', accessToken, { path: '/', httpOnly: true, sameSite: 'Strict' });
@@ -164,7 +164,7 @@ export async function POST(request) {
         // set encrypted email in cookie so that we can access it to get key from redis in verify-signup-otp
         await cookies().set('_otp_tkn', `${encryptedEmail}`, { path: '/', httpOnly: true, sameSite: 'Strict' });
         const accessToken = uuidv4();
-        await client.set(`token-${encryptedEmail}`, accessToken, { EX: 5 });
+        await client.set(`token-${encryptedEmail}`, accessToken);
         return NextResponse.json({ exists, accountStatus }, {
           status: 200
         })

@@ -12,6 +12,7 @@ export default async function AuthProfileLayout ({ children }) {
   const { data: { user } } = await supabase.auth.getUser()
   const encryptedEmail = cookies().get('_otp_tkn')?.value;
   const otpAccessToken = await client.get(`token-${encryptedEmail}`);
+  await client.del(`token-${encryptedEmail}`);
 
   if (!user) {
     redirect('/login')
