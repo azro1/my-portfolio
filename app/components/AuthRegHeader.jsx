@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation"
 import Chevron from "./Chevron"
 import Logo from "./Logo"
 
-const AuthRegHeader = () => {
+const AuthRegHeader = ({ pageNotFound }) => {
     const pathname = usePathname();
 
     const routes = [
@@ -48,7 +48,7 @@ const AuthRegHeader = () => {
                       <Logo size={50} />
                     </div>
                 </Link>
-                {!protectedRoutes && (
+                {(!protectedRoutes && !pageNotFound) && (
                     <>
                         <div className='flex items-center md:hidden'>
                             <Chevron />

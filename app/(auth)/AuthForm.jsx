@@ -45,7 +45,8 @@ const AuthForm = ({ handleSubmit, onSubmit, title, register, errors, isChecked, 
           <div className="mt-4 flex flex-col">
             <Button
               isLoading={isLoading}
-              className='w-full p-[11px] bg-goldenOchre'
+              className='w-full p-3 bg-goldenOchre'
+              textStyles='font-bold'
               text={title}
             />
 

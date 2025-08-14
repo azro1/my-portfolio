@@ -26,7 +26,9 @@ export default async function DashboardLayout({ children }) {
       </div>
 
       <div className="w-full z-0 xl:z-30">
-        <Footer />
+        <Footer
+          showAuthFooter={false}
+        />
       </div>
 
     </div>

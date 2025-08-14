@@ -4,6 +4,7 @@ import { redirect } from "next/navigation"
 
 // components
 import AuthRegHeader from "../components/AuthRegHeader"
+import Footer from "../components/Footer"
 
 export default async function RegisterLayout ({ children }) {
   const supabase = createServerComponentClient({ cookies })
@@ -35,11 +36,13 @@ export default async function RegisterLayout ({ children }) {
 
         <div className="w-full flex-grow flex flex-col bg-softGray">
           <AuthRegHeader />
-          <div className='main-container flex-grow flex items-center justify-center register-layout-wrapper'>
+          <div className='main-container flex-grow flex items-center justify-center'>
             {children}
           </div>
         </div>
-
+        <Footer 
+          showAuthFooter={true}
+        />
     </div>
   )
 }
