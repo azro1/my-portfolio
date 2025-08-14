@@ -6,6 +6,7 @@ import { client } from '@/app/lib/db';
 
 // components
 import AuthRegHeader from "../components/AuthRegHeader"
+import Footer from "../components/Footer";
 
 export default async function AuthProfileLayout ({ children }) {
   const supabase = createServerComponentClient({ cookies })
@@ -43,6 +44,9 @@ export default async function AuthProfileLayout ({ children }) {
       <div className='flex-grow flex flex-col items-center justify-center bg-softGray'>
         {children}
       </div>
+      <Footer
+        showAuthFooter={true}
+      />
     </div>
   )
 } 

@@ -159,7 +159,7 @@ const EmailForm = ({ user, profile }) => {
 
             } else if (res.status === 401) {
                 setIsUpdating(false);
-                setFormError(<>To prevent spam and abusive behavior <strong>cooldown</strong> is active. You must wait <strong>{updateResponse.minutesLeft}</strong>m <strong>{updateResponse.secondsLeft}</strong>s before you can request a new verification code.</>);
+                setFormError(<>To prevent spam and abusive behavior cooldown is active. You must wait <span className="underline">{updateResponse.minutesLeft}</span>m <span className="underline">{updateResponse.secondsLeft}</span>s before you can request a new verification code.</>);
 
             } else if (res.status === 200 && !updateResponse.error) {
                 setIsUpdating(false);

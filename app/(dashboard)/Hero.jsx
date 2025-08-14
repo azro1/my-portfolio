@@ -2,6 +2,7 @@ import Image from "next/image"
 
 // components
 import Heading from "../components/Heading"
+import Button from "../components/Button"
 
 const Hero = () => {
   return (
@@ -11,16 +12,18 @@ const Hero = () => {
         {/* Text Section */}
         <div className="flex-1 w-full flex flex-col justify-center text-center pt-6 md:max-w-[544px] lg:max-w-full lg:h-max lg:pt-0">
           <div className="lg:max-w-md lg:mx-auto">
-            <Heading className='font-bold text-goldenOchre mb-2 leading-tight text-[22px] md:m-3 md:text-2xl xl:text-3xl'>
+            <Heading className='font-bold text-goldenOchre mb-2 leading-tight text-[22px] md:m-3 lg:text-2xl xl:text-3xl'>
               Hi, I&apos;m Simon
             </Heading>
             <p className="text-stoneGray mb-5 md:mb-6 md:text-lg lg:leading-7">A full stack developer
               specializing in front and back end web
               technologies and UI design</p>
             <a className="text-sm block w-max mx-auto md:text-base" href="/CV_doc.txt" download="CV_doc.txt">
-              <button className="py-3 px-3.5 rounded-lg text-cloudGray font-extrabold cursor-pointer shadow-[0_4px_12px_rgba(0,0,0,0.3)] transition-all transform hover:scale-105 bg-charcoalGray lg:text-base">
-                  DOWNLOAD CV
-              </button>
+              <Button
+                className='py-3 px-5 rounded-lg text-cloudGray font-extrabold cursor-pointer shadow-[0_4px_12px_rgba(0,0,0,0.3)] transition-all transform hover:scale-105 bg-charcoalGray'
+                textStyles='text-sm lg:text-base font-bold'
+                text={'DOWNLOAD CV'}
+              />
             </a>
           </div>
         </div>

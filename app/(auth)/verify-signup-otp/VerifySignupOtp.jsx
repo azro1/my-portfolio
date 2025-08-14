@@ -262,7 +262,7 @@ const VerifySignupOtp = ({ email }) => {
 
 
     return (
-        <div className='main-container flex items-center justify-center'>
+        <div className='main-container flex items-center justify-center pt-36 pb-16 md:p-0'>
             {hasVisitedRegPage === null ? null : hasVisitedRegPage ? (
                 <Image
                     width={64}
@@ -272,7 +272,7 @@ const VerifySignupOtp = ({ email }) => {
                 />
             ) : (
                 <OtpForm
-                    containerStyles={'max-w-xs md:max-w-[430px] md:bg-white md:static md:shadow-outer md:p-12 md:rounded-xl'}
+                    containerStyles={'max-w-xs'}
                     handleSubmit={form.handleSubmit}
                     onSubmit={onSubmit}
                     title={'Sign Up'}

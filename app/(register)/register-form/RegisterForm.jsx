@@ -567,7 +567,7 @@ const RegisterForm = () => {
        const hasUploadedAvatar = localStorage.getItem('hasUploadedAvatar') === 'true';
        
        if (hasUploadedAvatar) {
-        changeMessage('info', "Looks like you've already uploaded an avatar. Please enter your personal details");
+        changeMessage('warning', "Looks like you've already uploaded an avatar. Please enter your personal details");
        }
         router.push('/upload-avatar');
     }
@@ -581,11 +581,11 @@ const RegisterForm = () => {
 
 
   return (
-        <div className='flex flex-col justify-start pt-32 md:justify-center md:pt-0 min-h-[668px] md:min-h-[824px]'>
+        <div className='flex flex-col justify-start pt-36 pb-24 md:p-0 md:justify-center md:min-h-[824px]'>
 
             <div className='flex flex-col gap-5 w-full max-w-xs sm:max-w-sm md:gap-4 md:bg-white md:shadow-outer md:p-14 md:rounded-xl md:max-w-md'>
 
-                <Heading className='font-semibold text-nightSky md:mb-3 text-[26px] md:text-[28px]'>
+                <Heading className='font-semibold text-nightSky text-[26px] md:text-[28px]'>
                     Enter your personal details
                 </Heading>
 
@@ -691,7 +691,7 @@ const RegisterForm = () => {
                             {errors.phone ? <p className="form-error mt-1">{errors.phone.message}</p> : phoneExists ? <p className="form-error mt-1">Phone already exists</p> : null}
                         </div>
 
-                        <button className={`p-3 text-[17px] rounded-lg text-white font-medium block w-full transition duration-500 bg-goldenOchre ${(isLoading || phoneExists) ? 'opacity-65' : 'opacity-100'}`} disabled={isLoading || phoneExists} aria-live={Object.keys(errors).length > 0 || isLoading ? 'assertive' : 'off'} onClick={handleSubmit(handleUpdateProfile)}>
+                        <button className={`p-3 rounded-lg text-white font-bold block w-full transition duration-500 bg-goldenOchre ${(isLoading || phoneExists) ? 'opacity-65' : 'opacity-100'}`} disabled={isLoading || phoneExists} aria-live={Object.keys(errors).length > 0 || isLoading ? 'assertive' : 'off'} onClick={handleSubmit(handleUpdateProfile)}>
                             {isLoading ? (
                                 <div className='flex items-center justify-center'>
                                     <Image
@@ -708,22 +708,16 @@ const RegisterForm = () => {
                         </button>
 
                     </form>
-    
-                    <div className='mt-6 h-1'>
-                        <Link className=' ' href='/upload-avatar' onClick={(e) => handleBackButton(e)}>
-                            <button className='text-nightSky'>
-                                Back
-                            </button>
-                        </Link>
-                    </div>
+                </div>
+
+                <div className='h-0'>
+                    <Link href='/upload-avatar' onClick={(e) => handleBackButton(e)}>
+                        <button className='text-nightSky text-base'>
+                            Back
+                        </button>
+                    </Link>
                 </div>
             </div>
-
-
-
-
-
-
         </div>
     )
 }

@@ -109,21 +109,19 @@ const MyAccount = async () => {
               <p>Email:</p>
               <p className='text-cloudGray'>{user.email}</p>
               {user.user_metadata.email_verified && (
-                <FaCheckCircle 
-                  size={20}
-                  color='lime'
-                />
+                <span className='bg-green-300 font-inter text-black px-1 text-xs tracking-wide'>
+                  Verified
+                </span>
               )}
           </div>)}
           {user?.phone && (
-            <div className='flex items-center gap-2'>
+            <div className='flex flex-wrap items-center gap-2'>
               <p>Phone:</p>
               <p  className='text-cloudGray'>{user.phone.replace('44', '0')}</p>
               {user.phone_confirmed_at && (
-                <FaCheckCircle 
-                  size={20}
-                  color='lime'
-                />
+                <span className='bg-green-300 font-inter text-black px-1 text-xs tracking-wide'>
+                  Verified
+                </span>
               )}
           </div>)}
         </div>

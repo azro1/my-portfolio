@@ -5,6 +5,7 @@ import { redirect } from "next/navigation"
 // components
 import AuthRegHeader from "../components/AuthRegHeader"
 import Cleanup from "./Cleanup"
+import Footer from "../components/Footer"
 
 export default async function AuthLayout ({ children }) {
   const supabase = createServerComponentClient({ cookies })
@@ -36,6 +37,9 @@ export default async function AuthLayout ({ children }) {
         {children}
         <Cleanup />
       </div>
+      <Footer
+        showAuthFooter={true}
+       />
     </div>
   )
 }  
