@@ -43,11 +43,11 @@ function maskEmail(email) {
             </Heading>
 
             {email && (
-                <p className='mb-4 md:text-[17px] leading-normal'>Enter the code sent to <span className='font-r text-nightSky'>{maskEmail(email)}</span> to verify your email address{title === 'Log In' || title === 'Update Email' ? '' : ' and create your account'}</p>
+                <p className='mb-4 text-[17px] text-center leading-normal'>Enter the code sent to <span className='font-r text-nightSky'>{maskEmail(email)}</span> to verify your email address{title === 'Log In' || title === 'Update Email' ? '' : ' and create your account'}</p>
             )}
 
             {phone && (
-                <p className='mb-4 md:text-[17px] leading-normal'>To update your phone number, enter the code sent to the number you provided ending in <span className='text-black'>{maskedPhone}</span></p> 
+                <p className='mb-4 text-[17px] leading-normal'>To update your phone number, enter the code sent to the number you provided ending in <span className='text-black'>{maskedPhone}</span></p> 
             )}
 
             <div className='flex gap-2 md:gap-2.5'>
@@ -73,7 +73,7 @@ function maskEmail(email) {
             </div>
             
             {(formState.isSubmitted && typeof errors.codes === 'object' && !Array.isArray(errors.codes)) && (
-                <p className="form-error mt-2">
+                <p className="form-error text-center mt-2">
                     {errors.codes.message}
                 </p>
             )}
@@ -85,10 +85,11 @@ function maskEmail(email) {
             ) : null}
 
 
-            <div className='mt-5 mb-6'>
+            <div className='my-5'>
                <Button
                     isLoading={isLoading}
-                    className='w-full p-[11px] bg-goldenOchre'
+                    className='w-[92px] mx-auto p-3 bg-goldenOchre'
+                    textStyles='font-bold'
                     text='Verify'
                />
             </div>

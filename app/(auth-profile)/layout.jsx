@@ -6,12 +6,14 @@ import { client } from '@/app/lib/db';
 
 // components
 import AuthRegHeader from "../components/AuthRegHeader"
+import Footer from "../components/Footer";
 
 export default async function AuthProfileLayout ({ children }) {
   const supabase = createServerComponentClient({ cookies })
   const { data: { user } } = await supabase.auth.getUser()
   const encryptedEmail = cookies().get('_otp_tkn')?.value;
   const otpAccessToken = await client.get(`token-${encryptedEmail}`);
+  await client.del(`token-${encryptedEmail}`);
 
   if (!user) {
     redirect('/login')
@@ -42,6 +44,9 @@ export default async function AuthProfileLayout ({ children }) {
       <div className='flex-grow flex flex-col items-center justify-center bg-softGray'>
         {children}
       </div>
+      <Footer
+        showAuthFooter={true}
+      />
     </div>
   )
 } 

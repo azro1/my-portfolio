@@ -28,10 +28,11 @@ const JoinRoomForm = () => {
     if (!data) {
       changeMessage('error', "Hmm, we couldn't find a room with that name. Double-check the spelling or create a new one.");
     } else {
+      // send a beacon to server endpoint to indicate a room has been joined
+      navigator.sendBeacon(`${location.origin}/api/rooms/access`, JSON.stringify({ hasJoinedRoom: true }));
       const roomId = data.id;
       router.push(`/chat/${roomId}`);
     }
-
   };
 
   return (

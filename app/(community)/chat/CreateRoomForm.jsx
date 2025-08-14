@@ -38,6 +38,9 @@ const CreateRoomForm = () => {
         return;
       }
 
+      // send a beacon to server endpoint to indicate a room has been created
+      navigator.sendBeacon(`${location.origin}/api/rooms/access`, JSON.stringify({ hasCreatedRoom: true }));
+
       router.push(`/chat/${data.id}`);
     } catch (error) {
       console.error('Error creating chat room:', error);

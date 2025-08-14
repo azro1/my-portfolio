@@ -286,7 +286,7 @@ const VerifyLoginOtp = ({ email }) => {
                     />
                 ) : ( 
                     <OtpForm
-                        containerStyles={'max-w-xs md:max-w-[430px] md:bg-white md:static md:max-w-md md:shadow-outer md:p-12 md:rounded-xl'}
+                        containerStyles={'max-w-xs'}
                         handleSubmit={handleSubmit}
                         onSubmit={onSubmit}
                         title={'Log In'}

@@ -253,9 +253,9 @@ const ProfilePhoneOtpForm = ({ phone, contact, verificationType, title, subHeadi
 
 
     return (
-        <div className='main-container flex-1 flex flex-col items-center justify-center w-full max-w-xs md:p-10 md:max-w-md md:rounded-xl md:bg-white md:shadow-outer'>
+        <div className='main-container pt-36 pb-16 md:p-0'>
             <OtpForm
-                containerStyles={'flex flex-col w-full max-w-sm'}
+                containerStyles={'flex flex-col w-full max-w-xs'}
                 handleSubmit={handleSubmit}
                 onSubmit={onSubmit}
                 title={title}

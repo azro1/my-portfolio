@@ -150,7 +150,7 @@ const Login = () => {
 
     } catch (error) {
         setIsLoading(false);
-        changeMessage('error', 'Oops! Something went wrong on our end. Please try again in a moment or contact support if the issue persists.');
+        changeMessage('error', error.message || 'An error occurred while trying to log in. Please try again later.');
         console.log('login error:', error.message)
     }
 

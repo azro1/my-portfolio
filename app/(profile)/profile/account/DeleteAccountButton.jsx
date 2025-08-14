@@ -84,7 +84,7 @@ const DeleteAccountButton = ({ id }) => {
                                <FiAlertTriangle color="black" fill="#FFD700" size={23} />
                             </div>
                             <p>
-                                This will <span className='font-medium text-black'>permanently</span>  delete your account and all associated data. Type <span className='font-medium text-black'>I want to delete my account</span> to confirm
+                                This will permanently delete your account and all associated data. Type <span className='font-medium text-black'>I want to delete my account</span> to confirm
                             </p>
                         </div>
 
@@ -100,14 +100,14 @@ const DeleteAccountButton = ({ id }) => {
                         <div className='flex items-center mt-3 gap-3'>
                             <button
                                 type="button"
-                                className='w-1/2 py-2.5 px-3 text-cloudGray font-semibold bg-deepCharcoal rounded-lg'
+                                className='w-1/2 py-2.5 px-3 text-cloudGray font-semibold bg-charcoalGray rounded-lg'
                                 onClick={handleCloseModal}
                             >
                                 Cancel
                             </button>
                             <button
                                 type="submit"
-                                className={`w-1/2 py-2.5 px-3 text-cloudGray font-semibold bg-red-600 rounded-lg ${isButtonDisabled || isLoading ? 'opacity-65' : 'opacity-100'}`}
+                                className={`w-1/2 py-2.5 px-3 text-cloudGray font-semibold bg-red-800 rounded-lg ${isButtonDisabled || isLoading ? 'opacity-65' : 'opacity-100'}`}
                                 disabled={isButtonDisabled || isLoading}
                             >
                                 {isLoading ? (
@@ -130,7 +130,7 @@ const DeleteAccountButton = ({ id }) => {
             )}
 
             <button
-                className='btn-small text-[17px] text-cloudGray bg-red-700 hover:bg-red-600 transition-colors duration-200 rounded-md'
+                className='btn-small text-[17px] text-cloudGray bg-red-800 hover:bg-red-700 transition-colors duration-200 rounded-md'
                 onClick={handleDeleteConfirmation}
             >
                 Delete Account
