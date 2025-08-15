@@ -276,7 +276,7 @@ const VerifyLoginOtp = ({ email }) => {
     
     
         return (
-            <div className='main-container flex items-center justify-center'>
+            <div className='main-container flex items-center justify-center pt-36 pb-16 md:p-0'>
                 {hasVisitedRegPage === null ? null : hasVisitedRegPage ? (
                     <Image
                         width={64}

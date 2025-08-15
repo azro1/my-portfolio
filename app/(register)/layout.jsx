@@ -32,7 +32,7 @@ export default async function RegisterLayout ({ children }) {
   }
   
   return (
-    <div className='min-h-[100dvh] flex flex-col items-center'>
+    <div className='min-h-[100dvh] flex flex-col items-center md:h-screen md:min-h-[760px]'>
 
         <div className="w-full flex-grow flex flex-col bg-softGray">
           <AuthRegHeader />

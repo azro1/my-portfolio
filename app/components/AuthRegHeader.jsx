@@ -39,32 +39,48 @@ const AuthRegHeader = ({ pageNotFound }) => {
 
     return (
         <header className='flex items-center bg-softCharcoal w-full py-4 fixed z-40 md:static'>
-            <div className='max-w-screen-xl mx-auto flex-1 flex items-center justify-between px-[x-pad]'>
-                <Link href={`${protectedRoutes ? '#' : '/'}`}>
-                    <div className='cursor-pointer md:hidden'>
-                      <Logo />
-                    </div>
-                    <div className='hidden cursor-pointer md:block'>
-                      <Logo size={50} />
-                    </div>
-                </Link>
-                {(!protectedRoutes && !pageNotFound) && (
-                    <>
-                        <div className='flex items-center md:hidden'>
-                            <Chevron />
-                        </div>
-                
-                        <ul className='hidden md:flex items-center gap-8 mr-2 xl:mr-0'>
-                            {links.map((link) => (
-                                <li key={link.href}> 
-                                    <Link href={link.href}>
-                                        <span className='text-base transition-text duration-300 text-stoneGray hover:text-cloudGray'>{link.label}</span>
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>      
-                    </>
-                )}
+            <div className='flex-1 max-w-screen-xl mx-auto px-[x-pad]'>
+                <main className='flex items-center justify-between'>
+                    {protectedRoutes ? (
+                        <>
+                            <div className="pointer-events-none md:hidden">
+                                <Logo />
+                            </div>
+                            <div className="pointer-events-none hidden md:block">
+                                <Logo size={50} />
+                            </div>
+                        </>
+                    ) : (
+                        <Link href="/">
+                            <div className="cursor-pointer flex items-center">
+                                <div className="md:hidden">
+                                    <Logo />
+                                </div>
+                                <div className="hidden md:block">
+                                    <Logo size={50} />
+                                </div>
+                            </div>
+                        </Link>
+                    )}
+
+                    {(!protectedRoutes && !pageNotFound) && (
+                        <>
+                            <div className='flex items-center md:hidden'>
+                                <Chevron />
+                            </div>
+                    
+                            <ul className='hidden md:flex items-center gap-8 mr-2 xl:mr-0'>
+                                {links.map((link) => (
+                                    <li key={link.href}> 
+                                        <Link href={link.href}>
+                                            <span className='text-base transition-text duration-300 text-stoneGray hover:text-cloudGray'>{link.label}</span>
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>      
+                        </>
+                    )}
+                </main>
             </div>
         </header>
     )
