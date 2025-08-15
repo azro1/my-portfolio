@@ -88,7 +88,7 @@ const Signup = () => {
 
     // checkbox validation
     if (!isChecked) {
-      changeMessage('error', 'You need to agree to our privacy policy and terms of service before signing up');
+      changeMessage('error', 'Please make sure you’ve read and agreed to our Privacy Policy and Terms of Service before signing up.');
       return;
     }
 

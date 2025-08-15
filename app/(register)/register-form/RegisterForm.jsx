@@ -581,7 +581,7 @@ const RegisterForm = () => {
 
 
   return (
-        <div className='flex flex-col justify-start pt-36 pb-24 md:p-0 md:justify-center md:min-h-[824px]'>
+        <div className='flex flex-col justify-start pt-36 pb-24 md:p-0 md:justify-center md:min-h-[760px]'>
 
             <div className='flex flex-col gap-5 w-full max-w-xs sm:max-w-sm md:gap-4 md:bg-white md:shadow-outer md:p-14 md:rounded-xl md:max-w-md'>
 
