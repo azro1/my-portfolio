@@ -39,8 +39,8 @@ const AuthRegHeader = ({ pageNotFound }) => {
 
     return (
         <header className='flex items-center bg-softCharcoal w-full py-4 fixed z-40 md:static'>
-            <div className='flex-1 max-w-screen-xl mx-auto px-[x-pad]'>
-                <main className='flex items-center justify-between'>
+            <div className='flex-1 max-w-[1200px] uw:max-w-screen-xl mx-auto px-[x-pad]'>
+                <div className='flex items-center justify-between'>
                     {protectedRoutes ? (
                         <>
                             <div className="pointer-events-none md:hidden">
@@ -80,7 +80,7 @@ const AuthRegHeader = ({ pageNotFound }) => {
                             </ul>      
                         </>
                     )}
-                </main>
+                </div>
             </div>
         </header>
     )

@@ -77,7 +77,7 @@ const CustomNotFound = () => {
                 <AuthRegHeader 
                   pageNotFound={true} 
                 />
-                <div className="main-container flex-grow flex items-center justify-center">
+                <div className="main-container flex-grow flex items-center justify-center pt-16 min-h-[440px] md:min-h-0 md:pt-0">
                     <main className="flex flex-col items-center justify-center text-center">
                         <h2 className={`font-semibold text-[26px] md:text-[28px] ${titleClass}`}>Page Not Found</h2>
                         <p className="text-lg leading-normal mt-2">The {isProjectPage ? 'project' : 'page'} you&apos;re looking for doesn&apos;t exist or has been moved.</p>
@@ -90,8 +90,9 @@ const CustomNotFound = () => {
                         </Link>
                     </main>
                 </div>
-<Footer />
-
+                  <Footer 
+                    showAuthFooter={isAuthPage}
+                  />
             </div>
         </div>
     )

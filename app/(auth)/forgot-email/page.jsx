@@ -164,9 +164,9 @@ const ForgotEmail = () => {
 
 
     return (
-        <div className='main-container flex flex-col items-center justify-center gap-4 w-full md:static md:bg-white md:max-w-sm md:shadow-outer md:p-10 md:pb-6 md:rounded-xl'>
+        <div className='main-container min-h-[440px] bg-red-990 pt-20 flex flex-col items-center justify-center gap-4 w-full md:md:min-h-0 md:static md:bg-white md:max-w-sm md:shadow-outer md:p-10 md:pb-6 md:rounded-xl'>
 
-            <div className='flex-1 w-full max-w-xs'>
+            <div className='w-full max-w-xs'>
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
                     <div>
                         <Heading className='text-[26px] text-center mb-2 font-semibold text-nightSky md:text-[28px]'>
