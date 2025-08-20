@@ -85,24 +85,11 @@ const Footer = ({ showAuthFooter }) => {
   }
 
   return (
-    <footer className="w-full flex min-h-[86px] bg-softCharcoal">
+    <footer className="w-full flex min-h-[80px] bg-softCharcoal">
       <div className="flex-1 flex p-10 max-w-[1200px] uw:max-w-screen-xl mx-auto md:p-0 md:px-[x-pad]">
         <div className="flex-grow flex flex-col">
           <div className="flex-grow flex flex-col items-center justify-center gap-2 mb-10 md:p-4 md:flex-row md:items-center md:justify-between md:m-0 lg:px-0">
-            <div className="flex flex-col items-center gap-2 md:flex-row">
-              {protectedRoutes ? (
-                <div className="pointer-events-none">
-                  <Logo size={36} />
-                </div>
-              ) : (
-                <Link href="/">
-                  <div className="cursor-pointer">
-                    <Logo size={36} />
-                  </div>
-                </Link>
-              )}
-              <p className="text-stoneGray">&copy; 2025 Simon Sutherland</p>
-            </div>
+            <p className="text-stoneGray">&copy; 2025 Simon Sutherland</p>
             <div className="flex items-center justify-center gap-4 md:order-2">
               {socialLinks("text-stoneGray")}
             </div>

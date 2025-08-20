@@ -38,7 +38,7 @@ const AuthRegHeader = ({ pageNotFound }) => {
 
 
     return (
-        <header className='flex items-center bg-softCharcoal w-full py-4 fixed z-40 md:static'>
+        <header className='flex items-center bg-softCharcoal w-full py-2.5 fixed z-40 md:static'>
             <div className='flex-1 max-w-[1200px] uw:max-w-screen-xl mx-auto px-[x-pad]'>
                 <div className='flex items-center justify-between'>
                     {protectedRoutes ? (
@@ -57,7 +57,7 @@ const AuthRegHeader = ({ pageNotFound }) => {
                                     <Logo />
                                 </div>
                                 <div className="hidden md:block">
-                                    <Logo size={50} />
+                                    <Logo size={46} />
                                 </div>
                             </div>
                         </Link>
