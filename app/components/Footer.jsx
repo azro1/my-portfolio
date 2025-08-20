@@ -61,7 +61,7 @@ const Footer = ({ showAuthFooter }) => {
   if (!showAuthFooter) {
     return (
       <footer className="min-h-[300px] w-full flex items-start xl:min-h-[170px] bg-slateOnyx">
-        <div className="flex-1 p-10 mx-auto max-w-screen-lg md:p-0">
+        <div className="flex-1 p-10 mx-auto max-w-screen-lg md:p-0 md:px-6 lg:px-0">
           <main className="flex-grow flex flex-col">
             <div className="flex flex-col items-center justify-start gap-2 mt-4 mb-20 md:p-4 md:flex-row md:items-start md:justify-between md:m-0 lg:px-0">
               <div className="flex flex-col gap-2 md:gap-2">
@@ -85,7 +85,7 @@ const Footer = ({ showAuthFooter }) => {
   }
 
   return (
-    <footer className="w-full flex min-h-[96px] bg-slateOnyx">
+    <footer className="w-full flex min-h-[86px] bg-softCharcoal">
       <div className="flex-1 flex p-10 max-w-[1200px] uw:max-w-screen-xl mx-auto md:p-0 md:px-[x-pad]">
         <div className="flex-grow flex flex-col">
           <div className="flex-grow flex flex-col items-center justify-center gap-2 mb-10 md:p-4 md:flex-row md:items-center md:justify-between md:m-0 lg:px-0">

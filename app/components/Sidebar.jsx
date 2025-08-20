@@ -161,7 +161,7 @@ const Sidebar = () => {
             )}
           </div>
 
-          <nav className="px-[x-pad] flex justify-between md:gap-6 relative xl:px-0 xl:flex-col xl:justify-normal xl:gap-0 xl:min-h-[768px] ">
+          <nav className="px-6 flex justify-between md:gap-6 relative xl:px-0 xl:flex-col xl:justify-normal xl:gap-0 xl:min-h-[768px] ">
             
             {/* Large Logo */}
             <div className="hidden xl:flex items-center justify-center py-4 p-10 min-h-[160px]">
