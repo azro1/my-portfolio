@@ -171,7 +171,7 @@ const EditProfileForms = () => {
                     user={user}
                     profile={profile}
                 />
-            </div>
+              </div>
             </div>
 
         </div>

@@ -243,7 +243,7 @@ const BioForm = ({ user, profile, fetchProfile, changeMessage }) => {
                         <label className="block mb-2 text-xl font-medium" htmlFor="draftBio">Edit Bio</label>
                         <p className='mb-3 font-light'>Please enter your updated bio. Keep it brief and relevant, as this will be displayed on your profile dashboard.</p>
                         <input
-                            className='w-full p-2.5 px-4 rounded-md border-[1px] border-gray-300'
+                            className='w-full p-2.5 px-4 rounded-[5px] border-[1px] border-gray-300'
                             id='draftBio'
                             type='text'
                             placeholder='Bio'

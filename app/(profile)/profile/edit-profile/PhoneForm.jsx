@@ -282,7 +282,7 @@ const PhoneForm = ({ user, profile }) => {
                         <label className='block mb-2 text-xl font-medium' htmlFor='draftPhone'>Phone Number</label>
                             <p className='mb-3 font-light'>Please enter your new phone number. This number will be used for account verification purposes</p>
                             <input
-                                className='w-full p-2.5 px-4 rounded-md border-[1px] border-gray-300'
+                                className='w-full p-2.5 px-4 rounded-[5px] border-[1px] border-gray-300'
                                 id='draftPhone'
                                 type='tel'
                                 placeholder='Phone'

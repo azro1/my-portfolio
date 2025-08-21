@@ -243,7 +243,7 @@ const EmailForm = ({ user, profile }) => {
                         <label className='block mb-2 text-xl font-medium' htmlFor='draftEmail'>Email Address</label>
                         <p className='mb-3 font-light'>Please enter your new email address. This email will be used for account verification and notifications</p>
                         <input
-                            className='w-full p-2.5 px-4 rounded-md border-[1px] border-gray-300'
+                            className='w-full p-2.5 px-4 rounded-[5px] border-[1px] border-gray-300'
                             id='draftEmail'
                             type='email'
                             placeholder='Email'

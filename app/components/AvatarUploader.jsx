@@ -11,7 +11,7 @@ import { useMessage } from '@/app/hooks/useMessage';
 
 
 
-const AvatarUploader = ({ user, updateProfile, btnColor, show3DAvatar, buttonTextStyles }) => {
+const AvatarUploader = ({ user, updateProfile, btnColor, show3DAvatar }) => {
     // custom hooks
     const { updateTable } = useUpdateTable()
     const { changeMessage } = useMessage()
@@ -193,7 +193,7 @@ const AvatarUploader = ({ user, updateProfile, btnColor, show3DAvatar, buttonTex
                                     />
                                 </div>
                             ) : (
-                                <span className={`${buttonTextStyles}`}>Upload</span>
+                                <span>Upload</span>
                             )}
                         </button>
                     </div>

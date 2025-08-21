@@ -179,7 +179,6 @@ const UploadAvatar = () => {
                 updateProfile={updateProfile}
                 btnColor='bg-goldenOchre'
                 show3DAvatar={true}
-                buttonTextStyles={'font-bold'}
               />
             </div>
 

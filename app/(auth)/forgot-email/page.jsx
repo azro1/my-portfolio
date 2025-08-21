@@ -175,7 +175,7 @@ const ForgotEmail = () => {
 
                         <label className='max-w-min mb-2 text-base text-ashGray block' htmlFor='phone'>Phone</label>
                         <input
-                            className={`w-full sm:max-w-xs py-2.5 px-4 rounded-md text-nightSky border-[1px] ${errors.phone ? 'border-red-500' : 'border-gray-300'}`}
+                            className={`w-full sm:max-w-xs py-2.5 px-4 rounded-[5px] text-nightSky border-[1px] ${errors.phone ? 'border-red-500' : 'border-gray-300'}`}
                             id='phone'
                             name='phone'
                             type='tel'
@@ -192,7 +192,6 @@ const ForgotEmail = () => {
                             <Button
                                 isLoading={isLoading}
                                 className='w-full p-3 bg-goldenOchre'
-                                textStyles='font-bold'
                                 text='Submit'
                             />
                         </div>

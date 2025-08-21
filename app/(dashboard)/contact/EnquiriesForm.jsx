@@ -234,7 +234,7 @@ const EnquiriesForm = ({ user }) => {
                             spellCheck='false'
                             placeholder='First name'
                             maxLength={30}
-                            className={`w-full py-2.5 px-4 rounded-md border-[1px] ${errors.firstname ? 'border-red-600' : 'border-gray-300'}`}
+                            className={`w-full py-2.5 px-4 rounded-[5px] border-[1px] ${errors.firstname ? 'border-red-600' : 'border-gray-300'}`}
                         /> 
                         {errors.firstname && <p className='form-error mt-1'>{errors.firstname?.message}</p>}   
                     </div>
@@ -249,7 +249,7 @@ const EnquiriesForm = ({ user }) => {
                             placeholder='Email'
                             autoComplete="email"
                             maxLength={50}
-                            className={`w-full py-2.5 px-4 rounded-md border-[1px] ${errors.email ? 'border-red-600' : 'border-gray-300'}`}
+                            className={`w-full py-2.5 px-4 rounded-[5px] border-[1px] ${errors.email ? 'border-red-600' : 'border-gray-300'}`}
                         />
                         {errors.email && <p className='form-error mt-1'>{errors.email?.message}</p>}    
                     </div>
@@ -266,7 +266,7 @@ const EnquiriesForm = ({ user }) => {
                                     setSubject={field.onChange}
                                     subject={field.value}
                                     errors={errors}
-                                    placeholderClass="text-ashGray opacity-[0.8] text-[15px] font-light tracking-wide"
+                                    placeholderClass="text-ashGray text-[15px] font-light tracking-wide"
                                 />
                             )}
                         />
@@ -280,7 +280,7 @@ const EnquiriesForm = ({ user }) => {
                             rows='4'
                             placeholder='Message'
                             {...register('message')}
-                            className={`py-2.5 px-4 outline-none rounded-md w-4/5 border-[1px] ${errors.message ? 'border-red-600' : 'border-gray-300'} resize-none`}
+                            className={`py-2.5 px-4 outline-none rounded-[5px] w-4/5 border-[1px] ${errors.message ? 'border-red-600' : 'border-gray-300'} resize-none`}
                         ></textarea>
                         {errors.message && <p className='form-error mt-1'>{errors.message?.message}</p>}       
                     </div>

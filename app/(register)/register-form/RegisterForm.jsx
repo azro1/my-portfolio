@@ -172,7 +172,6 @@ const customStyles = {
     placeholder: (base) => ({
         ...base,
         color: '#6F7469',
-        opacity: 0.8,
         fontSize: '15px',
         fontWeight: '300',
         letterSpacing: '0.025em'
@@ -602,7 +601,7 @@ const RegisterForm = () => {
                                     placeholder='First Name'
                                     minLength='3'
                                     {...register('firstname')}
-                                    className={`w-full py-2.5 px-3 text-nightSky rounded-md border-[1px] ${errors.firstname ? 'border-red-600' : 'border-gray-300'}`}
+                                    className={`w-full py-2.5 px-3 text-nightSky rounded-[5px] border-[1px] ${errors.firstname ? 'border-red-600' : 'border-gray-300'}`}
                                 />
                             </div>
                             {errors?.firstname && <p className='form-error mt-1'>{errors.firstname.message}</p>}
@@ -618,7 +617,7 @@ const RegisterForm = () => {
                                     placeholder='Last Name'
                                     minLength='2'
                                     {...register('lastname')}
-                                    className={`w-full py-2.5 px-3 text-nightSky rounded-md border-[1px] ${errors.lastname ? 'border-red-600' : 'border-gray-300'}`}
+                                    className={`w-full py-2.5 px-3 text-nightSky rounded-[5px] border-[1px] ${errors.lastname ? 'border-red-600' : 'border-gray-300'}`}
                                 />
                             </div>
                             {errors?.lastname && <p className='form-error mt-1'>{errors.lastname.message}</p>}
@@ -637,11 +636,11 @@ const RegisterForm = () => {
                                                 min={field.min}
                                                 maxLength={field.maxlength}
                                                 placeholder={field.placeholder}
-                                                className={`w-full py-2.5 px-3 rounded-md border-[1px] ${!hasInteracted && formState.isSubmitted && (!dob.day && !dob.month?.value && !dob.year) ? 'border-red-600' : 'border-gray-300'} ${field.name === 'day' ? 'w-[80px]' : ''}`}
+                                                className={`w-full py-2.5 px-3 rounded-[5px] border-[1px] pl-6 ${!hasInteracted && formState.isSubmitted && (!dob.day && !dob.month?.value && !dob.year) ? 'border-red-600' : 'border-gray-300'} ${field.name === 'day' ? 'w-[80px]' : ''}`}
                                                 {...register(`dob.${field.name}`)}
                                             />
                                         ) : (
-                                            <div className={`w-max min-w-[110px] text-center rounded-md border-[1px] ${!hasInteracted && formState.isSubmitted && (!dob.day && !dob.month?.value && !dob.year) ? 'border-red-600' : 'border-gray-300'} flex-1 flex items-center justify-center`}>
+                                            <div className={`w-max min-w-[110px] text-center rounded-[5px] border-[1px] ${!hasInteracted && formState.isSubmitted && (!dob.day && !dob.month?.value && !dob.year) ? 'border-red-600' : 'border-gray-300'} flex-1 flex items-center justify-center`}>
                                             {isClient && (
                                                 <Controller
                                                 name="dob.month"
@@ -684,14 +683,14 @@ const RegisterForm = () => {
                                     spellCheck={false}
                                     placeholder="Phone Number"
                                     {...register('phone')}
-                                    className={`w-full py-2.5 px-3 text-nightSky rounded-md border-[1px] ${(errors.phone || phoneExists) ? 'border-red-600' : 'border-gray-300'}`}
+                                    className={`w-full py-2.5 px-3 text-nightSky rounded-[5px] border-[1px] ${(errors.phone || phoneExists) ? 'border-red-600' : 'border-gray-300'}`}
                                     onKeyDown={handleKeyDown}
                                 />
                             </div>
                             {errors.phone ? <p className="form-error mt-1">{errors.phone.message}</p> : phoneExists ? <p className="form-error mt-1">Phone already exists</p> : null}
                         </div>
 
-                        <button className={`p-3 rounded-lg text-white font-bold block w-full transition duration-500 bg-goldenOchre ${(isLoading || phoneExists) ? 'opacity-65' : 'opacity-100'}`} disabled={isLoading || phoneExists} aria-live={Object.keys(errors).length > 0 || isLoading ? 'assertive' : 'off'} onClick={handleSubmit(handleUpdateProfile)}>
+                        <button className={`p-3 rounded-lg text-white font-medium block w-full transition duration-500 bg-goldenOchre ${(isLoading || phoneExists) ? 'opacity-65' : 'opacity-100'}`} disabled={isLoading || phoneExists} aria-live={Object.keys(errors).length > 0 || isLoading ? 'assertive' : 'off'} onClick={handleSubmit(handleUpdateProfile)}>
                             {isLoading ? (
                                 <div className='flex items-center justify-center'>
                                     <Image

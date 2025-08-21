@@ -234,7 +234,7 @@ const DobForm = ({ user, profile, fetchProfile, changeMessage }) => {
                         <label className="block mb-2 text-xl font-medium" htmlFor='draftDob'>Edit Dob</label>
                         <p className='mb-3 font-light'>Please enter a valid date of birth to keep your account accurate and up-to-date</p>
                         <input
-                            className='w-full p-2.5 px-4 rounded-md border-[1px] border-gray-300'
+                            className='w-full p-2.5 px-4 rounded-[5px] border-[1px] border-gray-300'
                             id='draftDob'
                             type='date'
                             spellCheck={false}

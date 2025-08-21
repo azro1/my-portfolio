@@ -250,7 +250,7 @@ const FirstNameForm = ({ user, profile, fetchProfile, changeMessage }) => {
                         <label className='block mb-2 text-xl font-medium' htmlFor='draftFirstName'>Edit First Name</label>
                         <p className='mb-3 font-light'>Please enter your first name as you&apos;d like it to appear in your profile</p>
                         <input
-                            className='w-full p-2.5 px-4 rounded-md border-[1px] border-gray-300'
+                            className='w-full p-2.5 px-4 rounded-[5px] border-[1px] border-gray-300'
                             id='draftFirstName'
                             type='text'
                             placeholder='First Name'

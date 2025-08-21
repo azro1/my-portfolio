@@ -33,7 +33,7 @@ a {
 }
 
 p, a {
-  @apply font-r text-base text-ashGray ;
+  @apply font-r text-base text-ashGray;
 }
 
 .main-container {
@@ -98,7 +98,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 /* input placeholder */
 input::placeholder, textarea::placeholder{
-  @apply opacity-80 text-ashGray text-[15px] font-light tracking-wide;
+  @apply text-ashGray text-[15px] font-light tracking-wide;
 }
 
 

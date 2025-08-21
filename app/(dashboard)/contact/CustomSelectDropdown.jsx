@@ -31,7 +31,7 @@ const CustomSelectDropdown = ({ placeholderClass, options, subject, setSubject, 
             <div className="custom-select relative">
                 {/* Dropdown header */}
                 <div
-                    className={`w-full py-2.5 px-4 rounded-md outline-none border-[1px] ${errors.subject ? 'border-red-600' : 'border-gray-300'} bg-white cursor-pointer flex justify-between items-center relative`}
+                    className={`w-full py-2.5 px-4 rounded-[5px] outline-none border-[1px] ${errors.subject ? 'border-red-600' : 'border-gray-300'} bg-white cursor-pointer flex justify-between items-center relative`}
                     onClick={() => setDropdownOpen(!dropdownOpen)}
                 >
                     {subject ? (
